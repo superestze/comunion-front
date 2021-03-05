@@ -1,0 +1,19 @@
+{
+  "name": "@comunion/components",
+  "version": "0.0.0",
+  "description": "Comunion UI components",
+  "main": "index.js",
+  "scripts": {},
+  "repository": "comunion-io/front-next.git",
+  "keywords": [
+    "vue",
+    "vue3",
+    "ui",
+    "components"
+  ],
+  "license": "GPL-3.0-or-later",
+  "bugs": {
+    "url": "https://github.com/comunion-io/front-next/issues"
+  },
+  "homepage": "https://github.com/comunion-io/front-next#readme"
+}

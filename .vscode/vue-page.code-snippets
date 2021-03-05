@@ -1,0 +1,16 @@
+{
+  "vue 3 page snippet": {
+    "prefix": "v3p",
+    "body": [
+      "import { defineComponent } from 'vue'",
+      "",
+      "export default defineComponent({",
+      "  name: '$1Page',",
+      "  setup(_, ctx) {",
+      "    return () => ($2)",
+      "  }",
+      "})"
+    ],
+    "description": "vue 3 page snippet"
+  }
+}

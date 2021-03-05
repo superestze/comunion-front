@@ -1,0 +1,26 @@
+{
+  "name": "@comunion/utils",
+  "version": "0.0.0",
+  "description": "Utility functions",
+  "main": "dist/index.js",
+  "module": "dist/index.mjs",
+  "types": "./types",
+  "scripts": {
+    "esm": "tsc -m esnext && find ./dist -name \"*.js\" | sed 'p;s/\\.js$/\\.esm.js/' | xargs -n2 mv",
+    "cjs": "tsc -m commonjs",
+    "build": "rm -rf dist/* types/* && npm run esm && npm run cjs"
+  },
+  "repository": "comunion-io/front-next.git",
+  "keywords": [
+    "typescript",
+    "utils"
+  ],
+  "license": "GPL-3.0-or-later",
+  "bugs": {
+    "url": "https://github.com/comunion-io/front-next/issues"
+  },
+  "homepage": "https://github.com/comunion-io/front-next#readme",
+  "devDependencies": {
+    "@types/node": "^14.14.31"
+  }
+}

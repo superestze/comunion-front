@@ -1,0 +1,17 @@
+{
+  "vue 3 component snippet": {
+    "prefix": "v3c",
+    "body": [
+      "import { defineComponent } from 'vue'",
+      "",
+      "export default defineComponent({",
+      "  name: '$1',",
+      "  props: {$3},",
+      "  setup(props, ctx) {",
+      "    return () => ($2)",
+      "  }",
+      "})"
+    ],
+    "description": "vue 3 component snippet"
+  }
+}

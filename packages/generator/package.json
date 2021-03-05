@@ -1,0 +1,27 @@
+{
+  "name": "@comunion/generator",
+  "version": "0.0.0",
+  "description": "Comunion code generator",
+  "main": "index.ts",
+  "scripts": {
+    "gen:component": "ts-node ./index.ts component"
+  },
+  "repository": "comunion-io/front-next.git",
+  "keywords": [
+    "code generator"
+  ],
+  "license": "GPL-3.0-or-later",
+  "bugs": {
+    "url": "https://github.com/comunion-io/front-next/issues"
+  },
+  "homepage": "https://github.com/comunion-io/front-next#readme",
+  "devDependencies": {
+    "@types/node": "^14.14.31",
+    "ts-node": "^9.1.1"
+  },
+  "dependencies": {
+    "@comunion/utils": "workspace:^0.0.0",
+    "@types/lodash.template": "^4.5.0",
+    "lodash.template": "^4.5.0"
+  }
+}
