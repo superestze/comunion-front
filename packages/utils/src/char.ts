@@ -5,8 +5,8 @@
  */
 export function convertCamelCase(originStr: string, firstUpper = false): string {
   return originStr
-    .replace(/(?:^\w|[A-Z]|\b\w)/g, (ltr, idx) =>
-      idx === 0 ? (firstUpper ? ltr.toUpperCase() : ltr.toLowerCase()) : ltr.toUpperCase()
-    )
-    .replace(/\s+/g, '')
+    .replace(/^[a-z]/, s => {
+      return firstUpper ? s.toUpperCase() : s.toLowerCase()
+    })
+    .replace(/_[a-zA-Z]/, s => s[1].toUpperCase())
 }

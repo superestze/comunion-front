@@ -11,8 +11,7 @@ export default async function run(name: string) {
   const tpl = await promisify(readFile)(join(__dirname, '../templates/component.tpl'), {
     encoding: 'utf-8',
   })
-  const componentName = convertCamelCase(name)
-  console.log(componentName)
+  const componentName = convertCamelCase(name, true)
   const componentDir = join(__dirname, '../../components', componentName)
   await promisify(mkdir)(componentDir)
   await promisify(writeFile)(
@@ -20,7 +19,8 @@ export default async function run(name: string) {
     template(tpl)({ name: componentName }),
     { encoding: 'utf-8' }
   )
-  await promisify(writeFile)(join(componentDir, 'index.css'), `// ${componentName}`, {
+  await promisify(writeFile)(join(componentDir, 'index.css'), `/** ${componentName} */`, {
     encoding: 'utf-8',
   })
+  console.log(`Component: ${componentName} folder generated in ${componentDir} !`)
 }
