@@ -6,6 +6,6 @@ export default defineComponent({
   name: 'Button',
   props: {},
   setup(props, ctx) {
-    return () => (<></>)
-  }
+    return () => <span>{ctx.slots.default?.()}</span>
+  },
 })

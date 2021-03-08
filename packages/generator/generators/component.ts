@@ -12,7 +12,7 @@ export default async function run(name: string) {
     encoding: 'utf-8',
   })
   const componentName = convertCamelCase(name, true)
-  const componentDir = join(__dirname, '../../components', componentName)
+  const componentDir = join(__dirname, '../../components/src', componentName)
   await promisify(mkdir)(componentDir)
   await promisify(writeFile)(
     join(componentDir, 'index.tsx'),
