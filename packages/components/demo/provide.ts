@@ -1,0 +1,1 @@
+export const componentSymbol = Symbol()

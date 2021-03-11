@@ -1,0 +1,6 @@
+.p-library {
+  @apply flex;
+  &-navs {
+    @apply w-60 flex-shrink-0;
+  }
+}
