@@ -1,18 +1,17 @@
 {
-  "name": "@comunion/components",
+  "name": "@comunion/docs",
   "version": "0.0.0",
-  "description": "Comunion UI components",
-  "main": "dist/index.js",
-  "module": "src/index.js",
+  "description": "Comunion documents",
   "scripts": {
-    "generate": "echo \"import './main.css'\n\" > src/index.ts && find ./src -type d -maxdepth 1 | awk -F/ 'NF > 2 {print $3}' | sort | xargs -n1 -I{} echo \"export { default as {} } from './{}'\" >> src/index.ts"
+    "dev": "vite",
+    "build": "vite build",
+    "serve": "vite preview"
   },
   "repository": "comunion-io/front-next.git",
   "keywords": [
     "vue",
     "vue3",
-    "ui",
-    "components"
+    "documents"
   ],
   "license": "GPL-3.0-or-later",
   "bugs": {
@@ -20,18 +19,18 @@
   },
   "homepage": "https://github.com/comunion-io/front-next#readme",
   "dependencies": {
-    "vue": "^3.0.7"
-  },
-  "peerDependencies": {
+    "vue": "^3.0.7",
     "vue-router": "4"
   },
   "devDependencies": {
+    "@vitejs/plugin-vue": "^1.1.5",
+    "@vitejs/plugin-vue-jsx": "^1.1.2",
     "@vue/compiler-sfc": "^3.0.7",
     "autoprefixer": "^10.2.5",
     "postcss": "^8.2.7",
     "postcss-nested": "^5.0.5",
-    "postcss-prefixer": "^2.1.2",
     "tailwindcss": "^2.0.3",
-    "typescript": "^4.2.3"
+    "typescript": "^4.2.3",
+    "vite": "^2.0.5"
   }
 }

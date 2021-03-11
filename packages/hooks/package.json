@@ -1,0 +1,23 @@
+{
+  "name": "@comunion/hooks",
+  "version": "0.0.0",
+  "description": "Comunion hooks",
+  "scripts": {
+    "build": "echo build"
+  },
+  "repository": "comunion-io/front-next.git",
+  "keywords": [
+    "vue",
+    "vue3",
+    "hooks"
+  ],
+  "license": "GPL-3.0-or-later",
+  "bugs": {
+    "url": "https://github.com/comunion-io/front-next/issues"
+  },
+  "homepage": "https://github.com/comunion-io/front-next#readme",
+  "dependencies": {
+    "@comunion/utils": "workspace:^0.0.0",
+    "vue": "^3.0.7"
+  }
+}
