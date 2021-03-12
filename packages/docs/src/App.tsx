@@ -1,7 +1,7 @@
 import { defineComponent, provide } from 'vue'
 import { useRouter } from 'vue-router'
 import { RouterView } from 'vue-router'
-import * as components from '../src'
+import * as components from '@comunion/components/src'
 import { componentSymbol } from './provide'
 
 export default defineComponent({

@@ -5,7 +5,8 @@ exports.setDarkMode = exports.HTML_DARK_CLASS = exports.watchMediaDarkMode = exp
  * @returns Get system's setting is dark mode
  */
 function isMediaDarkMode() {
-    return window.matchMedia?.('prefers-color-scheme: dark)').matches || false;
+    var _a;
+    return ((_a = window.matchMedia) === null || _a === void 0 ? void 0 : _a.call(window, 'prefers-color-scheme: dark)').matches) || false;
 }
 exports.isMediaDarkMode = isMediaDarkMode;
 /**
@@ -13,12 +14,13 @@ exports.isMediaDarkMode = isMediaDarkMode;
  * @param callback Function to call when dark mode changed
  */
 function watchMediaDarkMode(callback) {
-    const mediaQueryList = window.matchMedia?.('prefers-color-scheme: dark)');
-    const changeEventHandler = (e) => {
+    var _a;
+    var mediaQueryList = (_a = window.matchMedia) === null || _a === void 0 ? void 0 : _a.call(window, 'prefers-color-scheme: dark)');
+    var changeEventHandler = function (e) {
         callback(e.matches);
     };
-    mediaQueryList?.addEventListener('change', changeEventHandler);
-    return () => mediaQueryList?.removeEventListener('change', changeEventHandler);
+    mediaQueryList === null || mediaQueryList === void 0 ? void 0 : mediaQueryList.addEventListener('change', changeEventHandler);
+    return function () { return mediaQueryList === null || mediaQueryList === void 0 ? void 0 : mediaQueryList.removeEventListener('change', changeEventHandler); };
 }
 exports.watchMediaDarkMode = watchMediaDarkMode;
 /**
@@ -30,7 +32,7 @@ exports.HTML_DARK_CLASS = 'dark';
  * @param isDarkMode target mode is dark?
  */
 function setDarkMode(isDarkMode) {
-    const classes = document.documentElement.classList;
+    var classes = document.documentElement.classList;
     if (isDarkMode) {
         if (!classes.contains(exports.HTML_DARK_CLASS)) {
             classes.add(exports.HTML_DARK_CLASS);

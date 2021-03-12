@@ -8,6 +8,7 @@
     "sourceMap": true,
     "resolveJsonModule": true,
     "esModuleInterop": true,
+    // "types": ["@comunion/"],
     "lib": ["esnext", "dom"]
   },
   "include": ["src/**/*"]

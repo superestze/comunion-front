@@ -2,6 +2,6 @@
 .navigator {
   @apply text-base;
   &-title {
-    @apply mb-2 px-4 py-2 text-gray-400 text-sm border-b;
+    @apply mb-2 p-4 text-gray-400 text-sm border-b;
   }
 }

@@ -1,6 +1,6 @@
 /** Navigator */
 .navigator-item {
-  @apply block px-4 py-2 border-r-2 border-transparent text-gray-700 transition-all;
+  @apply block px-8 py-3 text-sm border-r-2 border-transparent text-gray-700 transition-all;
   &_active {
     @apply border-primary-500 text-primary-500 bg-primary-100;
   }

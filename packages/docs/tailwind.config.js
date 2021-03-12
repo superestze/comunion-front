@@ -1,3 +1,1 @@
-const config = require('../components/tailwind.config.js')
-
-module.exports = config
+module.exports = require('@comunion/components/tailwind.config.js')
