@@ -10,8 +10,7 @@ export default defineComponent({
   setup() {
     const { getRoutes } = useRouter()
     provide(componentSymbol, components)
-
-    getRoutes().find(route => route.path === '/lib').redirect = `/lib/components/${
+    getRoutes().find(route => route!.path === '/lib')!.redirect = `/lib/components/${
       Object.keys(components)[0]
     }`
 
