@@ -6,6 +6,7 @@
   "module": "dist/index.esm.js",
   "types": "./types",
   "scripts": {
+    "start": "",
     "esm": "tsc -m esnext && find ./dist -name \"*.js\" | sed 'p;s/\\.js$/\\.esm.js/' | xargs -n2 mv",
     "cjs": "tsc -t es5 -m commonjs",
     "build": "rm -rf dist/* types/* && npm run esm && npm run cjs"

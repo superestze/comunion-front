@@ -8,10 +8,7 @@
   "repository": "comunion-io/front-next",
   "license": "GPL-3.0-or-later",
   "scripts": {
-    "test": "a(){ echo $2 $1; };a",
-    "addp": "a(){ cd packages/$1 && pnpm add $3 $2 && cd ../; };a",
-    "runp": "a(){ cd packages/$1 && npm run $2 && cd ../; };a",
-    "gen:component": "a(){ cd packages/generator && npm run gen:component $1 && cd ../; };a",
+    "gen:component": "pnpm gen:component --filter @comunion/generator",
     "postinstall": "husky install",
     "stylint": "stylelint \"src/**/*.{css,less,scss,sass,styl}\" --fix"
   },

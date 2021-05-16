@@ -1,1 +1,0 @@
-export { default as SearchOutlined } from './SearchOutlined.esm.js'

@@ -3,6 +3,7 @@
   "version": "0.0.0",
   "description": "Comunion icons",
   "scripts": {
+    "start": "",
     "g": "ts-node scripts/build.ts"
   },
   "repository": "comunion-io/front-next.git",
