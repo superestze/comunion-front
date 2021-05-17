@@ -21,9 +21,7 @@
   "homepage": "https://github.com/comunion-io/front-next#readme",
   "dependencies": {
     "@comunion/icons": "workspace:^0.0.0",
-    "vue": "^3.0.7"
-  },
-  "peerDependencies": {
+    "vue": "^3.0.7",
     "vue-router": "4"
   },
   "devDependencies": {
