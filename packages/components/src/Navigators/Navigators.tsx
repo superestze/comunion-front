@@ -8,7 +8,7 @@ export default defineComponent({
       type: Array as PropType<Navigator[]>,
     },
   },
-  setup(props, ctx) {
+  setup() {
     return () => (
       <Navigators title="Components">
         <Navigators.Item route={{}}></Navigators.Item>

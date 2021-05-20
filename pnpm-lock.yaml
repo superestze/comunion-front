@@ -6,27 +6,44 @@ importers:
     specifiers:
       '@commitlint/cli': ^12.1.1
       '@commitlint/config-conventional': ^12.1.1
+      '@types/ncp': ^2.0.4
+      '@typescript-eslint/eslint-plugin': ^4.24.0
+      '@typescript-eslint/parser': ^4.24.0
       devmoji: ^2.2.0
       eslint: ^7.23.0
+      eslint-config-prettier: ^8.3.0
       eslint-plugin-import: ^2.22.1
       eslint-plugin-node: ^11.1.0
+      eslint-plugin-prettier: ^3.4.0
       eslint-plugin-promise: ^4.3.1
+      fast-glob: ^3.2.5
       husky: ^6.0.0
       lint-staged: ^10.5.4
+      ncp: ^2.0.0
+      prettier: ^2.3.0
       stylelint: ^13.12.0
       stylelint-config-standard: ^21.0.0
       ts-node: ^9.1.1
       typescript: ^4.2.2
+    dependencies:
+      fast-glob: 3.2.5
     devDependencies:
       '@commitlint/cli': 12.1.1
       '@commitlint/config-conventional': 12.1.1
+      '@types/ncp': registry.nlark.com/@types/ncp/2.0.4
+      '@typescript-eslint/eslint-plugin': registry.nlark.com/@typescript-eslint/eslint-plugin/4.24.0_78d87c2626bf89b8cb626b7dd20953c8
+      '@typescript-eslint/parser': registry.nlark.com/@typescript-eslint/parser/4.24.0_eslint@7.23.0+typescript@4.2.2
       devmoji: 2.2.0
       eslint: 7.23.0
+      eslint-config-prettier: registry.nlark.com/eslint-config-prettier/8.3.0_eslint@7.23.0
       eslint-plugin-import: 2.22.1_eslint@7.23.0
       eslint-plugin-node: 11.1.0_eslint@7.23.0
+      eslint-plugin-prettier: 3.4.0_284924dbecbac546b27118f7b5b9c851
       eslint-plugin-promise: 4.3.1
       husky: 6.0.0
       lint-staged: 10.5.4
+      ncp: 2.0.0
+      prettier: registry.nlark.com/prettier/2.3.0
       stylelint: 13.12.0
       stylelint-config-standard: 21.0.0_stylelint@13.12.0
       ts-node: 9.1.1_typescript@4.2.2
@@ -673,25 +690,22 @@ packages:
     dev: true
 
   /@nodelib/fs.scandir/2.1.4:
-    resolution: {integrity: sha512-33g3pMJk3bg5nXbL/+CY6I2eJDzZAni49PfJnL5fghPTggPvBd/pFNSgJsdAgWptuFu7qq/ERvOYFlhvsLTCKA==}
+    resolution: {integrity: sha1-1LNUml213iaD4MEHGrTxQJBLv2k=, tarball: '@nodelib/fs.scandir/download/@nodelib/fs.scandir-2.1.4.tgz'}
     engines: {node: '>= 8'}
     dependencies:
       '@nodelib/fs.stat': 2.0.4
       run-parallel: 1.2.0
-    dev: true
 
   /@nodelib/fs.stat/2.0.4:
-    resolution: {integrity: sha512-IYlHJA0clt2+Vg7bccq+TzRdJvv19c2INqBSsoOLp1je7xjtr7J26+WXR72MCdvU9q1qTzIWDfhMf+DRvQJK4Q==}
+    resolution: {integrity: sha1-o/LdYbq0O424+hCKEhz//kxnZlU=, tarball: '@nodelib/fs.stat/download/@nodelib/fs.stat-2.0.4.tgz'}
     engines: {node: '>= 8'}
-    dev: true
 
   /@nodelib/fs.walk/1.2.6:
-    resolution: {integrity: sha512-8Broas6vTtW4GIXTAHDoE32hnN2M5ykgCpWGbuXHQ15vEMqr23pB76e/GZcYsZCHALv50ktd24qhEyKr6wBtow==}
+    resolution: {integrity: sha1-zOk5azCqWv6eN1Zgj1gxrctT0GM=, tarball: '@nodelib/fs.walk/download/@nodelib/fs.walk-1.2.6.tgz'}
     engines: {node: '>= 8'}
     dependencies:
       '@nodelib/fs.scandir': 2.1.4
       fastq: 1.11.0
-    dev: true
 
   /@stylelint/postcss-css-in-js/0.37.2_4fe96148bf77e6cee792ae366c9083f9:
     resolution: {integrity: sha512-nEhsFoJurt8oUmieT8qy4nk81WRHmJynmVwn/Vts08PL9fhgIsMhk1GId5yAN643OzqEEb5S/6At2TZW7pqPDA==}
@@ -716,8 +730,6 @@ packages:
       postcss-syntax: 0.36.2_postcss@7.0.35
       remark: 13.0.0
       unist-util-find-all-after: 3.0.2
-    transitivePeerDependencies:
-      - supports-color
     dev: true
 
   /@trysound/sax/0.1.1:
@@ -997,7 +1009,7 @@ packages:
     dev: true
 
   /array-union/2.1.0:
-    resolution: {integrity: sha512-HGyxoOTYUyCM6stUe6EJgnd4EoewAI7zMdfqO+kGjnlZmBDz/cR5pf8r/cR4Wq60sL/p0IkcjUEEPwS3GFrIyw==}
+    resolution: {integrity: sha1-t5hCCtvrHego2ErNii4j0+/oXo0=, tarball: array-union/download/array-union-2.1.0.tgz}
     engines: {node: '>=8'}
     dev: true
 
@@ -1082,11 +1094,10 @@ packages:
     dev: true
 
   /braces/3.0.2:
-    resolution: {integrity: sha512-b8um+L1RzM3WDSzvhm6gIz1yfTbBt6YTlcEKAvsmqCZZFw46z626lVj9j1yEPW33H5H+lBQpZMP1k8l+78Ha0A==}
+    resolution: {integrity: sha1-NFThpGLujVmeI23zNs2epPiv4Qc=, tarball: braces/download/braces-3.0.2.tgz}
     engines: {node: '>=8'}
     dependencies:
       fill-range: 7.0.1
-    dev: true
 
   /browserslist/4.16.3:
     resolution: {integrity: sha512-vIyhWmIkULaq04Gt93txdh+j02yX/JzlyhLYbV3YQCn/zvES3JnY7TifHHvvr1w5hTDluNKMkV05cs4vy8Q7sw==}
@@ -1412,7 +1423,7 @@ packages:
     dev: true
 
   /debug/4.3.1:
-    resolution: {integrity: sha512-doEwdvm4PCeK4K3RQN2ZC2BYUBaxwLARCqZmMjtF8a51J2Rb0xpVloFRnCODwqjpwnAoao4pelN8l3RJdv3gRQ==}
+    resolution: {integrity: sha1-8NIpxQXgxtjEmsVT0bE9wYP2su4=, tarball: debug/download/debug-4.3.1.tgz}
     engines: {node: '>=6.0'}
     peerDependencies:
       supports-color: '*'
@@ -1484,7 +1495,7 @@ packages:
     dev: true
 
   /dir-glob/3.0.1:
-    resolution: {integrity: sha512-WkrWp9GR4KXfKGYzOLmTuGVi1UWFfws377n9cc55/tb6DuqyF6pcQ5AbiHEshaDpY9v6oaSr2XCDidGmMwdzIA==}
+    resolution: {integrity: sha1-Vtv3PZkqSpO6FYT0U0Bj/S5BcX8=, tarball: dir-glob/download/dir-glob-3.0.1.tgz}
     engines: {node: '>=8'}
     dependencies:
       path-type: 4.0.0
@@ -1717,6 +1728,23 @@ packages:
       semver: 6.3.0
     dev: true
 
+  /eslint-plugin-prettier/3.4.0_284924dbecbac546b27118f7b5b9c851:
+    resolution: {integrity: sha1-zbrTvx29Kxd+mCVzf+Y7R2oI8Mc=, tarball: eslint-plugin-prettier/download/eslint-plugin-prettier-3.4.0.tgz?cache=0&sync_timestamp=1618449455070&other_urls=https%3A%2F%2Fregistry.npm.taobao.org%2Feslint-plugin-prettier%2Fdownload%2Feslint-plugin-prettier-3.4.0.tgz}
+    engines: {node: '>=6.0.0'}
+    peerDependencies:
+      eslint: '>=5.0.0'
+      eslint-config-prettier: '*'
+      prettier: '>=1.13.0'
+    peerDependenciesMeta:
+      eslint-config-prettier:
+        optional: true
+    dependencies:
+      eslint: 7.23.0
+      eslint-config-prettier: registry.nlark.com/eslint-config-prettier/8.3.0_eslint@7.23.0
+      prettier: registry.nlark.com/prettier/2.3.0
+      prettier-linter-helpers: 1.0.0
+    dev: true
+
   /eslint-plugin-promise/4.3.1:
     resolution: {integrity: sha512-bY2sGqyptzFBDLh/GMbAxfdJC+b0f23ME63FOE4+Jao0oZ3E1LEwFtWJX/1pGMJLiTtrSSern2CRM/g+dfc0eQ==}
     engines: {node: '>=6'}
@@ -1870,17 +1898,20 @@ packages:
     resolution: {integrity: sha512-f3qQ9oQy9j2AhBe/H9VC91wLmKBCCU/gDOnKNAYG5hswO7BLKj09Hc5HYNz9cGI++xlpDCIgDaitVs03ATR84Q==}
     dev: true
 
+  /fast-diff/1.2.0:
+    resolution: {integrity: sha1-c+4RmC2Gyq95WYKNUZz+kn+sXwM=, tarball: fast-diff/download/fast-diff-1.2.0.tgz}
+    dev: true
+
   /fast-glob/3.2.5:
-    resolution: {integrity: sha512-2DtFcgT68wiTTiwZ2hNdJfcHNke9XOfnwmBRWXhmeKM8rF0TGwmC/Qto3S7RoZKp5cilZbxzO5iTNTQsJ+EeDg==}
+    resolution: {integrity: sha1-eTmvKmVt55pPGQGQPuityqfLlmE=, tarball: fast-glob/download/fast-glob-3.2.5.tgz}
     engines: {node: '>=8'}
     dependencies:
       '@nodelib/fs.stat': 2.0.4
       '@nodelib/fs.walk': 1.2.6
-      glob-parent: 5.1.2
+      glob-parent: registry.nlark.com/glob-parent/5.1.2
       merge2: 1.4.1
-      micromatch: 4.0.2
-      picomatch: 2.2.2
-    dev: true
+      micromatch: 4.0.4
+      picomatch: 2.2.3
 
   /fast-json-stable-stringify/2.1.0:
     resolution: {integrity: sha512-lhd/wF+Lk98HZoTCtlVraHtfh5XYijIjalXck7saUtuanSDyLMxnHhSXEDJqHxD7msR8D0uCmqlkwjCV8xvwHw==}
@@ -1899,10 +1930,9 @@ packages:
     dev: true
 
   /fastq/1.11.0:
-    resolution: {integrity: sha512-7Eczs8gIPDrVzT+EksYBcupqMyxSHXXrHOLRRxU2/DicV8789MRBRR8+Hc2uWzUupOs4YS4JzBmBxjjCVBxD/g==}
+    resolution: {integrity: sha1-u5+5VaBxMKkY62PB9RYcwypdCFg=, tarball: fastq/download/fastq-1.11.0.tgz}
     dependencies:
       reusify: 1.0.4
-    dev: true
 
   /figures/3.2.0:
     resolution: {integrity: sha512-yaduQFRKLXYOGgEn6AZau90j3ggSOyiqXU0F9JZfeXYhNa+Jk4X+s45A2zg5jns87GAFa34BBm2kXw4XpNcbdg==}
@@ -1919,11 +1949,10 @@ packages:
     dev: true
 
   /fill-range/7.0.1:
-    resolution: {integrity: sha512-qOo9F+dMUmC2Lcb4BbVvnKJxTPjCm+RRpe4gDuGrzkL7mEVl/djYSu2OdQ2Pa302N4oqkSg9ir6jaLWJ2USVpQ==}
+    resolution: {integrity: sha1-GRmmp8df44ssfHflGYU12prN2kA=, tarball: fill-range/download/fill-range-7.0.1.tgz}
     engines: {node: '>=8'}
     dependencies:
       to-regex-range: 5.0.1
-    dev: true
 
   /find-up/2.1.0:
     resolution: {integrity: sha1-RdG35QbHF93UgndaK3eSCjwMV6c=}
@@ -1990,7 +2019,7 @@ packages:
     dev: true
 
   /functional-red-black-tree/1.0.1:
-    resolution: {integrity: sha1-GwqzvVU7Kg1jmdKcDj6gslIHgyc=}
+    resolution: {integrity: sha1-GwqzvVU7Kg1jmdKcDj6gslIHgyc=, tarball: functional-red-black-tree/download/functional-red-black-tree-1.0.1.tgz}
     dev: true
 
   /generic-names/2.0.1:
@@ -2106,7 +2135,7 @@ packages:
     dev: true
 
   /globby/11.0.3:
-    resolution: {integrity: sha512-ffdmosjA807y7+lA1NM0jELARVmYul/715xiILEjo3hBLPTcirgQNnXECn5g3mtR8TOLCVbkfua1Hpen25/Xcg==}
+    resolution: {integrity: sha1-mx8MtSPhcd0a2MeyqftLZEuVk8s=, tarball: globby/download/globby-11.0.3.tgz}
     engines: {node: '>=10'}
     dependencies:
       array-union: 2.1.0
@@ -2201,7 +2230,7 @@ packages:
     dev: true
 
   /husky/6.0.0:
-    resolution: {integrity: sha512-SQS2gDTB7tBN486QSoKPKQItZw97BMOd+Kdb6ghfpBc0yXyzrddI0oDV5MkDAbuB4X2mO3/nj60TRMcYxwzZeQ==}
+    resolution: {integrity: sha1-gQ8RhprfUWBMMupXftvDd9f5MZ4=, tarball: husky/download/husky-6.0.0.tgz}
     hasBin: true
     dev: true
 
@@ -2224,7 +2253,7 @@ packages:
     dev: true
 
   /ignore/5.1.8:
-    resolution: {integrity: sha512-BMpfD7PpiETpBl/A6S498BaIJ6Y/ABT93ETbby2fP00v4EbvPBXWEoaR1UBPKs3iR53pJY7EtZk5KACI57i1Uw==}
+    resolution: {integrity: sha1-8VCotQo0KJsz4i9YiavU2AFvDlc=, tarball: ignore/download/ignore-5.1.8.tgz}
     engines: {node: '>= 4'}
     dev: true
 
@@ -2326,9 +2355,8 @@ packages:
     dev: true
 
   /is-extglob/2.1.1:
-    resolution: {integrity: sha1-qIwCU1eR8C7TfHahueqXc8gz+MI=}
+    resolution: {integrity: sha1-qIwCU1eR8C7TfHahueqXc8gz+MI=, tarball: is-extglob/download/is-extglob-2.1.1.tgz}
     engines: {node: '>=0.10.0'}
-    dev: true
 
   /is-fullwidth-code-point/3.0.0:
     resolution: {integrity: sha512-zymm5+u+sCsSWyD9qNaejV3DFvhCKclKdizYaJUuHA83RLjb7nSuGnddCHGv0hk+KY7BMAlsWeK4Ueg6EV6XQg==}
@@ -2336,11 +2364,10 @@ packages:
     dev: true
 
   /is-glob/4.0.1:
-    resolution: {integrity: sha512-5G0tKtBTFImOqDnLB2hG6Bp2qcKEFduo4tZu9MT/H6NQv/ghhy30o55ufafxJ/LdH79LLs2Kfrn85TLKyA7BUg==}
+    resolution: {integrity: sha1-dWfb6fL14kZ7x3q4PEopSCQHpdw=, tarball: is-glob/download/is-glob-4.0.1.tgz}
     engines: {node: '>=0.10.0'}
     dependencies:
       is-extglob: 2.1.1
-    dev: true
 
   /is-hexadecimal/1.0.4:
     resolution: {integrity: sha512-gyPJuv83bHMpocVYoqof5VDiZveEoGoFL8m3BXNb2VW8Xs+rz9kqO8LOQ5DH6EsuvilT1ApazU0pyl+ytbPtlw==}
@@ -2357,9 +2384,8 @@ packages:
     dev: true
 
   /is-number/7.0.0:
-    resolution: {integrity: sha512-41Cifkg6e8TylSpdtTpeLVMqvSBEVzTttHvERD741+pnZ8ANv0004MRL43QKPDlK9cGvNp6NZWZUBlbGXYxxng==}
+    resolution: {integrity: sha1-dTU0W4lnNNX4DE0GxQlVUnoU8Ss=, tarball: is-number/download/is-number-7.0.0.tgz}
     engines: {node: '>=0.12.0'}
-    dev: true
 
   /is-obj/1.0.1:
     resolution: {integrity: sha1-PkcprB9f3gJc19g6iW2rn09n2w8=}
@@ -2643,7 +2669,7 @@ packages:
     dev: true
 
   /lodash/4.17.21:
-    resolution: {integrity: sha512-v2kDEe57lecTulaDIuNTPy3Ry4gLGJ6Z1O3vE1krgXZNrsQ+LFTGHVxVjcXPs17LhbZVGedAJv8XZ1tvj5FvSg==}
+    resolution: {integrity: sha1-Z5WRxWTDv/quhFTPCz3zcMPWkRw=, tarball: lodash/download/lodash-4.17.21.tgz}
 
   /log-symbols/4.1.0:
     resolution: {integrity: sha512-8XPvpAA8uyhfteu8pIvQxpJZ7SYYdpUivZpGy6sFsBuKRY/7rQGavedeB8aK+Zkyq6upMFVL/9AW6vOYzfRyLg==}
@@ -2674,7 +2700,7 @@ packages:
     dev: true
 
   /lru-cache/6.0.0:
-    resolution: {integrity: sha512-Jo6dJ04CmSjuznwJSS3pUeWmd/H0ffTlkXXgwZi+eq1UCmqQwCh+eLsYOYCwY991i2Fah4h1BEMCx4qThGbsiA==}
+    resolution: {integrity: sha1-bW/mVw69lqr5D8rR2vo7JWbbOpQ=, tarball: lru-cache/download/lru-cache-6.0.0.tgz}
     engines: {node: '>=10'}
     dependencies:
       yallist: 4.0.0
@@ -2712,8 +2738,6 @@ packages:
       micromark: 2.11.4
       parse-entities: 2.0.0
       unist-util-stringify-position: 2.0.3
-    transitivePeerDependencies:
-      - supports-color
     dev: true
 
   /mdast-util-to-markdown/0.6.5:
@@ -2781,17 +2805,14 @@ packages:
     dev: true
 
   /merge2/1.4.1:
-    resolution: {integrity: sha512-8q7VEgMJW4J8tcfVPy8g09NcQwZdbwFEqhe/WZkoIzjn/3TGDwtOCYtXGxA3O8tPzpczCCDgv+P2P5y00ZJOOg==}
+    resolution: {integrity: sha1-Q2iJL4hekHRVpv19xVwMnUBJkK4=, tarball: merge2/download/merge2-1.4.1.tgz}
     engines: {node: '>= 8'}
-    dev: true
 
   /micromark/2.11.4:
     resolution: {integrity: sha512-+WoovN/ppKolQOFIAajxi7Lu9kInbPxFuTBVEavFcL8eAfVstoc5MocPmqBeAdBOJV00uaVjegzH4+MA0DN/uA==}
     dependencies:
       debug: 4.3.1
       parse-entities: 2.0.0
-    transitivePeerDependencies:
-      - supports-color
     dev: true
 
   /micromatch/4.0.2:
@@ -2801,6 +2822,13 @@ packages:
       braces: 3.0.2
       picomatch: 2.2.2
     dev: true
+
+  /micromatch/4.0.4:
+    resolution: {integrity: sha1-iW1Rnf6dsl/OlM63pQCRm/iB6/k=, tarball: micromatch/download/micromatch-4.0.4.tgz}
+    engines: {node: '>=8.6'}
+    dependencies:
+      braces: 3.0.2
+      picomatch: 2.2.3
 
   /mimic-fn/2.1.0:
     resolution: {integrity: sha512-OqbOk5oEQeAZ8WXWydlu9HJjz9WVdEIvamMCcXmuqUYjTknH/sqsWvhQ3vgwKFRR1HpjvNBKQ37nbJgYzGqGcg==}
@@ -2841,7 +2869,7 @@ packages:
     dev: true
 
   /ms/2.1.2:
-    resolution: {integrity: sha512-sGkPx+VjMtmA6MX27oA4FBFELFCZZ4S4XqeGOXCv68tT+jb3vk/RyaKWP0PTKyWtmLSM0b+adUTEvbs1PEaH2w==}
+    resolution: {integrity: sha1-0J0fNXtEP0kzgqjrPM0YOHKuYAk=, tarball: ms/download/ms-2.1.2.tgz}
     dev: true
 
   /nanoid/3.1.20:
@@ -2858,6 +2886,11 @@ packages:
 
   /natural-compare/1.4.0:
     resolution: {integrity: sha1-Sr6/7tdUHywnrPspvbvRXI1bpPc=}
+    dev: true
+
+  /ncp/2.0.0:
+    resolution: {integrity: sha1-GVoh1sRuNh0vsSgbo4uR6d9727M=, tarball: ncp/download/ncp-2.0.0.tgz}
+    hasBin: true
     dev: true
 
   /node-emoji/1.10.0:
@@ -3110,7 +3143,7 @@ packages:
     dev: true
 
   /path-type/4.0.0:
-    resolution: {integrity: sha512-gDKb8aZMDeD/tZWs9P6+q0J9Mwkdl6xMV8TjnGP3qJVJ06bdMgkbBlLU8IdfOsIsFz2BW1rNVT3XuNEl8zPAvw==}
+    resolution: {integrity: sha1-hO0BwKe6OAr+CdkKjBgNzZ0DBDs=, tarball: path-type/download/path-type-4.0.0.tgz}
     engines: {node: '>=8'}
     dev: true
 
@@ -3118,6 +3151,10 @@ packages:
     resolution: {integrity: sha512-q0M/9eZHzmr0AulXyPwNfZjtwZ/RBZlbN3K3CErVrk50T2ASYI7Bye0EvekFY3IP1Nt2DHu0re+V2ZHIpMkuWg==}
     engines: {node: '>=8.6'}
     dev: true
+
+  /picomatch/2.2.3:
+    resolution: {integrity: sha1-RlVH81nMwgbTxI5Goby4m/fuYZ0=, tarball: picomatch/download/picomatch-2.2.3.tgz}
+    engines: {node: '>=8.6'}
 
   /pify/2.3.0:
     resolution: {integrity: sha1-7RQaasBDqEnqWISY59yosVMw6Qw=}
@@ -3343,6 +3380,13 @@ packages:
     engines: {node: '>= 0.8.0'}
     dev: true
 
+  /prettier-linter-helpers/1.0.0:
+    resolution: {integrity: sha1-0j1B/hN1ZG3i0BBNNFSjAIgCz3s=, tarball: prettier-linter-helpers/download/prettier-linter-helpers-1.0.0.tgz}
+    engines: {node: '>=6.0.0'}
+    dependencies:
+      fast-diff: 1.2.0
+    dev: true
+
   /pretty-hrtime/1.0.3:
     resolution: {integrity: sha1-t+PqQkNaTJsnWdmeDyAesZWALuE=}
     engines: {node: '>= 0.8'}
@@ -3381,8 +3425,7 @@ packages:
     dev: true
 
   /queue-microtask/1.2.3:
-    resolution: {integrity: sha512-NuaNSa6flKT5JaSYQzJok04JzTL1CA6aGhv5rfLW3PgqA+M2ChpZQnAC8h8i4ZFkBS8X5RqkDBHA7r4hej3K9A==}
-    dev: true
+    resolution: {integrity: sha1-SSkii7xyTfrEPg77BYyve2z7YkM=, tarball: queue-microtask/download/queue-microtask-1.2.3.tgz?cache=0&sync_timestamp=1616392663793&other_urls=https%3A%2F%2Fregistry.npm.taobao.org%2Fqueue-microtask%2Fdownload%2Fqueue-microtask-1.2.3.tgz}
 
   /quick-lru/4.0.1:
     resolution: {integrity: sha512-ARhCpm70fzdcvNQfPoy49IaanKkTlRWF2JMzqhcJbhSFRZv7nPTvZJdcY7301IPmvW+/p0RgIWnQDLJxifsQ7g==}
@@ -3450,7 +3493,7 @@ packages:
     dev: true
 
   /regexpp/3.1.0:
-    resolution: {integrity: sha512-ZOIzd8yVsQQA7j8GCSlPGXwg5PfmA1mrq0JP4nGhh54LaKN3xdai/vHUDu74pKwV8OxseMS65u2NImosQcSD0Q==}
+    resolution: {integrity: sha1-IG0K0KVkjP+9uK5GQ489xRyfeOI=, tarball: regexpp/download/regexpp-3.1.0.tgz}
     engines: {node: '>=8'}
     dev: true
 
@@ -3458,8 +3501,6 @@ packages:
     resolution: {integrity: sha512-geKatMwSzEXKHuzBNU1z676sGcDcFoChMK38TgdHJNAYfFtsfHDQG7MoJAjs6sgYMqyLduCYWDIWZIxiPeafEw==}
     dependencies:
       mdast-util-from-markdown: 0.8.5
-    transitivePeerDependencies:
-      - supports-color
     dev: true
 
   /remark-stringify/9.0.1:
@@ -3474,8 +3515,6 @@ packages:
       remark-parse: 9.0.0
       remark-stringify: 9.0.1
       unified: 9.2.1
-    transitivePeerDependencies:
-      - supports-color
     dev: true
 
   /repeat-string/1.6.1:
@@ -3526,9 +3565,8 @@ packages:
     dev: true
 
   /reusify/1.0.4:
-    resolution: {integrity: sha512-U9nH88a3fc/ekCF1l0/UP1IosiuIjyTh7hBvXVMHYgVcfGvt897Xguj2UOLDeI5BG2m7/uwyaLVT6fbtCwTyzw==}
+    resolution: {integrity: sha1-kNo4Kx4SbvwCFG6QhFqI2xKSXXY=, tarball: reusify/download/reusify-1.0.4.tgz}
     engines: {iojs: '>=1.0.0', node: '>=0.10.0'}
-    dev: true
 
   /rimraf/3.0.2:
     resolution: {integrity: sha512-JZkJMZkAGFFPP2YqXZXPbMlMBgsxzE8ILs4lMIX/2o0L9UBw9O/Y3o6wFw/i9YLapcUJWwqbi3kdxIPdC62TIA==}
@@ -3546,10 +3584,9 @@ packages:
     dev: true
 
   /run-parallel/1.2.0:
-    resolution: {integrity: sha512-5l4VyZR86LZ/lDxZTR6jqL8AFE2S0IFLMP26AbjsLVADxHdhB/c0GUsH+y39UfCi3dzz8OlQuPmnaJOMoDHQBA==}
+    resolution: {integrity: sha1-ZtE2jae9+SHrnZW9GpIp5/IaQ+4=, tarball: run-parallel/download/run-parallel-1.2.0.tgz}
     dependencies:
       queue-microtask: 1.2.3
-    dev: true
 
   /rxjs/6.6.7:
     resolution: {integrity: sha512-hTdwr+7yYNIT5n4AMYp85KA6yw2Va0FLa3Rguvbpa4W3I5xynaBZo41cM3XM+4Q6fRMj3sBYIR1VAmZMXYJvRQ==}
@@ -3581,7 +3618,7 @@ packages:
     dev: true
 
   /semver/7.3.5:
-    resolution: {integrity: sha512-PoeGJYh8HK4BTO/a9Tf6ZG3veo/A7ZVsYrSA6J8ny9nb3B1VrpkuN+z9OE5wfE5p6H4LchYZsegiQgbJD94ZFQ==}
+    resolution: {integrity: sha1-C2Ich5NI2JmOSw5L6Us/EuYBjvc=, tarball: semver/download/semver-7.3.5.tgz}
     engines: {node: '>=10'}
     hasBin: true
     dependencies:
@@ -3611,7 +3648,7 @@ packages:
     dev: true
 
   /slash/3.0.0:
-    resolution: {integrity: sha512-g9Q1haeby36OSStwb4ntCGGGaKsaVSjQ68fBxoQcutl5fS1vuY18H3wSt3jFyFtrkx+Kz0V1G85A4MyAdDMi2Q==}
+    resolution: {integrity: sha1-ZTm+hwwWWtvVJAIg2+Nh8bxNRjQ=, tarball: slash/download/slash-3.0.0.tgz?cache=0&other_urls=https%3A%2F%2Fregistry.npm.taobao.org%2Fslash%2Fdownload%2Fslash-3.0.0.tgz}
     engines: {node: '>=8'}
     dev: true
 
@@ -3964,11 +4001,10 @@ packages:
     engines: {node: '>=4'}
 
   /to-regex-range/5.0.1:
-    resolution: {integrity: sha512-65P7iz6X5yEr1cwcgvQxbbIw7Uk3gOy5dIdtZ4rDveLqhrdJP+Li/Hx6tyK0NEb+2GCyneCMJiGqrADCSNk8sQ==}
+    resolution: {integrity: sha1-FkjESq58jZiKMmAY7XL1tN0DkuQ=, tarball: to-regex-range/download/to-regex-range-5.0.1.tgz}
     engines: {node: '>=8.0'}
     dependencies:
       is-number: 7.0.0
-    dev: true
 
   /trim-newlines/3.0.0:
     resolution: {integrity: sha512-C4+gOpvmxaSMKuEf9Qc134F1ZuOHVXKRbtEflf4NTtuuJDEIJ9p5PXsalL8SkeRw+qit1Mo+yuvMPAKwWg/1hA==}
@@ -4029,7 +4065,17 @@ packages:
     dev: true
 
   /tslib/1.14.1:
-    resolution: {integrity: sha512-Xni35NKzjgMrwevysHTCArtLDpPvye8zV/0E4EyYn43P7/7qvQwPh9BGkHewbMulVntbigmcT7rdX3BNo9wRJg==}
+    resolution: {integrity: sha1-zy04vcNKE0vK8QkcQfZhni9nLQA=, tarball: tslib/download/tslib-1.14.1.tgz}
+    dev: true
+
+  /tsutils/3.21.0_typescript@4.2.2:
+    resolution: {integrity: sha1-tIcX05TOpsHglpg+7Vjp1hcVtiM=, tarball: tsutils/download/tsutils-3.21.0.tgz}
+    engines: {node: '>= 6'}
+    peerDependencies:
+      typescript: '>=2.8.0 || >= 3.2.0-dev || >= 3.3.0-dev || >= 3.4.0-dev || >= 3.5.0-dev || >= 3.6.0-dev || >= 3.6.0-beta || >= 3.7.0-dev || >= 3.7.0-beta'
+    dependencies:
+      tslib: 1.14.1
+      typescript: 4.2.2
     dev: true
 
   /type-check/0.4.0:
@@ -4268,7 +4314,7 @@ packages:
     dev: true
 
   /yallist/4.0.0:
-    resolution: {integrity: sha512-3wdGidZyq5PB084XLES5TpOSRA3wjXAlIWMhum2kRcv/41Sn2emQ0dycQW4uZXLejwKvg6EsvbdlVL+FYEct7A==}
+    resolution: {integrity: sha1-m7knkNnA7/7GO+c1GeEaNQGaOnI=, tarball: yallist/download/yallist-4.0.0.tgz}
     dev: true
 
   /yaml/1.10.2:
@@ -4306,4 +4352,199 @@ packages:
 
   /zwitch/1.0.5:
     resolution: {integrity: sha512-V50KMwwzqJV0NpZIZFwfOD5/lyny3WlSzRiXgA0G7VUnRlqttta1L6UQIHzd6EuBY/cHGfwTIck7w1yH6Q5zUw==}
+    dev: true
+
+  registry.nlark.com/@types/json-schema/7.0.7:
+    resolution: {integrity: sha1-mKmTUWyFnrDVxMjwmDF6nqaNua0=, registry: https://registry.npm.taobao.org/, tarball: https://registry.nlark.com/@types/json-schema/download/@types/json-schema-7.0.7.tgz}
+    name: '@types/json-schema'
+    version: 7.0.7
+    dev: true
+
+  registry.nlark.com/@types/ncp/2.0.4:
+    resolution: {integrity: sha1-Fsnn+iyEnUKaGxQmSJhxZLBr9JA=, registry: https://registry.npm.taobao.org/, tarball: https://registry.nlark.com/@types/ncp/download/@types/ncp-2.0.4.tgz}
+    name: '@types/ncp'
+    version: 2.0.4
+    dependencies:
+      '@types/node': registry.nlark.com/@types/node/15.3.1
+    dev: true
+
+  registry.nlark.com/@types/node/15.3.1:
+    resolution: {integrity: sha1-I6Brh+7bUkAWYW6IaxFrj9yxgK8=, registry: https://registry.npm.taobao.org/, tarball: https://registry.nlark.com/@types/node/download/@types/node-15.3.1.tgz}
+    name: '@types/node'
+    version: 15.3.1
+    dev: true
+
+  registry.nlark.com/@typescript-eslint/eslint-plugin/4.24.0_78d87c2626bf89b8cb626b7dd20953c8:
+    resolution: {integrity: sha1-A4Af/CWyr50I89ybzPwLfON4DQ8=, registry: https://registry.npm.taobao.org/, tarball: https://registry.nlark.com/@typescript-eslint/eslint-plugin/download/@typescript-eslint/eslint-plugin-4.24.0.tgz}
+    id: registry.nlark.com/@typescript-eslint/eslint-plugin/4.24.0
+    name: '@typescript-eslint/eslint-plugin'
+    version: 4.24.0
+    engines: {node: ^10.12.0 || >=12.0.0}
+    peerDependencies:
+      '@typescript-eslint/parser': ^4.0.0
+      eslint: ^5.0.0 || ^6.0.0 || ^7.0.0
+      typescript: '*'
+    peerDependenciesMeta:
+      typescript:
+        optional: true
+    dependencies:
+      '@typescript-eslint/experimental-utils': registry.nlark.com/@typescript-eslint/experimental-utils/4.24.0_eslint@7.23.0+typescript@4.2.2
+      '@typescript-eslint/parser': registry.nlark.com/@typescript-eslint/parser/4.24.0_eslint@7.23.0+typescript@4.2.2
+      '@typescript-eslint/scope-manager': registry.nlark.com/@typescript-eslint/scope-manager/4.24.0
+      debug: 4.3.1
+      eslint: 7.23.0
+      functional-red-black-tree: 1.0.1
+      lodash: 4.17.21
+      regexpp: 3.1.0
+      semver: 7.3.5
+      tsutils: 3.21.0_typescript@4.2.2
+      typescript: 4.2.2
+    transitivePeerDependencies:
+      - supports-color
+    dev: true
+
+  registry.nlark.com/@typescript-eslint/experimental-utils/4.24.0_eslint@7.23.0+typescript@4.2.2:
+    resolution: {integrity: sha1-wj6tneRLmcOl/ZJcM6EGsAFl4XI=, registry: https://registry.npm.taobao.org/, tarball: https://registry.nlark.com/@typescript-eslint/experimental-utils/download/@typescript-eslint/experimental-utils-4.24.0.tgz}
+    id: registry.nlark.com/@typescript-eslint/experimental-utils/4.24.0
+    name: '@typescript-eslint/experimental-utils'
+    version: 4.24.0
+    engines: {node: ^10.12.0 || >=12.0.0}
+    peerDependencies:
+      eslint: '*'
+    dependencies:
+      '@types/json-schema': registry.nlark.com/@types/json-schema/7.0.7
+      '@typescript-eslint/scope-manager': registry.nlark.com/@typescript-eslint/scope-manager/4.24.0
+      '@typescript-eslint/types': registry.nlark.com/@typescript-eslint/types/4.24.0
+      '@typescript-eslint/typescript-estree': registry.nlark.com/@typescript-eslint/typescript-estree/4.24.0_typescript@4.2.2
+      eslint: 7.23.0
+      eslint-scope: 5.1.1
+      eslint-utils: registry.nlark.com/eslint-utils/2.1.0
+    transitivePeerDependencies:
+      - supports-color
+      - typescript
+    dev: true
+
+  registry.nlark.com/@typescript-eslint/parser/4.24.0_eslint@7.23.0+typescript@4.2.2:
+    resolution: {integrity: sha1-Ll8cx4/+/kO/rH5WWTCakrCaUb0=, registry: https://registry.npm.taobao.org/, tarball: https://registry.nlark.com/@typescript-eslint/parser/download/@typescript-eslint/parser-4.24.0.tgz}
+    id: registry.nlark.com/@typescript-eslint/parser/4.24.0
+    name: '@typescript-eslint/parser'
+    version: 4.24.0
+    engines: {node: ^10.12.0 || >=12.0.0}
+    peerDependencies:
+      eslint: ^5.0.0 || ^6.0.0 || ^7.0.0
+      typescript: '*'
+    peerDependenciesMeta:
+      typescript:
+        optional: true
+    dependencies:
+      '@typescript-eslint/scope-manager': registry.nlark.com/@typescript-eslint/scope-manager/4.24.0
+      '@typescript-eslint/types': registry.nlark.com/@typescript-eslint/types/4.24.0
+      '@typescript-eslint/typescript-estree': registry.nlark.com/@typescript-eslint/typescript-estree/4.24.0_typescript@4.2.2
+      debug: 4.3.1
+      eslint: 7.23.0
+      typescript: 4.2.2
+    transitivePeerDependencies:
+      - supports-color
+    dev: true
+
+  registry.nlark.com/@typescript-eslint/scope-manager/4.24.0:
+    resolution: {integrity: sha1-OAiCFvDq8jX6MO2Mq/aUjsc081k=, registry: https://registry.npm.taobao.org/, tarball: https://registry.nlark.com/@typescript-eslint/scope-manager/download/@typescript-eslint/scope-manager-4.24.0.tgz}
+    name: '@typescript-eslint/scope-manager'
+    version: 4.24.0
+    engines: {node: ^8.10.0 || ^10.13.0 || >=11.10.1}
+    dependencies:
+      '@typescript-eslint/types': registry.nlark.com/@typescript-eslint/types/4.24.0
+      '@typescript-eslint/visitor-keys': registry.nlark.com/@typescript-eslint/visitor-keys/4.24.0
+    dev: true
+
+  registry.nlark.com/@typescript-eslint/types/4.24.0:
+    resolution: {integrity: sha1-bQzKIEjL2k4mXgxNucKmKqrYIow=, registry: https://registry.npm.taobao.org/, tarball: https://registry.nlark.com/@typescript-eslint/types/download/@typescript-eslint/types-4.24.0.tgz}
+    name: '@typescript-eslint/types'
+    version: 4.24.0
+    engines: {node: ^8.10.0 || ^10.13.0 || >=11.10.1}
+    dev: true
+
+  registry.nlark.com/@typescript-eslint/typescript-estree/4.24.0_typescript@4.2.2:
+    resolution: {integrity: sha1-tJJJZ5qYAU2LA+jUtwhkuVDjyQ8=, registry: https://registry.npm.taobao.org/, tarball: https://registry.nlark.com/@typescript-eslint/typescript-estree/download/@typescript-eslint/typescript-estree-4.24.0.tgz}
+    id: registry.nlark.com/@typescript-eslint/typescript-estree/4.24.0
+    name: '@typescript-eslint/typescript-estree'
+    version: 4.24.0
+    engines: {node: ^10.12.0 || >=12.0.0}
+    peerDependencies:
+      typescript: '*'
+    peerDependenciesMeta:
+      typescript:
+        optional: true
+    dependencies:
+      '@typescript-eslint/types': registry.nlark.com/@typescript-eslint/types/4.24.0
+      '@typescript-eslint/visitor-keys': registry.nlark.com/@typescript-eslint/visitor-keys/4.24.0
+      debug: 4.3.1
+      globby: 11.0.3
+      is-glob: 4.0.1
+      semver: 7.3.5
+      tsutils: 3.21.0_typescript@4.2.2
+      typescript: 4.2.2
+    transitivePeerDependencies:
+      - supports-color
+    dev: true
+
+  registry.nlark.com/@typescript-eslint/visitor-keys/4.24.0:
+    resolution: {integrity: sha1-qPr9x2ytTgSmgalF+7rE416Y4pc=, registry: https://registry.npm.taobao.org/, tarball: https://registry.nlark.com/@typescript-eslint/visitor-keys/download/@typescript-eslint/visitor-keys-4.24.0.tgz}
+    name: '@typescript-eslint/visitor-keys'
+    version: 4.24.0
+    engines: {node: ^8.10.0 || ^10.13.0 || >=11.10.1}
+    dependencies:
+      '@typescript-eslint/types': registry.nlark.com/@typescript-eslint/types/4.24.0
+      eslint-visitor-keys: registry.nlark.com/eslint-visitor-keys/2.1.0
+    dev: true
+
+  registry.nlark.com/eslint-config-prettier/8.3.0_eslint@7.23.0:
+    resolution: {integrity: sha1-90cbILb+ipqSVMxoRFQgKIai3Xo=, registry: https://registry.npm.taobao.org/, tarball: https://registry.nlark.com/eslint-config-prettier/download/eslint-config-prettier-8.3.0.tgz}
+    id: registry.nlark.com/eslint-config-prettier/8.3.0
+    name: eslint-config-prettier
+    version: 8.3.0
+    hasBin: true
+    peerDependencies:
+      eslint: '>=7.0.0'
+    dependencies:
+      eslint: 7.23.0
+    dev: true
+
+  registry.nlark.com/eslint-utils/2.1.0:
+    resolution: {integrity: sha1-0t5eA0JOcH3BDHQGjd7a5wh0Gyc=, registry: https://registry.npm.taobao.org/, tarball: https://registry.nlark.com/eslint-utils/download/eslint-utils-2.1.0.tgz}
+    name: eslint-utils
+    version: 2.1.0
+    engines: {node: '>=6'}
+    dependencies:
+      eslint-visitor-keys: registry.nlark.com/eslint-visitor-keys/1.3.0
+    dev: true
+
+  registry.nlark.com/eslint-visitor-keys/1.3.0:
+    resolution: {integrity: sha1-MOvR73wv3/AcOk8VEESvJfqwUj4=, registry: https://registry.npm.taobao.org/, tarball: https://registry.nlark.com/eslint-visitor-keys/download/eslint-visitor-keys-1.3.0.tgz}
+    name: eslint-visitor-keys
+    version: 1.3.0
+    engines: {node: '>=4'}
+    dev: true
+
+  registry.nlark.com/eslint-visitor-keys/2.1.0:
+    resolution: {integrity: sha1-9lMoJZMFknOSyTjtROsKXJsr0wM=, registry: https://registry.npm.taobao.org/, tarball: https://registry.nlark.com/eslint-visitor-keys/download/eslint-visitor-keys-2.1.0.tgz}
+    name: eslint-visitor-keys
+    version: 2.1.0
+    engines: {node: '>=10'}
+    dev: true
+
+  registry.nlark.com/glob-parent/5.1.2:
+    resolution: {integrity: sha1-hpgyxYA0/mikCTwX3BXoNA2EAcQ=, registry: https://registry.npm.taobao.org/, tarball: https://registry.nlark.com/glob-parent/download/glob-parent-5.1.2.tgz}
+    name: glob-parent
+    version: 5.1.2
+    engines: {node: '>= 6'}
+    dependencies:
+      is-glob: 4.0.1
+
+  registry.nlark.com/prettier/2.3.0:
+    resolution: {integrity: sha1-tqW/EoQCauZA8X9/9WWKdWf8DRg=, registry: https://registry.npm.taobao.org/, tarball: https://registry.nlark.com/prettier/download/prettier-2.3.0.tgz?cache=0&sync_timestamp=1620606858097&other_urls=https%3A%2F%2Fregistry.nlark.com%2Fprettier%2Fdownload%2Fprettier-2.3.0.tgz}
+    name: prettier
+    version: 2.3.0
+    engines: {node: '>=10.13.0'}
+    hasBin: true
     dev: true

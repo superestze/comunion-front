@@ -4,7 +4,7 @@ import { RouterLink } from 'vue-router'
 export default defineComponent({
   name: 'WelcomePage',
   props: {},
-  setup(props, ctx) {
+  setup() {
     return () => (
       <div>
         Hello UI components.
