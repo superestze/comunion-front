@@ -1,2 +1,2 @@
-export * from './char';
-export * from './theme';
+export * from './char'
+export * from './theme'

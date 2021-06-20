@@ -1,5 +1,5 @@
-import { defineComponent, watch } from 'vue'
-import { useRoute, onBeforeRouteUpdate } from 'vue-router'
+import { defineComponent } from 'vue'
+import { useRoute } from 'vue-router'
 
 export default defineComponent({
   name: 'ComponentPage',
