@@ -1,0 +1,34 @@
+{
+  "name": "@comunion/web",
+  "version": "0.0.0",
+  "description": "Comunion website",
+  "scripts": {
+    "dev": "vite",
+    "build": "vue-tsc --noEmit && vite build",
+    "serve": "vite preview"
+  },
+  "repository": "comunion-io/front-next.git",
+  "keywords": [
+    "vue",
+    "vue3",
+    "blockchain"
+  ],
+  "license": "GPL-3.0-or-later",
+  "bugs": {
+    "url": "https://github.com/comunion-io/front-next/issues"
+  },
+  "homepage": "https://github.com/comunion-io/front-next#readme",
+  "dependencies": {
+    "@comunion/utils": "workspace:^0.0.0",
+    "vue": "^3.0.5",
+    "vue-router": "^3.5.1"
+  },
+  "devDependencies": {
+    "@vitejs/plugin-vue": "^1.2.3",
+    "@vitejs/plugin-vue-jsx": "^1.1.5",
+    "@vue/compiler-sfc": "^3.0.5",
+    "typescript": "^4.3.2",
+    "vite": "^2.3.7",
+    "vue-tsc": "^0.0.24"
+  }
+}
