@@ -78,8 +78,8 @@ pnpm -r publish
 3. language-postcss
 4. Prettier
 5. stylelint
-6. Tailwind CSS IntelliSense
-7. Vetur
+6. WindiCSS IntelliSense
+7. Volar（需禁用 Vetur 插件）
 
 ## 项目共享代码片段
 

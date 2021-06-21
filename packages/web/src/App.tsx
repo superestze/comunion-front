@@ -1,10 +1,9 @@
-
 import { defineComponent } from 'vue'
-import HelloWorld from './components/HelloWorld.vue'
+import { RouterView } from 'vue-router'
 
 export default defineComponent({
   name: 'App',
-  components: {
-    HelloWorld
-  }
+  setup() {
+    return () => <RouterView />
+  },
 })
