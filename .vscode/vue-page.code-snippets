@@ -4,12 +4,15 @@
     "body": [
       "import { defineComponent } from 'vue'",
       "",
-      "export default defineComponent({",
+      "const $1Page = defineComponent({",
       "  name: '$1Page',",
       "  setup(_, ctx) {",
       "    return () => ($2)",
       "  }",
-      "})"
+      "})",
+      "",
+      "export default $1Page",
+      ""
     ],
     "description": "vue 3 page snippet"
   }

@@ -10,7 +10,7 @@
     "esModuleInterop": true,
     "lib": ["esnext", "dom"],
     "baseUrl": "./",
-    "types": ["vite/client", "vite-plugin-pages/client"],
+    "types": ["node", "vite/client", "vite-plugin-pages/client"],
     "paths": {
       "@/*": ["src/*"]
     }

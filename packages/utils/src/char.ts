@@ -10,3 +10,11 @@ export function convertCamelCase(originStr: string, firstUpper = false): string 
     })
     .replace(/_[a-zA-Z]/, s => s[1].toUpperCase())
 }
+
+/**
+ * Generate random string
+ * @returns Random string
+ */
+export function randomStr() {
+  return Math.random().toString(36).substr(2)
+}
