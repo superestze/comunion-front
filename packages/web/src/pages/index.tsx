@@ -5,6 +5,15 @@ export default defineComponent({
   name: 'HomePage',
   props: {},
   setup() {
-    return () => <router-link to="/auth/github">Github Oauth</router-link>
+    return () => (
+      <div>
+        <router-link class="block" to="/auth/github">
+          Github Oauth
+        </router-link>
+        <router-link class="block" to="/auth/metamask">
+          MetaMask Login
+        </router-link>
+      </div>
+    )
   },
 })
