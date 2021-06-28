@@ -8,9 +8,10 @@
   "repository": "comunion-io/front-next",
   "license": "GPL-3.0-or-later",
   "scripts": {
-    "gen:component": "pnpm gen:component --filter @comunion/generator",
     "postinstall": "husky install",
-    "stylint": "stylelint \"src/**/*.{css,less,scss,sass,styl}\" --fix"
+    "stylint": "stylelint \"src/**/*.{css,less,scss,sass,styl}\" --fix",
+    "gen:component": "pnpm gen:component --filter @comunion/generator",
+    "web": "pnpm run dev --filter @comunion/web"
   },
   "dependencies": {
     "fast-glob": "^3.2.5"

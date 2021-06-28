@@ -4,8 +4,9 @@ import { createServices } from './yapi.services'
 const services = createServices(async (url, method, query, body) => {
   try {
     const res = await axois.request({
-      url: url,
+      url: '/api' + url,
       method: method,
+      params: query,
       data: body,
       headers: {
         Authorization: '',

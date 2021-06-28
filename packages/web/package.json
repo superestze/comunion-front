@@ -5,6 +5,7 @@
   "scripts": {
     "dev": "vite",
     "build": "vue-tsc --noEmit && vite build",
+    "build:nocheck": "vite build",
     "serve": "vite preview",
     "style:analysis": "npx windicss-analysis",
     "gen:api": "y2s update -y"

@@ -14,7 +14,7 @@ export default defineConfig({
   },
   server: {
     proxy: {
-      '/api': 'http://api.comunion.io',
+      '/api': 'http://v2.comunion.io',
     },
   },
   plugins: [

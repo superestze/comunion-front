@@ -1,4 +1,4 @@
-import { GITHUB_CLIENT_ID } from '@/constants/oauth'
+import { GITHUB_CALLBACK_URL, GITHUB_CLIENT_ID } from '@/constants'
 import { randomStr } from '@comunion/utils'
 import { defineComponent } from 'vue'
 
@@ -9,7 +9,7 @@ export default defineComponent({
     const state = randomStr()
     return () => (
       <a
-        href={`https://github.com/login/oauth/authorize?client_id=${GITHUB_CLIENT_ID}&redirect_uri=http://localhost:3000/auth/github/callback&state=e${
+        href={`https://github.com/login/oauth/authorize?client_id=${GITHUB_CLIENT_ID}&redirect_uri=${GITHUB_CALLBACK_URL}&state=e${
           isLocal ? '0' : '1'
         }${state}`}
       >
