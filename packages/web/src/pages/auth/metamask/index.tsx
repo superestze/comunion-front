@@ -1,19 +1,33 @@
+import { useEthInject } from '@/providers/EthProvider'
 import services from '@/services'
+import { utils } from 'ethers'
 import { defineComponent, ref } from 'vue'
-import Web3 from 'web3-eth'
 
 const MetaMaskAuthPage = defineComponent({
   name: 'MetaMaskAuthPage',
   setup() {
     const loading = ref(false)
-    const web3Eth = new Web3.Eth(Web3.Eth.givenProvider)
+    const eth = useEthInject()
 
     async function connect() {
-      console.log(web3Eth.currentProvider)
       loading.value = true
-      const { error, data } = await services['account@获取加密钱包登陆用的Nonce']()
-      if (!error) {
-        web3Eth.sign(data!.nonce!, web3Eth.coinbase, console.log)
+      await eth.connectMetamask()
+      console.log(eth)
+      const resN = await services['account@获取加密钱包登陆用的Nonce']({
+        address: eth.address.value
+      })
+      if (!resN.error) {
+        const signature = await eth.signer.signMessage(resN.data!.nonce!)
+        if (signature) {
+          const { error, data } = await services['account@ETH钱包登陆（metamask）']({
+            address: eth.address.value,
+            signature,
+            message_hash: utils.hashMessage(resN.data!.nonce!)
+          })
+          if (!error) {
+            console.log(data)
+          }
+        }
       }
       loading.value = false
     }
@@ -23,7 +37,7 @@ const MetaMaskAuthPage = defineComponent({
         链接 MetaMask
       </button>
     )
-  },
+  }
 })
 
 export default MetaMaskAuthPage

@@ -9,13 +9,13 @@ import WindiCSS from 'vite-plugin-windicss'
 export default defineConfig({
   resolve: {
     alias: {
-      '@': path.resolve(__dirname, '/src'),
-    },
+      '@': path.resolve(__dirname, '/src')
+    }
   },
   server: {
     proxy: {
-      '/api': 'http://v2.comunion.io',
-    },
+      '/api': 'https://v2.comunion.io'
+    }
   },
   plugins: [
     vue(),
@@ -28,7 +28,7 @@ export default defineConfig({
       pagesDir: 'src/pages',
       exclude: ['**/components/**/*.*', '**/blocks/**/*.*'],
       importMode: 'async',
-      nuxtStyle: true,
-    }),
-  ],
+      nuxtStyle: true
+    })
+  ]
 })

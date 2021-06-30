@@ -11,6 +11,7 @@
     "postinstall": "husky install",
     "stylint": "stylelint \"src/**/*.{css,less,scss,sass,styl}\" --fix",
     "gen:component": "pnpm gen:component --filter @comunion/generator",
+    "build": "tsc -b",
     "web": "pnpm run dev --filter @comunion/web"
   },
   "dependencies": {

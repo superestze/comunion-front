@@ -19,7 +19,7 @@ const GithubAuthCallbackPage = defineComponent({
       }
     }
     return () => null
-  },
+  }
 })
 
 export default GithubAuthCallbackPage

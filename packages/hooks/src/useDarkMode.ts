@@ -1,5 +1,5 @@
-import { computed, onMounted, onUnmounted } from 'vue'
 import { isMediaDarkMode, setDarkMode, watchMediaDarkMode } from '@comunion/utils'
+import { computed, onMounted, onUnmounted } from 'vue'
 
 export type DarkMode = 'dark' | 'light' | 'auto'
 export const DarkModeStorageKey = 'app.dark.mode'
@@ -12,7 +12,7 @@ export const DarkModeStorageKey = 'app.dark.mode'
 export default function useDarkMode() {
   const darkMode = computed<DarkMode>({
     get: () => localStorage[DarkModeStorageKey] ?? 'auto',
-    set: v => (localStorage[DarkModeStorageKey] = v),
+    set: (v: DarkMode) => (localStorage[DarkModeStorageKey] = v)
   })
 
   let unwatch: () => void
@@ -45,6 +45,6 @@ export default function useDarkMode() {
 
   return {
     darkMode,
-    setDarkMode: _setDarkMode,
+    setDarkMode: _setDarkMode
   }
 }

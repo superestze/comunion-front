@@ -1,15 +1,10 @@
 {
   "compilerOptions": {
-    "target": "esnext",
-    "module": "esnext",
-    "moduleResolution": "node",
-    "strict": true,
+    "outDir": "./lib",
+    "rootDir": "./src",
     "jsx": "preserve",
-    "sourceMap": true,
-    "resolveJsonModule": true,
-    "esModuleInterop": true,
-    // "types": ["@comunion/"],
     "lib": ["esnext", "dom"]
   },
-  "include": ["src/**/*"]
+  "extends": "../../tsconfig.package.json",
+  "include": ["src/*"]
 }

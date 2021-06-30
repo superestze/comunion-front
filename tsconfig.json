@@ -65,5 +65,11 @@
     /* Advanced Options */
     "skipLibCheck": true /* Skip type checking of declaration files. */,
     "forceConsistentCasingInFileNames": true /* Disallow inconsistently-cased references to the same file. */
-  }
+  },
+  "references": [
+    { "path": "./packages/components" },
+    { "path": "./packages/hooks" },
+    { "path": "./packages/icons" },
+    { "path": "./packages/utils" },
+  ]
 }

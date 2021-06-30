@@ -1,7 +1,7 @@
 module.exports = {
   parser: '@typescript-eslint/parser',
   parserOptions: {
-    ecmaVersion: 2020,
+    ecmaVersion: 2020
   },
   env: {
     es6: true,
@@ -11,24 +11,31 @@ module.exports = {
     node: true,
     browser: true,
     mocha: true,
-    jasmine: true,
+    jasmine: true
   },
   extends: [
     'plugin:@typescript-eslint/eslint-recommended',
     // 'plugin:@typescript-eslint/recommended',
-    'plugin:prettier/recommended',
+    'plugin:prettier/recommended'
   ],
   plugins: ['@typescript-eslint'],
   rules: {
     '@typescript-eslint/no-unused-vars': 'error',
+    '@typescript-eslint/consistent-type-imports': 'error',
+    '@typescript-eslint/explicit-module-boundary-types': 'off',
+    '@typescript-eslint/ban-ts-comment': 'off',
+    '@typescript-eslint/ban-types': 'off',
+    '@typescript-eslint/no-empty-interface': 'warn',
+    '@typescript-eslint/no-non-null-assertion': 'off'
     // 'jsx-quotes': ['error', 'prefer-double'],
   },
-  // overrides: [
-  //   {
-  //     files: ['config/*.js'],
-  //     rules: {
-  //       'import/no-commonjs': 'off',
-  //     },
-  //   },
-  // ],
+  overrides: [
+    {
+      files: ['*.js'],
+      rules: {
+        'import/no-commonjs': 'off',
+        '@typescript-eslint/no-var-requires': 'off'
+      }
+    }
+  ]
 }
