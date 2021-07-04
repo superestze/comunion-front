@@ -22,8 +22,8 @@
   },
   "homepage": "https://github.com/comunion-io/front-next#readme",
   "dependencies": {
-    "@comunion/components": "workspace:^0.0.0",
-    "@comunion/utils": "workspace:^0.0.0",
+    "@comunion/components": "^0.0.0",
+    "@comunion/utils": "^0.0.0",
     "axios": "^0.21.1",
     "ethers": "^5.4.0",
     "vue": "^3.0.5",

@@ -6,5 +6,5 @@
     "lib": ["esnext", "dom"]
   },
   "extends": "../../tsconfig.package.json",
-  "include": ["src/*"]
+  "include": ["./src"]
 }

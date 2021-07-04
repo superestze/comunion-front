@@ -4,37 +4,44 @@
 
 ## 依赖管理
 
-使用[pnpm](https://pnpm.js.org/)而不使用`npm`或`yarn`
+~使用[pnpm](https://pnpm.js.org/)而不使用`npm`或`yarn`~
+使用`yarn`
 
 ### 项目初始化
 
 ```bash
-pnpm i
+#pnpm i
+yarn setup
 ```
 
 ### 全局添加依赖
 
 ```bash
-pnpm add [-D] <pkg>
+#pnpm add [-D] <pkg>
+yarn add [-D] <pkg>
 ```
 
 ### 子项目添加依赖
 
 ```bash
-pnpm add [-D] <pkg> --filter <@comunion/packageName>
+#pnpm add [-D] <pkg> --filter <@comunion/packageName>
+lerna add [-D] <pkg> --scope <@comunion/packageName>
 # 例如
-pnpm add lodash --filter @comunion/components
+#pnpm add lodash --filter @comunion/components
+lerna add lodash --scope @comunion/components
 ```
 
 如果添加的是 workspace 级别的依赖，应该使用
 
 ```bash
-pnpm add [-D] <@comunion/pkg> --filter <@comunion/packageName>
+# pnpm add [-D] <@comunion/pkg> --filter <@comunion/packageName>
+lerna add [-D] <@comunion/pkg> --scope <@comunion/packageName>
 # 例如
-pnpm add @comunion/utils --filter @comunion/components
+#pnpm add @comunion/utils --filter @comunion/components
+lerna add @comunion/utils --scope @comunion/components
 ```
 
-也可以直接进入子项目目录进行添加删除依赖的操作，下同
+~也可以直接进入子项目目录进行添加删除依赖的操作，下同~
 
 ### 子项目移除依赖
 
@@ -53,22 +60,26 @@ pnpm add @comunion/utils --filter @comunion/components
 ## 子项目执行命令
 
 ```bash
-pnpm run xxx --filter @comunion/xxx
+#pnpm run xxx --filter @comunion/xxx
+lerna run xxx --scope @comunion/xxx
 # eg:
-pnpm run build --filter @comunion/utils
+#pnpm run build --filter @comunion/utils
+lerna run build --scope @comunion/utils
 ```
 
 ## 项目启动
 
 ```bash
-pnpm run -r start
+# pnpm run -r start
+npm run build -w
 ```
 
-## 打包部署
+## 打包
 
 ```bash
-pnpm -r build
-pnpm -r publish
+# pnpm -r build
+# pnpm -r publish
+npm run build
 ```
 
 ## VSCode 必备插件
@@ -99,9 +110,9 @@ pnpm -r publish
 执行该命令可以为你的`shell`提供 npm 脚本的自动提示
 
 ```bash
-pnpm install-completion
+#pnpm install-completion
 # 如果使用的是zsh，应该使用
-pnpm install-completion zsh
+#pnpm install-completion zsh
 ```
 
 ## RoadMap
