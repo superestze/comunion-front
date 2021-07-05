@@ -1,9 +1,9 @@
-import { join } from 'path'
-import { readdir, readFile, writeFile } from 'fs'
-import { promisify } from 'util'
-import { optimize } from 'svgo'
-import { compileTemplate } from '@vue/compiler-sfc'
 import { convertCamelCase } from '@comunion/utils'
+import { compileTemplate } from '@vue/compiler-sfc'
+import { readdir, readFile, writeFile } from 'fs'
+import { join } from 'path'
+import { optimize } from 'svgo'
+import { promisify } from 'util'
 
 const sourceDir = join(__dirname, '../src')
 const outlinedDir = join(sourceDir, 'outlined')
@@ -15,9 +15,9 @@ function optimizeSvg(filename: string, content: string): string {
     path: filename,
     js2svg: {
       indent: 2, // string with spaces or number of spaces. 4 by default
-      pretty: true, // boolean, false by default
+      pretty: true // boolean, false by default
     },
-    plugins: ['removeXMLNS'],
+    plugins: ['removeXMLNS']
   }).data
 }
 
@@ -25,7 +25,7 @@ function compileSvg(filename: string, content: string) {
   const { code } = compileTemplate({
     source: content,
     id: '1',
-    filename,
+    filename
   })
   return code.replace('export function render(', 'export default function render(')
 }
@@ -40,7 +40,7 @@ async function buildType(suffix: string, dirPath: string, filename: string) {
     join(targetDir, CamelCaseFilename.replace(/\.svg/, `${suffix}.esm.js`)),
     componentCode,
     {
-      encoding: 'utf-8',
+      encoding: 'utf-8'
     }
   )
   return CamelCaseFilename.replace(/\.svg/, suffix)
@@ -65,7 +65,7 @@ async function build() {
     }
   }
   await promisify(writeFile)(join(targetDir, 'index.esm.js'), exportEntries.join('\n'), {
-    encoding: 'utf-8',
+    encoding: 'utf-8'
   })
 }
 
