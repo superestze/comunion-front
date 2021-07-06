@@ -1,28 +1,32 @@
 {
-  "name": "@comunion/utils",
+  "name": "@comunion/esbuild-plugin-svg-to-vue3",
   "version": "0.0.0",
-  "description": "Utility functions",
+  "description": "esbuild plugin to build svg file to vue component",
   "main": "dist/index.js",
-  "module": "dist/esm/index.js",
   "types": "dist",
   "scripts": {
-    "build:esm": "tsup --dts",
-    "build:cjs": "tsup --format cjs --clean false src",
-    "build:all": "tsup --dts --format cjs,esm --clean src",
-    "build:all:watch": "tsup --dts --format cjs,esm --clean --watch src"
+    "build": "tsup",
+    "build:watch": "tsup --watch"
   },
   "repository": "comunion-io/front-next.git",
   "keywords": [
     "typescript",
-    "utils"
+    "esbuild-plugin",
+    "vue3 svg"
   ],
   "license": "GPL-3.0-or-later",
   "bugs": {
     "url": "https://github.com/comunion-io/front-next/issues"
   },
   "homepage": "https://github.com/comunion-io/front-next#readme",
+  "dependencies": {
+    "@comunion/utils": "0.0.0",
+    "@vue/compiler-sfc": "^3.0.7",
+    "svgo": "^2.2.2",
+    "vue": "^2.6.14"
+  },
   "devDependencies": {
-    "@types/node": "^14.14.31",
+    "@types/svgo": "^2.3.1",
     "tsup": "^4.12.0"
   }
 }

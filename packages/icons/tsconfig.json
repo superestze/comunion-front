@@ -1,7 +1,7 @@
 {
   "compilerOptions": {
-    "module": "commonjs",
-    "target": "es5"
+    "rootDir": "./src"
   },
-  "extends": "../../tsconfig.package.json"
+  "extends": "../../tsconfig.package.json",
+  "include": ["./src", "./tsup.config.ts", "./scripts"]
 }

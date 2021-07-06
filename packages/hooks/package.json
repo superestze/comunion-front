@@ -2,8 +2,11 @@
   "name": "@comunion/hooks",
   "version": "0.0.0",
   "description": "Comunion hooks",
+  "module": "dist/esm/index.js",
+  "types": "./dist",
   "scripts": {
-    "build": "echo build"
+    "build:esm": "tsup --dts",
+    "build:esm:watch": "tsup --dts --watch src"
   },
   "repository": "comunion-io/front-next.git",
   "keywords": [
@@ -19,5 +22,8 @@
   "dependencies": {
     "@comunion/utils": "^0.0.0",
     "vue": "^3.0.7"
+  },
+  "devDependencies": {
+    "tsup": "^4.12.0"
   }
 }

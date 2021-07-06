@@ -2,29 +2,24 @@
   "name": "@comunion/icons",
   "version": "0.0.0",
   "description": "Comunion icons",
+  "module": "dist/index.esm.js",
+  "types": "./dist",
   "scripts": {
-    "generate": "ts-node scripts/build.ts"
+    "build:esm": "tsup --dts",
+    "build:esm:watch": "tsup --dts --watch src"
   },
   "repository": "comunion-io/front-next.git",
   "keywords": [
     "svg",
     "icon"
   ],
-  "main": "dist/index.js",
-  "module": "dist/index.esm.js",
-  "types": "./types",
   "license": "GPL-3.0-or-later",
   "bugs": {
     "url": "https://github.com/comunion-io/front-next/issues"
   },
   "homepage": "https://github.com/comunion-io/front-next#readme",
   "devDependencies": {
-    "@types/svgo": "^2.0.0",
-    "@vue/compiler-sfc": "^3.0.7",
-    "svgo": "^2.2.2",
-    "vue": "3"
-  },
-  "dependencies": {
-    "@comunion/utils": "^0.0.0"
+    "@comunion/esbuild-plugin-svg-to-vue3": "^0.0.0",
+    "tsup": "^4.12.0"
   }
 }
