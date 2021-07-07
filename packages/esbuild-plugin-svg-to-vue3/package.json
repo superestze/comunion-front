@@ -1,6 +1,6 @@
 {
   "name": "@comunion/esbuild-plugin-svg-to-vue3",
-  "version": "0.0.0",
+  "version": "0.0.1",
   "description": "esbuild plugin to build svg file to vue component",
   "main": "dist/index.js",
   "types": "dist",

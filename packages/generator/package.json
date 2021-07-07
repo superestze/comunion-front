@@ -1,6 +1,6 @@
 {
   "name": "@comunion/generator",
-  "version": "0.0.0",
+  "version": "0.0.1",
   "description": "Comunion code generator",
   "main": "index.ts",
   "scripts": {

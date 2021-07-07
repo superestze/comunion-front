@@ -1,6 +1,6 @@
 {
   "name": "@comunion/docs",
-  "version": "0.0.0",
+  "version": "0.0.1",
   "description": "Comunion documents",
   "scripts": {
     "dev": "vite",

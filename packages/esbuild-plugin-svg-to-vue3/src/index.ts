@@ -1,7 +1,7 @@
 // refer to https://github.com/nativew/esbuild-plugin-svg
-import { convertCamelCase } from '@comunion/utils'
+import { convertCamelCase, debounce } from '@comunion/utils'
 import { compileTemplate } from '@vue/compiler-sfc'
-import type { Plugin } from 'esbuild'
+import type { BuildResult, Plugin } from 'esbuild'
 import { readFile } from 'fs'
 import path from 'path'
 import { optimize } from 'svgo'
@@ -54,14 +54,15 @@ async function transformSvg(filepath: string, targetFileName: string) {
 
 interface SvgTransformOptions {
   nameTransform?: (filePath: string) => string
+  onFinished?: (result: BuildResult) => void
 }
 
 export default function svgPlugin(options: SvgTransformOptions = {}): Plugin {
+  const { nameTransform, onFinished } = options
+  const onEnd = onFinished ? debounce(onFinished) : () => {}
   return {
     name: 'svg',
     setup(build) {
-      const { nameTransform } = options
-
       build.onLoad({ filter: /\.svg$/ }, async args => {
         const fileName = path.basename(args.path, '.svg')
         console.log('fileName', fileName)
@@ -69,7 +70,7 @@ export default function svgPlugin(options: SvgTransformOptions = {}): Plugin {
         const contents = await transformSvg(args.path, outputFile)
         return { contents, loader: 'tsx' }
       })
-      build.on
+      build.onEnd(onEnd)
     }
   }
 }

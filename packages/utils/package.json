@@ -1,15 +1,13 @@
 {
   "name": "@comunion/utils",
-  "version": "0.0.0",
+  "version": "0.0.1",
   "description": "Utility functions",
   "main": "dist/index.js",
   "module": "dist/esm/index.js",
   "types": "dist",
   "scripts": {
-    "build:esm": "tsup --dts",
-    "build:cjs": "tsup --format cjs --clean false src",
-    "build:all": "tsup --dts --format cjs,esm --clean src",
-    "build:all:watch": "tsup --dts --format cjs,esm --clean --watch src"
+    "build": "tsup --dts --format cjs,esm --clean src",
+    "build:watch": "tsup --dts --format cjs,esm --clean --watch src"
   },
   "repository": "comunion-io/front-next.git",
   "keywords": [

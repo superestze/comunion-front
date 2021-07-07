@@ -1,12 +1,12 @@
 {
   "name": "@comunion/hooks",
-  "version": "0.0.0",
+  "version": "0.0.1",
   "description": "Comunion hooks",
   "module": "dist/esm/index.js",
   "types": "./dist",
   "scripts": {
-    "build:esm": "tsup --dts",
-    "build:esm:watch": "tsup --dts --watch src"
+    "build": "tsup --dts",
+    "build:watch": "tsup --dts --watch src"
   },
   "repository": "comunion-io/front-next.git",
   "keywords": [
