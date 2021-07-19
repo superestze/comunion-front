@@ -19,7 +19,7 @@
   },
   "homepage": "https://github.com/comunion-io/front-next#readme",
   "dependencies": {
-    "@comunion/components": "^0.0.0",
+    "@comunion/components": "^0.0.1",
     "vue": "^3.0.7",
     "vue-router": "4"
   },

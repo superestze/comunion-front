@@ -1,7 +1,4 @@
-import type {
-  ExternalProvider,
-  Web3Provider
-} from '.pnpm/@ethersproject+providers@5.4.0/node_modules/@ethersproject/providers'
+import type { ExternalProvider, Web3Provider } from '@ethersproject/providers'
 
 declare global {
   interface Window {

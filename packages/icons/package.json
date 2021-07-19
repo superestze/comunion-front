@@ -19,7 +19,7 @@
   },
   "homepage": "https://github.com/comunion-io/front-next#readme",
   "devDependencies": {
-    "@comunion/esbuild-plugin-svg-to-vue3": "^0.0.0",
+    "@comunion/esbuild-plugin-svg-to-vue3": "^0.0.1",
     "@comunion/utils": "^0.0.1",
     "tsup": "^4.12.0"
   }

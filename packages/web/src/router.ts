@@ -9,7 +9,7 @@ const router = createRouter({
   routes,
   scrollBehavior(to, from, savedPosition) {
     window.scrollTo({ top: savedPosition?.top ?? 0 })
-  },
+  }
 })
 
 export default router

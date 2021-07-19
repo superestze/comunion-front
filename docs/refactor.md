@@ -12,7 +12,7 @@
   - [ ] 提供的参数尽量多，覆盖更多的场景，提供更多的可扩展性
   - [ ] 所有组件可单独预览，借助于辅助工具
 - [ ] 开发框架
-  - [ ] pnpm workspace
+  - [ ] lerna workspace
   - [ ] vite
   - [ ] vue3
   - [ ] typescript tsx

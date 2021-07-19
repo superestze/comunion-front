@@ -13,6 +13,9 @@ export default defineComponent({
         <router-link class="block" to="/auth/metamask">
           MetaMask Login
         </router-link>
+        <router-link class="block" to="/auth/wallet-connect">
+          WalletCollect Login
+        </router-link>
       </div>
     )
   }

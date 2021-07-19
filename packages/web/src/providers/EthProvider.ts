@@ -1,7 +1,4 @@
-import type {
-  JsonRpcSigner,
-  Web3Provider
-} from '.pnpm/@ethersproject+providers@5.4.0/node_modules/@ethersproject/providers'
+import type { JsonRpcSigner, Web3Provider } from '@ethersproject/providers'
 import { providers } from 'ethers'
 import type { DeepReadonly, Ref } from 'vue'
 import { inject, provide, readonly, ref } from 'vue'
