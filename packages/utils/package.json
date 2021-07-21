@@ -7,7 +7,7 @@
   "types": "dist",
   "scripts": {
     "build": "tsup --dts --format cjs,esm --clean src",
-    "build:watch": "tsup --dts --format cjs,esm --clean --watch src"
+    "build:w": "tsup --dts --format cjs,esm --clean --watch src"
   },
   "repository": "comunion-io/front-next.git",
   "keywords": [
