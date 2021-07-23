@@ -6,7 +6,7 @@
   "types": "dist",
   "scripts": {
     "build": "tsup",
-    "build:w": "tsup --watch"
+    "dev": "tsup --watch"
   },
   "repository": "comunion-io/front-next.git",
   "keywords": [

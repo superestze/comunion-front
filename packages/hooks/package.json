@@ -6,7 +6,7 @@
   "types": "./dist",
   "scripts": {
     "build": "tsup --dts",
-    "build:w": "tsup --dts --watch src"
+    "dev": "tsup --dts --watch src"
   },
   "repository": "comunion-io/front-next.git",
   "keywords": [

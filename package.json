@@ -12,9 +12,10 @@
     "setup": "yarn && lerna bootstrap",
     "stylint": "stylelint \"src/**/*.{css,less,scss,sass,styl}\" --fix",
     "gen:component": "lerna run gen:component --scope @comunion/generator",
-    "dev": "concurrently \"yarn --cwd packages/utils build:w\" \"yarn --cwd packages/icons build:w\" \"yarn --cwd packages/hooks build:w\" \"yarn --cwd packages/esbuild-plugin-svg-to-vue3 build:w\" \"yarn --cwd packages/web dev\"",
-    "build": "tsc -b",
-    "web": "lerna run dev --scope @comunion/web"
+    "dev": "lerna run --parallel dev --ignore @comunion/docs",
+    "dev:all": "lerna run --parallel dev",
+    "build": "lerna run --parallel build",
+    "build:web": "lerna run build:nocheck --stream --scope @comunion/web"
   },
   "dependencies": {
     "fast-glob": "^3.2.5"
@@ -27,7 +28,6 @@
     "@typescript-eslint/eslint-plugin": "^4.24.0",
     "@typescript-eslint/parser": "^4.24.0",
     "chokidar": "^3.5.2",
-    "concurrently": "^6.2.0",
     "devmoji": "^2.2.0",
     "esbuild": "^0.12.14",
     "eslint": "^7.23.0",
