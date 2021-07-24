@@ -15,7 +15,7 @@
     "dev": "lerna run --parallel dev --ignore @comunion/docs",
     "dev:all": "lerna run --parallel dev",
     "build": "lerna run --parallel build",
-    "build:web": "lerna run build:nocheck --stream --scope @comunion/web"
+    "build:web": "sh scripts/web.sh"
   },
   "dependencies": {
     "fast-glob": "^3.2.5"
