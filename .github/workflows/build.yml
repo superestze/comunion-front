@@ -59,4 +59,5 @@ jobs:
           key: ${{ secrets.DEV_KEY }}
           port: ${{ secrets.DEV_PORT }}
           source: "packages/web/dist"
+          strip_components: 3
           target: ${{ secrets.DEV_WEB_PATH }}
