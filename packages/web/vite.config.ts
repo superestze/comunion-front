@@ -1,6 +1,7 @@
 import vue from '@vitejs/plugin-vue'
 import vueJsx from '@vitejs/plugin-vue-jsx'
 import path from 'path'
+import polyfillNode from 'rollup-plugin-polyfill-node'
 import { defineConfig } from 'vite'
 import pages from 'vite-plugin-pages'
 import WindiCSS from 'vite-plugin-windicss'
@@ -17,6 +18,9 @@ export default defineConfig({
       '/api': 'https://v2.comunion.io'
     }
   },
+  // optimizeDeps: {
+  //   include: ['bn.js', 'hash.js']
+  // },
   plugins: [
     vue(),
     vueJsx({
@@ -29,6 +33,7 @@ export default defineConfig({
       exclude: ['**/components/**/*.*', '**/blocks/**/*.*'],
       importMode: 'async',
       nuxtStyle: true
-    })
+    }),
+    polyfillNode()
   ]
 })
