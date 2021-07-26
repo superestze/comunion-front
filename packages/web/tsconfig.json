@@ -7,8 +7,9 @@
     "types": ["node", "vite/client", "vite-plugin-pages/client"],
     "paths": {
       "@/*": ["./src/*"]
-    }
+    },
+    "resolveJsonModule": true
   },
   "extends": "../../tsconfig.package.json",
-  "include": ["./src"]
+  "include": ["./src/**/*"]
 }

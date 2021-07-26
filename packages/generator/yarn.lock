@@ -2,6 +2,13 @@
 # yarn lockfile v1
 
 
+"@types/fs-extra@^9.0.12":
+  version "9.0.12"
+  resolved "https://registry.nlark.com/@types/fs-extra/download/@types/fs-extra-9.0.12.tgz#9b8f27973df8a7a3920e8461517ebf8a7d4fdfaf"
+  integrity sha1-m48nlz34p6OSDoRhUX6/in1P368=
+  dependencies:
+    "@types/node" "*"
+
 "@types/lodash.template@^4.5.0":
   version "4.5.0"
   resolved "https://registry.yarnpkg.com/@types/lodash.template/-/lodash.template-4.5.0.tgz#277654af717ed37ce2687c69f8f221c550276b7a"
@@ -13,6 +20,11 @@
   version "4.14.170"
   resolved "https://registry.yarnpkg.com/@types/lodash/-/lodash-4.14.170.tgz#0d67711d4bf7f4ca5147e9091b847479b87925d6"
   integrity sha512-bpcvu/MKHHeYX+qeEN8GE7DIravODWdACVA1ctevD8CN24RhPZIKMn9ntfAsrvLfSX3cR5RrBKAbYm9bGs0A+Q==
+
+"@types/node@*":
+  version "16.4.3"
+  resolved "https://registry.nlark.com/@types/node/download/@types/node-16.4.3.tgz?cache=0&sync_timestamp=1627257813519&other_urls=https%3A%2F%2Fregistry.nlark.com%2F%40types%2Fnode%2Fdownload%2F%40types%2Fnode-16.4.3.tgz#c01c1a215721f6dec71b47d88b4687463601ba48"
+  integrity sha1-wBwaIVch9t7HG0fYi0aHRjYBukg=
 
 "@types/node@^14.14.31":
   version "14.17.4"
@@ -38,6 +50,29 @@ diff@^4.0.1:
   version "4.0.2"
   resolved "https://registry.yarnpkg.com/diff/-/diff-4.0.2.tgz#60f3aecb89d5fae520c11aa19efc2bb982aade7d"
   integrity sha512-58lmxKSA4BNyLz+HHMUzlOEpg09FV+ev6ZMe3vJihgdxzgcwZ8VoEEPmALCZG9LmqfVoNMMKpttIYTVG6uDY7A==
+
+fs-extra@^10.0.0:
+  version "10.0.0"
+  resolved "https://registry.nlark.com/fs-extra/download/fs-extra-10.0.0.tgz#9ff61b655dde53fb34a82df84bb214ce802e17c1"
+  integrity sha1-n/YbZV3eU/s0qC34S7IUzoAuF8E=
+  dependencies:
+    graceful-fs "^4.2.0"
+    jsonfile "^6.0.1"
+    universalify "^2.0.0"
+
+graceful-fs@^4.1.6, graceful-fs@^4.2.0:
+  version "4.2.6"
+  resolved "https://registry.nlark.com/graceful-fs/download/graceful-fs-4.2.6.tgz#ff040b2b0853b23c3d31027523706f1885d76bee"
+  integrity sha1-/wQLKwhTsjw9MQJ1I3BvGIXXa+4=
+
+jsonfile@^6.0.1:
+  version "6.1.0"
+  resolved "https://registry.npm.taobao.org/jsonfile/download/jsonfile-6.1.0.tgz?cache=0&sync_timestamp=1604161876665&other_urls=https%3A%2F%2Fregistry.npm.taobao.org%2Fjsonfile%2Fdownload%2Fjsonfile-6.1.0.tgz#bc55b2634793c679ec6403094eb13698a6ec0aae"
+  integrity sha1-vFWyY0eTxnnsZAMJTrE2mKbsCq4=
+  dependencies:
+    universalify "^2.0.0"
+  optionalDependencies:
+    graceful-fs "^4.1.6"
 
 lodash._reinterpolate@^3.0.0:
   version "3.0.0"
@@ -88,6 +123,11 @@ ts-node@^9.1.1:
     make-error "^1.1.1"
     source-map-support "^0.5.17"
     yn "3.1.1"
+
+universalify@^2.0.0:
+  version "2.0.0"
+  resolved "https://registry.npm.taobao.org/universalify/download/universalify-2.0.0.tgz?cache=0&sync_timestamp=1603180004159&other_urls=https%3A%2F%2Fregistry.npm.taobao.org%2Funiversalify%2Fdownload%2Funiversalify-2.0.0.tgz#75a4984efedc4b08975c5aeb73f530d02df25717"
+  integrity sha1-daSYTv7cSwiXXFrrc/Uw0C3yVxc=
 
 yn@3.1.1:
   version "3.1.1"
