@@ -1,27 +1,7 @@
 import { convertCamelCase } from '@comunion/utils'
-import https from 'https'
-import { resolve } from 'path'
-import { renderToFile, writeToFile } from '../utils'
-
-function fetchReadMe() {
-  return new Promise<string>((resolve, reject) => {
-    https.get(
-      'https://raw.githubusercontent.com/comunion-io/cos-contract-com/master/README.md',
-      res => {
-        let data = ''
-        res.on('data', chunk => {
-          data += chunk
-        })
-        res.once('end', () => {
-          resolve(data)
-        })
-        res.once('error', e => {
-          reject(e)
-        })
-      }
-    )
-  })
-}
+import ora from 'ora'
+import { join, resolve } from 'path'
+import { fetch, renderToFile, writeToFile } from '../utils'
 
 interface ContractItem {
   title: string
@@ -29,28 +9,37 @@ interface ContractItem {
   abi: string
 }
 
-async function fetchABIs() {
+async function fetchABIs(spinner: ora.Ora) {
   try {
-    const readme = await fetchReadMe()
+    const readme = await fetch(
+      'https://raw.githubusercontent.com/comunion-io/cos-contract-com/master/README.md'
+    )
     const contractLine = readme.match(/# \[Contract & Abi\].+/)
     if (contractLine) {
-      const list = readme.slice(contractLine.index + contractLine[0].length).trim()
+      const list = readme.slice(contractLine.index! + contractLine[0].length).trim()
       const titles = list.match(/\d+. [\w\d ]+/g)
       const contracts: ContractItem[] = []
-      for (let i = 0; i < titles.length - 1; i++) {
-        const title = titles[i]
+      spinner.text = 'Downloading abi jsons'
+      for (let i = 0; i < titles!.length - 1; i++) {
+        const title = titles![i]
         const contractItem = list
           .slice(
             list.indexOf(title) + title.length,
-            i === titles.length - 1 ? undefined : list.indexOf(titles[i + 1])
+            i === titles!.length - 1 ? undefined : list.indexOf(titles![i + 1])
           )
           .trim()
-        const contractAddr = contractItem.match(/ *- address: (0x[\w\d]+)/)[1]
-        const contractABI = contractItem.match(/ *- abi: ([\w\d/]+.json)/)[1]
+        const contractAddr = contractItem.match(/ *- address: (0x[\w\d]+)/)![1]
+        const contractABI = contractItem.match(/ *- abi: ([\w\d/]+.json)/)![1]
         if (contractAddr && contractABI) {
+          const abi = await fetch(
+            join(
+              'https://raw.githubusercontent.com/comunion-io/cos-contract-com/master/',
+              contractABI
+            )
+          )
           contracts.push({
             title: title.replace(/\d+\. /, '').trim(),
-            abi: contractABI,
+            abi,
             address: contractAddr
           })
         }
@@ -64,7 +53,9 @@ async function fetchABIs() {
 }
 
 export async function generaetContracts() {
-  const contracts = await fetchABIs()
+  const spinner = ora('Parsing contracts').start()
+  const contracts = await fetchABIs(spinner)
+  spinner.text = 'Writing files'
   for (const contract of contracts) {
     const contractFolder = resolve(__dirname, '../../web/src/hooks/contracts', contract.title)
     await renderToFile(resolve(contractFolder, 'index.ts'), 'contract.tpl', {
@@ -72,7 +63,7 @@ export async function generaetContracts() {
       titleHead: convertCamelCase(contract.title, true),
       address: contract.address
     })
-    // fetch abi json
-    await writeToFile(resolve(contractFolder, 'abi.json'), '')
+    await writeToFile(resolve(contractFolder, 'abi.json'), contract.abi)
   }
+  spinner.stop()
 }

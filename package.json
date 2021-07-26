@@ -12,6 +12,7 @@
     "setup": "yarn && lerna bootstrap",
     "stylint": "stylelint \"src/**/*.{css,less,scss,sass,styl}\" --fix",
     "gen:component": "lerna run gen:component --scope @comunion/generator",
+    "gen:contract": "lerna run gen:contract --scope @comunion/generator",
     "dev": "lerna run --parallel dev --ignore @comunion/docs --ignore @comunion/icons",
     "dev:all": "lerna run --parallel dev",
     "build": "lerna run --parallel build",

@@ -2,7 +2,7 @@ import { convertCamelCase } from '@comunion/utils'
 import { join } from 'path'
 import { renderToFile, writeToFile } from '../utils'
 
-export default async function run(name: string) {
+export async function generateComponent(name: string) {
   if (!name) {
     throw new Error('Please specify the component name.')
   }
