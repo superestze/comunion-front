@@ -1,11 +1,11 @@
 import { defineComponent } from 'vue'
 import { RouterView } from 'vue-router'
-import { useEthProvider } from './providers/EthProvider'
+import { useEtherProvider } from './hooks/useEther'
 
 export default defineComponent({
   name: 'App',
   setup() {
-    useEthProvider()
+    useEtherProvider()
     return () => <RouterView />
   }
 })

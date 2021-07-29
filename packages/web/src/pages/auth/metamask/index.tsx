@@ -7,9 +7,7 @@ const MetaMaskAuthPage = defineComponent({
   name: 'MetaMaskAuthPage',
   setup() {
     const { getSigner, address, loading, setProvider, onConnect } = useEther()
-    setProvider(async () => {
-      return window.ethereum
-    })
+    setProvider(window.ethereum)
     const connect = () => {
       onConnect(async () => {
         await window.ethereum.enable()

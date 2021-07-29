@@ -34,11 +34,12 @@ export function useEther() {
     async setProvider(provider: ExternalProvider | JsonRpcFetchFunc) {
       const web3Provider = new providers.Web3Provider(provider)
       ctx.currentProvider.value = web3Provider
-      ctx.address.value = await web3Provider.getSigner().getAddress()
     },
     async onConnect(func: () => Promise<boolean>) {
       ctx.loading.value = true
       const connected = await func()
+      console.log('connected', connected)
+      ctx.address.value = await ctx.currentProvider.value.getSigner().getAddress()
       ctx.loading.value = false
       return connected
     },

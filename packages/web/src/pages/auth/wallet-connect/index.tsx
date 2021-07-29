@@ -6,11 +6,11 @@ const WalletCollectPage = defineComponent({
   name: 'WalletCollectPage',
   setup() {
     const { address, loading, setProvider, onConnect } = useEther()
-    setProvider(async () => {
-      return new WalletConnectProvider({
+    setProvider(
+      new WalletConnectProvider({
         chainId: 5
       })
-    })
+    )
     const connect = () => {
       onConnect(async () => {
         // TODO
