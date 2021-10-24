@@ -5,7 +5,7 @@ import { defineConfig } from 'windicss/helpers'
 export default defineConfig({
   extract: {
     include: ['src/**/*.{vue,html,jsx,tsx}', 'public/**/*.html', 'index.html'],
-    exclude: ['node_modules', '.git'],
+    exclude: ['node_modules', '.git']
   },
   darkMode: 'class',
   theme: {
@@ -14,7 +14,7 @@ export default defineConfig({
       transparent: 'transparent',
       current: 'currentColor',
       ...colors,
-      primary: colors.blue,
-    },
-  },
+      primary: colors.blue
+    }
+  }
 })
