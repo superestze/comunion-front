@@ -1,34 +1,15 @@
 {
   "name": "@comunion/docs",
   "version": "0.0.1",
-  "description": "Comunion documents",
-  "scripts": {
-    "dev": "vite",
-    "build": "vite build",
-    "serve": "vite preview"
-  },
-  "repository": "comunion-io/front-next.git",
-  "keywords": [
-    "vue",
-    "vue3",
-    "documents"
-  ],
-  "license": "GPL-3.0-or-later",
-  "bugs": {
-    "url": "https://github.com/comunion-io/front-next/issues"
-  },
-  "homepage": "https://github.com/comunion-io/front-next#readme",
-  "dependencies": {
-    "@comunion/components": "^0.0.1",
-    "vue": "^3.0.7",
-    "vue-router": "4"
-  },
+  "description": "Comunion Frontend Docs",
+  "main": "index.js",
+  "license": "MIT",
   "devDependencies": {
-    "@vitejs/plugin-vue": "^1.1.5",
-    "@vitejs/plugin-vue-jsx": "^1.1.2",
-    "@vue/compiler-sfc": "^3.0.7",
-    "postcss-nested": "^5.0.5",
-    "typescript": "^4.2.3",
-    "vite": "^2.0.5"
+    "vitepress": "^0.20.0"
+  },
+  "scripts": {
+    "docs:dev": "vitepress dev",
+    "docs:build": "vitepress build",
+    "docs:serve": "vitepress serve"
   }
 }
