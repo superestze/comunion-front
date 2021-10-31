@@ -29,7 +29,7 @@ TODO
 
 ## 如何发起上链操作
 TODO
-1. 在写代码前，请先了解下前后端和合约的整体[交互流程]()。
+1. 在写代码前，请先了解下前后端和合约的整体[交互流程](https://comunion.yuque.com/niwla4/qbn2zb/xqprmp)以及 [v5合约架构图](https://comunion.yuque.com/niwla4/qbn2zb/bsqang)。
 2. 在根目录或 `web` 目录下执行 `yarn gen:contract` 来生成、更新合约代码
 3. 然后使用 `contracts[contract-name]` 的形式调用，所有参数都通过第一个参数传递，有对应的 ts 提示
 
