@@ -1,3 +1,8 @@
+---
+title: 快速开始
+sidebar: true
+---
+
 # 如何进行开发
 跟着下面的教程开始一个新页面的开发吧：
 
@@ -12,7 +17,7 @@
 
 ## 如何书写样式
 组件和页面的样式如何书写呢？一般情况下页面直接调用各类组件就可以完成开发，但少不了有个别需求还是要写一些样式，这时就可以使用 `WindiCSS` 进行原子化样式开发，具体可以先熟悉下 [WindiCSS](https://windicss.org/) 的资料。
-如何 `WindiCSS` 仍满足不了需求，那么请使用 `import styles from './index.module.css` 的方式引入模块化样式类避免样式类污染。
+如何 `WindiCSS` 仍满足不了需求，那么请使用 `import styles from './index.module.css'` 的方式引入模块化样式类避免样式类污染。
 当前项目的 css 写法支持嵌套模式，和 less 类似。
 
 ## 如何引用静态资源

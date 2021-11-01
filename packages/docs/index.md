@@ -1,5 +1,5 @@
 ---
-title: Welcome to Comunion Developer Center
+title: Welcome to Comunion Frontend Developer Center
 sidebar: false
 ---
 
