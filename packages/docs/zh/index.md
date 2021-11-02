@@ -10,8 +10,8 @@ footer: MIT Licensed | Copyright © 2021-present Comunion
 开始构建新一代网链交互平台
 
 ```bash
-git clone https://github.com/comunion-io/v5-front
-cd v5-front
+git clone https://github.com/comunion-io/comunion-front
+cd comunion-front
 yarn
 yarn dev
 ```

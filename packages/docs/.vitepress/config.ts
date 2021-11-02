@@ -59,8 +59,8 @@ export default {
         // },
         nav: [
           { text: '开发入门', link: '/zh/guide/getting-started', activeMatch: '^/zh/guide' },
-          { text: '组件库', link: '/zh/components', activeMatch: '^/zh/components' },
-          { text: '函数库', link: '/zh/libraries', activeMatch: '^/zh/libraries' }
+          { text: '组件库', link: '/zh/components/', activeMatch: '^/zh/components' },
+          { text: '函数库', link: '/zh/libraries/hooks/useUser', activeMatch: '^/zh/libraries' }
         ],
         sidebar: {
           '/zh/guide/': [
@@ -74,8 +74,8 @@ export default {
             {
               text: '基础',
               children: [
-                { text: '全局样式', link: '' },
-                { text: '图标', link: '' }
+                { text: '全局样式', link: '/zh/components/styles' },
+                { text: '图标', link: '/zh/components/icons' }
               ]
             },
             {
@@ -90,11 +90,15 @@ export default {
           '/zh/libraries/': [
             {
               text: 'hooks',
-              children: []
+              children: [
+                { text: '用户', link: '/zh/libraries/hooks/useUser' }
+              ]
             },
             {
-              text: 'utils',
-              children: []
+              text: '函数库',
+              children: [
+                { text: '链', link: '/zh/libraries/utils/chain' }
+              ]
             }
           ]
         }

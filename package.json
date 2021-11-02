@@ -15,7 +15,7 @@
     "gen:contract": "lerna run gen:contract --scope @comunion/generator",
     "dev": "lerna run --parallel dev --ignore @comunion/docs --ignore @comunion/icons",
     "dev:all": "lerna run --parallel dev",
-    "docs": "lerna run docs:dev --scope @comunion/docs",
+    "docs": "yarn --cwd packages/docs run docs:dev",
     "build": "lerna run --parallel build",
     "build:web": "sh scripts/web.sh"
   },
