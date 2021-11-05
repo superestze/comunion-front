@@ -14,3 +14,11 @@ sidebar: true
 - icons 应用需要用到的 svg 图标和生成的 vue 代码
 - utils 通用工具库
 - web 前端主项目
+
+项目用到的主要技术栈有：
+
+- lerna workspace
+- vue3 + vite
+- typescript
+- tsx
+- css 原子化
