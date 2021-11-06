@@ -68,6 +68,7 @@ export default {
             { text: '编辑器配置', link: '/zh/guide/ide' },
             { text: '开发规范', link: '/zh/guide/specification' },
             { text: '代码结构', link: '/zh/guide/structure' },
+            { text: 'Git 规范', link: '/zh/guide/git' },
             { text: '上链交互', link: '/zh/guide/chain' },
             { text: '开发规划', link: '/zh/guide/roadmap' }
           ],

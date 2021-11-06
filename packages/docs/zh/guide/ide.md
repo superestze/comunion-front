@@ -14,5 +14,5 @@ sidebar: true
 - Prettier
 - Stylelint
 - Todo Tree (推荐，非必需)
-- Vetur
+- Volar（需禁用 Vetur 插件）
 - WindiCSS IntelliSense (需要打开插件的 `Sort On Save` 选项)

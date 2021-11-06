@@ -3,6 +3,8 @@ title: 项目架构说明
 sidebar: true
 ---
 
+## 目录说明
+
 项目采用 `lerna` 进行多包管理，部分场景配合 `yarn` 进行管理，整个项目包含以下几个子包：
 
 - components 全局通用的组件库
@@ -15,7 +17,7 @@ sidebar: true
 - utils 通用工具库
 - web 前端主项目
 
-项目用到的主要技术栈有：
+## 项目用到的主要技术栈
 
 - lerna workspace
 - vue3 + vite

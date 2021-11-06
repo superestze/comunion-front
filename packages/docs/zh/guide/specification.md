@@ -107,3 +107,11 @@ export default defineComponent({
   }
 })
 ```
+
+## 代码提交规范
+
+1. eslint 通过
+2. stylelint 通过
+3. commitlint 通过
+4. 合理的注释，函数一定要有详细注释，组件一定要有`name`，非常见的组件 props 要有注释，必要时要有示例
+5. 目录使用`camel-case`格式，组件使用`CameCase`格式，图片等资源使用`came-case`格式，`markdown`文件使用`[lang]/xxx.md`格式

@@ -5,6 +5,18 @@ sidebar: true
 
 跟着下面的教程开始一个新页面的开发吧：
 
+## 项目启动
+在根目录执行
+```bash
+yarn dev
+```
+
+### 启动文档预览
+在根目录执行
+```bash
+yarn docs
+```
+
 ## 如何添加页面
 进入 `packages/web` 目录下，在 `src/pages` 目录下新建一个 `hello.tsx` 文件，输入 `v3p` 然后根据 `vscode` 提示新建一个页面，`name` 字段就填 `HelloPage`，内容就先输入 `<div>Hello Comunion</div>`，保存后就可以通过 `/hello` 路由查看页面了。[（关于更多路由配置请查看 vite-plugin-pages）](https://github.com/hannoeru/vite-plugin-pages)
 
@@ -40,3 +52,37 @@ TODO
 ## 如何获取用户信息，当前上链信息
 1. 当前用户的token存储在 localStorage，对应的用户信息使用全局 `hooks` 存储，使用时调用 `useUser` 即可获取，包括当前用户的 profile
 2. 当前的钱包连接信息使用全局 `hooks` 存储，使用时调用 `useWallet` 即可，包括当前钱包名称、链的名称、钱包地址
+
+## 依赖管理
+### 全局添加依赖
+
+```bash
+yarn add [-D] <pkg>
+```
+
+### 子项目添加依赖
+
+```bash
+lerna add [-D] <pkg> --scope <@comunion/packageName>
+# 例如
+lerna add lodash --scope @comunion/components
+```
+
+如果添加的是 workspace 级别的依赖，应该使用
+
+```bash
+lerna add [-D] <@comunion/pkg> --scope <@comunion/packageName>
+# 例如
+lerna add @comunion/utils --scope @comunion/components
+```
+
+~也可以直接进入子项目目录进行添加删除依赖的操作，下同~
+
+### 子项目移除依赖
+
+同添加，将命令中的`add [-D]`改为`remove`即可
+
+## 项目共享代码片段
+
+- `v3c` 创建 Vue 3 组件代码模板
+- `v3p` 创建 Vue 3 页面代码模板

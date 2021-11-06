@@ -1,120 +1,61 @@
-# Comunion 前端项目重构版本
+# Comunion 前端项目
+这是 Comunion 的 v5 版本的前端代码，项目使用 `lerna` 进行多包管理，主要是用 `Vue3` 和相关技术栈进行开发。
 
-[英文说明](./README.md)
+## 代码结构
+```
+packages
+|- components # 通用组件管理
+|- docs # 文档目录，基于 vitepress
+|- esbuild-plugin-svg-to-vue3 # svg 生成 vue3 组件的插件
+|- generator # 代码生成辅助工具
+|- hooks # 通用 vue hooks
+|- i8n-tools # 翻译辅助工具
+|- icons # 图标管理
+|- utils # 通用工具库管理
+|- web # 前端页面
+```
 
-## 依赖管理
+## 如何运行项目
+1. 拉取代码
+```sh
+git clone git@github.com:comunion-io/v5-front.git
+```
 
-~使用[pnpm](https://pnpm.js.org/)而不使用`npm`或`yarn`~
-使用`yarn`
-
-### 项目初始化
-
-```bash
-#pnpm i
+2. 安装依赖
+```sh
 yarn setup
 ```
 
-### 全局添加依赖
-
-```bash
-#pnpm add [-D] <pkg>
-yarn add [-D] <pkg>
+3. 运行web项目
+```sh
+yarn dev
 ```
 
-### 子项目添加依赖
-
-```bash
-#pnpm add [-D] <pkg> --filter <@comunion/packageName>
-lerna add [-D] <pkg> --scope <@comunion/packageName>
-# 例如
-#pnpm add lodash --filter @comunion/components
-lerna add lodash --scope @comunion/components
+4. 运行其它项目（可选）
+```sh
+# 文档
+yarn docs
 ```
 
-如果添加的是 workspace 级别的依赖，应该使用
-
-```bash
-# pnpm add [-D] <@comunion/pkg> --filter <@comunion/packageName>
-lerna add [-D] <@comunion/pkg> --scope <@comunion/packageName>
-# 例如
-#pnpm add @comunion/utils --filter @comunion/components
-lerna add @comunion/utils --scope @comunion/components
+5. 打包
+```sh
+yarn build
 ```
 
-~也可以直接进入子项目目录进行添加删除依赖的操作，下同~
+## 如何贡献代码
+### 对于团队开发成员
+1. clone 代码
+2. git checkout -b feat/xxx 根据代码修改内容切换一个新分支
+3. 修改代码并提交 git add -am 'feat: xxx'
+4. git push 推送代码
+5. [创建新的 PR](https://github.com/comunion-io/v5-front/pulls)并通知代码管理员
 
-### 子项目移除依赖
+### 对于非开发成员
+1. fork 仓库
+2. git checkout -b fix/xxx 根据代码修改内容切换一个新分支
+3. 修改代码并提交 git add -am 'fix: xxx'
+4. git push 推送代码
+5. 从你的代码库提交一个 PR
 
-同添加，将命令中的`add [-D]`改为`remove`即可
 
-## 子项目说明
-
-- `components` Comunion UI 组件库
-- `component-docs` Comunion UI 组件库在线预览和编辑
-- `hooks` 通用 Vue 3 hooks 函数库
-- `utils` 通用工具集函数库
-- `i18n-tools` 在线 i18n 翻译辅助工具
-- `docs` 各种文档
-- `web` Comunion 前端项目
-
-## 子项目执行命令
-
-```bash
-#pnpm run xxx --filter @comunion/xxx
-lerna run xxx --scope @comunion/xxx
-# eg:
-#pnpm run build --filter @comunion/utils
-lerna run build --scope @comunion/utils
-```
-
-## 项目启动
-
-```bash
-# pnpm run -r start
-npm run build -w
-```
-
-## 打包
-
-```bash
-# pnpm -r build
-# pnpm -r publish
-npm run build
-```
-
-## VSCode 必备插件
-
-1. EditorConfig for VS Code
-2. ESLint
-3. language-postcss
-4. Prettier
-5. stylelint
-6. WindiCSS IntelliSense
-7. Volar（需禁用 Vetur 插件）
-
-## 项目共享代码片段
-
-- `v3c` 创建 Vue 3 组件代码模板
-- `v3p` 创建 Vue 3 页面代码模板
-
-## 代码提交规范
-
-1. eslint 通过
-2. stylelint 通过
-3. commitlint 通过
-4. 合理的注释，函数一定要有详细注释，组件一定要有`name`，非常见的组件 props 要有注释，必要时要有示例
-5. 目录使用`camel-case`格式，组件使用`CameCase`格式，图片等资源使用`came-case`格式，`markdown`文件使用`xxx_[lang].md`格式
-
-## 命令行提示
-
-执行该命令可以为你的`shell`提供 npm 脚本的自动提示
-
-```bash
-#pnpm install-completion
-# 如果使用的是zsh，应该使用
-#pnpm install-completion zsh
-```
-
-## RoadMap
-
-[RoadMap](./ROADMAP_zh.md)
+[更多细节请参照](https://fe.dev.comunion.io/zh/)

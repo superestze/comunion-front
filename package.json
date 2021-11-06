@@ -10,14 +10,14 @@
   "scripts": {
     "postinstall": "husky install",
     "setup": "yarn && lerna bootstrap",
-    "stylint": "stylelint \"src/**/*.{css,less,scss,sass,styl}\" --fix",
-    "gen:component": "lerna run gen:component --scope @comunion/generator",
-    "gen:contract": "lerna run gen:contract --scope @comunion/generator",
     "dev": "lerna run --parallel dev --ignore @comunion/docs --ignore @comunion/icons",
     "dev:all": "lerna run --parallel dev",
     "docs": "yarn --cwd packages/docs run docs:dev",
     "build": "lerna run --parallel build",
-    "build:web": "sh scripts/web.sh"
+    "build:web": "sh scripts/web.sh",
+    "stylint": "stylelint \"src/**/*.{css,less,scss,sass,styl}\" --fix",
+    "gen:component": "lerna run gen:component --scope @comunion/generator",
+    "gen:contract": "lerna run gen:contract --scope @comunion/generator"
   },
   "dependencies": {
     "fast-glob": "^3.2.5"
