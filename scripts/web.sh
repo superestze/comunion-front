@@ -1,6 +1,6 @@
 #! /bin/bash
-lerna run build --scope @comunion/utils
-lerna run build --scope @comunion/esbuild-plugin-svg-to-vue3
-lerna run build --scope @comunion/hooks
+yarn --cwd packages/utils build
+yarn --cwd packages/esbuild-plugin-svg-to-vue3 build
+yarn --cwd packages/hooks build
 # lerna run build --scope @comunion/icons
-lerna run build:nocheck --scope @comunion/web
+yarn --cwd packages/web build:nocheck
