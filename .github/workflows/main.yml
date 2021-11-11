@@ -29,7 +29,7 @@ jobs:
         run: |
           cd packages/web/dist
           aws s3 sync . s3://comunion-production --delete
-          aws cloudfront create-invalidation --distribution-id E1HPMK2YTSD0L1 --paths 'index.html'
+          aws cloudfront create-invalidation --distribution-id E1HPMK2YTSD0L1 --paths '/index.html' '/service-worker.js' '/manifest.json'
       - name: Notification
         uses: erguotou520/instant-access-action@0.0.4
         if: ${{ success() }}
