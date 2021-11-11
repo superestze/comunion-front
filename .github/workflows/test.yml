@@ -28,7 +28,7 @@ jobs:
       - name: Deploy static site to S3 bucket
         run: |
           aws s3 sync ./packages/web/dist/ s3://comunion-test --delete
-          aws cloudfront create-invalidation --distribution-id E3R2FGWY8DFUJU --paths 'index.html' 'service-worker.js' 'manifest.json'
+          aws cloudfront create-invalidation --distribution-id E3R2FGWY8DFUJU --paths 'index.html'
       - name: Notification
         uses: erguotou520/instant-access-action@0.0.4
         if: ${{ success() }}
