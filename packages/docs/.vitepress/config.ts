@@ -67,6 +67,7 @@ export default {
             { text: '快速开始', link: '/zh/guide/getting-started' },
             { text: '编辑器配置', link: '/zh/guide/ide' },
             { text: '开发规范', link: '/zh/guide/specification' },
+            { text: '组件开发规范', link: '/zh/guide/component' },
             { text: '代码结构', link: '/zh/guide/structure' },
             { text: 'Git 规范', link: '/zh/guide/git' },
             { text: '上链交互', link: '/zh/guide/chain' },
