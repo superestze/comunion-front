@@ -3,6 +3,7 @@
     "outDir": "./dist",
     "rootDir": "./src",
     "jsx": "preserve",
+    "composite": false,
     "lib": ["esnext", "dom"],
     "types": ["node", "vite/client", "vite-plugin-pages/client"],
     "paths": {

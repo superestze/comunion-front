@@ -16,5 +16,5 @@ export default defineComponent({
         Github登录
       </a>
     )
-  },
+  }
 })

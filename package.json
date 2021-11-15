@@ -15,9 +15,12 @@
     "docs": "yarn --cwd packages/docs run docs:dev",
     "build": "lerna run --parallel build",
     "build:web": "sh scripts/web.sh",
-    "stylint": "stylelint \"src/**/*.{css,less,scss,sass,styl}\" --fix",
+    "stylint": "stylelint \"packages/*/src/**/*.{css,less,scss,sass,styl}\" --fix",
+    "jslint": "eslint \"packages/*/src/**/*.{ts,tsx}\"",
+    "lint": "npm run stylint && npm run jslint",
     "gen:component": "lerna run gen:component --scope @comunion/generator",
-    "gen:contract": "lerna run gen:contract --scope @comunion/generator"
+    "gen:contract": "lerna run gen:contract --scope @comunion/generator",
+    "gen:api": "yarn --cwd packages/web run gen:api"
   },
   "dependencies": {
     "fast-glob": "^3.2.5"
