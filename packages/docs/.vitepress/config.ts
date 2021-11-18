@@ -112,12 +112,9 @@ export default {
     //   indexName: 'vitepress'
     // },
   },
-  // markdown: {
-  //   plugins: [
-  //     'markdown-it-task-lists'
-  //   ],
-  //   extendMarkdown: md => {
-  //     md.use(require('markdown-it-task-lists'))
-  //   }
-  // }
+  markdown: {
+    config: (md) => {
+      md.use(require('markdown-it-task-lists'))
+    }
+  }
 }
