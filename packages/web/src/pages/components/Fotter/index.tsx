@@ -1,6 +1,6 @@
+import smallLogo from '@/assets/small-logo.png'
 import { defineComponent } from 'vue'
 import { RouterLink } from 'vue-router'
-import smallLogo from '../../assets/small-logo.png'
 
 export default defineComponent({
   name: 'Fotter',
@@ -23,7 +23,7 @@ export default defineComponent({
           },
           {
             title: 'Story',
-            url: '/'
+            url: 'https://www.yuque.com/books/share/546ee735-190d-48f0-a2c1-12c297c54d05?#'
           }
         ]
       },

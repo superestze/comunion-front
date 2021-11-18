@@ -1,18 +1,21 @@
+import joinComunion from '@/assets/join-comunion.png'
+import rightArrowIcon from '@/assets/right-arrow-small.png'
 import { defineComponent } from 'vue'
-import joinComunion from '../../assets/join-comunion.png'
-import rightArrowIcon from '../../assets/right-arrow-small.png'
+import styles from './index.module.css'
 
 export default defineComponent({
   name: 'IntroduceAndJoin',
   setup() {
     return () => (
-      <div class="h-580px pt-66px sm:h-844px sm:pt-60px w-full overflow-hidden relative after:content after:absolute after:w-3/1 after:-left-1/1 after:top-0 after:h-full after:bg-primary after:rounded-br-1/2 after:rounded-bl-1/2">
-        <div class="relative z-1">
-          {/* 标题 */}
+      <div class="h-580px pt-66px sm:h-844px sm:pt-60px w-full overflow-hidden relative after:content after:absolute after:w-3/1 after:-left-1/1 after:top-0 after:h-full after:bg-primary after:rounded-br-1/2 after:rounded-bl-1/2 after:z-1 overflow-hidden">
+        <div class={`${styles.introduceAndJoinBox} <sm:hidden`}></div>
+        <div class={`${styles.introduceAndJoinBoxH5} sm:hidden`}></div>
+        <div class="relative z-3">
+          {/* title */}
           <h1 class="font-bold text-white text-center mt-83px text-24px sm:mt-161px sm:text-68px sm:leading-80px">
             Incubate ZERO To ONE
           </h1>
-          {/* 介绍 */}
+          {/* introduce */}
           <div class="text-center mt-24px text-13px text-white text-opacity-80 leading-15px sm:mt-36px sm:leading-30px sm:text-22px">
             <p class="text-bold">Comunion is a metatech</p>
             <p class="mt-19px w-330px sm:w-780px m-auto">

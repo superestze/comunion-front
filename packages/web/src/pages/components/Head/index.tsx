@@ -1,9 +1,9 @@
+import closeMenu from '@/assets/close-menu.png'
+import logo from '@/assets/logo.png'
+import openMenu from '@/assets/open-menu.png'
+import smallLogo from '@/assets/small-logo.png'
 import { defineComponent, reactive } from 'vue'
 import { RouterLink } from 'vue-router'
-import closeMenu from '../../assets/close-menu.png'
-import logo from '../../assets/logo.png'
-import openMenu from '../../assets/open-menu.png'
-import smallLogo from '../../assets/small-logo.png'
 
 export default defineComponent({
   name: 'Head',
@@ -19,14 +19,14 @@ export default defineComponent({
               <img src={smallLogo} class="w-22px h-21px sm:hidden" />
               <img src={logo} class="w-136px <sm:hidden" />
               <a
-                class="text-textColor text-16px text-bold ml-54px  hover:text-primary <sm:hidden"
+                class="text-[#333333] text-16px text-bold ml-54px  hover:text-primary <sm:hidden"
                 href="https://wiki.comunion.io/comunion-economics"
                 target="_blank"
               >
                 Economics
               </a>
               <a
-                class="text-textColor text-16px text-bold ml-30px hover:text-primary <sm:hidden"
+                class="text-[#333333] text-16px text-bold ml-30px hover:text-primary <sm:hidden"
                 href="/"
               >
                 Foundation
@@ -57,7 +57,7 @@ export default defineComponent({
           </div>
         </div>
 
-        {/* h5菜单弹窗 */}
+        {/* h5 menu */}
         <div
           class={`fixed w-screen h-screen bg-white z-100 top-0 transition-all sm:hidden ${
             state.showMenu ? 'left-0' : 'left-1/1'
@@ -67,7 +67,7 @@ export default defineComponent({
             {/* close-icon */}
             <img src={closeMenu} class="w-12px" onClick={() => (state.showMenu = false)} />
           </div>
-          <div class="m-auto w-311px leading-24px text-bold text-16px text-textColor">
+          <div class="m-auto w-311px leading-24px text-bold text-16px text-[#333333]">
             <RouterLink to="/" class="block mb-30px">
               Economics
             </RouterLink>

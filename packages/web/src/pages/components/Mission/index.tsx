@@ -1,5 +1,6 @@
+import rightArrowWhite from '@/assets/right-arrow-white.png'
 import { defineComponent, reactive } from 'vue'
-import rightArrowWhite from '../../assets/right-arrow-white.png'
+import styles from './index.module.css'
 
 export default defineComponent({
   name: 'Mission',
@@ -39,12 +40,14 @@ export default defineComponent({
 
     return () => (
       <div class="h-813px sm:h-854px w-full overflow-hidden relative after:content after:absolute after:h-full after:sm:h-761px after:w-3/1 after:-left-1/1 after:bottom-0 after:h-full after:bg-gradient-to-b after:from-pageBgColor after:to-primary after:rounded-br-1/2 after:rounded-bl-1/2">
+        <div class={`${styles.missionBox} <sm:hidden`}></div>
+        <div class={`${styles.missionBoxH5} sm:hidden`}></div>
         <div class="relative z-1 w-311px sm:w-1110px m-auto">
-          {/* 标题 */}
+          {/* title */}
           <h2 class="font-bold text-white text-center mt-96px sm:mt-188px text-24px sm:text-48px">
             Mission
           </h2>
-          {/* 介绍 */}
+          {/* introduce */}
           <div class="mt-12px sm:mt-15px text-12px sm:text-18px text-white text-opacity-80 leading-15px">
             <p class="text-left sm:text-center sm:w-852px text-justify sm:m-auto">
               AI, automation and platform model have become the growth engine of world economy. It
