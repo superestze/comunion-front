@@ -24,24 +24,39 @@ export default defineComponent({
             </p>
           </div>
           <div class="flex flex-wrap items-center mt-68px sm:mt-95px sm:justify-between px-30px sm:px-20px">
-            <div class="flex flex-col items-center <sm:">
-              <img src={StartUp} class="w-55px sm:110px" />
+            <div class="flex flex-col items-center group">
+              <img
+                src={StartUp}
+                class="w-55px sm:110px transform transition group-hover:-translate-y-10px"
+              />
               <span class="text-10px sm:text-20px mt-18px sm:mt-36px text-white">Start-up</span>
             </div>
-            <div class="flex flex-col items-center <sm:ml-36px">
-              <img src={Blockchain} class="w-55px sm:110px" />
+            <div class="flex flex-col items-center <sm:ml-36px group">
+              <img
+                src={Blockchain}
+                class="w-55px sm:110px transform transition group-hover:-translate-y-10px"
+              />
               <span class="text-10px sm:text-20px mt-18px sm:mt-36px text-white">Blockchain</span>
             </div>
-            <div class="flex flex-col items-center <sm:ml-36px">
-              <img src={Metaverse} class="w-55px sm:110px" />
+            <div class="flex flex-col items-center <sm:ml-36px group">
+              <img
+                src={Metaverse}
+                class="w-55px sm:110px transform transition group-hover:-translate-y-10px"
+              />
               <span class="text-10px sm:text-20px mt-18px sm:mt-36px text-white">Metaverse</span>
             </div>
-            <div class="flex flex-col items-center <sm:mt-40px <sm:ml-38px">
-              <img src={Exchange} class="w-55px sm:110px" />
+            <div class="flex flex-col items-center <sm:mt-40px <sm:ml-38px group">
+              <img
+                src={Exchange}
+                class="w-55px sm:110px transform transition group-hover:-translate-y-10px"
+              />
               <span class="text-10px sm:text-20px mt-18px sm:mt-36px text-white">Exchange</span>
             </div>
-            <div class="flex flex-col items-center <sm:mt-40px <sm:ml-66px">
-              <img src={DAO} class="w-55px sm:110px" />
+            <div class="flex flex-col items-center <sm:mt-40px <sm:ml-66px group">
+              <img
+                src={DAO}
+                class="w-55px sm:110px transform transition group-hover:-translate-y-10px"
+              />
               <span class="text-10px sm:text-20px mt-18px sm:mt-36px text-white">DAO</span>
             </div>
           </div>

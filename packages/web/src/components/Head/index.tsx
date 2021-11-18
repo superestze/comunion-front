@@ -18,15 +18,19 @@ export default defineComponent({
               {/* logo */}
               <img src={smallLogo} class="w-22px h-21px sm:hidden" />
               <img src={logo} class="w-136px <sm:hidden" />
-              <RouterLink class="text-primary text-16px text-bold ml-54px <sm:hidden" to="/">
+              <a
+                class="text-textColor text-16px text-bold ml-54px  hover:text-primary <sm:hidden"
+                href="https://wiki.comunion.io/comunion-economics"
+                target="_blank"
+              >
                 Economics
-              </RouterLink>
-              <RouterLink
+              </a>
+              <a
                 class="text-textColor text-16px text-bold ml-30px hover:text-primary <sm:hidden"
-                to="/"
+                href="/"
               >
                 Foundation
-              </RouterLink>
+              </a>
             </div>
             {/* menu-icon */}
             <img
@@ -35,12 +39,20 @@ export default defineComponent({
               onClick={() => (state.showMenu = true)}
             />
             <div class="flex items-center <sm:hidden">
-              <button class="w-146px h-32px rounded-4px bg-primary text-white leading-32px text-14px text-bold mr-32px">
+              <a
+                class="w-146px h-32px rounded-4px bg-primary text-white leading-32px text-14px text-bold mr-32px text-center"
+                href="https://dev.comunion.io/b/guide"
+                target="_blank"
+              >
                 + New Start-Up
-              </button>
-              <button class="w-146px h-32px rounded-4px border-1 border-primary text-primary leading-32px text-14px text-bold">
+              </a>
+              <a
+                class="w-146px h-32px rounded-4px border-1 border-primary text-primary leading-32px text-14px text-bold text-center"
+                href="https://dev.comunion.io/b/guide"
+                target="_blank"
+              >
                 Connect account
-              </button>
+              </a>
             </div>
           </div>
         </div>

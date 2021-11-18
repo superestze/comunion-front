@@ -21,18 +21,26 @@ export default defineComponent({
             </p>
           </div>
           {/* 加入Comunion*/}
-          <button class="w-205px h-48px sm:w-254px sm:h-54px bg-white m-auto flex items-center pl-56px sm:pl-63px mt-58px sm:mt-70px rounded-24px sm:rounded-27px group">
+          <a
+            class="w-205px h-48px sm:w-254px sm:h-54px bg-white m-auto flex items-center pl-56px sm:pl-63px mt-58px sm:mt-70px rounded-24px sm:rounded-27px group"
+            href="https://dev.comunion.io/"
+            target="_blank"
+          >
             <span class="text-primary text-bold text-13px sm:text-18px">Join Comunion</span>
             <img
               class="w-16px sm:w-17px ml-11px group-hover:ml-22px transition-all"
               src={joinComunion}
             />
-          </button>
+          </a>
           {/* I want to… */}
           <div class="w-560px mt-95px text-white m-auto <sm:hidden">
             <p class="text-20px leading-28px">I want to…</p>
             <div class="flex items-center justify-between leading-17px text-12px mt-30px">
-              <div class="flex items-center cursor-pointer group">
+              <a
+                class="flex items-center cursor-pointer group"
+                href="https://dev.comunion.io/"
+                target="_blank"
+              >
                 <span class="opacity-81 transform transition group-hover:-translate-y-10px">
                   Build a startup
                 </span>
@@ -40,8 +48,12 @@ export default defineComponent({
                   src={rightArrowIcon}
                   class="w-12px ml-4px transform transition group-hover:-translate-y-10px"
                 />
-              </div>
-              <div class="flex items-center cursor-pointer group">
+              </a>
+              <a
+                class="flex items-center cursor-pointer group"
+                href="https://dev.comunion.io/"
+                target="_blank"
+              >
                 <span class="opacity-81 transform transition group-hover:-translate-y-10px">
                   Seek remote work
                 </span>
@@ -49,8 +61,12 @@ export default defineComponent({
                   src={rightArrowIcon}
                   class="w-12px ml-4px transform transition group-hover:-translate-y-10px"
                 />
-              </div>
-              <div class="flex items-center cursor-pointer group">
+              </a>
+              <a
+                class="flex items-center cursor-pointer group"
+                href="https://dev.comunion.io/"
+                target="_blank"
+              >
                 <span class="opacity-81 transform transition group-hover:-translate-y-10px">
                   Invest
                 </span>
@@ -58,8 +74,12 @@ export default defineComponent({
                   src={rightArrowIcon}
                   class="w-12px ml-4px transform transition group-hover:-translate-y-10px"
                 />
-              </div>
-              <div class="flex items-center cursor-pointer group">
+              </a>
+              <a
+                class="flex items-center cursor-pointer group"
+                href="https://dev.comunion.io/"
+                target="_blank"
+              >
                 <span class="opacity-81 transform transition group-hover:-translate-y-10px">
                   Setup a DAO
                 </span>
@@ -67,30 +87,30 @@ export default defineComponent({
                   src={rightArrowIcon}
                   class="w-12px ml-4px transform transition group-hover:-translate-y-10px"
                 />
-              </div>
+              </a>
             </div>
           </div>
           <div class="w-311px mt-60px text-white m-auto sm:hidden">
             <p class="text-14px leading-20px">I want to…</p>
             <div class="flex items-center leading-12px text-12px mt-20px">
-              <div class="flex items-center w-166px">
+              <a class="flex items-center w-166px" href="https://dev.comunion.io/" target="_blank">
                 <span class="opacity-81">Build a startup</span>
                 <img src={rightArrowIcon} class="w-12px ml-4px" />
-              </div>
-              <div class="flex items-center">
+              </a>
+              <a class="flex items-center" href="https://dev.comunion.io/" target="_blank">
                 <span class="opacity-81">Seek remote work</span>
                 <img src={rightArrowIcon} class="w-12px ml-4px" />
-              </div>
+              </a>
             </div>
             <div class="flex items-center leading-12px text-12px mt-20px">
-              <div class="flex items-center w-166px">
+              <a class="flex items-center w-166px" href="https://dev.comunion.io/" target="_blank">
                 <span class="opacity-81">Invest</span>
                 <img src={rightArrowIcon} class="w-12px ml-4px" />
-              </div>
-              <div class="flex items-center">
+              </a>
+              <a class="flex items-center" href="https://dev.comunion.io/" target="_blank">
                 <span class="opacity-81">Setup a DAO</span>
                 <img src={rightArrowIcon} class="w-12px ml-4px" />
-              </div>
+              </a>
             </div>
           </div>
         </div>
