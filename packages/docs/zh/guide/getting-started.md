@@ -80,7 +80,7 @@ lerna add @comunion/utils --scope @comunion/components
 
 ### 子项目移除依赖
 
-同添加，将命令中的`add [-D]`改为`remove`即可
+直接从对应的项目中删除 `package.json` 中的依赖，然后删除 `yarn.lock`文件和 `node_modules` 目录，接着执行 `npx lerna bootstrap`  
 
 ## 项目共享代码片段
 

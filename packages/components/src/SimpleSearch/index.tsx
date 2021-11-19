@@ -15,5 +15,5 @@ export default defineComponent({
         <input v-model={value.value} placeholder="Please input..." />
       </div>
     )
-  },
+  }
 })

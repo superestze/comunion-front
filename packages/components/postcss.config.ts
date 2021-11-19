@@ -5,5 +5,5 @@ export const prefixerConfig = prefixer({ prefix: 'ui-' })
 export const nestedConfig = nested({ preserveEmpty: false })
 
 export default {
-  plugins: [prefixerConfig, nestedConfig],
+  plugins: [prefixerConfig, nestedConfig]
 }

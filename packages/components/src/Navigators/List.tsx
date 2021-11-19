@@ -8,8 +8,8 @@ export default defineComponent({
   props: {
     title: {
       type: String,
-      required: true,
-    },
+      required: true
+    }
   },
   setup(props, ctx) {
     return () => (
@@ -18,5 +18,5 @@ export default defineComponent({
         {ctx.slots.default?.()}
       </div>
     )
-  },
+  }
 })

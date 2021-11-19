@@ -1,5 +1,7 @@
-import { defineComponent, PropType } from 'vue'
-import { RouteLocationRaw, RouterLink } from 'vue-router'
+import type { PropType } from 'vue'
+import { defineComponent } from 'vue'
+import type { RouteLocationRaw } from 'vue-router'
+import { RouterLink } from 'vue-router'
 import { addClassPrefix } from '../utils'
 
 import './Item.css'
@@ -9,8 +11,8 @@ export default defineComponent({
   props: {
     route: {
       type: [String, Object] as PropType<RouteLocationRaw>,
-      required: true,
-    },
+      required: true
+    }
   },
   setup(props, ctx) {
     return () => (
@@ -22,5 +24,5 @@ export default defineComponent({
         {() => ctx.slots.default?.()}
       </RouterLink>
     )
-  },
+  }
 })
