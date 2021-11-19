@@ -1,36 +1,47 @@
+// Comunion Economics
+import ComunionEconomics from '@/pages/components/ComunionEconomics'
+// Fotter
+import Fotter from '@/pages/components/Fotter'
+// Head
+import Head from '@/pages/components/Head'
+// introduce_and_join
+import IntroduceAndJoin from '@/pages/components/IntroduceAndJoin'
+// Mission
+import Mission from '@/pages/components/Mission'
+// Response
+import OurResponse from '@/pages/components/OurResponse'
+// PainsOfWorld
+import PainsOfWorld from '@/pages/components/PainsOfWorld'
+// UseCases
+import UseCases from '@/pages/components/UseCases'
 import { defineComponent } from 'vue'
-import ComunionEconomics from '../components/ComunionEconomics' // Comunion 经济学
-import Fotter from '../components/Fotter' // Fotter
-// import { RouterLink } from 'vue-router'
-import Head from '../components/Head' // Head
-import IntroduceAndJoin from '../components/IntroduceAndJoin' // 介绍/加入
-import Mission from '../components/Mission' // 使命
-import OurResponse from '../components/OurResponse' // Response
-import UseCases from '../components/UseCases' // 用例
+import styles from './index.module.css'
 
 export default defineComponent({
   name: 'HomePage',
   props: {},
   setup() {
     return () => (
-      <div>
+      <div class="bg-pageBgColor">
         {/* Head */}
         <Head />
-        {/* 内容区 */}
-        <div class="bg-pageBgColor">
-          {/* 介绍/加入 */}
+        {/* content */}
+        <div class={`${styles.contentBox}`}>
+          {/* introduce_and_join */}
           <IntroduceAndJoin />
-          {/* Comunion 经济学 */}
+          {/* Comunion Economics */}
           <ComunionEconomics />
-          {/* 使命 */}
+          {/* Mission */}
           <Mission />
+          {/* PainsOfWorld */}
+          <PainsOfWorld />
           {/* Response */}
           <OurResponse />
-          {/* 用例 */}
+          {/* UseCases */}
           <UseCases />
-          {/* Fotter */}
-          <Fotter />
         </div>
+        {/* Fotter */}
+        <Fotter />
       </div>
     )
   }

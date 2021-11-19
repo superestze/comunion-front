@@ -1,0 +1,31 @@
+.missionBoxH5 {
+  position: absolute;
+  background-image: url('/mission-bg.png');
+  background-repeat: no-repeat;
+  background-size: 307px 175px;
+  background-position: right top;
+  overflow: hidden;
+  height: 175px;
+  width: 307px;
+  left: 50%;
+  transform: translateX(-50%);
+  margin-left: -50px;
+  top: 142px;
+  z-index: 1;
+}
+
+.missionBox {
+  position: absolute;
+  background-image: url('/mission-bg.png');
+  background-repeat: no-repeat;
+  background-size: 1081px 681px;
+  background-position: right top;
+  overflow: hidden;
+  height: 681px;
+  width: 1081px;
+  left: 50%;
+  transform: translateX(-50%);
+  margin-left: -300px;
+  bottom: -50px;
+  z-index: 1;
+}

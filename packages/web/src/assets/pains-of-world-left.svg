@@ -1,0 +1,11 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<svg width="570px" height="324px" viewBox="0 0 570 324" version="1.1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink">
+    <title>形状结合</title>
+    <g id="新官网" stroke="none" stroke-width="1" fill="none" fill-rule="evenodd">
+        <g id="新切图" transform="translate(-165.000000, -2912.000000)" fill="#5E18FE">
+            <g id="编组-20" transform="translate(165.000000, 2912.000000)">
+                <path d="M556,0 C563.731986,-1.42034288e-15 570,6.2680135 570,14 L570,98 L570,98 C534.653776,98 506,126.653776 506,162 C506,197.346224 534.653776,226 570,226 L570,310 C570,317.731986 563.731986,324 556,324 L14,324 C6.2680135,324 9.46895252e-16,317.731986 0,310 L0,14 C-9.46895252e-16,6.2680135 6.2680135,1.42034288e-15 14,0 L556,0 Z" id="形状结合"></path>
+            </g>
+        </g>
+    </g>
+</svg>

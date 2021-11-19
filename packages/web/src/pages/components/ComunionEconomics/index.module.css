@@ -1,0 +1,31 @@
+.comunionEconomicsBox {
+  position: absolute;
+  background-image: url('/mission-bg.png');
+  background-repeat: no-repeat;
+  background-size: 734px 681px;
+  background-position: left top;
+  overflow: hidden;
+  height: 681px;
+  width: 734px;
+  left: 50%;
+  transform: translateX(-50%);
+  margin-left: 630px;
+  top: 0;
+  z-index: 1;
+}
+
+.comunionEconomicsBoxH5 {
+  position: absolute;
+  background-image: url('/mission-bg.png');
+  background-repeat: no-repeat;
+  background-size: 251px 202px;
+  background-position: left top;
+  overflow: hidden;
+  height: 202px;
+  width: 251px;
+  left: 50%;
+  transform: translateX(-50%);
+  margin-left: 150px;
+  top: 154px;
+  z-index: 1;
+}

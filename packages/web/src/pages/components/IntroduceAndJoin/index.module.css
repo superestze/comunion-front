@@ -1,0 +1,48 @@
+.introduceAndJoinBox::before {
+  content: '';
+  position: absolute;
+  background-image: url('@/assets/introduce-bc-1.png');
+  background-repeat: no-repeat;
+  background-size: 1207px 422px;
+  background-position: center top;
+  overflow: hidden;
+  height: 422px;
+  width: 1207px;
+  left: 50%;
+  transform: translateX(-50%);
+  margin-left: 120px;
+  bottom: 20px;
+  z-index: 3;
+}
+
+/* .introduceAndJoinBox::after {
+  content: '';
+  position: absolute;
+  background-image: url('@/assets/introduce-bc-2.png');
+  background-repeat: no-repeat;
+  background-size: 733px 554px;
+  background-position: center top;
+  overflow: hidden;
+  height: 554px;
+  width: 733px;
+  left: 50%;
+  transform: translateX(-50%);
+  margin-left: -500px;
+  bottom: 50px;
+  z-index: 2;
+} */
+
+.introduceAndJoinBoxH5 {
+  content: '';
+  position: absolute;
+  background-image: url('@/assets/introduce-bc-1.png');
+  background-repeat: no-repeat;
+  background-size: 311px 191px;
+  background-position: left top;
+  overflow: hidden;
+  height: 191px;
+  width: 311px;
+  right: 0%;
+  top: 190px;
+  z-index: 3;
+}

@@ -1,6 +1,6 @@
+import smallLogo from '@/assets/small-logo.png'
 import { defineComponent } from 'vue'
 import { RouterLink } from 'vue-router'
-import smallLogo from '../../assets/small-logo.png'
 
 export default defineComponent({
   name: 'Fotter',
@@ -11,19 +11,19 @@ export default defineComponent({
         links: [
           {
             title: 'Wlkl',
-            url: '/'
+            url: 'https://wiki.comunion.io/'
           },
           {
             title: 'BBS',
-            url: '/'
+            url: 'https://bbs.comunion.io/'
           },
           {
             title: 'Yuque',
-            url: '/'
+            url: 'https://comunion.yuque.com/'
           },
           {
             title: 'Story',
-            url: '/'
+            url: 'https://www.yuque.com/books/share/546ee735-190d-48f0-a2c1-12c297c54d05?#'
           }
         ]
       },
@@ -32,15 +32,15 @@ export default defineComponent({
         links: [
           {
             title: 'Github',
-            url: '/'
+            url: ' https://github.com/comunion-io/'
           },
           {
             title: 'Yapi',
-            url: '/'
+            url: ' https://yapi.comunion.io/'
           },
           {
             title: 'Taiga',
-            url: '/'
+            url: ' https://taiga.comunion.io/'
           }
         ]
       },
@@ -49,7 +49,7 @@ export default defineComponent({
         links: [
           {
             title: 'Private version',
-            url: '/'
+            url: 'https://private.comunion.io/'
           },
           {
             title: 'Enterprise',
@@ -76,13 +76,14 @@ export default defineComponent({
                 {data.title}
               </div>
               {data.links.map(item => (
-                <RouterLink
-                  class="pt-12px pb-12px sm:pb-16px text-white text-15px sm:text-16px leading-15px block"
+                <a
+                  class="pt-12px pb-12px sm:pb-16px text-white text-15px sm:text-16px leading-15px block hover:text-primary"
                   key={item.title}
-                  to={item.url}
+                  href={item.url}
+                  target="_blank"
                 >
                   {item.title}
-                </RouterLink>
+                </a>
               ))}
             </div>
           ))}
