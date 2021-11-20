@@ -39,26 +39,26 @@ export default defineComponent({
     ]
 
     return () => (
-      <div class="h-813px sm:h-854px w-full overflow-hidden relative after:content after:absolute after:h-full after:sm:h-761px after:w-3/1 after:-left-1/1 after:bottom-0 after:h-full after:bg-gradient-to-b after:from-pageBgColor after:to-primary after:rounded-br-1/2 after:rounded-bl-1/2">
+      <div class="h-813px w-full overflow-hidden relative sm:h-854px after:bg-gradient-to-b after:from-pageBgColor after:to-primary after:h-full after:rounded-br-1/2 after:rounded-bl-1/2 after:bottom-0 after:-left-1/1 after:w-3/1 after:content-[] after:absolute after:sm:h-761px ">
         <div class={`${styles.missionBox} <sm:hidden`}></div>
         <div class={`${styles.missionBoxH5} sm:hidden`}></div>
-        <div class="relative z-1 w-311px sm:w-1110px m-auto">
+        <div class="m-auto w-311px z-1 relative sm:w-1110px">
           {/* title */}
-          <h2 class="font-bold text-white text-center mt-96px sm:mt-188px text-24px sm:text-48px">
+          <h2 class="font-bold mt-96px text-white text-center text-24px sm:mt-188px sm:text-48px">
             Mission
           </h2>
           {/* introduce */}
-          <div class="mt-12px sm:mt-15px text-12px sm:text-18px text-white text-opacity-80 leading-15px">
-            <p class="text-left sm:text-center sm:w-852px text-justify sm:m-auto">
+          <div class="mt-12px text-white text-12px text-opacity-80 leading-15px sm:mt-15px sm:text-18px">
+            <p class="text-left text-justify sm:m-auto sm:text-center sm:w-852px">
               AI, automation and platform model have become the growth engine of world economy. It
               has fueled GDP growth, however has created new social problems.
             </p>
           </div>
           {/* devoted to */}
-          <p class="text-white leading-20px text-14px sm:text-20px mt-36px sm:mt-50px text-left sm:m-auto sm:text-center">
+          <p class="mt-36px text-white text-left text-14px leading-20px sm:m-auto sm:mt-50px sm:text-center sm:text-20px">
             Comunion is devoted to :
           </p>
-          <div class="<sm:hidden sm:w-1110px m-auto flex justify-between mt-100px">
+          <div class="flex m-auto mt-100px justify-between sm:w-1110px <sm:hidden">
             <div class="text-30px w-400px">
               {infoList.map((item, index) => (
                 <button
@@ -84,8 +84,8 @@ export default defineComponent({
               (item, index) =>
                 data.current === index && (
                   <div key={index} class="flex-1">
-                    <p class="text-32px leading-40px text-white">{item.title}</p>
-                    <p class="text-15px leading-26px text-white mt-33px text-justify">
+                    <p class="text-white text-32px leading-40px">{item.title}</p>
+                    <p class="mt-33px text-white text-justify text-15px leading-26px">
                       {item.content}
                     </p>
                   </div>
@@ -93,26 +93,26 @@ export default defineComponent({
             )}
           </div>
           <div class="sm:hidden">
-            <button class="w-206px h-44px bg-primary flex items-center justify-center mt-60px rounded-22px">
+            <button class="bg-primary flex rounded-22px h-44px mt-60px w-206px items-center justify-center">
               <span class="text-white text-bold text-13px">JElevate labor income</span>
-              <img class="w-14px h-12px ml-10px" src={rightArrowWhite} />
+              <img class="h-12px ml-10px w-14px" src={rightArrowWhite} />
             </button>
-            <p class="text-20px leading-26px text-white mt-30px">
+            <p class="mt-30px text-white text-20px leading-26px">
               Increase labor income on both relative and absolute terms
             </p>
-            <p class="text-12px leading-18px text-white mt-10px text-justify">
+            <p class="mt-10px text-white text-justify text-12px leading-18px">
               Currently workers get paid fixed salary in fiat currency. Quantitative Easing has
               significantly inflated living expenses and asset price, labor income has been
               declining on both relative and absolute terms. In Comunion, participants gets paid by
               tokens representing stakes in the startup, sharing capital upside of the business.
             </p>
-            <p class="text-13px leading-13px text-white text-bold mt-46px">
+            <p class="mt-46px text-white text-bold text-13px leading-13px">
               Break capital monopoly
             </p>
-            <p class="text-13px leading-13px text-white text-bold mt-38px">
+            <p class="mt-38px text-white text-bold text-13px leading-13px">
               Eliminate startup barrier
             </p>
-            <p class="text-13px leading-13px text-white text-bold mt-38px">Reduce wealth gap</p>
+            <p class="mt-38px text-white text-bold text-13px leading-13px">Reduce wealth gap</p>
           </div>
         </div>
       </div>
