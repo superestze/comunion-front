@@ -1,20 +1,20 @@
 // Comunion Economics
-import ComunionEconomics from '@/pages/components/ComunionEconomics'
-// Fotter
-import Fotter from '@/pages/components/Fotter'
-// Head
-import Head from '@/pages/components/Head'
-// introduce_and_join
-import IntroduceAndJoin from '@/pages/components/IntroduceAndJoin'
-// Mission
-import Mission from '@/pages/components/Mission'
-// Response
-import OurResponse from '@/pages/components/OurResponse'
-// PainsOfWorld
-import PainsOfWorld from '@/pages/components/PainsOfWorld'
-// UseCases
-import UseCases from '@/pages/components/UseCases'
 import { defineComponent } from 'vue'
+import ComunionEconomics from './components/ComunionEconomics'
+// Fotter
+import Fotter from './components/Fotter'
+// Head
+import Head from './components/Head'
+// introduce_and_join
+import IntroduceAndJoin from './components/IntroduceAndJoin'
+// Mission
+import Mission from './components/Mission'
+// Response
+import OurResponse from './components/OurResponse'
+// PainsOfWorld
+import PainsOfWorld from './components/PainsOfWorld'
+// UseCases
+import UseCases from './components/UseCases'
 import styles from './index.module.css'
 
 export default defineComponent({

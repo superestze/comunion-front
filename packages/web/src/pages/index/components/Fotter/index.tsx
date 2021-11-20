@@ -10,7 +10,7 @@ export default defineComponent({
         title: 'Connect with us',
         links: [
           {
-            title: 'Wlkl',
+            title: 'Wiki',
             url: 'https://wiki.comunion.io/'
           },
           {
@@ -60,24 +60,24 @@ export default defineComponent({
     ]
 
     return () => (
-      <div class="w-311px sm:w-1110px m-auto border-t-1px border-t-white mt-40px border-opacity-10 pb-28px sm:pb-62px sm:pt-36px sm:flex">
+      <div class="border-t-white m-auto border-t-1px border-opacity-10 mt-40px pb-28px w-311px sm:flex sm:pt-36px sm:pb-62px sm:w-1110px">
         {/* about us */}
         <RouterLink
-          class="flex items-center sm:items-baseline text-white mt-30px sm:mt-0 mb-16px block sm:mr-126px"
+          class="flex mt-30px text-white mb-16px items-center block sm:mt-0 sm:mr-126px sm:items-baseline"
           to="/"
         >
           <img src={smallLogo} class="w-26px" />
-          <span class="ml-16px sm:ml-10px leading-24px text-24px sm:text-30px">About us</span>
+          <span class="ml-16px text-24px leading-24px sm:ml-10px sm:text-30px">About us</span>
         </RouterLink>
-        <div class="sm:flex sm:justify-between sm:flex-1">
+        <div class="sm:flex sm:flex-1 sm:justify-between">
           {footerLinks.map(data => (
             <div key={data.title} class="mb-40px">
-              <div class="pt-12px pb-12px sm:pb-16px text-white text-18px sm:text-20px leading-18px block">
+              <div class="text-white pt-12px pb-12px text-18px leading-18px block sm:pb-16px sm:text-20px">
                 {data.title}
               </div>
               {data.links.map(item => (
                 <a
-                  class="pt-12px pb-12px sm:pb-16px text-white text-15px sm:text-16px leading-15px block hover:text-primary"
+                  class="text-white pt-12px pb-12px text-15px leading-15px block sm:pb-16px sm:text-16px hover:text-primary"
                   key={item.title}
                   href={item.url}
                   target="_blank"
