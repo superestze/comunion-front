@@ -1,3 +1,6 @@
+// import DemoComponentPlugin from './plugin/index'
+import HelloComponentPlugin from './plugin/hello'
+
 export default {
   lang: 'en-US',
   title: 'Comunion Frontend Developer',
@@ -115,6 +118,8 @@ export default {
   markdown: {
     config: (md) => {
       md.use(require('markdown-it-task-lists'))
+      // md.use(DemoComponentPlugin)
+      md.use(HelloComponentPlugin)
     }
   }
 }
