@@ -1,6 +1,9 @@
 name: Develop environment deployment
 
 on:
+  push:
+    branches:
+      - develop
   pull_request:
     branches:
       - develop
@@ -27,8 +30,9 @@ jobs:
           aws-region: ap-northeast-1
       - name: Deploy static site to S3 bucket
         run: |
-          aws s3 sync ./packages/web/dist/ s3://comunion-dev --delete
-          aws cloudfront create-invalidation --distribution-id E2AJ2NIGHSNYL --paths 'index.html' 'service-worker.js' 'manifest.json'
+          cd packages/web/dist
+          aws s3 sync . s3://comunion-dev --delete --acl public-read
+          aws cloudfront create-invalidation --distribution-id E2AJ2NIGHSNYL --paths '/index.html' '/service-worker.js' '/manifest.json'
       - name: Notification
         uses: erguotou520/instant-access-action@0.0.4
         if: ${{ success() }}

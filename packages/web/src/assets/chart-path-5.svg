@@ -1,0 +1,19 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<svg width="225px" height="20px" viewBox="0 0 225 20" version="1.1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink">
+    <title>路径 10备份 3</title>
+    <defs>
+        <linearGradient x1="50%" y1="0%" x2="50%" y2="100%" id="linearGradient-1">
+            <stop stop-color="#3A088C" offset="0%"></stop>
+            <stop stop-color="#00E1FF" offset="100%"></stop>
+        </linearGradient>
+    </defs>
+    <g id="新官网" stroke="none" stroke-width="1" fill="none" fill-rule="evenodd">
+        <g id="鼠标触碰" transform="translate(-813.000000, -3040.000000)" fill="url(#linearGradient-1)">
+            <g id="编组-16备份" transform="translate(765.000000, 2915.000000)">
+                <g id="编组-10" transform="translate(0.000000, 28.500000)">
+                    <path d="M151.5,218.585041 C152.341578,218.344545 152.773596,218.163347 152.796053,218.041446 C154.200782,210.416557 155.567245,199.917739 156.895442,186.544995 C158.255491,172.851561 158.864224,108.864909 158.721642,-5.414959 L162.654311,-5.414959 C162.870628,112.567985 163.418629,176.554637 164.298314,186.544995 C165.675036,202.180091 167.078053,212.639097 168.507366,217.922011 C168.549013,218.075943 168.936585,218.296953 169.670082,218.585041 L151.5,218.585041 Z" id="路径-10备份-3" transform="translate(160.585041, 106.585041) rotate(-270.000000) translate(-160.585041, -106.585041) "></path>
+                </g>
+            </g>
+        </g>
+    </g>
+</svg>

@@ -1,0 +1,55 @@
+.introduceAndJoinBox::before {
+  content: '';
+  position: absolute;
+  background-image: url('@/assets/introduce-bc.png');
+  background-repeat: no-repeat;
+  background-size: 1800px auto;
+  background-position: center top;
+  overflow: hidden;
+  width: 300%;
+  left: -100%;
+  bottom: 0;
+  z-index: 3;
+  border-radius: 50%;
+  height: 100%;
+}
+
+/* .introduceAndJoinBox::after {
+  content: '';
+  position: absolute;
+  background-image: url('@/assets/introduce-bc-2.png');
+  background-repeat: no-repeat;
+  background-size: 733px 554px;
+  background-position: center top;
+  overflow: hidden;
+  height: 554px;
+  width: 733px;
+  left: 50%;
+  transform: translateX(-50%);
+  margin-left: -500px;
+  bottom: 50px;
+  z-index: 2;
+} */
+
+.introduceAndJoinBoxH5 {
+  content: '';
+  position: absolute;
+  background-image: url('@/assets/introduce-bc.png');
+  background-repeat: no-repeat;
+  background-size: calc(100% + 10%) 250px;
+  background-position: center top;
+  overflow: hidden;
+  height: 250px;
+  width: 100%;
+  left: 0;
+  top: 154px;
+  z-index: 3;
+}
+
+.wantToText {
+  text-shadow: 0 1px 0 #4500e2;
+}
+
+.h5WantToText {
+  text-shadow: 0 1px 0 #4500e2;
+}

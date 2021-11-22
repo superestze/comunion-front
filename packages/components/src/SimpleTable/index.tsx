@@ -7,5 +7,5 @@ export default defineComponent({
   props: {},
   setup(props, ctx) {
     return () => <span>{ctx.slots.default?.()}</span>
-  },
+  }
 })
