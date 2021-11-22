@@ -45,7 +45,7 @@ export default defineComponent({
                 target="_blank"
               >
                 <span class="opacity-81 transform transition group-hover:-translate-y-10px">
-                  Build a startup
+                  Build a Startup
                 </span>
                 <img
                   src={rightArrowIcon}
@@ -97,7 +97,7 @@ export default defineComponent({
             <p class="text-14px leading-20px">I want to…</p>
             <div class="flex mt-20px text-12px leading-12px items-center">
               <a class="flex w-166px items-center" href="https://dev.comunion.io/" target="_blank">
-                <span class="opacity-81">Build a startup</span>
+                <span class="opacity-81">Build a Startup</span>
                 <img src={rightArrowIcon} class="ml-4px w-12px" />
               </a>
               <a class="flex items-center" href="https://dev.comunion.io/" target="_blank">
