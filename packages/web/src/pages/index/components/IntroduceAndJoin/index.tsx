@@ -7,7 +7,7 @@ export default defineComponent({
   name: 'IntroduceAndJoin',
   setup() {
     return () => (
-      <div class="h-580px w-full pt-66px overflow-hidden relative sm:h-844px sm:pt-60px after:bg-primary after:h-full after:rounded-br-1/2 after:rounded-bl-1/2 after:top-0 after:-left-1/1 after:w-3/1 after:z-1 after:content-[] after:absolute ">
+      <div class="h-646px w-full pt-66px overflow-hidden relative sm:h-844px sm:pt-60px after:bg-primary after:h-full after:rounded-br-1/2 after:rounded-bl-1/2 after:top-0 after:-left-1/1 after:w-3/1 after:z-1 after:content-[] after:absolute ">
         <div class={`${styles.introduceAndJoinBox} <sm:hidden`}></div>
         <div class={`${styles.introduceAndJoinBoxH5} sm:hidden`}></div>
         <div class="z-3 relative">
@@ -44,12 +44,14 @@ export default defineComponent({
                 href="https://dev.comunion.io/"
                 target="_blank"
               >
-                <span class="opacity-81 transform transition group-hover:-translate-y-10px">
+                <span
+                  class={`opacity-81 transform transition group-hover:-translate-y-2px ${styles.wantToText}`}
+                >
                   Build a Startup
                 </span>
                 <img
                   src={rightArrowIcon}
-                  class="ml-4px transform transition w-12px group-hover:-translate-y-10px"
+                  class="ml-4px transform transition w-12px group-hover:-translate-y-2px"
                 />
               </a>
               <a
@@ -57,12 +59,14 @@ export default defineComponent({
                 href="https://dev.comunion.io/"
                 target="_blank"
               >
-                <span class="opacity-81 transform transition group-hover:-translate-y-10px">
+                <span
+                  class={`opacity-81 transform transition group-hover:-translate-y-2px ${styles.wantToText}`}
+                >
                   Seek remote work
                 </span>
                 <img
                   src={rightArrowIcon}
-                  class="ml-4px transform transition w-12px group-hover:-translate-y-10px"
+                  class="ml-4px transform transition w-12px group-hover:-translate-y-2px"
                 />
               </a>
               <a
@@ -70,12 +74,14 @@ export default defineComponent({
                 href="https://dev.comunion.io/"
                 target="_blank"
               >
-                <span class="opacity-81 transform transition group-hover:-translate-y-10px">
+                <span
+                  class={`opacity-81 transform transition group-hover:-translate-y-2px ${styles.wantToText}`}
+                >
                   Invest
                 </span>
                 <img
                   src={rightArrowIcon}
-                  class="ml-4px transform transition w-12px group-hover:-translate-y-10px"
+                  class="ml-4px transform transition w-12px group-hover:-translate-y-2px"
                 />
               </a>
               <a
@@ -83,12 +89,14 @@ export default defineComponent({
                 href="https://dev.comunion.io/"
                 target="_blank"
               >
-                <span class="opacity-81 transform transition group-hover:-translate-y-10px">
+                <span
+                  class={`opacity-81 transform transition group-hover:-translate-y-2px ${styles.wantToText}`}
+                >
                   Setup a DAO
                 </span>
                 <img
                   src={rightArrowIcon}
-                  class="ml-4px transform transition w-12px group-hover:-translate-y-10px"
+                  class="ml-4px transform transition w-12px group-hover:-translate-y-2px"
                 />
               </a>
             </div>
@@ -97,21 +105,21 @@ export default defineComponent({
             <p class="text-14px leading-20px">I want to…</p>
             <div class="flex mt-20px text-12px leading-12px items-center">
               <a class="flex w-166px items-center" href="https://dev.comunion.io/" target="_blank">
-                <span class="opacity-81">Build a Startup</span>
+                <span class={`opacity-81 ${styles.h5WantToText}`}>Build a Startup</span>
                 <img src={rightArrowIcon} class="ml-4px w-12px" />
               </a>
               <a class="flex items-center" href="https://dev.comunion.io/" target="_blank">
-                <span class="opacity-81">Seek remote work</span>
+                <span class={`opacity-81 ${styles.h5WantToText}`}>Seek remote work</span>
                 <img src={rightArrowIcon} class="ml-4px w-12px" />
               </a>
             </div>
             <div class="flex mt-20px text-12px leading-12px items-center">
               <a class="flex w-166px items-center" href="https://dev.comunion.io/" target="_blank">
-                <span class="opacity-81">Invest</span>
+                <span class={`opacity-81 ${styles.h5WantToText}`}>Invest</span>
                 <img src={rightArrowIcon} class="ml-4px w-12px" />
               </a>
               <a class="flex items-center" href="https://dev.comunion.io/" target="_blank">
-                <span class="opacity-81">Setup a DAO</span>
+                <span class={`opacity-81 ${styles.h5WantToText}`}>Setup a DAO</span>
                 <img src={rightArrowIcon} class="ml-4px w-12px" />
               </a>
             </div>

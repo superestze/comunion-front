@@ -4,14 +4,35 @@ import openMenu from '@/assets/open-menu.png'
 import { defineComponent, reactive } from 'vue'
 import { RouterLink } from 'vue-router'
 
+let top = 0
 export default defineComponent({
   name: 'Head',
   setup() {
-    const state = reactive({ showMenu: false })
+    const state = reactive({ showMenu: false, showHead: true })
+
+    window.addEventListener(
+      'scroll',
+      () => {
+        const scrollTop =
+          window.pageYOffset || document.documentElement.scrollTop || document.body.scrollTop
+        const scroll = scrollTop - top
+        top = scrollTop
+        if (scroll < 0) {
+          state.showHead = true
+        } else {
+          state.showHead = false
+        }
+      },
+      true
+    )
 
     return () => (
       <div>
-        <div class="fixed left-0 top-0 z-99 w-full bg-white ">
+        <div
+          class={`fixed left-0 top-0 z-99 w-full bg-white transition-all duration-300 ${
+            !state.showHead && '-top-66px'
+          }`}
+        >
           <div class="m-auto <sm:h-66px h-60px w-1110px <sm:w-full h-full flex justify-between items-center <sm:pl-32px <sm:pr-33px">
             <div class="flex items-center h-full">
               {/* logo */}
