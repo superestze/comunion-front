@@ -8,7 +8,7 @@ export default defineComponent({
   name: 'OurResponse',
   setup() {
     return () => (
-      <div class="h-685px sm:h-979px w-full overflow-hidden relative pb-35 pt-50px sm:pt-110px sm:pb-110px">
+      <div class="h-685px sm:h-830px w-full overflow-hidden relative pt-50px sm:pt-60px">
         <div class="relative z-1">
           {/* title */}
           <h2 class="font-bold text-white text-center text-24px sm:text-48px">Our Response</h2>

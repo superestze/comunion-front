@@ -15,7 +15,7 @@ export default defineComponent({
         <div class={`${styles.comunionEconomicsBoxH5} sm:hidden`}></div>
         <div class="z-1 relative">
           {/* title */}
-          <h2 class="font-bold mt-83px text-white text-center text-24px sm:mt-185px sm:text-48px">
+          <h2 class="font-bold mt-83px text-white text-center text-24px sm:mt-105px sm:text-48px">
             Comunion Economics
           </h2>
           {/* introduce */}
@@ -35,25 +35,25 @@ export default defineComponent({
           </div>
 
           <div class="mt-45px grid gap-x-15px gap-y-30px grid-cols-[128px,128px] grid-rows-[174px,174px] justify-center sm:mt-64px sm:gap-x-28px sm:grid-cols-[256px,256px,256px,256px] sm:grid-rows-[348px]">
-            <div class="border-primary bg-[#00183c] bg-opacity-40 border-1 rounded-7px pt-25px sm:pt-50px">
+            <div class="border-primary bg-[#00183c] bg-opacity-40 border-1 rounded-7px pt-25px sm:pt-50px transform transition hover:-translate-y-10px hover:bg-opacity-60">
               <p class="text-center text-bold text-white text-10px leading-14px sm:text-20px sm:leading-28px">
                 Digital Identity
               </p>
               <img class="m-auto mt-32px w-90px sm:mt-64px sm:w-180px" src={digitalIdentity} />
             </div>
-            <div class="border-primary bg-[#7D6100] bg-opacity-20 border-1 rounded-7px pt-25px sm:pt-50px">
+            <div class="border-primary bg-[#7D6100] bg-opacity-20 border-1 rounded-7px pt-25px sm:pt-50px transform transition hover:-translate-y-10px hover:bg-opacity-40">
               <p class="text-center text-bold text-white text-10px leading-14px sm:text-20px sm:leading-28px">
                 Smart Contracts
               </p>
               <img class="m-auto mt-32px w-64px sm:mt-64px sm:w-127px" src={smartContracts} />
             </div>
-            <div class="border-primary bg-[#00433C] bg-opacity-40 border-1 rounded-7px pt-25px sm:pt-50px">
+            <div class="border-primary bg-[#00433C] bg-opacity-40 border-1 rounded-7px pt-25px sm:pt-50px transform transition hover:-translate-y-10px hover:bg-opacity-40">
               <p class="text-center text-bold text-white text-10px leading-14px sm:text-20px sm:leading-28px">
                 Tokenisation
               </p>
               <img class="m-auto mt-25px w-71px sm:mt-64px sm:w-142px" src={tokenisation} />
             </div>
-            <div class="border-primary bg-[#54000C] bg-opacity-24 border-1 rounded-7px pt-25px sm:pt-50px">
+            <div class="border-primary bg-[#54000C] bg-opacity-24 border-1 rounded-7px pt-25px sm:pt-50px transform transition hover:-translate-y-10px hover:bg-opacity-44">
               <p class="text-center text-bold text-white text-10px leading-14px sm:text-20px sm:leading-28px">
                 Governance
               </p>

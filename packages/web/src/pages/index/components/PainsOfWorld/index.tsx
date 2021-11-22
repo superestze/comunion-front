@@ -21,7 +21,7 @@ export default defineComponent({
   name: 'UseCases',
   setup() {
     return () => (
-      <div class="w-full overflow-hidden pt-60px sm:pt-158px pb-50px sm:pb-110px">
+      <div class="w-full overflow-hidden pt-60px sm:pt-100px pb-50px sm:pb-60px">
         <div class="relative z-1 w-311px sm:w-1110px m-auto">
           {/* title */}
           <h2 class="font-bold text-white text-center text-24px sm:text-48px">Pains of World</h2>

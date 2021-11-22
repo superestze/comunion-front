@@ -12,7 +12,7 @@ export default defineComponent({
       <div class="w-full overflow-hidden pb-78px sm:pb-150px">
         <div class="relative z-1 w-311px sm:w-1110px m-auto">
           {/* title */}
-          <h2 class="font-bold text-white text-center sm:text-left mt-35px sm:mt-110px text-24px sm:text-48px">
+          <h2 class="font-bold text-white text-center mt-35px sm:mt-60px text-24px sm:text-48px">
             Use Cases
           </h2>
           {/* introduce */}
@@ -23,7 +23,7 @@ export default defineComponent({
               help these organizations to grow into unicorns
             </p>
           </div> */}
-          <div class="flex flex-wrap items-center mt-68px sm:mt-95px sm:justify-between px-30px sm:px-20px">
+          <div class="flex flex-wrap items-center mt-68px sm:mt-70px sm:justify-between px-30px sm:px-20px">
             <div class="flex flex-col items-center group">
               <img
                 src={StartUp}

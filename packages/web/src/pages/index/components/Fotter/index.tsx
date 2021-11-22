@@ -60,7 +60,7 @@ export default defineComponent({
     ]
 
     return () => (
-      <div class="border-t-white m-auto border-t-1px border-opacity-10 mt-40px pb-28px w-311px sm:flex sm:pt-36px sm:pb-62px sm:w-1110px">
+      <div class="border-t-white m-auto border-t-1px border-opacity-10 pb-28px w-311px sm:flex sm:pt-36px sm:pb-62px sm:w-1110px">
         {/* about us */}
         <RouterLink
           class="flex mt-30px text-white mb-16px items-center block sm:mt-0 sm:mr-126px sm:items-baseline"
