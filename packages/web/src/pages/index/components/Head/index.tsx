@@ -1,7 +1,6 @@
 import closeMenu from '@/assets/close-menu.png'
 import logo from '@/assets/logo.png'
 import openMenu from '@/assets/open-menu.png'
-import smallLogo from '@/assets/small-logo.png'
 import { defineComponent, reactive } from 'vue'
 import { RouterLink } from 'vue-router'
 
@@ -16,8 +15,7 @@ export default defineComponent({
           <div class="m-auto <sm:h-66px h-60px w-1110px <sm:w-full h-full flex justify-between items-center <sm:pl-32px <sm:pr-33px">
             <div class="flex items-center h-full">
               {/* logo */}
-              <img src={smallLogo} class="w-22px h-21px sm:hidden" />
-              <img src={logo} class="w-136px <sm:hidden" />
+              <img src={logo} class="w-136px <sm:w-119px" />
               <a
                 class="text-[#333333] text-16px text-bold ml-54px  hover:text-primary <sm:hidden"
                 href="https://wiki.comunion.io/comunion-economics"
@@ -44,7 +42,7 @@ export default defineComponent({
                 href="https://dev.comunion.io/b/guide"
                 target="_blank"
               >
-                + New Start-Up
+                + New Startup
               </a>
               <a
                 class="w-146px h-32px rounded-4px border-1 border-primary text-primary leading-32px text-14px text-bold text-center"
@@ -76,7 +74,7 @@ export default defineComponent({
             </RouterLink>
             <div class="flex items-center justify-between">
               <button class="w-128px h-48px rounded-6px bg-primary text-white leading-48px text-13px text-bold">
-                + New Start-Up
+                + New Startup
               </button>
               <button class="w-128px h-48px rounded-6px border-1 border-primary text-primary leading-48px text-13px text-bold">
                 Connect account

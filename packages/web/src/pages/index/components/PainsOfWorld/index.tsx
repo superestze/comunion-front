@@ -34,9 +34,6 @@ export default defineComponent({
                 Imbalanced access to opportunities
               </p>
               <p class="text-bold text-white text-18px leading-24px mt-12px w-457px">
-                IT engineer in India makes $1 an hour vs. $50 an hour by peers in Silicon Valley
-              </p>
-              <p class="text-bold text-white text-18px leading-24px mt-10px w-457px">
                 Inequalities are deepening for vulnerable populations in countries with weaker
                 health systems due to Covid-19
               </p>
@@ -98,15 +95,11 @@ export default defineComponent({
               <img src={SwedenChart} class={`${styles.lineChartImg} z-6`} />
             </div>
             <div class={styles.rightBottomBox}>
-              <p class="text-bold text-white text-36px leading-36px">The Gap of Wealth</p>
+              <p class="text-bold text-white text-36px leading-36px">Wealth Gap</p>
               <p class="text-bold text-20px leading-36px text-[#00E0FE] mt-23px">
                 Workers excluded from capital gain
               </p>
               <p class="text-bold text-white text-18px leading-24px mt-12px w-457px">
-                Employees receive salary in fiat currencies, largely left out from company’s
-                valuation gain
-              </p>
-              <p class="text-bold text-white text-18px leading-24px mt-10px w-457px">
                 High entry barriers for individuals to participate within the current VC/PE
                 ecosystem; Big tech monopoly, rich gets richer
               </p>
@@ -118,9 +111,6 @@ export default defineComponent({
             <p class="text-bold text-white text-18px leading-18px">Extreme Poverty</p>
             <p class="text-bold text-12px leading-18px text-[#00E0FE] mt-8px">
               Imbalanced access to opportunities
-            </p>
-            <p class="text-bold text-white text-12px leading-15px mt-6px w-270px">
-              IT engineer in India makes $1 an hour vs. $50 an hour by peers in Silicon Valley
             </p>
             <p class="text-bold text-white text-12px leading-15px mt-5px w-270px">
               Inequalities are deepening for vulnerable populations in countries with weaker health
@@ -192,13 +182,9 @@ export default defineComponent({
             </div>
           </div>
           <div class={styles.box3}>
-            <p class="text-bold text-white text-18px leading-18px">The Gap of Wealth</p>
+            <p class="text-bold text-white text-18px leading-18px">Wealth Gap</p>
             <p class="text-bold text-12px leading-18px text-[#00E0FE] mt-8px">
               Workers excluded from capital gain
-            </p>
-            <p class="text-bold text-white text-12px leading-15px mt-6px w-270px">
-              Employees receive salary in fiat currencies, largely left out from company’s valuation
-              gain
             </p>
             <p class="text-bold text-white text-12px leading-15px mt-5px w-270px">
               High entry barriers for individuals to participate within the current VC/PE ecosystem;
