@@ -14,8 +14,8 @@ export default defineComponent({
             url: 'https://wiki.comunion.io/'
           },
           {
-            title: 'BBS',
-            url: 'https://bbs.comunion.io/'
+            title: 'Talk',
+            url: 'https://talk.comunion.org/'
           },
           {
             title: 'Yuque',
