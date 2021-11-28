@@ -16,15 +16,4 @@ yarn
 yarn dev
 ```
 
-```Demo 按钮
-import { defineComponent } from 'vue'
-import { Button } from '@comunion/components'
-
-export default defineComponent({
-  setup() {
-    return () => (
-      <Button>这是按钮</Button>
-    )
-  }
-})
-```
+<Demo src="zh/Button/index" />

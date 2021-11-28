@@ -1,6 +1,10 @@
-// import DemoComponentPlugin from './plugin/index'
-import HelloComponentPlugin from './plugin/hello'
+import { DemoComponentPlugin } from './plugin/index'
+import vueJsx from '@vitejs/plugin-vue-jsx'
+// import HelloComponentPlugin from './plugin/hello'
 
+import type { UserConfig } from 'vitepress/types/index'
+
+/** @type {import('vitepress/types').UserConfig} */
 export default {
   lang: 'en-US',
   title: 'Comunion Frontend Developer',
@@ -118,8 +122,15 @@ export default {
   markdown: {
     config: (md) => {
       md.use(require('markdown-it-task-lists'))
-      // md.use(DemoComponentPlugin)
-      md.use(HelloComponentPlugin)
+      md.use(DemoComponentPlugin)
+      // md.use(HelloComponentPlugin)
     }
+  },
+  vite: {
+    plugins: [
+      vueJsx({
+        enableObjectSlots: true
+      })
+    ]
   }
 }
