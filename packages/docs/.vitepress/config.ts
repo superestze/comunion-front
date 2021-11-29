@@ -84,7 +84,8 @@ export default {
               text: '基础',
               children: [
                 { text: '全局样式', link: '/zh/components/styles' },
-                { text: '图标', link: '/zh/components/icons' }
+                { text: '图标', link: '/zh/components/icons' },
+                { text: '按钮', link: '/zh/components/button' }
               ]
             },
             {

@@ -15,5 +15,3 @@ cd comunion-front
 yarn
 yarn dev
 ```
-
-<Demo src="zh/Button/index" />
