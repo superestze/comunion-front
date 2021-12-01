@@ -16,6 +16,10 @@ const Demo = defineComponent({
       type: String,
       required: true
     },
+    desc: {
+      type: String,
+      required: true
+    },
     code: {
       type: String
     },
@@ -46,10 +50,10 @@ const Demo = defineComponent({
         </div>
         <article class="__demo-desc">
           <h5 class="__demo-title">{props.title}</h5>
-          <p class="__demo-markdown">{ctx.slots.default?.()}</p>
+          <p class="__demo-markdown">{props.desc}</p>
         </article>
         <div class="__demo-actions">
-          <IconCodeSandBox />
+          <IconCodeSandBox code={props.code} title={props.title} />
           <IconCopy code={props.code} class="__demo-copy" />
           <IconCode onClick={toggleCodeVisible} />
         </div>

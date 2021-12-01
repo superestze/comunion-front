@@ -7,10 +7,11 @@ var RE = /<Demo /i
 function DemoBlockRender(md, tokens, idx) {
   var content = tokens[idx].content
     if (RE.test(content.trim())) {
-      console.log('content ', content)
+      // console.log('content ', content)
       // var componentName = `demo${index++}`
       // var language = (content.match(/language=("|')(.*)('|")/) || [])[2] ?? ''
       var src = (content.match(/src=("|')(\S+)('|")/) || [])[2] ?? ''
+      var title = (content.match(/title=("|')(\S+)('|")/) || [])[2] ?? ''
 
       var demoPagePath = path.join(__dirname, '../../_demos', `${src}.tsx`)
       // console.log('demo ', demoPagePath)
@@ -20,10 +21,9 @@ function DemoBlockRender(md, tokens, idx) {
         return `<Demo src="${demoPagePath}" errorMsg="${warningMsg}">`
       }
 
-      // TODO cache it
       var codeStr = fs.readFileSync(demoPagePath).toString()
-      console.log('code', codeStr)
-      return `<Demo src="${src}" code="${codeStr}" language="tsx" title="这是标题" desc="这是描述">`
+      // console.log('code', codeStr)
+      return `<Demo src="${src}" code="${codeStr}" language="tsx" title="${title}" desc="${title}" />`
       // return content
     } else {
       return content
@@ -31,12 +31,12 @@ function DemoBlockRender(md, tokens, idx) {
 }
 
 export default function DemoComponentPlugin(md) {
-  md.renderer.rules.html_inline = (tokens, idx) => {
-    console.log('inline ', tokens[idx].content)
-    return DemoBlockRender(md, tokens, idx)
-  }
+  // md.renderer.rules.html_inline = (tokens, idx) => {
+  //   console.log('inline ', tokens[idx].content)
+  //   return DemoBlockRender(md, tokens, idx)
+  // }
   md.renderer.rules.html_block = (tokens, idx) => {
-    console.log('block ', tokens[idx].content)
+    // console.log('block ', tokens[idx].content)
     return DemoBlockRender(md, tokens, idx)
   }
 }

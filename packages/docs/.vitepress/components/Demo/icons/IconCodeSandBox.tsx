@@ -1,11 +1,43 @@
 import { defineComponent } from 'vue'
+import { getParameters } from 'codesandbox/lib/api/define'
 
 const IconCodeSandBox = defineComponent({
   name: 'IconCodeSandBox',
-  setup() {
+  props: {
+    code: {
+      type: String,
+      required: true
+    },
+    title: {
+      type: String
+    }
+  },
+  setup(props) {
     const toCodeSandBox = () => {
-      //
-      console.log('toCodeSandBox')
+      const parameters = getParameters({
+        files: {
+          'package.json': {
+            content: {
+              dependencies: {
+                vue: 'latest',
+                '@comunion/components': 'latest'
+              }
+            }
+          },
+          'index.tsx': {
+            content: `${props.code}`,
+            isBinary: false
+          }
+        }
+      })
+      const div = document.createElement('div')
+      div.innerHTML = `
+      <form action="https://codesandbox.io/api/v1/sandboxes/define" method="POST" target="_blank">
+        <input type="hidden" name="parameters" value="${parameters}" />
+      </form>
+      `
+      document.body.appendChild(div);
+      (div.children[0] as HTMLFormElement).submit()
     }
     return () => (
       <svg

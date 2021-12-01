@@ -1,5 +1,6 @@
 import { DemoComponentPlugin } from './plugin/index'
 import vueJsx from '@vitejs/plugin-vue-jsx'
+import prismPlugin from 'vite-plugin-prismjs'
 // import HelloComponentPlugin from './plugin/hello'
 
 import type { UserConfig } from 'vitepress/types/index'
@@ -131,6 +132,11 @@ export default {
     plugins: [
       vueJsx({
         enableObjectSlots: true
+      }),
+      prismPlugin({
+        languages: ['jsx', 'tsx', 'ts'],
+        css: true,
+        theme: 'tomorrow'
       })
     ]
   }
