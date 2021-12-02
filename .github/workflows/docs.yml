@@ -22,7 +22,7 @@ jobs:
         with:
           node-version: '14'
       - name: Build docs
-        run: cd packages/docs && yarn && yarn docs:build
+        run: yarn setup && yarn --cwd packages/components build && yarn --cwd packages/docs docs:build
       - name: Deploy
         uses: JamesIves/github-pages-deploy-action@4.1.5
         with:
