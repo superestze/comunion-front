@@ -3,8 +3,10 @@
   "version": "0.0.1",
   "description": "Comunion UI components",
   "main": "dist/index.js",
-  "module": "src/index.js",
+  "module": "dist/index.js",
   "scripts": {
+    "dev": "vite build --watch",
+    "build": "vite build",
     "generate": "echo \"import './main.css'\n\" > src/index.ts && find ./src -type d -maxdepth 1 | awk -F/ 'NF > 2 {print $3}' | sort | xargs -n1 -I{} echo \"export { default as {} } from './{}'\" >> src/index.ts"
   },
   "repository": "comunion-io/front-next.git",
@@ -25,10 +27,12 @@
     "vue-router": "4"
   },
   "devDependencies": {
-    "@vue/compiler-sfc": "^3.0.7",
+    "@vitejs/plugin-vue": "^1.9.4",
+    "@vitejs/plugin-vue-jsx": "^1.2.0",
     "postcss-nested": "^5.0.5",
-    "postcss-prefixer": "^2.1.2",
     "typescript": "^4.2.3",
+    "vite": "^2.6.14",
+    "vite-plugin-windicss": "^1.5.1",
     "windicss": "^3.1.3"
   }
 }

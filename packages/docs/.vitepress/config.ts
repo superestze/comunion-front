@@ -1,3 +1,11 @@
+import { DemoComponentPlugin } from './plugin/index'
+import vueJsx from '@vitejs/plugin-vue-jsx'
+import prismPlugin from 'vite-plugin-prismjs'
+// import HelloComponentPlugin from './plugin/hello'
+
+import type { UserConfig } from 'vitepress/types/index'
+
+/** @type {import('vitepress/types').UserConfig} */
 export default {
   lang: 'en-US',
   title: 'Comunion Frontend Developer',
@@ -78,7 +86,8 @@ export default {
               text: '基础',
               children: [
                 { text: '全局样式', link: '/zh/components/styles' },
-                { text: '图标', link: '/zh/components/icons' }
+                { text: '图标', link: '/zh/components/icons' },
+                { text: '按钮', link: '/zh/components/button' }
               ]
             },
             {
@@ -113,12 +122,23 @@ export default {
     //   indexName: 'vitepress'
     // },
   },
-  // markdown: {
-  //   plugins: [
-  //     'markdown-it-task-lists'
-  //   ],
-  //   extendMarkdown: md => {
-  //     md.use(require('markdown-it-task-lists'))
-  //   }
-  // }
+  markdown: {
+    config: (md) => {
+      md.use(require('markdown-it-task-lists'))
+      md.use(DemoComponentPlugin)
+      // md.use(HelloComponentPlugin)
+    }
+  },
+  vite: {
+    plugins: [
+      vueJsx({
+        enableObjectSlots: true
+      }),
+      prismPlugin({
+        languages: ['jsx', 'tsx', 'ts'],
+        css: true,
+        theme: 'tomorrow'
+      })
+    ]
+  }
 }
