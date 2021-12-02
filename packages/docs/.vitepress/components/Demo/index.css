@@ -50,6 +50,14 @@
     align-items: center;
     border-top: 1px dashed var(--border-color);
     color: #888;
+
+    & svg {
+      cursor: pointer;
+
+      &:hover {
+        color: var(--c-brand);
+      }
+    }
   }
 
   &-copy {

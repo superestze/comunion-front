@@ -1,5 +1,6 @@
 import DefaultTheme from 'vitepress/theme'
 import Demo from '../components/Demo/index.tsx'
+import '@comunion/components/dist/style.css'
 
 export default {
   ...DefaultTheme,

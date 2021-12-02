@@ -12,6 +12,7 @@ function DemoBlockRender(md, tokens, idx) {
       // var language = (content.match(/language=("|')(.*)('|")/) || [])[2] ?? ''
       var src = (content.match(/src=("|')(\S+)('|")/) || [])[2] ?? ''
       var title = (content.match(/title=("|')(\S+)('|")/) || [])[2] ?? ''
+      var desc = content.match(/desc\=\"([\s\S]*)\"/)[1] ?? ''
 
       var demoPagePath = path.join(__dirname, '../../_demos', `${src}.tsx`)
       // console.log('demo ', demoPagePath)
@@ -23,7 +24,8 @@ function DemoBlockRender(md, tokens, idx) {
 
       var codeStr = fs.readFileSync(demoPagePath).toString()
       // console.log('code', codeStr)
-      return `<Demo src="${src}" code="${codeStr}" language="tsx" title="${title}" desc="${title}" />`
+      // console.log('desc', desc)
+      return `<Demo src="${src}" code="${codeStr}" language="tsx" title="${title}" desc="${desc}" />`
       // return content
     } else {
       return content

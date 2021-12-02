@@ -1,4 +1,5 @@
-import { ref, defineComponent, defineAsyncComponent, Suspense } from 'vue'
+import { ref, defineComponent, defineAsyncComponent } from 'vue'
+import {marked} from 'marked'
 import Code from './Code'
 import IconCode from './icons/IconCode'
 import IconCodeSandBox from './icons/IconCodeSandBox'
@@ -50,7 +51,7 @@ const Demo = defineComponent({
         </div>
         <article class="__demo-desc">
           <h5 class="__demo-title">{props.title}</h5>
-          <p class="__demo-markdown">{props.desc}</p>
+          <p class="__demo-markdown" innerHTML={marked.parse(props.desc)}></p>
         </article>
         <div class="__demo-actions">
           <IconCodeSandBox code={props.code} title={props.title} />
