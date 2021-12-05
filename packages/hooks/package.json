@@ -21,7 +21,7 @@
   "homepage": "https://github.com/comunion-io/front-next#readme",
   "dependencies": {
     "@comunion/utils": "^0.0.1",
-    "vue": "^3.0.7"
+    "vue": "^3.2.23"
   },
   "devDependencies": {
     "tsup": "^4.12.0"
