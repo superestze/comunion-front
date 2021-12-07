@@ -1,10 +1,10 @@
 import { ref, defineComponent, defineAsyncComponent } from 'vue'
 import {marked} from 'marked'
-import Code from './Code'
+// import Code from './Code'
 import IconCode from './icons/IconCode'
 import IconCodeSandBox from './icons/IconCodeSandBox'
 import IconCopy from './icons/IconCopy'
-// import 'prismjs/components/prism-tsx'
+import 'prismjs/themes/prism-okaidia.css'
 import './index.css'
 
 // @ts-ignore
@@ -58,9 +58,7 @@ const Demo = defineComponent({
           <IconCopy code={props.code} class="__demo-copy" />
           <IconCode onClick={toggleCodeVisible} />
         </div>
-        {codeVisible.value && (
-          <Code code={props.code} />
-        )}
+        {codeVisible.value && ctx.slots.default?.()}
       </div>
     )
   }
