@@ -4,7 +4,8 @@ import {marked} from 'marked'
 import IconCode from './icons/IconCode'
 import IconCodeSandBox from './icons/IconCodeSandBox'
 import IconCopy from './icons/IconCopy'
-import 'prismjs/themes/prism-okaidia.css'
+// import 'prismjs/themes/prism-okaidia.css'
+import './themes/one-dark.css'
 import './index.css'
 
 // @ts-ignore
