@@ -1,8 +1,5 @@
 import type { InjectionKey } from 'vue'
-import { readonly } from 'vue'
-import { inject } from 'vue'
-import { provide, reactive } from 'vue'
-import { defineComponent } from 'vue'
+import { readonly, inject, provide, reactive, defineComponent } from 'vue'
 
 export interface GlobalConfigState {
   // current theme, default: light

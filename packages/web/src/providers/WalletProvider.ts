@@ -1,8 +1,6 @@
 import type { InjectionKey } from 'vue'
-import { readonly } from 'vue'
-import { inject } from 'vue'
-import { provide, reactive } from 'vue'
-import { defineComponent } from 'vue'
+import { defineComponent, inject, readonly, provide, reactive } from 'vue'
+import { login as walletLogin } from './wallets'
 
 export interface WalletState {
   walletAddress?: string
@@ -34,5 +32,5 @@ export function useWallet() {
     state.chainId = chainId
   }
 
-  return { ...state, setWallet }
+  return { ...state, setWallet, walletLogin }
 }

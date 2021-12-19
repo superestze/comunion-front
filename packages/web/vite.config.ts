@@ -15,9 +15,12 @@ export default defineConfig({
   },
   server: {
     proxy: {
-      '/api': 'https://v2.comunion.io'
+      '/api': 'https://api.d.comunion.io'
     }
   },
+  // define: {
+  //   global: {}
+  // },
   // optimizeDeps: {
   //   include: ['bn.js', 'hash.js']
   // },

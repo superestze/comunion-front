@@ -35,241 +35,194 @@ function replacePath(path: string, pathValueMap?: any) {
 }
 
 export const services = {
-  'account@Oauth账号登陆（github）'(args: {
-    /**
-     * @description github 前端登陆获取的 request  token
-     */
-    request_token: any
-  }) {
+  'account@wallet-nonce-get'(args: { address: any }) {
     return requestAdapter<{
-      /**
-       * @description 状态编码
-       */
-      code: number
-      /**
-       * @description 返回消息
-       */
-      message: string
-      data?: {
-        /**
-         * @description 昵称
-         */
-        nick: string
-        /**
-         * @description 头像
-         */
-        avatar: string
-        /**
-         * @description comer ID
-         */
-        comer_id: string
-        /**
-         * @description 上链地址
-         */
-        address: string
-        /**
-         * @description 登陆成功token JWT
-         */
-        token: string
-        /**
-         * @description Comer 的 唯一标识
-         */
-        uin: number
-      }
+      nonce?: string
     }>({
-      url: replacePath('/account/oauth/login/github', args),
-      method: 'POST',
-      ...extract(args, ['request_token'], [])
-    })
-  },
-  'account@Oauth账号登陆（Facebook）'(args?: any) {
-    return requestAdapter<any>({
-      url: replacePath('/account/oauth/login/facebbok', args),
-      method: 'POST',
-      ...extract(args, [], [])
-    })
-  },
-  'account@Oauth账号登陆（LinkedIn）'(args?: any) {
-    return requestAdapter<any>({
-      url: replacePath('/account/oauth/login/linkedid', args),
-      method: 'POST',
-      ...extract(args, [], [])
-    })
-  },
-  'account@Oauth账号登陆（twitter）'(args?: any) {
-    return requestAdapter<{}>({
-      url: replacePath('/account/oauth/login/twitter', args),
-      method: 'POST',
-      ...extract(args, [], [])
-    })
-  },
-  'account@获取加密钱包登陆用的Nonce'(args: {
-    /**
-     * @description 用户当前钱包地址
-     * @example 0x1123124124414
-     */
-    address: any
-  }) {
-    return requestAdapter<{
-      code?: number
-      message?: string
-      data?: {
-        nonce?: string
-      }
-    }>({
-      url: replacePath('/account/eth/login/nonce', args),
+      url: replacePath('/account/eth/nonce', args),
       method: 'GET',
       ...extract(args, ['address'], [])
     })
   },
-  'account@ETH钱包登陆（metamask）'(args: {
-    /**
-     * @description 钱包地址
-     */
-    address: string
-    /**
-     * @description 消息Hash
-     */
-    message_hash: string
-    /**
-     * @description V
-     */
-    v?: string
-    /**
-     * @description S
-     */
-    r?: string
-    /**
-     * @description R
-     */
-    s?: string
-    /**
-     * @description 签名
-     */
-    signature: string
-  }) {
+  'account@wallet-login'(args: { signature: string; address: string }) {
     return requestAdapter<{
-      code?: number
-      message?: string
-      data?: {
-        /**
-         * @description 昵称
-         */
-        nick?: string
-        /**
-         * @description 头像
-         */
-        avatar?: string
-        /**
-         * @description comer ID
-         */
-        comer_id?: string
-        /**
-         * @description 上链地址
-         */
-        address?: string
-        /**
-         * @description 登陆后Token
-         */
-        token?: string
-        /**
-         * @description comer 唯一标识
-         */
-        uin?: string
-      }
+      name: string
+      avatar: string
+      address: string
+      token: string
+      isProfiled: boolean
     }>({
-      url: replacePath('/account/eth/login/metamask', args),
+      url: replacePath('/account/eth/wallet/login', args),
       method: 'POST',
       ...extract(args, [], [])
     })
   },
-  'account@创建Comer简历'(args?: any) {
-    return requestAdapter<any>({
-      url: replacePath('/account/profile', args),
+  'account@wallet-link'(args: { signature: string; address: string }) {
+    return requestAdapter<{}>({
+      url: replacePath('/account/eth/wallet/link', args),
       method: 'POST',
       ...extract(args, [], [])
     })
   },
-  'account@获取Comer简历'(args?: any) {
-    return requestAdapter<any>({
-      url: replacePath('/account/profile', args),
+  'account@oauth-google-login'(args?: any) {
+    return requestAdapter<{}>({
+      url: replacePath('/account/oauth/google/login', args),
       method: 'GET',
       ...extract(args, [], [])
     })
   },
-  'account@修改Comer简历'(args?: any) {
-    return requestAdapter<any>({
-      url: replacePath('/account/profile', args),
-      method: 'PUT',
+  'account@oauth-github-login'(args?: any) {
+    return requestAdapter<{}>({
+      url: replacePath('/account/oauth/github/login', args),
+      method: 'GET',
       ...extract(args, [], [])
     })
   },
-  'account@获取账号列表'(args?: any) {
-    return requestAdapter<any>({
+  'account@oauth-google-login-callback'(args: { state: any; code: any }) {
+    return requestAdapter<{
+      nick: string
+      avatar: string
+      address: string
+      token: string
+      isProfiled: boolean
+    }>({
+      url: replacePath('/account/oauth/google/login/callback', args),
+      method: 'GET',
+      ...extract(args, ['state', 'code'], [])
+    })
+  },
+  'account@oauth-github-login-callback'(args: { state: any; code: any }) {
+    return requestAdapter<{
+      nick: string
+      avatar: string
+      address: string
+      token: string
+      isProfiled: boolean
+    }>({
+      url: replacePath('/account/oauth/github/login/callback', args),
+      method: 'GET',
+      ...extract(args, ['state', 'code'], [])
+    })
+  },
+  'account@account-list'(args?: any) {
+    return requestAdapter<{
+      list?: {
+        id: number
+        createdAt: string
+        updatedAt: string
+        isDeleted: boolean
+        comerID: number
+        oin: string
+        isPrimary: boolean
+        nick: string
+        avatar: string
+        /**
+         * @description 1.github 2.google
+         */
+        type: number
+        isLinked: boolean
+      }[]
+      total: number
+    }>({
       url: replacePath('/account/list', args),
       method: 'GET',
       ...extract(args, [], [])
     })
   },
-  'account@连接Oauth账号(github)'(args?: any) {
+  'account@account-unlink'(args: { accountID: any }) {
     return requestAdapter<any>({
-      url: replacePath('/account/oauth/link/github', args),
+      url: replacePath('/account/:accountID/unlink', args),
+      method: 'DELETE',
+      ...extract(args, [], ['accountID'])
+    })
+  },
+  'account@comer-profile-create'(args: {
+    name: string
+    avatar: string
+    location: string
+    website: string
+    skills: string[]
+    bio: string
+  }) {
+    return requestAdapter<{}>({
+      url: replacePath('/account/profile', args),
       method: 'POST',
       ...extract(args, [], [])
     })
   },
-  'account@连接Oauth账号(facebook)'(args?: any) {
-    return requestAdapter<any>({
-      url: replacePath('/account/oauth/link/facebook', args),
-      method: 'POST',
+  'account@comer-profile-update'(args: {
+    name: string
+    avatar: string
+    location: string
+    website: string
+    skills: string[]
+    bio: string
+  }) {
+    return requestAdapter<{}>({
+      url: replacePath('/account/profile', args),
+      method: 'PUT',
       ...extract(args, [], [])
     })
   },
-  'account@连接Oauth账号(LinkedIn)'(args?: any) {
-    return requestAdapter<any>({
-      url: replacePath('/account/oauth/link/linkedin', args),
-      method: 'POST',
-      ...extract(args, [], [])
-    })
-  },
-  'account@连接Oauth账号(twitter)'(args?: any) {
-    return requestAdapter<any>({
-      url: replacePath('/account/oauth/link/twitter', args),
-      method: 'POST',
-      ...extract(args, [], [])
-    })
-  },
-  'account@连接ETH钱包'(args?: any) {
-    return requestAdapter<any>({
-      url: replacePath('/account/eth/link/metamask', args),
+  'account@comer-profile-get'(args: {
+    name: string
+    avatar: string
+    location: string
+    website: string
+    skills: string[]
+    bio: string
+  }) {
+    return requestAdapter<{
+      id?: number
+      createdAt?: string
+      updatedAt?: string
+      isDeleted?: boolean
+      comerID?: number
+      name?: string
+      avatar?: string
+      location?: string
+      website?: string
+      bio?: string
+      skills?: {
+        id?: number
+        createdAt?: string
+        updatedAt?: string
+        isDeleted?: boolean
+        name?: string
+        isIndex?: boolean
+      }[]
+    }>({
+      url: replacePath('/account/profile', args),
       method: 'GET',
       ...extract(args, [], [])
     })
   },
 
-  'misc@获取上传文件的签名URL（获取后前端可以直接上传）'(args: {
+  'meta@tag-list'(args: {
     /**
-     * @description 准备上传的文件名，带后缀
+     * @description true,false
+     * @example true
      */
-    file_name: any
+    isIndex: any
+    limit: any
+    offset: any
   }) {
-    return requestAdapter<{
-      /**
-       * @description 状态编码
-       */
-      code?: number
-      /**
-       * @description 消息
-       */
-      message?: string
-      /**
-       * @description 可以使用的上传URL
-       */
-      data?: string
-    }>({
-      url: replacePath('/misc/upload/presign', args),
+    return requestAdapter<{}>({
+      url: replacePath('/meta/tags', args),
       method: 'GET',
-      ...extract(args, ['file_name'], [])
+      ...extract(args, ['isIndex', 'limit', 'offset'], [])
+    })
+  },
+
+  'template@error'(args?: any) {
+    return requestAdapter<{
+      code: number
+      message: string
+      data?: {}
+    }>({
+      url: replacePath('/error', args),
+      method: 'GET',
+      ...extract(args, [], [])
     })
   }
 }
