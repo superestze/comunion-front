@@ -23,7 +23,7 @@ git clone git@github.com:comunion-io/v5-front.git
 
 2. 安装依赖
 ```sh
-yarn setup
+yarn
 ```
 
 3. 运行web项目

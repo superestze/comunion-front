@@ -78,7 +78,7 @@ export const services = {
       ...extract(args, [], [])
     })
   },
-  'account@oauth-google-login-callback'(args: { state: any; code: any }) {
+  'account@oauth-google-login-callback'(args: { code: any }) {
     return requestAdapter<{
       nick: string
       avatar: string
@@ -91,7 +91,7 @@ export const services = {
       ...extract(args, ['state', 'code'], [])
     })
   },
-  'account@oauth-github-login-callback'(args: { state: any; code: any }) {
+  'account@oauth-github-login-callback'(args: { code: any }) {
     return requestAdapter<{
       nick: string
       avatar: string

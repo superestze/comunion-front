@@ -19,7 +19,7 @@ jobs:
         with:
           node-version: '14'
       - name: Install dependencies
-        run: yarn setup
+        run: yarn
       - name: Build
         run: yarn build:web
       - name: Configure AWS Credentials
