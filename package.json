@@ -7,9 +7,10 @@
   ],
   "repository": "comunion-io/front-next",
   "license": "GPL-3.0-or-later",
+  "private": true,
+  "workspaces": ["packages/*"],
   "scripts": {
     "postinstall": "husky install",
-    "setup": "yarn && lerna bootstrap",
     "dev": "lerna run --parallel dev --ignore @comunion/docs --ignore @comunion/icons",
     "dev:all": "lerna run --parallel dev",
     "docs": "yarn --cwd packages/docs run docs:dev",
