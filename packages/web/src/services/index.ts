@@ -1,44 +1,236 @@
-import axois from 'axios'
-import { createServices } from './yapi.services'
+/* eslint-disable */
+import { requestAdapter } from './a2s.adapter'
+import type { RequestBody, RequestQuery } from './a2s.types'
 
-const services = createServices(async (url, method, query, body) => {
-  try {
-    const res = await axois.request({
-      url: '/api' + url,
-      method: method,
-      params: query,
-      data: body,
-      headers: {
-        Authorization: ''
+/**
+ * 将参数拆分为 query 和 body
+ */
+function extract(args: RequestBody | any, queryList: string[], paramList: string[]) {
+  if (args && typeof args === 'object') {
+    const query: RequestQuery = {}
+    const body: RequestBody = {}
+    Object.keys(args).forEach(key => {
+      if (queryList.includes(key)) {
+        query[key] = (args as RequestBody)[key] as RequestQuery
+      } else if (!paramList.includes(key)) {
+        body[key] = (args as RequestBody)[key]
       }
     })
-    if (res.status < 300 && res.status >= 200) {
-      if (res.data.code === 200) {
-        return {
-          error: false,
-          data: res.data.data
-        }
-      }
-      return {
-        error: true,
-        data: null,
-        stack: res
-      }
-    }
-    return {
-      error: true,
-      data: null,
-      stack: res,
-      message: res.data?.message ?? '未知'
-    }
-  } catch (error) {
-    console.error(error)
-    return {
-      error,
-      data: null,
-      stack: error
-    }
+    return { query, body }
   }
-})
+  return { query: {}, body: {} }
+}
 
-export default services
+/**
+ * 路径参数插值
+ */
+function replacePath(path: string, pathValueMap?: any) {
+  return path
+    .replace(/\/\{(\w+)}/g, (_, str) => {
+      return `/${(pathValueMap as Record<string, string | number>)[str]}`
+    })
+    .replace(/\/:(\w+)/g, (_, str) => {
+      return `/${(pathValueMap as Record<string, string | number>)[str]}`
+    })
+}
+
+export const services = {
+  'account@wallet-nonce-get'(args: { address: any }) {
+    return requestAdapter<{
+      nonce?: string
+    }>({
+      url: replacePath('/account/eth/nonce', args),
+      method: 'GET',
+      ...extract(args, ['address'], [])
+    })
+  },
+  'account@wallet-login'(args: { signature: string; address: string }) {
+    return requestAdapter<{
+      name: string
+      avatar: string
+      address: string
+      token: string
+      isProfiled: boolean
+    }>({
+      url: replacePath('/account/eth/wallet/login', args),
+      method: 'POST',
+      ...extract(args, [], [])
+    })
+  },
+  'account@wallet-link'(args: { signature: string; address: string }) {
+    return requestAdapter<{}>({
+      url: replacePath('/account/eth/wallet/link', args),
+      method: 'POST',
+      ...extract(args, [], [])
+    })
+  },
+  'account@oauth-google-login'(args?: any) {
+    return requestAdapter<{}>({
+      url: replacePath('/account/oauth/google/login', args),
+      method: 'GET',
+      ...extract(args, [], [])
+    })
+  },
+  'account@oauth-github-login'(args?: any) {
+    return requestAdapter<{}>({
+      url: replacePath('/account/oauth/github/login', args),
+      method: 'GET',
+      ...extract(args, [], [])
+    })
+  },
+  'account@oauth-google-login-callback'(args: { state: any; code: any }) {
+    return requestAdapter<{
+      nick: string
+      avatar: string
+      address: string
+      token: string
+      isProfiled: boolean
+    }>({
+      url: replacePath('/account/oauth/google/login/callback', args),
+      method: 'GET',
+      ...extract(args, ['state', 'code'], [])
+    })
+  },
+  'account@oauth-github-login-callback'(args: { state: any; code: any }) {
+    return requestAdapter<{
+      nick: string
+      avatar: string
+      address: string
+      token: string
+      isProfiled: boolean
+    }>({
+      url: replacePath('/account/oauth/github/login/callback', args),
+      method: 'GET',
+      ...extract(args, ['state', 'code'], [])
+    })
+  },
+  'account@account-list'(args?: any) {
+    return requestAdapter<{
+      list?: {
+        id: number
+        createdAt: string
+        updatedAt: string
+        isDeleted: boolean
+        comerID: number
+        oin: string
+        isPrimary: boolean
+        nick: string
+        avatar: string
+        /**
+         * @description 1.github 2.google
+         */
+        type: number
+        isLinked: boolean
+      }[]
+      total: number
+    }>({
+      url: replacePath('/account/list', args),
+      method: 'GET',
+      ...extract(args, [], [])
+    })
+  },
+  'account@account-unlink'(args: { accountID: any }) {
+    return requestAdapter<any>({
+      url: replacePath('/account/:accountID/unlink', args),
+      method: 'DELETE',
+      ...extract(args, [], ['accountID'])
+    })
+  },
+  'account@comer-profile-create'(args: {
+    name: string
+    avatar: string
+    location: string
+    website: string
+    skills: string[]
+    bio: string
+  }) {
+    return requestAdapter<{}>({
+      url: replacePath('/account/profile', args),
+      method: 'POST',
+      ...extract(args, [], [])
+    })
+  },
+  'account@comer-profile-update'(args: {
+    name: string
+    avatar: string
+    location: string
+    website: string
+    skills: string[]
+    bio: string
+  }) {
+    return requestAdapter<{}>({
+      url: replacePath('/account/profile', args),
+      method: 'PUT',
+      ...extract(args, [], [])
+    })
+  },
+  'account@comer-profile-get'(args: {
+    name: string
+    avatar: string
+    location: string
+    website: string
+    skills: string[]
+    bio: string
+  }) {
+    return requestAdapter<{
+      id?: number
+      createdAt?: string
+      updatedAt?: string
+      isDeleted?: boolean
+      comerID?: number
+      name?: string
+      avatar?: string
+      location?: string
+      website?: string
+      bio?: string
+      skills?: {
+        id?: number
+        createdAt?: string
+        updatedAt?: string
+        isDeleted?: boolean
+        name?: string
+        isIndex?: boolean
+      }[]
+    }>({
+      url: replacePath('/account/profile', args),
+      method: 'GET',
+      ...extract(args, [], [])
+    })
+  },
+
+  'meta@tag-list'(args: {
+    /**
+     * @description true,false
+     * @example true
+     */
+    isIndex: any
+    limit: any
+    offset: any
+  }) {
+    return requestAdapter<{}>({
+      url: replacePath('/meta/tags', args),
+      method: 'GET',
+      ...extract(args, ['isIndex', 'limit', 'offset'], [])
+    })
+  },
+
+  'template@error'(args?: any) {
+    return requestAdapter<{
+      code: number
+      message: string
+      data?: {}
+    }>({
+      url: replacePath('/error', args),
+      method: 'GET',
+      ...extract(args, [], [])
+    })
+  }
+}
+
+export type ServiceKeys = keyof typeof services
+
+export type ServiceArg<T extends ServiceKeys> = Parameters<typeof services[T]>[0]
+
+export type Awaited<T> = T extends PromiseLike<infer U> ? Awaited<U> : T
+
+export type ServiceReturn<T extends ServiceKeys> = Awaited<ReturnType<typeof services[T]>>['data']
