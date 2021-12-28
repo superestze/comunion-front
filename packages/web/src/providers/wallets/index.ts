@@ -21,7 +21,7 @@ export async function login(walletName: 'Metamask' | 'WalletConnect') {
       try {
         signedMsg = await wallet.sign(data.nonce)
       } catch (error) {
-        throw new Error('User rejected')
+        throw new Error('Wallet sign errored')
       }
       const { error: error2, data: data2 } = await services['account@wallet-login']({
         address,
