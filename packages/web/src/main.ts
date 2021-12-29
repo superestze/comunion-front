@@ -1,4 +1,4 @@
-import './polyfil'
+// import './polyfil'
 import 'virtual:windi.css'
 import { createApp } from 'vue'
 import App from './App'
