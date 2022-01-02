@@ -1,8 +1,11 @@
-import type { InjectionKey } from 'vue'
-import { readonly, inject, provide, reactive, defineComponent } from 'vue'
+import { STORE_KEY_USER } from '@/constants'
+import type { ComputedRef, InjectionKey } from 'vue'
+import { computed, readonly, inject, provide, reactive, defineComponent } from 'vue'
+import { readObject, removeObject, storeObject } from '@comunion/utils'
 
 export interface UserProfileState {
-  token?: string
+  token: string
+  avatar?: string
   name?: string
   location?: string
   homepage?: string
@@ -15,50 +18,47 @@ export interface UserProfileState {
   walletAddress?: string
 }
 
-export const UserProfileSymbol: InjectionKey<UserProfileState> = Symbol()
+export const UserProfileSymbol: InjectionKey<{
+  user: Readonly<{ user: UserProfileState }>
+  logged: ComputedRef<boolean>
+  setUser: (user?: UserProfileState) => void
+  logout: () => void
+}> = Symbol()
 
 export const UserProfileProvider = defineComponent({
   name: 'UserProfileProvider',
   setup(props, ctx) {
-    const state = reactive<UserProfileState | undefined>(undefined)
-    provide(UserProfileSymbol, readonly(state))
+    const stored = readObject<UserProfileState>(STORE_KEY_USER)
+    const state = reactive<{ user: UserProfileState | undefined }>({ user: stored })
+
+    const logged = computed<boolean>(() => !!state.user?.token)
+
+    function setUser(newUser: UserProfileState) {
+      state.user = newUser
+      storeObject(STORE_KEY_USER, newUser)
+    }
+
+    function logout() {
+      removeObject(STORE_KEY_USER)
+      state.user = null
+    }
+
+    provide(UserProfileSymbol, {
+      user: readonly(state),
+      logged,
+      setUser,
+      logout
+    })
+
     return () => ctx.slots.default?.()
   }
 })
 
 export function useUserProfile() {
-  const user = inject(UserProfileSymbol)
-  if (!user) {
+  const state = inject(UserProfileSymbol)
+  if (!state) {
     throw new Error('useUserProfile should be used inside UserProfileProvider.')
   }
 
-  async function loginWithGithub() {
-    // TODO
-  }
-
-  async function loginWithGoogle() {
-    // TODO
-  }
-
-  async function loginWithMetamask() {
-    // TODO
-  }
-
-  async function loginWithWalletCollect() {
-    // TODO
-  }
-
-  function logout() {
-    // TODO
-  }
-
-  return {
-    user,
-    logged: !!user.token,
-    loginWithGithub,
-    loginWithGoogle,
-    loginWithMetamask,
-    loginWithWalletCollect,
-    logout
-  }
+  return state
 }
