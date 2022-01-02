@@ -1,13 +1,19 @@
 import type { InjectionKey } from 'vue'
 import { defineComponent, inject, readonly, provide, reactive } from 'vue'
-import { login as walletLogin } from './wallets'
+import type { UserProfileState } from '.'
+import type { WalletLoginFunction } from './wallets'
+import { login } from './wallets'
+import type AbstractWallet from './wallets/Wallet'
 
 export interface WalletState {
   walletAddress?: string
   chainId?: string
 }
 
-export const WalletSymbol: InjectionKey<WalletState> = Symbol()
+export const WalletSymbol: InjectionKey<{
+  wallet: WalletState
+  walletLogin: (...args: Parameters<WalletLoginFunction>) => Promise<UserProfileState>
+}> = Symbol()
 
 export const WalletProvider = defineComponent({
   name: 'WalletProvider',
@@ -16,7 +22,22 @@ export const WalletProvider = defineComponent({
       walletAddress: undefined,
       chainId: undefined
     })
-    provide(WalletSymbol, readonly(state))
+
+    let _wallet: AbstractWallet | undefined = null
+
+    async function walletLogin(...args: Parameters<WalletLoginFunction>) {
+      const { user, wallet } = await login(...args)
+      _wallet = wallet
+      console.log(_wallet)
+      state.walletAddress = user.walletAddress
+      state.chainId = (await wallet.getProvider().getNetwork()).name
+      return user
+    }
+
+    provide(WalletSymbol, {
+      wallet: readonly(state),
+      walletLogin
+    })
     return () => ctx.slots.default?.()
   }
 })
@@ -27,10 +48,5 @@ export function useWallet() {
     throw new Error('useWallet should be used inside WalletProvider.')
   }
 
-  function setWallet(walletAddress: string, chainId: string) {
-    state.walletAddress = walletAddress
-    state.chainId = chainId
-  }
-
-  return { ...state, setWallet, walletLogin }
+  return state
 }

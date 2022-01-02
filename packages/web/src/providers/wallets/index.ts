@@ -1,9 +1,15 @@
 import { services } from '@/services'
+import type { UserProfileState } from '..'
 import MetamaskWallet from './Metamask'
 import type AbstractWallet from './Wallet'
 import WalletConnectWallet from './WalletConnect'
 
-export async function login(walletName: 'Metamask' | 'WalletConnect') {
+export type WalletLoginFunction = (walletName: 'Metamask' | 'WalletConnect') => Promise<{
+  user?: UserProfileState
+  wallet: AbstractWallet
+}>
+
+export const login: WalletLoginFunction = async walletName => {
   const wallet: AbstractWallet =
     walletName === 'Metamask' ? new MetamaskWallet() : new WalletConnectWallet()
   if (wallet.checkAvaliable()) {
@@ -28,8 +34,13 @@ export async function login(walletName: 'Metamask' | 'WalletConnect') {
         signature: signedMsg
       })
       if (!error2) {
-        // TODO: logged
-        console.log(data2)
+        return {
+          user: {
+            ...data2,
+            walletAddress: address
+          },
+          wallet
+        }
       } else {
         throw new Error('Login failed when parse signature')
       }
