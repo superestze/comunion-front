@@ -1,20 +1,9 @@
-// windi.config.js
-import colors from 'windicss/colors'
 import { defineConfig } from 'windicss/helpers'
 
 export default defineConfig({
   extract: {
-    include: ['src/**/*.{vue,jsx,tsx}'],
-    exclude: ['node_modules', '.git']
+    include: ['**/*.{vue,tsx,css}'],
+    exclude: ['node_modules', '.git', 'lib']
   },
-  darkMode: 'class',
-  theme: {
-    extend: {},
-    colors: {
-      transparent: 'transparent',
-      current: 'currentColor',
-      ...colors,
-      primary: colors.blue
-    }
-  }
+  darkMode: 'class'
 })

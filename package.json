@@ -2,9 +2,7 @@
   "name": "front-next",
   "version": "0.0.1",
   "description": "Comunion frontend packages",
-  "keywords": [
-    "comunion"
-  ],
+  "keywords": ["comunion"],
   "repository": "comunion-io/front-next",
   "license": "GPL-3.0-or-later",
   "private": true,
@@ -21,7 +19,9 @@
     "lint": "npm run stylint && npm run jslint",
     "gen:component": "lerna run gen:component --scope @comunion/generator",
     "gen:contract": "lerna run gen:contract --scope @comunion/generator",
-    "gen:api": "yarn --cwd packages/web run gen:api"
+    "gen:api": "yarn --cwd packages/web run gen:api",
+    "dev:comps": "lerna run --parallel dev --scope @comunion/components",
+    "build:comps": "lerna run --parallel build --scope @comunion/components"
   },
   "dependencies": {
     "fast-glob": "^3.2.5"

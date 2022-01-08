@@ -14,8 +14,12 @@ export default defineConfig({
       transparent: 'transparent',
       current: 'currentColor',
       ...colors,
+<<<<<<< HEAD
       primary: '#5E18FE',
       pageBgColor: '#151515'
+=======
+      primary: colors.blue
+>>>>>>> chore: 🔧 组件打包
     }
   }
 })

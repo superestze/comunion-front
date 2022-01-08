@@ -1,36 +1,21 @@
 import vue from '@vitejs/plugin-vue'
-import vueJsx from '@vitejs/plugin-vue-jsx'
+import vueTSX from '@vitejs/plugin-vue-jsx'
 import path from 'path'
 import { defineConfig } from 'vite'
-import WindiCSS from 'vite-plugin-windicss'
+import windiCSS from 'vite-plugin-windicss'
 
 // https://vitejs.dev/config/
 export default defineConfig({
-  build: {
-    lib: {
-      entry: path.resolve(__dirname, './src/index.ts'),
-      fileName: () => `index.js`,
-      formats: ['es']
-    },
-    rollupOptions: {
-      external: ['vue'],
-      output: {
-        globals: {
-          vue: 'Vue'
-        }
-      }
-    }
-  },
+  plugins: [vue(), vueTSX(), windiCSS()],
   resolve: {
     alias: {
-      '@': path.resolve(__dirname, '/src')
-    }
+      '@/': path.resolve(__dirname, 'example/'),
+      '@/comps/': path.resolve(__dirname, 'src/')
+    },
+    extensions: ['.ts', '.tsx', '.js', '.css', '.json']
   },
-  plugins: [
-    vue(),
-    vueJsx({
-      // enableObjectSlots: true
-    }),
-    WindiCSS()
-  ]
+  server: {
+    host: '0.0.0.0',
+    port: 3000
+  }
 })
