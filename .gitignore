@@ -4,3 +4,4 @@ dist
 packages/*/tsconfig.tsbuildinfo
 yarn-error.log
 lerna-debug.log
+packages/components/lib

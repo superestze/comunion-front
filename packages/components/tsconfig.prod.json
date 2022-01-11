@@ -1,11 +1,10 @@
 {
   "compilerOptions": {
-    "types": ["vite/client"],
-    "baseUrl": ".",
+    "baseUrl": "./src",
+    "outDir": "./lib",
+    "declarationDir": "./lib",
     "jsx": "preserve",
     "lib": ["esnext", "dom"],
-    "resolveJsonModule": true,
-    "isolatedModules": true,
     "allowSyntheticDefaultImports": true,
     "experimentalDecorators": true,
     "declaration": true,
@@ -14,11 +13,10 @@
     "noImplicitThis": true,
     "strictNullChecks": true,
     "moduleResolution": "node",
+    "resolveJsonModule": true,
     "module": "esnext",
-    "target": "es6",
-    "paths": {
-      "@/*": ["./example/*"],
-      "@/comps/*": ["./src/*"]
-    }
-  }
+    "target": "es6"
+  },
+  "exclude": ["node_modules"],
+  "include": ["./src/*"]
 }
