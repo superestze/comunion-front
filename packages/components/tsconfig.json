@@ -15,7 +15,7 @@
     "strictNullChecks": true,
     "moduleResolution": "node",
     "module": "esnext",
-    "target": "es6",
+    "target": "esnext",
     "paths": {
       "@/*": ["./example/*"],
       "@/comps/*": ["./src/*"]
