@@ -83,9 +83,9 @@ const StyleProvider = defineComponent({
       --u-grey-3-color: ${props.grey3Color};
       --u-grey-4-color: ${props.grey4Color};
       --u-grey-5-color: ${props.grey5Color};
-      --u-purple-bg: ${props.purpleBg};
-      --u-purple-light-bg: ${props.purpleLightBg};
-      --u-purple-gradient-bg: ${props.purpleGradientBg};
+      --u-purple-color: ${props.purpleBg};
+      --u-purple-light-color: ${props.purpleLightBg};
+      --u-purple-gradient-color: ${props.purpleGradientBg};
     }`
     document.head.appendChild(style)
 

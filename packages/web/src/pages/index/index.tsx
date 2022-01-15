@@ -22,7 +22,7 @@ export default defineComponent({
   props: {},
   setup() {
     return () => (
-      <div class="bg-pageBgColor">
+      <div class="bg-home-bg">
         {/* Head */}
         <Head />
         {/* content */}

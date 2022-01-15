@@ -7,26 +7,26 @@ export default defineConfig({
   },
   darkMode: 'class',
   extend: {
-    fontFamily: {
-      orbitron: ['Orbitron', 'sans-serif'],
-      opensans: ['Open Sans', 'sans-serif']
-    },
-    color: {
-      primary: 'var(--u-color-primary)',
-      primary1: 'var(--u-color-primary-1)',
-      primary2: 'var(--u-color-primary-2)',
-      error: 'var(--u-color-error)',
-      success: 'var(--u-color-success)',
-      warning: 'var(--u-color-warning)',
-      info: 'var(--u-color-info)',
-      grey1: 'var(--u-color-grey-1)',
-      grey2: 'var(--u-color-grey-2)',
-      grey3: 'var(--u-color-grey-3)',
-      grey4: 'var(--u-color-grey-4)',
-      grey5: 'var(--u-color-grey-5)',
-      purple: 'var(--u-color-purple)',
-      'purple-light': 'var(--u-color-purple-light)',
-      'purple-gradient': 'var(--u-color-purple-gradient)'
+    // fontFamily: {
+    //   orbitron: ['Orbitron', 'sans-serif'],
+    //   opensans: ['Open Sans', 'sans-serif']
+    // },
+    colors: {
+      primary: 'var(--u-primary-color)',
+      primary1: 'var(--u-primary-1-color)',
+      primary2: 'var(--u-primary-2-color)',
+      error: 'var(--u-error-color)',
+      success: 'var(--u-success-color)',
+      warning: 'var(--u-warning-color)',
+      info: 'var(--u-info-color)',
+      grey1: 'var(--u-grey-1-color)',
+      grey2: 'var(--u-grey-2-color)',
+      grey3: 'var(--u-grey-3-color)',
+      grey4: 'var(--u-grey-4-color)',
+      grey5: 'var(--u-grey-5-color)',
+      purple: 'var(--u-purple-color)',
+      'purple-light': 'var(--u-purple-light-color)',
+      'purple-gradient': 'var(--u-purple-gradient-color)'
     }
   }
 })
