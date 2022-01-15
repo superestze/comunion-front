@@ -1,4 +1,5 @@
 // @ts-check
+// https://github.com/vitejs/vite/issues/1579
 import fs from 'fs'
 import { resolve } from 'path'
 
@@ -8,14 +9,13 @@ const injectCode = code =>
   `function styleInject(css,ref){if(ref===void 0){ref={}}var insertAt=ref.insertAt;if(!css||typeof document==="undefined"){return}var head=document.head||document.getElementsByTagName("head")[0];var style=document.createElement("style");style.type="text/css";if(insertAt==="top"){if(head.firstChild){head.insertBefore(style,head.firstChild)}else{head.appendChild(style)}}else{head.appendChild(style)}if(style.styleSheet){style.styleSheet.cssText=css}else{style.appendChild(document.createTextNode(css))}};styleInject(\`${code}\`)`
 const template = `console.warn("__INJECT__")`
 
-let viteConfig
-const css = []
-
 export default function libInjectCss() {
+  let viteConfig
+  const css = []
   return {
     name: 'lib-inject-css',
 
-    apply: 'build',
+    // apply: 'build',
 
     configResolved(resolvedConfig) {
       viteConfig = resolvedConfig
@@ -55,6 +55,7 @@ export default function libInjectCss() {
           if (data.includes(template)) {
             data = data.replace(template, injectCode(css.join('\n')))
           }
+          css.length = 0
 
           fs.writeFileSync(filePath, data)
         } catch (e) {

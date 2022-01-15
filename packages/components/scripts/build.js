@@ -1,12 +1,12 @@
 // @ts-check
-import { resolve as pathResolve, dirname, sep } from 'path'
+import { resolve as pathResolve, dirname } from 'path'
 import { build } from 'vite'
+import { build as esBuild } from 'esbuild'
 import glob from 'fast-glob'
 import { fileURLToPath } from 'url'
-// import windiCssPlugin from '@luncheon/esbuild-plugin-windicss'
 import windiCSS from 'vite-plugin-windicss'
+// import injectImportCss from './injectImportCss.js'
 import libInjectCss from './libInjectCss.js'
-console.log(libInjectCss)
 
 const resolve = (...args) =>
   pathResolve(
@@ -20,79 +20,77 @@ const resolve = (...args) =>
     ...args
   )
 
+function getOutputDir(path) {
+  return path.replace(/\/.*.tsx?/, '')
+}
+
+function getFileName(path) {
+  return path
+    .split('/')
+    .pop()
+    .replace(/\.tsx?$/, '.js')
+}
+
 function buildComponent(componentName, isDev) {
+  // console.log('dir', getOutputDir(componentName))
+  // console.log('file', getFileName(componentName))
   return build({
-    // entryPoints: [resolve('src', componentName)],
-    // outfile: resolve('dist', componentName, 'index.js'),
-    // minify: isProd,
-    // bundle: true,
-    // target: ['esnext'],
-    // format: 'esm',
-    // // platform: 'browser',
-    // sourcemap: false,
-    // external: ['vue', 'naive-ui'],
-    // tsconfig: resolve('tsconfig.json'),
-    // plugins: [
-    //   // @ts-ignore
-    //   windiCssPlugin()
-    // ]
-    // build: {
-    //   rollupOptions: {
-    //     entryPoints: [resolve('src', componentName)],
-    //     outfile: resolve('dist', componentName, 'index.js'),
-    //     minify: isProd,
-    //     bundle: true,
-    //     target: ['esnext'],
-    //     format: 'esm',
-    //     // platform: 'browser',
-    //     sourcemap: false,
-    //     external: ['vue', 'naive-ui'],
-    //     tsconfig: resolve('tsconfig.json'),
-    //   }
-    // }
     plugins: [windiCSS(), libInjectCss()],
     build: {
       emptyOutDir: false,
       watch: isDev,
-      outDir: resolve('dist', componentName),
+      outDir: resolve('dist/es', getOutputDir(componentName)),
       lib: {
         entry: resolve('src', componentName),
-        fileName: () => 'index.js',
+        fileName: () => getFileName(componentName),
         formats: ['es']
       },
+      assetsDir: resolve('src', 'assets'),
       rollupOptions: {
         external: ['vue', 'naive-ui']
+        // output: {
+        //   assetFileNames: assetInfo => {
+        //     console.log('asset', assetInfo)
+        //     if (assetInfo.name === 'style.css') {
+        //       return 'index.css'
+        //     }
+        //     return assetInfo.name
+        //   }
+        // }
       }
     }
   })
 }
 
-function buildEntry() {
-  return build({
-    plugins: [windiCSS(), libInjectCss()],
-    build: {
-      emptyOutDir: false,
-      outDir: resolve('dist'),
-      lib: {
-        entry: resolve('src'),
-        fileName: () => 'index.js',
-        formats: ['es']
-      },
-      rollupOptions: {
-        external: ['vue', 'naive-ui']
-      }
-    }
+function buildEntry(entry, isDev) {
+  return esBuild({
+    entryPoints: [resolve('src', entry)],
+    outfile: resolve('dist/es', entry.replace(/\/?index.ts/, ''), 'index.js'),
+    minify: false,
+    bundle: false,
+    target: ['esnext'],
+    format: 'esm',
+    platform: 'browser',
+    sourcemap: false,
+    tsconfig: resolve('tsconfig.json'),
+    watch: isDev
   })
 }
 
 ;(async () => {
-  const isProd = process.env.NODE_ENV === 'production'
-  const components = glob.sync('*/index.{ts,tsx}', {
+  const isDev = process.env.NODE_ENV === 'development'
+  const components = glob.sync('**/*.tsx', {
     absolute: false,
     cwd: resolve('src')
   })
   for (const component of components) {
-    await buildComponent(component.split(sep)[0], isProd)
+    await buildComponent(component, isDev)
   }
-  await buildEntry()
+  const entries = glob.sync('**/index.ts', {
+    absolute: false,
+    cwd: resolve('src')
+  })
+  for (const entry of entries) {
+    await buildEntry(entry, isDev)
+  }
 })()

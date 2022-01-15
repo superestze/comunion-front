@@ -3,6 +3,7 @@
     "types": ["vite/client"],
     "baseUrl": ".",
     "jsx": "preserve",
+    "jsxFactory": "h",
     "lib": ["esnext", "dom"],
     "resolveJsonModule": true,
     "isolatedModules": true,
