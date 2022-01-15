@@ -2,15 +2,11 @@
   "name": "front-next",
   "version": "0.0.1",
   "description": "Comunion frontend packages",
-  "keywords": [
-    "comunion"
-  ],
+  "keywords": ["comunion"],
   "repository": "comunion-io/front-next",
   "license": "GPL-3.0-or-later",
   "private": true,
-  "workspaces": [
-    "packages/*"
-  ],
+  "workspaces": ["packages/*"],
   "scripts": {
     "postinstall": "husky install",
     "dev": "lerna run --parallel dev --ignore @comunion/docs --ignore @comunion/icons",
