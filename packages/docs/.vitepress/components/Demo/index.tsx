@@ -1,5 +1,5 @@
 import { ref, defineComponent, defineAsyncComponent } from 'vue'
-import {marked} from 'marked'
+import { marked } from 'marked'
 // import Code from './Code'
 import IconCode from './icons/IconCode'
 import IconCodeSandBox from './icons/IconCodeSandBox'

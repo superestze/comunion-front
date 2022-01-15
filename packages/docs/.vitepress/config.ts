@@ -100,15 +100,11 @@ export default {
           '/zh/libraries/': [
             {
               text: 'hooks',
-              children: [
-                { text: '用户', link: '/zh/libraries/hooks/useUser' }
-              ]
+              children: [{ text: '用户', link: '/zh/libraries/hooks/useUser' }]
             },
             {
               text: '函数库',
-              children: [
-                { text: '链', link: '/zh/libraries/utils/chain' }
-              ]
+              children: [{ text: '链', link: '/zh/libraries/utils/chain' }]
             }
           ]
         }
@@ -121,7 +117,7 @@ export default {
     // },
   },
   markdown: {
-    config: (md) => {
+    config: md => {
       md.use(require('markdown-it-task-lists'))
       md.use(DemoComponentPlugin)
       // md.use(HelloComponentPlugin)

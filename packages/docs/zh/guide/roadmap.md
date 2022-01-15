@@ -25,4 +25,4 @@ sidebar: true
   - [ ] 与后端约定当前所用语言
   - [ ] 翻译辅助工具
 - 项目基础
-  - [ ] Github CI，ISSUE模板
+  - [ ] Github CI，ISSUE 模板
