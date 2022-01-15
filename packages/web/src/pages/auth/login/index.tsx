@@ -7,6 +7,7 @@ import {
 } from '@/constants'
 import { randomStr } from '@comunion/utils'
 import { useUserProfile, useWallet } from '@/providers'
+import { UButton, UInput } from '@comunion/components'
 
 const LoginPage = defineComponent({
   name: 'LoginPage',
@@ -32,6 +33,7 @@ const LoginPage = defineComponent({
 
     return () => (
       <div class="p-4">
+        <UInput />
         <div class="flex my-2 items-center">
           <div class>{logged.value ? 'Logged! ' : 'Not logged. '}</div>
           {wallet.chainId && <div class="ml-4">Chain Id : {wallet.chainId}</div>}
@@ -45,9 +47,9 @@ const LoginPage = defineComponent({
         </div>
         <div class="flex">
           <div class="mr-2">
-            <button class="rounded bg-blue-500 text-white py-1 px-2" onClick={metamaskLogin}>
+            <UButton class="rounded bg-blue-500 text-white py-1 px-2" onClick={metamaskLogin}>
               MetaMask
-            </button>
+            </UButton>
           </div>
           <div>
             <button class="rounded bg-blue-500 text-white py-1 px-2" onClick={walletConnectLogin}>

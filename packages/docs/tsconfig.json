@@ -1,0 +1,10 @@
+{
+  "compilerOptions": {
+    "jsx": "preserve",
+    "composite": false,
+    "lib": ["esnext", "dom"],
+    "types": ["node"],
+    "resolveJsonModule": true
+  },
+  "extends": "../../tsconfig.package.json"
+}

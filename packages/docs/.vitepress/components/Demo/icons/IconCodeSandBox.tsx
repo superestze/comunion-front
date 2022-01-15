@@ -36,8 +36,8 @@ const IconCodeSandBox = defineComponent({
         <input type="hidden" name="parameters" value="${parameters}" />
       </form>
       `
-      document.body.appendChild(div);
-      (div.children[0] as HTMLFormElement).submit()
+      document.body.appendChild(div)
+      ;(div.children[0] as HTMLFormElement).submit()
     }
     return () => (
       <svg

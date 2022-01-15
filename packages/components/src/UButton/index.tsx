@@ -1,7 +1,9 @@
 import { NButton } from 'naive-ui'
+import type { ButtonProps } from 'naive-ui'
 import { defineComponent } from 'vue'
 import './index.css'
-import type { UButtonProps } from './interface'
+
+export type UButtonProps = ButtonProps
 
 export default defineComponent<UButtonProps>({
   name: 'UButton',

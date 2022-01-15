@@ -27,7 +27,11 @@ const Code = defineComponent({
 
     return () => (
       <pre class="__demo-code">
-        <code class="language-tsx" ref={codeRef} innerHTML={prism.highlight(props.code, prism.languages.tsx, 'tsx')}></code>
+        <code
+          class="language-tsx"
+          ref={codeRef}
+          innerHTML={prism.highlight(props.code, prism.languages.tsx, 'tsx')}
+        ></code>
       </pre>
     )
   }

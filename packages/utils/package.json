@@ -10,10 +10,7 @@
     "dev": "tsup --dts --format cjs,esm --clean --watch src"
   },
   "repository": "comunion-io/front-next.git",
-  "keywords": [
-    "typescript",
-    "utils"
-  ],
+  "keywords": ["typescript", "utils"],
   "license": "GPL-3.0-or-later",
   "bugs": {
     "url": "https://github.com/comunion-io/front-next/issues"

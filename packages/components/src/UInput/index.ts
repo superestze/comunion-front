@@ -1,0 +1,6 @@
+export { default as UInput } from './Input'
+export { default as UInputGroup } from './InputGroup'
+export { default as UInputGroupLabel } from './InputGroupLabel'
+export type { UInputProps } from './Input'
+export type { UInputGroupProps } from './InputGroup'
+export type { UInputGroupLabelProps } from './InputGroupLabel'

@@ -8,9 +8,7 @@
     "gen:contract": "ts-node ./index.ts contract"
   },
   "repository": "comunion-io/front-next.git",
-  "keywords": [
-    "code generator"
-  ],
+  "keywords": ["code generator"],
   "license": "GPL-3.0-or-later",
   "bugs": {
     "url": "https://github.com/comunion-io/front-next/issues"

@@ -18,7 +18,9 @@ export function setToken(_newToken: string) {
 //   data: T
 // }
 
-export async function requestAdapter<T = any>(args: RequestFunctionArgs): Promise<ResponseObject<T>> {
+export async function requestAdapter<T = any>(
+  args: RequestFunctionArgs
+): Promise<ResponseObject<T>> {
   const { url, method, query, body, done = true } = args
   const token = getToken()
   const { status, data, statusText } = await axios.request({

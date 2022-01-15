@@ -41,8 +41,7 @@ module.exports = {
   endOfLine: 'auto',
   overrides: [
     {
-      files:
-        '*.{babelrc,eslintrc,huskyrc,lintstagedrc,json,prettierrc,stylelintrc}',
+      files: '*.{babelrc,eslintrc,huskyrc,lintstagedrc,json,prettierrc,stylelintrc}',
       options: {
         parser: 'json'
       }
@@ -63,6 +62,12 @@ module.exports = {
       files: '*.vue',
       options: {
         parser: 'vue'
+      }
+    },
+    {
+      files: '*.md',
+      options: {
+        parser: 'markdown'
       }
     },
     {
@@ -90,7 +95,7 @@ module.exports = {
       }
     },
     {
-      files: '*.yaml',
+      files: '*.{yaml,yml}',
       options: {
         parser: 'yaml'
       }
