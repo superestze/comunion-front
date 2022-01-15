@@ -47,7 +47,7 @@ const LoginPage = defineComponent({
         </div>
         <div class="flex">
           <div class="mr-2">
-            <UButton class="rounded bg-blue-500 text-white py-1 px-2" onClick={metamaskLogin}>
+            <UButton type="primary" onClick={metamaskLogin}>
               MetaMask
             </UButton>
           </div>
