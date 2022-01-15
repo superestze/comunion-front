@@ -1,5 +1,5 @@
 import { defineComponent, ref } from 'vue'
-import { Button } from '@comunion/components'
+import { UButton } from '@comunion/components'
 
 const ButtonDemoPage = defineComponent({
   name: 'ButtonDemoPage',
@@ -8,7 +8,11 @@ const ButtonDemoPage = defineComponent({
     const handleClick = () => {
       count.value++
     }
-    return () => <Button onClick={handleClick}>Hello {count.value}</Button>
+    return () => (
+      <>
+        <UButton onClick={handleClick}>Hello {count.value}</UButton>
+      </>
+    )
   }
 })
 

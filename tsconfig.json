@@ -68,6 +68,7 @@
   },
   "references": [
     { "path": "./packages/components" },
+    { "path": "./packages/docs" },
     { "path": "./packages/hooks" },
     { "path": "./packages/icons" },
     { "path": "./packages/utils" },
