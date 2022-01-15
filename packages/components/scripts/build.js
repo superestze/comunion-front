@@ -4,6 +4,8 @@ import { build } from 'vite'
 import { build as esBuild } from 'esbuild'
 import glob from 'fast-glob'
 import { fileURLToPath } from 'url'
+import vue from '@vitejs/plugin-vue'
+import vueTSX from '@vitejs/plugin-vue-jsx'
 import windiCSS from 'vite-plugin-windicss'
 // import injectImportCss from './injectImportCss.js'
 import libInjectCss from './libInjectCss.js'
@@ -35,7 +37,8 @@ function buildComponent(componentName, isDev) {
   // console.log('dir', getOutputDir(componentName))
   // console.log('file', getFileName(componentName))
   return build({
-    plugins: [windiCSS(), libInjectCss()],
+    // @ts-ignore
+    plugins: [vue(), vueTSX(), windiCSS(), libInjectCss()],
     build: {
       emptyOutDir: false,
       watch: isDev,
