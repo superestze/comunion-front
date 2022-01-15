@@ -8,6 +8,10 @@ export type UButtonProps = ButtonProps
 export default defineComponent<UButtonProps>({
   name: 'UButton',
   setup(props, { slots }) {
-    return () => <NButton {...props}>{slots.default?.()}</NButton>
+    return () => (
+      <NButton class="u-button" {...props}>
+        {slots.default?.()}
+      </NButton>
+    )
   }
 })

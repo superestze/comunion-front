@@ -1,10 +1,10 @@
-import { DemoComponentPlugin } from './plugin/index'
 import vueJsx from '@vitejs/plugin-vue-jsx'
+import { DemoComponentPlugin } from './plugin/index'
 
 import type { UserConfig } from 'vitepress/types/index'
 
 /** @type {import('vitepress/types').UserConfig} */
-export default {
+const config: UserConfig = {
   lang: 'en-US',
   title: 'Comunion Frontend Developer',
   description: 'Comunion frontend developer documents',
@@ -83,17 +83,19 @@ export default {
             {
               text: '基础',
               children: [
-                { text: '全局样式', link: '/zh/components/styles' },
+                { text: '排版', link: '/zh/components/typography' },
                 { text: '图标', link: '/zh/components/icons' },
                 { text: '按钮', link: '/zh/components/button' }
               ]
             },
             {
-              text: '显示',
-              children: []
+              text: '表单',
+              children: [
+                { text: '输入框', link: '/zh/components/input' },
+              ]
             },
             {
-              text: '排版',
+              text: '显示',
               children: []
             }
           ],
@@ -131,3 +133,5 @@ export default {
     ]
   }
 }
+
+export default config
