@@ -1,4 +1,3 @@
-import { resolve } from 'path'
 import vueJsx from '@vitejs/plugin-vue-jsx'
 import { DemoComponentPlugin } from './plugin/index'
 
@@ -84,7 +83,7 @@ const config: UserConfig = {
             {
               text: '基础',
               children: [
-                // { text: '排版', link: '/zh/components/typography' },
+                { text: '排版', link: '/zh/components/typography' },
                 { text: '图标', link: '/zh/components/icons' },
                 { text: '按钮', link: '/zh/components/button' }
               ]
@@ -97,10 +96,6 @@ const config: UserConfig = {
             },
             {
               text: '显示',
-              children: []
-            },
-            {
-              text: '排版',
               children: []
             }
           ],
