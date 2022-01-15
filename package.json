@@ -2,11 +2,15 @@
   "name": "front-next",
   "version": "0.0.1",
   "description": "Comunion frontend packages",
-  "keywords": ["comunion"],
+  "keywords": [
+    "comunion"
+  ],
   "repository": "comunion-io/front-next",
   "license": "GPL-3.0-or-later",
   "private": true,
-  "workspaces": ["packages/*"],
+  "workspaces": [
+    "packages/*"
+  ],
   "scripts": {
     "postinstall": "husky install",
     "dev": "lerna run --parallel dev --ignore @comunion/docs --ignore @comunion/icons",
@@ -48,6 +52,7 @@
     "ncp": "^2.0.0",
     "prettier": "^2.3.0",
     "stylelint": "^13.12.0",
+    "stylelint-config-prettier": "^9.0.3",
     "stylelint-config-standard": "^21.0.0",
     "ts-node": "^9.1.1",
     "typescript": "^4.2.2"
