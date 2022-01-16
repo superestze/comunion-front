@@ -8,10 +8,12 @@
   "scripts": {
     "watch:components": "NODE_ENV=development node scripts/build.js",
     "watch:types": "tsc --project tsconfig.types.json --watch",
+    "watch:styles": "mkdir -p dist/es && cp -r src/Typography dist/es",
     "watch": "rimraf dist && run-p watch:*",
     "dev": "npm run watch",
     "build:components": "node scripts/build.js",
     "build:types": "tsc --project tsconfig.types.json",
+    "build:styles": "mkdir -p dist/es && cp -r src/Typography dist/es",
     "build": "rimraf dist && run-s build:*"
   },
   "repository": "comunion-io/front-next.git",
