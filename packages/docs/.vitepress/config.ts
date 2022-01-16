@@ -1,9 +1,9 @@
 import vueJsx from '@vitejs/plugin-vue-jsx'
 import { DemoComponentPlugin } from './plugin/index'
+import windicssPlugin from 'vite-plugin-windicss'
 
 import type { UserConfig } from 'vitepress/types/index'
 
-/** @type {import('vitepress/types').UserConfig} */
 const config: UserConfig = {
   lang: 'en-US',
   title: 'Comunion Frontend Developer',
@@ -129,7 +129,8 @@ const config: UserConfig = {
     plugins: [
       vueJsx({
         enableObjectSlots: true
-      })
+      }),
+      windicssPlugin()
     ]
   }
 }

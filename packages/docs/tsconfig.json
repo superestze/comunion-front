@@ -1,4 +1,8 @@
 {
+  "include": [
+    "_demos/**/*.{ts,tsx}",
+    ".vitepress/**/*.{ts,tsx}"
+  ],
   "compilerOptions": {
     "jsx": "preserve",
     "composite": false,
