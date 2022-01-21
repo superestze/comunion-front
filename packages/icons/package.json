@@ -19,6 +19,7 @@
   "homepage": "https://github.com/comunion-io/front-next#readme",
   "devDependencies": {
     "@comunion/utils": "^0.0.1",
+    "@types/fs-extra": "^9.0.13",
     "@types/svgo": "^2.6.1",
     "@vue/compiler-sfc": "^3.2.27",
     "fs-extra": "^10.0.0",

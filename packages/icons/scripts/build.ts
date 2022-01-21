@@ -1,5 +1,5 @@
 import { convertCamelCase } from '@comunion/utils'
-import { compileTemplate } from 'vue/compiler-sfc'
+import { compileTemplate } from '@vue/compiler-sfc'
 import { readdir, readFile, writeFile } from 'fs/promises'
 import { join } from 'path'
 import type { OptimizedSvg } from 'svgo'
@@ -55,7 +55,7 @@ async function buildSvg(suffix: string, dirPath: string, filename: string) {
   // entry file
   return [
     `export { default as ${componentName}${suffix} } from './${typeDir}/${componentName}.js'`,
-    `export function ${componentName}${suffix}(): ${typeDeclaration}`
+    `export function ${componentName}${suffix}(props?: { class?: string }): ${typeDeclaration}`
   ]
 }
 

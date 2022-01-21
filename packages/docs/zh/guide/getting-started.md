@@ -13,13 +13,16 @@ sidebar: true
 yarn dev
 ```
 
-### 启动文档预览
-
-在根目录执行
-
-```bash
-yarn docs
-```
+- 启动文档预览
+  ```bash
+  yarn docs
+  ```
+- 子包监听
+  ```bash
+  yarn dev:utils
+  yarn dev:components
+  yarn dev:hooks
+  ```
 
 ## 如何添加页面
 
@@ -67,34 +70,32 @@ TODO
 2. 当前的钱包连接信息使用全局 `hooks` 存储，使用时调用 `useWallet` 即可，包括当前钱包名称、链的名称、钱包地址
 
 ## 依赖管理
-
+建议直接在 vscode 中安装`Monorepo Helper`插件来进行依赖管理和脚本运行
 ### 全局添加依赖
 
 ```bash
-yarn add [-D] <pkg>
+yarn add -W [-D] <pkg>
 ```
 
 ### 子项目添加依赖
 
 ```bash
-lerna add [-D] <pkg> --scope <@comunion/packageName>
+yarn workspace <@comunion/packageName> add [-D] <pkg>
 # 例如
-lerna add lodash --scope @comunion/components
+yarn workspace @comunion/components add lodash
 ```
 
-如果添加的是 workspace 级别的依赖，应该使用
+如果添加的是 workspace 级别的依赖，应该制定依赖包的版本号
 
 ```bash
-lerna add [-D] <@comunion/pkg> --scope <@comunion/packageName>
-# 例如
-lerna add @comunion/utils --scope @comunion/components
+yarn workspace @comunion/web add @comunion/utils@0.0.1
 ```
-
-~也可以直接进入子项目目录进行添加删除依赖的操作，下同~
 
 ### 子项目移除依赖
 
-直接从对应的项目中删除 `package.json` 中的依赖，然后删除 `yarn.lock`文件和 `node_modules` 目录，接着执行 `npx lerna bootstrap`
+```
+yarn workspace <@comunion/packageName> remove <pkg>
+```
 
 ## 项目共享代码片段
 

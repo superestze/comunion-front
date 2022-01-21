@@ -7,7 +7,7 @@ sidebar: true
 
 - EditorConfig
 - ESLint
-- Monorepo Helper（推荐，非必需）
+- Monorepo Helper（依赖管理和脚本运行，推荐，非必需）
 - Image preview (推荐，非必需)
 - language-postcss
 - npm Intellisense (推荐，非必需)

@@ -23,6 +23,7 @@
   "homepage": "https://github.com/comunion-io/front-next#readme",
   "dependencies": {
     "@comunion/components": "^0.0.1",
+    "@comunion/icons": "^0.0.1",
     "@comunion/utils": "^0.0.1",
     "@walletconnect/web3-provider": "^1.7.0",
     "axios": "^0.21.1",
