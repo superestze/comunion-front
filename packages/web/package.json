@@ -11,7 +11,11 @@
     "gen:api": "a2s generate -y"
   },
   "repository": "comunion-io/front-next.git",
-  "keywords": ["vue", "vue3", "blockchain"],
+  "keywords": [
+    "vue",
+    "vue3",
+    "blockchain"
+  ],
   "license": "GPL-3.0-or-later",
   "bugs": {
     "url": "https://github.com/comunion-io/front-next/issues"
@@ -25,20 +29,16 @@
     "buffer": "^6.0.3",
     "ethers": "^5.5.2",
     "events": "^3.3.0",
-    "pinia": "^2.0.9",
     "util": "^0.12.4",
     "vue": "^3.2.23",
     "vue-router": "^4.0.9"
   },
   "devDependencies": {
-    "@originjs/vite-plugin-commonjs": "^1.0.1",
     "@types/node": "^15.12.4",
     "@vitejs/plugin-vue": "^1.2.3",
     "@vitejs/plugin-vue-jsx": "^1.1.5",
-    "@vue/compiler-sfc": "^3.2.23",
     "@zidong/a2s": "^0.0.8",
     "postcss-nested": "^5.0.6",
-    "rollup-plugin-polyfill-node": "^0.7.0",
     "typescript": "^4.3.4",
     "vite": "^2.3.8",
     "vite-plugin-pages": "^0.13.2",
