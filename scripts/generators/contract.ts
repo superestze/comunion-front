@@ -1,5 +1,5 @@
-import { convertCamelCase } from '@comunion/utils'
-import ora from 'ora'
+import { convertCamelCase } from '../../packages/utils'
+import type { Ora } from 'ora'
 import { join, resolve } from 'path'
 import { fetch, renderToFile, writeToFile } from '../utils'
 
@@ -9,7 +9,7 @@ interface ContractItem {
   abi: string
 }
 
-async function fetchABIs(spinner: ora.Ora) {
+async function fetchABIs(spinner: Ora) {
   try {
     const readme = await fetch(
       'https://raw.githubusercontent.com/comunion-io/cos-contract-com/master/README.md'
@@ -53,7 +53,8 @@ async function fetchABIs(spinner: ora.Ora) {
 }
 
 export async function generaetContracts() {
-  const spinner = ora('Parsing contracts').start()
+  const ora = await import('ora')
+  const spinner = ora.default('Parsing contracts').start()
   const contracts = await fetchABIs(spinner)
   spinner.text = 'Writing files'
   for (const contract of contracts) {
