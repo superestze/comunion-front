@@ -1,6 +1,6 @@
 import fs from 'fs'
 import { ensureFile } from 'fs-extra'
-import template from 'lodash.template'
+import { template } from 'lodash'
 import { resolve } from 'path'
 
 export async function writeToFile(filePath: string, content: string) {

@@ -8,6 +8,7 @@ import {
 import { randomStr } from '@comunion/utils'
 import { useUserProfile, useWallet } from '@/providers'
 import { UButton, UInput } from '@comunion/components'
+import { PlusOutlined } from '@comunion/icons'
 
 const LoginPage = defineComponent({
   name: 'LoginPage',
@@ -34,6 +35,7 @@ const LoginPage = defineComponent({
     return () => (
       <div class="p-4">
         <UInput />
+        <PlusOutlined class="h-20 my-3 text-red-500 w-20" />
         <p class="font-orbitron text-primary">Comunion</p>
         <p class="font-opensans text-primary1">Comunion</p>
         <div class="flex my-2 items-center">

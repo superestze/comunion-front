@@ -35,6 +35,8 @@ yarn
 
 ```sh
 yarn dev
+## 如果其它包不改，只关心web包，可以运行
+yarn dev:web
 ```
 
 4. 运行其它项目（可选）

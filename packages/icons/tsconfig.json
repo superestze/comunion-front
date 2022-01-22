@@ -1,6 +1,7 @@
 {
   "compilerOptions": {
-    "rootDir": "./src"
+    "rootDir": "./src",
+    "module": "None"
   },
   "extends": "../../tsconfig.package.json",
   "include": ["./src", "./tsup.config.ts", "./scripts"]

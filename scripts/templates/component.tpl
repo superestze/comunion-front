@@ -2,12 +2,15 @@ import { defineComponent } from 'vue'
 
 // import './index.css'
 
-const <%= name %> = defineComponent({
+export interface <%= name %>Props {
+  //
+}
+
+const <%= name %> = defineComponent<<%= name %>Props>({
   name: '<%= name %>',
-  props: {},
   setup(props, ctx) {
     return () => <span>{ctx.slots.default?.()}</span>
-  },
+  }
 })
 
 export default <%= name %>

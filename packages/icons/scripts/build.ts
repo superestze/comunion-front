@@ -1,70 +1,91 @@
 import { convertCamelCase } from '@comunion/utils'
 import { compileTemplate } from '@vue/compiler-sfc'
-import { readdir, readFile, writeFile } from 'fs'
+import { readdir, readFile, writeFile } from 'fs/promises'
 import { join } from 'path'
+import type { OptimizedSvg } from 'svgo'
 import { optimize } from 'svgo'
-import { promisify } from 'util'
+import { ensureFile } from 'fs-extra'
 
 const sourceDir = join(__dirname, '../src')
 const outlinedDir = join(sourceDir, 'outlined')
 const filledDir = join(sourceDir, 'filled')
 const targetDir = join(__dirname, '../dist')
 
+const typeDeclaration = `VNode<RendererNode, RendererElement, {
+  [key: string]: any;
+}>`
+
 function optimizeSvg(filename: string, content: string): string {
-  return optimize(content, {
+  const ret = optimize(content, {
     path: filename,
     js2svg: {
       indent: 2, // string with spaces or number of spaces. 4 by default
       pretty: true // boolean, false by default
     },
     plugins: ['removeXMLNS']
-  }).data
+  })
+  if (ret.error) {
+    return content
+  }
+  return (ret as OptimizedSvg).data
 }
 
 function compileSvg(filename: string, content: string) {
   const { code } = compileTemplate({
+    id: filename,
     source: content,
-    id: '1',
     filename
   })
   return code.replace('export function render(', 'export default function render(')
 }
 
-async function buildType(suffix: string, dirPath: string, filename: string) {
+async function buildSvg(suffix: string, dirPath: string, filename: string) {
   const svgFile = join(dirPath, filename)
-  const content = await promisify(readFile)(svgFile, { encoding: 'utf-8' })
+  const content = await readFile(svgFile, { encoding: 'utf-8' })
   const CamelCaseFilename = convertCamelCase(filename, true)
   const optimized = optimizeSvg(CamelCaseFilename, content)
   const componentCode = compileSvg(CamelCaseFilename, optimized)
-  await promisify(writeFile)(
-    join(targetDir, CamelCaseFilename.replace(/\.svg/, `${suffix}.esm.js`)),
-    componentCode,
-    {
-      encoding: 'utf-8'
-    }
-  )
-  return CamelCaseFilename.replace(/\.svg/, suffix)
-}
-
-function addExportEntry(entryName: string) {
-  return `export { default as ${entryName} } from './${entryName}.esm.js'`
+  const typeDir = suffix.toLowerCase()
+  const componentName = CamelCaseFilename.replace(/\.svg/, '')
+  const targetFile = join(targetDir, typeDir, CamelCaseFilename.replace(/\.svg/, `.js`))
+  await ensureFile(targetFile)
+  await writeFile(targetFile, componentCode, {
+    encoding: 'utf-8'
+  })
+  // entry file
+  return [
+    `export { default as ${componentName}${suffix} } from './${typeDir}/${componentName}.js'`,
+    `export function ${componentName}${suffix}(props?: { class?: string }): ${typeDeclaration}`
+  ]
 }
 
 async function build() {
   const exportEntries = []
-  let svgs = await promisify(readdir)(outlinedDir)
+  const exportTypes = [`import type { RendererElement, RendererNode, VNode } from "vue"`, '']
+  let svgs = await readdir(outlinedDir)
   for (const svg of svgs) {
-    if (svg !== '.gitkeep') {
-      exportEntries.push(addExportEntry(await buildType('Outlined', outlinedDir, svg)))
+    if (svg.match(/\.svg$/)) {
+      const [entry, types] = await buildSvg('Outlined', outlinedDir, svg)
+      exportEntries.push(entry)
+      exportTypes.push(types)
     }
   }
-  svgs = await promisify(readdir)(filledDir)
+  svgs = await readdir(filledDir)
   for (const svg of svgs) {
-    if (svg !== '.gitkeep') {
-      exportEntries.push(addExportEntry(await buildType('Filled', filledDir, svg)))
+    if (svg.match(/\.svg$/)) {
+      const [entry, types] = await buildSvg('Filled', filledDir, svg)
+      exportEntries.push(entry)
+      exportTypes.push(types)
     }
   }
-  await promisify(writeFile)(join(targetDir, 'index.esm.js'), exportEntries.join('\n'), {
+  const entryFile = join(targetDir, 'index.esm.js')
+  await ensureFile(entryFile)
+  await writeFile(entryFile, exportEntries.join('\n'), {
+    encoding: 'utf-8'
+  })
+  const typeFile = join(targetDir, 'index.d.ts')
+  await ensureFile(typeFile)
+  await writeFile(typeFile, exportTypes.join('\n'), {
     encoding: 'utf-8'
   })
 }
