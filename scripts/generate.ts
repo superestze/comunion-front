@@ -1,4 +1,4 @@
-import { generaetContracts, generateComponent } from './generators'
+import { generateContracts, generateComponent } from './generators'
 
 async function run() {
   const args = process.argv.slice(2)
@@ -7,7 +7,7 @@ async function run() {
     case 'component':
       return generateComponent(args[1])
     case 'contract':
-      return generaetContracts()
+      return generateContracts(args[1])
     default:
       break
   }

@@ -1,6 +1,5 @@
-// import http from 'http'
-import * as http from 'http'
-import * as https from 'https'
+import http from 'http'
+import https from 'https'
 
 export function fetch(url: string) {
   return new Promise<string>((resolve, reject) => {

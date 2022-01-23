@@ -1,4 +1,4 @@
-import * as fs from 'fs'
+import fs from 'fs'
 import { ensureFile } from 'fs-extra'
 import { template } from 'lodash'
 import { resolve } from 'path'
