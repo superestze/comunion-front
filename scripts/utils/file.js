@@ -132,7 +132,7 @@ var __generator =
   }
 exports.__esModule = true
 exports.renderToFile = exports.writeToFile = void 0
-var fs_1 = require('fs')
+var fs = require('fs')
 var fs_extra_1 = require('fs-extra')
 var lodash_1 = require('lodash')
 var path_1 = require('path')
@@ -141,12 +141,12 @@ function writeToFile(filePath, content) {
     return __generator(this, function (_a) {
       switch (_a.label) {
         case 0:
-          return [4 /*yield*/, fs_extra_1.ensureFile(filePath)]
+          return [4 /*yield*/, (0, fs_extra_1.ensureFile)(filePath)]
         case 1:
           _a.sent()
           return [
             4 /*yield*/,
-            fs_1['default'].promises.writeFile(filePath, content, {
+            fs.promises.writeFile(filePath, content, {
               encoding: 'utf8'
             })
           ]
@@ -164,18 +164,25 @@ function renderToFile(filePath, templateFileName, data) {
     return __generator(this, function (_a) {
       switch (_a.label) {
         case 0:
+          console.log(
+            '%c 🥜 filePath: ',
+            'font-size:20px;background-color: #ED9EC7;color:#fff;',
+            filePath
+          )
           return [
             4 /*yield*/,
-            fs_1['default'].promises.readFile(
-              path_1.resolve(__dirname, '../templates', templateFileName),
-              {
-                encoding: 'utf-8'
-              }
-            )
+            fs.promises.readFile((0, path_1.resolve)(__dirname, '../templates', templateFileName), {
+              encoding: 'utf-8'
+            })
           ]
         case 1:
           tpl = _a.sent()
-          content = lodash_1.template(tpl)(data)
+          content = (0, lodash_1.template)(tpl)(data)
+          console.log(
+            '%c 🍅 content: ',
+            'font-size:20px;background-color: #3F7CFF;color:#fff;',
+            content
+          )
           return [4 /*yield*/, writeToFile(filePath, content)]
         case 2:
           _a.sent()

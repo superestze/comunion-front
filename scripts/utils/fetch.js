@@ -1,11 +1,11 @@
 'use strict'
 exports.__esModule = true
 exports.fetch = void 0
-var http_1 = require('http')
-var https_1 = require('https')
+var http = require('http')
+var https = require('https')
 function fetch(url) {
   return new Promise(function (resolve, reject) {
-    ;(url.startsWith('https') ? https_1['default'] : http_1['default']).get(url, function (res) {
+    ;(url.startsWith('https') ? https : http).get(url, function (res) {
       var data = ''
       res.on('data', function (chunk) {
         data += chunk
