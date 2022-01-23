@@ -1,4 +1,4 @@
-import { convertCamelCase } from '../../packages/utils'
+import { convertCamelCase } from '../../packages/utils/src'
 import { join } from 'path'
 import { renderToFile, writeToFile } from '../utils'
 
