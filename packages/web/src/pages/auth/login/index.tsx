@@ -7,7 +7,7 @@ import {
 } from '@/constants'
 import { randomStr } from '@comunion/utils'
 import { useUserProfile, useWallet } from '@/providers'
-import { UButton, UInput } from '@comunion/components'
+import { UButton, UInput, ULogo } from '@comunion/components'
 import { PlusOutlined } from '@comunion/icons'
 
 const LoginPage = defineComponent({
@@ -34,6 +34,12 @@ const LoginPage = defineComponent({
 
     return () => (
       <div class="p-4">
+        <div class="bg-black" style={{ fontSize: 0 }}>
+          <ULogo />
+          <ULogo theme="white" />
+          <ULogo withText />
+          <ULogo theme="white" withText height={80} />
+        </div>
         <UInput />
         <PlusOutlined class="h-20 my-3 text-red-500 w-20" />
         <p class="font-orbitron text-primary">Comunion</p>
@@ -51,7 +57,7 @@ const LoginPage = defineComponent({
         </div>
         <div class="flex">
           <div class="mr-2">
-            <UButton type="primary" onClick={metamaskLogin}>
+            <UButton type="error" onClick={metamaskLogin}>
               MetaMask
             </UButton>
           </div>
