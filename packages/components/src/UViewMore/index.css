@@ -1,0 +1,19 @@
+.u-view-more{
+  font-family: "Open Sans",sans-serif;
+  font-style: normal;
+  font-weight: bold;
+  font-size: 14px;
+  line-height: 20px;
+  height: 20px;
+  text-align: right;
+  letter-spacing: 2px;
+  text-transform: uppercase;
+  color: var(--u-primary-color);
+}
+
+.u-view-more-icon{
+  height: 20px;
+  margin-left: 12px;
+}
+
+

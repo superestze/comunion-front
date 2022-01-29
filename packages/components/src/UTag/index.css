@@ -1,0 +1,17 @@
+.u-tag{
+  display: inline-block;
+  height: 24px;
+  background: var(--u-primary-color);
+  border-radius: 2px;
+  font-family: "Open Sans",sans-serif;
+  font-style: normal;
+  font-weight: normal;
+  font-size: 12px;
+  line-height: 24px;
+  text-align: center;
+  padding-left: 10px;
+  padding-right: 10px;
+  color: #FFF;
+}
+
+
