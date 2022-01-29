@@ -26,8 +26,8 @@
     "jslint": "eslint \"packages/*/src/**/*.{ts,tsx}\"",
     "lint": "npm run stylint && npm run jslint",
     "gen:component": "ts-node scripts/generate.ts component",
-    "gen:goerli": "set GITHUB_RAW_PROXY_URL=raw.githubusercontent.com && ts-node scripts/generate.ts contract goerli",
-    "gen:main": "set GITHUB_RAW_PROXY_URL=raw.githubusercontent.com && ts-node scripts/generate.ts contract main",
+    "gen:goerli": "set GITHUB_RAW_PROXY_URL=raw.githubusercontent.com&& ts-node scripts/generate.ts contract goerli",
+    "gen:main": "set GITHUB_RAW_PROXY_URL=raw.githubusercontent.com&& ts-node scripts/generate.ts contract main",
     "gen:api": "yarn --cwd packages/web run gen:api"
   },
   "dependencies": {},
