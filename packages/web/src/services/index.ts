@@ -78,7 +78,7 @@ export const services = {
       ...extract(args, [], [])
     })
   },
-  'account@oauth-google-login-callback'(args: { code: any }) {
+  'account@oauth-google-login-callback'(args: { state: any; code: any }) {
     return requestAdapter<{
       nick: string
       avatar: string
@@ -91,7 +91,7 @@ export const services = {
       ...extract(args, ['state', 'code'], [])
     })
   },
-  'account@oauth-github-login-callback'(args: { code: any }) {
+  'account@oauth-github-login-callback'(args: { state: any; code: any }) {
     return requestAdapter<{
       nick: string
       avatar: string
@@ -195,6 +195,180 @@ export const services = {
       url: replacePath('/account/profile', args),
       method: 'GET',
       ...extract(args, [], [])
+    })
+  },
+
+  'startup@startup-follow'(args: {
+    /**
+     * @example 1
+     */
+    startupId: any
+  }) {
+    return requestAdapter<{}>({
+      url: replacePath('/cores/startups/{startupId}/follow', args),
+      method: 'POST',
+      ...extract(args, [], ['startupId'])
+    })
+  },
+  'startup@startup-get'(args: { startupId: any }) {
+    return requestAdapter<{
+      id: number
+      createdAt: string
+      updatedAt: string
+      isDeleted: boolean
+      comerID: number
+      name: string
+      /**
+       * @description NONE,ESG,NGO,DAO,COM
+       */
+      mode: string
+      logo: string
+      mission: string
+      tokenContractAddress: string
+      isSet: boolean
+      wallets: {
+        id: number
+        createdAt: string
+        updatedAt: string
+        isDeleted: boolean
+        comerID: number
+        startupID: number
+        walletName: string
+        walletAddress: string
+      }[]
+    }>({
+      url: replacePath('/cores/startups/{startupId}', args),
+      method: 'GET',
+      ...extract(args, [], ['startupId'])
+    })
+  },
+  'startup@startup-list'(args: {
+    limit: any
+    offset: any
+    keyword: any
+    /**
+     * @description NONE,ESG,NGO,DAO,COM
+     */
+    mode: any
+  }) {
+    return requestAdapter<{
+      list: {
+        id: number
+        createdAt: string
+        updatedAt: string
+        isDeleted: boolean
+        comerID: number
+        name: string
+        /**
+         * @description NONE,ESG,NGO,DAO,COM
+         */
+        mode: string
+        logo: string
+        mission: string
+        tokenContractAddress: string
+        isSet: boolean
+        wallets: {
+          id: number
+          createdAt: string
+          updatedAt: string
+          isDeleted: boolean
+          comerID: number
+          startupID: number
+          walletName: string
+          walletAddress: string
+        }[]
+      }[]
+      total: number
+    }>({
+      url: replacePath('/cores/startups', args),
+      method: 'GET',
+      ...extract(args, ['limit', 'offset', 'keyword', 'mode'], [])
+    })
+  },
+  'startup@startup-list-followed'(args: {
+    limit: any
+    offset: any
+    keyword: any
+    /**
+     * @description NONE,ESG,NGO,DAO,COM
+     */
+    mode: any
+  }) {
+    return requestAdapter<{
+      list: {
+        id: number
+        createdAt: string
+        updatedAt: string
+        isDeleted: boolean
+        comerID: number
+        name: string
+        /**
+         * @description NONE,ESG,NGO,DAO,COM
+         */
+        mode: string
+        logo: string
+        mission: string
+        tokenContractAddress: string
+        isSet: boolean
+        wallets: {
+          id: number
+          createdAt: string
+          updatedAt: string
+          isDeleted: boolean
+          comerID: number
+          startupID: number
+          walletName: string
+          walletAddress: string
+        }[]
+      }[]
+      total: number
+    }>({
+      url: replacePath('/cores/startups/follow', args),
+      method: 'GET',
+      ...extract(args, ['limit', 'offset', 'keyword', 'mode'], [])
+    })
+  },
+  'startup@startup-list-me'(args: {
+    limit: any
+    offset: any
+    keyword: any
+    /**
+     * @description NONE,ESG,NGO,DAO,COM
+     */
+    mode: any
+  }) {
+    return requestAdapter<{
+      list: {
+        id: number
+        createdAt: string
+        updatedAt: string
+        isDeleted: boolean
+        comerID: number
+        name: string
+        /**
+         * @description NONE,ESG,NGO,DAO,COM
+         */
+        mode: string
+        logo: string
+        mission: string
+        tokenContractAddress: string
+        isSet: boolean
+        wallets: {
+          id: number
+          createdAt: string
+          updatedAt: string
+          isDeleted: boolean
+          comerID: number
+          startupID: number
+          walletName: string
+          walletAddress: string
+        }[]
+      }[]
+      total: number
+    }>({
+      url: replacePath('/cores/startups/me', args),
+      method: 'GET',
+      ...extract(args, ['limit', 'offset', 'keyword', 'mode'], [])
     })
   },
 

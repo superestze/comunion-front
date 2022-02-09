@@ -38,7 +38,7 @@ export default defineConfig({
     pages({
       extensions: ['tsx'],
       pagesDir: 'src/pages',
-      exclude: ['**/components/**/*.*', '**/blocks/**/*.*'],
+      exclude: ['**/components/**/*.*', '**/blocks/**/*.*', '**/hooks/**/*.*', '**/_*.*'],
       importMode: 'async',
       nuxtStyle: true
     })

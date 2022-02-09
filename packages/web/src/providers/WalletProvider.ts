@@ -1,6 +1,6 @@
 import type { InjectionKey } from 'vue'
 import { defineComponent, inject, readonly, provide, reactive } from 'vue'
-import type { UserProfileState } from '.'
+import type { UserResponse } from '@/types'
 import type { WalletLoginFunction } from './wallets'
 import { login } from './wallets'
 import type AbstractWallet from './wallets/Wallet'
@@ -12,7 +12,7 @@ export interface WalletState {
 
 export const WalletSymbol: InjectionKey<{
   wallet: WalletState
-  walletLogin: (...args: Parameters<WalletLoginFunction>) => Promise<UserProfileState>
+  walletLogin: (...args: Parameters<WalletLoginFunction>) => Promise<UserResponse>
 }> = Symbol()
 
 export const WalletProvider = defineComponent({
@@ -29,7 +29,7 @@ export const WalletProvider = defineComponent({
       const { user, wallet } = await login(...args)
       _wallet = wallet
       console.log(_wallet)
-      state.walletAddress = user.walletAddress
+      state.walletAddress = user.address
       state.chainId = (await wallet.getProvider().getNetwork()).name
       return user
     }

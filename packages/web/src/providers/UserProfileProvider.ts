@@ -2,11 +2,13 @@ import { STORE_KEY_USER } from '@/constants'
 import type { ComputedRef, InjectionKey } from 'vue'
 import { computed, readonly, inject, provide, reactive, defineComponent } from 'vue'
 import { readObject, removeObject, storeObject } from '@comunion/utils'
+import type { UserResponse } from '@/types'
 
 export interface UserProfileState {
   token: string
   avatar?: string
   name?: string
+  isProfiled?: boolean
   location?: string
   homepage?: string
   skills?: string[]
@@ -22,6 +24,7 @@ export const UserProfileSymbol: InjectionKey<{
   user: Readonly<{ user: UserProfileState }>
   logged: ComputedRef<boolean>
   setUser: (user?: UserProfileState) => void
+  setUserResponse: (user?: UserResponse) => void
   logout: () => void
 }> = Symbol()
 
@@ -38,6 +41,17 @@ export const UserProfileProvider = defineComponent({
       storeObject(STORE_KEY_USER, newUser)
     }
 
+    function setUserResponse(newUser: UserResponse) {
+      const user = {
+        token: newUser.token,
+        avatar: newUser.avatar,
+        name: newUser.nick,
+        isProfiled: newUser.isProfiled,
+        walletAddress: newUser.address
+      }
+      setUser(user)
+    }
+
     function logout() {
       removeObject(STORE_KEY_USER)
       state.user = null
@@ -47,6 +61,7 @@ export const UserProfileProvider = defineComponent({
       user: readonly(state),
       logged,
       setUser,
+      setUserResponse,
       logout
     })
 

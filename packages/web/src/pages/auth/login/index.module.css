@@ -1,0 +1,20 @@
+.oauthBtn {
+  @apply border-primary rounded cursor-pointer flex border-[2px] h-16 transition-all w-16 duration-500 items-center justify-center;
+
+  &:hover {
+    @apply rounded-4xl;
+
+  }
+
+  & + & {
+    @apply ml-8;
+  }
+
+  & > svg {
+    @apply h-7 w-7;
+  }
+}
+
+.walletBtn {
+  /* @apply  */
+}

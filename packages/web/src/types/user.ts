@@ -1,11 +1,7 @@
-export interface User {
-  nick?: string
-  avatar?: string
+export interface UserResponse {
   address?: string
+  avatar?: string
+  nick?: string
   token: string
   isProfiled: boolean
-}
-
-export interface UserProfile {
-  nick?: string
 }

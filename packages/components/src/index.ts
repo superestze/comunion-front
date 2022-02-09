@@ -1,4 +1,6 @@
 export { default as UButton } from './UButton'
 export * from './UInput'
 export { default as ULogo } from './ULogo'
+export { default as UModal } from './UModal'
+export { default as UWalletLogin } from './UWalletLogin'
 export { default as StyleProvider } from './StyleProvider'
