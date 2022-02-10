@@ -90,9 +90,7 @@ const config: UserConfig = {
             },
             {
               text: '表单',
-              children: [
-                { text: '输入框', link: '/zh/components/input' },
-              ]
+              children: [{ text: '输入框', link: '/zh/components/input' }]
             },
             {
               text: '显示',
