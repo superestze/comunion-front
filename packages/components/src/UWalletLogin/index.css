@@ -1,0 +1,29 @@
+.u-wallet-login {
+  @apply bg-white rounded-2xl py-8 px-14 w-145;
+
+  &__title {
+    @apply text-2xl leading-6;
+  }
+
+  &__subtitle {
+    @apply mt-3 text-sm leading-none text-grey2;
+  }
+
+  &__wallets {
+    @apply flex flex-wrap -mx-6 mt-8 mb-5;
+  }
+
+  &__wallet {
+    @apply cursor-pointer flex h-12.5 pl-7.5 transition-all text-[20px] w-62.5 items-center;
+
+    &:hover {
+      @apply rounded-3xl;
+
+      box-shadow: 0 0 4px rgba(0, 0, 0, 0.197015);
+    }
+
+    & > svg {
+      @apply h-8 w-8;
+    }
+  }
+}

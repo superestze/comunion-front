@@ -5,6 +5,12 @@
   "module": "dist/es/index.js",
   "types": "dist/es/index.d.ts",
   "type": "module",
+  "files": [
+    "dist",
+    "windi.config.ts",
+    "README.md",
+    "README_zh.md"
+  ],
   "scripts": {
     "watch:components": "NODE_ENV=development node scripts/build.js",
     "watch:types": "tsc --project tsconfig.types.json --watch",
@@ -17,13 +23,19 @@
     "build": "rimraf dist && run-s build:*"
   },
   "repository": "comunion-io/front-next.git",
-  "keywords": ["vue", "vue3", "ui", "components"],
+  "keywords": [
+    "vue",
+    "vue3",
+    "ui",
+    "components"
+  ],
   "license": "GPL-3.0-or-later",
   "bugs": {
     "url": "https://github.com/comunion-io/front-next/issues"
   },
   "homepage": "https://github.com/comunion-io/front-next#readme",
   "dependencies": {
+    "@comunion/icons": "0.0.1",
     "naive-ui": "^2.21.2",
     "vue": "^3.2.26"
   },

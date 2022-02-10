@@ -1,11 +1,11 @@
 import { services } from '@/services'
-import type { UserProfileState } from '..'
+import type { UserResponse } from '@/types'
 import MetamaskWallet from './Metamask'
 import type AbstractWallet from './Wallet'
 import WalletConnectWallet from './WalletConnect'
 
 export type WalletLoginFunction = (walletName: 'Metamask' | 'WalletConnect') => Promise<{
-  user?: UserProfileState
+  user?: UserResponse
   wallet: AbstractWallet
 }>
 
@@ -35,10 +35,7 @@ export const login: WalletLoginFunction = async walletName => {
       })
       if (!error2) {
         return {
-          user: {
-            ...data2,
-            walletAddress: address
-          },
+          user: data2,
           wallet
         }
       } else {

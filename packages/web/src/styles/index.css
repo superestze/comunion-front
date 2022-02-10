@@ -1,0 +1,3 @@
+body {
+  @apply font-opensans text-grey1 text-[16px] leading-5;
+}

@@ -96,6 +96,13 @@ const StyleProvider = defineComponent({
         successColor: props.successColor,
         warningColor: props.warningColor,
         errorColor: props.errorColor
+      },
+      Button: {
+        colorPrimary: props.primaryColor,
+        colorHoverPrimary: props.primary1Color,
+        colorPressedPrimary: props.primary1Color,
+        colorFocusPrimary: props.primary1Color,
+        borderRadiusLarge: '4px'
       }
     }))
 
