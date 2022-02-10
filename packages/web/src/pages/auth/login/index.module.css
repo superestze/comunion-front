@@ -3,7 +3,6 @@
 
   &:hover {
     @apply rounded-4xl;
-
   }
 
   & + & {
