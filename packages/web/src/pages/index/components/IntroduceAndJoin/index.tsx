@@ -1,6 +1,7 @@
 import joinComunion from '@/assets/join-comunion.png'
 import rightArrowIcon from '@/assets/right-arrow-small.png'
 import { defineComponent } from 'vue'
+import { RouterLink } from 'vue-router'
 import styles from './index.module.css'
 
 export default defineComponent({
@@ -23,18 +24,17 @@ export default defineComponent({
               online space, and empower super individuals to change the world
             </p>
           </div>
-          {/* 加入Comunion*/}
-          <a
+          {/* Join Comunion*/}
+          <RouterLink
             class="bg-white flex m-auto rounded-24px h-48px mt-58px pl-56px w-205px items-center group sm:rounded-27px sm:h-54px sm:mt-70px sm:pl-63px sm:w-254px"
-            href="https://dev.comunion.io/"
-            target="_blank"
+            to="/auth/login"
           >
             <span class="text-primary text-bold text-13px sm:text-18px">Join Comunion</span>
             <img
               class="ml-11px transition-all w-16px sm:w-17px group-hover:ml-22px"
               src={joinComunion}
             />
-          </a>
+          </RouterLink>
           {/* I want to… */}
           <div class="m-auto mt-95px text-white w-560px <sm:hidden">
             <p class="text-20px leading-28px">I want to…</p>
