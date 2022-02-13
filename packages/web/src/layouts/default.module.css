@@ -1,0 +1,13 @@
+.footer {
+  @apply bg-primary2;
+
+  :global {
+    .u-card-title1 {
+      @apply font-normal text-white text-[18px] leading-6;
+    }
+
+    .u-title1 {
+      @apply font-normal mt-6 text-white;
+    }
+  }
+}

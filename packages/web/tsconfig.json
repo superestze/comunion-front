@@ -5,7 +5,7 @@
     "jsx": "preserve",
     "composite": false,
     "lib": ["esnext", "dom"],
-    "types": ["node", "vite/client", "vite-plugin-pages/client"],
+    "types": ["node", "vite/client", "vite-plugin-pages/client", "vite-plugin-vue-layouts/client"],
     "paths": {
       "@/*": ["./src/*"]
     },

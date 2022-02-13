@@ -1,7 +1,8 @@
 // windi.config.js
+import { defineConfig } from 'windicss/helpers'
 import ComponentConfig from '@comunion/components/windi.config'
 
-export default {
+export default defineConfig({
   ...ComponentConfig,
   extract: {
     include: ['src/**/*.{vue,html,jsx,tsx}', 'public/**/*.html', 'index.html'],
@@ -18,5 +19,9 @@ export default {
         'home-bg': '#151515'
       }
     }
+  },
+  shortcuts: {
+    ...ComponentConfig.shortcuts,
+    'u-page-container': 'mx-auto w-248 xl:w-300 2xl:w-345'
   }
-}
+})
