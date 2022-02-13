@@ -3,8 +3,10 @@ import vueJsx from '@vitejs/plugin-vue-jsx'
 import path from 'path'
 // import polyfillNode from 'rollup-plugin-polyfill-node'
 import { defineConfig } from 'vite'
-import pages from 'vite-plugin-pages'
+import Pages from 'vite-plugin-pages'
+import Layouts from 'vite-plugin-vue-layouts'
 import WindiCSS from 'vite-plugin-windicss'
+import { layoutGroupedRoutes } from './src/routes'
 // import { esbuildCommonjs } from '@originjs/vite-plugin-commonjs'
 
 // https://vitejs.dev/config/
@@ -35,12 +37,42 @@ export default defineConfig({
       // enableObjectSlots: true
     }),
     WindiCSS(),
-    pages({
+    Pages({
       extensions: ['tsx'],
       pagesDir: 'src/pages',
       exclude: ['**/components/**/*.*', '**/blocks/**/*.*', '**/hooks/**/*.*', '**/_*.*'],
       importMode: 'async',
-      nuxtStyle: true
+      nuxtStyle: true,
+      extendRoute(route) {
+        function addLayout(layout: string) {
+          route.meta = route.meta || {}
+          route.meta.layout = layout
+        }
+
+        for (const layout of Object.keys(layoutGroupedRoutes)) {
+          const routes = layoutGroupedRoutes[layout] as string[]
+          for (const rule of routes) {
+            if (rule.includes('*')) {
+              if (route.path.match(new RegExp('^' + rule.replace('*', '\\S*')))) {
+                addLayout(layout)
+                break
+              }
+            } else {
+              if (route.path === rule) {
+                addLayout(layout)
+                break
+              }
+            }
+          }
+          if (!route.meta?.layout) {
+            addLayout('default')
+          }
+        }
+        return route
+      }
+    }),
+    Layouts({
+      extensions: ['tsx']
     })
     // polyfillNode()
   ],
