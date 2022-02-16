@@ -69,7 +69,7 @@ const LoginPage = defineComponent({
           <MoreOutlined class="top-9 right-15 absolute" />
           <h2 class="text-[36px] leading-9">Sign to Comunion</h2>
           <UButton
-            class="h-16 mt-[30px] text-white mb-3 text-[21px] w-105 relative"
+            className="h-16 mt-[30px] text-white mb-3 text-[21px] w-105 relative"
             size="large"
             type="primary"
             onClick={showWallets}
