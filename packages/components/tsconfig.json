@@ -1,6 +1,6 @@
 {
   "compilerOptions": {
-    // "types": ["vite/client"],
+    "types": ["vite/client"],
     "baseUrl": ".",
     "jsx": "preserve",
     "jsxFactory": "h",
@@ -16,6 +16,10 @@
     "strictNullChecks": true,
     "moduleResolution": "node",
     "module": "esnext",
-    "target": "esnext"
+    "target": "esnext",
+    "paths": {
+      "@/ex/*": ["./demo/*"],
+      "@/comps/*": ["./src/*"]
+    }
   }
 }
