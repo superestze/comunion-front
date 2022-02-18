@@ -1,24 +1,13 @@
-.u-back{
-  font-family: "Open Sans",sans-serif;
-  font-style: normal;
-  font-weight: bold;
-  font-size: 14px;
-  line-height: 20px;
-  height: 20px;
-  text-align: left;
-  letter-spacing: 2px;
-  text-transform: uppercase;
-  color: var(--u-primary-color);
+.u-back {
+  @apply flex text-left font-bold text-primary tracking-2px uppercase text-[14px] leading-[20px] h-[20px];
+
+  &__icon {
+    @apply origin-center rotate-180 h-[20px];
+
+    transform: rotate(180deg);
+  }
+
+  &__text {
+    @apply ml-[12px]
+  }
 }
-
-.u-back-icon{
-  height: 20px;
-  transform: rotate(180deg);
-  transform-origin:center;
-}
-
-.u-back-text {
-  margin-left: 12px;
-}
-
-

@@ -8,7 +8,7 @@ export default defineComponent({
     return () => (
       <div class="u-view-more flex">
         <div>{slots.default?.() ?? 'View more'}</div>
-        <ArrowRightOutlined class="u-view-more-icon" />
+        <ArrowRightOutlined class="u-view-more__icon" />
       </div>
     )
   }

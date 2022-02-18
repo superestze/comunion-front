@@ -15,9 +15,9 @@ export default defineComponent<UBackProps>({
       router.go(-1)
     }
     return () => (
-      <div class="u-back flex" onClick={props.onClick ?? handleClick}>
-        <ArrowRightOutlined class="u-back-icon transform rotate-90 origin-center" />
-        <div class="u-back-text">{slots.default?.() ?? 'BACK'}</div>
+      <div class="u-back" onClick={props.onClick ?? handleClick}>
+        <ArrowRightOutlined class="u-back__icon" />
+        <div class="u-back__text">{slots.default?.() ?? 'BACK'}</div>
       </div>
     )
   }
