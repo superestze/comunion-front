@@ -1,13 +1,13 @@
 .u-back {
-  @apply flex text-left font-bold text-primary tracking-2px uppercase text-[14px] leading-[20px] h-[20px];
+  @apply flex text-primary uppercase h-5 u-label2;
 
   &__icon {
-    @apply origin-center rotate-180 h-[20px];
+    @apply origin-center rotate-180 h-5;
 
     transform: rotate(180deg);
   }
 
   &__text {
-    @apply ml-[12px]
+    @apply ml-3
   }
 }

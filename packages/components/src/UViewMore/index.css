@@ -1,8 +1,8 @@
 .u-view-more {
-  @apply flex text-left font-bold text-primary tracking-2px uppercase text-[14px] leading-[20px] h-[20px];
+  @apply flex text-primary uppercase h-5 u-title2;
 
   &__icon {
-    @apply h-[20px] ml-[12px];
+    @apply h-5 ml-3;
   }
 }
 
