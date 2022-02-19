@@ -3,7 +3,7 @@ import type { PropType } from 'vue'
 import './index.css'
 
 export const UTagProps = {
-  uTagType: {
+  type: {
     type: String as PropType<'outlined' | 'filled'>,
     default: 'outlined'
   },
@@ -19,8 +19,8 @@ export const Utag = defineComponent({
   setup(props, { slots }) {
     return () => (
       <div
-        class={`u-tag u-tag__${props.uTagType}`}
-        style={props.uTagType === 'filled' ? { backgroundColor: props.bgColor } : undefined}
+        class={`u-tag u-tag__${props.type}`}
+        style={props.type === 'filled' ? { backgroundColor: props.bgColor } : undefined}
       >
         {slots.default?.()}
       </div>

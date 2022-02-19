@@ -1,24 +1,25 @@
 import { defineComponent } from 'vue'
 import { ArrowRightOutlined } from '@comunion/icons'
-import { useRouter } from 'vue-router'
 import './index.css'
 
-type UBackProps = {
-  onClick: (e: MouseEvent) => void
+export const UBackProps = {
+  onClick: {
+    type: Function,
+    default: window.history.back
+  }
 }
 
-export default defineComponent<UBackProps>({
+const Uback = defineComponent({
   name: 'UBack',
+  props: UBackProps,
   setup(props, { slots }) {
-    const router = useRouter()
-    const handleClick = () => {
-      router.go(-1)
-    }
     return () => (
-      <div class="u-back" onClick={props.onClick ?? handleClick}>
+      <div class="u-back">
         <ArrowRightOutlined class="u-back__icon" />
         <div class="u-back__text">{slots.default?.() ?? 'BACK'}</div>
       </div>
     )
   }
 })
+
+export default Uback

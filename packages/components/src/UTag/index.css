@@ -1,5 +1,5 @@
 .u-tag {
-  @apply inline-flex items-center h-6 text-center pl-2.5 pr-2.5 u-tag rounded-sm;
+  @apply inline-flex items-center h-6 text-center px-2.5 u-tag rounded-sm;
 
   &__filled{
     @apply text-white;
