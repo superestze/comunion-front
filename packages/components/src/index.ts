@@ -1,7 +1,7 @@
 export { default as UButton } from './UButton'
 export type { UButtonProps } from './UButton'
 export { default as UBack } from './UBack'
-// export type { UBackProps } from './UBack'
+export type { UBackProps } from './UBack'
 export { default as UViewMore } from './UViewMore'
 export { default as UTag } from './UTag'
 export type { UTagProps } from './UTag'
