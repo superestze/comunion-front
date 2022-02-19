@@ -1,7 +1,11 @@
-.u-tag-filled {
-  @apply inline-flex items-center h-6 text-center text-white pl-2.5 pr-2.5 u-tag;
-}
+.u-tag {
+  @apply inline-flex items-center h-6 text-center pl-2.5 pr-2.5 u-tag rounded-sm;
 
-.u-tag-outlined {
-  @apply inline-flex items-center border-1 h-6 border-solid bg-white rounded-sm text-center text-primary2 pl-2.5 pr-2.5 u-tag border-purple-gradient;
+  &__filled{
+    @apply text-white;
+  }
+
+  &__outlined{
+    @apply text-primary2 bg-white border-1 border-solid border-purple-gradient;
+  }
 }

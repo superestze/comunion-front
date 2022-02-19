@@ -19,7 +19,8 @@ export const Utag = defineComponent({
   setup(props, { slots }) {
     return () => (
       <div
-        class={props.uTagType == 'filled' ? `u-tag-filled bg-[${props.bgColor}]` : 'u-tag-outlined'}
+        class={`u-tag u-tag__${props.uTagType}`}
+        style={props.uTagType === 'filled' ? { backgroundColor: props.bgColor } : undefined}
       >
         {slots.default?.()}
       </div>
