@@ -1,9 +1,30 @@
 import { defineComponent } from 'vue'
+import type { PropType } from 'vue'
 import './index.css'
 
-export default defineComponent({
+export const UtagProps = {
+  uTagType: {
+    type: String as PropType<'outlined' | 'filled'>,
+    default: 'outlined'
+  },
+  bgColor: {
+    type: String,
+    default: '#5331F4'
+  }
+}
+
+export const Utag = defineComponent({
   name: 'UTag',
+  props: UtagProps,
   setup(props, { slots }) {
-    return () => <div class="u-tag">{slots.default?.()}</div>
+    return () => (
+      <div
+        class={props.uTagType == 'filled' ? `u-tag-filled bg-[${props.bgColor}]` : 'u-tag-outlined'}
+      >
+        {slots.default?.()}
+      </div>
+    )
   }
 })
+
+export default Utag
