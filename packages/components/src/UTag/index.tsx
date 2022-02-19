@@ -2,7 +2,7 @@ import { defineComponent } from 'vue'
 import type { PropType } from 'vue'
 import './index.css'
 
-export const UtagProps = {
+export const UTagProps = {
   uTagType: {
     type: String as PropType<'outlined' | 'filled'>,
     default: 'outlined'
@@ -15,7 +15,7 @@ export const UtagProps = {
 
 export const Utag = defineComponent({
   name: 'UTag',
-  props: UtagProps,
+  props: UTagProps,
   setup(props, { slots }) {
     return () => (
       <div
