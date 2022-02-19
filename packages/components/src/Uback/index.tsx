@@ -14,7 +14,7 @@ const Uback = defineComponent({
   props: UBackProps,
   setup(props, { slots }) {
     return () => (
-      <div class="u-back">
+      <div class="u-back" onClick={props.onClick()}>
         <ArrowRightOutlined class="u-back__icon" />
         <div class="u-back__text">{slots.default?.() ?? 'BACK'}</div>
       </div>
