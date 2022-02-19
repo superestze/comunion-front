@@ -94,7 +94,16 @@ const config: UserConfig = {
             },
             {
               text: '显示',
-              children: []
+              children: [
+                { text:'tag',link:'/zh/components/tag'}
+              ]
+            },
+            {
+              text: '导航',
+              children: [
+                { text: '返回', link:'/zh/components/back'},
+                { text: '查看更多', link:'/zh/components/viewMore'},
+              ]
             }
           ],
           '/zh/libraries/': [
