@@ -1,11 +1,12 @@
-import type { FormProps, InputProps, FormInst } from 'naive-ui'
+import type { FormProps, InputProps, FormInst, FormItemRule } from 'naive-ui'
 import { NInput } from 'naive-ui'
 import { NForm, NFormItem } from 'naive-ui'
 import type { ExtractPropTypes, PropType } from 'vue'
+import { computed } from 'vue'
 import { ref, toRaw } from 'vue'
 import { reactive } from 'vue'
 import { defineComponent } from 'vue'
-import { omitObject } from '@comunion/utils'
+import { omitObject, effectiveUrlValidator } from '@comunion/utils'
 import './FormFactory.css'
 import UButton from '../UButton'
 
@@ -25,6 +26,7 @@ export type FormFactoryField = {
   title: string
   name: string
   required?: boolean
+  rules?: FormItemRule[]
 } & (FormFactoryInputField | FormFactoryWebsiteField | FormFactoryHashInputField)
 
 export type FormData = Record<string, any>
@@ -51,20 +53,25 @@ export const UFormFactoryPropsObj = {
   },
   initialValues: {
     type: Object as PropType<FormData>
+  },
+  // remove '' null undefined []
+  removeNil: {
+    type: Boolean,
+    default: true
   }
 } as const
 
-export type UFormFactoryProps = ExtractPropTypes<typeof UFormFactoryPropsObj> & FormProps
+export type UFormFactoryProps = ExtractPropTypes<typeof UFormFactoryPropsObj> & Omit<FormProps, ''>
 
-function renderField(field: FormFactoryField) {
-  const props = omitObject(field, ['title', 'name', 'required', 't'])
+function renderField(field: FormFactoryField, values: FormData) {
+  const props = omitObject(field, 'title', 'name', 'required', 't', 'rules')
   switch (field.t) {
     case 'website':
-      return <NInput {...props} size="large" />
+      return <NInput {...props} v-model:value={values[field.name]} size="large" />
     case 'hashInput':
-      return <NInput type="text" {...props} size="large" />
+      return <NInput type="text" {...props} v-model:value={values[field.name]} size="large" />
     default:
-      return <NInput {...props} size="large" />
+      return <NInput {...props} v-model:value={values[field.name]} size="large" />
   }
 }
 
@@ -74,26 +81,64 @@ const UFormFactory = defineComponent({
   props: UFormFactoryPropsObj,
   setup(props, ctx) {
     const formRef = ref<FormInst>()
-    const formProps = omitObject(props, [
+    const formProps = omitObject(
+      props,
       'fields',
       'onSubmit',
       'submitText',
       'showCancel',
       'cancelText',
       'initialValues'
-    ])
+    )
     const values = reactive(props.initialValues ?? {})
+
+    const rules = computed(() => {
+      return props.fields.reduce<Record<string, FormItemRule[]>>((acc, field) => {
+        if (field.rules) {
+          acc[field.name] = field.rules
+        }
+        acc[field.name] = acc[field.name] ?? []
+        if (field.required) {
+          acc[field.name].push({
+            required: true,
+            message: `${field.title} is required`,
+            trigger: 'blur'
+          })
+        }
+        if (field.t === 'website') {
+          acc[field.name].push({
+            validator: (rule, value) => (value ? effectiveUrlValidator(value) : true),
+            message: 'Please enter a valid url',
+            trigger: 'blur'
+          })
+        }
+        return acc
+      }, {})
+    })
 
     const onSubmit = () => {
       formRef.value?.validate(errors => {
         if (!errors) {
-          props.onSubmit(toRaw(values))
+          const _values = toRaw(values)
+          if (props.removeNil) {
+            Object.keys(_values).forEach(key => {
+              if (
+                _values[key] === '' ||
+                _values[key] === null ||
+                _values[key] === undefined ||
+                (Array.isArray(_values[key]) && _values[key].length === 0)
+              ) {
+                delete _values[key]
+              }
+            })
+          }
+          props.onSubmit?.(_values)
         }
       })
     }
 
     return () => (
-      <NForm {...formProps} model={values} ref={formRef}>
+      <NForm {...formProps} model={values} rules={rules.value} ref={formRef}>
         {props.fields.map(field => {
           return (
             <NFormItem
@@ -103,7 +148,7 @@ const UFormFactory = defineComponent({
               path={field.name}
               required={field.required}
             >
-              {renderField(field)}
+              {renderField(field, values)}
             </NFormItem>
           )
         })}

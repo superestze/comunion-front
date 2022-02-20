@@ -1,12 +1,12 @@
-export function omitObject(
-  obj: Record<string, any>,
-  keys: (keyof typeof obj)[]
-): Omit<typeof obj, keyof typeof obj> {
+export function omitObject<T extends Record<string, any>, K extends Extract<keyof T, string>>(
+  obj: T,
+  ...keys: K[]
+): Omit<T, K> {
   const result: Record<string, any> = {}
   Object.keys(obj).forEach(key => {
-    if (!keys.includes(key)) {
+    if (!keys.includes(key as K)) {
       result[key] = obj[key]
     }
   })
-  return result
+  return result as Omit<T, K>
 }

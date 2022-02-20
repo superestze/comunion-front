@@ -1,5 +1,5 @@
 import { defineComponent } from 'vue'
-import { UButton, UFormFactory } from '@comunion/components'
+import { UFormFactory } from '@comunion/components'
 import type { FormFactoryField } from '@comunion/components/dist/es/UForm/FormFactory'
 
 const RegisterProfilePage = defineComponent({
@@ -52,14 +52,8 @@ const RegisterProfilePage = defineComponent({
           Add your profile , a short bio , and links to your other online websites.
         </p>
         <div class="bg-white border rounded-lg border-grey5 pt-10 pb-5">
-          <div class="mx-auto min-h-300 w-200">
-            <UFormFactory fields={fields} onSubmit={onSubmit}>
-              <div class="flex justify-end">
-                <UButton attrType="submit" type="primary" size="large" class="w-30">
-                  Next step
-                </UButton>
-              </div>
-            </UFormFactory>
+          <div class="mx-auto w-200">
+            <UFormFactory fields={fields} submitText="Next step" onSubmit={onSubmit}></UFormFactory>
           </div>
         </div>
       </div>
