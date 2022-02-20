@@ -101,16 +101,43 @@ const StyleProvider = defineComponent({
         successColorHover: props.successColor,
         successColorPressed: props.successColor
       },
+      Form: {
+        asteriskColor: props.errorColor
+      },
       Button: {
+        heightLarge: '48px',
+        heightMedium: '40px',
+        borderRadiusLarge: '8px',
+        borderRadiusMedium: '8px',
+        borderRadiusSmall: '8px',
+        heightSmall: '36px',
         colorPrimary: props.primaryColor,
         colorHoverPrimary: props.primary1Color,
         colorPressedPrimary: props.primary1Color,
         colorFocusPrimary: props.primary1Color,
-        borderRadiusLarge: '4px'
+        textColorGhostPrimary: props.primaryColor,
+        textColorGhostHoverPrimary: props.primaryColor,
+        textColorGhostFocusPrimary: props.primaryColor,
+        borderHoverPrimary: props.primaryColor,
+        borderFocusPrimary: props.primaryColor
       },
       Pagination: {
         itemBorderHover: props.primaryColor,
         itemTextColorHover: props.primaryColor
+      },
+      Input: {
+        border: `1px solid ${props.grey5Color}`,
+        borderFocus: props.primaryColor,
+        borderHover: `1px solid ${props.primaryColor}`,
+        borderWarning: props.warningColor,
+        borderError: props.errorColor,
+        borderDisabled: props.grey5Color,
+        placeholderColor: props.grey3Color,
+        heightLarge: '48px',
+        textColor: props.grey3Color,
+        fontSizeLarge: '16px',
+        paddingLarge: '16px',
+        borderRadius: '8px'
       }
     }))
 

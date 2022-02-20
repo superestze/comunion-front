@@ -37,6 +37,7 @@
   "homepage": "https://github.com/comunion-io/front-next#readme",
   "dependencies": {
     "@comunion/icons": "0.0.1",
+    "@comunion/utils": "0.0.1",
     "naive-ui": "^2.21.2",
     "vue": "^3.2.26"
   },
