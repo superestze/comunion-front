@@ -105,6 +105,12 @@ const StyleProvider = defineComponent({
         asteriskColor: props.errorColor
       },
       Button: {
+        heightLarge: '48px',
+        heightMedium: '40px',
+        borderRadiusLarge: '8px',
+        borderRadiusMedium: '8px',
+        borderRadiusSmall: '8px',
+        heightSmall: '36px',
         colorPrimary: props.primaryColor,
         colorHoverPrimary: props.primary1Color,
         colorPressedPrimary: props.primary1Color,
@@ -113,18 +119,11 @@ const StyleProvider = defineComponent({
         textColorGhostHoverPrimary: props.primaryColor,
         textColorGhostFocusPrimary: props.primaryColor,
         borderHoverPrimary: props.primaryColor,
-        borderFocusPrimary: props.primaryColor,
-        borderRadiusLarge: '8px'
+        borderFocusPrimary: props.primaryColor
       },
       Pagination: {
         itemBorderHover: props.primaryColor,
-        itemTextColorHover: props.primaryColor,
-        heightLarge: '48px',
-        heightMedium: '40px',
-        borderRadiusLarge: '8px',
-        borderRadiusMedium: '8px',
-        borderRadiusSmall: '8px',
-        heightSmall: '36px'
+        itemTextColorHover: props.primaryColor
       },
       Input: {
         border: `1px solid ${props.grey5Color}`,
