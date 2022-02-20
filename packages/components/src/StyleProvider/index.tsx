@@ -109,7 +109,12 @@ const StyleProvider = defineComponent({
         colorHoverPrimary: props.primary1Color,
         colorPressedPrimary: props.primary1Color,
         colorFocusPrimary: props.primary1Color,
-        borderRadiusLarge: '4px'
+        textColorGhostPrimary: props.primaryColor,
+        textColorGhostHoverPrimary: props.primaryColor,
+        textColorGhostFocusPrimary: props.primaryColor,
+        borderHoverPrimary: props.primaryColor,
+        borderFocusPrimary: props.primaryColor,
+        borderRadiusLarge: '8px'
       },
       Pagination: {
         itemBorderHover: props.primaryColor,
