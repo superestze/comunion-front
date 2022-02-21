@@ -1,8 +1,9 @@
 /* eslint-disable */
 import axios from 'axios'
+import { message } from '@comunion/components'
 import { RequestFunctionArgs, ResponseObject } from './a2s.types'
 
-let _token = localStorage.getItem('token')
+let _token = ''
 
 export function getToken() {
   return _token
@@ -32,7 +33,7 @@ export async function requestAdapter<T = any>(
     responseType: 'json',
     headers: token
       ? {
-          Authorization: `Bearer ${token}`
+          'X-COMUNION-AUTHORIZATION': token
         }
       : {}
   })
@@ -41,13 +42,13 @@ export async function requestAdapter<T = any>(
       error: false,
       data: data as T
     }
-    // TODO show error message
     // return {
-    //   error: true,
-    //   message: data.message,
-    //   data: null
-    // }
+      //   error: true,
+      //   message: data.message,
+      //   data: null
+      // }
   }
+  message.error(data.message ?? statusText)
   return {
     error: true,
     data: null,

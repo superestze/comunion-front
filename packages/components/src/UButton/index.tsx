@@ -1,14 +1,13 @@
 import { NButton } from 'naive-ui'
 import type { ButtonProps } from 'naive-ui'
 import { defineComponent } from 'vue'
-// import './index.css'
 
-export type UButtonProps = ButtonProps & { className?: string }
+export type UButtonProps = ButtonProps
 
 const UButton = defineComponent({
   extends: NButton,
-  setup(props, ctx) {
-    return () => <NButton {...props}>{ctx.slots.default?.()}</NButton>
+  setup(props, { slots }) {
+    return () => <NButton {...props}>{slots.default?.()}</NButton>
   }
 })
 

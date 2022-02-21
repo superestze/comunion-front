@@ -3,6 +3,7 @@ import type { ComputedRef, InjectionKey } from 'vue'
 import { computed, readonly, inject, provide, reactive, defineComponent } from 'vue'
 import { readObject, removeObject, storeObject } from '@comunion/utils'
 import type { UserResponse } from '@/types'
+import { setToken } from '@/services/a2s.adapter'
 
 export interface UserProfileState {
   token: string
@@ -10,7 +11,7 @@ export interface UserProfileState {
   name?: string
   isProfiled?: boolean
   location?: string
-  homepage?: string
+  website?: string
   skills?: string[]
   bio?: string
   oauth?: {
@@ -32,12 +33,14 @@ export const UserProfileProvider = defineComponent({
   name: 'UserProfileProvider',
   setup(props, ctx) {
     const stored = readObject<UserProfileState>(STORE_KEY_USER)
+    setToken(stored?.token)
     const state = reactive<{ user: UserProfileState | undefined }>({ user: stored })
 
     const logged = computed<boolean>(() => !!state.user?.token)
 
     function setUser(newUser: UserProfileState) {
       state.user = newUser
+      setToken(newUser.token)
       storeObject(STORE_KEY_USER, newUser)
     }
 

@@ -1,3 +1,17 @@
 body {
   @apply font-opensans text-grey1 text-[16px] leading-5;
 }
+
+::-webkit-scrollbar {
+  @apply w-1;
+
+  background: none;
+}
+
+::-webkit-scrollbar-thumb {
+  @apply bg-primary rounded w-1;
+}
+
+::-webkit-scrollbar-track {
+  background: none;
+}
