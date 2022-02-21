@@ -1,0 +1,27 @@
+.u-guide-steps {
+  .u-guide-step {
+    @apply flex flex-row;
+
+    &-index {
+      &__number {
+        @apply h-8 w-16 text-white mr-4 rounded-4px u-h1 text-[14px]  bg-primary flex items-center justify-center;
+      }
+  
+      &__line {
+        @apply w-[2px] bg-primary ml-4 h-full;
+      }
+    }
+  
+    &-content {
+      @apply flex flex-col flex-1 items-left;
+      
+      &__title {
+        @apply text-[14px] h-6 leading-5 font-bold tracking-2px;
+      }
+  
+      &__desc {
+        @apply text-[16px] font-normal leading-4 pb-10 leading-5;
+      }
+    }
+  }
+}
