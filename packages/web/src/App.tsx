@@ -1,4 +1,4 @@
-import { StyleProvider } from '@comunion/components'
+import { StyleProvider, UMessage, UMessageProvider } from '@comunion/components'
 import { defineComponent } from 'vue'
 import { RouterView } from 'vue-router'
 import { GlobalConfigProvider, UserProfileProvider, WalletProvider } from './providers'
@@ -8,6 +8,9 @@ export default defineComponent({
   setup() {
     return () => (
       <StyleProvider>
+        <UMessageProvider>
+          <UMessage />
+        </UMessageProvider>
         <GlobalConfigProvider>
           <UserProfileProvider>
             <WalletProvider>
