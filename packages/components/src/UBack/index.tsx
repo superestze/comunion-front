@@ -9,7 +9,7 @@ export const UBackProps = {
   }
 }
 
-const Uback = defineComponent({
+const UBack = defineComponent({
   name: 'UBack',
   props: UBackProps,
   setup(props, { slots }) {
@@ -22,4 +22,4 @@ const Uback = defineComponent({
   }
 })
 
-export default Uback
+export default UBack
