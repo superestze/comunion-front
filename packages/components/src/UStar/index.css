@@ -1,5 +1,5 @@
 .u-star {
-  @apply inline-flex text-center justify-center w-27 h-9 text-center px-2.5 u-label1 rounded-lg uppercase;
+  @apply inline-flex items-center justify-center w-27 h-9 text-center px-2.5 u-label1 rounded-lg uppercase;
 
   &__followed{
     @apply text-white bg-primary1;
