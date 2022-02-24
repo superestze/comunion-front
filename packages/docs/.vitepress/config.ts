@@ -96,7 +96,8 @@ const config: UserConfig = {
               text: '显示',
               children: [
                 { text:'tag',link:'/zh/components/tag'},
-                { text:'开发中',link:'/zh/components/developing'}
+                { text:'开发中',link:'/zh/components/developing'},
+                { text:'star',link:'/zh/components/star'}
               ]
             },
             {
