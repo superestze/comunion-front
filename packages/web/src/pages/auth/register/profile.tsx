@@ -3,11 +3,14 @@ import { UButton, UFormFactory, UModal } from '@comunion/components'
 import type { FormFactoryField } from '@comunion/components/dist/es/UForm/FormFactory'
 import successImg from './assets/success.svg'
 import { useRouter } from 'vue-router'
+import { services } from '@/services'
+import { useUserProfile } from '@/providers'
 
 const RegisterProfilePage = defineComponent({
   name: 'RegisterProfilePage',
   setup() {
     const router = useRouter()
+    const { user, setUser } = useUserProfile()
     const success = ref(false)
     const fields: FormFactoryField[] = [
       {
@@ -29,6 +32,7 @@ const RegisterProfilePage = defineComponent({
       },
       {
         t: 'hashInput',
+        category: 'comerSkill',
         title: 'Skills',
         name: 'skills',
         required: true,
@@ -42,13 +46,25 @@ const RegisterProfilePage = defineComponent({
         placeholder: 'Tell us about yourself, at least 100 characters',
         minlength: 100,
         rules: [{ min: 100, message: 'Tell us about yourself, at least 100 characters' }],
-        rows: 5
+        // @ts-ignore
+        autosize: {
+          minRows: 5,
+          maxRows: 10
+        }
       }
     ]
 
-    const onSubmit = (values: Record<string, any>) => {
-      console.log(values)
-      success.value = true
+    const onSubmit = async (
+      values: Parameters<typeof services['account@comer-profile-update']>[0]
+    ) => {
+      const { error } = await services['account@comer-profile-create']({
+        avatar: 'https://comunion-avatars.s3.ap-northeast-1.amazonaws.com/avatar1.svg',
+        ...values
+      })
+      if (!error) {
+        setUser({ ...user.user, ...values })
+        success.value = true
+      }
     }
 
     const toHomePage = () => {

@@ -27,13 +27,13 @@ const RegisterIntroductionPage = defineComponent({
           new startup mutual network, that is comunion economic paradigm, promote success rate of
           startup, in this process, realize labor-capitalized , enhance labor value liquidity
         </p>
-        <div class="mt-18 grid gap-10 grid-cols-1 md:grid-cols-2 xl:grid-cols-4">
-          <img src={IntroImg1} class="w-full" />
-          <img src={IntroImg2} class="w-full" />
-          <img src={IntroImg3} class="w-full" />
-          <img src={IntroImg4} class="w-full" />
+        <div class="mt-18 grid gap-10 grid-cols-1 sm:grid-cols-2 md:grid-cols-4">
+          <img src={IntroImg1} class="w-full max-w-[315px]" />
+          <img src={IntroImg2} class="w-full max-w-[315px]" />
+          <img src={IntroImg3} class="w-full max-w-[315px]" />
+          <img src={IntroImg4} class="w-full max-w-[315px]" />
         </div>
-        <div class="flex mt-6 justify-end">
+        <div class="flex my-6 justify-end">
           <UButton
             type="primary"
             class="rounded-lg font-[16px] w-30"
