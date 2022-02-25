@@ -1,4 +1,4 @@
-import type { FormProps, InputProps, FormInst, FormItemRule } from 'naive-ui'
+import type { FormProps, InputProps, FormInst, FormItemRule, SelectProps } from 'naive-ui'
 import { NInput } from 'naive-ui'
 import { NForm, NFormItem } from 'naive-ui'
 import type { ExtractPropTypes, PropType } from 'vue'
@@ -9,6 +9,7 @@ import { defineComponent } from 'vue'
 import { omitObject, effectiveUrlValidator } from '@comunion/utils'
 import './FormFactory.css'
 import UButton from '../UButton'
+import UHashInput from '../UInput/HashInput'
 
 export type FormFactoryInputField = {
   t?: 'string'
@@ -20,7 +21,8 @@ export type FormFactoryWebsiteField = {
 
 export type FormFactoryHashInputField = {
   t: 'hashInput'
-} & InputProps
+  category: 'comerSkill' | 'startup' | 'bounty'
+} & SelectProps
 
 export type FormFactoryField = {
   title: string
@@ -67,11 +69,17 @@ function renderField(field: FormFactoryField, values: FormData) {
   const props = omitObject(field, 'title', 'name', 'required', 't', 'rules')
   switch (field.t) {
     case 'website':
-      return <NInput {...props} v-model:value={values[field.name]} size="large" />
+      return <NInput {...(props as InputProps)} v-model:value={values[field.name]} size="large" />
     case 'hashInput':
-      return <NInput type="text" {...props} v-model:value={values[field.name]} size="large" />
+      return (
+        <UHashInput
+          {...(props as SelectProps & { category: 'comerSkill' | 'startup' | 'bounty' })}
+          v-model:value={values[field.name]}
+          size="large"
+        />
+      )
     default:
-      return <NInput {...props} v-model:value={values[field.name]} size="large" />
+      return <NInput {...(props as InputProps)} v-model:value={values[field.name]} size="large" />
   }
 }
 
@@ -102,7 +110,8 @@ const UFormFactory = defineComponent({
           acc[field.name].push({
             required: true,
             message: `${field.title} is required`,
-            trigger: 'blur'
+            trigger: 'blur',
+            type: field.t === 'hashInput' ? 'array' : field.rules?.[0]?.type ?? 'string'
           })
         }
         if (field.t === 'website') {

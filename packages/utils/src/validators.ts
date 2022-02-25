@@ -6,7 +6,11 @@ export function effectiveUrlValidator(value: string): boolean {
   }
   try {
     const url = new URL(value)
-    // 非ip地址
+    // no invalid
+    if (!url.hostname.includes('.')) {
+      return false
+    }
+    // no ip addr
     if (/(\d+\.){3}(\d+)/.test(url.hostname)) {
       return false
     }

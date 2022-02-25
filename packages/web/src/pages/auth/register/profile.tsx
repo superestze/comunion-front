@@ -32,6 +32,7 @@ const RegisterProfilePage = defineComponent({
       },
       {
         t: 'hashInput',
+        category: 'comerSkill',
         title: 'Skills',
         name: 'skills',
         required: true,
@@ -56,7 +57,10 @@ const RegisterProfilePage = defineComponent({
     const onSubmit = async (
       values: Parameters<typeof services['account@comer-profile-update']>[0]
     ) => {
-      const { error } = await services['account@comer-profile-update'](values)
+      const { error } = await services['account@comer-profile-create']({
+        avatar: 'https://comunion-avatars.s3.ap-northeast-1.amazonaws.com/avatar1.svg',
+        ...values
+      })
       if (!error) {
         setUser({ ...user.user, ...values })
         success.value = true
