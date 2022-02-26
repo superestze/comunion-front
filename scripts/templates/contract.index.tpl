@@ -1,4 +1,2 @@
-<% contracts.forEach(function(contract) { %>
-    export * from './<%- contract %>'
+<% contracts.forEach(function(contract) { %>export * from './<%- contract %>'
 <% }) %>
-
