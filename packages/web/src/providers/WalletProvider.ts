@@ -12,6 +12,7 @@ export interface WalletState {
 
 export const WalletSymbol: InjectionKey<{
   wallet: WalletState
+  getWallet: () => AbstractWallet
   walletLogin: (...args: Parameters<WalletLoginFunction>) => Promise<UserResponse>
 }> = Symbol()
 
@@ -36,6 +37,7 @@ export const WalletProvider = defineComponent({
 
     provide(WalletSymbol, {
       wallet: readonly(state),
+      getWallet: () => _wallet,
       walletLogin
     })
     return () => ctx.slots.default?.()

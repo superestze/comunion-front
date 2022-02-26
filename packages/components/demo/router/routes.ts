@@ -27,6 +27,16 @@ const routes: RouteRecordRaw[] = [
             path: '/form/input',
             name: 'Input',
             component: () => import('@/ex/views/Input')
+          },
+          {
+            path: '/form/hash-input',
+            name: 'HashInput',
+            component: () => import('@/ex/views/HashInput')
+          },
+          {
+            path: '/form/factory',
+            name: 'FormFactory',
+            component: () => import('@/ex/views/Form/Factory')
           }
         ]
       },

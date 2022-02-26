@@ -1,0 +1,7 @@
+.u-form-factory {
+  &_item {
+    .n-form-item-label {
+      @apply u-title2;
+    }
+  }
+}

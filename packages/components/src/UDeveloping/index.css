@@ -1,0 +1,11 @@
+.u-developing {
+  @apply relative border-1 border-grey5 rounded-lg;
+
+  &__title {
+    @apply absolute left-10 top-10 u-title1 text-primary;
+  }
+
+  &__text {
+    @apply flex items-center justify-center h-full text-center text-grey3 u-label2;
+  }
+}
