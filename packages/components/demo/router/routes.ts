@@ -41,19 +41,24 @@ const routes: RouteRecordRaw[] = [
         ]
       },
       {
-        path: '/navs',
-        name: '导航组件',
+        path: '/table',
+        name: '表格组件',
         component: RouterView,
         children: [
           {
-            path: '/navs/pagination',
+            path: '/table/pagination',
             name: 'Pagination',
             component: () => import('@/ex/views/Pagination')
           },
           {
-            path: '/navs/paginated-list',
+            path: '/table/paginated-list',
             name: 'PaginatedList',
             component: () => import('@/ex/views/PaginatedList')
+          },
+          {
+            path: '/table/scroll-list',
+            name: 'ScrollList',
+            component: () => import('@/ex/views/ScrollList')
           }
         ]
       }

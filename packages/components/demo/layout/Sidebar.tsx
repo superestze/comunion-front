@@ -30,7 +30,7 @@ export default defineComponent({
             class=""
             defaultExpandAll
             options={menuItems}
-            onSelect={key => {
+            onUpdateValue={key => {
               router.push({ path: key })
             }}
           />
