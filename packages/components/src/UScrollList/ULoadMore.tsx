@@ -19,11 +19,11 @@ const scrollListProps = {
   },
   loadingText: {
     type: String,
-    default: '加载中...'
+    default: 'Loading...'
   },
   noMoreText: {
     type: String,
-    default: '没有更多数据了'
+    default: 'No more data'
   }
 } as const
 
@@ -41,10 +41,10 @@ const ULoadMore = defineComponent({
             style={{
               height: `${height?.value}px`
             }}
-            class="flex flex-row items-center justify-center bg-[#f2f2f2]"
+            class="flex flex-row items-center justify-center"
           >
             <div class="flex flex-row items-center justify-center">
-              <span class="ml-8px text-[#999] text-[14px]">{noMoreText?.value}</span>
+              <span class="ml-8px text-grey3 text-[14px]">{noMoreText?.value}</span>
             </div>
           </div>
         )
@@ -56,11 +56,11 @@ const ULoadMore = defineComponent({
             height: loading?.value === true ? `${height?.value}px` : 0,
             overflow: 'hidden'
           }}
-          class="flex flex-row items-center justify-center bg-[#f2f2f2]"
+          class="flex flex-row items-center justify-center"
         >
           <div class="flex flex-row items-center justify-center">
             <NSpin size="small" />
-            <span class="ml-8px text-[#999] text-[14px]">{loadingText?.value}</span>
+            <span class="ml-16px text-grey3 text-[14px]">{loadingText?.value}</span>
           </div>
         </div>
       )

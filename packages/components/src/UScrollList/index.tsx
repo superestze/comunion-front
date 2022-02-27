@@ -22,7 +22,8 @@ const scrollListProps = {
     required: true,
     default: 0
   },
-  moreTriggered: {
+  // load more states
+  triggered: {
     type: Boolean,
     required: true,
     default: false
@@ -31,6 +32,7 @@ const scrollListProps = {
     type: Function as PropType<(page: number) => void>,
     required: true
   },
+  // Trigger to load more threshold
   triggerThreshold: {
     type: Number,
     default: 60
@@ -53,7 +55,7 @@ const UScrollList = defineComponent({
       pageSize,
       loadingText,
       noMoreText,
-      moreTriggered,
+      triggered,
       triggerThreshold,
       onLoadMore
     } = toRefs(props)
@@ -63,7 +65,7 @@ const UScrollList = defineComponent({
     })
 
     watch(
-      () => moreTriggered.value,
+      () => triggered.value,
       n => {
         if (n === false) {
           loadMoreLock.value = false
@@ -71,35 +73,34 @@ const UScrollList = defineComponent({
       }
     )
 
+    const onWarpperScroll = (e: UIEvent) => {
+      const el = e.target as Element
+      const invisibleSize = el.scrollHeight - el.clientHeight
+
+      if (loadMoreLock.value) {
+        return
+      }
+
+      const threshold = triggerThreshold?.value
+      if (invisibleSize - el.scrollTop < threshold) {
+        loadMoreLock.value = true
+
+        if (!isLastPage.value) {
+          onLoadMore.value(page.value + 1)
+        }
+      }
+    }
+
     return () => {
       return (
-        <div
-          class={`u-scroll-list ${attrs?.class || ''}`}
-          onScroll={e => {
-            const el = e.target as Element
-            const invisibleSize = el.scrollHeight - el.clientHeight
-
-            if (loadMoreLock.value) {
-              return
-            }
-
-            const threshold = triggerThreshold?.value
-            if (invisibleSize - el.scrollTop < threshold) {
-              loadMoreLock.value = true
-
-              if (!isLastPage.value) {
-                onLoadMore.value(page.value + 1)
-              }
-            }
-          }}
-        >
+        <div class={`u-scroll-list ${attrs?.class || ''}`} onScroll={onWarpperScroll}>
           <div>{slots.default?.()}</div>
           {loadMoreLock.value && (
             <ULoadMore
               height={triggerThreshold.value}
               noMore={isLastPage.value}
               noMoreText={noMoreText.value}
-              loading={moreTriggered?.value}
+              loading={triggered?.value}
               loadingText={loadingText.value}
             />
           )}

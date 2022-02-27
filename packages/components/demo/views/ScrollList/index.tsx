@@ -53,7 +53,7 @@ export default defineComponent({
           </div>
           <div class="flex-1 min-h-0">
             <UScrollList
-              moreTriggered={pagination.loading}
+              triggered={pagination.loading}
               page={pagination.page}
               pageSize={pagination.pageSize}
               total={pagination.total}
