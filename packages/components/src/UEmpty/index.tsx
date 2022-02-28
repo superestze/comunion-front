@@ -1,0 +1,12 @@
+import { NEmpty } from 'naive-ui'
+import { defineComponent } from 'vue'
+
+const UEmpty = defineComponent({
+  name: 'UEmpty',
+  extends: NEmpty,
+  setup(props, ctx) {
+    return () => <NEmpty {...props}>{ctx.slots.default?.()}</NEmpty>
+  }
+})
+
+export default UEmpty

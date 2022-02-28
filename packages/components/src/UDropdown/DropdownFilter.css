@@ -1,7 +1,7 @@
-/* UDropdown */
+/* UDropdownFilter */
 
-.u-dropdown {
-  &-arrow {
+.u-dropdown-filter {
+  &__arrow {
     color: #333;
   }
 
