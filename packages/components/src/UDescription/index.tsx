@@ -1,6 +1,17 @@
+import type { PropType, VNode } from 'vue'
 import { defineComponent } from 'vue'
 
-export const descriptionProps = {} as const
+export interface UDescriptionItem {
+  label: string
+  value: string | number | ((data: unknown) => VNode)
+}
+
+export const descriptionProps = {
+  items: {
+    type: Array as PropType<UDescriptionItem[]>,
+    required: true
+  }
+} as const
 
 // TODO
 const UDescription = defineComponent({

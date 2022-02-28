@@ -1,12 +1,12 @@
-import type { InputGroupLabelProps } from 'naive-ui'
 import { NInputGroupLabel } from 'naive-ui'
-import type { SetupContext } from 'vue'
-import './styles/input-group-label.css'
+import { defineComponent } from 'vue'
 
-export type UInputGroupLabelProps = InputGroupLabelProps
-
-const UInputGroupLabel = (props: UInputGroupLabelProps, { slots }: SetupContext) => {
-  return <NInputGroupLabel {...props}>{slots.default?.()}</NInputGroupLabel>
-}
+const UInputGroupLabel = defineComponent({
+  name: 'UInputGroupLabel',
+  extends: NInputGroupLabel,
+  setup(props, ctx) {
+    return () => <NInputGroupLabel {...props}>{ctx.slots.default?.()}</NInputGroupLabel>
+  }
+})
 
 export default UInputGroupLabel
