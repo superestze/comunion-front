@@ -25,9 +25,10 @@
     "stylint": "stylelint \"packages/*/src/**/*.{css,less,scss,sass,styl}\" --fix",
     "jslint": "eslint \"packages/*/src/**/*.{ts,tsx}\"",
     "lint": "npm run stylint && npm run jslint",
+    "fix:contracts": "prettier ./packages/web/src/contracts --write",
     "gen:component": "ts-node scripts/generate.ts component",
-    "gen:contract:g": "ts-node scripts/generate.ts contract goerli",
-    "gen:contract:m": "ts-node scripts/generate.ts contract main",
+    "gen:contract:g": "ts-node scripts/generate.ts contract goerli && npm run fix:contracts",
+    "gen:contract:m": "ts-node scripts/generate.ts contract main && npm run fix:contracts",
     "gen:api": "yarn --cwd packages/web run gen:api"
   },
   "dependencies": {},

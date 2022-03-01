@@ -372,19 +372,79 @@ export const services = {
     })
   },
 
+  'meta@image-list'(args: {
+    /**
+     * @description 0～100
+     */
+    limit: any
+    /**
+     * @description &gt;0
+     */
+    offset: any
+    /**
+     * @description avatar
+     * @example avatar
+     */
+    category: any
+  }) {
+    return requestAdapter<{
+      list: {
+        id: number
+        createdAt: string
+        updatedAt: string
+        isDeleted: boolean
+        name: string
+        /**
+         * @description avatar
+         */
+        category: string
+      }[]
+      total: number
+    }>({
+      url: replacePath('/meta/images', args),
+      method: 'GET',
+      ...extract(args, ['limit', 'offset', 'category'], [])
+    })
+  },
   'meta@tag-list'(args: {
     /**
      * @description true,false
-     * @example true
+     * @example false
      */
     isIndex: any
+    /**
+     * @description 0～100
+     */
     limit: any
+    /**
+     * @description &gt;0
+     */
     offset: any
+    /**
+     * @description comerSkill;startup;bounty
+     * @example comerSkill
+     */
+    category: any
+    /**
+     * @example a
+     */
+    keyword: any
   }) {
-    return requestAdapter<{}>({
+    return requestAdapter<{
+      list: {
+        id: number
+        createdAt: string
+        updatedAt: string
+        isDeleted: boolean
+        name: string
+        category: string
+        isIndex: boolean
+      }[]
+      total: number
+    }>({
       url: replacePath('/meta/tags', args),
       method: 'GET',
-      ...extract(args, ['isIndex', 'limit', 'offset'], [])
+      ...extract(args, ['isIndex', 'limit', 'offset', 'category', 'keyword'], [])
     })
   },
 

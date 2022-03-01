@@ -12,15 +12,17 @@
     "README_zh.md"
   ],
   "scripts": {
-    "watch:components": "NODE_ENV=development node scripts/build.js",
+    "#watch:components": "NODE_ENV=development node scripts/build.js",
+    "watch:components": "NODE_ENV=development node scripts/vite.js",
     "watch:types": "tsc --project tsconfig.types.json --watch",
-    "watch:styles": "mkdir -p dist/es && cp -r src/Typography dist/es",
-    "watch": "rimraf dist && run-p watch:*",
-    "dev": "npm run watch",
-    "build:components": "node scripts/build.js",
+    "#watch:styles": "mkdir -p dist/es && cp -r src/Typography dist/es",
+    "#watch": "rimraf dist && run-p watch:*",
+    "#dev": "npm run watch",
+    "#build:components": "node scripts/build.js",
+    "build:components": "node scripts/vite.js",
     "build:types": "tsc --project tsconfig.types.json",
-    "build:styles": "mkdir -p dist/es && cp -r src/Typography dist/es",
-    "build": "rimraf dist && run-s build:*",
+    "#build:styles": "mkdir -p dist/es && cp -r src/Typography dist/es",
+    "build": "rimraf dist && npm run build:types && npm run build:components",
     "dev:demo": "vite"
   },
   "repository": "comunion-io/front-next.git",
@@ -37,6 +39,7 @@
   "homepage": "https://github.com/comunion-io/front-next#readme",
   "dependencies": {
     "@comunion/icons": "0.0.1",
+    "@comunion/utils": "0.0.1",
     "naive-ui": "^2.21.2",
     "vue": "^3.2.26"
   },
@@ -51,7 +54,7 @@
     "typescript": "^4.2.3",
     "vite": "^2.7.10",
     "vite-plugin-windicss": "^1.6.1",
-    "vue-router": "^3.5.3",
+    "vue-router": "^4.0.9",
     "windicss": "^3.1.3"
   }
 }
