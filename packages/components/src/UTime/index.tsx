@@ -5,7 +5,7 @@ const UTime = defineComponent({
   name: 'UTime',
   extends: NTime,
   setup(props, ctx) {
-    return () => <NTime {...props}>{ctx.slots.default?.()}</NTime>
+    return () => <NTime {...props} v-slots={ctx.slots} />
   }
 })
 

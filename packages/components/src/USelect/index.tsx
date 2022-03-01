@@ -5,7 +5,7 @@ const USelect = defineComponent({
   name: 'USelect',
   extends: NSelect,
   setup(props, ctx) {
-    return () => <NSelect {...props}>{ctx.slots.default?.()}</NSelect>
+    return () => <NSelect {...props} v-slots={ctx.slots} />
   }
 })
 

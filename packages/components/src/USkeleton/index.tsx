@@ -5,7 +5,7 @@ const USkeleton = defineComponent({
   name: 'USkeleton',
   extends: NSkeleton,
   setup(props, ctx) {
-    return () => <NSkeleton {...props}>{ctx.slots.default?.()}</NSkeleton>
+    return () => <NSkeleton {...props} v-slots={ctx.slots} />
   }
 })
 

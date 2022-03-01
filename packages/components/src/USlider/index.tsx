@@ -5,7 +5,7 @@ const USlider = defineComponent({
   name: 'USlider',
   extends: NSlider,
   setup(props, ctx) {
-    return () => <NSlider {...props}>{ctx.slots.default?.()}</NSlider>
+    return () => <NSlider {...props} v-slots={ctx.slots} />
   }
 })
 

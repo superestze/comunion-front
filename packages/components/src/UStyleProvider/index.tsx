@@ -1,7 +1,7 @@
 import type { GlobalThemeOverrides } from 'naive-ui'
 import { NConfigProvider } from 'naive-ui'
 import { computed, defineComponent } from 'vue'
-import '../Typography/font.css'
+import '../UTypography/font.css'
 
 const StyleProvider = defineComponent({
   name: 'StyleProvider',
@@ -137,6 +137,13 @@ const StyleProvider = defineComponent({
         textColor: props.grey3Color,
         fontSizeLarge: '16px',
         paddingLarge: '16px'
+      },
+      Scrollbar: {
+        color: props.primary1Color,
+        colorHover: props.primaryColor
+      },
+      Checkbox: {
+        borderRadius: '2px'
       }
     }))
 

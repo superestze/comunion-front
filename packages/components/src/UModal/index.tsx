@@ -1,13 +1,11 @@
 import { defineComponent } from 'vue'
-import type { ModalProps } from 'naive-ui'
 import { NModal } from 'naive-ui'
 
-type UModalProps = ModalProps
-
-const UModal = defineComponent<UModalProps>({
+const UModal = defineComponent({
   name: 'UModal',
+  extends: NModal,
   setup(props, ctx) {
-    return () => <NModal {...ctx.attrs}>{() => ctx.slots.default?.()}</NModal>
+    return () => <NModal {...props} v-slots={ctx.slots} />
   }
 })
 

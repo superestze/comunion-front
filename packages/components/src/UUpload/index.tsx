@@ -5,7 +5,7 @@ const UUpload = defineComponent({
   name: 'UUpload',
   extends: NUpload,
   setup(props, ctx) {
-    return () => <NUpload {...props}>{ctx.slots.default?.()}</NUpload>
+    return () => <NUpload {...props} v-slots={ctx.slots} />
   }
 })
 

@@ -5,7 +5,7 @@ const UTooltip = defineComponent({
   name: 'UTooltip',
   extends: NTooltip,
   setup(props, ctx) {
-    return () => <NTooltip {...props}>{ctx.slots.default?.()}</NTooltip>
+    return () => <NTooltip {...props} v-slots={ctx.slots} />
   }
 })
 

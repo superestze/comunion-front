@@ -5,7 +5,7 @@ const USwitch = defineComponent({
   name: 'USwitch',
   extends: NSwitch,
   setup(props, ctx) {
-    return () => <NSwitch {...props}>{ctx.slots.default?.()}</NSwitch>
+    return () => <NSwitch {...props} v-slots={ctx.slots} />
   }
 })
 

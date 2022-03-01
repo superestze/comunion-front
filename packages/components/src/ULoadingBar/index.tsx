@@ -5,7 +5,7 @@ const UTabs = defineComponent({
   name: 'UTabs',
   extends: NTabs,
   setup(props, ctx) {
-    return () => <NTabs {...props}>{ctx.slots.default?.()}</NTabs>
+    return () => <NTabs {...props} v-slots={ctx.slots} />
   }
 })
 

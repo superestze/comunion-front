@@ -5,7 +5,7 @@ const UPopconfirm = defineComponent({
   name: 'UPopconfirm',
   extends: NPopconfirm,
   setup(props, ctx) {
-    return () => <NPopconfirm {...props}>{ctx.slots.default?.()}</NPopconfirm>
+    return () => <NPopconfirm {...props} v-slots={ctx.slots} />
   }
 })
 

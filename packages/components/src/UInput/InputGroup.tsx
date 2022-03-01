@@ -9,7 +9,7 @@ const UInputGroup = defineComponent({
   extends: NInputGroup,
   setup(props, ctx) {
     return () => {
-      return <NInputGroup {...props}>{ctx.slots.default?.()}</NInputGroup>
+      return <NInputGroup {...props} v-slots={ctx.slots} />
     }
   }
 })

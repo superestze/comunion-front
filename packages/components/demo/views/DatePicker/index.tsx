@@ -1,10 +1,29 @@
 import UDatePicker from '@/comps/UDatePicker'
-import { defineComponent } from 'vue'
+import UTime from '@/comps/UTime'
+import { defineComponent, ref } from 'vue'
 
 const DatePickerDemoPage = defineComponent({
   name: 'DatePickerDemoPage',
   setup() {
-    return () => <UDatePicker />
+    const date = ref(new Date().getTime())
+    const month = ref()
+    const range = ref<Date[] | null>(null)
+    return () => (
+      <>
+        <UDatePicker v-model:value={date.value} type="date" />
+        <UDatePicker v-model:value={month.value} type="month" />
+        <UDatePicker v-model:value={range.value} type="datetimerange" />
+        <div>
+          1. <UTime time={date.value} />
+        </div>
+        <div>
+          2. <UTime time={month.value} />
+        </div>
+        <div>
+          3. <UTime time={range.value?.[0]} /> -&gt; <UTime time={range.value?.[1]} />
+        </div>
+      </>
+    )
   }
 })
 

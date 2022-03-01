@@ -1,11 +1,20 @@
-import UCheckbox from '@/comps/UCheckbox'
+import { UCheckboxGroup } from '@/comps/UCheckbox'
+import UCheckbox from '@/comps/UCheckbox/Checkbox'
 import { defineComponent, ref } from 'vue'
 
 const CheckboxDemoPage = defineComponent({
   name: 'CheckboxDemoPage',
   setup() {
-    const v = ref(false)
-    return () => <UCheckbox v-model={v.value} />
+    const v = ref([1])
+    return () => (
+      <>
+        <UCheckboxGroup v-model:value={v.value}>
+          <UCheckbox value={1} label="1" />
+          <UCheckbox value={2} label="2" />
+        </UCheckboxGroup>
+        <span>{v.value}</span>
+      </>
+    )
   }
 })
 

@@ -1,10 +1,19 @@
 import USelect from '@/comps/USelect'
-import { defineComponent } from 'vue'
+import { defineComponent, ref } from 'vue'
 
 const SelectDemoPage = defineComponent({
   name: 'SelectDemoPage',
   setup() {
-    return () => <USelect></USelect>
+    const v = ref(1)
+    return () => (
+      <USelect
+        v-model:value={v.value}
+        options={[
+          { value: 1, label: '1' },
+          { value: 2, label: '2' }
+        ]}
+      ></USelect>
+    )
   }
 })
 

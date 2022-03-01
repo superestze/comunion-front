@@ -5,7 +5,7 @@ const UScrollbar = defineComponent({
   name: 'UScrollbar',
   extends: NScrollbar,
   setup(props, ctx) {
-    return () => <NScrollbar {...props}>{ctx.slots.default?.()}</NScrollbar>
+    return () => <NScrollbar {...props} v-slots={ctx.slots} />
   }
 })
 

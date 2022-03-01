@@ -5,7 +5,7 @@ const UEllipsis = defineComponent({
   name: 'UEllipsis',
   extends: NEllipsis,
   setup(props, ctx) {
-    return () => <NEllipsis {...props}>{ctx.slots.default?.()}</NEllipsis>
+    return () => <NEllipsis {...props} v-slots={ctx.slots} />
   }
 })
 

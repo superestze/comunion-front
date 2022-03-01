@@ -5,7 +5,7 @@ const UInputNumber = defineComponent({
   name: 'UInputNumber',
   extends: NInputNumber,
   setup(props, ctx) {
-    return () => <NInputNumber {...props}>{ctx.slots.default?.()}</NInputNumber>
+    return () => <NInputNumber {...props} v-slots={ctx.slots}></NInputNumber>
   }
 })
 

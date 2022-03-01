@@ -5,7 +5,7 @@ const UImage = defineComponent({
   name: 'UImage',
   extends: NImage,
   setup(props, ctx) {
-    return () => <NImage {...props}>{ctx.slots.default?.()}</NImage>
+    return () => <NImage {...props} v-slots={ctx.slots} />
   }
 })
 

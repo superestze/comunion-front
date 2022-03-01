@@ -7,7 +7,7 @@ export type UButtonProps = ButtonProps
 const UButton = defineComponent({
   extends: NButton,
   setup(props, { slots }) {
-    return () => <NButton {...props}>{slots.default?.()}</NButton>
+    return () => <NButton {...props} v-slots={slots} />
   }
 })
 

@@ -5,7 +5,7 @@ const UInputGroupLabel = defineComponent({
   name: 'UInputGroupLabel',
   extends: NInputGroupLabel,
   setup(props, ctx) {
-    return () => <NInputGroupLabel {...props}>{ctx.slots.default?.()}</NInputGroupLabel>
+    return () => <NInputGroupLabel {...props} v-slots={ctx.slots} />
   }
 })
 

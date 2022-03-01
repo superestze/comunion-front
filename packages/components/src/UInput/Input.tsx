@@ -9,7 +9,7 @@ export default defineComponent({
   extends: NInput,
   setup(props, ctx) {
     return () => {
-      return <NInput {...props}>{ctx.slots.default?.()}</NInput>
+      return <NInput {...props} v-slots={ctx.slots} />
     }
   }
 })

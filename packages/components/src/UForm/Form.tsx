@@ -5,7 +5,7 @@ import { defineComponent } from 'vue'
 const UForm = defineComponent<FormProps>({
   name: 'UForm',
   setup(props, ctx) {
-    return () => <NForm {...ctx.attrs}>{ctx.slots}</NForm>
+    return () => <NForm {...ctx.attrs} v-slots={ctx.slots} />
   }
 })
 

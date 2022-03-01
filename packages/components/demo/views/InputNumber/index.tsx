@@ -1,11 +1,21 @@
-import { NInputNumber } from 'naive-ui'
+import UInputNumber from '@/comps/UInputNumber'
 import { defineComponent, ref } from 'vue'
 
 const InputNumberDemoPage = defineComponent({
   name: 'InputNumberDemoPage',
   setup() {
     const v = ref(1)
-    return () => <NInputNumber v-model={v.value} />
+    return () => (
+      <>
+        <UInputNumber v-model:value={v.value}>
+          {{
+            prefix: () => <span>$</span>,
+            suffix: () => <span>%</span>
+          }}
+        </UInputNumber>
+        {v.value}
+      </>
+    )
   }
 })
 
