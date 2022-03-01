@@ -1,4 +1,4 @@
-import UEmpty from '@/comps/UEmpty'
+import { UEmpty } from '@/comps/index'
 import { defineComponent } from 'vue'
 
 const EmptyDemoPage = defineComponent({

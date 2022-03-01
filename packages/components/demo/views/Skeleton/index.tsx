@@ -1,10 +1,15 @@
-import USkeleton from '@/comps/USkeleton'
+import { USkeleton } from '@/comps/index'
 import { defineComponent } from 'vue'
 
 const SkeletonDemoPage = defineComponent({
   name: 'SkeletonDemoPage',
   setup() {
-    return () => <USkeleton />
+    return () => (
+      <>
+        <USkeleton text repeat={2} />
+        <USkeleton text class="!w-1/2" />
+      </>
+    )
   }
 })
 

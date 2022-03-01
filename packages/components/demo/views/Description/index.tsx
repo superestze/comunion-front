@@ -1,4 +1,4 @@
-import UDescription from '@/comps/UDescription'
+import { UDescription } from '@/comps/index'
 import { defineComponent } from 'vue'
 
 const DescriptionDemoPage = defineComponent({

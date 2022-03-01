@@ -1,6 +1,6 @@
 import { defineComponent } from 'vue'
 import { ArrowRightOutlined } from '@comunion/icons'
-import './index.css'
+import './back.css'
 
 export const UBackProps = {
   onClick: {

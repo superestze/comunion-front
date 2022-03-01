@@ -1,6 +1,4 @@
-import UButton from '@/comps/UButton'
-import UDropdown from '@/comps/UDropdown'
-import UDropdownFilter from '@/comps/UDropdown/DropdownFilter'
+import { UButton, UDropdown, UDropdownFilter } from '@/comps/index'
 import { defineComponent, ref } from 'vue'
 
 const DropdownDemoPage = defineComponent({

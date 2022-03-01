@@ -1,5 +1,4 @@
-import UButton from '@/comps/UButton'
-import message from '@/comps/UMessage'
+import { UButton, message } from '@/comps/index'
 import { defineComponent } from 'vue'
 
 const MessageDemoPage = defineComponent({

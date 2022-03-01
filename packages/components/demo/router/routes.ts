@@ -127,7 +127,7 @@ const routes: RouteRecordRaw[] = [
         component: RouterView,
         children: [
           {
-            path: 'card',
+            path: '/display/card',
             name: 'Card',
             component: () => import('@/ex/views/Card')
           },
