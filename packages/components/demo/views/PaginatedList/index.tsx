@@ -18,7 +18,7 @@ export default defineComponent({
                 <UButton
                   type={colCount.value === count ? 'primary' : 'default'}
                   key={count}
-                  className="not-last:mr-16px"
+                  class="not-last:mr-16px"
                   onClick={() => {
                     colCount.value = count
                   }}
