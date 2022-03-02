@@ -6,8 +6,8 @@ import './index.css'
 
 export type UDropdownProps = SelectProps
 
-const UDropdown = defineComponent<UDropdownProps>({
-  name: 'UDropdown',
+const UDropdown = defineComponent({
+  extends: NSelect,
   setup(props) {
     return () => (
       <NSelect {...props} class="u-dropdown" placeholder={props.placeholder || 'Select'}>

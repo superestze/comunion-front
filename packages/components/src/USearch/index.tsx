@@ -6,11 +6,11 @@ import './index.css'
 
 export type USearchProps = InputProps
 
-const USearch = defineComponent<USearchProps>({
-  name: 'USearch',
+const USearch = defineComponent({
+  extends: NInput,
   setup(props) {
     return () => (
-      <NInput {...props} class="u-search" placeholder={props.placeholder || 'search'}>
+      <NInput {...props} class="u-search" placeholder={props.placeholder || 'Search'}>
         {{
           prefix: () => <SearchOutlined class="u-search-prefix" />
         }}

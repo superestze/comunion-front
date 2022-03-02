@@ -184,7 +184,7 @@
     semver "^6.3.0"
     source-map "^0.5.0"
 
-"@babel/core@^7.1.0", "@babel/core@^7.12.3", "@babel/core@^7.16.12", "@babel/core@^7.7.2", "@babel/core@^7.8.0":
+"@babel/core@^7.1.0", "@babel/core@^7.12.3", "@babel/core@^7.16.12", "@babel/core@^7.17.2", "@babel/core@^7.7.2", "@babel/core@^7.8.0":
   version "7.17.5"
   resolved "https://registry.yarnpkg.com/@babel/core/-/core-7.17.5.tgz#6cd2e836058c28f06a4ca8ee7ed955bbf37c8225"
   integrity sha512-/BBMw4EvjmyquN5O+t5eh0+YqB3XXJkYD2cjKpYtWOfFy4lQ4UozNSmxAcWT8r2XtZs0ewG+zrfsqeR15i1ajA==
@@ -988,7 +988,7 @@
   dependencies:
     "@babel/helper-plugin-utils" "^7.16.7"
 
-"@babel/plugin-transform-typescript@^7.16.1", "@babel/plugin-transform-typescript@^7.16.7":
+"@babel/plugin-transform-typescript@^7.16.1", "@babel/plugin-transform-typescript@^7.16.7", "@babel/plugin-transform-typescript@^7.16.8":
   version "7.16.8"
   resolved "https://registry.yarnpkg.com/@babel/plugin-transform-typescript/-/plugin-transform-typescript-7.16.8.tgz#591ce9b6b83504903fa9dd3652c357c2ba7a1ee0"
   integrity sha512-bHdQ9k7YpBDO2d0NVfkj51DpQcvwIzIusJ7mEUaMlbZq3Kt/U47j24inXZHQ5MDiYpCs+oZiwnXyKedE8+q7AQ==
@@ -1330,7 +1330,7 @@
   resolved "https://registry.yarnpkg.com/@css-render/plugin-bem/-/plugin-bem-0.15.8.tgz#02df62ec0a16f5c07687e64f1ee595e8509d04ce"
   integrity sha512-rJMFBaqZGrezs1d0vPB7hZTSkfFEgcdWxPMtLUmm9PAOioWtw+Knb9A0xU0bYazPKDo0SoNVVcd1Qd1LXD9x4Q==
 
-"@css-render/vue3-ssr@^0.15.8":
+"@css-render/vue3-ssr@^0.15.7", "@css-render/vue3-ssr@^0.15.8":
   version "0.15.8"
   resolved "https://registry.yarnpkg.com/@css-render/vue3-ssr/-/vue3-ssr-0.15.8.tgz#76f36fd52c4e53b8f553e00032c378c0ae59bab3"
   integrity sha512-zPFyOH47hEcyRgoIjNEwzYqZEq/LEXPafDXY/9EMpvgCmsPhW1bpC3w8YwAISaP519QesJ/8aNDL/xWKpwXBvQ==
@@ -3179,6 +3179,18 @@
     "@vue/babel-plugin-jsx" "^1.1.1"
     hash-sum "^2.0.0"
 
+"@vitejs/plugin-vue-jsx@^1.3.3":
+  version "1.3.8"
+  resolved "https://registry.yarnpkg.com/@vitejs/plugin-vue-jsx/-/plugin-vue-jsx-1.3.8.tgz#a3ee492d30699e4eb95bf3cd5216185451ffe545"
+  integrity sha512-gPtie8IM7G5OI2O2/Xwk/oYjnw2gKBzayVuEOM5Jx65KmpVcW444F+H7IsIMduvAgwLQPEYMGiO1V8dBgk7qog==
+  dependencies:
+    "@babel/core" "^7.17.2"
+    "@babel/plugin-syntax-import-meta" "^7.10.4"
+    "@babel/plugin-transform-typescript" "^7.16.8"
+    "@rollup/pluginutils" "^4.1.2"
+    "@vue/babel-plugin-jsx" "^1.1.1"
+    hash-sum "^2.0.0"
+
 "@vitejs/plugin-vue@^1.2.3":
   version "1.10.2"
   resolved "https://registry.yarnpkg.com/@vitejs/plugin-vue/-/plugin-vue-1.10.2.tgz#d718479e2789d8a94b63e00f23f1898ba239253a"
@@ -3188,6 +3200,11 @@
   version "2.0.1"
   resolved "https://registry.yarnpkg.com/@vitejs/plugin-vue/-/plugin-vue-2.0.1.tgz#db0e5eacf96358e04cc501c9008079b25a70a4ac"
   integrity sha512-wtdMnGVvys9K8tg+DxowU1ytTrdVveXr3LzdhaKakysgGXyrsfaeds2cDywtvujEASjWOwWL/OgWM+qoeM8Plg==
+
+"@vitejs/plugin-vue@^2.1.0":
+  version "2.2.4"
+  resolved "https://registry.yarnpkg.com/@vitejs/plugin-vue/-/plugin-vue-2.2.4.tgz#ab8b199ca82496b05d2654c5f34ffcf9b947243d"
+  integrity sha512-ev9AOlp0ljCaDkFZF3JwC/pD2N4Hh+r5srl5JHM6BKg5+99jiiK0rE/XaRs3pVm1wzyKkjUy/StBSoXX5fFzcw==
 
 "@volar/code-gen@^0.27.24":
   version "0.27.24"
@@ -9732,10 +9749,10 @@ mz@^2.7.0:
     object-assign "^4.0.1"
     thenify-all "^1.0.0"
 
-naive-ui@^2.21.2:
-  version "2.24.1"
-  resolved "https://registry.yarnpkg.com/naive-ui/-/naive-ui-2.24.1.tgz#146e0c547248e64cd9b2c34d1437e80063e250c6"
-  integrity sha512-nwU4L7P5rIutkRjoBB3wvtn19GYBI/vbz+DeyhbkG9MB4VZe2xZLA5fgq0dD4MsY2KYYcffKz4wDcQOJBy5zGg==
+naive-ui@^2.25.8:
+  version "2.25.8"
+  resolved "https://registry.yarnpkg.com/naive-ui/-/naive-ui-2.25.8.tgz#d079888bcadaf3c3234c98612cf169b913ab9421"
+  integrity sha512-xLRBI7Kz0HCN/TWi4aobsUu3MhNR9UUipK9KMioHHCaBybwsJj42wlEBb4X5z4Ap3wzPK2nBOT2TxBWSDfoOrg==
   dependencies:
     "@css-render/plugin-bem" "^0.15.8"
     "@css-render/vue3-ssr" "^0.15.8"
@@ -9754,7 +9771,7 @@ naive-ui@^2.21.2:
     vdirs "^0.1.7"
     vfonts "^0.0.3"
     vooks "^0.2.12"
-    vueuc "^0.4.21"
+    vueuc "^0.4.26"
 
 nanoid@^2.1.0:
   version "2.1.11"
@@ -13268,11 +13285,12 @@ vue@^3.2.23, vue@^3.2.26:
     "@vue/server-renderer" "3.2.27"
     "@vue/shared" "3.2.27"
 
-vueuc@^0.4.21:
-  version "0.4.23"
-  resolved "https://registry.yarnpkg.com/vueuc/-/vueuc-0.4.23.tgz#573ca8635bbdbdb544ec5500fe3f2b790f5477ee"
-  integrity sha512-8I5FFBwcgnMDFQBWVOg2uJPrk7vh+CeaRNEuiKtnn2QWKr5dqYs6+A93pQfErEIugc8nq61slj2siw0JAcxYeQ==
+vueuc@^0.4.26:
+  version "0.4.27"
+  resolved "https://registry.yarnpkg.com/vueuc/-/vueuc-0.4.27.tgz#ac9fba71e33bed7e51ee59962e260371293119d6"
+  integrity sha512-wkIM6F1VT9cuzC2YOIzktPcTJ3eI8FoQ39KazAKwcdPv3GcXZGO1vBZc3TspBwap0AIn9eF8dxvQAW80yxhbHg==
   dependencies:
+    "@css-render/vue3-ssr" "^0.15.7"
     css-render "^0.15.7"
     evtd "^0.2.2"
     resize-observer-polyfill "^1.5.1"

@@ -37,6 +37,16 @@ const routes: RouteRecordRaw[] = [
             path: '/form/factory',
             name: 'FormFactory',
             component: () => import('@/ex/views/Form/Factory')
+          },
+          {
+            path: '/form/Dropdown',
+            name: 'Dropdown',
+            component: () => import('@/ex/views/Dropdown')
+          },
+          {
+            path: '/form/Search',
+            name: 'Search',
+            component: () => import('@/ex/views/Search')
           }
         ]
       },
