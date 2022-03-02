@@ -1,0 +1,15 @@
+/* UDropdown */
+
+.u-dropdown {
+  &-arrow {
+    color: #333;
+  }
+
+  .n-base-selection {
+    @apply rounded-4px;
+
+    .n-base-suffix__arrow {
+      @apply text-20px;
+    }
+  }
+}
