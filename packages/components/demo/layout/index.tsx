@@ -11,7 +11,7 @@ export default defineComponent({
           <Head />
           <div class="flex-1 flex flex-row min-h-0">
             <Sidebar />
-            <div class="flex-1 min-w-0">
+            <div class="flex-1 min-w-0 overflow-y-auto">
               <Body />
             </div>
           </div>

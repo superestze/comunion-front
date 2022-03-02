@@ -4,7 +4,11 @@ import { defineComponent } from 'vue'
 const BackTopDemoPage = defineComponent({
   name: 'BackTopDemoPage',
   setup() {
-    return () => <UBackTop />
+    return () => (
+      <div class="h-[2000px]">
+        <UBackTop />
+      </div>
+    )
   }
 })
 

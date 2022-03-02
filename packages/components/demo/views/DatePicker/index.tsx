@@ -1,4 +1,4 @@
-import UDatePicker from '@/comps/UDatePicker'
+import { UDatePicker } from '@/comps/index'
 import UTime from '@/comps/UTime'
 import { defineComponent, ref } from 'vue'
 

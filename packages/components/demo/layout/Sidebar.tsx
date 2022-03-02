@@ -19,12 +19,15 @@ export default defineComponent({
           title: item.name,
           key: item.path,
           type: 'group',
-          children: (item.children || []).map(c => ({ title: c.name, key: c.path }))
+          children: (item.children || []).map(c => ({
+            title: c.name,
+            key: c.path.startsWith('/') ? c.path : `${item.path}/${c.path}`.replace(/\/\//g, '/')
+          }))
         }
       })
 
       return (
-        <div class="w-[200px] border-r-1 layout-sidebar">
+        <div class="w-[200px] overflow-y-auto border-r-1 layout-sidebar">
           <NMenu
             value={path}
             class=""

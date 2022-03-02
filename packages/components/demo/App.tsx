@@ -1,7 +1,7 @@
 import { defineComponent } from 'vue'
 import { RouterView } from 'vue-router'
 
-import { StyleProvider, UHashInputProvider } from '@/comps/index'
+import { StyleProvider, UHashInputProvider, UMessageProvider, UMessage } from '@/comps/index'
 
 interface IProps {}
 
@@ -21,6 +21,9 @@ export default defineComponent<IProps>({
     return () => {
       return (
         <StyleProvider>
+          <UMessageProvider>
+            <UMessage />
+          </UMessageProvider>
           <UHashInputProvider onSearch={onHashSearch}>
             <RouterView></RouterView>
           </UHashInputProvider>
