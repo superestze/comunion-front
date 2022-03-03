@@ -1,5 +1,5 @@
 import { defineComponent } from 'vue'
-import type { PropType } from 'vue'
+import type { PropType, ExtractPropTypes } from 'vue'
 import './index.css'
 
 export const UTagProps = {
@@ -12,6 +12,8 @@ export const UTagProps = {
     default: '#5331F4'
   }
 }
+
+export type UTagPropsType = ExtractPropTypes<typeof UTagProps>
 
 export const Utag = defineComponent({
   name: 'UTag',

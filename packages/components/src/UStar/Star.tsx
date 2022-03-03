@@ -1,5 +1,5 @@
 import { defineComponent } from 'vue'
-import type { PropType } from 'vue'
+import type { PropType, ExtractPropTypes } from 'vue'
 import './index.css'
 
 export const UStarProps = {
@@ -8,6 +8,8 @@ export const UStarProps = {
     default: 'follow'
   }
 }
+
+export type UStarPropsType = ExtractPropTypes<typeof UStarProps>
 
 export const UStar = defineComponent({
   name: 'UStar',

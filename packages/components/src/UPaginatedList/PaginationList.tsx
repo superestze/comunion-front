@@ -5,7 +5,7 @@ import type { PropType } from 'vue'
 import { range } from 'lodash'
 import './index.css'
 
-const paginationListProps = {
+export const UPaginationListProps = {
   colCount: {
     type: Number,
     default: 4
@@ -27,7 +27,7 @@ const paginationListProps = {
   cellRender: Function as PropType<(item: any) => void>
 } as const
 
-export type UPaginationListProps = typeof paginationListProps
+export type UPaginationListPropsType = typeof UPaginationListProps
 
 const UPaginationList = defineComponent({
   name: 'UPaginationList',

@@ -1,5 +1,8 @@
+import type { ScrollbarProps } from 'naive-ui'
 import { NScrollbar } from 'naive-ui'
 import { defineComponent } from 'vue'
+
+export type UScrollbarPropsType = ScrollbarProps
 
 const UScrollbar = defineComponent({
   name: 'UScrollbar',

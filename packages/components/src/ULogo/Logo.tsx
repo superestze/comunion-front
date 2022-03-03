@@ -1,22 +1,26 @@
-import type { PropType } from 'vue'
+import type { ExtractPropTypes, PropType } from 'vue'
 import { defineComponent } from 'vue'
+
+export const ULogoProps = {
+  theme: {
+    type: String as PropType<'colorful' | 'white'>,
+    default: 'colorful'
+  },
+  withText: {
+    type: Boolean,
+    default: false
+  },
+  height: {
+    type: Number,
+    default: 40
+  }
+} as const
+
+export type ULogoPropsType = ExtractPropTypes<typeof ULogoProps>
 
 const ULogo = defineComponent({
   name: 'ULogo',
-  props: {
-    theme: {
-      type: String as PropType<'colorful' | 'white'>,
-      default: 'colorful'
-    },
-    withText: {
-      type: Boolean,
-      default: false
-    },
-    height: {
-      type: Number,
-      default: 40
-    }
-  },
+  props: ULogoProps,
   setup(props) {
     return () => (
       <svg height={props.height} viewBox={`0 0 ${props.withText ? '225' : '40'} 40`} fill="none">

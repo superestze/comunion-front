@@ -1,5 +1,8 @@
+import type { SwitchProps } from 'naive-ui'
 import { NSwitch } from 'naive-ui'
 import { defineComponent } from 'vue'
+
+export type USwitchPropsType = SwitchProps
 
 const USwitch = defineComponent({
   name: 'USwitch',

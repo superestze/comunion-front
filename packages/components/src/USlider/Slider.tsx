@@ -1,5 +1,8 @@
+import type { SliderProps } from 'naive-ui'
 import { NSlider } from 'naive-ui'
 import { defineComponent } from 'vue'
+
+export type USliderPropsType = SliderProps
 
 const USlider = defineComponent({
   name: 'USlider',

@@ -1,4 +1,4 @@
-import type { PropType } from 'vue'
+import type { ExtractPropTypes, PropType } from 'vue'
 import { defineComponent } from 'vue'
 import './index.css'
 
@@ -8,16 +8,18 @@ interface UGuideStep {
   desc: string
 }
 
-const guideStepProps = {
+export const UGuideStepProps = {
   steps: {
     type: Array as PropType<UGuideStep[]>,
     required: true
   }
-}
+} as const
+
+export type UGuideStepPropsType = ExtractPropTypes<typeof UGuideStepProps>
 
 const UGuideSteps = defineComponent({
   name: 'UGuideSteps',
-  props: guideStepProps,
+  props: UGuideStepProps,
   setup(props) {
     const len = (props?.steps || []).length
     return () => {

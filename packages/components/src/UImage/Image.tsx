@@ -1,5 +1,8 @@
+import type { ImageProps } from 'naive-ui'
 import { NImage } from 'naive-ui'
 import { defineComponent } from 'vue'
+
+export type UImagePropsType = ImageProps
 
 const UImage = defineComponent({
   name: 'UImage',

@@ -1,5 +1,8 @@
+import type { TimeProps } from 'naive-ui'
 import { NTime } from 'naive-ui'
 import { defineComponent } from 'vue'
+
+export type UTimePropsType = TimeProps
 
 const UTime = defineComponent({
   name: 'UTime',
