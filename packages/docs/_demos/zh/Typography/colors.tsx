@@ -1,4 +1,4 @@
-import { StyleProvider } from '@comunion/components'
+import { UStyleProvider } from '@comunion/components'
 import { defineComponent } from 'vue'
 
 // const ColorBlock = defineComponent({
@@ -33,7 +33,7 @@ const DemoColorsPage = defineComponent({
   name: 'DemoColorsPage',
   setup() {
     return () => (
-      <StyleProvider>
+      <UStyleProvider>
         <h3>主色调</h3>
         {/* <div class="flex items-center">
           <ColorBlock color="#5331F4" name="primary" />
@@ -64,7 +64,7 @@ const DemoColorsPage = defineComponent({
             name="purple-gradient"
           />
         </div> */}
-      </StyleProvider>
+      </UStyleProvider>
     )
   }
 })

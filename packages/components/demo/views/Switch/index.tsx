@@ -1,4 +1,4 @@
-import USwitch from '@/comps/USwitch'
+import { USwitch } from '@/comps/index'
 import { defineComponent } from 'vue'
 
 const SwitchDemoPage = defineComponent({

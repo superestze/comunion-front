@@ -2,7 +2,7 @@ import { defineComponent } from 'vue'
 import { RouterView } from 'vue-router'
 
 import {
-  StyleProvider,
+  UStyleProvider,
   UHashInputProvider,
   UMessageProvider,
   UMessage,
@@ -27,7 +27,7 @@ export default defineComponent<IProps>({
   setup() {
     return () => {
       return (
-        <StyleProvider>
+        <UStyleProvider>
           <UMessageProvider>
             <UMessage />
           </UMessageProvider>
@@ -37,7 +37,7 @@ export default defineComponent<IProps>({
           <UHashInputProvider onSearch={onHashSearch}>
             <RouterView></RouterView>
           </UHashInputProvider>
-        </StyleProvider>
+        </UStyleProvider>
       )
     }
   }

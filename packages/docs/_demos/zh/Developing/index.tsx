@@ -1,14 +1,14 @@
 import { defineComponent } from 'vue'
-import { UDeveloping, StyleProvider } from '@comunion/components'
+import { UDeveloping, UStyleProvider } from '@comunion/components'
 
 const BackDemoPage = defineComponent({
   name: 'DevelopingDemoPage',
   setup() {
     return () => (
       <>
-        <StyleProvider>
+        <UStyleProvider>
           <UDeveloping style="height:400px">BOUNTIES</UDeveloping>
-        </StyleProvider>
+        </UStyleProvider>
       </>
     )
   }

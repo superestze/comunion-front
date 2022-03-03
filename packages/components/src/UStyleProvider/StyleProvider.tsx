@@ -69,8 +69,8 @@ export const UStyleProviderProps = {
 
 export type UStyleProviderPropsType = ExtractPropTypes<typeof UStyleProviderProps>
 
-const StyleProvider = defineComponent({
-  name: 'StyleProvider',
+const UStyleProvider = defineComponent({
+  name: 'UStyleProvider',
   props: UStyleProviderProps,
   setup(props, ctx) {
     const style = document.createElement('style')
@@ -164,4 +164,4 @@ const StyleProvider = defineComponent({
   }
 })
 
-export default StyleProvider
+export default UStyleProvider

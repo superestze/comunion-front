@@ -1,4 +1,4 @@
-import UTime from '@/comps/UTime'
+import { UTime } from '@/comps/index'
 import { defineComponent } from 'vue'
 
 const TimeDemoPage = defineComponent({

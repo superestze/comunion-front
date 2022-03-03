@@ -8,7 +8,7 @@ export type UPaginationPropsType = PaginationProps
 const UPagination = defineComponent({
   extends: NPagination,
   setup(props, ctx) {
-    return <NPagination class="u-pagination" {...props} v-slots={ctx.slots} />
+    return () => <NPagination class="u-pagination" {...props} v-slots={ctx.slots} />
   }
 })
 

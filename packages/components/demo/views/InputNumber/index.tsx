@@ -1,4 +1,4 @@
-import UInputNumber from '@/comps/UInputNumber'
+import { UInputNumber } from '@/comps/index'
 import { defineComponent, ref } from 'vue'
 
 const InputNumberDemoPage = defineComponent({

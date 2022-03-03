@@ -1,5 +1,3 @@
-import type { UPaginationProps } from '../UPagination'
-import UPagination from '../UPagination'
 import { defineComponent } from 'vue'
 import type { PropType } from 'vue'
 import { range } from 'lodash'
@@ -31,7 +29,7 @@ export type UPaginationListPropsType = typeof UPaginationListProps
 
 const UPaginationList = defineComponent({
   name: 'UPaginationList',
-  props: paginationListProps,
+  props: UPaginationListProps,
   setup(props) {
     function parseDataSourceByRow() {
       const { dataSource, colCount } = props

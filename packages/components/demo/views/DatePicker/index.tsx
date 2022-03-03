@@ -1,5 +1,4 @@
-import { UDatePicker } from '@/comps/index'
-import UTime from '@/comps/UTime'
+import { UDatePicker, UTime } from '@/comps/index'
 import { defineComponent, ref } from 'vue'
 
 const DatePickerDemoPage = defineComponent({
