@@ -1,5 +1,8 @@
+import type { ButtonGroupProps } from 'naive-ui'
 import { NButtonGroup } from 'naive-ui'
 import { defineComponent } from 'vue'
+
+export type UButtonGroupPropsType = ButtonGroupProps
 
 const UButtonGroup = defineComponent({
   name: 'UButtonGroup',

@@ -1,5 +1,8 @@
+import type { CheckboxGroupProps } from 'naive-ui'
 import { NCheckboxGroup } from 'naive-ui'
 import { defineComponent } from 'vue'
+
+export type UCheckboxGroupPropsType = CheckboxGroupProps
 
 const UCheckboxGroup = defineComponent({
   name: 'UCheckboxGroup',

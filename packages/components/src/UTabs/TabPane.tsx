@@ -1,12 +1,5 @@
 import { NTabPane } from 'naive-ui'
-import { defineComponent } from 'vue'
 
-const UTabsPane = defineComponent({
-  name: 'UTabsPane',
-  extends: NTabPane,
-  setup(props, ctx) {
-    return () => <NTabPane {...props}>{ctx.slots.default?.()}</NTabPane>
-  }
-})
+const UTabPane = NTabPane
 
-export default UTabsPane
+export default UTabPane

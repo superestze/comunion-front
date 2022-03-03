@@ -1,26 +1,30 @@
-import type { PropType } from 'vue'
+import type { ExtractPropTypes, PropType } from 'vue'
 import { defineComponent } from 'vue'
 import { NGrid, NGridItem, NModal } from 'naive-ui'
 import { WalletConnectFilled, MetamaskFilled } from '@comunion/icons'
 import './index.css'
 
+export const UWalletLoginProps = {
+  show: {
+    type: Boolean,
+    default: false
+  },
+  onUpdateShow: {
+    type: Function as PropType<(v: boolean) => void>
+  },
+  onMetaMaskLogin: {
+    type: Function
+  },
+  onWalletConnectLogin: {
+    type: Function
+  }
+} as const
+
+export type UWalletLoginPropsType = ExtractPropTypes<typeof UWalletLoginProps>
+
 const UWalletLogin = defineComponent({
   name: 'UWalletLogin',
-  props: {
-    show: {
-      type: Boolean,
-      default: false
-    },
-    onUpdateShow: {
-      type: Function as PropType<(v: boolean) => void>
-    },
-    onMetaMaskLogin: {
-      type: Function
-    },
-    onWalletConnectLogin: {
-      type: Function
-    }
-  },
+  props: UWalletLoginProps,
   setup(props) {
     return () => (
       <NModal show={props.show} onUpdateShow={props.onUpdateShow}>

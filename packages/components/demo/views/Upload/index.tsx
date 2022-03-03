@@ -11,7 +11,7 @@ const UploadDemoPage = defineComponent({
         status: 'finished',
         percentage: 100
       }
-    ])
+    ] as const)
     return () => (
       <UUpload
         abstract

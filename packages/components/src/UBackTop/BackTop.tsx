@@ -1,5 +1,8 @@
 import { NBackTop } from 'naive-ui'
 import { defineComponent } from 'vue'
+import type { BackTopProps } from 'naive-ui'
+
+export type UBackTopPropsType = BackTopProps
 
 const UBackTop = defineComponent({
   name: 'UBackTop',

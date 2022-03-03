@@ -92,6 +92,8 @@ const StyleProvider = defineComponent({
     const naiveThemeOverrides = computed<GlobalThemeOverrides>(() => ({
       common: {
         heightLarge: '48px',
+        heightMedium: '40px',
+        heightSmall: '36px',
         borderRadius: '8px',
         borderRadiusLarge: '8px',
         borderRadiusMedium: '8px',
@@ -110,9 +112,6 @@ const StyleProvider = defineComponent({
         asteriskColor: props.errorColor
       },
       Button: {
-        heightMedium: '40px',
-        heightSmall: '36px',
-        colorPrimary: props.primaryColor,
         colorHoverPrimary: props.primary1Color,
         colorPressedPrimary: props.primary1Color,
         colorFocusPrimary: props.primary1Color,
@@ -145,6 +144,12 @@ const StyleProvider = defineComponent({
       Checkbox: {
         borderRadius: '2px'
       }
+      // Message: {
+      //   colorSuccess: props.successColor,
+      //   colorWarning: props.warningColor,
+      //   colorError: props.errorColor,
+      //   colorInfo: props.infoColor
+      // }
     }))
 
     return () => (

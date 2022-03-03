@@ -2,7 +2,7 @@ import { NButton } from 'naive-ui'
 import type { ButtonProps } from 'naive-ui'
 import { defineComponent } from 'vue'
 
-export type UButtonProps = ButtonProps
+export type UButtonPropsType = ButtonProps
 
 const UButton = defineComponent({
   extends: NButton,
