@@ -4,7 +4,7 @@ import { defineComponent } from 'vue'
 import { SearchOutlined } from '@comunion/icons'
 import './index.css'
 
-export type USearchProps = InputProps
+export type USearchPropsType = InputProps
 
 const USearch = defineComponent({
   extends: NInput,

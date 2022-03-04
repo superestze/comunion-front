@@ -12,7 +12,7 @@ const routes: RouteRecordRaw[] = [
         component: RouterView,
         children: [
           {
-            path: '/base/button',
+            path: 'button',
             name: 'Button',
             component: () => import('@/ex/views/Button')
           },
@@ -89,11 +89,6 @@ const routes: RouteRecordRaw[] = [
             component: () => import('@/ex/views/Form/Factory')
           },
           {
-            path: '/form/Dropdown',
-            name: 'Dropdown',
-            component: () => import('@/ex/views/Dropdown')
-          },
-          {
             path: '/form/Search',
             name: 'Search',
             component: () => import('@/ex/views/Search')
@@ -119,6 +114,7 @@ const routes: RouteRecordRaw[] = [
             path: 'scroll-list',
             name: 'ScrollList',
             component: () => import('@/ex/views/ScrollList')
+          }
         ]
       },
       {

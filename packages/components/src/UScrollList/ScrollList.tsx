@@ -6,7 +6,7 @@ import ULoadMore from './ULoadMore'
 
 import './index.css'
 
-const scrollListProps = {
+export const UScrollListProps = {
   pageSize: {
     type: Number,
     required: true,
@@ -41,11 +41,11 @@ const scrollListProps = {
   noMoreText: String
 } as const
 
-export type UScrollListProps = typeof scrollListProps
+export type UScrollListPropsType = typeof UScrollListProps
 
 const UScrollList = defineComponent({
   name: 'UScrollList',
-  props: scrollListProps,
+  props: UScrollListProps,
   setup(props, { slots, attrs }) {
     const loadMoreLock = ref<boolean>(false)
 

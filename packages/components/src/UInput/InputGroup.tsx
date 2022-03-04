@@ -2,7 +2,7 @@ import type { InputGroupProps } from 'naive-ui'
 import { NInputGroup } from 'naive-ui'
 import { defineComponent } from 'vue'
 
-export type UInputGroupProps = InputGroupProps
+export type UInputGroupPropsType = InputGroupProps
 
 const UInputGroup = defineComponent({
   name: 'UInputGroup',

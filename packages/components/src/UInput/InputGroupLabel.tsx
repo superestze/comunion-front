@@ -1,5 +1,8 @@
+import type { InputGroupLabelProps } from 'naive-ui'
 import { NInputGroupLabel } from 'naive-ui'
 import { defineComponent } from 'vue'
+
+export type UInputGroupLabelPropsType = InputGroupLabelProps
 
 const UInputGroupLabel = defineComponent({
   name: 'UInputGroupLabel',

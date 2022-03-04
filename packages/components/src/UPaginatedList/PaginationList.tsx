@@ -2,21 +2,26 @@ import { defineComponent } from 'vue'
 import type { PropType } from 'vue'
 import { range } from 'lodash'
 import './index.css'
+import type { UPaginationPropsType } from '../UPagination'
+import { UPagination } from '../UPagination'
 
 export const UPaginationListProps = {
   colCount: {
     type: Number,
     default: 4
-  }, // column count, default 3
+  },
+  // column count, default 3
   colGapSize: {
     type: Number,
     default: 40
-  }, // column gap size, default 40px
+  },
+  // column gap size, default 40px
   rowGapSize: {
     type: Number,
     default: 40
-  }, // row gap size, default 40px
-  pagination: Object as PropType<UPaginationProps>,
+  },
+  // row gap size, default 40px
+  pagination: Object as PropType<UPaginationPropsType>,
   dataSource: Array,
   cellKey: {
     type: String,
