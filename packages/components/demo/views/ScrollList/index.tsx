@@ -27,7 +27,7 @@ export default defineComponent({
       return (
         <div class="h-full flex flex-col">
           <div class="h-60px px-24px flex flex-row items-center">
-            <div>当前 page: {pagination.page}</div>
+            <div>Current page: {pagination.page}</div>
             <div class="flex flex-row items-center ml-24px">
               pageSize:{' '}
               <NInputNumber

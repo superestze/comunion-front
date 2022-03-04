@@ -8,7 +8,7 @@ import { reactive } from 'vue'
 import { defineComponent } from 'vue'
 import { omitObject, effectiveUrlValidator } from '@comunion/utils'
 import './FormFactory.css'
-import UButton from '../UButton'
+import { UButton } from '../UButton'
 import UHashInput from '../UInput/HashInput'
 
 export type FormFactoryInputField = {

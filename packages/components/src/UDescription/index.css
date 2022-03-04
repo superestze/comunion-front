@@ -1,0 +1,15 @@
+.u-description {
+  @apply flex flex-wrap;
+
+  &-item {
+    @apply flex u-label2 my-2;
+
+    &__label {
+      @apply text-grey3 flex-shrink-0;
+    }
+
+    &__content {
+      @apply u-title2 text-primary2 flex-shrink-0 flex-1 overflow-ellipsis;
+    }
+  }
+}

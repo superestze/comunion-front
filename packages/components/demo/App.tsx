@@ -1,7 +1,14 @@
 import { defineComponent } from 'vue'
 import { RouterView } from 'vue-router'
 
-import { StyleProvider, UHashInputProvider } from '@/comps/index'
+import {
+  UStyleProvider,
+  UHashInputProvider,
+  UMessageProvider,
+  UMessage,
+  ULoadingBar,
+  ULoadingBarProvider
+} from '@/comps/index'
 
 interface IProps {}
 
@@ -20,11 +27,17 @@ export default defineComponent<IProps>({
   setup() {
     return () => {
       return (
-        <StyleProvider>
+        <UStyleProvider>
+          <UMessageProvider>
+            <UMessage />
+          </UMessageProvider>
+          <ULoadingBarProvider>
+            <ULoadingBar />
+          </ULoadingBarProvider>
           <UHashInputProvider onSearch={onHashSearch}>
             <RouterView></RouterView>
           </UHashInputProvider>
-        </StyleProvider>
+        </UStyleProvider>
       )
     }
   }

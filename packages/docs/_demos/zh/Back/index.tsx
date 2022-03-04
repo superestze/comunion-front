@@ -1,14 +1,14 @@
 import { defineComponent } from 'vue'
-import { UBack, StyleProvider } from '@comunion/components'
+import { UBack, UStyleProvider } from '@comunion/components'
 
 const BackDemoPage = defineComponent({
   name: 'BackDemoPage',
   setup() {
     return () => (
       <>
-        <StyleProvider>
+        <UStyleProvider>
           <UBack></UBack>
-        </StyleProvider>
+        </UStyleProvider>
       </>
     )
   }

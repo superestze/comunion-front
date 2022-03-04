@@ -8,10 +8,10 @@ module.exports = {
         // ignoreTypes: ['page'],
       }
     ],
-    "selector-pseudo-class-no-unknown": [
+    'selector-pseudo-class-no-unknown': [
       true,
       {
-        "ignorePseudoClasses": ["global"]
+        ignorePseudoClasses: ['global']
       }
     ]
   }

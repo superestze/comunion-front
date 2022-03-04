@@ -1,19 +1,29 @@
-import { defineComponent } from 'vue'
-import { UDropdown } from '@/comps/index'
+import { UButton, UDropdown, UDropdownFilter } from '@/comps/index'
+import { defineComponent, ref } from 'vue'
 
-export default defineComponent({
+const DropdownDemoPage = defineComponent({
+  name: 'DropdownDemoPage',
   setup() {
-    return () => {
-      return (
-        <div class="h-full">
-          <div class="p-20px rounded-xl">
-            <div class="text-16px mb-16px">基础</div>
-            <div class="flex flex-row w-180px">
-              <UDropdown />
-            </div>
-          </div>
-        </div>
-      )
-    }
+    const selected = ref(null)
+    return () => (
+      <>
+        <h4>Dropdown</h4>
+        <UDropdown
+          trigger="hover"
+          options={[
+            { label: '1', key: 1 },
+            { label: '2', key: 2 }
+          ]}
+          onSelect={v => (selected.value = v)}
+        >
+          <UButton>trigger me</UButton>
+        </UDropdown>
+        {selected.value}
+        <h4 class="mt-6">Dropdown filter</h4>
+        <UDropdownFilter />
+      </>
+    )
   }
 })
+
+export default DropdownDemoPage

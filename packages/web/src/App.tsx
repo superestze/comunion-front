@@ -1,4 +1,9 @@
-import { StyleProvider, UHashInputProvider, UMessage, UMessageProvider } from '@comunion/components'
+import {
+  UStyleProvider,
+  UHashInputProvider,
+  UMessage,
+  UMessageProvider
+} from '@comunion/components'
 import { defineComponent } from 'vue'
 import { RouterView } from 'vue-router'
 import { GlobalConfigProvider, UserProfileProvider, WalletProvider } from './providers'
@@ -19,7 +24,7 @@ export default defineComponent({
     }
 
     return () => (
-      <StyleProvider>
+      <UStyleProvider>
         <UMessageProvider>
           <UMessage />
         </UMessageProvider>
@@ -32,7 +37,7 @@ export default defineComponent({
             </UserProfileProvider>
           </UHashInputProvider>
         </GlobalConfigProvider>
-      </StyleProvider>
+      </UStyleProvider>
     )
   }
 })

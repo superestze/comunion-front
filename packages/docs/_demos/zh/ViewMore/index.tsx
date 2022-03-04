@@ -1,14 +1,14 @@
 import { defineComponent } from 'vue'
-import { UViewMore, StyleProvider } from '@comunion/components'
+import { UViewMore, UStyleProvider } from '@comunion/components'
 
 const ViewMoreDemoPage = defineComponent({
   name: 'ViewMoreDemoPage',
   setup() {
     return () => (
       <>
-        <StyleProvider>
+        <UStyleProvider>
           <UViewMore>View all 250 comers</UViewMore>
-        </StyleProvider>
+        </UStyleProvider>
       </>
     )
   }

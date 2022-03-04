@@ -7,8 +7,8 @@ export default defineComponent({
     return () => {
       return (
         <div class="h-full">
-          <div class="p-20px rounded-xl">
-            <div class="text-16px mb-16px">基础</div>
+          <div class="rounded-xl p-20px">
+            <div class="mb-16px text-16px">基础</div>
             <div class="flex flex-row">
               <UButton class="mr-16px mb-16px" type="primary">
                 Primary

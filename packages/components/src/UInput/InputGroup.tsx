@@ -1,12 +1,17 @@
 import type { InputGroupProps } from 'naive-ui'
 import { NInputGroup } from 'naive-ui'
-import type { SetupContext } from 'vue'
-import './styles/input-group.css'
+import { defineComponent } from 'vue'
 
-export type UInputGroupProps = InputGroupProps
+export type UInputGroupPropsType = InputGroupProps
 
-const UInputLabel = (props: UInputGroupProps, { slots }: SetupContext) => {
-  return <NInputGroup {...props}>{slots.default?.()}</NInputGroup>
-}
+const UInputGroup = defineComponent({
+  name: 'UInputGroup',
+  extends: NInputGroup,
+  setup(props, ctx) {
+    return () => {
+      return <NInputGroup {...props} v-slots={ctx.slots} />
+    }
+  }
+})
 
-export default UInputLabel
+export default UInputGroup
