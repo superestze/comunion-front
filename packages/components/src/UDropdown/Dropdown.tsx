@@ -1,5 +1,8 @@
+import type { DropdownProps } from 'naive-ui'
 import { NDropdown } from 'naive-ui'
 import { defineComponent } from 'vue'
+
+export type UDropdownPropsType = DropdownProps
 
 const UDropdown = defineComponent({
   name: 'UDropdown',

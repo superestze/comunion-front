@@ -4,7 +4,7 @@ import { defineComponent } from 'vue'
 import { ArrowDownOutlined } from '@comunion/icons'
 import './DropdownFilter.css'
 
-export type UDropdownProps = SelectProps
+export type UDropdownFilterProps = SelectProps
 
 const UDropdownFilter = defineComponent({
   name: 'UDropdownFilter',
