@@ -1,5 +1,7 @@
-import { NTabs } from 'naive-ui'
+import { NTabs, TabsProps } from 'naive-ui'
 
-const UTabs = NTabs
+export type UTabsPropsType = TabsProps
+
+const UTabs: typeof NTabs = NTabs
 
 export default UTabs

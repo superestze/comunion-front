@@ -1,10 +1,10 @@
 import type { DatePickerProps } from 'naive-ui'
 import { NDatePicker } from 'naive-ui'
-import { defineComponent } from 'vue'
+import { DefineComponent, defineComponent } from 'vue'
 
 export type UDatePickerPropsType = DatePickerProps
 
-const UDatePicker = defineComponent({
+const UDatePicker: DefineComponent<UDatePickerPropsType> = defineComponent({
   name: 'UDatePicker',
   extends: NDatePicker,
   setup(props, ctx) {

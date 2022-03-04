@@ -40,7 +40,9 @@
   "dependencies": {
     "@comunion/icons": "0.0.1",
     "@comunion/utils": "0.0.1",
-    "naive-ui": "^2.26.0",
+    "naive-ui": "^2.26.0"
+  },
+  "peerDependencies": {
     "vue": "^3.2.31"
   },
   "devDependencies": {

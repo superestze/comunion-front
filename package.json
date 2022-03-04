@@ -8,9 +8,6 @@
   ],
   "repository": "comunion-io/front-next",
   "license": "GPL-3.0-or-later",
-  "workspaces": [
-    "packages/*"
-  ],
   "scripts": {
     "postinstall": "husky install",
     "docs": "yarn --cwd packages/docs run docs:dev",

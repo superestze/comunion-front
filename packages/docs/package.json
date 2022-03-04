@@ -12,7 +12,8 @@
     "markdown-it-task-lists": "^2.1.1",
     "postcss-nested": "^5.0.6",
     "vite-plugin-windicss": "^1.8.2",
-    "vitepress": "^0.22.3"
+    "vitepress": "^0.22.3",
+    "windicss": "^3.5.1"
   },
   "scripts": {
     "docs:dev": "vitepress dev",
