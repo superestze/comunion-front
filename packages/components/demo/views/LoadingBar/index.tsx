@@ -1,5 +1,5 @@
-import { UButton, loadingBar } from '@/comps/index'
 import { defineComponent } from 'vue'
+import { UButton, loadingBar } from '@/comps/index'
 
 const LoadingBarDemoPage = defineComponent({
   name: 'LoadingBarDemoPage',

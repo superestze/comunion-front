@@ -1,4 +1,4 @@
-const { omitObject } = require('../src/obj')
+import { omitObject } from '../src/obj'
 
 describe('utils: omit properties from object', () => {
   const obj = {

@@ -1,6 +1,6 @@
+import path from 'path'
 import vue from '@vitejs/plugin-vue'
 import vueTSX from '@vitejs/plugin-vue-jsx'
-import path from 'path'
 import { defineConfig } from 'vite'
 import windiCSS from 'vite-plugin-windicss'
 

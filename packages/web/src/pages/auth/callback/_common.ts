@@ -1,8 +1,8 @@
+import { useRoute } from 'vue-router'
+import useOnLogin from '../_login'
 import type { ServiceKeys } from '@/services'
 import { services } from '@/services'
 import type { UserResponse } from '@/types'
-import { useRoute } from 'vue-router'
-import useOnLogin from '../_login'
 
 /**
  * return true when is local and false when is not, undefined for invalid

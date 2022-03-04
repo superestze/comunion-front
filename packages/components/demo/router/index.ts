@@ -11,6 +11,6 @@ router.beforeEach((to, from, next) => {
   next()
 })
 
-router.afterEach(() => {})
+// router.afterEach(() => {})
 
 export default router

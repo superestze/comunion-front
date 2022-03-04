@@ -1,6 +1,6 @@
-import { UDescription } from '@/comps/index'
 import { ArrowRightOutlined } from '@comunion/icons'
 import { defineComponent } from 'vue'
+import { UDescription } from '@/comps/index'
 
 const DescriptionDemoPage = defineComponent({
   name: 'DescriptionDemoPage',

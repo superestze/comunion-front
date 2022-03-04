@@ -1,10 +1,10 @@
-import { defineComponent, ref } from 'vue'
 import { UButton, UFormFactory, UModal } from '@comunion/components'
 import type { FormFactoryField } from '@comunion/components/dist/es/UForm/FormFactory'
-import successImg from './assets/success.svg'
+import { defineComponent, ref } from 'vue'
 import { useRouter } from 'vue-router'
-import { services } from '@/services'
+import successImg from './assets/success.svg'
 import { useUserProfile } from '@/providers'
+import { services } from '@/services'
 
 const RegisterProfilePage = defineComponent({
   name: 'RegisterProfilePage',

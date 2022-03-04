@@ -1,5 +1,5 @@
-import { UHashInput } from '@/comps/UInput'
 import { defineComponent, ref } from 'vue'
+import { UHashInput } from '@/comps/UInput'
 
 export const HashInputDemoPage = defineComponent({
   name: 'HashInputDemoPage',

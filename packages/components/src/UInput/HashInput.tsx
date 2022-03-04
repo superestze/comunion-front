@@ -41,7 +41,7 @@ const UHashInput = defineComponent({
         return
       }
       loading.value = true
-      const result = await hashInputState.onSearch!(inputValue, props.category)
+      const result = await hashInputState.onSearch?.(inputValue, props.category)
       if (result.some(item => item.value === inputValue)) {
         options.value = result
       } else {

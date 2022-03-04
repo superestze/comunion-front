@@ -1,8 +1,8 @@
-import { services } from '@/services'
-import type { UserResponse } from '@/types'
 import MetamaskWallet from './Metamask'
 import type AbstractWallet from './Wallet'
 import WalletConnectWallet from './WalletConnect'
+import { services } from '@/services'
+import type { UserResponse } from '@/types'
 
 export type WalletLoginFunction = (walletName: 'Metamask' | 'WalletConnect') => Promise<{
   user?: UserResponse

@@ -1,6 +1,6 @@
-import { defineComponent } from 'vue'
 import type { ModalProps } from 'naive-ui'
 import { NModal } from 'naive-ui'
+import { defineComponent } from 'vue'
 
 export type UModalPropsType = ModalProps
 

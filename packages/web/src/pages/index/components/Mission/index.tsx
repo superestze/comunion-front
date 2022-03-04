@@ -1,6 +1,6 @@
-import rightArrowWhite from '@/assets/right-arrow-white.png'
 import { defineComponent, reactive } from 'vue'
 import styles from './index.module.css'
+import rightArrowWhite from '@/assets/right-arrow-white.png'
 
 export default defineComponent({
   name: 'Mission',

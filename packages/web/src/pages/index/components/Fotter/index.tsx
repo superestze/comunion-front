@@ -1,6 +1,6 @@
-import smallLogo from '@/assets/small-logo.png'
 import { defineComponent } from 'vue'
 import { RouterLink } from 'vue-router'
+import smallLogo from '@/assets/small-logo.png'
 
 export default defineComponent({
   name: 'Fotter',

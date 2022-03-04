@@ -1,6 +1,6 @@
 import { NBackTop } from 'naive-ui'
-import { defineComponent } from 'vue'
 import type { BackTopProps } from 'naive-ui'
+import { defineComponent } from 'vue'
 
 export type UBackTopPropsType = BackTopProps
 

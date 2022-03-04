@@ -1,4 +1,4 @@
-const { convertCamelCase, randomStr } = require('../src/char')
+import { convertCamelCase, randomStr } from '../src/char'
 
 describe('utils: convert camel case', () => {
   test('startup to Startup', () => {

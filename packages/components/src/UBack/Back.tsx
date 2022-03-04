@@ -1,5 +1,5 @@
-import { defineComponent } from 'vue'
 import { ArrowRightOutlined } from '@comunion/icons'
+import { defineComponent } from 'vue'
 import './back.css'
 
 export const UBackProps = {

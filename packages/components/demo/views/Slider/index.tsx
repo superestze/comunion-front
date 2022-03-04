@@ -1,5 +1,5 @@
-import { USlider } from '@/comps/index'
 import { defineComponent } from 'vue'
+import { USlider } from '@/comps/index'
 
 const SliderDemoPage = defineComponent({
   name: 'SliderDemoPage',

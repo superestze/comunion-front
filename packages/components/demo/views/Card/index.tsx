@@ -1,5 +1,5 @@
-import { UCard } from '@/comps/index'
 import { defineComponent } from 'vue'
+import { UCard } from '@/comps/index'
 
 const CardDemoPage = defineComponent({
   name: 'CardDemoPage',

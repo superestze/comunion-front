@@ -1,9 +1,9 @@
 import type { InjectionKey } from 'vue'
 import { defineComponent, inject, readonly, provide, reactive } from 'vue'
-import type { UserResponse } from '@/types'
 import type { WalletLoginFunction } from './wallets'
 import { login } from './wallets'
 import type AbstractWallet from './wallets/Wallet'
+import type { UserResponse } from '@/types'
 
 export interface WalletState {
   walletAddress?: string

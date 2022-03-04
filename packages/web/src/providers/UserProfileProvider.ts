@@ -1,9 +1,9 @@
-import { STORE_KEY_USER } from '@/constants'
+import { readObject, removeObject, storeObject } from '@comunion/utils'
 import type { ComputedRef, InjectionKey } from 'vue'
 import { computed, readonly, inject, provide, reactive, defineComponent } from 'vue'
-import { readObject, removeObject, storeObject } from '@comunion/utils'
-import type { UserResponse } from '@/types'
+import { STORE_KEY_USER } from '@/constants'
 import { setToken } from '@/services/a2s.adapter'
+import type { UserResponse } from '@/types'
 
 export interface UserProfileState {
   token: string

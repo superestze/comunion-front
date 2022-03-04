@@ -1,5 +1,5 @@
-import { UTabs, UTabPane, UCard } from '@/comps/index'
 import { defineComponent, ref } from 'vue'
+import { UTabs, UTabPane, UCard } from '@/comps/index'
 
 const TabsDemoPage = defineComponent({
   name: 'TabsDemoPage',

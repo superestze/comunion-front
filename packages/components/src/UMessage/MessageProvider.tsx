@@ -1,5 +1,5 @@
-import { defineComponent } from 'vue'
 import { NMessageProvider } from 'naive-ui'
+import { defineComponent } from 'vue'
 
 const UMessageProvider = defineComponent({
   name: 'UMessageProvider',

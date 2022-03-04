@@ -1,5 +1,5 @@
-import { UImage } from '@/comps/index'
 import { defineComponent } from 'vue'
+import { UImage } from '@/comps/index'
 
 const ImageDemoPage = defineComponent({
   name: 'ImageDemoPage',

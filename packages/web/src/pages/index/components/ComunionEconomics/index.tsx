@@ -1,10 +1,10 @@
+import { defineComponent } from 'vue'
+import styles from './index.module.css'
 import digitalIdentity from '@/assets/Digital Identity.png'
 import governance from '@/assets/Governance.png'
 import smartContracts from '@/assets/Smart Contracts.png'
 import tokenisation from '@/assets/Tokenisation.png'
 import UBI from '@/assets/UBI.png'
-import { defineComponent } from 'vue'
-import styles from './index.module.css'
 
 export default defineComponent({
   name: 'ComunionEconomics',

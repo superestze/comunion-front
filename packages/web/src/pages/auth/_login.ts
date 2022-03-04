@@ -1,6 +1,6 @@
+import { useRouter } from 'vue-router'
 import { useUserProfile } from '@/providers'
 import type { UserResponse } from '@/types'
-import { useRouter } from 'vue-router'
 
 export default function useOnLogin() {
   const { replace } = useRouter()

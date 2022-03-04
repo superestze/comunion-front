@@ -1,9 +1,8 @@
+import { range } from 'lodash'
+import { NInputNumber } from 'naive-ui'
 import { computed, defineComponent, reactive } from 'vue'
 
 import { UScrollList } from '@/comps/index'
-import { NInputNumber } from 'naive-ui'
-
-import { range } from 'lodash'
 
 interface IPagination {
   pageSize: number

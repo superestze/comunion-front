@@ -1,6 +1,6 @@
-import { defineComponent } from 'vue'
 import { NMenu } from 'naive-ui'
 import type { MenuMixedOption } from 'naive-ui/lib/menu/src/interface'
+import { defineComponent } from 'vue'
 import { useRoute, useRouter } from 'vue-router'
 
 import routes from '@/ex/router/routes'
