@@ -28,28 +28,28 @@ git clone git@github.com:comunion-io/v5-front.git
 2. 安装依赖
 
 ```sh
-yarn
+pnpm
 ```
 
 3. 运行 web 项目
 
 ```sh
-yarn dev
+pnpm dev
 ## 如果其它包不改，只关心web包，可以运行
-yarn dev:web
+pnpm dev:web
 ```
 
 4. 运行其它项目（可选）
 
 ```sh
 # 文档
-yarn docs
+pnpm docs
 ```
 
 5. 打包
 
 ```sh
-yarn build
+pnpm build
 ```
 
 ## 如何贡献代码

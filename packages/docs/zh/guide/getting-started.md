@@ -10,18 +10,18 @@ sidebar: true
 在根目录执行
 
 ```bash
-yarn dev
+pnpm run dev
 ```
 
 - 启动文档预览
   ```bash
-  yarn docs
+  pnpm run docs
   ```
 - 子包监听
   ```bash
-  yarn dev:utils
-  yarn dev:components
-  yarn dev:hooks
+  pnpm run dev:utils
+  pnpm run dev:components
+  pnpm run dev:hooks
   ```
 
 ## 如何添加页面
@@ -30,7 +30,7 @@ yarn dev
 
 ## 如何添加一个组件
 
-写页面离不开组件封装，如果要添加一个全局组件，请到根目录下执行 `yarn gen:component` 名称生成一个组件模板。
+写页面离不开组件封装，如果要添加一个全局组件，请到根目录下执行 `pnpm gen:component` 名称生成一个组件模板。
 如果是要添加一个 `web` 项目的组件，那么就在 `web` 项目的 `components` 目录新建一个组件名称的文件夹以及入口文件。
 如果只是要添加当前页面的特定组件，那么就在页面目录下新建一个 `components` 目录然后在目录里添加入口文件。
 入口文件可以用 `v3c` 这个 `snippet` 进行快速生成
@@ -53,7 +53,7 @@ TODO
 
 ## 如何调用后端接口
 
-1. 在根目录或 `web` 目录执行 `yarn gen:api` 来生成、更新 api 文件
+1. 在根目录或 `web` 目录执行 `pnpm gen:api` 来生成、更新 api 文件
 2. 然后使用 `services[api-group@api-name]` 的形式调用，所有参数都通过第一个参数传递，具体可查看[a2s 文档](https://www.npmjs.com/package/@zidong/a2s)
 
 ## 如何发起上链操作
@@ -61,7 +61,7 @@ TODO
 TODO
 
 1. 在写代码前，请先了解下前后端和合约的整体[交互流程](https://comunion.yuque.com/niwla4/qbn2zb/orqwyo#j7Fkv)以及 [v5 合约架构图](https://comunion.yuque.com/niwla4/qbn2zb/bsqang)。
-2. 在根目录或 `web` 目录下执行 `yarn gen:contract` 来生成、更新合约代码
+2. 在根目录或 `web` 目录下执行 `pnpm gen:contract` 来生成、更新合约代码
 3. 然后使用 `contracts[contract-name]` 的形式调用，所有参数都通过第一个参数传递，有对应的 ts 提示
 
 ## 如何获取用户信息，当前上链信息
@@ -76,27 +76,27 @@ TODO
 ### 全局添加依赖
 
 ```bash
-yarn add -W [-D] <pkg>
+pnpm i -w [-D] <pkg>
 ```
 
 ### 子项目添加依赖
 
 ```bash
-yarn workspace <@comunion/packageName> add [-D] <pkg>
+pnpm --filter <@comunion/packageName> add [-D] <pkg>
 # 例如
-yarn workspace @comunion/components add lodash
+pnpm --filter @comunion/components add lodash
 ```
 
 如果添加的是 workspace 级别的依赖，应该制定依赖包的版本号
 
 ```bash
-yarn workspace @comunion/web add @comunion/utils@0.0.1
+pnpm --filter @comunion/web add @comunion/utils@0.0.1
 ```
 
 ### 子项目移除依赖
 
 ```
-yarn workspace <@comunion/packageName> remove <pkg>
+pnpm --filter <@comunion/packageName> remove <pkg>
 ```
 
 ## 项目共享代码片段

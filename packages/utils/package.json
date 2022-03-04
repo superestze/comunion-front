@@ -8,7 +8,7 @@
   "scripts": {
     "build": "tsup --dts --format cjs,esm --clean src",
     "dev": "tsup --dts --format cjs,esm --clean --watch src",
-    "test": "yarn jest"
+    "test": "jest"
   },
   "repository": "comunion-io/front-next.git",
   "keywords": ["typescript", "utils"],
