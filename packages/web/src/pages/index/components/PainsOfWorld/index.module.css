@@ -1,37 +1,37 @@
 .leftTopBox {
   width: 570px;
   height: 324px;
+  margin-right: -19px;
+  padding-top: 44px;
+  padding-left: 24px;
   background-image: url('@/assets/pains-of-world-left.svg');
   background-repeat: no-repeat;
-  margin-right: -19px;
-  padding-left: 24px;
-  padding-top: 44px;
 }
 
 .rightTopBox {
   width: 570px;
   height: 324px;
-  background-image: url('@/assets/paing-world-chart-bg-1.svg');
-  background-repeat: no-repeat;
   margin-left: -19px;
   padding-top: 32px;
   padding-left: 116px;
+  background-image: url('@/assets/paing-world-chart-bg-1.svg');
+  background-repeat: no-repeat;
 }
 
 .leftBottomBox {
+  position: relative;
   width: 578px;
   height: 324px;
+  margin-right: -19px;
   background-image: url('@/assets/paing-world-chart-bg-2.svg');
   background-repeat: no-repeat;
-  margin-right: -19px;
-  position: relative;
 }
 
 .leftBottomBox .lineChartImg {
   position: absolute;
-  width: 291px;
-  left: 48px;
   bottom: 14px;
+  left: 48px;
+  width: 291px;
 }
 
 .rightBottomBox {
@@ -39,8 +39,8 @@
   width: 570px;
   height: 324px;
   margin-left: -19px;
-  padding-left: 90px;
   padding-top: 44px;
+  padding-left: 90px;
 }
 
 .rightBottomBox p {
@@ -49,62 +49,62 @@
 }
 
 .rightBottomBox::after {
-  content: '';
   position: absolute;
+  top: 0;
+  left: 0;
   width: 100%;
   height: 100%;
-  left: 0;
-  top: 0;
   background-image: url('@/assets/pains-of-world-left.svg');
   background-repeat: no-repeat;
   transform: rotate(180deg);
+  content: '';
 }
 
 .box1 {
   width: 311px;
   height: 184px;
+  padding-top: 19px;
+  padding-left: 30px;
   background-image: url('@/assets/pains-of-world-1.svg');
   background-repeat: no-repeat;
   background-size: 100%;
-  padding-left: 30px;
-  padding-top: 19px;
 }
 
 .box2 {
   width: 311px;
   height: 203px;
-  background-image: url('@/assets/pains-of-world-2.png');
-  background-repeat: no-repeat;
-  background-size: 100%;
   margin-top: -12px;
   padding-top: 50px;
   padding-left: 58px;
+  background-image: url('@/assets/pains-of-world-2.png');
+  background-repeat: no-repeat;
+  background-size: 100%;
 }
 
 .box3 {
   width: 311px;
   height: 184px;
+  margin-top: 32px;
+  padding-top: 19px;
+  padding-left: 30px;
   background-image: url('@/assets/pains-of-world-1.svg');
   background-repeat: no-repeat;
   background-size: 100%;
-  padding-left: 30px;
-  padding-top: 19px;
-  margin-top: 32px;
 }
 
 .box4 {
+  position: relative;
   width: 311px;
   height: 203px;
+  margin-top: -12px;
   background-image: url('@/assets/pains-of-world-3.png');
   background-repeat: no-repeat;
   background-size: 100%;
-  margin-top: -12px;
-  position: relative;
 }
 
 .box4 .lineChartImg {
   position: absolute;
-  width: 145px;
-  left: 46px;
   bottom: 18px;
+  left: 46px;
+  width: 145px;
 }

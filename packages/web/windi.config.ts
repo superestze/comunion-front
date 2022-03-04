@@ -1,6 +1,6 @@
 // windi.config.js
-import { defineConfig } from 'windicss/helpers'
 import ComponentConfig from '@comunion/components/windi.config'
+import { defineConfig } from 'windicss/helpers'
 
 export default defineConfig({
   ...ComponentConfig,

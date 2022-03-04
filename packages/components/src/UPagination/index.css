@@ -4,13 +4,13 @@
 }
 
 .u-pagination .n-pagination-item {
-  background: var(--n-button-color);
   color: var(--n-button-icon-color);
+  background: var(--n-button-color);
   border: var(--n-button-border);
 }
 
 .u-pagination .n-pagination-item:not(.n-pagination-item--disabled):hover {
-  background: var(--n-item-color-hover);
   color: var(--n-item-text-color-active);
+  background: var(--n-item-color-hover);
   border: var(--n-item-border-active);
 }

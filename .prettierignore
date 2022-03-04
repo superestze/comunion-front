@@ -1,7 +1,5 @@
 lib/
 dist/
 packages/generator/templates
-.yarn
-.yarnrc
 node_modules
 *.json

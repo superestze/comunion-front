@@ -1,17 +1,17 @@
 .introduceAndJoinBox::before {
-  content: '';
   position: absolute;
+  bottom: 0;
+  left: -100%;
+  z-index: 3;
+  width: 300%;
+  height: 100%;
+  overflow: hidden;
   background-image: url('@/assets/introduce-bc.png');
   background-repeat: no-repeat;
-  background-size: 1800px auto;
   background-position: center top;
-  overflow: hidden;
-  width: 300%;
-  left: -100%;
-  bottom: 0;
-  z-index: 3;
+  background-size: 1800px auto;
   border-radius: 50%;
-  height: 100%;
+  content: '';
 }
 
 /* .introduceAndJoinBox::after {
@@ -32,18 +32,18 @@
 } */
 
 .introduceAndJoinBoxH5 {
-  content: '';
   position: absolute;
+  top: 154px;
+  left: 0;
+  z-index: 3;
+  width: 100%;
+  height: 250px;
+  overflow: hidden;
   background-image: url('@/assets/introduce-bc.png');
   background-repeat: no-repeat;
-  background-size: calc(100% + 10%) 250px;
   background-position: center top;
-  overflow: hidden;
-  height: 250px;
-  width: 100%;
-  left: 0;
-  top: 154px;
-  z-index: 3;
+  background-size: calc(100% + 10%) 250px;
+  content: '';
 }
 
 .wantToText {

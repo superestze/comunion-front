@@ -19,7 +19,7 @@
     &:hover {
       @apply rounded-3xl;
 
-      box-shadow: 0 0 4px rgba(0, 0, 0, 0.197015);
+      box-shadow: 0 0 4px rgb(0 0 0 / 19.7%);
     }
 
     & > svg {
