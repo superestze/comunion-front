@@ -13,7 +13,7 @@
     }
 
     &-content {
-      @apply flex flex-col flex-1 items-left;
+      @apply flex flex-col flex-1 items-start;
 
       &__title {
         @apply text-[14px] h-6 leading-5 font-bold tracking-2px;
