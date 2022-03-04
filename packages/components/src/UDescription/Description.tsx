@@ -1,4 +1,4 @@
-import type { PropType, VNode } from 'vue'
+import type { PropType, VNode, ExtractPropTypes } from 'vue'
 import { defineComponent } from 'vue'
 import { UEllipsis } from '../UEllipsis'
 import './index.css'
@@ -38,6 +38,8 @@ export const UDescriptionProps = {
     default: true
   }
 } as const
+
+export type UDescriptionPropsType = ExtractPropTypes<typeof UDescriptionProps>
 
 const UDescription = defineComponent({
   name: 'UDescription',

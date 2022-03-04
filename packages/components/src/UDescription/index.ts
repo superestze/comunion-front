@@ -1,1 +1,2 @@
-export { default as UDescription } from './Description'
+export { default as UDescription, UDescriptionProps } from './Description'
+export type { UDescriptionItem, UDescriptionPropsType } from './Description'
