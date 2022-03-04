@@ -8,6 +8,6 @@
   }
 
   &__text {
-    @apply ml-3
+    @apply ml-3;
   }
 }

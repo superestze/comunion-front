@@ -51,13 +51,11 @@ export async function requestAdapter<T = any>(
     }
   } catch (error) {
     const msg = error.message ?? 'Error occured'
-    message.error(msg);
+    message.error(msg)
     return {
       error: true,
       data: null,
       message: msg
     }
-
   }
-
 }
