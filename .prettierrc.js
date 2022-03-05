@@ -25,8 +25,7 @@ module.exports = {
   endOfLine: 'auto',
   overrides: [
     {
-      files:
-        '*.{babelrc,eslintrc,huskyrc,lintstagedrc,json,prettierrc,stylelintrc}',
+      files: '*.{babelrc,eslintrc,huskyrc,lintstagedrc,json,prettierrc,stylelintrc}',
       options: {
         parser: 'json'
       }
