@@ -67,20 +67,6 @@ importers:
       ts-node: 10.6.0_e79e62fe450383fd2d418267dc75e645
       typescript: 4.6.2
 
-  node_modules/.pnpm/vue@3.2.31/node_modules/vue:
-    specifiers:
-      '@vue/compiler-dom': 3.2.31
-      '@vue/compiler-sfc': 3.2.31
-      '@vue/runtime-dom': 3.2.31
-      '@vue/server-renderer': 3.2.31
-      '@vue/shared': 3.2.31
-    dependencies:
-      '@vue/compiler-dom': 3.2.31
-      '@vue/compiler-sfc': 3.2.31
-      '@vue/runtime-dom': 3.2.31
-      '@vue/server-renderer': 3.2.31
-      '@vue/shared': 3.2.31
-
   packages/components:
     specifiers:
       '@comunion/icons': 0.0.1
@@ -198,7 +184,7 @@ importers:
       '@types/node': 17.0.21
       babel-jest: 27.5.1_@babel+core@7.17.5
       jest: 27.5.1_ts-node@10.6.0
-      tsup: 4.14.0_ts-node@10.6.0
+      tsup: 4.14.0_ts-node@10.6.0+typescript@4.6.2
 
   packages/web:
     specifiers:
@@ -3807,18 +3793,6 @@ packages:
       '@vue/runtime-core': 3.2.31
       '@vue/shared': 3.2.31
       csstype: 2.6.20
-
-  /@vue/server-renderer/3.2.31:
-    resolution:
-      {
-        integrity: sha512-8CN3Zj2HyR2LQQBHZ61HexF5NReqngLT3oahyiVRfSSvak+oAvVmu8iNLSu6XR77Ili2AOpnAt1y8ywjjqtmkg==
-      }
-    peerDependencies:
-      vue: 3.2.31
-    dependencies:
-      '@vue/compiler-ssr': 3.2.31
-      '@vue/shared': 3.2.31
-    dev: false
 
   /@vue/server-renderer/3.2.31_vue@3.2.31:
     resolution:
@@ -10205,7 +10179,7 @@ packages:
       pretty-format: 27.5.1
       slash: 3.0.0
       strip-json-comments: 3.1.1
-      ts-node: 10.6.0_@types+node@17.0.21
+      ts-node: 10.6.0_e79e62fe450383fd2d418267dc75e645
     transitivePeerDependencies:
       - bufferutil
       - canvas
@@ -15500,36 +15474,6 @@ packages:
       {
         integrity: sha512-77EbyPPpMz+FRFRuAFlWMtmgUWGe9UOG2Z25NqCwiIjRhOf5iKGuzSe5P2w1laq+FkRy4p+PCuVkJSGkzTEKVw==
       }
-
-  /tsup/4.14.0_ts-node@10.6.0:
-    resolution:
-      {
-        integrity: sha512-77rWdzhikTP9mQ34XMRzK83tw++LF6f4ox/HNERlgesB7g6g5VQ1iJlueG9O0P9HAZGVKavUwyoZv0+322p6rg==
-      }
-    hasBin: true
-    peerDependencies:
-      typescript: ^4.2.3
-    peerDependenciesMeta:
-      typescript:
-        optional: true
-    dependencies:
-      cac: 6.7.12
-      chalk: 4.1.2
-      chokidar: 3.5.3
-      debug: 4.3.3
-      esbuild: 0.12.29
-      execa: 5.1.1
-      globby: 11.1.0
-      joycon: 3.1.1
-      postcss-load-config: 3.1.3_ts-node@10.6.0
-      resolve-from: 5.0.0
-      rollup: 2.69.0
-      sucrase: 3.20.3
-      tree-kill: 1.2.2
-    transitivePeerDependencies:
-      - supports-color
-      - ts-node
-    dev: true
 
   /tsup/4.14.0_ts-node@10.6.0+typescript@4.6.2:
     resolution:
