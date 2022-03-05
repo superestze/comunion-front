@@ -19,7 +19,11 @@
     "target": "esnext",
     "paths": {
       "@/ex/*": ["./demo/*"],
-      "@/comps/*": ["./src/*"]
+      "@/comps/*": ["./src/*"],
+      // This is import to fix pnpm bug: The inferred type of "X" cannot be named without a reference to "Y". This is likely not portable. A type annotation is necessary.
+      // https://github.com/microsoft/TypeScript/issues/42873
+      // https://github.com/qmhc/vite-plugin-dts/issues/51
+      "naive-ui": ["node_modules/naive-ui/"]
     }
   }
 }

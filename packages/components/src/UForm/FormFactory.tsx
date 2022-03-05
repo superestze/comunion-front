@@ -1,12 +1,8 @@
 import { omitObject, effectiveUrlValidator } from '@comunion/utils'
 import type { FormProps, InputProps, FormInst, FormItemRule, SelectProps } from 'naive-ui'
-import { NInput } from 'naive-ui'
-import { NForm, NFormItem } from 'naive-ui'
+import { NForm, NFormItem, NInput } from 'naive-ui'
 import type { ExtractPropTypes, PropType } from 'vue'
-import { computed } from 'vue'
-import { ref, toRaw } from 'vue'
-import { reactive } from 'vue'
-import { defineComponent } from 'vue'
+import { defineComponent, ref, reactive, toRaw, computed } from 'vue'
 import './FormFactory.css'
 import { UButton } from '../UButton'
 import UHashInput from '../UInput/HashInput'
@@ -81,6 +77,53 @@ function renderField(field: FormFactoryField, values: FormData) {
     default:
       return <NInput {...(props as InputProps)} v-model:value={values[field.name]} size="large" />
   }
+}
+
+export function createFormFields(fields: FormFactoryField[], values: FormData) {
+  const rules = computed(() => {
+    return fields.reduce<Record<string, FormItemRule[]>>((acc, field) => {
+      if (field.rules) {
+        acc[field.name] = field.rules
+      }
+      acc[field.name] = acc[field.name] ?? []
+      if (field.required) {
+        acc[field.name].push({
+          required: true,
+          message: `${field.title} is required`,
+          trigger: 'blur',
+          type: field.t === 'hashInput' ? 'array' : field.rules?.[0]?.type ?? 'string'
+        })
+      }
+      if (field.t === 'website') {
+        acc[field.name].push({
+          validator: (rule, value) => (value ? effectiveUrlValidator(value) : true),
+          message: 'Please enter a valid url',
+          trigger: 'blur'
+        })
+      }
+      return acc
+    }, {})
+  })
+
+  const items = (
+    <>
+      {fields.map(field => {
+        return (
+          <NFormItem
+            key={field.name}
+            class="u-form-factory_item"
+            label={field.title}
+            path={field.name}
+            required={field.required}
+          >
+            {renderField(field, values)}
+          </NFormItem>
+        )
+      })}
+    </>
+  )
+
+  return { rules, items }
 }
 
 const UFormFactory = defineComponent({

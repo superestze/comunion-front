@@ -3,6 +3,7 @@ import { PlusOutlined } from '@comunion/icons'
 import { defineComponent } from 'vue'
 import { RouterLink, RouterView } from 'vue-router'
 import styles from './default.module.css'
+import CreateStartupBlock from '@/blocks/Startup/Create'
 
 const DefaultLayout = defineComponent({
   name: 'DefaultLayout',
@@ -16,10 +17,14 @@ const DefaultLayout = defineComponent({
             <RouterLink class="ml-27 u-label1" activeClass="text-primary" to="/">
               STARTUPS
             </RouterLink>
-            <UButton class="rounded-lg ml-auto h-10 text-primary w-33" type="primary" ghost>
-              <PlusOutlined class="h-4 mr-3 w-4" />
-              <span class="text-primary u-label1">CREATE</span>
-            </UButton>
+            <CreateStartupBlock
+              trigger={
+                <UButton class="rounded-lg ml-auto h-10 text-primary w-33" type="primary" ghost>
+                  <PlusOutlined class="h-4 mr-3 w-4" />
+                  <span class="text-primary u-label1">CREATE</span>
+                </UButton>
+              }
+            />
             <RouterLink to="/" class="text-primary ml-16 u-label1">
               MY DASHBOARD
             </RouterLink>

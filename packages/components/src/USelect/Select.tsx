@@ -1,10 +1,10 @@
 import type { SelectProps } from 'naive-ui'
 import { NSelect } from 'naive-ui'
-import { DefineComponent, defineComponent } from 'vue'
+import { defineComponent } from 'vue'
 
 export type USelectPropsType = SelectProps
 
-const USelect: DefineComponent<USelectPropsType> = defineComponent({
+const USelect = defineComponent({
   name: 'USelect',
   extends: NSelect,
   setup(props, ctx) {

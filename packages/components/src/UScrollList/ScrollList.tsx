@@ -1,6 +1,5 @@
 import type { PropType } from 'vue'
-import { watch } from 'vue'
-import { defineComponent, ref, toRefs, computed } from 'vue'
+import { watch, defineComponent, ref, toRefs, computed } from 'vue'
 
 import ULoadMore from './ULoadMore'
 

@@ -1,10 +1,8 @@
 import { debounce } from '@comunion/utils'
 import { NSelect, SelectProps } from 'naive-ui'
 import type { SelectBaseOption } from 'naive-ui/lib/select/src/interface'
-import type { DefineComponent, InjectionKey, PropType } from 'vue'
-import { provide } from 'vue'
-import { inject } from 'vue'
-import { defineComponent, ref } from 'vue'
+import type { InjectionKey, PropType } from 'vue'
+import { provide, inject, defineComponent, ref } from 'vue'
 
 export type UHashInputOnSearch = (
   value: string,
@@ -19,7 +17,7 @@ export const UHashInputSymbol: InjectionKey<UHashInputState> = Symbol()
 
 export type UHashInputPropsType = SelectProps
 
-const UHashInput: DefineComponent<UHashInputPropsType> = defineComponent({
+const UHashInput = defineComponent({
   name: 'UHashInput',
   extends: NSelect,
   props: {
