@@ -1,9 +1,9 @@
 // @ts-check
 import { resolve as pathResolve, dirname, sep } from 'path'
-import { build } from 'esbuild'
-import glob from 'fast-glob'
 import { fileURLToPath } from 'url'
 import windiCssPlugin from '@luncheon/esbuild-plugin-windicss'
+import { build } from 'esbuild'
+import glob from 'fast-glob'
 
 const resolve = (...args) =>
   pathResolve(

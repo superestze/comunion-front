@@ -1,7 +1,7 @@
 import { debounce } from '@comunion/utils'
-import { NSelect } from 'naive-ui'
+import { NSelect, SelectProps } from 'naive-ui'
 import type { SelectBaseOption } from 'naive-ui/lib/select/src/interface'
-import type { InjectionKey, PropType } from 'vue'
+import type { DefineComponent, InjectionKey, PropType } from 'vue'
 import { provide } from 'vue'
 import { inject } from 'vue'
 import { defineComponent, ref } from 'vue'
@@ -17,7 +17,9 @@ export interface UHashInputState {
 
 export const UHashInputSymbol: InjectionKey<UHashInputState> = Symbol()
 
-const UHashInput = defineComponent({
+export type UHashInputPropsType = SelectProps
+
+const UHashInput: DefineComponent<UHashInputPropsType> = defineComponent({
   name: 'UHashInput',
   extends: NSelect,
   props: {
@@ -41,7 +43,7 @@ const UHashInput = defineComponent({
         return
       }
       loading.value = true
-      const result = await hashInputState.onSearch!(inputValue, props.category)
+      const result = await hashInputState.onSearch?.(inputValue, props.category)
       if (result.some(item => item.value === inputValue)) {
         options.value = result
       } else {

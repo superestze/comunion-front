@@ -1,5 +1,5 @@
-import { defineComponent } from 'vue'
 import { UViewMore, UStyleProvider } from '@comunion/components'
+import { defineComponent } from 'vue'
 
 const ViewMoreDemoPage = defineComponent({
   name: 'ViewMoreDemoPage',

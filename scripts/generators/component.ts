@@ -1,5 +1,5 @@
-import { convertCamelCase } from '../../packages/utils/src'
 import { join } from 'path'
+import { convertCamelCase } from '../../packages/utils/src'
 import { renderToFile, writeToFile } from '../utils'
 
 export async function generateComponent(name: string) {

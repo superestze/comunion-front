@@ -1,8 +1,8 @@
+import { defineComponent, reactive } from 'vue'
+import { RouterLink } from 'vue-router'
 import closeMenu from '@/assets/close-menu.png'
 import logo from '@/assets/logo.png'
 import openMenu from '@/assets/open-menu.png'
-import { defineComponent, reactive } from 'vue'
-import { RouterLink } from 'vue-router'
 
 let top = 0
 export default defineComponent({

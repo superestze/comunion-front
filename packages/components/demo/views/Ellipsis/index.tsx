@@ -1,5 +1,5 @@
-import { UEllipsis } from '@/comps/index'
 import { defineComponent } from 'vue'
+import { UEllipsis } from '@/comps/index'
 
 const EllipsisDemoPage = defineComponent({
   name: 'EllipsisDemoPage',

@@ -1,9 +1,9 @@
 // @ts-check
 import { resolve as pathResolve, dirname } from 'path'
-import { build } from 'vite'
 import { fileURLToPath } from 'url'
 import vue from '@vitejs/plugin-vue'
 import vueTSX from '@vitejs/plugin-vue-jsx'
+import { build } from 'vite'
 import windiCSS from 'vite-plugin-windicss'
 // import injectImportCss from './injectImportCss.js'
 

@@ -1,4 +1,4 @@
-const { debounce } = require('../src/delay')
+import { debounce } from '../src/delay'
 
 describe('utils: debounce', () => {
   const debounceTime = 1000

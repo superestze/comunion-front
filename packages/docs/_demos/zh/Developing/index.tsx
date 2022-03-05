@@ -1,5 +1,5 @@
-import { defineComponent } from 'vue'
 import { UDeveloping, UStyleProvider } from '@comunion/components'
+import { defineComponent } from 'vue'
 
 const BackDemoPage = defineComponent({
   name: 'DevelopingDemoPage',

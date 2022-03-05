@@ -1,5 +1,5 @@
-import { USkeleton } from '@/comps/index'
 import { defineComponent } from 'vue'
+import { USkeleton } from '@/comps/index'
 
 const SkeletonDemoPage = defineComponent({
   name: 'SkeletonDemoPage',

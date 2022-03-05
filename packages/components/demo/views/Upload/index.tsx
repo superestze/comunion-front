@@ -1,5 +1,5 @@
-import { UButton, UUpload } from '@/comps/index'
 import { defineComponent, ref } from 'vue'
+import { UButton, UUpload } from '@/comps/index'
 
 const UploadDemoPage = defineComponent({
   name: 'UploadDemoPage',

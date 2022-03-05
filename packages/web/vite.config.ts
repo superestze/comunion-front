@@ -1,6 +1,6 @@
+import path from 'path'
 import vue from '@vitejs/plugin-vue'
 import vueJsx from '@vitejs/plugin-vue-jsx'
-import path from 'path'
 // import polyfillNode from 'rollup-plugin-polyfill-node'
 import { defineConfig } from 'vite'
 import Pages from 'vite-plugin-pages'
@@ -16,7 +16,7 @@ export default defineConfig({
       '@': path.resolve(__dirname, '/src'),
       '@walletconnect/web3-provider': path.resolve(
         __dirname,
-        '../../node_modules/@walletconnect/web3-provider/dist/umd/index.min.js'
+        './node_modules/@walletconnect/web3-provider/dist/umd/index.min.js'
       )
     }
   },

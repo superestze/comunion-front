@@ -1,6 +1,5 @@
-import { defineComponent, toRefs } from 'vue'
-
 import { NSpin } from 'naive-ui'
+import { defineComponent, toRefs } from 'vue'
 
 import './index.css'
 

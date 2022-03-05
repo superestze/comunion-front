@@ -1,6 +1,6 @@
-import { defineComponent } from 'vue'
 import type { InputProps } from 'naive-ui'
 import { NInput } from 'naive-ui'
+import { defineComponent } from 'vue'
 
 export type UInputPropsType = InputProps
 

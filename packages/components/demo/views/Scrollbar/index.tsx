@@ -1,5 +1,5 @@
-import { UScrollbar } from '@/comps/index'
 import { defineComponent } from 'vue'
+import { UScrollbar } from '@/comps/index'
 
 const ScrollbarDemoPage = defineComponent({
   name: 'ScrollbarDemoPage',

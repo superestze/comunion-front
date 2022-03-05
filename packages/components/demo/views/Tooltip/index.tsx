@@ -1,5 +1,5 @@
-import { UTooltip, UButton } from '@/comps/index'
 import { defineComponent } from 'vue'
+import { UTooltip, UButton } from '@/comps/index'
 
 const TooltipDemoPage = defineComponent({
   name: 'TooltipDemoPage',

@@ -1,8 +1,8 @@
+import { defineComponent } from 'vue'
 import response1 from '@/assets/response-1.png'
 import response2 from '@/assets/response-2.png'
 import response3 from '@/assets/response-3.png'
 import response4 from '@/assets/response-4.png'
-import { defineComponent } from 'vue'
 
 export default defineComponent({
   name: 'OurResponse',

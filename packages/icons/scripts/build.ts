@@ -1,10 +1,10 @@
-import { convertCamelCase } from '@comunion/utils'
-import { compileTemplate } from '@vue/compiler-sfc'
 import { readdir, readFile, writeFile } from 'fs/promises'
 import { join } from 'path'
+import { convertCamelCase } from '@comunion/utils'
+import { compileTemplate } from '@vue/compiler-sfc'
+import { ensureFile } from 'fs-extra'
 import type { OptimizedSvg } from 'svgo'
 import { optimize } from 'svgo'
-import { ensureFile } from 'fs-extra'
 
 const sourceDir = join(__dirname, '../src')
 const outlinedDir = join(sourceDir, 'outlined')

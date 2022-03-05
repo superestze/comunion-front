@@ -1,8 +1,8 @@
-import joinComunion from '@/assets/join-comunion.png'
-import rightArrowIcon from '@/assets/right-arrow-small.png'
 import { defineComponent } from 'vue'
 import { RouterLink } from 'vue-router'
 import styles from './index.module.css'
+import joinComunion from '@/assets/join-comunion.png'
+import rightArrowIcon from '@/assets/right-arrow-small.png'
 
 export default defineComponent({
   name: 'IntroduceAndJoin',

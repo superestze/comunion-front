@@ -1,5 +1,5 @@
-import { providers } from 'ethers'
 import WalletConnectProvider from '@walletconnect/web3-provider'
+import { providers } from 'ethers'
 import AbstractWallet from './Wallet'
 
 export default class WalletConnectWallet extends AbstractWallet {

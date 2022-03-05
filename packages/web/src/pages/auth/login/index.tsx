@@ -1,18 +1,18 @@
+import { UButton, ULogo, UWalletLogin } from '@comunion/components'
+import { GithubFilled, GoogleFilled, MoreOutlined, WalletOutlined } from '@comunion/icons'
+import { randomStr } from '@comunion/utils'
 import { defineComponent, ref } from 'vue'
+import useOnLogin from '../_login'
+import leftBgImg from './assets/bg.jpg'
+import styles from './index.module.css'
 import {
   GITHUB_CALLBACK_URL,
   GITHUB_CLIENT_ID,
   GOOGLE_CALLBACK_URL,
   GOOGLE_CLIENT_ID
 } from '@/constants'
-import { randomStr } from '@comunion/utils'
 // import { useUserProfile, useWallet } from '@/providers'
-import { GithubFilled, GoogleFilled, MoreOutlined, WalletOutlined } from '@comunion/icons'
-import { UButton, ULogo, UWalletLogin } from '@comunion/components'
-import leftBgImg from './assets/bg.jpg'
-import styles from './index.module.css'
 import { useWallet } from '@/providers'
-import useOnLogin from '../_login'
 
 const LoginPage = defineComponent({
   name: 'LoginPage',

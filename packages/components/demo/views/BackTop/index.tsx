@@ -1,5 +1,5 @@
-import { UBackTop } from '@/comps/index'
 import { defineComponent } from 'vue'
+import { UBackTop } from '@/comps/index'
 
 const BackTopDemoPage = defineComponent({
   name: 'BackTopDemoPage',

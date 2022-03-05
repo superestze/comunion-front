@@ -1,9 +1,9 @@
+import { defineComponent } from 'vue'
 import Blockchain from '@/assets/Blockchain.png'
 import DAO from '@/assets/DAO.png'
 import Metaverse from '@/assets/Metaverse.png'
 import StartUp from '@/assets/Start-up.png'
 import Web3 from '@/assets/Web3.png'
-import { defineComponent } from 'vue'
 
 export default defineComponent({
   name: 'UseCases',

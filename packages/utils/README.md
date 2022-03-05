@@ -7,7 +7,7 @@ if you attempt to collect and print open handles preventing Jest from exiting cl
 in dev env
 
 ```
-yarn jest --watchAll --detectOpenHandles
+pnpm run jest --watchAll --detectOpenHandles
 ```
 
 is very convenience for you

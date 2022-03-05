@@ -1,5 +1,5 @@
-import { useWallet } from '@/providers'
 import { Contract } from 'ethers'
+import { useWallet } from '@/providers'
 
 const address = 'xxxxxxxxxxxxxxx'
 const abi =

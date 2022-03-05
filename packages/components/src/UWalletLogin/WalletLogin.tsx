@@ -1,7 +1,7 @@
+import { WalletConnectFilled, MetamaskFilled } from '@comunion/icons'
+import { NGrid, NGridItem, NModal } from 'naive-ui'
 import type { ExtractPropTypes, PropType } from 'vue'
 import { defineComponent } from 'vue'
-import { NGrid, NGridItem, NModal } from 'naive-ui'
-import { WalletConnectFilled, MetamaskFilled } from '@comunion/icons'
 import './index.css'
 
 export const UWalletLoginProps = {

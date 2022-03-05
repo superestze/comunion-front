@@ -1,5 +1,5 @@
-import { USelect } from '@/comps/index'
 import { defineComponent, ref } from 'vue'
+import { USelect } from '@/comps/index'
 
 const SelectDemoPage = defineComponent({
   name: 'SelectDemoPage',

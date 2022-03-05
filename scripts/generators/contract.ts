@@ -1,6 +1,6 @@
+import { join, resolve } from 'path'
 import { convertCamelCase } from '../../packages/utils/src'
 // import { Ora } from 'ora'
-import { join, resolve } from 'path'
 import { fetch, renderToFile } from '../utils'
 
 const GITHUB_RAW_PROXY_URL = process.env.GITHUB_RAW_PROXY_URL || 'raw.githubusercontent.com'
@@ -24,29 +24,25 @@ interface ContractItem {
 }
 
 async function fetchABIs(env: string) {
-  try {
-    const res = await fetch(
-      `https://${GITHUB_RAW_PROXY_URL}/comunion-io/comunion-contract/main/contractAddress.json`
+  const res = await fetch(
+    `https://${GITHUB_RAW_PROXY_URL}/comunion-io/comunion-contract/main/contractAddress.json`
+  )
+  const contractConfig = JSON.parse(res)
+  const contracts: ContractItem[] = []
+  for (const element of contractConfig[env]) {
+    const response = await fetch(
+      join(`https://${GITHUB_RAW_PROXY_URL}/comunion-io/comunion-contract/main/${element.abiUrl}`)
     )
-    const contractConfig = JSON.parse(res)
-    const contracts: ContractItem[] = []
-    for (const element of contractConfig[env]) {
-      const response = await fetch(
-        join(`https://${GITHUB_RAW_PROXY_URL}/comunion-io/comunion-contract/main/${element.abiUrl}`)
-      )
 
-      const { abi } = JSON.parse(response)
-      contracts.push({
-        title: element.name,
-        abi: JSON.stringify(abi),
-        abiArr: abi,
-        address: element.address
-      })
-    }
-    return contracts
-  } catch (error) {
-    throw error
+    const { abi } = JSON.parse(response)
+    contracts.push({
+      title: element.name,
+      abi: JSON.stringify(abi),
+      abiArr: abi,
+      address: element.address
+    })
   }
+  return contracts
 }
 
 const contractTypeMap = {

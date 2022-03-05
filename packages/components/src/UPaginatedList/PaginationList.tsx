@@ -1,6 +1,6 @@
+import { range } from 'lodash'
 import { defineComponent } from 'vue'
 import type { PropType } from 'vue'
-import { range } from 'lodash'
 import './index.css'
 import type { UPaginationPropsType } from '../UPagination'
 import { UPagination } from '../UPagination'

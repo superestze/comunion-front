@@ -1,6 +1,6 @@
+import { defineComponent, ref } from 'vue'
 import { UCheckboxGroup } from '@/comps/UCheckbox'
 import UCheckbox from '@/comps/UCheckbox/Checkbox'
-import { defineComponent, ref } from 'vue'
 
 const CheckboxDemoPage = defineComponent({
   name: 'CheckboxDemoPage',

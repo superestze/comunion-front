@@ -10,8 +10,6 @@ import {
   ULoadingBarProvider
 } from '@/comps/index'
 
-interface IProps {}
-
 const onHashSearch = (value: string) => {
   return new Promise<{ label: string; value: string }[]>(resolve => {
     resolve(
@@ -23,7 +21,7 @@ const onHashSearch = (value: string) => {
   })
 }
 
-export default defineComponent<IProps>({
+export default defineComponent({
   setup() {
     return () => {
       return (

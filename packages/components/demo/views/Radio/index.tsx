@@ -1,5 +1,5 @@
-import { URadio, URadioGroup } from '@/comps/URadio'
 import { defineComponent, ref } from 'vue'
+import { URadio, URadioGroup } from '@/comps/URadio'
 
 const RadioDemoPage = defineComponent({
   name: 'RadioDemoPage',
