@@ -34,17 +34,17 @@ const routes: RouteRecordRaw[] = [
         component: RouterView,
         children: [
           {
-            path: '/form/input',
+            path: 'input',
             name: 'Input',
             component: () => import('@/ex/views/Input')
           },
           {
-            path: '/form/input-number',
+            path: 'input-number',
             name: 'InputNumber',
             component: () => import('@/ex/views/InputNumber')
           },
           {
-            path: '/form/hash-input',
+            path: 'hash-input',
             name: 'HashInput',
             component: () => import('@/ex/views/HashInput')
           },
@@ -84,12 +84,12 @@ const routes: RouteRecordRaw[] = [
             component: () => import('@/ex/views/Upload')
           },
           {
-            path: '/form/factory',
+            path: 'factory',
             name: 'FormFactory',
             component: () => import('@/ex/views/Form/Factory')
           },
           {
-            path: '/form/Search',
+            path: 'Search',
             name: 'Search',
             component: () => import('@/ex/views/Search')
           }
@@ -123,9 +123,14 @@ const routes: RouteRecordRaw[] = [
         component: RouterView,
         children: [
           {
-            path: '/display/card',
+            path: 'card',
             name: 'Card',
             component: () => import('@/ex/views/Card')
+          },
+          {
+            path: 'drawer',
+            name: 'Drawer',
+            component: () => import('@/ex/views/Drawer')
           },
           {
             path: 'description',
