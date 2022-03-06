@@ -1,31 +1,45 @@
 import { omitObject, effectiveUrlValidator } from '@comunion/utils'
-import type { FormProps, InputProps, FormInst, FormItemRule, SelectProps } from 'naive-ui'
+import type { FormProps, FormInst, FormItemRule } from 'naive-ui'
 import { NForm, NFormItem, NInput } from 'naive-ui'
-import type { ExtractPropTypes, PropType } from 'vue'
+import type { ExtractPropTypes, PropType, VNode } from 'vue'
 import { defineComponent, ref, reactive, toRaw, computed } from 'vue'
 import './FormFactory.css'
-import { UButton } from '../UButton'
-import UHashInput from '../UInput/HashInput'
+import { UInputPropsType, UHashInput, USelect, UButton, USelectPropsType } from '../index'
 
 export type FormFactoryInputField = {
-  t?: 'string'
-} & InputProps
+  t: 'string'
+} & UInputPropsType
 
 export type FormFactoryWebsiteField = {
   t: 'website'
-} & InputProps
+} & UInputPropsType
+
+export type FormFactorySelectField = {
+  t: 'select'
+} & USelectPropsType
 
 export type FormFactoryHashInputField = {
   t: 'hashInput'
   category: 'comerSkill' | 'startup' | 'bounty'
-} & SelectProps
+} & USelectPropsType
+
+export type FormFactoryCustomField = {
+  t: 'custom'
+  render: () => VNode
+}
 
 export type FormFactoryField = {
   title: string
   name: string
   required?: boolean
   rules?: FormItemRule[]
-} & (FormFactoryInputField | FormFactoryWebsiteField | FormFactoryHashInputField)
+} & (
+  | FormFactoryInputField
+  | FormFactoryWebsiteField
+  | FormFactoryHashInputField
+  | FormFactorySelectField
+  | FormFactoryCustomField
+)
 
 export type FormData = Record<string, any>
 
@@ -65,17 +79,36 @@ function renderField(field: FormFactoryField, values: FormData) {
   const props = omitObject(field, 'title', 'name', 'required', 't', 'rules')
   switch (field.t) {
     case 'website':
-      return <NInput {...(props as InputProps)} v-model:value={values[field.name]} size="large" />
+      return (
+        <NInput
+          {...(props as UInputPropsType)}
+          v-model:value={values[field.name]}
+          size="large"
+          clearable
+        />
+      )
     case 'hashInput':
       return (
         <UHashInput
-          {...(props as SelectProps & { category: 'comerSkill' | 'startup' | 'bounty' })}
+          {...(props as USelectPropsType & { category: 'comerSkill' | 'startup' | 'bounty' })}
           v-model:value={values[field.name]}
+          clearable
+          size="large"
+        />
+      )
+    case 'select':
+      return (
+        <USelect
+          {...(props as USelectPropsType & { category: 'comerSkill' | 'startup' | 'bounty' })}
+          v-model:value={values[field.name]}
+          clearable
           size="large"
         />
       )
     default:
-      return <NInput {...(props as InputProps)} v-model:value={values[field.name]} size="large" />
+      return (
+        <NInput {...(props as UInputPropsType)} v-model:value={values[field.name]} size="large" />
+      )
   }
 }
 
