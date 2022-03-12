@@ -1,12 +1,18 @@
 import type { SelectProps } from 'naive-ui'
 import { NSelect } from 'naive-ui'
-import { DefineComponent, defineComponent } from 'vue'
+import { defineComponent, PropType } from 'vue'
 
 export type USelectPropsType = SelectProps
 
-const USelect: DefineComponent<USelectPropsType> = defineComponent({
+const USelect = defineComponent({
   name: 'USelect',
   extends: NSelect,
+  props: {
+    size: {
+      type: String as PropType<SelectProps['size']>,
+      default: 'large'
+    }
+  },
   setup(props, ctx) {
     return () => <NSelect {...props} v-slots={ctx.slots} />
   }

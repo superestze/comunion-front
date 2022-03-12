@@ -3,3 +3,4 @@ dist/
 packages/generator/templates
 node_modules
 *.json
+.npmrc

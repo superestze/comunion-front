@@ -1,12 +1,12 @@
 import { ArrowDownOutlined } from '@comunion/icons'
 import { NSelect } from 'naive-ui'
 import type { SelectProps } from 'naive-ui'
-import { DefineComponent, defineComponent } from 'vue'
+import { defineComponent } from 'vue'
 import './DropdownFilter.css'
 
 export type UDropdownFilterProps = SelectProps
 
-const UDropdownFilter: DefineComponent<UDropdownFilterProps> = defineComponent({
+const UDropdownFilter = defineComponent({
   name: 'UDropdownFilter',
   extends: NSelect,
   setup(props) {

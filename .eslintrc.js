@@ -24,9 +24,11 @@ module.exports = {
   plugins: ['@typescript-eslint', 'unused-imports', 'import'],
   rules: {
     // 'jsx-quotes': ['error', 'prefer-double']
+    'import/no-duplicates': 'error',
     '@typescript-eslint/no-unused-vars': 'off',
     '@typescript-eslint/no-explicit-any': 'off',
     '@typescript-eslint/ban-ts-comment': 'off',
+    '@typescript-eslint/no-non-null-assertion': 'off',
     'unused-imports/no-unused-imports': 'warn',
     'import/order': [
       'error',

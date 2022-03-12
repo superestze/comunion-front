@@ -147,13 +147,12 @@ const UStyleProvider = defineComponent({
       },
       Checkbox: {
         borderRadius: '2px'
+      },
+      Card: {
+        paddingHuge: '40px',
+        borderRadius: '8px',
+        borderColor: props.grey5Color
       }
-      // Message: {
-      //   colorSuccess: props.successColor,
-      //   colorWarning: props.warningColor,
-      //   colorError: props.errorColor,
-      //   colorInfo: props.infoColor
-      // }
     }))
 
     return () => (

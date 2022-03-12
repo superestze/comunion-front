@@ -1,11 +1,11 @@
-import type { FormItemGiProps } from 'naive-ui'
 import { NFormItemGi } from 'naive-ui'
 import { defineComponent } from 'vue'
 
-const UFormItemGi = defineComponent<FormItemGiProps>({
+const UFormItemGi = defineComponent({
   name: 'UFormItemGi',
+  extends: NFormItemGi,
   setup(props, ctx) {
-    return () => <NFormItemGi {...ctx.attrs}>{ctx.slots}</NFormItemGi>
+    return () => <NFormItemGi {...ctx.attrs} v-slots={ctx.slots} />
   }
 })
 
