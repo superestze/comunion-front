@@ -4,6 +4,7 @@ import { NForm, NFormItem, NInput } from 'naive-ui'
 import type { ExtractPropTypes, PropType, VNode } from 'vue'
 import { defineComponent, ref, reactive, toRaw, computed } from 'vue'
 import './FormFactory.css'
+import { USingleUpload, USingleUploadPropsType } from '../UUpload'
 import { UInputPropsType, UHashInput, USelect, UButton, USelectPropsType } from '../index'
 
 export type FormFactoryInputField = {
@@ -23,6 +24,10 @@ export type FormFactoryHashInputField = {
   category: 'comerSkill' | 'startup' | 'bounty'
 } & USelectPropsType
 
+export type FormFactorySingleUploadField = {
+  t: 'singleUpload'
+} & USingleUploadPropsType
+
 export type FormFactoryCustomField = {
   t: 'custom'
   render: () => VNode
@@ -38,6 +43,7 @@ export type FormFactoryField = {
   | FormFactoryWebsiteField
   | FormFactoryHashInputField
   | FormFactorySelectField
+  | FormFactorySingleUploadField
   | FormFactoryCustomField
 )
 
@@ -104,6 +110,10 @@ function renderField(field: FormFactoryField, values: FormData) {
           clearable
           size="large"
         />
+      )
+    case 'singleUpload':
+      return (
+        <USingleUpload {...(props as USingleUploadPropsType)} v-model:value={values[field.name]} />
       )
     default:
       return (

@@ -1,9 +1,10 @@
 import { defineComponent, ref } from 'vue'
-import { UButton, UUpload } from '@/comps/index'
+import { UButton, USingleUpload, UUpload } from '@/comps/index'
 
 const UploadDemoPage = defineComponent({
   name: 'UploadDemoPage',
   setup() {
+    const value = ref('')
     const fileList = ref([
       {
         id: 'razars',
@@ -13,13 +14,16 @@ const UploadDemoPage = defineComponent({
       }
     ] as const)
     return () => (
-      <UUpload
-        abstract
-        defaultFileList={fileList.value}
-        action="https://www.mocky.io/v2/5e4bafc63100007100d8b70f"
-      >
-        <UButton>点我</UButton>
-      </UUpload>
+      <>
+        <UUpload
+          abstract
+          defaultFileList={fileList.value}
+          action="https://www.mocky.io/v2/5e4bafc63100007100d8b70f"
+        >
+          <UButton>点我</UButton>
+        </UUpload>
+        <USingleUpload v-model:value={value.value} text="Upload  startup Logo" />
+      </>
     )
   }
 })

@@ -8,17 +8,19 @@ describe('utils: omit properties from object', () => {
   }
 
   test('omit unexisted', () => {
-    expect(omitObject(obj, ['d', 'e'])).toEqual(obj)
+    // @ts-ignore
+    expect(omitObject(obj, 'd', 'e')).toEqual(obj)
   })
 
   test('omit all existed', () => {
-    expect(omitObject(obj, ['a', 'c'])).toEqual({
+    expect(omitObject(obj, 'a', 'c')).toEqual({
       b: 2
     })
   })
 
   test('omit existed and not existed', () => {
-    expect(omitObject(obj, ['a', 'd'])).toEqual({
+    // @ts-ignore
+    expect(omitObject(obj, 'a', 'd')).toEqual({
       b: 2,
       c: 3
     })

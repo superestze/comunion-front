@@ -7,7 +7,8 @@ import {
   UMessageProvider,
   UMessage,
   ULoadingBar,
-  ULoadingBarProvider
+  ULoadingBarProvider,
+  UUploadProvider
 } from '@/comps/index'
 
 const onHashSearch = (value: string) => {
@@ -18,6 +19,31 @@ const onHashSearch = (value: string) => {
         value: `${value}_${i}`
       }))
     )
+  })
+}
+
+const onUpload = (file: File, callback: (percent: number) => void) => {
+  let _timeout: number
+  const run = () => {
+    function loop(progress: number) {
+      _timeout = window.setTimeout(() => {
+        const nextProgress = Math.random() * (100 - progress) + progress
+        callback(nextProgress)
+        loop(nextProgress)
+      }, 100)
+    }
+    loop(1)
+  }
+  return new Promise<string>((resolve, reject) => {
+    run()
+    setTimeout(() => {
+      clearTimeout(_timeout)
+      if (Math.random() < 0.9) {
+        resolve(`https://picsum.photos/200/200?image=${Math.floor(Math.random() * 1000)}`)
+      } else {
+        reject(new Error('Upload error'))
+      }
+    }, 2000)
   })
 }
 
@@ -33,7 +59,9 @@ export default defineComponent({
             <ULoadingBar />
           </ULoadingBarProvider>
           <UHashInputProvider onSearch={onHashSearch}>
-            <RouterView></RouterView>
+            <UUploadProvider onUpload={onUpload}>
+              <RouterView></RouterView>
+            </UUploadProvider>
           </UHashInputProvider>
         </UStyleProvider>
       )
