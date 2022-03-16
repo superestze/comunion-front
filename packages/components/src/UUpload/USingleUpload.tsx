@@ -1,8 +1,11 @@
 import { sizeFormat } from '@comunion/utils'
 import { NImage, NProgress, NUpload } from 'naive-ui'
 import { CustomRequest, OnBeforeUpload } from 'naive-ui/lib/upload/src/interface'
-import { computed, defineComponent, ExtractPropTypes, ref } from 'vue'
+import { computed, defineComponent, ref } from 'vue'
+import type { ExtractPropTypes } from '../utils'
 import { useUpload } from './UUploadProvider'
+
+import './USingleUpload.css'
 
 export const USingleUploadProps = {
   value: {
@@ -10,10 +13,12 @@ export const USingleUploadProps = {
   },
   size: {
     type: Number,
+    required: false,
     default: 72
   },
   text: {
     type: String,
+    required: false,
     default: 'Select a file to upload'
   },
   accept: {
@@ -21,6 +26,7 @@ export const USingleUploadProps = {
   },
   sizeLimit: {
     type: Number,
+    required: false,
     default: 1024 * 1024 * 10
   }
 } as const
@@ -88,23 +94,19 @@ const USingleUpload = defineComponent({
         onBeforeUpload={onBeforeUpload}
         customRequest={customRequest}
       >
-        <div class="cursor-pointer inline-flex items-center relative overflow-hidden">
+        <div class="u-single-upload-inner">
           {/* image wrapper */}
-          <div class="rounded-full text-0px group overflow-hidden relative">
+          <div class="u-single-upload-wrapper">
             {props.value && (
               <div
-                class="flex flex-col bg-[rgba(0,0,0,0.3)] transform translate-y-full transition top-0 bottom-0 left-0 absolute items-center justify-center group-hover:translate-y-0"
+                class="u-single-upload-preview"
                 style={{
                   ...sizeStyle.value
                   // transform: `translateY(${props.size}px)`
                 }}
               >
                 {/* preview */}
-                <svg
-                  viewBox="0 0 24 24"
-                  class="cursor-pointer mb-1 text-light-900 w-5 hover:text-white"
-                  onClick={preview}
-                >
+                <svg viewBox="0 0 24 24" class="u-single-upload-preview__icon" onClick={preview}>
                   <g
                     fill="none"
                     stroke="currentColor"
@@ -117,11 +119,7 @@ const USingleUpload = defineComponent({
                   </g>
                 </svg>
                 {/* remove */}
-                <svg
-                  viewBox="0 0 24 24"
-                  class="cursor-pointer mt-1 text-light-900 w-5 hover:text-white"
-                  onClick={remove}
-                >
+                <svg viewBox="0 0 24 24" class="u-single-upload-preview__icon" onClick={remove}>
                   <g
                     fill="none"
                     stroke="currentColor"
@@ -139,14 +137,19 @@ const USingleUpload = defineComponent({
               </div>
             )}
             {props.value ? (
-              <NImage ref={imgRef} class="rounded-full" src={props.value} style={sizeStyle.value} />
+              <NImage
+                ref={imgRef}
+                class="u-single-upload-img"
+                src={props.value}
+                style={sizeStyle.value}
+              />
             ) : (
-              <div class="bg-purple rounded-full" style={sizeStyle.value} />
+              <div class="u-single-upload-img" style={sizeStyle.value} />
             )}
           </div>
           {process.value < 100 && (
             <NProgress
-              class="-top-1 -left-1 absolute !h-20 !w-20"
+              class="u-single-upload-progress"
               color="var(--u-primary-color)"
               railColor="transparent"
               strokeWidth={3}
@@ -155,7 +158,7 @@ const USingleUpload = defineComponent({
               showIndicator={false}
             />
           )}
-          <span class="text-primary ml-5 u-title2">{props.text}</span>
+          <span class="u-single-upload-txt">{props.text}</span>
         </div>
       </NUpload>
     )

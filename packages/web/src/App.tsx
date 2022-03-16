@@ -2,7 +2,8 @@ import {
   UStyleProvider,
   UHashInputProvider,
   UMessage,
-  UMessageProvider
+  UMessageProvider,
+  UUploadProvider
 } from '@comunion/components'
 import { defineComponent } from 'vue'
 import { RouterView } from 'vue-router'
@@ -23,19 +24,30 @@ export default defineComponent({
       return error ? [] : data.list.map(item => ({ label: item.name, value: item.id }))
     }
 
+    const onUpload = async (file: File, cb: (percent: number) => void) => {
+      // const { error, data } = await services['']({
+      //   file,
+      //   cb
+      // })
+      // return error ? '' : data.url
+      return ''
+    }
+
     return () => (
       <UStyleProvider>
         <UMessageProvider>
           <UMessage />
         </UMessageProvider>
         <GlobalConfigProvider>
-          <UHashInputProvider onSearch={onSearchHash}>
-            <UserProfileProvider>
-              <WalletProvider>
-                <RouterView />
-              </WalletProvider>
-            </UserProfileProvider>
-          </UHashInputProvider>
+          <UUploadProvider onUpload={onUpload}>
+            <UHashInputProvider onSearch={onSearchHash}>
+              <UserProfileProvider>
+                <WalletProvider>
+                  <RouterView />
+                </WalletProvider>
+              </UserProfileProvider>
+            </UHashInputProvider>
+          </UUploadProvider>
         </GlobalConfigProvider>
       </UStyleProvider>
     )

@@ -64,6 +64,12 @@ const CreateStartupBlock = defineComponent({
     const infoForm = createFormFields(
       [
         {
+          t: 'singleUpload',
+          title: '',
+          name: 'logo',
+          text: 'Upload startup Logo'
+        },
+        {
           t: 'string',
           title: 'Name',
           name: 'name',
