@@ -3,6 +3,7 @@ import {
   createFormFields,
   UForm,
   UInput,
+  UAddressInput,
   UFormItem,
   UInputGroup,
   UButton
@@ -196,7 +197,7 @@ const CreateStartupBlock = defineComponent({
               </div>
             </ul>
             <UFormItem label="Token Contract" required path="tokenContract">
-              <UInput
+              <UAddressInput
                 placeholder="Please enter your token contract address"
                 v-model:value={model.tokenContract}
               />
@@ -242,7 +243,7 @@ const CreateStartupBlock = defineComponent({
                         class="!w-50"
                         placeholder="Wallet name"
                       />
-                      <UInput
+                      <UAddressInput
                         v-model:value={compose.address}
                         class="flex-1"
                         placeholder="Please entre wallet address"

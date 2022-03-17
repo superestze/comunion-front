@@ -1,15 +1,20 @@
-import { omitObject, effectiveUrlValidator } from '@comunion/utils'
+import { omitObject, effectiveUrlValidator, isValidAddress } from '@comunion/utils'
 import type { FormProps, FormInst, FormItemRule } from 'naive-ui'
 import { NForm, NFormItem, NInput } from 'naive-ui'
 import type { ExtractPropTypes, PropType, VNode } from 'vue'
 import { defineComponent, ref, reactive, toRaw, computed } from 'vue'
 import './FormFactory.css'
+import { UAddressInput, UAddressInputPropsType } from '../UInput'
 import { USingleUpload, USingleUploadPropsType } from '../UUpload'
 import { UInputPropsType, UHashInput, USelect, UButton, USelectPropsType } from '../index'
 
 export type FormFactoryInputField = {
   t: 'string'
 } & UInputPropsType
+
+export type FormFactoryAddrssInputField = {
+  t: 'address'
+} & UAddressInputPropsType
 
 export type FormFactoryWebsiteField = {
   t: 'website'
@@ -40,6 +45,7 @@ export type FormFactoryField = {
   rules?: FormItemRule[]
 } & (
   | FormFactoryInputField
+  | FormFactoryAddrssInputField
   | FormFactoryWebsiteField
   | FormFactoryHashInputField
   | FormFactorySelectField
@@ -85,13 +91,10 @@ function renderField(field: FormFactoryField, values: FormData) {
   const props = omitObject(field, 'title', 'name', 'required', 't', 'rules')
   switch (field.t) {
     case 'website':
+      return <NInput {...(props as UInputPropsType)} v-model:value={values[field.name]} clearable />
+    case 'address':
       return (
-        <NInput
-          {...(props as UInputPropsType)}
-          v-model:value={values[field.name]}
-          size="large"
-          clearable
-        />
+        <UAddressInput {...(props as UAddressInputPropsType)} v-model:value={values[field.name]} />
       )
     case 'hashInput':
       return (
@@ -99,27 +102,31 @@ function renderField(field: FormFactoryField, values: FormData) {
           {...(props as USelectPropsType & { category: 'comerSkill' | 'startup' | 'bounty' })}
           v-model:value={values[field.name]}
           clearable
-          size="large"
         />
       )
     case 'select':
       return (
-        <USelect
-          {...(props as USelectPropsType & { category: 'comerSkill' | 'startup' | 'bounty' })}
-          v-model:value={values[field.name]}
-          clearable
-          size="large"
-        />
+        <USelect {...(props as USelectPropsType)} v-model:value={values[field.name]} clearable />
       )
     case 'singleUpload':
       return (
         <USingleUpload {...(props as USingleUploadPropsType)} v-model:value={values[field.name]} />
       )
     default:
-      return (
-        <NInput {...(props as UInputPropsType)} v-model:value={values[field.name]} size="large" />
-      )
+      return <NInput {...(props as UInputPropsType)} v-model:value={values[field.name]} />
   }
+}
+
+export const addressInputRule: FormItemRule = {
+  validator: (rule, value) => (value ? isValidAddress(value) : true),
+  message: 'Please enter a valid address',
+  trigger: 'blur'
+}
+
+export const websiteInputRule: FormItemRule = {
+  validator: (rule, value) => (value ? effectiveUrlValidator(value) : true),
+  message: 'Please enter a valid url',
+  trigger: 'blur'
 }
 
 export function createFormFields(fields: FormFactoryField[], values: FormData) {
@@ -137,12 +144,10 @@ export function createFormFields(fields: FormFactoryField[], values: FormData) {
           type: field.t === 'hashInput' ? 'array' : field.rules?.[0]?.type ?? 'string'
         })
       }
-      if (field.t === 'website') {
-        acc[field.name].push({
-          validator: (rule, value) => (value ? effectiveUrlValidator(value) : true),
-          message: 'Please enter a valid url',
-          trigger: 'blur'
-        })
+      if (field.t === 'address') {
+        acc[field.name].push(addressInputRule)
+      } else if (field.t === 'website') {
+        acc[field.name].push(websiteInputRule)
       }
       return acc
     }, {})
@@ -169,7 +174,7 @@ export function createFormFields(fields: FormFactoryField[], values: FormData) {
   return { rules, items }
 }
 
-const UFormFactory = defineComponent({
+export const UFormFactory = defineComponent({
   extends: NForm,
   name: 'UFormFactory',
   props: UFormFactoryPropsObj,
@@ -262,5 +267,3 @@ const UFormFactory = defineComponent({
     )
   }
 })
-
-export default UFormFactory
