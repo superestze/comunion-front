@@ -4,7 +4,7 @@
   "private": true,
   "description": "@comunion/ frontend packages",
   "keywords": [
-    "@comunion/"
+    "comunion"
   ],
   "repository": "@comunion/-io/front-next",
   "license": "GPL-3.0-or-later",

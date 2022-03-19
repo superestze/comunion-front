@@ -1,5 +1,5 @@
 import { useRoute } from 'vue-router'
-import useOnLogin from '../_login'
+import { useOnLoggedIn } from '@/hooks'
 import type { ServiceKeys } from '@/services'
 import { services } from '@/services'
 import type { UserResponse } from '@/types'
@@ -12,7 +12,7 @@ export default async function useCommonCallback(
   service: ServiceKeys | ((code: string) => Promise<UserResponse>)
 ) {
   const { query } = useRoute()
-  const onLogin = useOnLogin()
+  const onLogin = useOnLoggedIn()
   if (query.code && query.state) {
     const isLocal = (query.state as string).match(/^u([01])/)?.[1] === '0'
     if (isLocal && !window.location.origin.match(/http:\/\/localhost/)) {
