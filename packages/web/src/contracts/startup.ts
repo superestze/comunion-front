@@ -1,17 +1,42 @@
 import { Contract } from 'ethers'
 import { useWallet } from '@/providers'
 
-const address = 'xxxxxxxxxxxxxxx'
+const address = '0xd9145CCE52D386f254917e481eB44e9943F39138'
 const abi =
-  '[{"inputs":[{"internalType":"uint256","name":"","type":"uint256"}],"name":"adopters","outputs":[{"internalType":"address","name":"","type":"address"}],"stateMutability":"view","type":"function","constant":true},{"inputs":[{"internalType":"uint256","name":"petId","type":"uint256"}],"name":"adopt","outputs":[{"internalType":"uint256","name":"","type":"uint256"}],"stateMutability":"nonpayable","type":"function"},{"inputs":[],"name":"getAdopters","outputs":[{"internalType":"address[16]","name":"","type":"address[16]"}],"stateMutability":"view","type":"function","constant":true}]'
+  '[{"inputs":[{"internalType":"string","name":"id","type":"string"}],"name":"getStartup","outputs":[{"components":[{"internalType":"string","name":"id","type":"string"},{"internalType":"string","name":"name","type":"string"},{"internalType":"enum Startup.Mode","name":"mode","type":"uint8"},{"internalType":"string","name":"hashtag","type":"string"},{"internalType":"bytes","name":"logo","type":"bytes"},{"internalType":"string","name":"mission","type":"string"},{"internalType":"string","name":"overview","type":"string"}],"internalType":"struct Startup.Profile","name":"p","type":"tuple"}],"stateMutability":"view","type":"function"},{"inputs":[{"components":[{"internalType":"string","name":"id","type":"string"},{"internalType":"string","name":"name","type":"string"},{"internalType":"enum Startup.Mode","name":"mode","type":"uint8"},{"internalType":"string","name":"hashtag","type":"string"},{"internalType":"bytes","name":"logo","type":"bytes"},{"internalType":"string","name":"mission","type":"string"},{"internalType":"string","name":"overview","type":"string"}],"internalType":"struct Startup.Profile","name":"p","type":"tuple"}],"name":"newStartup","outputs":[],"stateMutability":"payable","type":"function"},{"inputs":[{"internalType":"address payable","name":"receiver","type":"address"}],"name":"suicide0","outputs":[],"stateMutability":"nonpayable","type":"function"},{"inputs":[{"internalType":"address","name":"newOwner","type":"address"}],"name":"transferOwnership","outputs":[],"stateMutability":"nonpayable","type":"function"}]'
 
 let _contract: Contract = null
 
 export function useStartupContract(): {
   contract: Contract
-  adopters: (arg0: number) => Promise<[string]>
-  adopt: (petId: number) => Promise<[number]>
-  getAdopters: () => Promise<[any]>
+  getStartup: (
+    id: string
+  ) => Promise<
+    [
+      /** p */ [
+        /** id */ string,
+        /** name */ string,
+        /** mode */ number,
+        /** hashtag */ string,
+        /** logo */ string,
+        /** mission */ string,
+        /** overview */ string
+      ]
+    ]
+  >
+  newStartup: (
+    p: [
+      id: string,
+      name: string,
+      mode: number,
+      hashtag: string,
+      logo: string,
+      mission: string,
+      overview: string
+    ]
+  ) => Promise<[]>
+  suicide0: (receiver: string) => Promise<[]>
+  transferOwnership: (newOwner: string) => Promise<[]>
 } {
   const { getWallet } = useWallet()
   const provider = getWallet()?.getProvider()
@@ -23,8 +48,9 @@ export function useStartupContract(): {
   }
   return {
     contract: _contract,
-    adopters: _contract.adopters,
-    adopt: _contract.adopt,
-    getAdopters: _contract.getAdopters
+    getStartup: _contract.getStartup,
+    newStartup: _contract.newStartup,
+    suicide0: _contract.suicide0,
+    transferOwnership: _contract.transferOwnership
   }
 }

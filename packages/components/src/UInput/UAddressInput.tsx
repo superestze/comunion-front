@@ -34,11 +34,11 @@ const UAddressInput = defineComponent({
         : v
     })
     const onInput = (v: string) => {
+      ctx.emit('update:value', v)
       if (isValidAddress(v)) {
         disabled.value = true
         props.onChange?.(v)
       }
-      ctx.emit('update:value', v)
     }
     const onBlur = () => {
       if (props.value && !isValidAddress(props.value)) {
