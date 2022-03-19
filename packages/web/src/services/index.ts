@@ -164,14 +164,7 @@ export const services = {
       ...extract(args, [], [])
     })
   },
-  'account@comer-profile-get'(args: {
-    name: string
-    avatar: string
-    location: string
-    website: string
-    skills: string[]
-    bio: string
-  }) {
+  'account@comer-profile-get'() {
     return requestAdapter<{
       id?: number
       createdAt?: string
@@ -192,9 +185,9 @@ export const services = {
         isIndex?: boolean
       }[]
     }>({
-      url: replacePath('/account/profile', args),
+      url: replacePath('/account/profile'),
       method: 'GET',
-      ...extract(args, [], [])
+      ...extract([], [], [])
     })
   },
 

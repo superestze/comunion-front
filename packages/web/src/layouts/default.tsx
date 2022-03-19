@@ -25,7 +25,7 @@ const DefaultLayout = defineComponent({
                 </UButton>
               }
             />
-            <RouterLink to="/" class="text-primary ml-16 u-label1">
+            <RouterLink to="/dashboard" class="text-primary ml-16 u-label1">
               MY DASHBOARD
             </RouterLink>
           </div>
