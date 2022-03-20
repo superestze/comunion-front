@@ -5,22 +5,28 @@ import { fetch, renderToFile } from '../utils'
 
 const GITHUB_RAW_PROXY_URL = process.env.GITHUB_RAW_PROXY_URL || 'raw.githubusercontent.com'
 
-interface ContractArg {
+type ABIArgBaseType = {
   internalType: string
-  type: string
   name: string
+  type: 'string' | 'uint8' | 'uint256' | 'bytes' | 'tuple'
+  components?: ABIArgBaseType[]
+}
+
+interface ABIItem {
+  inputs: ({
+    indexed: boolean
+  } & ABIArgBaseType)[]
+  outputs?: ABIArgBaseType[]
+  name?: string
+  stateMutability?: string
+  type: 'constructor' | 'event' | 'function' | 'fallback' | 'receive' | 'send'
 }
 
 interface ContractItem {
   title: string
   address: string
   abi: string
-  abiArr: {
-    inputs: ContractArg[]
-    outputs: ContractArg[]
-    name: string
-    type: 'function'
-  }[]
+  abiArr: ABIItem[]
 }
 
 async function fetchABIs(env: string) {
@@ -34,11 +40,11 @@ async function fetchABIs(env: string) {
       join(`https://${GITHUB_RAW_PROXY_URL}/comunion-io/comunion-contract/main/${element.abiUrl}`)
     )
 
-    const { abi } = JSON.parse(response)
+    const abis = (JSON.parse(response).abi as ABIItem[]).filter(abi => abi.type === 'function')
     contracts.push({
       title: element.name,
-      abi: JSON.stringify(abi),
-      abiArr: abi,
+      abi: JSON.stringify(abis),
+      abiArr: abis,
       address: element.address
     })
   }
@@ -46,8 +52,12 @@ async function fetchABIs(env: string) {
 }
 
 const contractTypeMap = {
+  string: 'string',
   address: 'string',
-  uint256: 'number'
+  bytes: 'string',
+  uint256: 'number',
+  uint8: 'number',
+  tuple: '[]'
 } as const
 
 export async function generateContracts(env: string) {
@@ -62,12 +72,17 @@ export async function generateContracts(env: string) {
       'contract.tpl',
       {
         ...contract,
-        generateArgs: (args: ContractArg[], withArgName = true): string => {
+        generateArgs: (args: ABIItem['inputs'] = [], isReturn = false): string => {
           return args.reduce<string>((acc, arg, index) => {
-            const _arg = withArgName ? `${arg.name || `arg${index}`}: ` : ''
-            return `${acc}${acc.length ? ';' : ''} ${_arg} ${
-              contractTypeMap[arg.type as keyof typeof contractTypeMap] || 'any'
-            }`
+            function loopType(items: ABIArgBaseType): string {
+              const _arg = isReturn ? `/** ${items.name} */` : `${items.name || `arg${index}`}:`
+              if (items.type === 'tuple' && items.components) {
+                return `${_arg} [${items.components.map(item => loopType(item)).join(', ')}]`
+              }
+              return `${_arg} ${contractTypeMap[items.type] || 'any'}`
+            }
+
+            return `${acc}${acc.length ? ';' : ''} ${loopType(arg)}`
           }, '')
         }
       }

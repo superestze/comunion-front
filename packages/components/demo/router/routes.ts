@@ -12,6 +12,11 @@ const routes: RouteRecordRaw[] = [
         component: RouterView,
         children: [
           {
+            path: 'icon',
+            name: 'Icon',
+            component: () => import('@/ex/views/Icon')
+          },
+          {
             path: 'button',
             name: 'Button',
             component: () => import('@/ex/views/Button')

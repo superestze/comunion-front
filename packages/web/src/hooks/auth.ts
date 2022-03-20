@@ -2,7 +2,7 @@ import { useRouter } from 'vue-router'
 import { useUserProfile } from '@/providers'
 import type { UserResponse } from '@/types'
 
-export default function useOnLoggedIn() {
+export function useOnLoggedIn() {
   const { replace } = useRouter()
   const { setUserResponse } = useUserProfile()
   return (user: UserResponse) => {

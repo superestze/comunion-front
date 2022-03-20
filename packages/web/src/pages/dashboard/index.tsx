@@ -1,11 +1,9 @@
 import { UCard, UButton } from '@comunion/components'
+import { FacebookFilled, LinkInFilled, PinterestFilled } from '@comunion/icons'
 import { defineComponent, onMounted, ref } from 'vue'
 import styles from './index.module.css'
-
-// TODO
-import facebook from '@/assets/facebook.svg'
-import linkin from '@/assets/linkin.svg'
-import pinterest from '@/assets/pinterest.svg'
+import empty from '@/assets/empty.png'
+import { useWallet } from '@/providers'
 import { ServiceReturn, services } from '@/services'
 
 interface startupParams {
@@ -22,8 +20,7 @@ const Dashboard = defineComponent({
   name: 'Dashboard',
   props: {},
   setup() {
-    // const {wallet} = useWallet()
-    // console.log('%c 🍐 wallet: ', 'font-size:20px;background-color: #6EC1C2;color:#fff;', wallet.walletAddress);
+    const { wallet } = useWallet()
     const myProfile = ref<ServiceReturn<'account@comer-profile-get'>>()
     const myCreatedStartups = ref<ServiceReturn<'startup@startup-list-me'>>()
     const myJoinStartups = ref<ServiceReturn<'startup@startup-list-followed'>>()
@@ -92,39 +89,34 @@ const Dashboard = defineComponent({
 
     const socialLinks = [
       {
-        avatar: linkin,
-        label: 'Facebook',
-        link: 'https://www.linkedin.cn'
-      },
-      {
-        avatar: facebook,
+        avatar: 'LinkInFilled',
         label: 'linkedin',
         link: 'https://www.facebook.com'
       },
       {
-        avatar: pinterest,
+        avatar: 'FacebookFilled',
+        label: 'Facebook',
+        link: 'https://www.linkedin.cn'
+      },
+      {
+        avatar: 'PinterestFilled',
         label: 'Pinterest',
         link: 'https://www.pinterest.com/'
       }
     ]
 
-    myProfile.value = {
-      avatar: '',
-      name: ''
-    }
-
     return () => (
       <div class={styles.dashboard}>
         <div class={styles.dashboardTitle}> dashboard </div>
         <div class={styles.dashboardMyProfile}>
-          <UCard title="MY PROFILE" class={styles.profileTitle}>
+          <UCard title="MY PROFILE" size="small" class={styles.profileTitle}>
             <div class="flex">
               <div class={styles.myProfileLeft}>
                 <div class={styles.myWalletInfo}>
                   <img class={styles.avatar} src={myProfile.value?.avatar} />
                   <div>
                     <div class={styles.name}>{myProfile.value?.name}</div>
-                    <div class={styles.walletAddr}> {/* {myProfile.value.}{' '} */}</div>
+                    <div class={styles.walletAddr}> {wallet?.walletAddress}</div>
                   </div>
                 </div>
                 <div class={styles.myInfo}>
@@ -145,7 +137,21 @@ const Dashboard = defineComponent({
                     {socialLinks.map(link => {
                       return (
                         <div class={styles.linksContentItems}>
-                          <img class={styles.linksContentItemsAvatar} src={link.avatar} />
+                          {link.avatar === 'FacebookFilled' ? (
+                            <FacebookFilled class={styles.linksContentItemsAvatar} />
+                          ) : (
+                            ''
+                          )}
+                          {link.avatar === 'LinkInFilled' ? (
+                            <LinkInFilled class={styles.linksContentItemsAvatar} />
+                          ) : (
+                            ''
+                          )}
+                          {link.avatar === 'PinterestFilled' ? (
+                            <PinterestFilled class={styles.linksContentItemsAvatar} />
+                          ) : (
+                            ''
+                          )}
                           <span class={styles.linksContentItemsLabel}>{link.label}</span>
                           <UButton
                             class={styles.linksContentItemsBtn}
@@ -161,10 +167,10 @@ const Dashboard = defineComponent({
                 </div>
                 <div class={styles.walletLinks}>
                   <div class={styles.linksTitle}>Associated Wallet Links</div>
-                  {/* <div class={styles.linksContent}>{`${myProfile.value?.address.substring(
+                  <div class={styles.linksContent}>{`${wallet?.walletAddress?.substring(
                     0,
                     10
-                  )}...${myProfile.address.substring(myProfile.address.length - 4)}`}</div> */}
+                  )}...${wallet?.walletAddress?.substring(wallet.walletAddress.length - 4)}`}</div>
                 </div>
               </div>
             </div>
@@ -172,9 +178,21 @@ const Dashboard = defineComponent({
         </div>
         <div class={styles.myActivates}>
           <UCard title="MY COMEUPS" size="small" class={styles.profileTitle}></UCard>
-          <UCard title="MY BOUNTIES" size="small" class={styles.profileTitle}></UCard>
-          <UCard title="My PROPOSALS" size="small" class={styles.profileTitle}></UCard>
-          <UCard title="MY BOOKMARKS" size="small" class={styles.profileTitle}></UCard>
+          <UCard title="MY BOUNTIES" size="small" class={styles.profileTitle}>
+            <div class={styles.empty}>
+              <img class={styles.emptyImg} src={empty} />
+            </div>
+          </UCard>
+          <UCard title="My PROPOSALS" size="small" class={styles.profileTitle}>
+            <div class={styles.empty}>
+              <img class={styles.emptyImg} src={empty} />
+            </div>
+          </UCard>
+          <UCard title="MY BOOKMARKS" size="small" class={styles.profileTitle}>
+            <div class={styles.empty}>
+              <img class={styles.emptyImg} src={empty} />
+            </div>
+          </UCard>
         </div>
       </div>
     )

@@ -91,7 +91,19 @@
   }
 
   .myActivates {
-    @apply grid grid-cols-2 grid-rows-2 gap-10 mt-10 mb-20;
+    @apply grid grid-cols-2 grid-rows-2 gap-x-10 gap-y-5 mt-10 mb-20;
+
+    .profileTitle {
+      @apply p-10 font-700 font-4 leading-6 tracking-2px;
+
+      .empty {
+        @apply w-full h-full flex justify-center items-center;
+
+        .emptyImg {
+          @apply w-49 h-56;
+        }
+      }
+    }
 
     & > div {
       @apply h-155 rounded-8px  border-1 box-border bg-white border-grey5;

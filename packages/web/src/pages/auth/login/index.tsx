@@ -1,8 +1,7 @@
-import { UButton, ULogo, UWalletLogin } from '@comunion/components'
+import { UButton, ULogo } from '@comunion/components'
 import { GithubFilled, GoogleFilled, MoreOutlined, WalletOutlined } from '@comunion/icons'
 import { randomStr } from '@comunion/utils'
-import { defineComponent, ref } from 'vue'
-import useOnLogin from '../_login'
+import { defineComponent } from 'vue'
 import leftBgImg from './assets/bg.jpg'
 import styles from './index.module.css'
 import {
@@ -11,33 +10,19 @@ import {
   GOOGLE_CALLBACK_URL,
   GOOGLE_CLIENT_ID
 } from '@/constants'
-// import { useUserProfile, useWallet } from '@/providers'
 import { useWallet } from '@/providers'
+// import { useUserProfile, useWallet } from '@/providers'
 
 const LoginPage = defineComponent({
   name: 'LoginPage',
   setup() {
-    const walletModalVisible = ref(false)
     const isLocal = process.env.NODE_ENV === 'development'
+    const { ensureWalletConnected } = useWallet()
     const state = randomStr()
-    const { walletLogin } = useWallet()
-    const onLogin = useOnLogin()
-
-    const metamaskLogin = async () => {
-      const _user = await walletLogin('Metamask')
-      onLogin(_user)
-    }
-
-    const walletConnectLogin = async () => {
-      const _user = await walletLogin('WalletConnect')
-      onLogin(_user)
-    }
 
     // const doLogout = () => {
     //   logout()
     // }
-
-    const showWallets = () => (walletModalVisible.value = true)
 
     const googleLogin = () =>
       (window.location.href = `https://accounts.google.com/o/oauth2/v2/auth?response_type=code&scope=openid%20email&client_id=${GOOGLE_CLIENT_ID}&redirect_uri=${GOOGLE_CALLBACK_URL}&state=u${
@@ -72,7 +57,7 @@ const LoginPage = defineComponent({
             class="h-16 mt-[30px] text-white mb-3 text-[21px] w-105 relative"
             size="large"
             type="primary"
-            onClick={showWallets}
+            onClick={() => ensureWalletConnected(true)}
           >
             <WalletOutlined class="h-8 top-4 left-4 w-8 absolute" />
             Sign in with Wallet
@@ -92,12 +77,6 @@ const LoginPage = defineComponent({
             </div>
           </div>
         </div>
-        <UWalletLogin
-          show={walletModalVisible.value}
-          onUpdateShow={v => (walletModalVisible.value = v)}
-          onMetaMaskLogin={metamaskLogin}
-          onWalletConnectLogin={walletConnectLogin}
-        />
       </div>
     )
   }

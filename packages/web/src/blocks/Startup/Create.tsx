@@ -3,14 +3,18 @@ import {
   createFormFields,
   UForm,
   UInput,
+  UAddressInput,
   UFormItem,
   UInputGroup,
   UButton
 } from '@comunion/components'
 import type { FormInst } from '@comunion/components'
 import { CloseOutlined, PlusOutlined, TipOutlined } from '@comunion/icons'
+import { utils } from 'ethers'
 import { defineComponent, ref, reactive } from 'vue'
 import type { PropType, VNode } from 'vue'
+import { useErc20Contract } from '@/contracts/erc20'
+import { useWallet } from '@/providers'
 
 const CreateStartupBlock = defineComponent({
   name: 'CreateStartupBlock',
@@ -52,17 +56,28 @@ const CreateStartupBlock = defineComponent({
         composes: [...defaultModel.composes]
       }
     })
+    const { ensureWalletConnected } = useWallet()
 
     const tokenInfo = reactive({ ...defaultTokenInfo })
 
+    const erc20ContractFactory = useErc20Contract()
+
+    // add trigger action
     if (props.trigger) {
-      props.trigger.props.onClick = () => {
+      props.trigger.props.onClick = async () => {
+        await ensureWalletConnected()
         show.value = true
       }
     }
 
     const infoForm = createFormFields(
       [
+        {
+          t: 'singleUpload',
+          title: '',
+          name: 'logo',
+          text: 'Upload startup Logo'
+        },
         {
           t: 'string',
           title: 'Name',
@@ -142,6 +157,14 @@ const CreateStartupBlock = defineComponent({
       model.composes.splice(index, 1)
     }
 
+    async function onTokenContractChange(addr: string) {
+      const contract = erc20ContractFactory(addr)
+      // await contract.deployTransaction.wait()
+      tokenInfo.name = await contract.name()
+      tokenInfo.symbol = await contract.symbol()
+      tokenInfo.supply = +utils.formatUnits(await contract.totalSupply(), 18)
+    }
+
     function onCancel() {
       Object.assign(model, {
         ...{
@@ -154,7 +177,7 @@ const CreateStartupBlock = defineComponent({
     }
 
     function onSubmit() {
-      formRef.value.validate(async error => {
+      formRef.value?.validate(async error => {
         if (!error) {
           loading.value = true
           try {
@@ -175,7 +198,7 @@ const CreateStartupBlock = defineComponent({
       <>
         {props.trigger}
         <UDrawer title="Create startup" v-model:show={show.value}>
-          <UForm ref={formRef.value} rules={{ ...infoForm.rules.value }}>
+          <UForm ref={formRef} rules={{ ...infoForm.rules.value }}>
             <p class="mb-7 u-card-title1">INFO SETTING</p>
             {infoForm.items}
             <div class="bg-purple h-13px my-8"></div>
@@ -190,9 +213,10 @@ const CreateStartupBlock = defineComponent({
               </div>
             </ul>
             <UFormItem label="Token Contract" required path="tokenContract">
-              <UInput
+              <UAddressInput
                 placeholder="Please enter your token contract address"
                 v-model:value={model.tokenContract}
+                onChange={onTokenContractChange}
               />
             </UFormItem>
             <div class="border rounded-lg border-grey5 mb-2 grid py-4.5 px-4 text-body2 gap-x-2 gap-y-4 grid-cols-2">
@@ -236,7 +260,7 @@ const CreateStartupBlock = defineComponent({
                         class="!w-50"
                         placeholder="Wallet name"
                       />
-                      <UInput
+                      <UAddressInput
                         v-model:value={compose.address}
                         class="flex-1"
                         placeholder="Please entre wallet address"
