@@ -49,6 +49,12 @@ module.exports = {
       }
     },
     {
+      files: '*.md',
+      options: {
+        parser: 'markdown'
+      }
+    },
+    {
       files: '*.mdx',
       options: {
         parser: 'mdx'
@@ -73,7 +79,7 @@ module.exports = {
       }
     },
     {
-      files: '*.yaml',
+      files: '*.{yml,yaml}',
       options: {
         parser: 'yaml'
       }

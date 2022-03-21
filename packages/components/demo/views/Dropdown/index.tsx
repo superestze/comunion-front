@@ -20,7 +20,13 @@ const DropdownDemoPage = defineComponent({
         </UDropdown>
         {selected.value}
         <h4 class="mt-6">Dropdown filter</h4>
-        <UDropdownFilter />
+        <UDropdownFilter
+          options={[
+            { label: 'A', value: 'A' },
+            { label: 'B', value: 'B' },
+            { label: 'C', value: 'C' }
+          ]}
+        />
       </>
     )
   }

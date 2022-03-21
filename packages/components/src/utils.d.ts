@@ -1,19 +1,18 @@
 import type { Prop } from 'vue'
 
 declare type RequiredKeys<T> = {
-  [K in keyof T]: T[K] extends
-    | {
-        required: true
-      }
-    // remove default as it is optional
-    // | {
-    //     default: any
-    //   }
-    | BooleanConstructor
-    | {
-        type: BooleanConstructor
-      }
-    ? T[K] extends {
+  [K in keyof T]: T[K] extends {
+    required: true
+  }
+    ? // remove default as it is optional
+      // | {
+      //     default: any
+      //   }
+      // | BooleanConstructor
+      // | {
+      //     type: BooleanConstructor
+      //   }
+      T[K] extends {
         default: undefined | (() => undefined)
       }
       ? never

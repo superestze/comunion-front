@@ -28,6 +28,9 @@ export default defineConfig({
         purple: 'var(--u-purple-color)',
         'purple-light': 'var(--u-purple-light-color)',
         'purple-gradient': 'var(--u-purple-gradient-color)'
+      },
+      backgroundImage: {
+        'purple-gradient': 'var(--u-purple-gradient-color)'
       }
     }
   },

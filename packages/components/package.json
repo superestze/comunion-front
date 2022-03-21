@@ -38,6 +38,7 @@
   },
   "homepage": "https://github.com/comunion-io/front-next#readme",
   "dependencies": {
+    "@comunion/hooks": "workspace:^0.0.1",
     "@comunion/icons": "0.0.1",
     "@comunion/utils": "0.0.1",
     "naive-ui": "^2.26.0",

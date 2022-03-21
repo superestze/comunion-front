@@ -2,7 +2,7 @@ import { CloseOutlined, WalletOutlined } from '@comunion/icons'
 import { isValidAddress } from '@comunion/utils'
 import { computed, defineComponent, PropType, ref } from 'vue'
 import { UInput } from '../UInput'
-import { ExtractPropTypes } from '../utils'
+import type { ExtractPropTypes } from '../utils'
 import './UAddressInput.css'
 
 export const UAddressInputProps = {
