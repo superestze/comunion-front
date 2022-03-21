@@ -9,7 +9,7 @@ export const DarkModeStorageKey = 'app.dark.mode'
  *
  * true | false
  */
-export default function useDarkMode() {
+export function useDarkMode() {
   const darkMode = computed<DarkMode>({
     get: () => localStorage[DarkModeStorageKey] ?? 'auto',
     set: (v: DarkMode) => (localStorage[DarkModeStorageKey] = v)

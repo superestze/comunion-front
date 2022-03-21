@@ -11,7 +11,14 @@ const UDropdownFilter = defineComponent({
   extends: NSelect,
   setup(props) {
     return () => (
-      <NSelect {...props} class="u-dropdown-filter" placeholder={props.placeholder || 'Select'}>
+      <NSelect
+        {...props}
+        class="u-dropdown-filter"
+        placeholder={props.placeholder || 'Select'}
+        menuProps={{
+          class: 'u-dropdown-filter__menu'
+        }}
+      >
         {{
           arrow: () => <ArrowDownOutlined class="u-dropdown-filter__arrow" />
         }}

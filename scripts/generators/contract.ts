@@ -8,7 +8,7 @@ const GITHUB_RAW_PROXY_URL = process.env.GITHUB_RAW_PROXY_URL || 'raw.githubuser
 type ABIArgBaseType = {
   internalType: string
   name: string
-  type: 'string' | 'uint8' | 'uint256' | 'bytes' | 'tuple'
+  type: 'string' | 'string[]' | 'uint8' | 'uint256' | 'bytes' | 'tuple' | 'tuple[]'
   components?: ABIArgBaseType[]
 }
 
@@ -57,6 +57,8 @@ const contractTypeMap = {
   bytes: 'string',
   uint256: 'number',
   uint8: 'number',
+  'string[]': 'string[]',
+  'tuple[]': '[][]',
   tuple: '[]'
 } as const
 
@@ -79,10 +81,13 @@ export async function generateContracts(env: string) {
               if (items.type === 'tuple' && items.components) {
                 return `${_arg} [${items.components.map(item => loopType(item)).join(', ')}]`
               }
+              if (items.type === 'tuple[]' && items.components) {
+                return `${_arg} [${items.components.map(item => loopType(item)).join(', ')}][]`
+              }
               return `${_arg} ${contractTypeMap[items.type] || 'any'}`
             }
 
-            return `${acc}${acc.length ? ';' : ''} ${loopType(arg)}`
+            return `${acc}${acc.length ? ',' : ''} ${loopType(arg)}`
           }, '')
         }
       }

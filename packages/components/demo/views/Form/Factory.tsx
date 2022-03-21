@@ -47,7 +47,7 @@ const FormFactoryDemoPage = defineComponent({
       }
     ]
 
-    const onSubmit = async (values: any) => {
+    const onSubmit = async (values: Record<string, any>) => {
       console.log(values)
     }
     return () => (
