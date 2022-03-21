@@ -25,14 +25,14 @@
     "@comunion/components": "^0.0.1",
     "@comunion/icons": "^0.0.1",
     "@comunion/utils": "^0.0.1",
-    "@walletconnect/web3-provider": "^1.7.3",
-    "axios": "^0.26.0",
+    "@walletconnect/web3-provider": "^1.7.5",
+    "axios": "^0.26.1",
     "buffer": "^6.0.3",
     "ethers": "^5.5.4",
     "events": "^3.3.0",
     "util": "^0.12.4",
     "vue": "^3.2.31",
-    "vue-router": "^4.0.13"
+    "vue-router": "^4.0.14"
   },
   "devDependencies": {
     "@types/node": "^17.0.21",
@@ -42,10 +42,10 @@
     "postcss-nested": "^5.0.6",
     "typescript": "^4.6.2",
     "vite": "^2.8.6",
-    "vite-plugin-pages": "^0.21.2",
+    "vite-plugin-pages": "^0.22.0",
     "vite-plugin-vue-layouts": "^0.6.0",
-    "vite-plugin-windicss": "^1.8.2",
-    "vue-tsc": "^0.32.1",
+    "vite-plugin-windicss": "^1.8.3",
+    "vue-tsc": "^0.33.5",
     "windicss": "^3.5.1"
   }
 }
