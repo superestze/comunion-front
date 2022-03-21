@@ -79,7 +79,6 @@ importers:
       fast-glob: ^3.2.11
       naive-ui: ^2.26.0
       npm-run-all: ^4.1.5
-      postcss-google-font: ^1.1.0
       postcss-nested: ^5.0.6
       rimraf: ^3.0.2
       typescript: ^4.6.2
@@ -100,7 +99,6 @@ importers:
       esbuild: 0.14.27
       fast-glob: 3.2.11
       npm-run-all: 4.1.5
-      postcss-google-font: 1.1.0
       postcss-nested: 5.0.6
       rimraf: 3.0.2
       typescript: 4.6.2
@@ -9638,12 +9636,6 @@ packages:
   /posix-character-classes/0.1.1:
     resolution: {integrity: sha1-AerA/jta9xoqbAL+q7jB/vfgDqs=}
     engines: {node: '>=0.10.0'}
-    dev: true
-
-  /postcss-google-font/1.1.0:
-    resolution: {integrity: sha512-RRy3En+APsASoQVia4JtRnYlvllau14Gla6oovynHyPQvgLjM5ziGnys55AaUvZ56hLZfyzwGsI1W0/Osjg93g==}
-    dependencies:
-      postcss: 7.0.39
     dev: true
 
   /postcss-html/0.36.0_4f7b71a942b8b7a555b8adf78f88122b:
