@@ -1,44 +1,21 @@
 import { UCard, UButton } from '@comunion/components'
 import { FacebookFilled, LinkInFilled, PinterestFilled } from '@comunion/icons'
 import { defineComponent, onMounted, ref } from 'vue'
+import Bookmarks from './components/Bookmarks'
+import Bounties from './components/Bounties'
+import Comeups from './components/Comeups'
+import Proposals from './components/Proposals'
 import styles from './index.module.css'
-import empty from '@/assets/empty.png'
 import { useWallet } from '@/providers'
 import { ServiceReturn, services } from '@/services'
-
-interface startupParams {
-  limit: any
-  offset: any
-  keyword: any
-  /**
-   * @description NONE,ESG,NGO,DAO,COM
-   */
-  mode: any
-}
 
 const Dashboard = defineComponent({
   name: 'Dashboard',
   props: {},
+  components: { Comeups },
   setup() {
     const { wallet } = useWallet()
     const myProfile = ref<ServiceReturn<'account@comer-profile-get'>>()
-    const myCreatedStartups = ref<ServiceReturn<'startup@startup-list-me'>>()
-    const myJoinStartups = ref<ServiceReturn<'startup@startup-list-followed'>>()
-
-    const myStartupPages = {
-      limit: 4,
-      offset: 0,
-      keyword: '',
-      mode: 'NONE'
-    }
-
-    const myJoinStartupPages = {
-      limit: 4,
-      offset: 0,
-      keyword: '',
-      mode: 'NONE'
-    }
-
     let myInfo: { label: string; value: string }[] = []
 
     onMounted(async () => {
@@ -47,9 +24,6 @@ const Dashboard = defineComponent({
         myProfile.value = data
         handleMyInfo()
       }
-
-      getCreatedStartups(myStartupPages)
-      getMyJoinStartups(myJoinStartupPages)
     })
 
     const handleMyInfo = () => {
@@ -71,20 +45,6 @@ const Dashboard = defineComponent({
           value: myProfile.value?.bio
         }
       ]
-    }
-
-    const getCreatedStartups = async (params: startupParams) => {
-      const { error, data } = await services['startup@startup-list-followed'](params)
-      if (!error) {
-        myCreatedStartups.value = data
-      }
-    }
-
-    const getMyJoinStartups = async (params: startupParams) => {
-      const { error, data } = await services['startup@startup-list-me'](params)
-      if (!error) {
-        myJoinStartups.value = data
-      }
     }
 
     const socialLinks = [
@@ -177,22 +137,10 @@ const Dashboard = defineComponent({
           </UCard>
         </div>
         <div class={styles.myActivates}>
-          <UCard title="MY COMEUPS" size="small" class={styles.profileTitle}></UCard>
-          <UCard title="MY BOUNTIES" size="small" class={styles.profileTitle}>
-            <div class={styles.empty}>
-              <img class={styles.emptyImg} src={empty} />
-            </div>
-          </UCard>
-          <UCard title="My PROPOSALS" size="small" class={styles.profileTitle}>
-            <div class={styles.empty}>
-              <img class={styles.emptyImg} src={empty} />
-            </div>
-          </UCard>
-          <UCard title="MY BOOKMARKS" size="small" class={styles.profileTitle}>
-            <div class={styles.empty}>
-              <img class={styles.emptyImg} src={empty} />
-            </div>
-          </UCard>
+          <Comeups></Comeups>
+          <Bounties></Bounties>
+          <Proposals></Proposals>
+          <Bookmarks></Bookmarks>
         </div>
       </div>
     )

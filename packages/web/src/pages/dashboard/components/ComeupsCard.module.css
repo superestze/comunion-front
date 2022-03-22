@@ -1,0 +1,5 @@
+.ComesUpCard {
+    @apply grid grid-cols-3 grid-rows-h-1 h-
+    .ComesUpCardItems {
+        @apply h-28; }
+}

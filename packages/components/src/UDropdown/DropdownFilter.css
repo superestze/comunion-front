@@ -8,8 +8,24 @@
   .n-base-selection {
     @apply rounded-4px;
 
+    &-label {
+      background: none;
+    }
+
+    &__border {
+      border: none;
+    }
+
+    &-input {
+      @apply text-grey1 !pr-10;
+    }
+
     .n-base-suffix__arrow {
       @apply text-20px;
+    }
+
+    .n-base-selection-placeholder {
+      @apply text-grey1;
     }
   }
 }

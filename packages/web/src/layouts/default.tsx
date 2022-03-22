@@ -14,7 +14,11 @@ const DefaultLayout = defineComponent({
           {/* Header */}
           <div class="flex h-30 items-center">
             <ULogo height={40} withText theme="colorful" />
-            <RouterLink class="ml-27 u-label1" activeClass="text-primary" to="/">
+            <RouterLink
+              class="ml-27 transition u-label1 hover:text-primary"
+              activeClass="text-primary"
+              to="/startups"
+            >
               STARTUPS
             </RouterLink>
             <CreateStartupBlock
