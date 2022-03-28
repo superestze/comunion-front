@@ -25,12 +25,10 @@ export default defineComponent({
     }
 
     const onUpload = async (file: File, cb: (percent: number) => void) => {
-      // const { error, data } = await services['']({
-      //   file,
-      //   cb
-      // })
-      // return error ? '' : data.url
-      return ''
+      const form = new FormData()
+      form.append('file', file)
+      const { error, data } = await services['misc@文件-上传'](form)
+      return error ? '' : data.url
     }
 
     return () => (
