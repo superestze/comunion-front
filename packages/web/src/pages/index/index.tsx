@@ -2,7 +2,7 @@
 import { defineComponent } from 'vue'
 import ComunionEconomics from './components/ComunionEconomics'
 // Fotter
-import Fotter from './components/Fotter'
+import Footer from './components/Footer'
 // Head
 import Head from './components/Head'
 // introduce_and_join
@@ -40,8 +40,8 @@ export default defineComponent({
           {/* UseCases */}
           <UseCases />
         </div>
-        {/* Fotter */}
-        <Fotter />
+        {/* Footer */}
+        <Footer />
       </div>
     )
   }

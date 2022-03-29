@@ -59,3 +59,23 @@ export async function requestAdapter<T = any>(
     }
   }
 }
+
+export async function upload(file: File, onProgress: (percent: number) => void): Promise<string> {
+  const formData = new FormData()
+  formData.append('file', file)
+  const token = getToken()
+  const { data } = await axios.post('/misc/upload', formData, {
+    baseURL: '/api',
+    responseType: 'json',
+    headers: token
+      ? {
+          'X-COMUNION-AUTHORIZATION': token
+        }
+      : {},
+    onUploadProgress: (event) => {
+      const percent = Math.round((event.loaded / event.total) * 100)
+      onProgress(percent)
+    }
+  })
+  return data.Url
+}

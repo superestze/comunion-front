@@ -20,7 +20,7 @@ export function extract(
         body: null
       }
     }
-    if (('FormData' in global || 'FormData' in window) && args instanceof FormData) {
+    if ('FormData' in globalThis && args instanceof FormData) {
       return {
         query: null,
         body: args as FormData
