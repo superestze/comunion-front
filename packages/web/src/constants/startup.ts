@@ -9,3 +9,10 @@ export const STARTUP_TYPES_COLOR_MAP = {
   DAO: '#4BD4B4',
   COM: '#F8C631'
 } as const
+/**
+ * 0:NONE,1:ESG,2:NGO,3:DAO,4:COM
+ * @param mode contract mode
+ */
+export function getStartupTypeFromNumber(mode: number) {
+  return STARTUP_TYPES[mode - 1]
+}
