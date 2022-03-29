@@ -1,10 +1,10 @@
-import { UCard, UButton } from '@comunion/components'
-import { FacebookFilled, LinkInFilled, PinterestFilled } from '@comunion/icons'
+import { UCard } from '@comunion/components'
 import { defineComponent, onMounted, ref } from 'vue'
 import Bookmarks from './components/Bookmarks'
 import Bounties from './components/Bounties'
 import Comeups from './components/Comeups'
 import Proposals from './components/Proposals'
+import SocialLinks from './components/SocialLinks'
 import styles from './index.module.css'
 import { useWallet } from '@/providers'
 import { ServiceReturn, services } from '@/services'
@@ -47,24 +47,6 @@ const Dashboard = defineComponent({
       ]
     }
 
-    const socialLinks = [
-      {
-        avatar: 'LinkInFilled',
-        label: 'linkedin',
-        link: 'https://www.facebook.com'
-      },
-      {
-        avatar: 'FacebookFilled',
-        label: 'Facebook',
-        link: 'https://www.linkedin.cn'
-      },
-      {
-        avatar: 'PinterestFilled',
-        label: 'Pinterest',
-        link: 'https://www.pinterest.com/'
-      }
-    ]
-
     return () => (
       <div class={styles.dashboard}>
         <div class={styles.dashboardTitle}> dashboard </div>
@@ -91,47 +73,7 @@ const Dashboard = defineComponent({
                 </div>
               </div>
               <div class={styles.myProfileRight}>
-                <div class={styles.socialLinks}>
-                  <div class={styles.linksTitle}>Social links</div>
-                  <div class={styles.linksContent}>
-                    {socialLinks.map(link => {
-                      return (
-                        <div class={styles.linksContentItems}>
-                          {link.avatar === 'FacebookFilled' ? (
-                            <FacebookFilled class={styles.linksContentItemsAvatar} />
-                          ) : (
-                            ''
-                          )}
-                          {link.avatar === 'LinkInFilled' ? (
-                            <LinkInFilled class={styles.linksContentItemsAvatar} />
-                          ) : (
-                            ''
-                          )}
-                          {link.avatar === 'PinterestFilled' ? (
-                            <PinterestFilled class={styles.linksContentItemsAvatar} />
-                          ) : (
-                            ''
-                          )}
-                          <span class={styles.linksContentItemsLabel}>{link.label}</span>
-                          <UButton
-                            class={styles.linksContentItemsBtn}
-                            size="small"
-                            onClick={() => window.open(link.link)}
-                          >
-                            Connect
-                          </UButton>
-                        </div>
-                      )
-                    })}
-                  </div>
-                </div>
-                <div class={styles.walletLinks}>
-                  <div class={styles.linksTitle}>Associated Wallet Links</div>
-                  <div class={styles.linksContent}>{`${wallet?.walletAddress?.substring(
-                    0,
-                    10
-                  )}...${wallet?.walletAddress?.substring(wallet.walletAddress.length - 4)}`}</div>
-                </div>
+                <SocialLinks></SocialLinks>
               </div>
             </div>
           </UCard>

@@ -1,38 +1,6 @@
 /* eslint-disable */
 import { requestAdapter } from './a2s.adapter'
-import type { RequestBody, RequestQuery } from './a2s.types'
-
-/**
- * 将参数拆分为 query 和 body
- */
-function extract(args: RequestBody | any, queryList: string[], paramList: string[]) {
-  if (args && typeof args === 'object') {
-    const query: RequestQuery = {}
-    const body: RequestBody = {}
-    Object.keys(args).forEach(key => {
-      if (queryList.includes(key)) {
-        query[key] = (args as RequestBody)[key] as RequestQuery
-      } else if (!paramList.includes(key)) {
-        body[key] = (args as RequestBody)[key]
-      }
-    })
-    return { query, body }
-  }
-  return { query: {}, body: {} }
-}
-
-/**
- * 路径参数插值
- */
-function replacePath(path: string, pathValueMap?: any) {
-  return path
-    .replace(/\/\{(\w+)}/g, (_, str) => {
-      return `/${(pathValueMap as Record<string, string | number>)[str]}`
-    })
-    .replace(/\/:(\w+)/g, (_, str) => {
-      return `/${(pathValueMap as Record<string, string | number>)[str]}`
-    })
-}
+import { extract, replacePath } from './a2s.utils'
 
 export const services = {
   'account@wallet-nonce-get'(args: { address: any }) {
@@ -41,7 +9,7 @@ export const services = {
     }>({
       url: replacePath('/account/eth/nonce', args),
       method: 'GET',
-      ...extract(args, ['address'], [])
+      ...extract('GET', args, ['address'], [])
     })
   },
   'account@wallet-login'(args: { signature: string; address: string }) {
@@ -54,28 +22,28 @@ export const services = {
     }>({
       url: replacePath('/account/eth/wallet/login', args),
       method: 'POST',
-      ...extract(args, [], [])
+      ...extract('POST', args, [], [])
     })
   },
   'account@wallet-link'(args: { signature: string; address: string }) {
     return requestAdapter<{}>({
       url: replacePath('/account/eth/wallet/link', args),
       method: 'POST',
-      ...extract(args, [], [])
+      ...extract('POST', args, [], [])
     })
   },
   'account@oauth-google-login'(args?: any) {
     return requestAdapter<{}>({
       url: replacePath('/account/oauth/google/login', args),
       method: 'GET',
-      ...extract(args, [], [])
+      ...extract('GET', args, [], [])
     })
   },
   'account@oauth-github-login'(args?: any) {
     return requestAdapter<{}>({
       url: replacePath('/account/oauth/github/login', args),
       method: 'GET',
-      ...extract(args, [], [])
+      ...extract('GET', args, [], [])
     })
   },
   'account@oauth-google-login-callback'(args: { state: any; code: any }) {
@@ -88,7 +56,7 @@ export const services = {
     }>({
       url: replacePath('/account/oauth/google/login/callback', args),
       method: 'GET',
-      ...extract(args, ['state', 'code'], [])
+      ...extract('GET', args, ['state', 'code'], [])
     })
   },
   'account@oauth-github-login-callback'(args: { state: any; code: any }) {
@@ -101,7 +69,7 @@ export const services = {
     }>({
       url: replacePath('/account/oauth/github/login/callback', args),
       method: 'GET',
-      ...extract(args, ['state', 'code'], [])
+      ...extract('GET', args, ['state', 'code'], [])
     })
   },
   'account@account-list'(args?: any) {
@@ -126,14 +94,14 @@ export const services = {
     }>({
       url: replacePath('/account/list', args),
       method: 'GET',
-      ...extract(args, [], [])
+      ...extract('GET', args, [], [])
     })
   },
   'account@account-unlink'(args: { accountID: any }) {
     return requestAdapter<any>({
       url: replacePath('/account/:accountID/unlink', args),
       method: 'DELETE',
-      ...extract(args, [], ['accountID'])
+      ...extract('DELETE', args, [], ['accountID'])
     })
   },
   'account@comer-profile-create'(args: {
@@ -147,7 +115,7 @@ export const services = {
     return requestAdapter<{}>({
       url: replacePath('/account/profile', args),
       method: 'POST',
-      ...extract(args, [], [])
+      ...extract('POST', args, [], [])
     })
   },
   'account@comer-profile-update'(args: {
@@ -161,10 +129,17 @@ export const services = {
     return requestAdapter<{}>({
       url: replacePath('/account/profile', args),
       method: 'PUT',
-      ...extract(args, [], [])
+      ...extract('PUT', args, [], [])
     })
   },
-  'account@comer-profile-get'() {
+  'account@comer-profile-get'(args?: {
+    name: string
+    avatar: string
+    location: string
+    website: string
+    skills: string[]
+    bio: string
+  }) {
     return requestAdapter<{
       id?: number
       createdAt?: string
@@ -185,9 +160,9 @@ export const services = {
         isIndex?: boolean
       }[]
     }>({
-      url: replacePath('/account/profile'),
+      url: replacePath('/account/profile', args),
       method: 'GET',
-      ...extract([], [], [])
+      ...extract('GET', args, [], [])
     })
   },
 
@@ -200,7 +175,7 @@ export const services = {
     return requestAdapter<{}>({
       url: replacePath('/cores/startups/{startupId}/follow', args),
       method: 'POST',
-      ...extract(args, [], ['startupId'])
+      ...extract('POST', args, [], ['startupId'])
     })
   },
   'startup@startup-get'(args: { startupId: any }) {
@@ -212,9 +187,9 @@ export const services = {
       comerID: number
       name: string
       /**
-       * @description NONE,ESG,NGO,DAO,COM
+       * @description 0:NONE,1:ESG,2:NGO,3:DAO,4:COM
        */
-      mode: string
+      mode: number
       logo: string
       mission: string
       tokenContractAddress: string
@@ -232,17 +207,17 @@ export const services = {
     }>({
       url: replacePath('/cores/startups/{startupId}', args),
       method: 'GET',
-      ...extract(args, [], ['startupId'])
+      ...extract('GET', args, [], ['startupId'])
     })
   },
   'startup@startup-list'(args: {
     limit: any
-    offset: any
-    keyword: any
+    offset?: any
+    keyword?: any
     /**
      * @description NONE,ESG,NGO,DAO,COM
      */
-    mode: any
+    mode?: any
   }) {
     return requestAdapter<{
       list: {
@@ -275,7 +250,7 @@ export const services = {
     }>({
       url: replacePath('/cores/startups', args),
       method: 'GET',
-      ...extract(args, ['limit', 'offset', 'keyword', 'mode'], [])
+      ...extract('GET', args, ['limit', 'offset', 'keyword', 'mode'], [])
     })
   },
   'startup@startup-list-followed'(args: {
@@ -318,17 +293,17 @@ export const services = {
     }>({
       url: replacePath('/cores/startups/follow', args),
       method: 'GET',
-      ...extract(args, ['limit', 'offset', 'keyword', 'mode'], [])
+      ...extract('GET', args, ['limit', 'offset', 'keyword', 'mode'], [])
     })
   },
   'startup@startup-list-me'(args: {
     limit: any
-    offset: any
-    keyword: any
+    offset?: any
+    keyword?: any
     /**
      * @description NONE,ESG,NGO,DAO,COM
      */
-    mode: any
+    mode?: any
   }) {
     return requestAdapter<{
       list: {
@@ -361,7 +336,25 @@ export const services = {
     }>({
       url: replacePath('/cores/startups/me', args),
       method: 'GET',
-      ...extract(args, ['limit', 'offset', 'keyword', 'mode'], [])
+      ...extract('GET', args, ['limit', 'offset', 'keyword', 'mode'], [])
+    })
+  },
+  'startup@startup-name-is-exist'(args: { name: any }) {
+    return requestAdapter<{
+      isExist: boolean
+    }>({
+      url: replacePath('/cores/startups/name/:name/isExist', args),
+      method: 'GET',
+      ...extract('GET', args, [], ['name'])
+    })
+  },
+  'startup@startup-token-contract-is-exist'(args: { tokenContract: any }) {
+    return requestAdapter<{
+      isExist: boolean
+    }>({
+      url: replacePath('/cores/startups/tokenContract/:tokenContract/isExist', args),
+      method: 'GET',
+      ...extract('GET', args, [], ['tokenContract'])
     })
   },
 
@@ -396,7 +389,7 @@ export const services = {
     }>({
       url: replacePath('/meta/images', args),
       method: 'GET',
-      ...extract(args, ['limit', 'offset', 'category'], [])
+      ...extract('GET', args, ['limit', 'offset', 'category'], [])
     })
   },
   'meta@tag-list'(args: {
@@ -437,7 +430,7 @@ export const services = {
     }>({
       url: replacePath('/meta/tags', args),
       method: 'GET',
-      ...extract(args, ['isIndex', 'limit', 'offset', 'category', 'keyword'], [])
+      ...extract('GET', args, ['isIndex', 'limit', 'offset', 'category', 'keyword'], [])
     })
   },
 
@@ -449,7 +442,20 @@ export const services = {
     }>({
       url: replacePath('/error', args),
       method: 'GET',
-      ...extract(args, [], [])
+      ...extract('GET', args, [], [])
+    })
+  },
+
+  'misc@文件-上传'(
+    args: // file : File
+    FormData
+  ) {
+    return requestAdapter<{
+      url: string
+    }>({
+      url: replacePath('/misc/upload', args),
+      method: 'POST',
+      ...extract('POST', args, [], [])
     })
   }
 }

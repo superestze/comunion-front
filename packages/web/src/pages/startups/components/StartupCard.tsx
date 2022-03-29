@@ -1,7 +1,7 @@
 import { UTag } from '@comunion/components'
 import { defineComponent, PropType } from 'vue'
 import styles from './StartupCard.module.css'
-import { StartupTypesType, STARTUP_TYPES_COLOR_MAP } from '@/constants'
+import { getStartupTypeFromNumber, StartupTypesType, STARTUP_TYPES_COLOR_MAP } from '@/constants'
 import { StartupItem } from '@/types'
 
 const StartupCard = defineComponent({
@@ -18,11 +18,15 @@ const StartupCard = defineComponent({
         <div class="p-6">
           <div class="flex">
             <img src={props.startup.logo} class="h-10 w-10" />
-            {props.startup.mode && (
+            {props.startup.mode > 0 && (
               <UTag
                 class="ml-auto"
                 type="filled"
-                bgColor={STARTUP_TYPES_COLOR_MAP[props.startup.mode as StartupTypesType]}
+                bgColor={
+                  STARTUP_TYPES_COLOR_MAP[
+                    getStartupTypeFromNumber(props.startup.mode) as StartupTypesType
+                  ]
+                }
               >
                 {props.startup.mode}
               </UTag>

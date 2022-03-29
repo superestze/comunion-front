@@ -9,6 +9,7 @@ import { defineComponent } from 'vue'
 import { RouterView } from 'vue-router'
 import { GlobalConfigProvider, UserProfileProvider, WalletProvider } from './providers'
 import { services } from './services'
+import { upload as onUpload } from './services/a2s.adapter'
 
 export default defineComponent({
   name: 'App',
@@ -22,15 +23,6 @@ export default defineComponent({
         category
       })
       return error ? [] : data.list.map(item => ({ label: item.name, value: item.id }))
-    }
-
-    const onUpload = async (file: File, cb: (percent: number) => void) => {
-      // const { error, data } = await services['']({
-      //   file,
-      //   cb
-      // })
-      // return error ? '' : data.url
-      return ''
     }
 
     return () => (

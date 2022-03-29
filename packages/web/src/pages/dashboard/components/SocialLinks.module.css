@@ -1,0 +1,36 @@
+.socialLinks,
+.walletLinks {
+  .linksTitle {
+    @apply text-[20px] font-600 leading-6 font-opensans;
+  }
+}
+
+.socialLinks {
+  .linksContent {
+    .linksContentItems {
+      @apply flex items-center h-18 leading-18;
+
+      .linksContentItemsAvatar {
+        @apply w-6 h-6 mr-6;
+      }
+
+      .linksContentItemsLabel {
+        @apply font-opensans font-600 text-[16px] mr-18 w-18 inline-block;
+      }
+
+      .linksContentItemsBtn {
+        @apply bg-white rounded-2px w-30 h-9 p-1 font-opensans font-600 text-[16px] text-primary;
+      }
+    }
+  }
+}
+
+.walletLinks {
+  .linksTitle {
+    @apply mb-4;
+  }
+
+  .linksContent {
+    @apply w-77 h-10 rounded-4px leading-10 mb-11 bg-white;
+  }
+}
