@@ -40,16 +40,17 @@ const UHashInput = defineComponent({
     }
 
     const doSearch = debounce(async (inputValue: string) => {
-      if (!inputValue) {
+      const value = inputValue.replace(/^#+/, '').replace(/#+$/, '')
+      if (!value) {
         options.value = []
         return
       }
       loading.value = true
-      const result = await hashInputState.onSearch?.(inputValue, props.category)
-      if (result.some(item => item.value === inputValue)) {
+      const result = await hashInputState.onSearch?.(value, props.category)
+      if (result.some(item => item.value === value)) {
         options.value = result
       } else {
-        options.value = [...result, { label: `#${inputValue}#(new)`, value: inputValue }]
+        options.value = [...result, { label: `#${value}#(new)`, value: value }]
       }
       loading.value = false
     }, 500)

@@ -33,7 +33,7 @@ const RegisterIntroductionPage = defineComponent({
           <img src={IntroImg3} class="w-full max-w-[315px]" />
           <img src={IntroImg4} class="w-full max-w-[315px]" />
         </div>
-        <div class="flex my-6 justify-end">
+        <div class="flex py-6 justify-end">
           <UButton
             type="primary"
             class="rounded-lg font-[16px] w-30"

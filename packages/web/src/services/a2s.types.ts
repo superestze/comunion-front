@@ -19,15 +19,25 @@ export interface RequestQuery {
   [key: string]: string | number | boolean | RequestQuery
 }
 
-export interface RequestBody {
-  [key: string]: string | number | boolean | File | RequestBody
-}
+export type RequestBody =
+  | {
+      [key: string]:
+        | string
+        | number
+        | boolean
+        | string[]
+        | number[]
+        | boolean[]
+        | RequestBody
+        | RequestBody[]
+    }
+  | FormData
 
 export interface RequestFunctionArgs {
   url: string
   method: Method
-  query: RequestQuery
-  body: RequestBody
+  query: RequestQuery | null | undefined
+  body: RequestBody | null | undefined
   extraParams?: RequestBody
   done?: boolean
 }

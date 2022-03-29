@@ -3,27 +3,23 @@ import { RouterLink } from 'vue-router'
 import smallLogo from '@/assets/small-logo.png'
 
 export default defineComponent({
-  name: 'Fotter',
+  name: 'Footer',
   setup() {
     const footerLinks = [
       {
         title: 'Connect with us',
         links: [
           {
-            title: 'Wiki',
-            url: 'https://wiki.comunion.io/'
+            title: 'DOCS',
+            url: 'https://docs.comunion.org'
           },
           {
-            title: 'Talk',
-            url: 'https://talk.comunion.org/'
+            title: 'Twitter',
+            url: 'https://twitter.com/Comunion01'
           },
           {
-            title: 'Yuque',
-            url: 'https://comunion.yuque.com/'
-          },
-          {
-            title: 'Story',
-            url: 'https://www.yuque.com/books/share/546ee735-190d-48f0-a2c1-12c297c54d05?#'
+            title: 'Discord',
+            url: 'https://discord.gg/9x4Up6aWRj'
           }
         ]
       },
@@ -35,28 +31,24 @@ export default defineComponent({
             url: ' https://github.com/comunion-io/'
           },
           {
-            title: 'Yapi',
-            url: ' https://yapi.comunion.io/'
-          },
-          {
             title: 'Taiga',
             url: ' https://taiga.comunion.io/'
           }
         ]
-      },
-      {
-        title: 'Innovation',
-        links: [
-          {
-            title: 'Private version',
-            url: 'https://private.comunion.io/'
-          },
-          {
-            title: 'Enterprise',
-            url: '/'
-          }
-        ]
       }
+      // {
+      //   title: 'Innovation',
+      //   links: [
+      //     {
+      //       title: 'Private version',
+      //       url: 'https://private.comunion.io/'
+      //     },
+      //     {
+      //       title: 'Enterprise',
+      //       url: '/'
+      //     }
+      //   ]
+      // }
     ]
 
     return () => (
@@ -69,7 +61,7 @@ export default defineComponent({
           <img src={smallLogo} class="w-26px" />
           <span class="ml-16px text-24px leading-24px sm:ml-10px sm:text-30px">About us</span>
         </RouterLink>
-        <div class="sm:flex sm:flex-1 sm:justify-between">
+        <div class="sm:flex sm:flex-1 sm:gap-40">
           {footerLinks.map(data => (
             <div key={data.title} class="mb-40px">
               <div class="text-white pt-12px pb-12px text-18px leading-18px block sm:pb-16px sm:text-20px">

@@ -6,7 +6,7 @@ const GithubAuthCallbackPage = defineComponent({
   setup() {
     const errMsg = useCommonCallback('github', 'account@oauth-github-login-callback')
 
-    return () => <div>{errMsg}</div>
+    return () => <div>{errMsg.value}</div>
   }
 })
 

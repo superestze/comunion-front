@@ -6,7 +6,14 @@ export const HashInputDemoPage = defineComponent({
   setup() {
     const value = ref([])
 
-    return () => <UHashInput category="comerSkill" v-model={value.value} />
+    return () => (
+      <>
+        {value.value.map((item, index) => (
+          <span key={index}>{item}</span>
+        ))}
+        <UHashInput category="comerSkill" v-model={value.value} />
+      </>
+    )
   }
 })
 
