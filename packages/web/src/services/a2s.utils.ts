@@ -10,7 +10,7 @@ export function extract(
   queryList: string[],
   paramList: string[]
 ): {
-  query: RequestQuery | null,
+  query: RequestQuery | null
   body: RequestBody | null
 } {
   if (args && typeof args === 'object') {
@@ -20,7 +20,7 @@ export function extract(
         body: null
       }
     }
-    if ('FormData' in globalThis && args instanceof FormData) {
+    if (typeof globalThis !== 'undefined' && 'FormData' in globalThis && args instanceof FormData) {
       return {
         query: null,
         body: args as FormData

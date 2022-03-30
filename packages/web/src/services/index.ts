@@ -97,6 +97,19 @@ export const services = {
       ...extract('GET', args, [], [])
     })
   },
+  'account@user-info'(args?: any) {
+    return requestAdapter<{
+      nick: string
+      avatar: string
+      address: string
+      token: string
+      isProfiled: boolean
+    }>({
+      url: replacePath('/account/user/info', args),
+      method: 'GET',
+      ...extract('GET', args, [], [])
+    })
+  },
   'account@account-unlink'(args: { accountID: any }) {
     return requestAdapter<any>({
       url: replacePath('/account/:accountID/unlink', args),

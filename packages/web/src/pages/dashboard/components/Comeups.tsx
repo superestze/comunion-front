@@ -51,7 +51,7 @@ const Comeups = defineComponent({
     }
 
     return () => (
-      <UCard title="MY COMEUPS" size="small" class={styles.profileTitle}>
+      <UCard title="MY COMEUPS" size="small" class={styles.cardTitle}>
         <UTabs>
           <UTabPane name="WHAT I PARTICIPATED" tab="WHAT I PARTICIPATED">
             {' '}

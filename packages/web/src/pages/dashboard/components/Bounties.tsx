@@ -7,7 +7,7 @@ const Bounties = defineComponent({
   name: 'Bounties',
   setup(prop, ctx) {
     return () => (
-      <UCard title="MY BOUNTIES" size="small" class={styles.profileTitle}>
+      <UCard title="MY BOUNTIES" size="small" class={styles.cardTitle}>
         <UTabs>
           <UTabPane name="WHAT I SIGNED UP" tab="WHAT I SIGNED UP">
             {' '}

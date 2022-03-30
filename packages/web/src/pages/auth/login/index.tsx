@@ -37,7 +37,7 @@ const LoginPage = defineComponent({
     return () => (
       <div class="flex min-h-screen">
         <div
-          class="bg-primary bg-bottom bg-no-repeat bg-cover text-white min-w-150 pt-15 pl-10 w-1/3 2xl:pt-19 2xl:pl-12"
+          class="bg-primary bg-bottom bg-no-repeat bg-cover text-white min-w-100 px-5 pt-15 w-1/3 lg:px-10 2xl:pt-19 2xl:pl-12"
           style={{
             backgroundImage: `url(${leftBgImg})`
           }}
@@ -50,7 +50,7 @@ const LoginPage = defineComponent({
             online space,and empower super individuals to change the world
           </p>
         </div>
-        <div class="flex flex-col flex-1 pl-1/5 relative justify-center">
+        <div class="flex flex-col flex-1 pl-1/8 relative justify-center lg:pl-1/5">
           <MoreOutlined class="top-9 right-15 absolute" />
           <h2 class="text-[36px] leading-9">Sign to Comunion</h2>
           <UButton

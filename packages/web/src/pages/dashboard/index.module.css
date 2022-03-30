@@ -6,7 +6,7 @@
   }
 
   .dashboardMyProfile {
-    .profileTitle {
+    .cardTitle {
       @apply p-10 font-700 font-4 leading-6 tracking-2px;
     }
 

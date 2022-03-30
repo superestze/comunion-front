@@ -51,7 +51,7 @@ const Dashboard = defineComponent({
       <div class={styles.dashboard}>
         <div class={styles.dashboardTitle}> dashboard </div>
         <div class={styles.dashboardMyProfile}>
-          <UCard title="MY PROFILE" size="small" class={styles.profileTitle}>
+          <UCard title="MY PROFILE" size="small" class={styles.cardTitle}>
             <div class="flex">
               <div class={styles.myProfileLeft}>
                 <div class={styles.myWalletInfo}>
