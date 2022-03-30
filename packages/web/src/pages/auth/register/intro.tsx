@@ -5,6 +5,7 @@ import IntroImg1 from './assets/intro1.png'
 import IntroImg2 from './assets/intro2.png'
 import IntroImg3 from './assets/intro3.png'
 import IntroImg4 from './assets/intro4.png'
+import RegisterLayout from './components/Layout'
 
 const RegisterIntroductionPage = defineComponent({
   name: 'RegisterIntroductionPage',
@@ -16,8 +17,8 @@ const RegisterIntroductionPage = defineComponent({
     }
 
     return () => (
-      <>
-        <h1 class="text-primary py-[9vh] u-h1">About to enter the decentralized network！</h1>
+      <RegisterLayout>
+        <h1 class="text-primary pt-[9vh] u-h1">About to enter the decentralized network！</h1>
         <h2 class="mt-3 text-primary u-h1">You're a comer now！</h2>
         <p class="mt-6 text-grey3 u-body2">
           Comunion is a next, new startup paradigm of digital economic growth
@@ -43,7 +44,7 @@ const RegisterIntroductionPage = defineComponent({
             Next
           </UButton>
         </div>
-      </>
+      </RegisterLayout>
     )
   }
 })

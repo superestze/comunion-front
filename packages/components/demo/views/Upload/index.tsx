@@ -1,5 +1,5 @@
 import { defineComponent, ref } from 'vue'
-import { UButton, USingleUpload, UUpload } from '@/comps/index'
+import { UButton, USingleImageUpload, UUpload } from '@/comps/index'
 
 const UploadDemoPage = defineComponent({
   name: 'UploadDemoPage',
@@ -22,7 +22,7 @@ const UploadDemoPage = defineComponent({
         >
           <UButton>点我</UButton>
         </UUpload>
-        <USingleUpload v-model:value={value.value} text="Upload  startup Logo" />
+        <USingleImageUpload v-model:value={value.value} text="Upload  startup Logo" />
       </>
     )
   }

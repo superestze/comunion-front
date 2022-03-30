@@ -5,9 +5,9 @@ import { computed, defineComponent, ref } from 'vue'
 import type { ExtractPropTypes } from '../utils'
 import { useUpload } from './UUploadProvider'
 
-import './USingleUpload.css'
+import './USingleImageUpload.css'
 
-export const USingleUploadProps = {
+export const USingleImageUploadProps = {
   value: {
     type: String
   },
@@ -22,7 +22,8 @@ export const USingleUploadProps = {
     default: 'Select a file to upload'
   },
   accept: {
-    type: String
+    type: String,
+    default: 'image/*'
   },
   sizeLimit: {
     type: Number,
@@ -31,11 +32,11 @@ export const USingleUploadProps = {
   }
 } as const
 
-export type USingleUploadPropsType = ExtractPropTypes<typeof USingleUploadProps>
+export type USingleImageUploadPropsType = ExtractPropTypes<typeof USingleImageUploadProps>
 
-const USingleUpload = defineComponent({
-  name: 'USingleUpload',
-  props: USingleUploadProps,
+const USingleImageUpload = defineComponent({
+  name: 'USingleImageUpload',
+  props: USingleImageUploadProps,
   emits: ['update:value'],
   setup(props, ctx) {
     const { onUpload } = useUpload()
@@ -141,6 +142,7 @@ const USingleUpload = defineComponent({
                 ref={imgRef}
                 class="u-single-upload-img"
                 src={props.value}
+                objectFit="cover"
                 style={sizeStyle.value}
               />
             ) : (
@@ -165,4 +167,4 @@ const USingleUpload = defineComponent({
   }
 })
 
-export default USingleUpload
+export default USingleImageUpload

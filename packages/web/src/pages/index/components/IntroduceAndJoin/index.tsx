@@ -1,12 +1,22 @@
 import { defineComponent } from 'vue'
-import { RouterLink } from 'vue-router'
+import { useRouter } from 'vue-router'
 import styles from './index.module.css'
 import joinComunion from '@/assets/join-comunion.png'
 import rightArrowIcon from '@/assets/right-arrow-small.png'
+import { useUserProfile } from '@/providers'
 
 export default defineComponent({
   name: 'IntroduceAndJoin',
   setup() {
+    const { logged } = useUserProfile()
+    const router = useRouter()
+    const toJoin = () => {
+      if (!logged) {
+        router.push('/auth/login')
+      } else {
+        router.push('/welcome')
+      }
+    }
     return () => (
       <div class="h-646px w-full pt-66px overflow-hidden relative sm:h-844px sm:pt-60px after:bg-primary after:h-full after:rounded-br-1/2 after:rounded-bl-1/2 after:top-0 after:-left-1/1 after:w-3/1 after:z-1 after:content-[] after:absolute ">
         <div class={`${styles.introduceAndJoinBox} <sm:hidden`}></div>
@@ -28,16 +38,16 @@ export default defineComponent({
             </p>
           </div>
           {/* Join Comunion*/}
-          <RouterLink
-            class="bg-white flex m-auto rounded-24px h-48px mt-58px pl-56px w-205px items-center group sm:rounded-27px sm:h-54px sm:mt-70px sm:pl-63px sm:w-254px"
-            to="/auth/login"
+          <div
+            class="bg-white cursor-pointer flex m-auto rounded-24px h-48px mt-58px pl-56px w-205px items-center group sm:rounded-27px sm:h-54px sm:mt-70px sm:pl-63px sm:w-254px"
+            onClick={toJoin}
           >
             <span class="text-primary text-bold text-13px sm:text-18px">Join Comunion</span>
             <img
               class="ml-11px transition-all w-16px sm:w-17px group-hover:ml-22px"
               src={joinComunion}
             />
-          </RouterLink>
+          </div>
           {/* I want to… */}
           <div class="m-auto mt-95px text-white w-560px <sm:hidden">
             <p class="text-20px leading-28px">I want to…</p>

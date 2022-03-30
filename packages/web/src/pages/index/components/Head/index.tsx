@@ -4,11 +4,14 @@ import closeMenu from '@/assets/close-menu.png'
 import logo from '@/assets/logo.png'
 import openMenu from '@/assets/open-menu.png'
 import CreateStartupBlock from '@/blocks/Startup/Create'
+import UserAvatar from '@/components/UserAvatar'
+import { useUserProfile } from '@/providers'
 
 let top = 0
 export default defineComponent({
   name: 'Head',
   setup() {
+    const { logged } = useUserProfile()
     const state = reactive({ showMenu: false, showHead: true })
 
     const onScroll = () => {
@@ -71,12 +74,18 @@ export default defineComponent({
                   </span>
                 }
               />
-              <RouterLink
-                class="border-primary border-1 rounded-4px h-32px text-primary text-bold text-center text-14px leading-32px w-146px"
-                to="/auth/login"
-              >
-                Connect account
-              </RouterLink>
+              {logged.value ? (
+                <RouterLink to="/dashboard">
+                  <UserAvatar />
+                </RouterLink>
+              ) : (
+                <RouterLink
+                  class="border-primary border-1 rounded-4px h-32px text-primary text-bold text-center text-14px leading-32px w-146px"
+                  to="/auth/login"
+                >
+                  Connect account
+                </RouterLink>
+              )}
             </div>
           </div>
         </div>
