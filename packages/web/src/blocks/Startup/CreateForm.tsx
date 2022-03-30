@@ -129,7 +129,7 @@ const CreateStartupForm = defineComponent({
     }
     const infoFields = [
       {
-        t: 'singleUpload',
+        t: 'singleImageUpload',
         title: '',
         name: 'logo',
         text: 'Upload startup Logo'

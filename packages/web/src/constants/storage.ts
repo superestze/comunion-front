@@ -1,1 +1,1 @@
-export const STORE_KEY_USER = 'user.profile'
+export const STORE_KEY_TOKEN = 'user.token'

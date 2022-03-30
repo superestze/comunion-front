@@ -13,11 +13,31 @@ export function setToken(_newToken: string) {
   _token = _newToken
 }
 
-// export interface BaseResponse<T = any> {
-//   code: number
-//   message?: string
-//   data: T
-// }
+export interface BaseResponse<T = any> {
+  code: number
+  message?: string
+  data: T
+}
+
+function onErrorHandler(error: any): ResponseObject<null> {
+  try {
+    const rep: BaseResponse = error.response.data
+    if (rep.code === 401 && location.pathname !== '/auth/login') {
+      message.error('The token expired, please re-login')
+      setToken('')
+      window.location.href = '/auth/login'
+    }
+  } catch (error) {
+    //
+  }
+  const msg = error.message ?? 'Error occured'
+  message.error(msg)
+  return {
+    error: true,
+    data: null,
+    message: msg
+  }
+}
 
 export async function requestAdapter<T = any>(
   args: RequestFunctionArgs
@@ -25,7 +45,7 @@ export async function requestAdapter<T = any>(
   const { url, method, query, body, done = true } = args
   const token = getToken()
   try {
-    const { status, data, statusText } = await axios.request({
+    const { data } = await axios.request({
       url,
       method,
       baseURL: done ? '/api' : 'https://yapi.comunion.io/mock/39/api',
@@ -38,25 +58,12 @@ export async function requestAdapter<T = any>(
           }
         : {}
     })
-    if (status < 300 && status >= 200) {
-      return {
-        error: false,
-        data: data as T
-      }
-    }
     return {
-      error: true,
-      data: null,
-      message: data.message ?? statusText
+      error: false,
+      data: data as T
     }
   } catch (error) {
-    const msg = error.message ?? 'Error occured'
-    message.error(msg)
-    return {
-      error: true,
-      data: null,
-      message: msg
-    }
+    return onErrorHandler(error)
   }
 }
 
@@ -64,18 +71,22 @@ export async function upload(file: File, onProgress: (percent: number) => void):
   const formData = new FormData()
   formData.append('file', file)
   const token = getToken()
-  const { data } = await axios.post('/misc/upload', formData, {
-    baseURL: '/api',
-    responseType: 'json',
-    headers: token
-      ? {
-          'X-COMUNION-AUTHORIZATION': token
-        }
-      : {},
-    onUploadProgress: (event) => {
-      const percent = Math.round((event.loaded / event.total) * 100)
-      onProgress(percent)
-    }
-  })
-  return data.Url
+  try {
+    const { data } = await axios.post('/misc/upload', formData, {
+      baseURL: '/api',
+      responseType: 'json',
+      headers: token
+        ? {
+            'X-COMUNION-AUTHORIZATION': token
+          }
+        : {},
+      onUploadProgress: (event) => {
+        const percent = Math.round((event.loaded / event.total) * 100) / 100
+        onProgress(percent)
+      }
+    })
+    return data.Url
+  } catch(error) {
+    onErrorHandler(error).data
+  }
 }

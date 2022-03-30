@@ -3,6 +3,7 @@ import type { FormFactoryField } from '@comunion/components/dist/es/UForm/FormFa
 import { defineComponent, ref } from 'vue'
 import { useRouter } from 'vue-router'
 import successImg from './assets/success.svg'
+import RegisterLayout from './components/Layout'
 import { useUserProfile } from '@/providers'
 import { services } from '@/services'
 
@@ -76,30 +77,36 @@ const RegisterProfilePage = defineComponent({
     }
 
     return () => (
-      <div class="mx-auto max-w-226 py-[10vh]">
-        <h1 class="u-h3">Basic Profile</h1>
-        <p class="mt-2 mb-6 text-grey2 u-body2">
-          Add your profile , a short bio , and links to your other online websites.
-        </p>
-        <div class="bg-white border rounded-lg border-grey5 pt-10 pb-5">
-          <div class="mx-auto w-200">
-            <UFormFactory fields={fields} submitText="Next step" onSubmit={onSubmit}></UFormFactory>
-            <UModal v-model:show={success.value} closable={false} maskClosable={false}>
-              <div class="bg-white rounded-lg flex flex-col h-88 w-150 items-center">
-                <img src={successImg} class="h-40 mt-18 w-110" />
-                <div class="flex mt-12 items-center">
-                  <UButton type="primary" ghost size="large" onClick={toHomePage}>
-                    Go to homepage
-                  </UButton>
-                  <UButton class="ml-4" type="primary" size="large" onClick={toMyWorkbench}>
-                    View my Startup
-                  </UButton>
+      <RegisterLayout>
+        <div class="mx-auto max-w-226 py-[10vh]">
+          <h1 class="u-h3">Basic Profile</h1>
+          <p class="mt-2 mb-6 text-grey2 u-body2">
+            Add your profile , a short bio , and links to your other online websites.
+          </p>
+          <div class="bg-white border rounded-lg border-grey5 pt-10 pb-5">
+            <div class="mx-auto w-200">
+              <UFormFactory
+                fields={fields}
+                submitText="Next step"
+                onSubmit={onSubmit}
+              ></UFormFactory>
+              <UModal v-model:show={success.value} closable={false} maskClosable={false}>
+                <div class="bg-white rounded-lg flex flex-col h-88 w-150 items-center">
+                  <img src={successImg} class="h-40 mt-18 w-110" />
+                  <div class="flex mt-12 items-center">
+                    <UButton type="primary" ghost size="large" onClick={toHomePage}>
+                      Go to homepage
+                    </UButton>
+                    <UButton class="ml-4" type="primary" size="large" onClick={toMyWorkbench}>
+                      View my Startup
+                    </UButton>
+                  </div>
                 </div>
-              </div>
-            </UModal>
+              </UModal>
+            </div>
           </div>
         </div>
-      </div>
+      </RegisterLayout>
     )
   }
 })

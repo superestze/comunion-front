@@ -1,7 +1,17 @@
 import { readObject, removeObject, storeObject } from '@comunion/utils'
 import type { ComputedRef, InjectionKey } from 'vue'
-import { computed, readonly, inject, provide, reactive, defineComponent } from 'vue'
-import { STORE_KEY_USER } from '@/constants'
+import {
+  computed,
+  readonly,
+  inject,
+  ref,
+  provide,
+  reactive,
+  defineComponent,
+  onBeforeMount
+} from 'vue'
+import { STORE_KEY_TOKEN } from '@/constants'
+import { services } from '@/services'
 import { setToken } from '@/services/a2s.adapter'
 import type { UserResponse } from '@/types'
 
@@ -32,16 +42,21 @@ export const UserProfileSymbol: InjectionKey<{
 export const UserProfileProvider = defineComponent({
   name: 'UserProfileProvider',
   setup(props, ctx) {
-    const stored = readObject<UserProfileState>(STORE_KEY_USER)
-    setToken(stored?.token)
-    const state = reactive<{ user: UserProfileState | undefined }>({ user: stored })
+    const storedToken = readObject<string>(STORE_KEY_TOKEN)
+    setToken(storedToken)
+    const state = reactive<{ user: UserProfileState | undefined }>({ user: undefined })
+    const ready = ref(false)
 
     const logged = computed<boolean>(() => !!state.user?.token)
 
     function setUser(newUser: UserProfileState) {
       state.user = newUser
-      setToken(newUser.token)
-      storeObject(STORE_KEY_USER, newUser)
+      state.user.token = newUser.token || storedToken
+      if (newUser.token) {
+        setToken(newUser.token)
+        // @ts-ignore
+        storeObject(STORE_KEY_TOKEN, newUser.token)
+      }
     }
 
     function setUserResponse(newUser: UserResponse) {
@@ -56,9 +71,22 @@ export const UserProfileProvider = defineComponent({
     }
 
     function logout() {
-      removeObject(STORE_KEY_USER)
+      removeObject(STORE_KEY_TOKEN)
+      setToken(null)
       state.user = null
     }
+
+    onBeforeMount(async () => {
+      if (storedToken) {
+        const { error, data } = await services['account@user-info']()
+        if (error) {
+          logout()
+        } else {
+          setUserResponse(data)
+        }
+      }
+      ready.value = true
+    })
 
     provide(UserProfileSymbol, {
       user: readonly(state),
@@ -68,7 +96,7 @@ export const UserProfileProvider = defineComponent({
       logout
     })
 
-    return () => ctx.slots.default?.()
+    return () => (ready.value ? ctx.slots.default?.() : null)
   }
 })
 

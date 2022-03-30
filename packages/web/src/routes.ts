@@ -1,5 +1,5 @@
 export const layoutGroupedRoutes = {
-  empty: ['/', '/auth/login', '/auth/callback/*'],
-  common: ['/auth/register/*']
+  empty: ['/'],
+  auth: ['/auth/login', '/auth/callback/*', '/auth/register/*']
   // default: ['*']
 } as const
