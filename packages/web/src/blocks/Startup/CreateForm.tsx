@@ -144,7 +144,7 @@ const CreateStartupForm = defineComponent({
       },
       {
         t: 'select',
-        title: 'type',
+        title: 'Type',
         name: 'type',
         required: true,
         placeholder: 'Startup type',

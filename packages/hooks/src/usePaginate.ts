@@ -1,25 +1,29 @@
 import { onMounted, reactive, watchEffect } from 'vue'
 
-export function usePaginate<T extends Record<string, any>>({
+export function usePaginate({
   service,
   pageSize = 12,
   params
 }: {
-  service: (page: number, pageSize: number, params?: any) => Promise<{ total: number; items: T[] }>
+  service: (
+    page: number,
+    pageSize: number,
+    params?: any
+  ) => Promise<{ total: number; items: any[] }>
   pageSize?: number
   params?: any
 }) {
-  const data = reactive({
+  const data = reactive<{
+    page: number
+    total: number
+    loading: boolean
+    dataSource: any[]
+  }>({
     page: 1,
     total: 0,
     loading: false,
     dataSource: []
-  }) as {
-    page: number
-    total: number
-    loading: boolean
-    dataSource: T[]
-  }
+  })
 
   const fetch = async () => {
     data.loading = true
@@ -34,7 +38,5 @@ export function usePaginate<T extends Record<string, any>>({
     fetch()
   })
 
-  return {
-    data
-  }
+  return { data }
 }

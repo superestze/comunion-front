@@ -67,7 +67,7 @@ export async function requestAdapter<T = any>(
   }
 }
 
-export async function upload(file: File, onProgress: (percent: number) => void): Promise<string> {
+export async function upload(file: File, onProgress: (percent: number) => void): Promise<string | null> {
   const formData = new FormData()
   formData.append('file', file)
   const token = getToken()
@@ -88,5 +88,6 @@ export async function upload(file: File, onProgress: (percent: number) => void):
     return data.Url
   } catch(error) {
     onErrorHandler(error).data
+    return null
   }
 }
