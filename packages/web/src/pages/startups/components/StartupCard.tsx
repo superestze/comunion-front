@@ -1,4 +1,4 @@
-import { UTag } from '@comunion/components'
+import { UTag, ULazyImage } from '@comunion/components'
 import { defineComponent, PropType } from 'vue'
 import styles from './StartupCard.module.css'
 import { getStartupTypeFromNumber, StartupTypesType, STARTUP_TYPES_COLOR_MAP } from '@/constants'
@@ -12,23 +12,16 @@ const StartupCard = defineComponent({
     }
   },
   setup(props, ctx) {
+    const modeName = getStartupTypeFromNumber(props.startup.mode) as StartupTypesType
     return () => (
       <div class="bg-white rounded h-80 min-w-314px">
         <div class={styles.cardBorder}></div>
         <div class="p-6">
           <div class="flex">
-            <img src={props.startup.logo} class="h-10 w-10" />
+            <ULazyImage src={props.startup.logo} class="rounded h-10 w-10" />
             {props.startup.mode > 0 && (
-              <UTag
-                class="ml-auto"
-                type="filled"
-                bgColor={
-                  STARTUP_TYPES_COLOR_MAP[
-                    getStartupTypeFromNumber(props.startup.mode) as StartupTypesType
-                  ]
-                }
-              >
-                {props.startup.mode}
+              <UTag class="ml-auto" type="filled" bgColor={STARTUP_TYPES_COLOR_MAP[modeName]}>
+                {modeName}
               </UTag>
             )}
           </div>
