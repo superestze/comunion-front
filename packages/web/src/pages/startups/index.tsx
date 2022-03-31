@@ -1,5 +1,6 @@
 import { UDropdownFilter, UPaginatedList, UPaginatedListPropsType } from '@comunion/components'
 import { defineComponent, ref } from 'vue'
+import StartupCard from './components/StartupCard'
 import { STARTUP_TYPES } from '@/constants'
 import { services } from '@/services'
 import { StartupItem } from '@/types'
@@ -16,8 +17,9 @@ const StartupsPage = defineComponent({
         mode: startupType.value,
         keyword: ''
       })
-      const total = error ? 0 : data.total
-      return { items: error ? [] : data.list, total }
+      const _total = error ? 0 : data.total
+      total.value = _total
+      return { items: error ? [] : data.list, total: _total }
     }
 
     return () => (
@@ -33,22 +35,18 @@ const StartupsPage = defineComponent({
             />
           </div>
         </div>
-        <UPaginatedList service={dataService}>
-          {{
-            default: (startups: StartupItem[]) => {
-              return (
-                <div class="mt-8 mb-4 grid gap-10 grid-cols-1 md:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4">
-                  {/* {startups.map(startup => (
-                    <StartupCard startup={startup} />
-                  ))} */}
-                  {/* <StartupCard startup={{}} />
-                  <StartupCard startup={{}} />
-                  <StartupCard startup={{}} /> */}
-                </div>
-              )
-            }
+        <UPaginatedList
+          service={dataService}
+          children={({ dataSource: startups }: { dataSource: StartupItem[] }) => {
+            return (
+              <div class="mt-8 mb-4 grid gap-10 grid-cols-1 md:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4">
+                {startups.map(startup => (
+                  <StartupCard startup={startup} />
+                ))}
+              </div>
+            )
           }}
-        </UPaginatedList>
+        />
       </div>
     )
   }

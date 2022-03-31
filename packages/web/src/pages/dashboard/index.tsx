@@ -1,35 +1,30 @@
 import { UCard } from '@comunion/components'
-import { defineComponent, onMounted, ref } from 'vue'
+import { computed, defineComponent, onMounted, ref } from 'vue'
 import Bookmarks from './components/Bookmarks'
 import Bounties from './components/Bounties'
-import Comeups from './components/Comeups'
 import Proposals from './components/Proposals'
 import SocialLinks from './components/SocialLinks'
+import Startups from './components/Startups'
 import styles from './index.module.css'
 import { useWallet } from '@/providers'
 import { ServiceReturn, services } from '@/services'
 
-const Dashboard = defineComponent({
+const DashboardPage = defineComponent({
   name: 'Dashboard',
-  props: {},
-  components: { Comeups },
   setup() {
     const { wallet } = useWallet()
     const myProfile = ref<ServiceReturn<'account@comer-profile-get'>>()
-    let myInfo: { label: string; value: string }[] = []
-
     onMounted(async () => {
       const { error, data } = await services['account@comer-profile-get']()
       if (!error) {
         myProfile.value = data
-        handleMyInfo()
       }
     })
 
-    const handleMyInfo = () => {
-      myInfo = [
+    const myInfo = computed(() => {
+      return [
         {
-          label: 'location',
+          label: 'Location',
           value: myProfile.value?.location
         },
         {
@@ -37,15 +32,15 @@ const Dashboard = defineComponent({
           value: myProfile.value?.website
         },
         {
-          label: 'skills',
+          label: 'Skills',
           value: myProfile.value?.skills.map(skill => skill.name).join(' | ')
         },
         {
-          label: 'BIO',
+          label: 'Bio',
           value: myProfile.value?.bio
         }
       ]
-    }
+    })
 
     return () => (
       <div class={styles.dashboard}>
@@ -58,11 +53,12 @@ const Dashboard = defineComponent({
                   <img class={styles.avatar} src={myProfile.value?.avatar} />
                   <div>
                     <div class={styles.name}>{myProfile.value?.name}</div>
+                    {/*TODO after wallet address component completed, replace this */}
                     <div class={styles.walletAddr}> {wallet?.walletAddress}</div>
                   </div>
                 </div>
                 <div class={styles.myInfo}>
-                  {myInfo.map(info => {
+                  {myInfo.value?.map(info => {
                     return (
                       <div class={styles.infoItem}>
                         <div class={styles.label}>{info.label}</div>
@@ -73,20 +69,20 @@ const Dashboard = defineComponent({
                 </div>
               </div>
               <div class={styles.myProfileRight}>
-                <SocialLinks></SocialLinks>
+                <SocialLinks />
               </div>
             </div>
           </UCard>
         </div>
         <div class={styles.myActivates}>
-          <Comeups></Comeups>
-          <Bounties></Bounties>
-          <Proposals></Proposals>
-          <Bookmarks></Bookmarks>
+          <Startups />
+          <Bounties />
+          <Proposals />
+          <Bookmarks />
         </div>
       </div>
     )
   }
 })
 
-export default Dashboard
+export default DashboardPage

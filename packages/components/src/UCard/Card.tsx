@@ -15,7 +15,7 @@ const UCard = defineComponent({
     }
   },
   setup(props, ctx) {
-    return () => <NCard {...props} v-slots={ctx.slots} />
+    return () => <NCard {...props} class="u-card" v-slots={ctx.slots} />
   }
 })
 

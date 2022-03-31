@@ -1,27 +1,22 @@
-import { UCard, UTabPane, UTabs } from '@comunion/components'
+import { UCard, UTabPane, UTabs, UDeveloping } from '@comunion/components'
 import { defineComponent } from 'vue'
-import styles from './Shared.module.css'
-import empty from '@/assets/empty.png'
 
 const Bookmarks = defineComponent({
   name: 'Proposal',
   setup(props, ctx) {
     return () => (
-      <UCard title="MY BOOKMARKS" size="small" class={styles.cardTitle}>
+      <UCard title="MY BOOKMARKS" size="small" class="p-10 font-700 font-4 leading-6 tracking-2px">
         <UTabs>
           <UTabPane name="COMEUPS" tab="COMEUPS">
-            {' '}
+            <UDeveloping />
           </UTabPane>
           <UTabPane name="BOUNTIES" tab="BOUNTIES">
-            {' '}
+            <UDeveloping />
           </UTabPane>
           <UTabPane name="COMERS" tab="COMERS">
-            {' '}
+            <UDeveloping />
           </UTabPane>
         </UTabs>
-        <div class={styles.empty}>
-          <img class={styles.emptyImg} src={empty} />
-        </div>
       </UCard>
     )
   }
