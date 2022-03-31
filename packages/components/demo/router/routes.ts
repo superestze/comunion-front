@@ -30,6 +30,11 @@ const routes: RouteRecordRaw[] = [
             path: 'scrollbar',
             name: 'Scrollbar',
             component: () => import('@/ex/views/Scrollbar')
+          },
+          {
+            path: 'lazy-image',
+            name: 'LazyImage',
+            component: () => import('@/ex/views/LazyImage')
           }
         ]
       },
