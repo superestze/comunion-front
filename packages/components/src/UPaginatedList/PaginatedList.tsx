@@ -1,6 +1,7 @@
 import { usePaginate } from '@comunion/hooks'
 import { defineComponent, ExtractPropTypes, PropType, VNode } from 'vue'
 import { UPagination } from '../UPagination'
+import './PaginatedList.css'
 
 type ServiceArgs = Parameters<typeof usePaginate>[0]
 
@@ -18,6 +19,10 @@ export const UPaginatedListProps = {
   },
   children: {
     type: Function as PropType<(data: ReturnType<typeof usePaginate>['data']) => VNode>
+  },
+  hidePaginationOnSinglePage: {
+    type: Boolean,
+    default: true
   }
   // onChange: {
   //   type: Function as PropType<(data: ReturnType<typeof usePaginate>['data']) => void>
@@ -39,13 +44,15 @@ const UPaginatedList = defineComponent({
     return () => (
       <>
         {props.children?.(data)}
-        <div class="flex justify-center">
-          <UPagination
-            v-model:page={data.page}
-            itemCount={data.total}
-            v-model:pageSize={props.defaultPageSize}
-          />
-        </div>
+        {(!props.hidePaginationOnSinglePage || data.total > 0) && (
+          <div class="u-paginated-list">
+            <UPagination
+              v-model:page={data.page}
+              itemCount={data.total}
+              v-model:pageSize={props.defaultPageSize}
+            />
+          </div>
+        )}
       </>
     )
   }
