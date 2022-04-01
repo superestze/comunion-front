@@ -117,7 +117,9 @@ const CreateStartupForm = defineComponent({
               )
               onCancel()
             } catch (error) {
-              message.error(error.message)
+              message.error('Failed to create startup, please check your network and contract')
+              console.error(error)
+              // message.error(error.message)
             }
           } catch (e) {
             ctx.emit('error', e)
