@@ -18,7 +18,7 @@ export default defineComponent({
       }
     }
     return () => (
-      <div class="h-646px w-full pt-66px overflow-hidden relative sm:h-844px sm:pt-60px after:bg-primary after:h-full after:rounded-br-1/2 after:rounded-bl-1/2 after:top-0 after:-left-1/1 after:w-3/1 after:z-1 after:content-[] after:absolute ">
+      <div class="h-646px w-full pt-66px overflow-hidden relative sm:h-250 sm:pt-60px after:bg-primary after:h-full after:rounded-br-1/2 after:rounded-bl-1/2 after:top-0 after:-left-1/1 after:w-3/1 after:z-1 after:content-[] after:absolute ">
         <div class={`${styles.introduceAndJoinBox} <sm:hidden`}></div>
         <div class={`${styles.introduceAndJoinBoxH5} sm:hidden`}></div>
         <div class="z-3 relative">
