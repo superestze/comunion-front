@@ -171,6 +171,11 @@ const routes: RouteRecordRaw[] = [
             path: 'time',
             name: 'Time',
             component: () => import('@/ex/views/Time')
+          },
+          {
+            path: 'address',
+            name: 'Address',
+            component: () => import('@/ex/views/Address')
           }
         ]
       },

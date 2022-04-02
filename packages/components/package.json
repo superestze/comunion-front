@@ -41,6 +41,7 @@
     "@comunion/hooks": "workspace:^0.0.1",
     "@comunion/icons": "0.0.1",
     "@comunion/utils": "0.0.1",
+    "copy-to-clipboard": "^3.3.1",
     "naive-ui": "^2.26.0",
     "vue": "^3.2.31"
   },
