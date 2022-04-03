@@ -9,7 +9,7 @@ const SocialLinks = defineComponent({
     const { wallet } = useWallet()
 
     /**
-     * @description 关联社交账号
+     * @description connect social account
      */
     const connectLink = () => {
       // TODO
@@ -23,7 +23,7 @@ const SocialLinks = defineComponent({
       {
         avatar: GoogleFilled,
         label: 'Google',
-        link: 'http://www.google.cn/'
+        link: 'https://accounts.google.com/'
       }
     ]
     return () => (
