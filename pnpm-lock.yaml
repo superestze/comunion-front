@@ -75,6 +75,7 @@ importers:
       '@comunion/utils': 0.0.1
       '@vitejs/plugin-vue': ^2.2.4
       '@vitejs/plugin-vue-jsx': ^1.3.8
+      copy-to-clipboard: ^3.3.1
       esbuild: ^0.14.25
       fast-glob: ^3.2.11
       naive-ui: ^2.26.0
@@ -91,6 +92,7 @@ importers:
       '@comunion/hooks': link:../hooks
       '@comunion/icons': link:../icons
       '@comunion/utils': link:../utils
+      copy-to-clipboard: 3.3.1
       naive-ui: 2.26.4_vue@3.2.31
       vue: 3.2.31
     devDependencies:
