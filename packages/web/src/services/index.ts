@@ -145,7 +145,7 @@ export const services = {
       ...extract('PUT', args, [], [])
     })
   },
-  'account@comer-profile-get'(args: {
+  'account@comer-profile-get'(args?: {
     name: string
     avatar: string
     location: string

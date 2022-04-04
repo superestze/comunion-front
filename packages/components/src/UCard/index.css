@@ -1,0 +1,9 @@
+.u-card {
+  .n-card-header {
+    @apply p-0 pb-[10px] !important;
+
+    .n-card-header__main {
+      @apply font-orbitron font-700 text-18px tracking-2px uppercase text-primary1 !important;
+    }
+  }
+}

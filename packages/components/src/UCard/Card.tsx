@@ -1,6 +1,7 @@
 import type { CardProps } from 'naive-ui'
 import { NCard } from 'naive-ui'
 import { defineComponent, PropType } from 'vue'
+import './index.css'
 
 export type UCardPropsType = CardProps
 
@@ -14,7 +15,7 @@ const UCard = defineComponent({
     }
   },
   setup(props, ctx) {
-    return () => <NCard {...props} v-slots={ctx.slots} />
+    return () => <NCard {...props} class="u-card" v-slots={ctx.slots} />
   }
 })
 
