@@ -28,8 +28,8 @@ const StartupsPage = defineComponent({
     )
 
     return () => (
-      <div class="my-20">
-        <div class="flex">
+      <div class="mb-10">
+        <div class="flex my-4">
           <h3 class="text-grey1 u-h3">{total.value.toLocaleString()} Startups available</h3>
           <div class="flex ml-auto self-end items-center u-title2">
             Filter by:
@@ -46,7 +46,7 @@ const StartupsPage = defineComponent({
           service={dataService.value}
           children={({ dataSource: startups }: { dataSource: StartupItem[] }) => {
             return (
-              <div class="mt-8 mb-4 grid gap-10 grid-cols-1 md:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4">
+              <div class="grid pb-6 gap-8 grid-cols-1 md:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4">
                 {startups.map(startup => (
                   <StartupCard key={startup.id} startup={startup} />
                 ))}

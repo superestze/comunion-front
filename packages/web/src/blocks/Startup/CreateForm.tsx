@@ -157,7 +157,7 @@ const CreateStartupForm = defineComponent({
         required: true,
         title: 'Hashtag',
         category: 'startup',
-        name: 'hashtag',
+        name: 'tags',
         placeholder: '#Enter you startup tag'
       },
       {

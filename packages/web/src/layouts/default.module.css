@@ -3,11 +3,11 @@
 
   :global {
     .u-card-title1 {
-      @apply font-normal text-white text-[18px] leading-6;
+      @apply font-normal text-white text-[18px] leading-4;
     }
 
     .u-title1 {
-      @apply font-normal mt-6 text-white;
+      @apply font-normal mt-4 text-white;
     }
   }
 }
