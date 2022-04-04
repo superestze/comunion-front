@@ -14,7 +14,7 @@ const StartupCard = defineComponent({
   setup(props, ctx) {
     const modeName = getStartupTypeFromNumber(props.startup.mode) as StartupTypesType
     return () => (
-      <div class="bg-white rounded h-80 min-w-314px">
+      <div class="bg-white rounded h-80">
         <div class={styles.cardBorder}></div>
         <div class="p-6">
           <div class="flex">

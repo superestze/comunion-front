@@ -24,10 +24,6 @@ const UHashInput = defineComponent({
     category: {
       type: String as PropType<'comerSkill' | 'startup' | 'bounty'>,
       required: true
-    },
-    size: {
-      type: String as PropType<SelectProps['size']>,
-      default: 'large'
     }
   },
   setup(props) {

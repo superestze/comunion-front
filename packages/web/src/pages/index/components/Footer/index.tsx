@@ -28,11 +28,11 @@ export default defineComponent({
         links: [
           {
             title: 'Github',
-            url: ' https://github.com/comunion-io/'
+            url: 'https://github.com/comunion-io'
           },
           {
             title: 'Taiga',
-            url: ' https://taiga.comunion.io/'
+            url: 'https://taiga.comunion.io'
           }
         ]
       }

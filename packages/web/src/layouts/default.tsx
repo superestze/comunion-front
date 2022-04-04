@@ -12,10 +12,10 @@ const DefaultLayout = defineComponent({
       <div class="bg-purple flex flex-col h-full min-h-screen text-[14px] relative">
         <div class="flex-1 u-page-container">
           {/* Header */}
-          <div class="flex h-30 items-center">
-            <ULogo height={40} withText theme="colorful" />
+          <div class="flex h-24 items-center">
+            <ULogo height={32} withText theme="colorful" />
             <RouterLink
-              class="ml-27 transition u-label1 hover:text-primary"
+              class="ml-22 transition u-label1 hover:text-primary"
               activeClass="text-primary"
               to="/startups"
             >
@@ -23,7 +23,7 @@ const DefaultLayout = defineComponent({
             </RouterLink>
             <CreateStartupBlock
               trigger={
-                <UButton class="rounded-lg ml-auto h-10 text-primary w-33" type="primary" ghost>
+                <UButton class="rounded-lg ml-auto h-40px text-primary w-33" type="primary" ghost>
                   <PlusOutlined class="h-4 mr-3 w-4" />
                   <span class="text-primary u-label1">CREATE</span>
                 </UButton>
@@ -38,30 +38,46 @@ const DefaultLayout = defineComponent({
         </div>
         {/* Footer */}
         <div class={styles.footer}>
-          <div class="flex py-20 u-page-container">
+          <div class="flex py-12 u-page-container">
             <div class="flex flex-1">
-              <ULogo theme="colorful" height={80} />
+              <ULogo theme="colorful" height={56} />
               <div class="flex flex-col ml-40">
                 <div class="u-card-title1">ABOUT US</div>
-                <a class="u-title1">Who we are</a>
-                <a class="u-title1">Comunion Economics</a>
-                <a class="u-title1">Our vision</a>
-                <a class="u-title1">Contact us</a>
+                <a target="_black" class="u-title1">
+                  Who we are
+                </a>
+                <a target="_black" class="u-title1">
+                  Comunion Economics
+                </a>
+                <a target="_black" class="u-title1">
+                  Our vision
+                </a>
+                <a target="_black" class="u-title1">
+                  Contact us
+                </a>
               </div>
             </div>
             <div class="flex flex-col flex-1">
               <div class="u-card-title1">COMMUNITY</div>
               <div class="flex">
                 <div class="flex flex-col w-60">
-                  <a class="u-title1">Wiki</a>
-                  <a class="u-title1">BBS</a>
-                  <a class="u-title1">Telegram</a>
-                  <a class="u-title1">Twitter</a>
+                  <a target="_black" href="https://docs.comunion.org" class="u-title1">
+                    DOCS
+                  </a>
+                  <a target="_black" href="https://twitter.com/Comunion01" class="u-title1">
+                    Twitter
+                  </a>
+                  <a target="_black" href="https://discord.gg/9x4Up6aWRj" class="u-title1">
+                    Discord
+                  </a>
                 </div>
                 <div class="flex flex-col">
-                  <a class="u-title1">Github</a>
-                  <a class="u-title1">Yapi</a>
-                  <a class="u-title1">Yuque</a>
+                  <a target="_black" href="https://github.com/comunion-io" class="u-title1">
+                    Github
+                  </a>
+                  <a target="_black" href="https://taiga.comunion.io" class="u-title1">
+                    Taiga
+                  </a>
                 </div>
               </div>
             </div>

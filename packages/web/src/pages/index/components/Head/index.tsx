@@ -4,7 +4,6 @@ import closeMenu from '@/assets/close-menu.png'
 import logo from '@/assets/logo.png'
 import openMenu from '@/assets/open-menu.png'
 import CreateStartupBlock from '@/blocks/Startup/Create'
-import UserAvatar from '@/components/UserAvatar'
 import { useUserProfile } from '@/providers'
 
 let top = 0
@@ -75,8 +74,12 @@ export default defineComponent({
                 }
               />
               {logged.value ? (
-                <RouterLink to="/dashboard">
-                  <UserAvatar />
+                <RouterLink
+                  to="/dashboard"
+                  class="bg-primary cursor-pointer rounded-4px h-32px text-white text-bold mr-32px text-center text-14px leading-32px w-146px"
+                >
+                  {/* <UserAvatar /> */}
+                  Launch App
                 </RouterLink>
               ) : (
                 <RouterLink

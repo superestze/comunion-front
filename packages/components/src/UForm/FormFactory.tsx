@@ -234,11 +234,11 @@ export const UFormFactory: DefineComponent<UFormFactoryPropsType> = defineCompon
         <UFormItemsFactory fields={props.fields} values={values} />
         <div class="flex justify-end">
           {props.showCancel && (
-            <UButton type="default" size="large" class="mr-4" onClick={props.onCancel}>
+            <UButton type="default" class="mr-4" onClick={props.onCancel}>
               {props.cancelText}
             </UButton>
           )}
-          <UButton type="primary" size="large" onClick={onSubmit}>
+          <UButton type="primary" onClick={onSubmit}>
             {props.submitText}
           </UButton>
         </div>

@@ -44,7 +44,7 @@ const UPaginatedList = defineComponent({
     return () => (
       <>
         {props.children?.(data)}
-        {(!props.hidePaginationOnSinglePage || data.total > 0) && (
+        {(!props.hidePaginationOnSinglePage || data.total > data.dataSource.length) && (
           <div class="u-paginated-list">
             <UPagination
               v-model:page={data.page}
