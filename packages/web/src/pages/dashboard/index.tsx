@@ -1,4 +1,4 @@
-import { UCard } from '@comunion/components'
+import { UCard, UAddress } from '@comunion/components'
 import { computed, defineComponent, onMounted, ref } from 'vue'
 import Bookmarks from './components/Bookmarks'
 import Bounties from './components/Bounties'
@@ -60,10 +60,8 @@ const DashboardPage = defineComponent({
                     <div class="font-orbitron font-600 text-[20px] leading-6 mb-3">
                       {myProfile.value?.name}
                     </div>
-                    {/*TODO after wallet address component completed, replace this */}
                     <div class="font-opensans font-400 text-[14px] leading-5 text-primary">
-                      {' '}
-                      {wallet?.walletAddress}
+                      <UAddress address={wallet?.walletAddress} />
                     </div>
                   </div>
                 </div>
