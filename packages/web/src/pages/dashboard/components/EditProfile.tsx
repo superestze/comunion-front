@@ -1,15 +1,15 @@
 import { FormFactoryField, UDrawer, UFormFactory } from '@comunion/components'
-import { FormData } from '@comunion/components/src'
 import { PlusOutlined } from '@comunion/icons'
 import { defineComponent, PropType, ref } from 'vue'
 import { useUserProfile } from '@/providers'
-import { services } from '@/services'
+import { ServiceReturn, services } from '@/services'
 
 const EditProfile = defineComponent({
   name: 'EditProfile',
   props: {
     myProfile: {
-      type: Object as PropType<FormData>
+      type: Object as PropType<ServiceReturn<'account@comer-profile-get'>>,
+      required: true
     }
   },
   setup(props, ctx) {
@@ -92,7 +92,7 @@ const EditProfile = defineComponent({
         <UDrawer title="Edit" v-model:show={show.value}>
           {show.value && (
             <UFormFactory
-              initialValues={props?.myProfile}
+              initialValues={props.myProfile}
               fields={fields}
               showCancel={true}
               submitText="Confirm"
