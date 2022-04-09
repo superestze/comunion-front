@@ -15,7 +15,7 @@ const StartupCard = defineComponent({
     const { startup } = props
 
     const setStartup = () => {
-      router.push({ path: '/startupset' })
+      router.push({ path: '/startupset', query: { startupId: startup.id } })
     }
     return () => (
       <div class="h-28 w-full flex items-center">

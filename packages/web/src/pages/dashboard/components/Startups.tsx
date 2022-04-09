@@ -15,7 +15,7 @@ const Startups = defineComponent({
           trigger={
             <span class="flex flex-row items-center text-primary font-opensans font-700 text-[14px] tracking-2px cursor-pointer">
               <PlusOutlined class="h-4 mr-3 w-4" />
-              CREATE NEW{' '}
+              CREATE NEW
             </span>
           }
         />

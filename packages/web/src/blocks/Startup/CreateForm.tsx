@@ -13,33 +13,52 @@ import {
 } from '@comunion/components'
 import { TipOutlined, CloseOutlined, PlusOutlined } from '@comunion/icons'
 import { utils } from 'ethers'
-import { defineComponent, PropType, reactive, ref } from 'vue'
+import { computed, defineComponent, PropType, reactive, ref } from 'vue'
 import { STARTUP_TYPES, StartupTypesType } from '@/constants'
 import { useStartupContract, useErc20Contract } from '@/contracts'
+import { StartupItem } from '@/types'
+
+enum StartupModes {
+  NONE = 0,
+  ESG = 1,
+  NGO = 2,
+  DAO = 3,
+  COM = 4
+}
 
 const CreateStartupForm = defineComponent({
   name: 'CreateStartupForm',
   props: {
     onCancel: {
       type: Function as PropType<() => void>
+    },
+    startup: {
+      type: Object as PropType<StartupItem>,
+      default: {}
     }
   },
   setup(props, ctx) {
+    const { logo, name, mode, hashTags, mission, overview, tokenContractAddress, wallets } =
+      props.startup
     const defaultModel = {
-      logo: '',
-      name: '',
-      type: '',
-      tags: [] as string[],
-      mission: '',
-      overview: '',
-      tokenContract: '',
-      composes: [
-        {
-          name: '',
-          address: ''
-        }
-      ]
+      logo: logo || '',
+      name: name || '',
+      type: StartupModes[mode] || '',
+      tags: (hashTags || []).map(t => t.name) as string[],
+      mission: mission || '',
+      overview: overview || '',
+      tokenContract: tokenContractAddress || '',
+      composes:
+        wallets?.length > 0
+          ? wallets.map(w => ({ name: w.walletName, address: w.walletAddress }))
+          : [
+              {
+                name: '',
+                address: ''
+              }
+            ]
     }
+
     const defaultTokenInfo = {
       name: '',
       symbol: '',
@@ -190,6 +209,10 @@ const CreateStartupForm = defineComponent({
       tokenContract: [{ required: true, message: 'Token contract is required', trigger: 'blur' }],
       composes: [{ required: true, type: 'array', min: 1 }]
     }
+
+    const isEditStartup = computed(() => {
+      return Object.keys(props.startup).length !== 0
+    })
     return () => (
       <UForm ref={formRef} rules={allRules} model={model}>
         <p class="mb-7 u-card-title1">INFO SETTING</p>
@@ -278,12 +301,14 @@ const CreateStartupForm = defineComponent({
             Submit
           </UButton>
         </div>
-        <div class="mt-6 text-grey3 u-caption">
-          When you click submit button，you have entered all informations of start-up that will be
-          submited to Blockchain . It's similar to how you register a company in the Trade and
-          Industry Bureau，meanwhile you have builded your start-up in blockchain with zero cost and
-          much more efficient.
-        </div>
+        {!isEditStartup && (
+          <div class="mt-6 text-grey3 u-caption">
+            When you click submit button，you have entered all informations of start-up that will be
+            submited to Blockchain . It's similar to how you register a company in the Trade and
+            Industry Bureau，meanwhile you have builded your start-up in blockchain with zero cost
+            and much more efficient.
+          </div>
+        )}
       </UForm>
     )
   }

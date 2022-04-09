@@ -1,9 +1,15 @@
 import { UInput, UInputGroup, UButton } from '@comunion/components'
-import { defineComponent, ref } from 'vue'
+import { defineComponent, PropType, ref } from 'vue'
 import TeamCard from '@/pages/StartupSet/components/TeamCard'
+import { StartupItem } from '@/types'
 
 const TeamSetting = defineComponent({
   name: 'TeamSetting',
+  props: {
+    startup: {
+      type: Object as PropType<StartupItem>
+    }
+  },
   setup(props, ctx) {
     const searchMember = () => {
       console.log(inputMember.value)

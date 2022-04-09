@@ -1,14 +1,28 @@
-import { defineComponent, ref } from 'vue'
+import { defineComponent, PropType, ref } from 'vue'
+import { useRouter } from 'vue-router'
 import CreateStartupForm from '../../../blocks/Startup/CreateForm'
+import { StartupItem } from '@/types'
 
 const StartupSetting = defineComponent({
   name: 'StartupSetting',
-  setup(prop, ctx) {
+  props: {
+    startup: {
+      type: Object as PropType<StartupItem>,
+      require: true
+    }
+  },
+  setup(props, ctx) {
     const show = ref(false)
+    const router = useRouter()
+
+    const onCancel = () => {
+      show.value = false
+      router.push({ path: '/dashboard' })
+    }
 
     return () => (
       <div>
-        <CreateStartupForm onCancel={() => (show.value = false)} />
+        <CreateStartupForm startup={props.startup} onCancel={onCancel} />
       </div>
     )
   }
