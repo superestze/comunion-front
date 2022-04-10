@@ -18,7 +18,7 @@ const StartupCard = defineComponent({
     return () => (
       <div class="h-28 w-full flex items-center">
         <div class="h-full flex items-center w-22">
-          <ULazyImage src={startup.logo} class="h-18 w-18 rounded"></ULazyImage>
+          <ULazyImage src={startup.logo} class="h-18 w-18 rounded" />
         </div>
         <div class="border-b-1 h-full w-full flex items-center ml-6 border-gray-5">
           <div class="content">
