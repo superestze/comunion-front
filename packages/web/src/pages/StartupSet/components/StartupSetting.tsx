@@ -1,6 +1,6 @@
-import { defineComponent, PropType, ref } from 'vue'
+import { defineComponent, PropType } from 'vue'
 import { useRouter } from 'vue-router'
-import CreateStartupForm from '../../../blocks/Startup/CreateForm'
+import EditStartupForm from '@/blocks/Startup/EditForm'
 import { StartupItem } from '@/types'
 
 const StartupSetting = defineComponent({
@@ -12,17 +12,15 @@ const StartupSetting = defineComponent({
     }
   },
   setup(props, ctx) {
-    const show = ref(false)
     const router = useRouter()
 
     const onCancel = () => {
-      show.value = false
       router.push({ path: '/dashboard' })
     }
 
     return () => (
       <div>
-        <CreateStartupForm startup={props.startup} onCancel={onCancel} />
+        <EditStartupForm startup={props.startup} onCancel={onCancel} />
       </div>
     )
   }

@@ -37,7 +37,7 @@ const StartupCard = defineComponent({
               ))}
             </div>
           </div>
-          <div class="justify-end ml-auto">
+          <div class="justify-end ml-auto mr-1">
             <UButton
               class="w-30 h-12  font-opensans rounded-2 text-white text-[16px]"
               type="primary"

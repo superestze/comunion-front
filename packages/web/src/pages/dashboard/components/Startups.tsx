@@ -1,6 +1,6 @@
-import { UCard, UDeveloping, UTabPane, UTabs } from '@comunion/components'
+import { UCard, UDeveloping, UScrollList, UTabPane, UTabs } from '@comunion/components'
 import { PlusOutlined } from '@comunion/icons'
-import { defineComponent, onMounted, ref } from 'vue'
+import { defineComponent, onMounted, reactive, ref } from 'vue'
 import StartupCard from './StartupCard'
 import CreateStartupBlock from '@/blocks/Startup/Create'
 import { services } from '@/services'
@@ -8,6 +8,17 @@ import { services } from '@/services'
 const Startups = defineComponent({
   name: 'Startups',
   setup(prop, ctx) {
+    const pagination = reactive<{
+      pageSize: number
+      total: number
+      page: number
+      loading: boolean
+    }>({
+      pageSize: 4,
+      total: 0,
+      page: 1,
+      loading: false
+    })
     const myCreatedStartups = ref([])
     const slots = {
       'header-extra': () => (
@@ -21,14 +32,22 @@ const Startups = defineComponent({
         />
       )
     }
-    const getCreatedStartups = async (page = 1, pageSize = 4) => {
+    const getCreatedStartups = async () => {
       const { error, data } = await services['startup@startup-list-me']({
-        limit: pageSize,
-        offset: pageSize * (page - 1)
+        limit: pagination.pageSize,
+        offset: pagination.pageSize * (pagination.page - 1)
       })
       if (!error) {
-        myCreatedStartups.value = data.list
+        myCreatedStartups.value = [...myCreatedStartups.value, ...data.list]
+        pagination.total = data.total
       }
+    }
+
+    const onLoadMore = async (p: number) => {
+      pagination.loading = true
+      pagination.page = p
+      await getCreatedStartups()
+      pagination.loading = false
     }
 
     onMounted(() => {
@@ -46,12 +65,20 @@ const Startups = defineComponent({
           <UTabPane name="WHAT I PARTICIPATED" tab="WHAT I PARTICIPATED">
             <UDeveloping />
           </UTabPane>
-          <UTabPane name="INITIATED BY ME" tab="INITIATED BY ME">
-            {myCreatedStartups.value.length ? (
-              myCreatedStartups.value.map(startup => <StartupCard startup={startup} />)
-            ) : (
-              <UDeveloping />
-            )}
+          <UTabPane name="INITIATED BY ME" tab="INITIATED BY ME" class="h-112">
+            <UScrollList
+              triggered={pagination.loading}
+              page={pagination.page}
+              pageSize={pagination.pageSize}
+              total={pagination.total}
+              onLoadMore={onLoadMore}
+            >
+              {myCreatedStartups.value.length ? (
+                myCreatedStartups.value.map(startup => <StartupCard startup={startup} />)
+              ) : (
+                <UDeveloping />
+              )}
+            </UScrollList>
           </UTabPane>
         </UTabs>
       </UCard>
