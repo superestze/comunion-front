@@ -26,16 +26,15 @@ const StartupCard = defineComponent({
           <div class="content">
             <div class="font-opensans font-600 text-[20px] mb-2 leading-6">{startup.name}</div>
             <div class="divide-x">
-              {/* TODO */}
-              <span class="pr-2 tracking-normal font-opensans font-400 text-[14px] leading-5">
-                Graphic design
-              </span>
-              <span class="pl-2 pr-2 pr-2 tracking-normal font-opensans font-400 text-[14px] leading-5">
-                UI design
-              </span>
-              <span class="pl-2 pr-2 pr-2 tracking-normal font-opensans font-400 text-[14px] leading-5">
-                Marketing
-              </span>
+              {startup.hashTags.map((tag, i) => (
+                <span
+                  class={`${
+                    i !== 0 ? 'pl-2' : ''
+                  } pr-2 tracking-normal font-opensans font-400 text-[14px] leading-5`}
+                >
+                  {tag.name}
+                </span>
+              ))}
             </div>
           </div>
           <div class="justify-end ml-auto">
