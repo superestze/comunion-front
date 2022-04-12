@@ -1,5 +1,5 @@
 import { UButton, ULogo } from '@comunion/components'
-import { GithubFilled, GoogleFilled, MoreOutlined, WalletOutlined } from '@comunion/icons'
+import { GithubFilled, GoogleFilled, WalletOutlined } from '@comunion/icons'
 import { randomStr } from '@comunion/utils'
 import { defineComponent } from 'vue'
 import leftBgImg from './assets/bg.jpg'
@@ -10,6 +10,7 @@ import {
   GOOGLE_CALLBACK_URL,
   GOOGLE_CLIENT_ID
 } from '@/constants'
+import MoreNavigationPage from '@/pages/auth/login/components/More'
 import { useWallet } from '@/providers'
 // import { useUserProfile, useWallet } from '@/providers'
 
@@ -51,7 +52,7 @@ const LoginPage = defineComponent({
           </p>
         </div>
         <div class="flex flex-col flex-1 pl-1/8 relative justify-center lg:pl-1/5">
-          <MoreOutlined class="top-9 right-15 absolute" />
+          <MoreNavigationPage />
           <h2 class="text-[36px] leading-9">Sign to Comunion</h2>
           <UButton
             class="h-16 mt-[30px] text-white mb-3 text-[21px] w-105 relative"
