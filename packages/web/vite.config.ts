@@ -13,7 +13,7 @@ import { layoutGroupedRoutes } from './src/routes'
 export default defineConfig({
   resolve: {
     alias: {
-      '@': path.resolve(__dirname, '/src'),
+      '@': path.resolve(__dirname, './src'),
       '@walletconnect/web3-provider': path.resolve(
         __dirname,
         './node_modules/@walletconnect/web3-provider/dist/umd/index.min.js'
