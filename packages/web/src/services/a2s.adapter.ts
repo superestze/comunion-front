@@ -67,7 +67,10 @@ export async function requestAdapter<T = any>(
   }
 }
 
-export async function upload(file: File, onProgress: (percent: number) => void): Promise<string | null> {
+export async function upload(
+  file: File,
+  onProgress: (percent: number) => void
+): Promise<string | null> {
   const formData = new FormData()
   formData.append('file', file)
   const token = getToken()
@@ -80,13 +83,13 @@ export async function upload(file: File, onProgress: (percent: number) => void):
             'X-COMUNION-AUTHORIZATION': token
           }
         : {},
-      onUploadProgress: (event) => {
+      onUploadProgress: event => {
         const percent = Math.round((event.loaded / event.total) * 100) / 100
         onProgress(percent)
       }
     })
     return data.Url
-  } catch(error) {
+  } catch (error) {
     onErrorHandler(error).data
     return null
   }
