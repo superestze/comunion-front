@@ -7,8 +7,8 @@ module.exports = {
     'stylelint-config-standard',
     'stylelint-config-css-modules',
     'stylelint-config-rational-order',
-    'stylelint-config-prettier',
-    'stylelint-no-unsupported-browser-features'
+    'stylelint-no-unsupported-browser-features',
+    'stylelint-config-prettier'
   ],
   plugins: ['stylelint-order', 'stylelint-declaration-block-no-ignored-properties'],
   rules: {
