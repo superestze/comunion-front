@@ -1,7 +1,8 @@
-import { UCard } from '@comunion/components'
+import { UCard, UAddress } from '@comunion/components'
 import { computed, defineComponent, onMounted, ref } from 'vue'
 import Bookmarks from './components/Bookmarks'
 import Bounties from './components/Bounties'
+import EditProfile from './components/EditProfile'
 import Proposals from './components/Proposals'
 import SocialLinks from './components/SocialLinks'
 import Startups from './components/Startups'
@@ -40,6 +41,9 @@ const DashboardPage = defineComponent({
         }
       ]
     })
+    const slots = {
+      'header-extra': () => <EditProfile myProfile={myProfile.value} />
+    }
 
     return () => (
       <div class="dashboard">
@@ -51,6 +55,7 @@ const DashboardPage = defineComponent({
             title="MY PROFILE"
             size="small"
             class="p-10 font-700 font-4 leading-6 tracking-2px"
+            v-slots={slots}
           >
             <div class="flex">
               <div class="flex flex-col flex-1 mt-7">
@@ -60,10 +65,8 @@ const DashboardPage = defineComponent({
                     <div class="font-orbitron font-600 text-[20px] leading-6 mb-3">
                       {myProfile.value?.name}
                     </div>
-                    {/*TODO after wallet address component completed, replace this */}
                     <div class="font-opensans font-400 text-[14px] leading-5 text-primary">
-                      {' '}
-                      {wallet?.walletAddress}
+                      <UAddress address={wallet?.walletAddress} />
                     </div>
                   </div>
                 </div>
