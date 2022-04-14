@@ -1,6 +1,7 @@
-import { FormFactoryField, UDrawer, UFormFactory } from '@comunion/components'
+import { FormFactoryField, UDrawer, UFormFactory, ULazyImage } from '@comunion/components'
 import { PlusOutlined } from '@comunion/icons'
 import { defineComponent, PropType, ref } from 'vue'
+import AvatarSelect from '@/blocks/Profile/AvatarSelect'
 import { useUserProfile } from '@/providers'
 import { ServiceReturn, services } from '@/services'
 
@@ -63,14 +64,19 @@ const EditProfile = defineComponent({
     const onCancel = () => {
       show.value = false
     }
-
+    const showAvatarModal = ref(false)
+    const avatar = ref(props?.myProfile?.avatar || '')
+    const showAvatarSelect = () => {
+      showAvatarModal.value = true
+    }
     const onSubmit = async (
       values: Parameters<typeof services['account@comer-profile-update']>[0]
     ) => {
       const { error } = await services['account@comer-profile-update']({
-        avatar: 'https://comunion-avatars.s3.ap-northeast-1.amazonaws.com/avatar1.svg',
-        ...values
+        ...values,
+        avatar: avatar.value
       })
+
       if (!error) {
         setUser({ ...user.user, ...values })
       }
@@ -79,10 +85,9 @@ const EditProfile = defineComponent({
 
     return () => (
       <>
-        {/* plus icon */}
         <span
           onClick={editProfile}
-          class="flex flex-row items-center text-primary font-opensans font-700 text-[14px] tracking-2px cursor-pointer"
+          class="u-label2 flex flex-row items-center text-primary cursor-pointer"
         >
           <PlusOutlined class="h-4 mr-3 w-4" />
           EDIT
@@ -91,15 +96,28 @@ const EditProfile = defineComponent({
         {/* sidebar drawer */}
         <UDrawer title="Edit" v-model:show={show.value}>
           {show.value && (
-            <UFormFactory
-              initialValues={props.myProfile}
-              fields={fields}
-              showCancel={true}
-              submitText="Confirm"
-              cancelText="Cancel"
-              onSubmit={onSubmit}
-              onCancel={onCancel}
-            />
+            <>
+              <div class="flex flex-row items-center mb-6">
+                <div class="mr-4">
+                  <ULazyImage src={avatar.value} class="h-20 w-20 rounded" />
+                </div>
+                <a class="u-title2 text-primary cursor-pointer" onClick={showAvatarSelect}>
+                  Choose your avatar
+                </a>
+              </div>
+
+              <UFormFactory
+                initialValues={props.myProfile}
+                fields={fields}
+                showCancel={true}
+                submitText="Confirm"
+                cancelText="Cancel"
+                onSubmit={onSubmit}
+                onCancel={onCancel}
+              />
+
+              <AvatarSelect v-model:show={showAvatarModal.value} v-model:avatar={avatar.value} />
+            </>
           )}
         </UDrawer>
       </>
