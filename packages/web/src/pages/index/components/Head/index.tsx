@@ -75,7 +75,7 @@ export default defineComponent({
               />
               {logged.value ? (
                 <RouterLink
-                  to="/dashboard"
+                  to="/welcome"
                   class="bg-primary cursor-pointer rounded-4px h-32px text-white text-bold mr-32px text-center text-14px leading-32px w-146px"
                 >
                   {/* <UserAvatar /> */}

@@ -56,16 +56,16 @@ const Startups = defineComponent({
 
     return () => (
       <UCard
-        title="MY STARTUPS"
+        title="STARTUPS"
         size="small"
         class="p-10 font-700 font-4 leading-6 tracking-2px"
         v-slots={slots}
       >
         <UTabs>
-          <UTabPane name="WHAT I PARTICIPATED" tab="WHAT I PARTICIPATED">
+          <UTabPane name="PARTICIPATED" tab="PARTICIPATED">
             <UDeveloping />
           </UTabPane>
-          <UTabPane name="INITIATED BY ME" tab="INITIATED BY ME" class="h-112">
+          <UTabPane name="CREATED BY ME" tab="CREATED BY ME" class="h-112">
             <UScrollList
               triggered={pagination.loading}
               page={pagination.page}
