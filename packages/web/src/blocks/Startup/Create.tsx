@@ -1,33 +1,42 @@
 import { UDrawer } from '@comunion/components'
-import { defineComponent, ref } from 'vue'
-import type { PropType, VNode } from 'vue'
+import { defineComponent, ref, VNode } from 'vue'
 import CreateStartupForm from './CreateForm'
-import { useWallet } from '@/providers'
+import { useWalletStore } from '@/stores'
 
 const CreateStartupBlock = defineComponent({
   name: 'CreateStartupBlock',
-  props: {
-    trigger: {
-      type: Object as PropType<VNode>
-    }
-  },
-  setup(props, ctx) {
+  setup() {
     const show = ref(false)
-    const { ensureWalletConnected } = useWallet()
+    const walletStore = useWalletStore()
 
+    const onClose = () => {
+      show.value = false
+    }
+
+    const onClick = async () => {
+      await walletStore.ensureWalletConnected()
+      show.value = true
+    }
+
+    return { onClose, onClick, show }
+  },
+  render() {
+    const { $slots, onClick, onClose } = this
+    let trigger: VNode | null = null
     // add trigger action
-    if (props.trigger) {
-      props.trigger.props.onClick = async () => {
-        await ensureWalletConnected()
-        show.value = true
+    if ($slots.default) {
+      trigger = $slots.default()?.[0]
+      if (trigger) {
+        trigger.props = trigger.props || {}
+        trigger.props.onClick = onClick
       }
     }
 
-    return () => (
+    return (
       <>
-        {props.trigger}
-        <UDrawer title="Create startup" v-model:show={show.value}>
-          {show.value && <CreateStartupForm onCancel={() => (show.value = false)} />}
+        {trigger}
+        <UDrawer title="Create startup" maskClosable={false} v-model:show={this.show}>
+          {this.show && <CreateStartupForm onCancel={onClose} />}
         </UDrawer>
       </>
     )

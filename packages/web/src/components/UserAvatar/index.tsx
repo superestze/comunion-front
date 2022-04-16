@@ -1,20 +1,19 @@
+import { ULazyImage } from '@comunion/components'
 import { defineComponent } from 'vue'
-import { useUserProfile } from '@/providers'
+import { useUserStore } from '@/stores'
 
 const UserAvatar = defineComponent({
   name: 'UserAvatar',
   // props: {},
-  setup(props, ctx) {
-    const { logged, user } = useUserProfile()
+  setup() {
+    const userStore = useUserStore()
     return () =>
-      logged.value ? (
+      userStore.logged ? (
         <div class="inline-flex items-center truncate">
-          <img src={user.user.avatar} class="rounded-full h-10 w-10" />
-          {user.user.name && <span class="text-sm ml-2">{user.user.name}</span>}
+          <ULazyImage src={userStore.profile?.avatar ?? ''} class="rounded-full h-10 w-10" />
+          {userStore.profile?.name && <span class="text-sm ml-2">{userStore.profile.name}</span>}
         </div>
-      ) : (
-        <span>123</span>
-      )
+      ) : undefined
   }
 })
 

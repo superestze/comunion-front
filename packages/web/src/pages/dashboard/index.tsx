@@ -6,13 +6,13 @@ import EditProfile from './components/EditProfile'
 import Proposals from './components/Proposals'
 import SocialLinks from './components/SocialLinks'
 import Startups from './components/Startups'
-import { useWallet } from '@/providers'
 import { ServiceReturn, services } from '@/services'
+import { useWalletStore } from '@/stores'
 
 const DashboardPage = defineComponent({
   name: 'Dashboard',
   setup() {
-    const { wallet } = useWallet()
+    const walletStore = useWalletStore()
     const myProfile = ref<ServiceReturn<'account@comer-profile-get'>>()
     onMounted(async () => {
       const { error, data } = await services['account@comer-profile-get']()
@@ -33,7 +33,7 @@ const DashboardPage = defineComponent({
         },
         {
           label: 'Skills',
-          value: myProfile.value?.skills.map(skill => skill.name).join(' | ')
+          value: myProfile.value?.skills?.map(skill => skill.name).join(' | ')
         },
         {
           label: 'Bio',
@@ -66,7 +66,7 @@ const DashboardPage = defineComponent({
                       {myProfile.value?.name}
                     </div>
                     <div class="font-opensans font-400 text-[14px] leading-5 text-primary">
-                      <UAddress address={wallet?.walletAddress} />
+                      {walletStore.address && <UAddress address={walletStore.address} />}
                     </div>
                   </div>
                 </div>

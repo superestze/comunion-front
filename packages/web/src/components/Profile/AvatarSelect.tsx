@@ -1,7 +1,7 @@
 import { UButton, UModal } from '@comunion/components'
 import ULazyImage from '@comunion/components/src/ULazyImage/LazyImage'
 import { defineComponent, ref } from 'vue'
-import avatars from '@/blocks/Profile/avatars'
+import avatars from '@/components/Profile/avatars'
 
 const AvatarSelect = defineComponent({
   name: 'AvatarSelect',

@@ -12,6 +12,40 @@ export const services = {
       ...extract('GET', args, ['address'], [])
     })
   },
+  'account@comer-info-get'(args: { comerId: any }) {
+    return requestAdapter<{
+      id: number
+      createdAt: string
+      updatedAt: string
+      isDeleted: boolean
+      Address: string
+      comerProfile?: {
+        id: number
+        createdAt: string
+        updatedAt: string
+        isDeleted: boolean
+        comerID: number
+        name: string
+        avatar: string
+        location: string
+        website: string
+        bio: string
+        skills: {
+          id: number
+          createdAt: string
+          updatedAt: string
+          isDeleted: boolean
+          name: string
+          category: string
+          isIndex: boolean
+        }[]
+      }
+    }>({
+      url: replacePath('/account/comer/{comerId}', args),
+      method: 'GET',
+      ...extract('GET', args, [], ['comerId'])
+    })
+  },
   'account@wallet-login'(args: { signature: string; address: string }) {
     return requestAdapter<{
       name: string
@@ -145,7 +179,7 @@ export const services = {
       ...extract('PUT', args, [], [])
     })
   },
-  'account@comer-profile-get'(args?: {
+  'account@comer-profile-get'(args: {
     name: string
     avatar: string
     location: string
@@ -160,7 +194,7 @@ export const services = {
       isDeleted?: boolean
       comerID?: number
       name?: string
-      avatar: string
+      avatar?: string
       location?: string
       website?: string
       bio?: string
@@ -179,18 +213,6 @@ export const services = {
     })
   },
 
-  'startup@startup-follow'(args: {
-    /**
-     * @example 1
-     */
-    startupId: any
-  }) {
-    return requestAdapter<{}>({
-      url: replacePath('/cores/startups/{startupId}/follow', args),
-      method: 'POST',
-      ...extract('POST', args, [], ['startupId'])
-    })
-  },
   'startup@startup-get'(args: { startupId: any }) {
     return requestAdapter<{
       id: number
@@ -200,23 +222,23 @@ export const services = {
       comerID: number
       name: string
       /**
-       * @description 0:NONE,1:ESG,2:NGO,3:DAO,4:COM
+       * @description 1:ESG,2:NGO,3:DAO,4:COM
        */
       mode: number
       logo: string
-      overview: string
-      hashTags: {
-        id:	number,
-        createdAt:	string,
-        updatedAt:	string,
-        isDeleted:	boolean,
-        name:	string,
-        category:	string,
-        isIndex:	boolean,
-      }[],
       mission: string
       tokenContractAddress: string
+      overview: string
       isSet: boolean
+      hashTags: {
+        id: number
+        createdAt: string
+        updatedAt: string
+        isDeleted: boolean
+        name: string
+        category: string
+        isIndex: boolean
+      }[]
       wallets: {
         id: number
         createdAt: string
@@ -231,6 +253,102 @@ export const services = {
       url: replacePath('/cores/startups/{startupId}', args),
       method: 'GET',
       ...extract('GET', args, [], ['startupId'])
+    })
+  },
+  'startup@start-team-meabers-create'(
+    args: {
+      startupId: any
+      comerId: any
+    } & {
+      position: string
+    }
+  ) {
+    return requestAdapter<{}>({
+      url: replacePath('/cores/startups/{startupId}/teamMembers/{comerId}', args),
+      method: 'POST',
+      ...extract('POST', args, [], ['startupId', 'comerId'])
+    })
+  },
+  'startup@start-team-meabers-list'(
+    args: {
+      startupId: any
+    } & {
+      limit: any
+      offset: any
+    }
+  ) {
+    return requestAdapter<{
+      list: {
+        ID: number
+        CreatedAt: string
+        UpdatedAt: string
+        comerID: number
+        startupID: number
+        position: string
+        comer?: {
+          id: number
+          createdAt: string
+          updatedAt: string
+          isDeleted: boolean
+          Address: string
+        }
+        comerProfile?: {
+          id: number
+          createdAt: string
+          updatedAt: string
+          isDeleted: boolean
+          comerID: number
+          name: string
+          avatar: string
+          location: string
+          website: string
+          bio: string
+          skills?: any
+        }
+      }[]
+      total: number
+    }>({
+      url: replacePath('/cores/startups/{startupId}/teamMembers', args),
+      method: 'GET',
+      ...extract('GET', args, ['limit', 'offset'], ['startupId'])
+    })
+  },
+  'startup@start-team-meabers-update'(
+    args: {
+      startupId: any
+      comerId: any
+    } & {
+      position: string
+    }
+  ) {
+    return requestAdapter<{}>({
+      url: replacePath('/cores/startups/{startupId}/teamMembers/{comerId}', args),
+      method: 'PUT',
+      ...extract('PUT', args, [], ['startupId', 'comerId'])
+    })
+  },
+  'startup@startup-follow'(args: {
+    /**
+     * @example 1
+     */
+    startupId: any
+  }) {
+    return requestAdapter<{}>({
+      url: replacePath('/cores/startups/{startupId}/follow', args),
+      method: 'POST',
+      ...extract('POST', args, [], ['startupId'])
+    })
+  },
+  'startup@start-team-meabers-delete'(
+    args: {
+      startupId: any
+      comerId: any
+    } & {}
+  ) {
+    return requestAdapter<{}>({
+      url: replacePath('/cores/startups/{startupId}/teamMembers/{comerId}', args),
+      method: 'DELETE',
+      ...extract('DELETE', args, [], ['startupId', 'comerId'])
     })
   },
   'startup@startup-list'(args: {
@@ -251,13 +369,23 @@ export const services = {
         comerID: number
         name: string
         /**
-         * @description NONE,ESG,NGO,DAO,COM
+         * @description 1:ESG,2:NGO,3:DAO,4:COM
          */
-        mode: string
+        mode: number
         logo: string
         mission: string
         tokenContractAddress: string
+        overview: string
         isSet: boolean
+        hashTags: {
+          id: number
+          createdAt: string
+          updatedAt: string
+          isDeleted: boolean
+          name: string
+          category: string
+          isIndex: boolean
+        }[]
         wallets: {
           id: number
           createdAt: string
@@ -469,7 +597,7 @@ export const services = {
     })
   },
 
-  'misc@文件-上传'(
+  'misc@file-upload'(
     args: // file : File
     FormData
   ) {

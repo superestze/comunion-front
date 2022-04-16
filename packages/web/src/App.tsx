@@ -7,13 +7,22 @@ import {
 } from '@comunion/components'
 import { defineComponent } from 'vue'
 import { RouterView } from 'vue-router'
-import { GlobalConfigProvider, UserProfileProvider, WalletProvider } from './providers'
+import WalletConnectBlock from './blocks/WalletConnect'
 import { services } from './services'
 import { upload as onUpload } from './services/a2s.adapter'
+import { useUserStore, useWalletStore } from './stores'
 
 export default defineComponent({
   name: 'App',
   setup() {
+    const userStore = useUserStore()
+    const walletStore = useWalletStore()
+
+    // init user state
+    userStore.init()
+    // init wallet state
+    walletStore.init()
+
     const onSearchHash = async (value: string, category: string) => {
       const { error, data } = await services['meta@tag-list']({
         isIndex: true,
@@ -30,17 +39,12 @@ export default defineComponent({
         <UMessageProvider>
           <UMessage />
         </UMessageProvider>
-        <GlobalConfigProvider>
-          <UUploadProvider onUpload={onUpload}>
-            <UHashInputProvider onSearch={onSearchHash}>
-              <UserProfileProvider>
-                <WalletProvider>
-                  <RouterView />
-                </WalletProvider>
-              </UserProfileProvider>
-            </UHashInputProvider>
-          </UUploadProvider>
-        </GlobalConfigProvider>
+        <UUploadProvider onUpload={onUpload}>
+          <UHashInputProvider onSearch={onSearchHash}>
+            {userStore.inited && walletStore.inited && <RouterView />}
+          </UHashInputProvider>
+        </UUploadProvider>
+        <WalletConnectBlock />
       </UStyleProvider>
     )
   }
