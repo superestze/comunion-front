@@ -30,12 +30,12 @@ const StartupsPage = defineComponent({
     return () => (
       <div class="mb-10">
         <div class="flex my-4">
-          <h3 class="text-grey1 u-h3">{total.value.toLocaleString()} Startups available</h3>
+          <h3 class="text-grey1 u-h3">{total.value.toLocaleString()} Startups</h3>
           <div class="flex ml-auto self-end items-center u-title2">
             Filter by:
             <UDropdownFilter
               options={STARTUP_TYPES.map(item => ({ label: item, value: item }))}
-              placeholder="Company Type"
+              placeholder="Startup Type"
               class="ml-8 w-37"
               clearable
               v-model:value={startupType.value}
