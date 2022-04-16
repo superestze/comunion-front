@@ -42,7 +42,7 @@ const DashboardPage = defineComponent({
       ]
     })
     const slots = {
-      'header-extra': () => <EditProfile myProfile={myProfile.value} />
+      'header-extra': () => !!myProfile.value && <EditProfile myProfile={myProfile.value} />
     }
 
     return () => (

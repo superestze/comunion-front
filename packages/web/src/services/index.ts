@@ -160,7 +160,7 @@ export const services = {
       isDeleted?: boolean
       comerID?: number
       name?: string
-      avatar?: string
+      avatar: string
       location?: string
       website?: string
       bio?: string
