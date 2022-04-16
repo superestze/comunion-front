@@ -14,10 +14,10 @@ export interface BaseResponse<T = any> {
 function getHeaders(): AxiosRequestHeaders {
   const userStore = useUserStore()
   return userStore.token
-        ? {
-            'X-COMUNION-AUTHORIZATION': userStore.token
-          }
-        : {}
+    ? {
+        'X-COMUNION-AUTHORIZATION': userStore.token
+      }
+    : {}
 }
 
 function onErrorHandler(error: any) {

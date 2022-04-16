@@ -27,7 +27,7 @@
     "gen:component": "ts-node scripts/generate.ts component",
     "gen:contract:g": "ts-node scripts/generate.ts contract goerli && npm run fix:contracts",
     "gen:contract:m": "ts-node scripts/generate.ts contract main && npm run fix:contracts",
-    "gen:api": "pnpm --filter @comunion/web run gen:api",
+    "gen:api": "pnpm --filter @comunion/web run gen:api && prettier packages/web/src/services --write",
     "stylint": "stylelint \"packages/*/src/**/*.{css,less,scss,sass,styl}\" --fix",
     "jslint": "eslint ./ --fix",
     "lint": "run-s stylint jslint"

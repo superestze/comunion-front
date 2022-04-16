@@ -206,14 +206,14 @@ export const services = {
       logo: string
       overview: string
       hashTags: {
-        id:	number,
-        createdAt:	string,
-        updatedAt:	string,
-        isDeleted:	boolean,
-        name:	string,
-        category:	string,
-        isIndex:	boolean,
-      }[],
+        id: number
+        createdAt: string
+        updatedAt: string
+        isDeleted: boolean
+        name: string
+        category: string
+        isIndex: boolean
+      }[]
       mission: string
       tokenContractAddress: string
       isSet: boolean
