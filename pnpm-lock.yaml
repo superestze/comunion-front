@@ -11,6 +11,7 @@ importers:
       '@types/node': ^17.0.21
       '@typescript-eslint/eslint-plugin': ^5.13.0
       '@typescript-eslint/parser': ^5.13.0
+      devmoji: ^2.3.0
       eslint: ^8.10.0
       eslint-config-prettier: ^8.5.0
       eslint-plugin-import: ^2.25.4
@@ -43,6 +44,7 @@ importers:
       '@types/node': 17.0.21
       '@typescript-eslint/eslint-plugin': 5.15.0_f2c49ce7d0e93ebcfdb4b7d25b131b28
       '@typescript-eslint/parser': 5.15.0_eslint@8.11.0+typescript@4.6.2
+      devmoji: 2.3.0
       eslint: 8.11.0
       eslint-config-prettier: 8.5.0_eslint@8.11.0
       eslint-plugin-import: 2.25.4_eslint@8.11.0
@@ -4929,6 +4931,15 @@ packages:
   /detect-newline/3.1.0:
     resolution: {integrity: sha512-TLz+x/vEXm/Y7P7wn1EJFNLxYpUD4TgMosxY6fAVJUnJMbupHBOncxyWUG9OpTaH9EBD7uFI5LfEgmMOc54DsA==}
     engines: {node: '>=8'}
+    dev: true
+
+  /devmoji/2.3.0:
+    resolution: {integrity: sha512-ErQdYUsE7tKxqDzQzRos6fKWaRIFUOJvMkQODq9iYDI3o5X6nxD78XEdGNYaW5AaJW4uxj+XQTkCuJkV86Qg6g==}
+    hasBin: true
+    dependencies:
+      chalk: 4.1.2
+      commander: 7.2.0
+      ts-interface-checker: 1.0.0
     dev: true
 
   /diff-sequences/27.5.1:
@@ -11640,6 +11651,10 @@ packages:
 
   /ts-interface-checker/0.1.13:
     resolution: {integrity: sha512-Y/arvbn+rrz3JCKl9C4kVNfTfSm2/mEp5FSz5EsZSANGPSlQrpRI5M4PKF+mJnE52jOO90PnPSc3Ur3bTQw0gA==}
+    dev: true
+
+  /ts-interface-checker/1.0.0:
+    resolution: {integrity: sha512-yUeWbFBDiwPodNqrqpvQpGWheL6PvNu2/pVAb9yy2vzdkkflCgwVA4U2akByPCXzYTum3/5/nB92yKuiLpSo/Q==}
     dev: true
 
   /ts-node/10.7.0_e79e62fe450383fd2d418267dc75e645:
