@@ -20,7 +20,7 @@ const StartupSetting = defineComponent({
 
     return () => (
       <div>
-        <EditStartupForm startup={props.startup} onCancel={onCancel} />
+        <EditStartupForm startup={props.startup!} onCancel={onCancel} />
       </div>
     )
   }

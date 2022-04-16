@@ -42,9 +42,16 @@ export interface RequestFunctionArgs {
   done?: boolean
 }
 
-export type ResponseObject<T> = {
-  error: boolean
-  data: T | null
-  message?: string
-  stack?: string | Error
-}
+export type ResponseObject<T> =
+  | {
+      error: true
+      data: null
+      message?: string
+      stack?: string | Error
+    }
+  | {
+      error: false
+      data: T
+      message?: string
+      stack?: string | Error
+    }

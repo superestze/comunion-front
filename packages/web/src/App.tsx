@@ -31,7 +31,7 @@ export default defineComponent({
         keyword: value,
         category
       })
-      return error ? [] : data.list.map(item => ({ label: item.name, value: item.id }))
+      return error ? [] : data!.list.map(item => ({ label: item.name, value: item.id }))
     }
 
     return () => (

@@ -4,6 +4,7 @@ import { defineComponent, onMounted, reactive, ref } from 'vue'
 import StartupCard from './StartupCard'
 import CreateStartupBlock from '@/blocks/Startup/Create'
 import { services } from '@/services'
+import { StartupItem } from '@/types'
 
 const Startups = defineComponent({
   name: 'Startups',
@@ -19,7 +20,7 @@ const Startups = defineComponent({
       page: 1,
       loading: false
     })
-    const myCreatedStartups = ref([])
+    const myCreatedStartups = ref<StartupItem[]>([])
     const slots = {
       'header-extra': () => (
         <CreateStartupBlock>
@@ -36,8 +37,9 @@ const Startups = defineComponent({
         offset: pagination.pageSize * (pagination.page - 1)
       })
       if (!error) {
-        myCreatedStartups.value = [...myCreatedStartups.value, ...data.list]
-        pagination.total = data.total
+        // @ts-ignore
+        myCreatedStartups.value = [...myCreatedStartups.value, ...data!.list]
+        pagination.total = data!.total
       }
     }
 

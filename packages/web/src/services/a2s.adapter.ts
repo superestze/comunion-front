@@ -38,7 +38,7 @@ function onErrorHandler(error: any) {
     error: true,
     data: null,
     message: msg
-  }
+  } as const
 }
 
 export async function requestAdapter<T = any>(
