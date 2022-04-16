@@ -1,7 +1,7 @@
 import { UTag, ULazyImage } from '@comunion/components'
-import { TeamOutlined } from '@comunion/icons'
 import { defineComponent, PropType } from 'vue'
 import styles from './StartupCard.module.css'
+import UTeamMembers from './TeamMembers'
 import { getStartupTypeFromNumber, StartupTypesType, STARTUP_TYPES_COLOR_MAP } from '@/constants'
 import { StartupItem } from '@/types'
 
@@ -21,7 +21,7 @@ const StartupCard = defineComponent({
     })
     const modeName = getStartupTypeFromNumber(props.startup.mode) as StartupTypesType
     return () => (
-      <div class="bg-white rounded h-80" style={styles.card_box}>
+      <div class="bg-white rounded h-80 relative">
         <div class={styles.cardBorder}></div>
         <div class="p-6">
           <div class="flex">
@@ -36,21 +36,11 @@ const StartupCard = defineComponent({
           <p class="h-10 mb-6 u-body1 line-clamp-2">{props.startup.mission}</p>
           <div class="flex flex-wrap gap-2">
             {hashtagsArray.map((key, value) => {
-              return value + 1 < 4 ? <UTag>{key}</UTag> : <UTag>+1</UTag>
+              return value + 1 < 4 ? <UTag key={value}>{key}</UTag> : <UTag key={value}>+1</UTag>
             })}
           </div>
           {/* <UTeam */}
-        </div>
-        <div class={styles.team_members}>
-          <div class="flex">
-            <span class={styles.members_svg}>
-              <TeamOutlined class={styles.members_icon} />
-            </span>
-            <span class={styles.members_span}>
-              <i class={styles.members_span_i}>1,342</i>
-            </span>
-            <span class={styles.members_span}>Members</span>
-          </div>
+          <UTeamMembers />
         </div>
       </div>
     )

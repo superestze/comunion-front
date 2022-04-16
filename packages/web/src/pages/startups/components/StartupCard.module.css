@@ -6,36 +6,12 @@
   border-top-right-radius: 4px;
 }
 
-.card_box {
-  position: relative;
-}
-
 .team_members {
-  position: absolute;
-  bottom: 1rem;
-  padding-left: 1.5rem;
+  @apply absolute bottom-3;
 }
 
 .members_svg {
-  display: inline-block;
-  width: 2rem;
-  height: 2rem;
-  overflow: hidden;
-  background: #d5cff4;
+  @apply w-7 h-7 bg-blue-100;
+
   border-radius: 50%;
-}
-
-.members_span {
-  padding-left: 1rem;
-  line-height: 2rem;
-}
-
-.members_span_i {
-  font-weight: bold;
-  font-size: 20px;
-}
-
-.members_icon {
-  margin: 0.3rem 0.2rem;
-  color: #5431f4;
 }
