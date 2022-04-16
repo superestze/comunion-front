@@ -4,14 +4,14 @@ import { defineComponent, ref } from 'vue'
 import { useRouter } from 'vue-router'
 import successImg from './assets/success.svg'
 import RegisterLayout from './components/Layout'
-import { useUserProfile } from '@/providers'
 import { services } from '@/services'
+import { useUserStore } from '@/stores'
 
 const RegisterProfilePage = defineComponent({
   name: 'RegisterProfilePage',
   setup() {
     const router = useRouter()
-    const { user, setUser } = useUserProfile()
+    const userStore = useUserStore()
     const success = ref(false)
     const fields: FormFactoryField[] = [
       {
@@ -59,11 +59,11 @@ const RegisterProfilePage = defineComponent({
       values: Parameters<typeof services['account@comer-profile-update']>[0]
     ) => {
       const { error } = await services['account@comer-profile-create']({
-        avatar: 'https://comunion-avatars.s3.ap-northeast-1.amazonaws.com/avatar1.svg',
-        ...values
+        ...values,
+        avatar: 'https://comunion-avatars.s3.ap-northeast-1.amazonaws.com/avatar1.svg'
       })
       if (!error) {
-        setUser({ ...user.user, ...values })
+        userStore.mergeProfile(values)
         success.value = true
       }
     }

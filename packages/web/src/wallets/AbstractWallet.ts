@@ -18,7 +18,7 @@ export default abstract class AbstractWallet {
     return this.getSigner().getAddress()
   }
   abstract checkAvaliable(): boolean
-  abstract prepare(): Promise<any> | any
+  abstract prepare(): Promise<string | undefined> | undefined
   sign(nonce: string): Promise<string> {
     return this._provider.getSigner().signMessage(nonce)
   }

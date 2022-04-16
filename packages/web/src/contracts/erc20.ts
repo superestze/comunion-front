@@ -1,5 +1,5 @@
 import { Contract } from 'ethers'
-import { useWallet } from '@/providers'
+import { useWalletStore } from '@/stores'
 
 const erc20ABI = `[
   {
@@ -226,9 +226,9 @@ const erc20ABI = `[
 `
 
 export function useErc20Contract(): (address: string) => Contract {
-  const { getWallet } = useWallet()
+  const walletStore = useWalletStore()
   return (address: string) => {
-    const provider = getWallet()?.getProvider()
+    const provider = walletStore.wallet?.getProvider()
     if (!provider) {
       throw new Error('Wallet is not initialized')
     }

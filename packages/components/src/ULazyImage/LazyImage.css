@@ -46,7 +46,7 @@
     @apply bg-grey5 inline-block overflow-hidden;
 
     &.failed {
-      @apply bg-error text-white inline-flex items-center justify-center;
+      @apply bg-grey4 text-white inline-flex items-center justify-center;
     }
   }
 }

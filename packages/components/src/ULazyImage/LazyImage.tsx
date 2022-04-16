@@ -10,6 +10,9 @@ export const ULazyImageProps = {
   alt: {
     type: String
   }
+  // defaultSrc: {
+  //   type: String
+  // }
 } as const
 
 export type ULazyImagePropsType = ImgHTMLAttributes & ExtractPropTypes<typeof ULazyImageProps>
@@ -52,7 +55,7 @@ const ULazyImage = defineComponent({
       ) : (
         <span class={['u-lazy-image-placeholder', { failed: errored.value }]} {...ctx.attrs}>
           {errored.value ? (
-            'Failed'
+            ''
           ) : (
             <svg
               class="u-lazy-image-waves"

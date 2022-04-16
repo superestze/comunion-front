@@ -4,6 +4,8 @@ import { defineComponent } from 'vue'
 import { RouterLink, RouterView } from 'vue-router'
 import styles from './default.module.css'
 import CreateStartupBlock from '@/blocks/Startup/Create'
+import UserAvatar from '@/components/UserAvatar'
+import WalletInfo from '@/components/WalletInfo'
 
 const DefaultLayout = defineComponent({
   name: 'DefaultLayout',
@@ -21,17 +23,17 @@ const DefaultLayout = defineComponent({
             >
               STARTUPS
             </RouterLink>
-            <CreateStartupBlock
-              trigger={
-                <UButton class="rounded-lg ml-auto h-40px text-primary w-33" type="primary" ghost>
-                  <PlusOutlined class="h-4 mr-3 w-4" />
-                  <span class="text-primary u-label1">CREATE</span>
-                </UButton>
-              }
-            />
+            <CreateStartupBlock>
+              <UButton class="rounded-lg ml-auto h-40px text-primary w-33" type="primary" ghost>
+                <PlusOutlined class="h-4 mr-3 w-4" />
+                <span class="text-primary u-label1">CREATE</span>
+              </UButton>
+            </CreateStartupBlock>
             <RouterLink to="/dashboard" class="text-primary ml-16 u-label1">
               MY DASHBOARD
             </RouterLink>
+            <UserAvatar class="ml-4" />
+            <WalletInfo class="ml-2" />
           </div>
           {/* Body */}
           <RouterView />

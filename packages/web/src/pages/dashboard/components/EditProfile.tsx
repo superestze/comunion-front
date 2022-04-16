@@ -1,9 +1,9 @@
 import { FormFactoryField, UDrawer, UFormFactory, ULazyImage } from '@comunion/components'
 import { PlusOutlined } from '@comunion/icons'
 import { defineComponent, PropType, ref } from 'vue'
-import AvatarSelect from '@/blocks/Profile/AvatarSelect'
-import { useUserProfile } from '@/providers'
+import AvatarSelect from '@/components/Profile/AvatarSelect'
 import { ServiceReturn, services } from '@/services'
+import { useUserStore } from '@/stores'
 
 const EditProfile = defineComponent({
   name: 'EditProfile',
@@ -59,7 +59,7 @@ const EditProfile = defineComponent({
         }
       }
     ]
-    const { user, setUser } = useUserProfile()
+    const userStore = useUserStore()
 
     const onCancel = () => {
       show.value = false
@@ -78,7 +78,7 @@ const EditProfile = defineComponent({
       })
 
       if (!error) {
-        setUser({ ...user.user, ...values })
+        userStore.mergeProfile(values)
       }
       show.value = false
     }
