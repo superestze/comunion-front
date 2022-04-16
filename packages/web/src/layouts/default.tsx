@@ -4,7 +4,6 @@ import { defineComponent } from 'vue'
 import { RouterLink, RouterView } from 'vue-router'
 import styles from './default.module.css'
 import CreateStartupBlock from '@/blocks/Startup/Create'
-import Footer from '@/pages/index/components/Footer'
 
 const DefaultLayout = defineComponent({
   name: 'DefaultLayout',
@@ -39,8 +38,49 @@ const DefaultLayout = defineComponent({
         </div>
         {/* Footer */}
         <div class={styles.footer}>
-          <div class="u-page-container">
-            <Footer />
+          <div class="flex py-12 u-page-container">
+            <div class="flex flex-1">
+              <ULogo theme="colorful" height={56} />
+              <div class="flex flex-col ml-40">
+                <div class="u-card-title1">ABOUT US</div>
+                <a target="_black" class="u-title1">
+                  Who we are
+                </a>
+                <a target="_black" class="u-title1">
+                  Comunion Economics
+                </a>
+                <a target="_black" class="u-title1">
+                  Our vision
+                </a>
+                <a target="_black" class="u-title1">
+                  Contact us
+                </a>
+              </div>
+            </div>
+            <div class="flex flex-col flex-1">
+              <div class="u-card-title1">COMMUNITY</div>
+              <div class="flex">
+                <div class="flex flex-col w-60">
+                  <a target="_black" href="https://docs.comunion.org" class="u-title1">
+                    DOCS
+                  </a>
+                  <a target="_black" href="https://twitter.com/Comunion01" class="u-title1">
+                    Twitter
+                  </a>
+                  <a target="_black" href="https://discord.gg/9x4Up6aWRj" class="u-title1">
+                    Discord
+                  </a>
+                </div>
+                <div class="flex flex-col">
+                  <a target="_black" href="https://github.com/comunion-io" class="u-title1">
+                    Github
+                  </a>
+                  <a target="_black" href="https://taiga.comunion.io" class="u-title1">
+                    Taiga
+                  </a>
+                </div>
+              </div>
+            </div>
           </div>
         </div>
       </div>
