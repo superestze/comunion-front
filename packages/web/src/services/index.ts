@@ -179,14 +179,7 @@ export const services = {
       ...extract('PUT', args, [], [])
     })
   },
-  'account@comer-profile-get'(args: {
-    name: string
-    avatar: string
-    location: string
-    website: string
-    skills: string[]
-    bio: string
-  }) {
+  'account@comer-profile-get'(args?: any) {
     return requestAdapter<{
       id?: number
       createdAt?: string

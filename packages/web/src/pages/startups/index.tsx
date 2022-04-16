@@ -8,7 +8,7 @@ import { StartupItem } from '@/types'
 const StartupsPage = defineComponent({
   name: 'StartupsPage',
   setup() {
-    const startupType = ref<string>(undefined)
+    const startupType = ref<string | undefined>(undefined)
     const total = ref(0)
     const dataService = computed<UPaginatedListPropsType['service']>(
       () => async (page, pageSize) => {
@@ -21,9 +21,9 @@ const StartupsPage = defineComponent({
               : undefined,
           keyword: ''
         })
-        const _total = error ? 0 : data.total
+        const _total = error ? 0 : data!.total
         total.value = _total
-        return { items: error ? [] : data.list, total: _total }
+        return { items: error ? [] : data!.list!, total: _total }
       }
     )
 
@@ -44,7 +44,7 @@ const StartupsPage = defineComponent({
         </div>
         <UPaginatedList
           service={dataService.value}
-          children={({ dataSource: startups }: { dataSource: StartupItem[] }) => {
+          children={({ dataSource: startups }: { dataSource: NonNullable<StartupItem>[] }) => {
             return (
               <div class="grid pb-6 gap-8 grid-cols-1 md:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4">
                 {startups.map(startup => (

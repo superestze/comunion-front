@@ -31,16 +31,16 @@ const EditStartupForm = defineComponent({
   },
   setup(props, ctx) {
     const defaultModel = {
-      logo: props.startup.logo || '',
-      name: props.startup.name || '',
-      type: getStartupTypeFromNumber(props.startup.mode) || '',
-      tags: (props.startup.hashTags || []).map(t => t.name) as string[],
-      mission: props.startup.mission || '',
-      overview: props.startup.overview || '',
-      tokenContract: props.startup.tokenContractAddress || '',
+      logo: props.startup!.logo || '',
+      name: props.startup!.name || '',
+      type: getStartupTypeFromNumber(props.startup!.mode) || '',
+      tags: (props.startup!.hashTags || []).map(t => t.name) as string[],
+      mission: props.startup!.mission || '',
+      overview: props.startup!.overview || '',
+      tokenContract: props.startup!.tokenContractAddress || '',
       composes:
-        props.startup.wallets?.length > 0
-          ? props.startup.wallets.map(w => ({ name: w.walletName, address: w.walletAddress }))
+        props.startup!.wallets?.length > 0
+          ? props.startup!.wallets.map(w => ({ name: w.walletName, address: w.walletAddress }))
           : [
               {
                 name: '',
