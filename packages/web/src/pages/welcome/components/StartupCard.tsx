@@ -8,7 +8,8 @@ const StartupCard = defineComponent({
   name: 'StartupCard',
   props: {
     startup: {
-      type: Object as PropType<StartupItem>
+      type: Object as PropType<StartupItem>,
+      required: true
     }
   },
   setup(props, ctx) {
@@ -16,17 +17,17 @@ const StartupCard = defineComponent({
       <>
         <div class="flex flex-row h-44 pt-6 pb-6 border-b border-grey5">
           <div class="logo mr-4">
-            <ULazyImage src={props.startup.logo} class="h-20 w-20" />
+            <ULazyImage src={props.startup!.logo} class="h-20 w-20" />
           </div>
           <div class="content flex flex-col flex-1">
             <div class="title font-orbitron font-normal font-700 text-[24px] leading-8 text-grey1 mb-2">
-              {props.startup.name}
+              {props.startup!.name}
             </div>
             <div
               class={`${styles.content} content font-opensans font-normal font-400 text-[16px] leading-5 text-grey2 max-w-180 max-h-10 break-all cursor-pointer`}
-              title={props.startup.mission}
+              title={props.startup!.mission}
             >
-              {props.startup.mission}
+              {props.startup!.mission}
             </div>
             <div class="foot flex justify-between mt-7">
               <div class="p-1 font-opensans font-normal font-400 text-[12px] leading-3 text-grey3 border border-primary">

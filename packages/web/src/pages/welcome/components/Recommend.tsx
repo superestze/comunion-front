@@ -3,12 +3,13 @@ import { UPagination } from '@comunion/components/src'
 import { defineComponent, onMounted, ref } from 'vue'
 import StartupCard from '@/pages/welcome/components/StartupCard'
 import { services } from '@/services'
+import { StartupItem } from '@/types'
 
 const Recommend = defineComponent({
   name: 'Recommend',
   setup(props, ctx) {
     const total = ref<number>()
-    const startups = ref([])
+    const startups = ref<StartupItem[]>([])
     // TODO: use load more component
     const pagination = ref({
       pageSize: 8,
