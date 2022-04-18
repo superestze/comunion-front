@@ -30,12 +30,12 @@ const StartupCard = defineComponent({
               {props.startup!.mission}
             </div>
             <div class="foot flex justify-between mt-7">
-              <div class="p-1 font-opensans font-normal font-400 text-[12px] leading-3 text-grey3 border border-primary">
+              <div class="p-1 font-opensans font-normal font-400 text-[12px] leading-3 text-grey3 border border-fuchsia-400 rounded  ">
                 {/*{startup?.hashTags.slice(0, 5).map(t => t.name)}*/}
                 Data processing
               </div>
-              <div class="flex items-center">
-                <TeamOutlined class="h-6 mr-2 w-6 bg-primary rounded-1/2" />
+              <div class="flex items-center ">
+                <TeamOutlined class="h-6 mr-2 w-6 bg-blue-100 text-primary rounded-1/2" />
                 <span class="font-opensans italic font-700 text-[16px] leading-5 text-grey1 mr-2">
                   {/*  TODO after recommend interface finished in backend, please replace this by real data */}
                   {Math.floor(Math.random() * 200) + 800}
