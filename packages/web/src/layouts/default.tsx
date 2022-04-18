@@ -6,55 +6,11 @@ import styles from './default.module.css'
 import CreateStartupBlock from '@/blocks/Startup/Create'
 import UserAvatar from '@/components/UserAvatar'
 import WalletInfo from '@/components/WalletInfo'
+import { FOOTER_LINKS } from '@/constants'
 
 const DefaultLayout = defineComponent({
   name: 'DefaultLayout',
   setup() {
-    const footerLinks = [
-      {
-        title: 'Connect with us',
-        links: [
-          {
-            title: 'DOCS',
-            url: 'https://docs.comunion.org'
-          },
-          {
-            title: 'Twitter',
-            url: 'https://twitter.com/Comunion01'
-          },
-          {
-            title: 'Discord',
-            url: 'https://discord.gg/9x4Up6aWRj'
-          }
-        ]
-      },
-      {
-        title: 'Developers',
-        links: [
-          {
-            title: 'Github',
-            url: 'https://github.com/comunion-io'
-          }
-          // {
-          //   title: 'Taiga',
-          //   url: 'https://taiga.comunion.io'
-          // }
-        ]
-      }
-      // {
-      //   title: 'Innovation',
-      //   links: [
-      //     {
-      //       title: 'Private version',
-      //       url: 'https://private.comunion.io/'
-      //     },
-      //     {
-      //       title: 'Enterprise',
-      //       url: '/'
-      //     }
-      //   ]
-      // }
-    ]
     return () => (
       <div class="bg-purple flex flex-col h-full min-h-screen text-[14px] relative">
         <div class="flex-1 u-page-container">
@@ -95,7 +51,7 @@ const DefaultLayout = defineComponent({
               <span class="ml-16px text-24px leading-24px sm:ml-10px sm:text-30px">About us</span>
             </RouterLink>
             <div class="sm:flex sm:flex-1 sm:gap-40">
-              {footerLinks.map(data => (
+              {FOOTER_LINKS.map(data => (
                 <div key={data.title} class="mb-40px">
                   <div class="text-white pt-12px pb-12px text-18px leading-18px block sm:pb-16px sm:text-20px">
                     {data.title}
