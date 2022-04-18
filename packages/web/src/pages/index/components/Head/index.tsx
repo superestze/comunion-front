@@ -49,7 +49,7 @@ export default defineComponent({
             <div class="flex h-full items-center">
               {/* logo */}
               <img src={logo} class="w-136px <sm:w-119px" />
-              <a
+              {/* <a
                 class="text-bold ml-54px text-[#333333] text-16px  <sm:hidden hover:text-primary"
                 href="https://wiki.comunion.io/comunion-economics"
                 target="_blank"
@@ -61,7 +61,7 @@ export default defineComponent({
                 href="/"
               >
                 Foundation
-              </a>
+              </a> */}
             </div>
             {/* menu-icon */}
             <img
@@ -70,12 +70,11 @@ export default defineComponent({
               onClick={() => (state.showMenu = true)}
             />
             <div class="flex items-center <sm:hidden">
-              <span
-                class="bg-primary cursor-pointer rounded-4px h-32px text-white text-bold mr-32px text-center text-14px leading-32px w-146px"
-                onClick={createStartup}
-              >
+              {/* onClick={createStartup} */}
+              <span class="bg-gray-300 cursor-pointer rounded-4px h-32px text-white text-bold mr-32px text-center text-14px leading-32px w-146px">
                 + New Startup
               </span>
+
               {userStore.logged ? (
                 <RouterLink
                   to="/welcome"
@@ -85,12 +84,15 @@ export default defineComponent({
                   Launch App
                 </RouterLink>
               ) : (
-                <RouterLink
-                  class="border-primary border-1 rounded-4px h-32px text-primary text-bold text-center text-14px leading-32px w-146px"
-                  to="/auth/login"
-                >
+                // <RouterLink
+                //   class="border-primary border-1 rounded-4px h-32px text-primary text-bold text-center text-14px leading-32px w-146px"
+                //   to="/auth/login"
+                // >
+                //   Connect account
+                // </RouterLink>
+                <span class="bg-gray-300 cursor-pointer rounded-4px h-32px text-white text-bold mr-32px text-center text-14px leading-32px w-146px">
                   Connect account
-                </RouterLink>
+                </span>
               )}
             </div>
           </div>
