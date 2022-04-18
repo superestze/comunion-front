@@ -16,6 +16,7 @@ import { utils } from 'ethers'
 import { defineComponent, PropType, reactive, ref } from 'vue'
 import { getStartupTypeFromNumber, STARTUP_TYPES, StartupTypesType } from '@/constants'
 import { useStartupContract, useErc20Contract } from '@/contracts'
+import { services } from '@/services'
 import { StartupItem } from '@/types'
 
 const EditStartupForm = defineComponent({
@@ -108,6 +109,14 @@ const EditStartupForm = defineComponent({
         if (!error) {
           loading.value = true
           try {
+            const { data } = await services['startup@startup-name-is-exist']({
+              name: model.name
+            })
+            if (data.isExist) {
+              message.error('Startup name already exists')
+              throw new Error('Startup name already exists')
+            }
+
             try {
               await startupContract().newStartup([
                 model.name,
