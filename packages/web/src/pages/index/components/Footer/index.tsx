@@ -1,56 +1,11 @@
 import { defineComponent } from 'vue'
 import { RouterLink } from 'vue-router'
 import smallLogo from '@/assets/small-logo.png'
+import { FOOTER_LINKS } from '@/constants'
 
 export default defineComponent({
   name: 'Footer',
   setup() {
-    const footerLinks = [
-      {
-        title: 'Connect with us',
-        links: [
-          {
-            title: 'DOCS',
-            url: 'https://docs.comunion.org'
-          },
-          {
-            title: 'Twitter',
-            url: 'https://twitter.com/Comunion01'
-          },
-          {
-            title: 'Discord',
-            url: 'https://discord.gg/9x4Up6aWRj'
-          }
-        ]
-      },
-      {
-        title: 'Developers',
-        links: [
-          {
-            title: 'Github',
-            url: 'https://github.com/comunion-io'
-          }
-          // {
-          //   title: 'Taiga',
-          //   url: 'https://taiga.comunion.io'
-          // }
-        ]
-      }
-      // {
-      //   title: 'Innovation',
-      //   links: [
-      //     {
-      //       title: 'Private version',
-      //       url: 'https://private.comunion.io/'
-      //     },
-      //     {
-      //       title: 'Enterprise',
-      //       url: '/'
-      //     }
-      //   ]
-      // }
-    ]
-
     return () => (
       <div class="border-t-white m-auto border-t-1px border-opacity-10 pb-28px w-311px sm:flex sm:pt-36px sm:pb-62px sm:w-1110px">
         {/* about us */}
@@ -62,7 +17,7 @@ export default defineComponent({
           <span class="ml-16px text-24px leading-24px sm:ml-10px sm:text-30px">About us</span>
         </RouterLink>
         <div class="sm:flex sm:flex-1 sm:gap-40">
-          {footerLinks.map(data => (
+          {FOOTER_LINKS.map(data => (
             <div key={data.title} class="mb-40px">
               <div class="text-white pt-12px pb-12px text-18px leading-18px block sm:pb-16px sm:text-20px">
                 {data.title}
