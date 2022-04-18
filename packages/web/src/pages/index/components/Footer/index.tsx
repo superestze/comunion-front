@@ -29,11 +29,11 @@ export default defineComponent({
           {
             title: 'Github',
             url: 'https://github.com/comunion-io'
-          },
-          {
-            title: 'Taiga',
-            url: 'https://taiga.comunion.io'
           }
+          // {
+          //   title: 'Taiga',
+          //   url: 'https://taiga.comunion.io'
+          // }
         ]
       }
       // {
