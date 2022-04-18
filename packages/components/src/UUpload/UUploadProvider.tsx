@@ -1,6 +1,9 @@
 import { defineComponent, ExtractPropTypes, inject, InjectionKey, PropType, provide } from 'vue'
 
-type OnCustomUpload = (file: File, onProgress: (percent: number) => void) => Promise<string>
+type OnCustomUpload = (
+  file: File,
+  onProgress: (percent: number) => void
+) => Promise<string | undefined>
 
 export const UUploadProviderProps = {
   onUpload: {

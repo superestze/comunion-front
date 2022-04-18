@@ -3,15 +3,15 @@ import { useRouter } from 'vue-router'
 import styles from './index.module.css'
 import joinComunion from '@/assets/join-comunion.png'
 import rightArrowIcon from '@/assets/right-arrow-small.png'
-import { useUserProfile } from '@/providers'
+import { useUserStore } from '@/stores'
 
 export default defineComponent({
   name: 'IntroduceAndJoin',
   setup() {
-    const { logged } = useUserProfile()
+    const userStore = useUserStore()
     const router = useRouter()
     const toJoin = () => {
-      if (!logged) {
+      if (!userStore.logged) {
         router.push('/auth/login')
       } else {
         router.push('/welcome')

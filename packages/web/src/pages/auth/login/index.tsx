@@ -1,5 +1,5 @@
 import { UButton, ULogo } from '@comunion/components'
-import { GithubFilled, GoogleFilled, MoreOutlined, WalletOutlined } from '@comunion/icons'
+import { GithubFilled, GoogleFilled, WalletOutlined } from '@comunion/icons'
 import { randomStr } from '@comunion/utils'
 import { defineComponent } from 'vue'
 import leftBgImg from './assets/bg.jpg'
@@ -10,15 +10,18 @@ import {
   GOOGLE_CALLBACK_URL,
   GOOGLE_CLIENT_ID
 } from '@/constants'
-import { useWallet } from '@/providers'
-// import { useUserProfile, useWallet } from '@/providers'
+import { useOnLoggedIn } from '@/hooks'
+import MoreNavigationPage from '@/pages/auth/login/components/More'
+import { useUserStore, useWalletStore } from '@/stores'
 
 const LoginPage = defineComponent({
   name: 'LoginPage',
   setup() {
     const isLocal = process.env.NODE_ENV === 'development'
-    const { ensureWalletConnected } = useWallet()
+    const walletStore = useWalletStore()
+    const userStore = useUserStore()
     const state = randomStr()
+    const onLogin = useOnLoggedIn()
 
     // const doLogout = () => {
     //   logout()
@@ -33,6 +36,13 @@ const LoginPage = defineComponent({
       (window.location.href = `https://github.com/login/oauth/authorize?client_id=${GITHUB_CLIENT_ID}&redirect_uri=${GITHUB_CALLBACK_URL}&state=u${
         isLocal ? '0' : '1'
       }${state}`)
+
+    const walletLogin = async () => {
+      await walletStore.ensureWalletConnected()
+      if (userStore.logged) {
+        onLogin()
+      }
+    }
 
     return () => (
       <div class="flex min-h-screen">
@@ -51,13 +61,13 @@ const LoginPage = defineComponent({
           </p>
         </div>
         <div class="flex flex-col flex-1 pl-1/8 relative justify-center lg:pl-1/5">
-          <MoreOutlined class="top-9 right-15 absolute" />
+          <MoreNavigationPage />
           <h2 class="text-[36px] leading-9">Sign to Comunion</h2>
           <UButton
             class="h-16 mt-[30px] text-white mb-3 text-[21px] w-105 relative"
             size="large"
             type="primary"
-            onClick={() => ensureWalletConnected(true)}
+            onClick={walletLogin}
           >
             <WalletOutlined class="h-8 top-4 left-4 w-8 absolute" />
             Sign in with Wallet

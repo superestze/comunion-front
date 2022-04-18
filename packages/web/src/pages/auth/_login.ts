@@ -1,12 +1,12 @@
 import { useRouter } from 'vue-router'
-import { useUserProfile } from '@/providers'
+import { useUserStore } from '@/stores'
 import type { UserResponse } from '@/types'
 
 export default function useOnLoggedIn() {
   const { replace } = useRouter()
-  const { setUserResponse } = useUserProfile()
+  const userStore = useUserStore()
   return (user: UserResponse) => {
-    setUserResponse(user)
+    userStore.setProfile(user)
     if (user.isProfiled) {
       replace('/welcome')
     } else {

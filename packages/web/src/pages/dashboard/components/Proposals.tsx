@@ -5,12 +5,12 @@ const Proposals = defineComponent({
   name: 'Proposal',
   setup(props, ctx) {
     return () => (
-      <UCard title="MY PROPOSALS" size="small" class="p-10 font-700 font-4 leading-6 tracking-2px">
+      <UCard title="PROPOSALS" size="small" class="p-10 font-700 font-4 leading-6 tracking-2px">
         <UTabs>
-          <UTabPane name="WHAT I PARTICIPATED" tab="WHAT I PARTICIPATED">
+          <UTabPane name="PARTICIPATED" tab="PARTICIPATED">
             <UDeveloping />
           </UTabPane>
-          <UTabPane name="INITIATED BY ME" tab="INITIATED BY ME">
+          <UTabPane name="POSTED BY ME" tab="POSTED BY ME">
             <UDeveloping />
           </UTabPane>
         </UTabs>

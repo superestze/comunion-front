@@ -1,4 +1,5 @@
 # Comunion Web Front
+
 This project is for Comunion V5 version, the packages are managed by `lerna`, and we used vue3
 
 ## Directory
@@ -6,9 +7,9 @@ This project is for Comunion V5 version, the packages are managed by `lerna`, an
 ```
 packages
 |- components # shared components
-|- docs # the document directory, which was based by  vitepress 
+|- docs # the document directory, which was based by  vitepress
 |- esbuild-plugin-svg-to-vue3 #  this plugin is used to generate svg  component
-|- generator #  this utils help generate code  
+|- generator #  this utils help generate code
 |- hooks #  shared vue hooks
 |- i8n-tools # this utils help translate language
 |- icons # manage icons
@@ -16,7 +17,7 @@ packages
 |- web # this is the source code for web pages
 ```
 
-## how to run 
+## how to run
 
 1. clone the project
 
@@ -56,17 +57,17 @@ pnpm build
 ### For team members
 
 1. clone code
-2. "git checkout -b feat/xxx" to create a new branch 
-3. commit  "git add -am 'feat: xxx'"
+2. "git checkout -b feat/xxx" to create a new branch
+3. commit "git add -am 'feat: xxx'"
 4. git push
-5. [create PR](https://github.com/comunion-io/v5-front/pulls) and Inform manager 
+5. [create PR](https://github.com/comunion-io/v5-front/pulls) and Inform manager
 
 ### For non team members
 
 1. fork repository
-2. "git checkout -b fix/xxx" to create a new branch 
-3. commit  "git add -am 'fix: xxx"
-4. git push 
+2. "git checkout -b fix/xxx" to create a new branch
+3. commit "git add -am 'fix: xxx"
+4. git push
 5. create PR
 
 [For more details link](https://fe.dev.comunion.io/zh/)

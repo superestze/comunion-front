@@ -1,16 +1,16 @@
 import { defineComponent, reactive, onMounted, onUnmounted } from 'vue'
-import { RouterLink } from 'vue-router'
+import { RouterLink, useRouter } from 'vue-router'
 import closeMenu from '@/assets/close-menu.png'
 import logo from '@/assets/logo.png'
 import openMenu from '@/assets/open-menu.png'
-import CreateStartupBlock from '@/blocks/Startup/Create'
-import { useUserProfile } from '@/providers'
+import { useUserStore } from '@/stores'
 
 let top = 0
 export default defineComponent({
   name: 'Head',
   setup() {
-    const { logged } = useUserProfile()
+    const userStore = useUserStore()
+    const router = useRouter()
     const state = reactive({ showMenu: false, showHead: true })
 
     const onScroll = () => {
@@ -23,6 +23,10 @@ export default defineComponent({
       } else {
         state.showHead = false
       }
+    }
+
+    const createStartup = () => {
+      router.push(userStore.logged ? '/startups' : '/auth/login')
     }
 
     onMounted(() => {
@@ -66,16 +70,15 @@ export default defineComponent({
               onClick={() => (state.showMenu = true)}
             />
             <div class="flex items-center <sm:hidden">
-              <CreateStartupBlock
-                trigger={
-                  <span class="bg-primary cursor-pointer rounded-4px h-32px text-white text-bold mr-32px text-center text-14px leading-32px w-146px">
-                    + New Startup
-                  </span>
-                }
-              />
-              {logged.value ? (
+              <span
+                class="bg-primary cursor-pointer rounded-4px h-32px text-white text-bold mr-32px text-center text-14px leading-32px w-146px"
+                onClick={createStartup}
+              >
+                + New Startup
+              </span>
+              {userStore.logged ? (
                 <RouterLink
-                  to="/dashboard"
+                  to="/welcome"
                   class="bg-primary cursor-pointer rounded-4px h-32px text-white text-bold mr-32px text-center text-14px leading-32px w-146px"
                 >
                   {/* <UserAvatar /> */}

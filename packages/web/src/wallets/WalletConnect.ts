@@ -1,6 +1,5 @@
-import WalletConnectProvider from '@walletconnect/web3-provider'
-import { providers } from 'ethers'
-import AbstractWallet from './Wallet'
+import AbstractWallet from './AbstractWallet'
+import { WalletConnectProvider } from './provider/WalletConnectProvider'
 
 export default class WalletConnectWallet extends AbstractWallet {
   walletConnectProvider: WalletConnectProvider
@@ -25,14 +24,18 @@ export default class WalletConnectWallet extends AbstractWallet {
       // infuraId: 'e6df27a37720674f7f88a859dd72a026'
       infuraId: '7092762b512b4153bb32ddeea134bfb8'
     })
-    super('WalletConnect', new providers.Web3Provider(provider))
+    super('WalletConnect', provider)
     this.walletConnectProvider = provider
   }
   checkAvaliable(): boolean {
     return true
   }
-  prepare(): any | Promise<any> {
-    return this.walletConnectProvider.enable()
-    // return this.walletConnectProvider.enable()
+  async prepare() {
+    try {
+      const addressList = await this.walletConnectProvider._wcProvider.enable()
+      return addressList?.[0]
+    } catch (error) {
+      return undefined
+    }
   }
 }

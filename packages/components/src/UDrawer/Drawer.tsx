@@ -1,6 +1,6 @@
 import { CloseOutlined } from '@comunion/icons'
 import { NDrawer } from 'naive-ui'
-import { defineComponent, ExtractPropTypes } from 'vue'
+import { computed, defineComponent, ExtractPropTypes } from 'vue'
 import { UCard } from '../UCard'
 import './Drawer.css'
 
@@ -16,6 +16,10 @@ export const UDrawerProps = {
   show: {
     type: Boolean,
     default: false
+  },
+  maskClosable: {
+    type: Boolean,
+    default: true
   }
 } as const
 
@@ -27,10 +31,24 @@ const UDrawer = defineComponent({
   emits: ['update:show'],
   setup(props, ctx) {
     const close = () => {
-      ctx.emit('update:show', false)
+      visible.value = false
     }
+    const visible = computed({
+      get() {
+        return props.show
+      },
+      set(v) {
+        ctx.emit('update:show', v)
+      }
+    })
     return () => (
-      <NDrawer class="u-drawer" v-model:show={props.show} width={props.width} placement="right">
+      <NDrawer
+        class="u-drawer"
+        maskClosable={props.maskClosable}
+        v-model:show={visible.value}
+        width={props.width}
+        placement="right"
+      >
         <div class="u-drawer-header">
           <span class="u-drawer-header__title">{props.title}</span>
           <CloseOutlined class="u-drawer-header__close" onClick={close} />

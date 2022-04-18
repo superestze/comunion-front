@@ -1,17 +1,9 @@
 /* eslint-disable */
-import axios from 'axios'
+import axios, { AxiosRequestHeaders } from 'axios'
 import { message } from '@comunion/components'
 import { RequestFunctionArgs, ResponseObject } from './a2s.types'
 
-let _token = ''
-
-export function getToken() {
-  return _token
-}
-
-export function setToken(_newToken: string) {
-  _token = _newToken
-}
+import { useUserStore } from '@/stores'
 
 export interface BaseResponse<T = any> {
   code: number
@@ -19,12 +11,22 @@ export interface BaseResponse<T = any> {
   data: T
 }
 
-function onErrorHandler(error: any): ResponseObject<null> {
+function getHeaders(): AxiosRequestHeaders {
+  const userStore = useUserStore()
+  return userStore.token
+    ? {
+        'X-COMUNION-AUTHORIZATION': userStore.token
+      }
+    : {}
+}
+
+function onErrorHandler(error: any) {
+  const userStore = useUserStore()
   try {
     const rep: BaseResponse = error.response.data
     if (rep.code === 401 && location.pathname !== '/auth/login') {
       message.error('The token expired, please re-login')
-      setToken('')
+      userStore.onLogout()
       window.location.href = '/auth/login'
     }
   } catch (error) {
@@ -36,14 +38,14 @@ function onErrorHandler(error: any): ResponseObject<null> {
     error: true,
     data: null,
     message: msg
-  }
+  } as const
 }
 
 export async function requestAdapter<T = any>(
   args: RequestFunctionArgs
 ): Promise<ResponseObject<T>> {
   const { url, method, query, body, done = true } = args
-  const token = getToken()
+
   try {
     const { data } = await axios.request({
       url,
@@ -52,11 +54,7 @@ export async function requestAdapter<T = any>(
       params: query,
       data: body,
       responseType: 'json',
-      headers: token
-        ? {
-            'X-COMUNION-AUTHORIZATION': token
-          }
-        : {}
+      headers: getHeaders()
     })
     return {
       error: false,
@@ -67,27 +65,25 @@ export async function requestAdapter<T = any>(
   }
 }
 
-export async function upload(file: File, onProgress: (percent: number) => void): Promise<string | null> {
+export async function upload(
+  file: File,
+  onProgress: (percent: number) => void
+): Promise<string | undefined> {
   const formData = new FormData()
   formData.append('file', file)
-  const token = getToken()
   try {
     const { data } = await axios.post('/misc/upload', formData, {
       baseURL: '/api',
       responseType: 'json',
-      headers: token
-        ? {
-            'X-COMUNION-AUTHORIZATION': token
-          }
-        : {},
-      onUploadProgress: (event) => {
+      headers: getHeaders(),
+      onUploadProgress: event => {
         const percent = Math.round((event.loaded / event.total) * 100) / 100
         onProgress(percent)
       }
     })
-    return data.Url
-  } catch(error) {
-    onErrorHandler(error).data
-    return null
+    return data.Url as string
+  } catch (error) {
+    onErrorHandler(error)
+    return undefined
   }
 }

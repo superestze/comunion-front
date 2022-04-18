@@ -1,18 +1,18 @@
 import { Contract } from 'ethers'
-import { useWallet } from '@/providers'
+import { useWalletStore } from '@/stores'
 
 const address = '<%= address %>'
 const abi = '<%= abi %>'
 
-let _contract: Contract = null
+let _contract: Contract | null = null
 
 export function use<%= title %>Contract(): () => {
   contract: Contract<% abiArr.forEach(function(func, index) { %>
   <%= func.name %>: (<%=generateArgs(func.inputs) %>) => Promise<[<%= generateArgs(func.outputs, true) %>]><% }) %>
 } {
-  const { getWallet } = useWallet()
+  const walletStore = useWalletStore()
   return () => {
-    const signer = getWallet()?.getSigner()
+    const signer = walletStore.wallet?.getSigner()
     if (!signer) {
       throw new Error('Wallet is not initialized')
     }

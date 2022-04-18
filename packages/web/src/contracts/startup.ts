@@ -1,11 +1,11 @@
 import { Contract } from 'ethers'
-import { useWallet } from '@/providers'
+import { useWalletStore } from '@/stores'
 
 const address = '0x447336D5e7E594DB2f8C72FF54aF34557d2Da752'
 const abi =
   '[{"inputs":[{"components":[{"internalType":"string","name":"name","type":"string"},{"internalType":"enum Startup.Mode","name":"mode","type":"uint8"},{"internalType":"string[]","name":"hashtag","type":"string[]"},{"internalType":"string","name":"logo","type":"string"},{"internalType":"string","name":"mission","type":"string"},{"internalType":"address","name":"tokenContract","type":"address"},{"components":[{"internalType":"string","name":"name","type":"string"},{"internalType":"address","name":"walletAddress","type":"address"}],"internalType":"struct Startup.wallet[]","name":"wallets","type":"tuple[]"},{"internalType":"string","name":"overview","type":"string"},{"internalType":"bool","name":"isValidate","type":"bool"}],"internalType":"struct Startup.Profile","name":"p","type":"tuple"}],"name":"newStartup","outputs":[],"stateMutability":"payable","type":"function"},{"inputs":[{"internalType":"string","name":"","type":"string"}],"name":"startups","outputs":[{"internalType":"string","name":"name","type":"string"},{"internalType":"enum Startup.Mode","name":"mode","type":"uint8"},{"internalType":"string","name":"logo","type":"string"},{"internalType":"string","name":"mission","type":"string"},{"internalType":"address","name":"tokenContract","type":"address"},{"internalType":"string","name":"overview","type":"string"},{"internalType":"bool","name":"isValidate","type":"bool"}],"stateMutability":"view","type":"function"},{"inputs":[{"internalType":"address payable","name":"receiver","type":"address"}],"name":"suicide0","outputs":[],"stateMutability":"nonpayable","type":"function"},{"inputs":[{"internalType":"address","name":"newOwner","type":"address"}],"name":"transferOwnership","outputs":[],"stateMutability":"nonpayable","type":"function"}]'
 
-let _contract: Contract = null
+let _contract: Contract | null = null
 
 export function useStartupContract(): () => {
   contract: Contract
@@ -38,9 +38,9 @@ export function useStartupContract(): () => {
   suicide0: (receiver: string) => Promise<[]>
   transferOwnership: (newOwner: string) => Promise<[]>
 } {
-  const { getWallet } = useWallet()
+  const walletStore = useWalletStore()
   return () => {
-    const signer = getWallet()?.getSigner()
+    const signer = walletStore.wallet?.getSigner()
     if (!signer) {
       throw new Error('Wallet is not initialized')
     }

@@ -8,7 +8,7 @@ import { StartupItem } from '@/types'
 const StartupsPage = defineComponent({
   name: 'StartupsPage',
   setup() {
-    const startupType = ref<string>(undefined)
+    const startupType = ref<string | undefined>(undefined)
     const total = ref(0)
     const dataService = computed<UPaginatedListPropsType['service']>(
       () => async (page, pageSize) => {
@@ -21,21 +21,21 @@ const StartupsPage = defineComponent({
               : undefined,
           keyword: ''
         })
-        const _total = error ? 0 : data.total
+        const _total = error ? 0 : data!.total
         total.value = _total
-        return { items: error ? [] : data.list, total: _total }
+        return { items: error ? [] : data!.list!, total: _total }
       }
     )
 
     return () => (
       <div class="mb-10">
         <div class="flex my-4">
-          <h3 class="text-grey1 u-h3">{total.value.toLocaleString()} Startups available</h3>
+          <h3 class="text-grey1 u-h3">{total.value.toLocaleString()} Startups</h3>
           <div class="flex ml-auto self-end items-center u-title2">
             Filter by:
             <UDropdownFilter
               options={STARTUP_TYPES.map(item => ({ label: item, value: item }))}
-              placeholder="Company Type"
+              placeholder="Startup Type"
               class="ml-8 w-37"
               clearable
               v-model:value={startupType.value}
@@ -44,7 +44,7 @@ const StartupsPage = defineComponent({
         </div>
         <UPaginatedList
           service={dataService.value}
-          children={({ dataSource: startups }: { dataSource: StartupItem[] }) => {
+          children={({ dataSource: startups }: { dataSource: NonNullable<StartupItem>[] }) => {
             return (
               <div class="grid pb-6 gap-8 grid-cols-1 md:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4">
                 {startups.map(startup => (

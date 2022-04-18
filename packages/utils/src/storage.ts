@@ -1,8 +1,10 @@
-export function storeObject(key: string, obj: object) {
+export type SupportSaveType = string | number | boolean | object
+
+export function storeObject(key: string, obj: SupportSaveType) {
   localStorage.setItem(key, JSON.stringify(obj))
 }
 
-export function readObject<T>(key: string): T | undefined {
+export function readObject<T extends SupportSaveType>(key: string): T | undefined {
   const data = localStorage.getItem(key)
   if (!data) {
     return undefined

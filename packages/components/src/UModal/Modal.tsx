@@ -7,8 +7,9 @@ export type UModalPropsType = ModalProps
 const UModal = defineComponent({
   name: 'UModal',
   extends: NModal,
+  inheritAttrs: true,
   setup(props, ctx) {
-    return () => <NModal {...props} v-slots={ctx.slots} />
+    return () => <NModal {...props} class="u-modal" v-slots={ctx.slots} />
   }
 })
 

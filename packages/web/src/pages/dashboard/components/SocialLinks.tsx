@@ -1,12 +1,12 @@
-import { UButton } from '@comunion/components'
+import { UButton, UAddress } from '@comunion/components'
 import { GithubFilled, GoogleFilled } from '@comunion/icons'
 import { defineComponent } from 'vue'
-import { useWallet } from '@/providers'
+import { useWalletStore } from '@/stores'
 
 const SocialLinks = defineComponent({
   name: 'SocialLinks',
   setup(props, ctx) {
-    const { wallet } = useWallet()
+    const walletStore = useWalletStore()
 
     /**
      * @description connect social account
@@ -27,7 +27,7 @@ const SocialLinks = defineComponent({
       }
     ]
     return () => (
-      <div>
+      <div class="flex flex-col h-full justify-between">
         <div>
           <div class="text-[20px] font-600 leading-6 font-opensans">Social links</div>
           <div>
@@ -51,12 +51,12 @@ const SocialLinks = defineComponent({
           </div>
         </div>
         <div>
-          <div class="text-[20px] font-600 leading-6 font-opensans">Associated Wallet Links</div>
-          {/*TODO after wallet address component completed, replace this */}
-          <div class="w-77 h-10 rounded-4px leading-10 mb-11 bg-white">{`${wallet?.walletAddress?.substring(
-            0,
-            10
-          )}...${wallet?.walletAddress?.substring(wallet.walletAddress.length - 4)}`}</div>
+          <div class="text-[20px] font-600 leading-6 font-opensans mb-4">
+            Associated Wallet Links
+          </div>
+          <div class="w-77 h-10 rounded-4px leading-10 bg-white flex overflow-hidden">
+            {walletStore.address && <UAddress address={walletStore.address} autoSlice={true} />}
+          </div>
         </div>
       </div>
     )
