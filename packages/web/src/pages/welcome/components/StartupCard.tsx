@@ -30,7 +30,7 @@ const StartupCard = defineComponent({
               {props.startup!.mission}
             </div>
             <div class="foot flex justify-between mt-7">
-              <div class="p-1 font-opensans font-normal font-400 text-[12px] leading-3 text-grey3 border border-fuchsia-400 rounded  ">
+              <div class="p-1 font-opensans font-normal font-400 text-[12px] leading-3  border border-fuchsia-400 rounded  ">
                 {/*{startup?.hashTags.slice(0, 5).map(t => t.name)}*/}
                 Data processing
               </div>
