@@ -1,5 +1,6 @@
 import { UInput, UInputGroup, UButton } from '@comunion/components'
 import { defineComponent, PropType, ref } from 'vue'
+import TeamModal from './TeamModal'
 import TeamCard from '@/pages/StartupSet/components/TeamCard'
 import { StartupItem } from '@/types'
 
@@ -11,8 +12,10 @@ const TeamSetting = defineComponent({
     }
   },
   setup(props, ctx) {
+    const success = ref(false)
     const searchMember = () => {
       console.log(inputMember.value)
+      success.value = true
     }
     const inputMember = ref<string>('')
     // TODO: after backend completed, get data from backend
@@ -60,6 +63,7 @@ const TeamSetting = defineComponent({
           {teamMembers?.map(teamMember => (
             <TeamCard teamMember={teamMember} />
           ))}
+          <TeamModal v-model:show={success.value} teamList={props.startup} />
         </div>
       </div>
     )

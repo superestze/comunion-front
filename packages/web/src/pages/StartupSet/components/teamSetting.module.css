@@ -1,0 +1,5 @@
+.bottom_submit div button {
+  margin: auto;
+  background-color: #1e3a8a;
+  @apply ml-1;
+}
