@@ -14,7 +14,7 @@ import {
 import { TipOutlined, CloseOutlined, PlusOutlined } from '@comunion/icons'
 import { utils } from 'ethers'
 import { defineComponent, PropType, reactive, ref } from 'vue'
-import { STARTUP_TYPES, StartupTypesType } from '@/constants'
+import { STARTUP_TYPES, StartupTypesType, getStartupNumberFromType } from '@/constants'
 import { useStartupContract, useErc20Contract } from '@/contracts'
 import { services } from '@/services'
 
@@ -103,15 +103,14 @@ const CreateStartupForm = defineComponent({
             const { data } = await services['startup@startup-name-is-exist']({
               name: model.name
             })
-            if (data.isExist) {
+            if (!data || data.isExist) {
               message.error('Startup name already exists')
               throw new Error('Startup name already exists')
             }
-
             try {
               await startupContract().newStartup([
                 model.name,
-                STARTUP_TYPES.indexOf(model.type as StartupTypesType),
+                getStartupNumberFromType(model.type as StartupTypesType),
                 model.tags,
                 model.logo,
                 model.mission,
