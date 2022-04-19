@@ -1,7 +1,7 @@
 import { UButton, ULogo } from '@comunion/components'
 import { GithubFilled, GoogleFilled, WalletOutlined } from '@comunion/icons'
 import { randomStr } from '@comunion/utils'
-import { defineComponent } from 'vue'
+import { defineComponent, ref } from 'vue'
 import leftBgImg from './assets/bg.jpg'
 import styles from './index.module.css'
 import {
@@ -22,6 +22,7 @@ const LoginPage = defineComponent({
     const userStore = useUserStore()
     const state = randomStr()
     const onLogin = useOnLoggedIn()
+    const loading = ref(false)
 
     // const doLogout = () => {
     //   logout()
@@ -38,10 +39,12 @@ const LoginPage = defineComponent({
       }${state}`)
 
     const walletLogin = async () => {
-      await walletStore.ensureWalletConnected()
+      loading.value = true
+      await walletStore.ensureWalletConnected(true)
       if (userStore.logged) {
         onLogin()
       }
+      loading.value = false
     }
 
     return () => (
@@ -67,6 +70,7 @@ const LoginPage = defineComponent({
             class="h-16 mt-[30px] text-white mb-3 text-[21px] w-105 relative"
             size="large"
             type="primary"
+            loading={loading.value}
             onClick={walletLogin}
           >
             <WalletOutlined class="h-8 top-4 left-4 w-8 absolute" />

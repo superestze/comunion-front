@@ -124,8 +124,8 @@ export const useWalletStore = defineStore('wallet', {
         _reject = undefined
       }
     },
-    async ensureWalletConnected() {
-      if (!this.connected) {
+    async ensureWalletConnected(force = false) {
+      if (!this.connected || force) {
         this.openConnectModal()
         return new Promise<void>((resolve, reject) => {
           _resolve = resolve

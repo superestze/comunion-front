@@ -2,6 +2,7 @@ import { readObject, removeObject, storeObject } from '@comunion/utils'
 import { defineStore } from 'pinia'
 import { STORE_KEY_TOKEN } from '@/constants'
 import { services } from '@/services'
+import { useWalletStore } from '@/stores'
 import type { UserProfileState } from '@/types'
 import AbstractWallet from '@/wallets/AbstractWallet'
 
@@ -82,9 +83,11 @@ export const useUserStore = defineStore('user', {
       storeObject(STORE_KEY_TOKEN, token)
     },
     onLogout() {
+      const walletStore = useWalletStore()
       this.token = ''
       this.profile = null
       removeObject(STORE_KEY_TOKEN)
+      walletStore._onWalletDisconnected()
     }
   }
 })
