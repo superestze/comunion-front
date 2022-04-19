@@ -16,3 +16,10 @@ export const STARTUP_TYPES_COLOR_MAP = {
 export function getStartupTypeFromNumber(mode: number) {
   return STARTUP_TYPES[mode - 1]
 }
+/**
+ * @param type contract mode
+ * @return 0:NONE,1:ESG,2:NGO,3:DAO,4:COM
+ */
+export function getStartupNumberFromType(type: StartupTypesType) {
+  return STARTUP_TYPES.indexOf(type) + 1
+}
