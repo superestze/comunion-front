@@ -1,12 +1,12 @@
 import { UButton, UAddress } from '@comunion/components'
-import { GithubFilled, GoogleFilled } from '@comunion/icons'
+import { GithubFilled, GoogleFilled, WalletOutlined } from '@comunion/icons'
 import { defineComponent } from 'vue'
-import { useWalletStore } from '@/stores'
+import { useUserStore } from '@/stores'
 
 const SocialLinks = defineComponent({
   name: 'SocialLinks',
   setup(props, ctx) {
-    const walletStore = useWalletStore()
+    const userStore = useUserStore()
 
     /**
      * @description connect social account
@@ -27,21 +27,24 @@ const SocialLinks = defineComponent({
       }
     ]
     return () => (
-      <div class="flex flex-col h-full justify-between">
+      <div class="w-88 flex flex-col h-full justify-between">
         <div>
-          <div class="text-[20px] font-600 leading-6 font-opensans">Social links</div>
+          <div class="u-title1 u-primary2 mb-4">Social links</div>
           <div>
             {socialLinks.map(link => {
               return (
-                <div class="flex items-center h-18 leading-18">
-                  <link.avatar class="w-6 h-6 mr-6" />
-                  <span class="font-opensans font-600 text-[16px] mr-18 w-18 inline-block">
-                    {link.label}
-                  </span>
+                <div key={link.label} class="flex items-center mb-6">
+                  <link.avatar class="w-6 h-6 mr-3.5" />
+                  <span class="u-title2 u-primary2">{link.label}</span>
                   <UButton
-                    class="bg-white rounded-2px w-30 h-9 p-1 font-opensans font-600 text-[16px] text-primary"
+                    class="ml-auto bg-white rounded-lg w-30 text-primary2"
                     size="small"
+                    type="primary"
+                    ghost
                     onClick={connectLink}
+                    style={{
+                      '--n-border': '1px solid var(--u-primary-2-color)'
+                    }}
                   >
                     Connect
                   </UButton>
@@ -51,11 +54,14 @@ const SocialLinks = defineComponent({
           </div>
         </div>
         <div>
-          <div class="text-[20px] font-600 leading-6 font-opensans mb-4">
-            Associated Wallet Links
-          </div>
-          <div class="w-77 h-10 rounded-4px leading-10 bg-white flex overflow-hidden">
-            {walletStore.address && <UAddress address={walletStore.address} autoSlice={true} />}
+          <div class="u-title1 text-primary2 mb-4">Associated Wallet Links</div>
+          <div class="rounded bg-white flex items-center overflow-hidden py-2.5 px-4">
+            <WalletOutlined class="text-primary mr-4" />
+            {userStore.profile?.walletAddress ? (
+              <UAddress address={userStore.profile.walletAddress} autoSlice={true} />
+            ) : (
+              <span class="text-grey3">Not bind</span>
+            )}
           </div>
         </div>
       </div>
