@@ -1,4 +1,5 @@
 import { Contract } from 'ethers'
+import { wrapTransaction } from './share'
 import { useWalletStore } from '@/stores'
 
 const address = '<%= address %>'
@@ -8,7 +9,7 @@ let _contract: Contract | null = null
 
 export function use<%= title %>Contract(): () => {
   contract: Contract<% abiArr.forEach(function(func, index) { %>
-  <%= func.name %>: (<%=generateArgs(func.inputs) %>) => Promise<[<%= generateArgs(func.outputs, true) %>]><% }) %>
+  <%= func.name %>: (<%=generateArgs(func.inputs) %>, text: string) => Promise<[<%= generateArgs(func.outputs, true) %>]><% }) %>
 } {
   const walletStore = useWalletStore()
   return () => {
@@ -21,7 +22,7 @@ export function use<%= title %>Contract(): () => {
     }
     return {
       contract: _contract,
-      <% abiArr.forEach(function(func, index) { %><%= func.name %>: _contract.<%= func.name %>,
+      <% abiArr.forEach(function(func, index) { %><%= func.name %>: wrapTransaction(_contract.<%= func.name %>),
       <% }) %>
     }
   }

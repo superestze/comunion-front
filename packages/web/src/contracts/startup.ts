@@ -1,4 +1,5 @@
 import { Contract } from 'ethers'
+import { wrapTransaction } from './share'
 import { useWalletStore } from '@/stores'
 
 const address = '0x447336D5e7E594DB2f8C72FF54aF34557d2Da752'
@@ -20,10 +21,12 @@ export function useStartupContract(): () => {
       wallets: [name: string, walletAddress: string][],
       overview: string,
       isValidate: any
-    ]
+    ],
+    text: string
   ) => Promise<[]>
   startups: (
-    arg0: string
+    arg0: string,
+    text: string
   ) => Promise<
     [
       /** name */ string,
@@ -35,8 +38,8 @@ export function useStartupContract(): () => {
       /** isValidate */ any
     ]
   >
-  suicide0: (receiver: string) => Promise<[]>
-  transferOwnership: (newOwner: string) => Promise<[]>
+  suicide0: (receiver: string, text: string) => Promise<[]>
+  transferOwnership: (newOwner: string, text: string) => Promise<[]>
 } {
   const walletStore = useWalletStore()
   return () => {
@@ -49,10 +52,10 @@ export function useStartupContract(): () => {
     }
     return {
       contract: _contract,
-      newStartup: _contract.newStartup,
-      startups: _contract.startups,
-      suicide0: _contract.suicide0,
-      transferOwnership: _contract.transferOwnership
+      newStartup: wrapTransaction(_contract.newStartup),
+      startups: wrapTransaction(_contract.startups),
+      suicide0: wrapTransaction(_contract.suicide0),
+      transferOwnership: wrapTransaction(_contract.transferOwnership)
     }
   }
 }

@@ -3,6 +3,7 @@ import {
   UHashInputProvider,
   UMessage,
   UMessageProvider,
+  UTransaction,
   UUploadProvider
 } from '@comunion/components'
 import { defineComponent } from 'vue'
@@ -11,12 +12,14 @@ import WalletConnectBlock from './blocks/WalletConnect'
 import { services } from './services'
 import { upload as onUpload } from './services/a2s.adapter'
 import { useUserStore, useWalletStore } from './stores'
+import { useTransactionStore } from './stores/transaction'
 
 export default defineComponent({
   name: 'App',
   setup() {
     const userStore = useUserStore()
     const walletStore = useWalletStore()
+    const transactionStore = useTransactionStore()
 
     // init user state
     userStore.init()
@@ -39,6 +42,7 @@ export default defineComponent({
         <UMessageProvider>
           <UMessage />
         </UMessageProvider>
+        <UTransaction {...transactionStore.transaction} />
         <UUploadProvider onUpload={onUpload}>
           <UHashInputProvider onSearch={onSearchHash}>
             {/* {userStore.inited && walletStore.inited && <RouterView />} */}

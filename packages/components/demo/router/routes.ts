@@ -181,6 +181,11 @@ const routes: RouteRecordRaw[] = [
             path: 'address',
             name: 'Address',
             component: () => import('@/ex/views/Address')
+          },
+          {
+            path: 'Transaction',
+            name: 'Transaction',
+            component: () => import('@/ex/views/Transaction')
           }
         ]
       },

@@ -1,0 +1,89 @@
+@keyframes u-transaction-pending-left {
+  0% {
+    @apply z-10;
+  }
+
+  25% {
+    @apply z-10;
+
+    transform: translateX(-48px) scale(0.9);
+  }
+
+  50% {
+    @apply z-20;
+  }
+
+  75% {
+    @apply z-20;
+
+    transform: translateX(48px) scale(0.9);
+  }
+
+  100% {
+    @apply z-10;
+  }
+}
+@keyframes u-transaction-pending-right {
+  0% {
+    @apply z-20;
+  }
+
+  25% {
+    @apply z-20;
+
+    transform: translateX(48px) scale(0.9);
+  }
+
+  50% {
+    @apply z-10;
+  }
+
+  75% {
+    @apply z-10;
+
+    transform: translateX(-48px) scale(0.9);
+  }
+
+  100% {
+    @apply z-20;
+  }
+}
+
+.u-transaction {
+  @apply relative rounded-2xl flex flex-col min-h-60 bg-white items-center w-100 px-16 py-12;
+
+  &-close {
+    @apply absolute w-5 h-5 right-4 top-4 z-10 cursor-pointer;
+  }
+
+  &-animation {
+    @apply h-8 relative;
+
+    &::before,
+    &::after {
+      transition: all 0.3s linear;
+      content: '';
+      @apply absolute top-0 left-1/2 w-8 h-8 -ml-4 rounded-full;
+    }
+
+    &::before {
+      @apply bg-error;
+
+      animation: u-transaction-pending-left 1.2s linear infinite;
+    }
+
+    &::after {
+      @apply bg-warning;
+
+      animation: u-transaction-pending-right 1.2s linear infinite;
+    }
+  }
+
+  &-status {
+    @apply mt-8 u-title1 text-grey1;
+  }
+
+  &-text {
+    @apply mt-6 u-caption text-grey3 text-center;
+  }
+}
