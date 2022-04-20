@@ -1,2 +1,2 @@
-export { default as UTransaction, UTransactionProps } from './UTransactionLoading'
-export type { UTransactionPropsType } from './UTransactionLoading'
+export { default as UTransaction, UTransactionProps } from './UTransaction'
+export type { UTransactionPropsType, UTransactionStatus } from './UTransaction'

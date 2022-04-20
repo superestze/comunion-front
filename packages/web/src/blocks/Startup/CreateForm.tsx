@@ -108,17 +108,20 @@ const CreateStartupForm = defineComponent({
               throw new Error('Startup name already exists')
             }
             try {
-              await startupContract().newStartup([
-                model.name,
-                getStartupNumberFromType(model.type as StartupTypesType),
-                model.tags,
-                model.logo,
-                model.mission,
-                model.tokenContract,
-                model.composes.map(item => [item.name, item.address]),
-                model.overview,
-                true
-              ])
+              await startupContract().newStartup(
+                [
+                  model.name,
+                  getStartupNumberFromType(model.type as StartupTypesType),
+                  model.tags,
+                  model.logo,
+                  model.mission,
+                  model.tokenContract,
+                  model.composes.map(item => [item.name, item.address]),
+                  model.overview,
+                  true
+                ],
+                'Waiting to submit all contents to blockchain for creating startup'
+              )
               ctx.emit('success', model)
               message.success(
                 'Success send transaction to the chain, please wait for the confirmation'

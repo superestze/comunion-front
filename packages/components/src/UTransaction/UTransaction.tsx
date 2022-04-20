@@ -5,9 +5,11 @@ import { ExtractPropTypes } from '../utils'
 
 import './UTransaction.css'
 
+export type UTransactionStatus = 'pending' | 'success' | 'canceled' | 'failed'
+
 export const UTransactionProps = {
   status: {
-    type: String as PropType<'pending' | 'success' | 'canceled' | 'failed'>
+    type: String as PropType<UTransactionStatus>
   },
   text: {
     type: String
