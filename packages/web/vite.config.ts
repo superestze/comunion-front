@@ -94,18 +94,25 @@ export default defineConfig({
             vue: 'vue',
             'vue-router': 'vue',
             pinia: 'vue',
+            'naive-ui': 'ui',
             axios: 'tools',
             buffer: 'tools',
             events: 'tools',
+            'lodash-es': 'tools',
+            'date-fns': 'tools',
             util: 'tools'
           }
-          const splited = id.split('node_modules' + path.sep)
+          const splited = id.split('node_modules')
           if (splited.length > 1) {
             let pkgName
-            if (splited[1].startsWith('@')) {
-              pkgName = splited[1].split('/').slice(0, 2).join('/')
+            let pkgPath = splited[splited.length - 1]
+            if (pkgPath.startsWith('/') || pkgPath.startsWith('\\')) {
+              pkgPath = pkgPath.substring(1)
+            }
+            if (pkgPath.startsWith('@')) {
+              pkgName = pkgPath.split('/').slice(0, 2).join('/')
             } else {
-              pkgName = splited[1].split('/')[0]
+              pkgName = pkgPath.split('/')[0]
             }
             if (
               Object.keys(chunkMap).includes(pkgName) ||

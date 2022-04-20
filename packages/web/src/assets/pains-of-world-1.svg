@@ -1,11 +1,1 @@
-<?xml version="1.0" encoding="UTF-8"?>
-<svg width="621px" height="368px" viewBox="0 0 621 368" version="1.1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink">
-    <title>形状结合</title>
-    <g id="新官网" stroke="none" stroke-width="1" fill="none" fill-rule="evenodd">
-        <g id="移动端新新切图" transform="translate(-65.000000, -4713.000000)" fill="#5E18FE">
-            <g id="编组-20备份-4" transform="translate(65.000000, 4713.500000)">
-                <path d="M480,-127 C487.731986,-127 494,-120.731986 494,-113 L494,119.5 L494,119.5 C458.653776,119.5 430,148.153776 430,183.5 C430,218.846224 458.653776,247.5 494,247.5 L494,480 C494,487.731986 487.731986,494 480,494 L141,494 C133.268014,494 127,487.731986 127,480 L127,-113 C127,-120.731986 133.268014,-127 141,-127 L480,-127 Z" id="形状结合" transform="translate(310.500000, 183.500000) rotate(-270.000000) translate(-310.500000, -183.500000) "></path>
-            </g>
-        </g>
-    </g>
-</svg>
+<svg height="368" viewBox="0 0 621 368" width="621" xmlns="http://www.w3.org/2000/svg"><path d="m480-127c7.731986 0 14 6.268014 14 14v232.5c-35.346224 0-64 28.653776-64 64s28.653776 64 64 64v232.5c0 7.731986-6.268014 14-14 14h-339c-7.731986 0-14-6.268014-14-14v-593c0-7.731986 6.268014-14 14-14z" fill="#5e18fe" fill-rule="evenodd" transform="matrix(0 1 -1 0 494 -126.5)"/></svg>

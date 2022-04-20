@@ -20,7 +20,7 @@ const WalletInfo = defineComponent({
             </div>
           </div>
         ) : (
-          <div class="flex items-center py-1.5" onClick={walletStore.ensureWalletConnected}>
+          <div class="flex items-center py-1.5" onClick={() => walletStore.ensureWalletConnected()}>
             <div class={styles.unconnectedDot}></div>
             <span class="text-grey3">unconnected</span>
           </div>
