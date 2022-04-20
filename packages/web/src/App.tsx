@@ -41,7 +41,8 @@ export default defineComponent({
         </UMessageProvider>
         <UUploadProvider onUpload={onUpload}>
           <UHashInputProvider onSearch={onSearchHash}>
-            {userStore.inited && walletStore.inited && <RouterView />}
+            {/* {userStore.inited && walletStore.inited && <RouterView />} */}
+            <RouterView />
           </UHashInputProvider>
         </UUploadProvider>
         <WalletConnectBlock />

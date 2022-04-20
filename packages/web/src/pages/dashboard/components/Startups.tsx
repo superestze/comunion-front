@@ -37,8 +37,7 @@ const Startups = defineComponent({
         offset: pagination.pageSize * (pagination.page - 1)
       })
       if (!error) {
-        // @ts-ignore
-        myCreatedStartups.value = [...myCreatedStartups.value, ...data!.list]
+        myCreatedStartups.value.push(...(data!.list as unknown as StartupItem[]))
         pagination.total = data!.total
       }
     }
