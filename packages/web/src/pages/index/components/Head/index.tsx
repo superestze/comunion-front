@@ -1,5 +1,5 @@
 import { defineComponent, reactive, onMounted, onUnmounted } from 'vue'
-import { RouterLink, useRouter } from 'vue-router'
+import { RouterLink } from 'vue-router'
 import closeMenu from '@/assets/close-menu.png'
 import logo from '@/assets/logo.png'
 import openMenu from '@/assets/open-menu.png'
@@ -10,7 +10,7 @@ export default defineComponent({
   name: 'Head',
   setup() {
     const userStore = useUserStore()
-    const router = useRouter()
+    // const router = useRouter()
     const state = reactive({ showMenu: false, showHead: true })
 
     const onScroll = () => {
@@ -25,9 +25,9 @@ export default defineComponent({
       }
     }
 
-    const createStartup = () => {
-      router.push(userStore.logged ? '/startups' : '/auth/login')
-    }
+    // const createStartup = () => {
+    //   router.push(userStore.logged ? '/startups' : '/auth/login')
+    // }
 
     onMounted(() => {
       window.addEventListener('scroll', onScroll, true)

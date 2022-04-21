@@ -2,7 +2,7 @@ import { FormFactoryField, UDrawer, UFormFactory, ULazyImage } from '@comunion/c
 import { PlusOutlined } from '@comunion/icons'
 import { defineComponent, PropType, ref } from 'vue'
 import AvatarSelect from '@/components/Profile/AvatarSelect'
-import { ServiceReturn, services } from '@/services'
+import { ServiceArg, ServiceReturn, services } from '@/services'
 import { useUserStore } from '@/stores'
 
 const EditProfile = defineComponent({
@@ -69,11 +69,9 @@ const EditProfile = defineComponent({
     const showAvatarSelect = () => {
       showAvatarModal.value = true
     }
-    const onSubmit = async (
-      values: Parameters<typeof services['account@comer-profile-update']>[0]
-    ) => {
+    const onSubmit = async (values: Record<string, any>) => {
       const { error } = await services['account@comer-profile-update']({
-        ...values,
+        ...(values as ServiceArg<'account@comer-profile-update'>),
         avatar: avatar.value
       })
 
@@ -107,7 +105,7 @@ const EditProfile = defineComponent({
               </div>
 
               <UFormFactory
-                initialValues={props.myProfile}
+                initialValues={props.myProfile!}
                 fields={fields}
                 showCancel={true}
                 submitText="Confirm"

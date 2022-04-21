@@ -9,7 +9,8 @@ import {
   UAddressInput,
   UInputGroup,
   UInput,
-  UButton
+  UButton,
+  FormFactoryField
 } from '@comunion/components'
 import { TipOutlined, CloseOutlined, PlusOutlined } from '@comunion/icons'
 import { utils } from 'ethers'
@@ -155,7 +156,7 @@ const EditStartupForm = defineComponent({
         }
       })
     }
-    const infoFields = [
+    const infoFields: FormFactoryField[] = [
       {
         t: 'singleImageUpload',
         title: '',
@@ -224,9 +225,9 @@ const EditStartupForm = defineComponent({
         <div class="bg-purple h-13px my-8"></div>
         <p class="mb-7 uppercase u-card-title1">Finance Setting</p>
         <ul class="border rounded-lg list-disc border-grey5 mb-6 p-4 pl-8 text-body1 relative">
-          <li>Firstly，the token must be bound to the Start-Up as Proof-of-Stake.</li>
-          <li>A token can only be bound to one Startup and can’t be changed after bound.</li>
-          <li>If you have not a token yet， use Erc20-Generator to create your token.</li>
+          <li>Firstly, the token must be bound to the Start-Up as Proof-of-Stake.</li>
+          <li>A token can only be bound to one Startup and can't be changed after bound.</li>
+          <li>If you have not a token yet, use Erc20-Generator to create your token.</li>
           <div class="flex text-primary right-4 bottom-4 absolute items-center">
             How to Set
             <TipOutlined class="ml-1" />

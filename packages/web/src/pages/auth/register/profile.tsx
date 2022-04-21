@@ -4,7 +4,7 @@ import { defineComponent, ref } from 'vue'
 import { useRouter } from 'vue-router'
 import successImg from './assets/success.svg'
 import RegisterLayout from './components/Layout'
-import { services } from '@/services'
+import { ServiceArg, services } from '@/services'
 import { useUserStore } from '@/stores'
 
 const RegisterProfilePage = defineComponent({
@@ -55,11 +55,9 @@ const RegisterProfilePage = defineComponent({
       }
     ]
 
-    const onSubmit = async (
-      values: Parameters<typeof services['account@comer-profile-update']>[0]
-    ) => {
+    const onSubmit = async (values: Record<string, any>) => {
       const { error } = await services['account@comer-profile-create']({
-        ...values,
+        ...(values as ServiceArg<'account@comer-profile-create'>),
         avatar: 'https://comunion-avatars.s3.ap-northeast-1.amazonaws.com/avatar1.svg'
       })
       if (!error) {
@@ -85,11 +83,7 @@ const RegisterProfilePage = defineComponent({
           </p>
           <div class="bg-white border rounded-lg border-grey5 pt-10 pb-5">
             <div class="mx-auto w-200">
-              <UFormFactory
-                fields={fields}
-                submitText="Next step"
-                onSubmit={onSubmit}
-              ></UFormFactory>
+              <UFormFactory fields={fields} submitText="Next step" onSubmit={onSubmit} />
               <UModal v-model:show={success.value} closable={false} maskClosable={false}>
                 <div class="bg-white rounded-lg flex flex-col h-88 w-150 items-center">
                   <img src={successImg} class="h-40 mt-18 w-110" />

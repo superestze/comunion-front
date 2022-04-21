@@ -10,7 +10,7 @@ import type { ExtractPropTypes } from '../utils'
 import './FormFactory.css'
 
 export type FormFactoryInputField = {
-  t: 'string'
+  t?: 'string'
 } & UInputPropsType
 
 export type FormFactoryAddrssInputField = {
