@@ -25,3 +25,5 @@ jobs:
           eslint: true
           prettier: true
           stylelint: true
+      - name: Run typescript check
+        run: cd packages/web && npx vue-tsc --noEmit
