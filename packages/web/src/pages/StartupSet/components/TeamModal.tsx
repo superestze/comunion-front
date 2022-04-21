@@ -1,8 +1,7 @@
-import { FormFactoryField, UModal, UFormFactory, UButton } from '@comunion/components'
+import { FormFactoryField, UModal, UFormItemsFactory, UButton } from '@comunion/components'
 import ULazyImage from '@comunion/components/src/ULazyImage/LazyImage'
-import { defineComponent, ref, PropType } from 'vue'
+import { defineComponent, ref, PropType, inject } from 'vue'
 import styles from './teamSetting.module.css'
-import { services } from '@/services'
 
 const TeamModal = defineComponent({
   name: 'TeamModal',
@@ -20,69 +19,60 @@ const TeamModal = defineComponent({
     }
   },
   setup(props, ctx) {
-    console.log(props.teamList, '==============')
     const selectedAvatar = ref(props.avatar)
     const fields: FormFactoryField[] = [
       {
+        t: 'String',
         title: 'Roles',
-        name: 'Roles',
+        name: 'roles',
+        roles: '',
         required: true,
         placeholder: 'Plealse position, link developer...'
       }
     ]
+    const data = {
+      roles: props.teamList.role
+    }
+    const defaultModel = {
+      roles: ''
+    }
+    const PARENT_PROVIDE = 'parentProvide'
+    const parent = inject(PARENT_PROVIDE)
+    const parentTestFun = inject(`${PARENT_PROVIDE}/teamCreate`)
+    const parentUpDataFun = inject(`${PARENT_PROVIDE}/upData`)
     const cancel = () => {
       ctx.emit('update:show', false)
       selectedAvatar.value = ''
     }
 
-    const onSubmit = async (
-      values: Parameters<typeof services['account@comer-profile-update']>[0]
-    ) => {
-      console.log(values)
-      // const { error } = await services['startup@start-team-meabers-create']({
-
-      // })
-
-      // if (!error) {
-      //   console.log(values)
-      // }
-    }
-
-    const confirm = () => {
-      // ctx.emit('update:avatar', selectedAvatar.value)
-      // cancel()
-      onSubmit()
-    }
-
-    const select = (avatarSrc: string) => {
-      selectedAvatar.value = avatarSrc
+    const onSubmit = async (values: object) => {
+      console.log(data)
+      ctx.emit('update:show', false)
+      if (props.teamList.role) {
+        parentUpDataFun(data)
+      } else {
+        parentTestFun(data)
+      }
     }
 
     const slots = {
-      header: () => <div class="px-2 py-3 u-title1 text-20px">Team Setting</div>,
-      footer: () => (
-        <div class="text-right pb-3 pr-2">
-          <UButton class="w-41 h-12 mr-4" onClick={cancel}>
-            <span class="u-title2 text-primary">Cancel</span>
-          </UButton>
-          <UButton class="w-41 h-12" onClick={confirm} type="primary">
-            Confirm
-            <span class="u-title2 text-primary">Confirm</span>
-          </UButton>
-        </div>
-      )
+      header: () => <div class="px-2 py-3 u-title1 text-20px">Team Setting</div>
     }
     return () => (
       <>
         <section>
           <UModal
-            bordered={false}
+            bordered={true}
             size="small"
             preset="card"
             v-model:show={props.show}
-            mask-closable={false}
-            class="w-188 h-100 bg-white overflow-hidden"
+            mask-closable={true}
+            class="w-188 h-100 bg-white overflow-hidden m-auto"
             v-slots={slots}
+            aria-modal={true}
+            on-update:show={(value: boolean) => {
+              ctx.emit('update:show', value)
+            }}
           >
             <div class="h-25 m-4 bg-neutral-100 rounded-2xl ">
               <div class="flex flex-row">
@@ -93,19 +83,26 @@ const TeamModal = defineComponent({
                   />
                 </div>
                 <div class="flex-7 ">
+                  {!props.show}
                   <div class="font-bold text-25px mt-5">{props.teamList.name}</div>
                   <div class="text-primary mt-5">{props.teamList.tokenContractAddress}</div>
                 </div>
               </div>
-              <div>
-                <UFormFactory
-                  fields={fields}
-                  submitText="Confirm"
-                  cancelText="Cancel"
-                  onSubmit={onSubmit}
-                  class={styles.bottom_submit}
-                />
-              </div>
+            </div>
+            <div class="h-25 m-4  ">
+              <UFormItemsFactory
+                fields={fields}
+                submitText="Confirm"
+                onSubmit={onSubmit}
+                onCancel={cancel}
+                class={styles.bottom_submit}
+                values={data}
+              />
+            </div>
+            <div class="text-center">
+              <UButton type="primary" size="large" class="w-41  " onClick={onSubmit}>
+                Submit
+              </UButton>
             </div>
           </UModal>
         </section>
