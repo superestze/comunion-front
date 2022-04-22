@@ -27,28 +27,33 @@ const TeamSetting = defineComponent({
     // TODO: after backend completed, get data from backend
     const teamMembers = [
       {
-        avatar: 'https://comunion-avatars.s3.ap-northeast-1.amazonaws.com/avatar1.svg',
-        name: 'Jason Doe',
-        role: 'Front-end developer',
-        tokenContractAddress: '0x2C5d07aa8188A791CAdC83270A726EECf48B5B11',
-        id: 102040386875392,
-        comerID: '99804655071232'
-      },
-      {
-        avatar: 'https://comunion-avatars.s3.ap-northeast-1.amazonaws.com/avatar1.svg',
-        name: 'Darrell Stew',
-        role: 'Front-end developer',
-        tokenContractAddress: '0x2C5d07aa8188A791CAdC83270A726EECf48B5B11',
-        id: 102040386875392,
-        comerID: '99804655071232'
-      },
-      {
-        avatar: 'https://comunion-avatars.s3.ap-northeast-1.amazonaws.com/avatar1.svg',
-        name: 'Darrell Stew',
-        role: 'Front-end developer',
-        tokenContractAddress: '0x2C5d07aa8188A791CAdC83270A726EECf48B5B11',
-        id: 102040386875392,
-        comerID: '99804655071232'
+        ID: 7709685793311477,
+        CreatedAt: 'magna sunt aute',
+        UpdatedAt: 'et dolor',
+        comerID: 8397756524493314,
+        startupID: 10213386430842146,
+        position: 'aute quis voluptate incididunt',
+        comer: {
+          id: '43455592614327095',
+          createdAt: 'Ut',
+          updatedAt: 'exercitation nostrud id',
+          isDeleted: true,
+          Address: 'tempor'
+        },
+        comerProfile: {
+          id: 1793687679410097,
+          createdAt: 'consequat sit sed ipsum pariatur',
+          updatedAt: 'ad est',
+          isDeleted: true,
+          comerID: '15660611372087225',
+          name: 'proident enim anim incididunt',
+          avatar: 'aliqua',
+          location: 'aute proident reprehenderit incididunt sint',
+          website: 'consequat magna',
+          bio: 'nulla amet nisi',
+          skills: null,
+          role: 'develop'
+        }
       }
     ]
     const teamList = async () => {
@@ -74,8 +79,8 @@ const TeamSetting = defineComponent({
     }
     const teamUpdata = async (val: any) => {
       const { error, data } = await services['startup@start-team-meabers-update']({
-        startupId: paramsList.value.startupId,
-        comerId: paramsList.value.comerID,
+        startupId: val.startupId,
+        comerId: val.comerId,
         position: val.roles
       })
       if (!error) {

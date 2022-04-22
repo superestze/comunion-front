@@ -11,7 +11,8 @@ interface TeamMember {
   role: string
   tokenContractAddress: number
   id: number
-  comerID: number
+  comerID: string
+  comerProfile: any
 }
 
 const TeamCard = defineComponent({
@@ -28,8 +29,8 @@ const TeamCard = defineComponent({
       success.value = true
     }
     const paramsList = ref({
-      startupId: props.teamMember.id,
-      comerID: props.teamMember.comerID
+      startupId: props.teamMember.comerProfile.id,
+      comerID: props.teamMember.comerProfile.comerID
     })
 
     const PARENT_PROVIDE = 'parentProvide'
@@ -56,7 +57,7 @@ const TeamCard = defineComponent({
 
     return () => (
       <div
-        class="team-card flex flex-row leading-20 h-20 mb-6 hover:bg-blue-600 hover:rounded-xl hover:text-light-50 hover:cursor-pointer"
+        class="team-card flex flex-row leading-20 h-20 mb-6 hover:bg-blue-600 hover:rounded-lg hover:text-light-50 hover:cursor-pointer"
         onMouseleave={e => {
           e.stopPropagation()
           showTooltipRef.value = false
@@ -67,14 +68,14 @@ const TeamCard = defineComponent({
         }}
       >
         <div class="avatar">
-          <ULazyImage src={props.teamMember?.avatar ?? ''} class="h-20 w-20 rounded" />
+          <ULazyImage src={props.teamMember?.avatar ?? ''} class="h-20 w-20 rounded-1\/2 " />
         </div>
         <div class="w-45 member-info flex flex-col justify-center ml-6">
           <div class="u-label font-orbitron font-700 text-[18px] tracking-2px uppercase mb-1 ">
-            {props.teamMember?.name}
+            {props.teamMember.comerProfile?.name}
           </div>
           <div class="u-title font-opensans font-400 text-[14px] leading-5 h-5  ">
-            {props.teamMember?.role}
+            {props.teamMember.comerProfile?.role}
           </div>
         </div>
         {showTooltipRef.value && (
@@ -93,7 +94,9 @@ const TeamCard = defineComponent({
             </div>
           </div>
         )}
-        {success.value && <TeamModal v-model:show={success.value} teamList={props.teamMember} />}
+        {success.value && (
+          <TeamModal v-model:show={success.value} teamList={props.teamMember.comerProfile} />
+        )}
       </div>
     )
   }

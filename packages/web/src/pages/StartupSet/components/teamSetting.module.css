@@ -1,5 +1,0 @@
-.bottom_submit div button {
-  /* margin: auto;
-    background-color: #1e3a8a; */
-  @apply w-50 h-12 m-auto bg-blue-900 border-transparent;
-}

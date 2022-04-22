@@ -1,7 +1,6 @@
 import { FormFactoryField, UModal, UFormItemsFactory, UButton } from '@comunion/components'
 import ULazyImage from '@comunion/components/src/ULazyImage/LazyImage'
 import { defineComponent, ref, PropType, inject } from 'vue'
-import styles from './teamSetting.module.css'
 
 const TeamModal = defineComponent({
   name: 'TeamModal',
@@ -22,7 +21,6 @@ const TeamModal = defineComponent({
     const selectedAvatar = ref(props.avatar)
     const fields: FormFactoryField[] = [
       {
-        t: 'String',
         title: 'Roles',
         name: 'roles',
         roles: '',
@@ -31,11 +29,11 @@ const TeamModal = defineComponent({
       }
     ]
     const data = {
-      roles: props.teamList.role
+      roles: props.teamList.role,
+      startupId: props.teamList.id,
+      comerId: props.teamList.comerID
     }
-    const defaultModel = {
-      roles: ''
-    }
+
     const PARENT_PROVIDE = 'parentProvide'
     const parent = inject(PARENT_PROVIDE)
     const parentTestFun = inject(`${PARENT_PROVIDE}/teamCreate`)
@@ -46,7 +44,6 @@ const TeamModal = defineComponent({
     }
 
     const onSubmit = async (values: object) => {
-      console.log(data)
       ctx.emit('update:show', false)
       if (props.teamList.role) {
         parentUpDataFun(data)
@@ -90,14 +87,7 @@ const TeamModal = defineComponent({
               </div>
             </div>
             <div class="h-25 m-4  ">
-              <UFormItemsFactory
-                fields={fields}
-                submitText="Confirm"
-                onSubmit={onSubmit}
-                onCancel={cancel}
-                class={styles.bottom_submit}
-                values={data}
-              />
+              <UFormItemsFactory fields={fields} values={data} />
             </div>
             <div class="text-center">
               <UButton type="primary" size="large" class="w-41  " onClick={onSubmit}>
