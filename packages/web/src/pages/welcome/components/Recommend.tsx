@@ -27,7 +27,7 @@ const Recommend = defineComponent({
         offset: pagination.value.pageSize * (pagination.value.page - 1)
       })
       if (!error) {
-        startups.value = [...data.list]
+        startups.value = data.list
         console.log('startups.value:::', startups.value)
         total.value = data.total
         pageList.total = total.value

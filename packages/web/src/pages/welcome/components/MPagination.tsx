@@ -1,5 +1,5 @@
 import { UPagination } from '@comunion/components/src'
-import { defineComponent, PropType, inject } from 'vue'
+import { defineComponent, PropType, inject, ref } from 'vue'
 
 interface pageList {
   page: number
@@ -16,19 +16,22 @@ const MPagination = defineComponent({
   },
   emits: ['updatePage'],
   setup(props, ctx) {
-    // 注入父组件指定方法
+    const pageinationList = ref({
+      page: props.pageList.page,
+      total: props.pageList.total,
+      pageSize: props.pageList.pageSize
+    })
     const PARENT_PROVIDE = 'parentProvide'
-    // 注入父组件 ref
     const parentTestFun = inject(`${PARENT_PROVIDE}/updatePage`)
     const updatePages = (page: number) => {
-      props.pageList.page = page
+      pageinationList.value.page = page
       parentTestFun(page)
     }
     return () => (
       <UPagination
-        v-model:page={props.pageList.page}
-        itemCount={props.pageList.total}
-        v-model:pageSize={props.pageList.pageSize}
+        v-model:page={pageinationList.value.page}
+        itemCount={pageinationList.value.total}
+        v-model:pageSize={pageinationList.value.pageSize}
         on-update:page={updatePages}
       />
     )

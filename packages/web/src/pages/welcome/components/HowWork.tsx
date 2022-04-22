@@ -1,4 +1,4 @@
-import { UGuideStep } from '@comunion/components'
+import { UGuideStep, UButton } from '@comunion/components'
 import { defineComponent } from 'vue'
 
 const HowWork = defineComponent({
@@ -26,6 +26,10 @@ const HowWork = defineComponent({
         desc: 'Complete the bounty to get paid by the company token, and you will become a new comer for the comeup.'
       }
     ]
+    const titleText = {
+      title: 'Want to become a founder?',
+      text: 'Create your own comeup portfolio on Comunion and recruite for talents.'
+    }
     return () => (
       <>
         <div class="w-full p-10 bg-white">
@@ -36,14 +40,14 @@ const HowWork = defineComponent({
         </div>
         <div class="w-full p-10 bg-white mt-10 flex flex-col justify-center">
           <div class="font-orbitron font-normal font-700 text-[24px] leading-8 text-center tracking-2px text-primary">
-            Want to become a founder?
+            {titleText.title}
           </div>
           <div class="font-opensans font-normal font-400 text-[16px] leading-5 text-grey1 text-center mt-6 mb-6">
-            Create your own comeup portfolio on Comunion and recruite for talents.
+            {titleText.text}
           </div>
-          <button class="bg-primary1 rounded-6px h-48px text-white text-bold text-16px leading-40px w-180px self-center">
+          <UButton class="bg-primary1 rounded-6px h-48px text-white text-bold text-16px leading-40px w-180px self-center">
             Create
-          </button>
+          </UButton>
         </div>
       </>
     )
