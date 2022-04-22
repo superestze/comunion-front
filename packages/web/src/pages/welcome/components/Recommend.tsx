@@ -39,10 +39,8 @@ const Recommend = defineComponent({
       getRecommendStartups()
     }
     const PARENT_PROVIDE = 'parentProvide'
-    // 提供父组件 ref 引用
     provide(PARENT_PROVIDE, root)
 
-    // 提供父组件指定方法
     provide(`${PARENT_PROVIDE}/updatePage`, updatePage)
 
     onMounted(() => {
