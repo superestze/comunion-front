@@ -1,150 +1,103 @@
 import { UPopupMenu } from '@comunion/components'
 import {
-  HelpCircleFilled,
-  MessageCircleFilled,
-  MoonFilled,
-  MoreOutlined,
-  TypeFilled
+  ChatFilled,
+  WebsiteFilled,
+  DiscordFilled,
+  TelegramFilled,
+  TwitterFilled,
+  DocsFilled,
+  MoreOutlined
 } from '@comunion/icons'
 import { defineComponent, h, ref } from 'vue'
+import DropItem from './DropItem'
 
 const MoreNavigationPage = defineComponent({
   name: 'MoreNavigationPage',
   setup() {
     const options = ref([
+      // about comunion
       {
         type: 'render',
-        key: 'about',
+        // TODO the about openUrl will be changed after PM given
         render: () => {
           return h(
-            'div',
-            {
-              depth: 0,
-              class:
-                'flex flex-row w-89 h-12 items-center cursor-pointer group hover:bg-grey3 hover:rounded-lg',
-              onClick: () => window.open('https://comunion.org/', '_blank')
-            },
-            [
-              h(
-                'div',
-                {
-                  depth: 1,
-                  class:
-                    'h-8 w-8 rounded-lg mr-5 flex items-center justify-center group-hover:bg-grey3 bg-grey5'
-                },
-                [h(<HelpCircleFilled />, { class: 'h-4 w-4' })]
-              ),
-              h(
-                'div',
-                {
-                  depth: 1,
-                  class: 'font-opensans font-normal font-400 font-[16px] bg-grey-1'
-                },
-                [h('NText', null, { default: () => 'About Comunion' })]
-              )
-            ]
+            <DropItem
+              openUrl="https://docs.comunion.org/"
+              text="About Comunion"
+              icon={ChatFilled}
+            />,
+            {}
           )
         }
       },
+      // line
       {
         type: 'render',
-        key: 'https://comunion.org/',
+        render: () => {
+          return h('div', {
+            class: 'bg-grey5 h-[1px] w-full mt-4 mb-4'
+          })
+        }
+      },
+      // Website
+      {
+        type: 'render',
         render: () => {
           return h(
-            'div',
-            {
-              depth: 0,
-              class:
-                'flex flex-row w-89 h-12 items-center cursor-pointer group hover:bg-grey3 hover:rounded-lg',
-              onClick: () => window.open('https://comunion.org/', '_blank')
-            },
-            [
-              h(
-                'div',
-                {
-                  depth: 1,
-                  class:
-                    'h-8 w-8 rounded-lg mr-5 flex items-center justify-center group-hover:bg-grey3 bg-grey5'
-                },
-                [h(<MessageCircleFilled />, { class: 'h-4 w-4' })]
-              ),
-              h(
-                'div',
-                {
-                  depth: 1,
-                  class: 'font-opensans font-normal font-400 font-[16px] bg-grey-1'
-                },
-                [h('NText', null, { default: () => 'Community BBS' })]
-              )
-            ]
+            <DropItem openUrl="https://comunion.org" text="Website" icon={WebsiteFilled} />,
+            {}
           )
         }
       },
+      // Discord
       {
         type: 'render',
-        key: 'language',
         render: () => {
           return h(
-            'div',
-            {
-              depth: 0,
-              class:
-                'flex flex-row w-89 h-12 items-center cursor-not-allowed group hover:bg-grey3 hover:rounded-lg',
-              disabled: true
-            },
-            [
-              h(
-                'div',
-                {
-                  depth: 1,
-                  class:
-                    'h-8 w-8 rounded-lg mr-5  flex items-center justify-center group-hover:bg-grey3 bg-grey5'
-                },
-                [h(<TypeFilled />, { class: 'h-4 w-4' })]
-              ),
-              h(
-                'div',
-                {
-                  depth: 1,
-                  class: 'font-opensans font-normal font-400 font-[16px] bg-grey-1'
-                },
-                [h('NText', null, { default: () => 'Language' })]
-              )
-            ]
+            <DropItem
+              openUrl="https://discord.gg/9x4Up6aWRj"
+              text="Discord"
+              icon={DiscordFilled}
+            />,
+            {}
           )
         }
       },
+      // Telegram
       {
         type: 'render',
-        key: 'moon',
         render: () => {
           return h(
-            'div',
-            {
-              depth: 0,
-              class:
-                'flex flex-row w-89 h-12 items-center cursor-not-allowed group hover:bg-grey3 hover:rounded-lg',
-              disabled: true
-            },
-            [
-              h(
-                'div',
-                {
-                  depth: 1,
-                  class:
-                    'h-8 w-8 rounded-lg mr-5  flex items-center justify-center group-hover:bg-grey3 bg-grey5'
-                },
-                [h(<MoonFilled />, { class: 'h-4 w-4' })]
-              ),
-              h(
-                'div',
-                {
-                  depth: 1,
-                  class: 'font-opensans font-normal font-400 font-[16px] bg-grey-1'
-                },
-                [h('NText', null, { default: () => 'render' })]
-              )
-            ]
+            <DropItem
+              openUrl="https://t.me/ComunionEconomics"
+              text="Telegram"
+              icon={TelegramFilled}
+            />,
+            {}
+          )
+        }
+      },
+      // Twitter
+      {
+        type: 'render',
+        render: () => {
+          return h(
+            <DropItem
+              openUrl="https://twitter.com/Comunion01"
+              text="Twitter"
+              icon={TwitterFilled}
+            />,
+            {}
+          )
+        }
+      },
+      // Docs
+      {
+        type: 'render',
+        render: () => {
+          return h(
+            <DropItem openUrl="https://docs.comunion.org/" text="Docs" icon={DocsFilled} />,
+            {}
           )
         }
       }
@@ -154,7 +107,7 @@ const MoreNavigationPage = defineComponent({
       <>
         <section>
           <UPopupMenu trigger="click" options={options.value}>
-            <MoreOutlined class="top-9 right-15 absolute cursor-pointer" />
+            <MoreOutlined class="top-9 right-15 absolute cursor-pointer hover:bg-grey5" />
           </UPopupMenu>
         </section>
       </>
