@@ -105,14 +105,14 @@ const EditStartupForm = defineComponent({
     }
 
     function onSubmit() {
-      formRef.value?.validate(async error => {
+      formRef.value?.validate(async (error: any) => {
         if (!error) {
           loading.value = true
           try {
             const { data } = await services['startup@startup-name-is-exist']({
               name: model.name
             })
-            if (data.isExist) {
+            if (data?.isExist) {
               message.error('Startup name already exists')
               throw new Error('Startup name already exists')
             }
