@@ -1,6 +1,15 @@
-import { FormFactoryField, UModal, UFormItemsFactory, UButton } from '@comunion/components'
+import { UModal, UFormItemsFactory, UButton } from '@comunion/components'
 import ULazyImage from '@comunion/components/src/ULazyImage/LazyImage'
-import { defineComponent, ref, PropType, inject } from 'vue'
+import { defineComponent, PropType, inject, reactive } from 'vue'
+
+interface teamList {
+  id: number | null | undefined
+  comerID: number | null | undefined
+  roles: string | null | undefined
+  name: string | null | undefined
+  tokenContractAddress: string | null | undefined
+  comerProfile: any | null | undefined
+}
 
 const TeamModal = defineComponent({
   name: 'TeamModal',
@@ -14,12 +23,13 @@ const TeamModal = defineComponent({
       default: ''
     },
     teamList: {
-      type: Object as PropType<teamList>
+      type: Object as PropType<teamList>,
+      required: true
     }
   },
   setup(props, ctx) {
-    const selectedAvatar = ref(props.avatar)
-    const fields: FormFactoryField[] = [
+    // const selectedAvatar = ref(props.avatar)
+    const fields = [
       {
         title: 'Roles',
         name: 'roles',
@@ -28,28 +38,40 @@ const TeamModal = defineComponent({
         placeholder: 'Plealse position, link developer...'
       }
     ]
-    const data = {
-      roles: props.teamList.role,
-      startupId: props.teamList.id,
-      comerId: props.teamList.comerID
+    const defaultModel = {
+      roles: props.teamList?.roles,
+      id: props.teamList?.id,
+      comerId: props.teamList?.comerID
     }
 
+    const value = reactive({
+      ...{
+        ...defaultModel
+      }
+    })
     const PARENT_PROVIDE = 'parentProvide'
-    const parent = inject(PARENT_PROVIDE)
+    // const parent = inject(PARENT_PROVIDE)
     const parentTestFun = inject(`${PARENT_PROVIDE}/teamCreate`)
     const parentUpDataFun = inject(`${PARENT_PROVIDE}/upData`)
-    const cancel = () => {
+    // const cancel = () => {
+    //   ctx.emit('update:show', false)
+    //   selectedAvatar.value = ''
+    // }
+    function onCancel() {
+      Object.assign(value, {
+        ...{
+          ...defaultModel
+        }
+      })
       ctx.emit('update:show', false)
-      selectedAvatar.value = ''
     }
-
-    const onSubmit = async (values: object) => {
-      ctx.emit('update:show', false)
-      if (props.teamList.role) {
-        parentUpDataFun(data)
+    const onSubmit = () => {
+      if (props.teamList?.roles) {
+        if (parentUpDataFun instanceof Function) parentUpDataFun(value)
       } else {
-        parentTestFun(data)
+        if (parentTestFun instanceof Function) parentTestFun(value)
       }
+      onCancel()
     }
 
     const slots = {
@@ -67,9 +89,7 @@ const TeamModal = defineComponent({
             class="w-188 h-100 bg-white overflow-hidden m-auto"
             v-slots={slots}
             aria-modal={true}
-            on-update:show={(value: boolean) => {
-              ctx.emit('update:show', value)
-            }}
+            on-update:show={onCancel}
           >
             <div class="h-25 m-4 bg-neutral-100 rounded-2xl ">
               <div class="flex flex-row">
@@ -81,13 +101,13 @@ const TeamModal = defineComponent({
                 </div>
                 <div class="flex-7 ">
                   {!props.show}
-                  <div class="font-bold text-25px mt-5">{props.teamList.name}</div>
-                  <div class="text-primary mt-5">{props.teamList.tokenContractAddress}</div>
+                  <div class="font-bold text-25px mt-5">{props.teamList?.name}</div>
+                  <div class="text-primary mt-5">{props.teamList?.tokenContractAddress}</div>
                 </div>
               </div>
             </div>
             <div class="h-25 m-4  ">
-              <UFormItemsFactory fields={fields} values={data} />
+              <UFormItemsFactory fields={fields} values={value} />
             </div>
             <div class="text-center">
               <UButton type="primary" size="large" class="w-41  " onClick={onSubmit}>

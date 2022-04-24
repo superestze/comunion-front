@@ -14,10 +14,16 @@ const TeamSetting = defineComponent({
     }
   },
   setup(props, ctx) {
+    console.log(props.startup)
+    console.log
     const success = ref(false)
     const paramsList = ref({
-      startupId: props.startup.id,
-      comerID: props.startup.comerID
+      id: props.startup?.id,
+      comerID: props.startup?.comerID,
+      roles: null,
+      name: props.startup?.name,
+      tokenContractAddress: props.startup?.tokenContractAddress,
+      comerProfile: Object
     })
     const searchMember = () => {
       console.log(inputMember.value)
@@ -52,13 +58,13 @@ const TeamSetting = defineComponent({
           website: 'consequat magna',
           bio: 'nulla amet nisi',
           skills: null,
-          role: 'develop'
+          roles: 'develop'
         }
       }
     ]
     const teamList = async () => {
       const { error, data } = await services['startup@start-team-meabers-list']({
-        startupId: paramsList.value.startupId,
+        startupId: paramsList.value.id,
         limit: 10,
         offset: 1
       })
@@ -68,7 +74,7 @@ const TeamSetting = defineComponent({
     }
     const teamCreate = async (val: any) => {
       const { error, data } = await services['startup@start-team-meabers-create']({
-        startupId: paramsList.value.startupId,
+        startupId: paramsList.value.id,
         comerId: paramsList.value.comerID,
         position: val.roles
       })
@@ -78,8 +84,9 @@ const TeamSetting = defineComponent({
       }
     }
     const teamUpdata = async (val: any) => {
+      console.log(val)
       const { error, data } = await services['startup@start-team-meabers-update']({
-        startupId: val.startupId,
+        startupId: val.id,
         comerId: val.comerId,
         position: val.roles
       })
@@ -124,7 +131,7 @@ const TeamSetting = defineComponent({
         </div>
         <TeamModal
           v-model:show={success.value}
-          teamList={props.startup}
+          teamList={paramsList.value}
           v-model:teamCreate={teamCreate}
         />
       </div>
