@@ -1,20 +1,26 @@
-import { useTransactionStore } from '@/stores/transaction'
+import { ContractTransaction } from 'ethers'
+import { useContractStore } from '@/stores/contract'
 
 export function wrapTransaction(
-  fn: (...args: any) => Promise<any>
+  fn: (...args: any) => Promise<ContractTransaction>
 ): (...args: any) => Promise<any> {
-  const transactionStore = useTransactionStore()
+  const contractStore = useContractStore()
   return (...args: any[]) => {
-    const _args = args.slice(0, args.length - 1)
-    const text = args[args.length - 1]
-    transactionStore.startTransaction(text)
-    return fn(..._args)
-      .then(() => {
-        transactionStore.endTransaction('success')
+    const waitingText = args.pop()
+    const pengdingText = args.pop()
+    contractStore.startContract(pengdingText)
+    return fn(...args)
+      .then(res => {
+        contractStore.endContract('success', {
+          success: true,
+          hash: res.hash,
+          text: waitingText,
+          promiseFn: res.wait
+        })
       })
       .catch(e => {
         console.error(e)
-        transactionStore.endTransaction('failed')
+        contractStore.endContract('failed', { success: false })
         throw e
       })
   }

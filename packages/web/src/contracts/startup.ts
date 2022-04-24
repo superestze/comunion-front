@@ -22,7 +22,8 @@ export function useStartupContract(): () => {
       overview: string,
       isValidate: any
     ],
-    text: string
+    pendingText: string,
+    waitingText: string
   ) => Promise<[]>
   startups: (
     arg0: string,

@@ -3,25 +3,25 @@ import { defineComponent, PropType, ref, watchEffect } from 'vue'
 import { UModal } from '../UModal'
 import { ExtractPropTypes } from '../utils'
 
-import './UTransaction.css'
+import './UContractInteraction.css'
 
-export type UTransactionStatus = 'pending' | 'success' | 'canceled' | 'failed'
+export type UContractInteractionStatus = 'pending' | 'success' | 'canceled' | 'failed'
 
-export const UTransactionProps = {
+export const UContractInteractionProps = {
   status: {
-    type: String as PropType<UTransactionStatus>
+    type: String as PropType<UContractInteractionStatus>
   },
   text: {
     type: String
   }
 } as const
 
-export type UTransactionPropsType = ExtractPropTypes<typeof UTransactionProps>
+export type UContractInteractionPropsType = ExtractPropTypes<typeof UContractInteractionProps>
 
-const UTransaction = defineComponent({
-  name: 'UTransaction',
-  props: UTransactionProps,
-  setup(props, ctx) {
+const UContractInteraction = defineComponent({
+  name: 'UContractInteraction',
+  props: UContractInteractionProps,
+  setup(props) {
     const show = ref(false)
 
     const close = () => {
@@ -43,14 +43,16 @@ const UTransaction = defineComponent({
     return () => (
       <UModal v-model:show={show.value} transform-origin="center">
         {props.status && show.value ? (
-          <div class={`u-transaction status-${props.status}`}>
-            <CloseOutlined class="u-transaction-close" onClick={close} />
-            {props.status === 'pending' && <div class="u-transaction-animation"></div>}
-            <div class="u-transaction-status">
+          <div class={`u-contract-interaction status-${props.status}`}>
+            <CloseOutlined class="u-contract-interaction-close" onClick={close} />
+            {props.status === 'pending' && <div class="u-contract-interaction-animation"></div>}
+            <div class="u-contract-interaction-status">
               {props.status.slice(0, 1).toUpperCase()}
               {props.status.slice(1)}
             </div>
-            {props.status === 'pending' && <div class="u-transaction-text">{props.text}</div>}
+            {props.status === 'pending' && (
+              <div class="u-contract-interaction-text">{props.text}</div>
+            )}
           </div>
         ) : (
           <div />
@@ -60,4 +62,4 @@ const UTransaction = defineComponent({
   }
 })
 
-export default UTransaction
+export default UContractInteraction
