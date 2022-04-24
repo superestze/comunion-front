@@ -25,7 +25,7 @@ const MPagination = defineComponent({
     const parentTestFun = inject(`${PARENT_PROVIDE}/updatePage`)
     const updatePages = (page: number) => {
       pageinationList.value.page = page
-      parentTestFun(page)
+      if (parentTestFun instanceof Function) parentTestFun(page)
     }
     return () => (
       <UPagination
