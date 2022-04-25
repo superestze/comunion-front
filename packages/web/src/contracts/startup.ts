@@ -14,11 +14,11 @@ export function useStartupContract(): () => {
     p: [
       name: string,
       mode: number,
-      hashtag: string[],
+      // hashtag: string[],
       logo: string,
       mission: string,
-      tokenContract: string,
-      wallets: [name: string, walletAddress: string][],
+      // tokenContract: string,
+      // wallets: [name: string, walletAddress: string][],
       overview: string,
       isValidate: any
     ],
