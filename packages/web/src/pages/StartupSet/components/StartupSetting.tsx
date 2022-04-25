@@ -1,6 +1,6 @@
 import { defineComponent, PropType } from 'vue'
 import { useRouter } from 'vue-router'
-import EditStartupForm from '@/blocks/Startup/EditForm'
+import EditStartupForm from '@/blocks/Startup/Edit'
 import { StartupItem } from '@/types'
 
 const StartupSetting = defineComponent({

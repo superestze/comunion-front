@@ -206,46 +206,16 @@ export const services = {
     })
   },
 
-  'startup@startup-get'(args: { startupId: any }) {
-    return requestAdapter<{
-      id: number
-      createdAt: string
-      updatedAt: string
-      isDeleted: boolean
-      comerID: number
-      name: string
-      /**
-       * @description 1:ESG,2:NGO,3:DAO,4:COM
-       */
-      mode: number
-      logo: string
-      mission: string
-      tokenContractAddress: string
-      overview: string
-      isSet: boolean
-      hashTags: {
-        id: number
-        createdAt: string
-        updatedAt: string
-        isDeleted: boolean
-        name: string
-        category: string
-        isIndex: boolean
-      }[]
-      wallets: {
-        id: number
-        createdAt: string
-        updatedAt: string
-        isDeleted: boolean
-        comerID: number
-        startupID: number
-        walletName: string
-        walletAddress: string
-      }[]
-    }>({
-      url: replacePath('/cores/startups/{startupId}', args),
-      method: 'GET',
-      ...extract('GET', args, [], ['startupId'])
+  'startup@startup-follow'(args: {
+    /**
+     * @example 1
+     */
+    startupId: any
+  }) {
+    return requestAdapter<{}>({
+      url: replacePath('/cores/startups/{startupId}/follow', args),
+      method: 'POST',
+      ...extract('POST', args, [], ['startupId'])
     })
   },
   'startup@start-team-meabers-create'(
@@ -320,16 +290,43 @@ export const services = {
       ...extract('PUT', args, [], ['startupId', 'comerId'])
     })
   },
-  'startup@startup-follow'(args: {
-    /**
-     * @example 1
-     */
-    startupId: any
-  }) {
+  'startup@startup-basic-setting-update'(
+    args: {
+      startupId: any
+    } & {
+      kyc: string
+      contractAudit: string
+      hashTags: string[]
+      website: string
+      discord: string
+      twitter: string
+      telegram: string
+      docs: string
+    }
+  ) {
     return requestAdapter<{}>({
-      url: replacePath('/cores/startups/{startupId}/follow', args),
-      method: 'POST',
-      ...extract('POST', args, [], ['startupId'])
+      url: replacePath('/cores/startups/{startupId}/basicSetting', args),
+      method: 'PUT',
+      ...extract('PUT', args, [], ['startupId'])
+    })
+  },
+  'startup@startup-finance-setting-update'(
+    args: {
+      startupId: any
+    } & {
+      tokenContractAddress: string
+      presaleDate: string
+      launchDate: string
+      wallets: {
+        walletName: string
+        walletAddress: string
+      }[]
+    }
+  ) {
+    return requestAdapter<{}>({
+      url: replacePath('/cores/startups/{startupId}/financeSetting', args),
+      method: 'PUT',
+      ...extract('PUT', args, [], ['startupId'])
     })
   },
   'startup@start-team-meabers-delete'(
@@ -342,6 +339,57 @@ export const services = {
       url: replacePath('/cores/startups/{startupId}/teamMembers/{comerId}', args),
       method: 'DELETE',
       ...extract('DELETE', args, [], ['startupId', 'comerId'])
+    })
+  },
+  'startup@startup-get'(args: { startupId: any }) {
+    return requestAdapter<{
+      id: number
+      createdAt: string
+      updatedAt: string
+      isDeleted: boolean
+      comerID: number
+      name: string
+      /**
+       * @description 1:ESG,2:NGO,3:DAO,4:COM
+       */
+      mode: number
+      logo: string
+      mission: string
+      tokenContractAddress: string
+      overview: string
+      isSet: boolean
+      kyc: string
+      contractAudit: string
+      hashTags: {
+        id: number
+        createdAt: string
+        updatedAt: string
+        isDeleted: boolean
+        name: string
+        category: string
+        isIndex: boolean
+      }[]
+      website: string
+      discord: string
+      twitter: string
+      telegram: string
+      docs: string
+      presaleDate: string
+      launchDate: string
+      wallets: {
+        id: number
+        createdAt: string
+        updatedAt: string
+        isDeleted: boolean
+        comerID: number
+        startupID: number
+        walletName: string
+        walletAddress: string
+      }[]
+    }>({
+      url: replacePath('/cores/startups/{startupId}', args),
+      method: 'GET',
+      ...extract('GET', args, [], ['startupId'])
     })
   },
   'startup@startup-list'(args: {
@@ -370,6 +418,8 @@ export const services = {
         tokenContractAddress: string
         overview: string
         isSet: boolean
+        kyc: string
+        contractAudit: string
         hashTags: {
           id: number
           createdAt: string
@@ -379,6 +429,13 @@ export const services = {
           category: string
           isIndex: boolean
         }[]
+        website: string
+        discord: string
+        twitter: string
+        telegram: string
+        docs: string
+        presaleDate: string
+        launchDate: string
         wallets: {
           id: number
           createdAt: string
