@@ -1,6 +1,6 @@
+import smallLogo from '@/assets/small-logo.png'
 import { defineComponent } from 'vue'
 import { RouterLink } from 'vue-router'
-import smallLogo from '@/assets/small-logo.png'
 
 export default defineComponent({
   name: 'Footer',
@@ -29,10 +29,6 @@ export default defineComponent({
           {
             title: 'Github',
             url: ' https://github.com/comunion-io/'
-          },
-          {
-            title: 'Taiga',
-            url: ' https://taiga.comunion.io/'
           }
         ]
       }
