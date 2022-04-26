@@ -51,8 +51,8 @@ const TeamModal = defineComponent({
     })
     const PARENT_PROVIDE = 'parentProvide'
     // const parent = inject(PARENT_PROVIDE)
-    const parentTestFun = inject(`${PARENT_PROVIDE}/teamCreate`)
-    const parentUpDataFun = inject(`${PARENT_PROVIDE}/upData`)
+    const parentTestFun: any = inject(`${PARENT_PROVIDE}/teamCreate`)
+    const parentUpDataFun: any = inject(`${PARENT_PROVIDE}/upData`)
     // const cancel = () => {
     //   ctx.emit('update:show', false)
     //   selectedAvatar.value = ''
@@ -67,9 +67,9 @@ const TeamModal = defineComponent({
     }
     const onSubmit = () => {
       if (props.teamList?.roles) {
-        if (parentUpDataFun instanceof Function) parentUpDataFun(value)
+        parentUpDataFun?.(value)
       } else {
-        if (parentTestFun instanceof Function) parentTestFun(value)
+        parentTestFun?.(value)
       }
       onCancel()
     }
