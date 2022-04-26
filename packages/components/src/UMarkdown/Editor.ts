@@ -15,11 +15,11 @@ export default class Editor {
     document.addEventListener('selectionchange', this._onSelectionChange)
   }
 
-  private _onInput(e: InputEvent) {
+  private _onInput() {
     this._options.onChange?.(this._el.innerHTML)
   }
 
-  private _onSelectionChange(e: Event) {
+  private _onSelectionChange() {
     //
   }
 

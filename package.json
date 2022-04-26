@@ -21,6 +21,7 @@
     "build:hooks": "pnpm --filter @comunion/hooks build",
     "build:components": "pnpm --filter @comunion/components build",
     "build:web": "pnpm --filter @comunion/web build",
+    "prepare-build": "run-s build:utils build:icon build:hooks build:components",
     "build": "run-s build:utils build:icon build:hooks build:components build:web",
     "clear:dist": "rm -rf packages/*/dist",
     "fix:contracts": "prettier ./packages/web/src/contracts --write",
