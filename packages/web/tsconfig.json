@@ -13,6 +13,7 @@
     },
     "resolveJsonModule": true
   },
+  "exclude": ["node_modules", "dist"],
   "extends": "../../tsconfig.package.json",
   "include": ["./src/**/*"]
 }

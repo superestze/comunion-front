@@ -26,4 +26,4 @@ jobs:
           prettier: true
           stylelint: true
       - name: Run typescript check
-        run: cd packages/web && npx vue-tsc --noEmit
+        run: pnpm run prepare-build && pnpm --dir packages/web check

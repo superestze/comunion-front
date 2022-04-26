@@ -4,7 +4,8 @@
   "description": "Comunion website",
   "scripts": {
     "dev": "vite",
-    "build": "vue-tsc --noEmit && vite build",
+    "check": "vue-tsc --noEmit",
+    "build": "npm run check && vite build",
     "build:nocheck": "vite build",
     "serve": "vite preview",
     "style:analysis": "npx windicss-analysis",
