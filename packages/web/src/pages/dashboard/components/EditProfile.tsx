@@ -1,6 +1,6 @@
 import { FormFactoryField, UDrawer, UFormFactory, ULazyImage } from '@comunion/components'
 import { PlusOutlined } from '@comunion/icons'
-import { defineComponent, PropType, ref } from 'vue'
+import { defineComponent, PropType, reactive, ref } from 'vue'
 import AvatarSelect from '@/components/Profile/AvatarSelect'
 import { ServiceArg, ServiceReturn, services } from '@/services'
 import { useUserStore } from '@/stores'
@@ -17,6 +17,10 @@ const EditProfile = defineComponent({
     const editProfile = () => {
       show.value = true
     }
+    const profileInfo = reactive({
+      ...props!.myProfile,
+      skills: (props!.myProfile!.skills || []).map(s => s.name)
+    })
     const show = ref(false)
     const fields: FormFactoryField[] = [
       {
@@ -105,7 +109,7 @@ const EditProfile = defineComponent({
               </div>
 
               <UFormFactory
-                initialValues={props.myProfile!}
+                initialValues={profileInfo}
                 fields={fields}
                 showCancel={true}
                 submitText="Confirm"
