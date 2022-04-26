@@ -1,0 +1,23 @@
+.u-transaction-waiting {
+  @apply fixed top-25.5 right-67.5 z-100 relative bg-white rounded-md px-4 pt-6 pb-4 flex items-center;
+
+  &-close {
+    @apply absolute top-4 right-4;
+  }
+
+  &-checked {
+    @apply text-primary mr-5 w-6 h-6;
+  }
+
+  &-text {
+    @apply u-title2 text-primary2;
+  }
+
+  &-link {
+    @apply mt-4.5 text-primary u-body2;
+  }
+
+  &-bar {
+    @apply -mx-2.5 h-0.5 bg-primary;
+  }
+}

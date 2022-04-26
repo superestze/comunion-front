@@ -1,6 +1,8 @@
+import { useMockCountdown } from '@comunion/hooks'
 import { CheckedFilled, CloseOutlined } from '@comunion/icons'
 import { defineComponent, PropType } from 'vue'
 import { ExtractPropTypes } from '../utils'
+import './UTransactionWaiting.css'
 
 export const UTransactionWaitingProps = {
   text: {
@@ -24,9 +26,11 @@ const UTransactionWaiting = defineComponent({
   name: 'UTransactionWaiting',
   props: UTransactionWaitingProps,
   setup(props) {
+    const { left, cancel } = useMockCountdown()
+
     return () => (
       <div class="u-transaction-waiting">
-        <CloseOutlined class="u-transaction-waiting-close" />
+        <CloseOutlined class="u-transaction-waiting-close" onClick={cancel} />
         <CheckedFilled class="u-transaction-waiting-checked" />
         <div>
           <div class="u-transaction-waiting-text">{props.text}</div>
@@ -37,7 +41,12 @@ const UTransactionWaiting = defineComponent({
             View on Etherscan
           </a>
         </div>
-        <div class="u-transaction-waiting-bar"></div>
+        <div
+          class="u-transaction-waiting-bar"
+          style={{
+            width: `${left}%`
+          }}
+        ></div>
       </div>
     )
   }

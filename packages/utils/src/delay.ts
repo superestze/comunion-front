@@ -10,3 +10,7 @@ export function debounce<F extends (...params: any[]) => void>(fn: F, delay = 30
     )
   } as F
 }
+
+export function sleep(ms: number) {
+  return new Promise(resolve => setTimeout(resolve, ms))
+}
