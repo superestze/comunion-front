@@ -30,11 +30,11 @@ const TeamCard = defineComponent({
 
     const PARENT_PROVIDE = 'parentProvide'
     // const parent = inject(PARENT_PROVIDE)
-    const parentUpDataFun = inject(`${PARENT_PROVIDE}/teamUpdata`)
+    const parentUpDataFun: any = inject(`${PARENT_PROVIDE}/teamUpdata`)
 
     const upData = (values: object) => {
       ctx.emit('update:show', false)
-      if (parentUpDataFun instanceof Function) parentUpDataFun(values)
+      parentUpDataFun?.(values)
     }
 
     provide(PARENT_PROVIDE, root)
