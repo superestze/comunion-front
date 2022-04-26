@@ -6,15 +6,17 @@ import type {
 import { defineStore } from 'pinia'
 import { DeepWriteable } from '@/utils/type'
 
+export type TransacationType = {
+  hash: string
+  text: string
+  status: 'pending' | 'success' | 'failed'
+}
+
 export type ContractState = {
   // current status
   contract: DeepWriteable<NonNullable<UContractInteractionPropsType>>
-  // TODO pending contract transacations
-  transacations: {
-    hash: string
-    text: string
-    status: 'pending' | 'success' | 'failed'
-  }[]
+  // pending contract transacations
+  transacations: TransacationType[]
 }
 
 export const useContractStore = defineStore('contract', {
@@ -48,13 +50,16 @@ export const useContractStore = defineStore('contract', {
         this.transacations.push(transaction)
         try {
           await ret.promiseFn()
-          const index = this.transacations.indexOf(transaction)
-          if (index > -1) {
-            this.transacations.splice(index, 1)
-          }
+          transaction.status = 'success'
         } catch (error) {
           transaction.status = 'failed'
         }
+      }
+    },
+    closeTransaction(transaction: TransacationType) {
+      const index = this.transacations.indexOf(transaction)
+      if (index > -1) {
+        this.transacations.splice(index, 1)
       }
     }
   }

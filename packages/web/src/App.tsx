@@ -20,6 +20,7 @@ export default defineComponent({
     const userStore = useUserStore()
     const walletStore = useWalletStore()
     const contractStore = useContractStore()
+    window.contractStore = contractStore
 
     // init user state
     userStore.init()

@@ -1,6 +1,6 @@
 import { useMockCountdown } from '@comunion/hooks'
 import { CheckedFilled, CloseOutlined } from '@comunion/icons'
-import { defineComponent, PropType } from 'vue'
+import { defineComponent, PropType, ref, watchEffect } from 'vue'
 import { ExtractPropTypes } from '../utils'
 import './UTransactionWaiting.css'
 
@@ -25,30 +25,50 @@ export type UTransactionWaitingPropsType = ExtractPropTypes<typeof UTransactionW
 const UTransactionWaiting = defineComponent({
   name: 'UTransactionWaiting',
   props: UTransactionWaitingProps,
-  setup(props) {
-    const { left, cancel } = useMockCountdown()
+  emits: ['close'],
+  setup(props, ctx) {
+    const show = ref(true)
+    const { left, cancel, setLeft } = useMockCountdown()
 
-    return () => (
-      <div class="u-transaction-waiting">
-        <CloseOutlined class="u-transaction-waiting-close" onClick={cancel} />
-        <CheckedFilled class="u-transaction-waiting-checked" />
-        <div>
-          <div class="u-transaction-waiting-text">{props.text}</div>
-          <a
-            class="u-transaction-waiting-link"
-            href={`https://goerli.etherscan.io/tx/${props.hash}`}
-          >
-            View on Etherscan
-          </a>
+    watchEffect(() => {
+      if (props.status === 'success') {
+        setLeft(0)
+        setTimeout(() => {
+          close()
+        }, 1000)
+      } else if (props.status === 'failed') {
+        setLeft(0)
+      }
+    })
+
+    function close() {
+      cancel()
+      show.value = false
+      ctx.emit('close')
+    }
+
+    return () =>
+      show.value ? (
+        <div class={['u-transaction-waiting', `status-${props.status}`]}>
+          <CloseOutlined class="u-transaction-waiting-close" onClick={close} />
+          <CheckedFilled class="u-transaction-waiting-checked" />
+          <div>
+            <div class="u-transaction-waiting-text">{props.text}</div>
+            <a
+              class="u-transaction-waiting-link"
+              href={`https://goerli.etherscan.io/tx/${props.hash}`}
+            >
+              View on Etherscan
+            </a>
+          </div>
+          <div
+            class="u-transaction-waiting-bar"
+            style={{
+              width: `${left.value}%`
+            }}
+          ></div>
         </div>
-        <div
-          class="u-transaction-waiting-bar"
-          style={{
-            width: `${left}%`
-          }}
-        ></div>
-      </div>
-    )
+      ) : null
   }
 })
 
