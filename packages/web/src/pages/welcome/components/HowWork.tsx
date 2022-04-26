@@ -32,13 +32,13 @@ const HowWork = defineComponent({
           <div class="font-orbitron font-normal font-700 text-[18px] leading-6 tracking-2px uppercase text-primary mb-10">
             How it works
           </div>
-          <UGuideStep steps={steps} class="text-Label-2" />
+          <UGuideStep steps={steps} class="u-label2" />
         </div>
         <div class="w-full p-10 bg-white mt-10 flex flex-col justify-center">
-          <div class="text-Headline-3 font-orbitron font-normal font-700 text-[24px] leading-8 text-center tracking-2px text-primary">
+          <div class="u-headline3 font-orbitron font-normal font-700 text-[24px] leading-8 text-center tracking-2px text-primary">
             Want to become a founder?
           </div>
-          <div class="text-body-1 font-opensans font-normal font-400 text-[16px] leading-5 text-grey1 text-center mt-6 mb-6">
+          <div class="u-body1 font-opensans font-normal font-400 text-[16px] leading-5 text-grey1 text-center mt-6 mb-6">
             Create your own comeup portfolio on Comunion and recruite for talents.
           </div>
           <UButton class="bg-primary1 rounded-6px h-48px text-white text-bold text-16px leading-40px w-180px self-center">
