@@ -6,7 +6,7 @@ const Bounties = defineComponent({
   name: 'Bounties',
   setup(prop, ctx) {
     return () => (
-      <UCard title="BOUNTIES" size="small" class="p-10 font-700 font-4 leading-6 tracking-2px">
+      <UCard title="BOUNTIES">
         <UTabs>
           <UTabPane name="HUNTED" tab="HUNTED">
             <UDeveloping>

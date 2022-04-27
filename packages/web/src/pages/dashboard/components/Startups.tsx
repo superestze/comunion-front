@@ -54,12 +54,7 @@ const Startups = defineComponent({
     })
 
     return () => (
-      <UCard
-        title="STARTUPS"
-        size="small"
-        class="p-10 font-700 font-4 leading-6 tracking-2px"
-        v-slots={slots}
-      >
+      <UCard title="STARTUPS" v-slots={slots}>
         <UTabs>
           <UTabPane name="PARTICIPATED" tab="PARTICIPATED">
             <UDeveloping>
