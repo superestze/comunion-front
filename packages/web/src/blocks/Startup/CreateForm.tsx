@@ -197,7 +197,7 @@ const CreateStartupForm = defineComponent({
     }
     return () => (
       <UForm ref={formRef} rules={allRules} model={model}>
-        <p class="mb-7 u-card-title1">INFO SETTING</p>
+        <p class="mb-7 u-card-title1 text-primary1">INFO SETTING</p>
         <UFormItemsFactory fields={infoFields} values={model} />
         {/* <div class="bg-purple h-13px my-8"></div> */}
         {/* <p class="mb-7 uppercase u-card-title1">Finance Setting</p> */}
@@ -285,7 +285,7 @@ const CreateStartupForm = defineComponent({
         </div>
         <div class="mt-6 text-grey3 u-caption">
           When you click submit button，you have entered all informations of start-up that will be
-          submited to Blockchain . It's similar to how you register a company in the Trade and
+          submited to Blockchain. It's similar to how you register a company in the Trade and
           Industry Bureau，meanwhile you have builded your start-up in blockchain with zero cost and
           much more efficient.
         </div>

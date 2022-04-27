@@ -16,11 +16,11 @@
       @apply flex flex-col flex-1 items-start;
 
       &__title {
-        @apply text-[14px] h-6 leading-5 font-bold tracking-2px;
+        @apply u-label2 uppercase h-6 tracking-2px;
       }
 
       &__desc {
-        @apply text-[16px] font-normal leading-4 pb-10 leading-5;
+        @apply u-body1 pb-10;
       }
     }
   }
