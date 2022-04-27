@@ -118,7 +118,6 @@ const EditStartupForm = defineComponent({
     onMounted(() => {
       onTokenContractChange(defaultModel.contract)
     })
-    // console.log('m', model, infoForm.items)
 
     function addCompose() {
       model.composes.push({
