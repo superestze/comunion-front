@@ -23,7 +23,7 @@ const AvatarSelect = defineComponent({
       selectedAvatar.value = ''
     }
 
-    const confirm = () => {
+    const submit = () => {
       ctx.emit('update:avatar', selectedAvatar.value)
       cancel()
     }
@@ -39,9 +39,8 @@ const AvatarSelect = defineComponent({
           <UButton class="w-41 h-12 mr-4" onClick={cancel}>
             <span class="u-title2 text-primary">Cancel</span>
           </UButton>
-          <UButton class="w-41 h-12" onClick={confirm} type="primary">
-            Confirm
-            <span class="u-title2 text-primary">Confirm</span>
+          <UButton class="w-41 h-12" onClick={submit} type="primary">
+            <span class="u-title2 text-white">Submit</span>
           </UButton>
         </div>
       )
@@ -56,6 +55,7 @@ const AvatarSelect = defineComponent({
             v-model:show={props.show}
             mask-closable={false}
             class="w-136 h-128 bg-white overflow-hidden"
+            on-update:show={cancel}
             v-slots={slots}
           >
             <div class="px-2 flex flex-wrap mt-6">

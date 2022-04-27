@@ -1,7 +1,7 @@
 import { omitObject, effectiveUrlValidator, isValidAddress } from '@comunion/utils'
 import type { FormProps, FormInst, FormItemRule } from 'naive-ui'
 import { NForm, NFormItem, NInput } from 'naive-ui'
-import type { DefineComponent, PropType, VNode } from 'vue'
+import type { PropType, VNode } from 'vue'
 import { defineComponent, ref, reactive, toRaw, computed } from 'vue'
 import { UAddressInput, UAddressInputPropsType } from '../UInput'
 import { USingleImageUpload, USingleImageUploadPropsType } from '../UUpload'
@@ -189,7 +189,7 @@ export const UFormItemsFactory = defineComponent({
   }
 })
 
-export const UFormFactory: DefineComponent<UFormFactoryPropsType> = defineComponent({
+export const UFormFactory = defineComponent({
   extends: NForm,
   name: 'UFormFactory',
   props: UFormFactoryProps,
@@ -211,7 +211,7 @@ export const UFormFactory: DefineComponent<UFormFactoryPropsType> = defineCompon
     const onSubmit = () => {
       formRef.value?.validate(errors => {
         if (!errors) {
-          const _values = toRaw(values)
+          const _values: FormData = toRaw<FormData>(values)
           if (props.removeNil) {
             Object.keys(_values).forEach(key => {
               if (

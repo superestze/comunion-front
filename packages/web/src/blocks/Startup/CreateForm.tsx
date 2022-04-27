@@ -5,18 +5,12 @@ import {
   FormItemRule,
   UForm,
   UFormItemsFactory,
-  UFormItem,
-  UAddressInput,
-  UInputGroup,
-  UInput,
   UButton,
   FormFactoryField
 } from '@comunion/components'
-import { TipOutlined, CloseOutlined, PlusOutlined } from '@comunion/icons'
-import { utils } from 'ethers'
 import { defineComponent, PropType, reactive, ref } from 'vue'
 import { STARTUP_TYPES, StartupTypesType, getStartupNumberFromType } from '@/constants'
-import { useStartupContract, useErc20Contract } from '@/contracts'
+import { useStartupContract } from '@/contracts'
 import { services } from '@/services'
 
 const CreateStartupForm = defineComponent({
@@ -31,68 +25,67 @@ const CreateStartupForm = defineComponent({
       logo: '',
       name: '',
       type: '',
-      tags: [] as string[],
       mission: '',
-      overview: '',
-      tokenContract: '',
-      composes: [
-        {
-          name: '',
-          address: ''
-        }
-      ]
+      overview: ''
+      // tokenContract: '',
+      // composes: [
+      //   {
+      //     name: '',
+      //     address: ''
+      //   }
+      // ]
     }
-    const defaultTokenInfo = {
-      name: '',
-      symbol: '',
-      supply: null as number | null,
-      liquidity: null as number | null,
-      txns: null as number | null,
-      holders: null as number | null
-    }
+    // const defaultTokenInfo = {
+    //   name: '',
+    //   symbol: '',
+    //   supply: null as number | null,
+    //   liquidity: null as number | null,
+    //   txns: null as number | null,
+    //   holders: null as number | null
+    // }
     const formRef = ref<FormInst>()
     const loading = ref(false)
     const model = reactive({
       ...{
-        ...defaultModel,
-        composes: [...defaultModel.composes]
+        ...defaultModel
+        // composes: [...defaultModel.composes]
       }
     })
     const startupContract = useStartupContract()
 
-    const tokenInfo = reactive({ ...defaultTokenInfo })
+    // const tokenInfo = reactive({ ...defaultTokenInfo })
 
-    const erc20ContractFactory = useErc20Contract()
+    // const erc20ContractFactory = useErc20Contract()
 
     // console.log('m', model, infoForm.items)
 
-    function addCompose() {
-      model.composes.push({
-        name: '',
-        address: ''
-      })
-    }
+    // function addCompose() {
+    //   model.composes.push({
+    //     name: '',
+    //     address: ''
+    //   })
+    // }
 
-    function removeCompose(index: number) {
-      model.composes.splice(index, 1)
-    }
+    // function removeCompose(index: number) {
+    //   model.composes.splice(index, 1)
+    // }
 
-    async function onTokenContractChange(addr: string) {
-      const contract = erc20ContractFactory(addr)
-      // await contract.deployTransaction.wait()
-      tokenInfo.name = await contract.name()
-      tokenInfo.symbol = await contract.symbol()
-      tokenInfo.supply = +utils.formatUnits(await contract.totalSupply(), 18)
-    }
+    // async function onTokenContractChange(addr: string) {
+    //   const contract = erc20ContractFactory(addr)
+    //   // await contract.deployTransaction.wait()
+    //   tokenInfo.name = await contract.name()
+    //   tokenInfo.symbol = await contract.symbol()
+    //   tokenInfo.supply = +utils.formatUnits(await contract.totalSupply(), 18)
+    // }
 
     function onCancel() {
       Object.assign(model, {
         ...{
-          ...defaultModel,
-          composes: [...defaultModel.composes]
+          ...defaultModel
+          // composes: [...defaultModel.composes]
         }
       })
-      Object.assign(tokenInfo, { ...defaultTokenInfo })
+      // Object.assign(tokenInfo, { ...defaultTokenInfo })
       props.onCancel?.()
     }
 
@@ -113,11 +106,11 @@ const CreateStartupForm = defineComponent({
                 [
                   model.name,
                   getStartupNumberFromType(model.type as StartupTypesType),
-                  model.tags,
+                  // model.tags,
                   model.logo,
                   model.mission,
-                  model.tokenContract,
-                  model.composes.map(item => [item.name, item.address]),
+                  // model.tokenContract,
+                  // model.composes.map(item => [item.name, item.address]),
                   model.overview,
                   true
                 ],
@@ -165,14 +158,14 @@ const CreateStartupForm = defineComponent({
         placeholder: 'Startup type',
         options: STARTUP_TYPES.map(item => ({ label: item, value: item }))
       },
-      {
-        t: 'hashInput',
-        required: true,
-        title: 'Hashtag',
-        category: 'startup',
-        name: 'tags',
-        placeholder: '#Enter you startup tag'
-      },
+      // {
+      //   t: 'hashInput',
+      //   required: true,
+      //   title: 'Hashtag',
+      //   category: 'startup',
+      //   name: 'tags',
+      //   placeholder: '#Enter you startup tag'
+      // },
       {
         t: 'string',
         title: 'Mission',
@@ -199,17 +192,17 @@ const CreateStartupForm = defineComponent({
     ]
     const infoRules = getFieldsRules(infoFields)
     const allRules: Record<string, FormItemRule[]> = {
-      ...infoRules,
-      tokenContract: [{ required: true, message: 'Token contract is required', trigger: 'blur' }],
-      composes: [{ required: true, type: 'array', min: 1 }]
+      ...infoRules
+      // tokenContract: [{ required: true, message: 'Token contract is required', trigger: 'blur' }],
+      // composes: [{ required: true, type: 'array', min: 1 }]
     }
     return () => (
       <UForm ref={formRef} rules={allRules} model={model}>
         <p class="mb-7 u-card-title1">INFO SETTING</p>
         <UFormItemsFactory fields={infoFields} values={model} />
-        <div class="bg-purple h-13px my-8"></div>
-        <p class="mb-7 uppercase u-card-title1">Finance Setting</p>
-        <ul class="border rounded-lg list-disc border-grey5 mb-6 p-4 pl-8 text-body1 relative">
+        {/* <div class="bg-purple h-13px my-8"></div> */}
+        {/* <p class="mb-7 uppercase u-card-title1">Finance Setting</p> */}
+        {/* <ul class="border rounded-lg list-disc border-grey5 mb-6 p-4 pl-8 text-body1 relative">
           <li>Firstly, the token must be bound to the Start-Up as Proof-of-Stake.</li>
           <li>A token can only be bound to one Startup and can't be changed after bound.</li>
           <li>If you have not a token yet, use Erc20-Generator to create your token.</li>
@@ -217,15 +210,15 @@ const CreateStartupForm = defineComponent({
             How to Set
             <TipOutlined class="ml-1" />
           </div>
-        </ul>
-        <UFormItem label="Token Contract" required path="tokenContract">
+        </ul> */}
+        {/* <UFormItem label="Token Contract" required path="tokenContract">
           <UAddressInput
             placeholder="Please enter your token contract address"
             v-model:value={model.tokenContract}
             onChange={onTokenContractChange}
           />
-        </UFormItem>
-        <div class="border rounded-lg border-grey5 mb-2 grid py-4.5 px-4 text-body2 gap-x-2 gap-y-4 grid-cols-2">
+        </UFormItem> */}
+        {/* <div class="border rounded-lg border-grey5 mb-2 grid py-4.5 px-4 text-body2 gap-x-2 gap-y-4 grid-cols-2">
           <div class="flex items-center">
             <span class="w-36">TOKEN NAME:</span>
             <span>{tokenInfo.name || '--'}</span>
@@ -250,8 +243,8 @@ const CreateStartupForm = defineComponent({
             <span class="w-36">Holders:</span>
             <span>{tokenInfo.holders || '--'}</span>
           </div>
-        </div>
-        <UFormItem label="Wallet Compose" required path="composes">
+        </div> */}
+        {/* <UFormItem label="Wallet Compose" required path="composes">
           <div class="w-full">
             {model.composes.map((compose, index) => (
               <div class="flex mb-6 w-full items-center">
@@ -272,11 +265,11 @@ const CreateStartupForm = defineComponent({
               </div>
             ))}
           </div>
-        </UFormItem>
-        <UButton text onClick={addCompose} type="primary">
+        </UFormItem> */}
+        {/* <UButton text onClick={addCompose} type="primary">
           <PlusOutlined class="mr-2" />
           ADD ANOTHER WALLET
-        </UButton>
+        </UButton> */}
         <div class="flex mt-16 items-center justify-end">
           <UButton type="default" size="large" class="mr-4 w-41" onClick={onCancel}>
             Cancel

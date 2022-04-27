@@ -1,5 +1,5 @@
 import { UCard, UDeveloping, UScrollList, UTabPane, UTabs } from '@comunion/components'
-import { PlusOutlined } from '@comunion/icons'
+import { EmptyFilled, PlusOutlined } from '@comunion/icons'
 import { defineComponent, onMounted, reactive, ref } from 'vue'
 import StartupCard from './StartupCard'
 import CreateStartupBlock from '@/blocks/Startup/Create'
@@ -62,7 +62,9 @@ const Startups = defineComponent({
       >
         <UTabs>
           <UTabPane name="PARTICIPATED" tab="PARTICIPATED">
-            <UDeveloping />
+            <UDeveloping>
+              <EmptyFilled class="mt-34" />
+            </UDeveloping>
           </UTabPane>
           <UTabPane name="CREATED BY ME" tab="CREATED BY ME" class="h-112">
             <UScrollList

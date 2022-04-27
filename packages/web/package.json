@@ -4,7 +4,8 @@
   "description": "Comunion website",
   "scripts": {
     "dev": "vite",
-    "build": "vue-tsc --noEmit && vite build",
+    "check": "vue-tsc --noEmit",
+    "build": "npm run check && vite build",
     "build:nocheck": "vite build",
     "serve": "vite preview",
     "style:analysis": "npx windicss-analysis",
@@ -28,6 +29,7 @@
     "@walletconnect/web3-provider": "^1.7.5",
     "axios": "^0.26.1",
     "buffer": "^6.0.3",
+    "dayjs": "^1.11.1",
     "ethers": "^5.5.4",
     "events": "^3.3.0",
     "pinia": "^2.0.13",

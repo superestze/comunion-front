@@ -1,4 +1,5 @@
-import { UButton, ULazyImage } from '@comunion/components'
+import { ULazyImage } from '@comunion/components'
+import { BasicSettingFilled, FinanceSettingFilled } from '@comunion/icons'
 import { defineComponent, PropType } from 'vue'
 import { useRouter } from 'vue-router'
 import { StartupItem } from '@/types'
@@ -14,8 +15,11 @@ const StartupCard = defineComponent({
   setup(props, context) {
     const router = useRouter()
 
-    const setStartup = () => {
+    const basicSetting = () => {
       router.push({ path: '/startupset', query: { startupId: props.startup!.id } })
+    }
+    const financeSetting = () => {
+      router.push({ path: '/financeset', query: { startupId: props.startup!.id } })
     }
     return () => (
       <div class="h-28 w-full flex items-center">
@@ -40,13 +44,14 @@ const StartupCard = defineComponent({
             </div>
           </div>
           <div class="justify-end ml-auto mr-1">
-            <UButton
-              class="w-30 h-12  font-opensans rounded-2 text-white text-[16px]"
-              type="primary"
-              onClick={setStartup}
-            >
-              Set
-            </UButton>
+            <BasicSettingFilled
+              class="rounded-2 w-12 h-12 cursor-pointer mr-3"
+              onClick={basicSetting}
+            />
+            <FinanceSettingFilled
+              class="rounded-2 w-12 h-12 cursor-pointer"
+              onClick={financeSetting}
+            />
           </div>
         </div>
       </div>
