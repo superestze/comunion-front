@@ -1,12 +1,12 @@
 import { defineComponent, ref } from 'vue'
-import { UButton, UTransaction, UTransactionPropsType } from '@/comps/index'
+import { UButton, UContractInteraction, UContractInteractionPropsType } from '@/comps/index'
 
 const TransactionDemoPage = defineComponent({
   name: 'TransactionDemoPage',
   setup() {
-    const status = ref<UTransactionPropsType['status']>()
+    const status = ref<UContractInteractionPropsType['status']>()
 
-    const testStatus = (_status: UTransactionPropsType['status']) => {
+    const testStatus = (_status: UContractInteractionPropsType['status']) => {
       status.value = 'pending'
       setTimeout(() => {
         status.value = _status
@@ -15,7 +15,7 @@ const TransactionDemoPage = defineComponent({
 
     return () => (
       <>
-        <UTransaction
+        <UContractInteraction
           status={status.value}
           text="Waiting to submit all contents to blockchain for creating startup"
         />

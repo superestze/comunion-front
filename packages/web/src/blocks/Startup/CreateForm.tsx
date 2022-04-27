@@ -114,7 +114,8 @@ const CreateStartupForm = defineComponent({
                   model.overview,
                   true
                 ],
-                'Waiting to submit all contents to blockchain for creating startup'
+                'Waiting to submit all contents to blockchain for creating startup',
+                `Startup "${model.name}" is Creating`
               )
               ctx.emit('success', model)
               message.success(

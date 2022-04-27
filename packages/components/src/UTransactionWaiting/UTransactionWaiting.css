@@ -1,0 +1,47 @@
+.u-transaction-waiting {
+  @apply bg-white rounded-md min-w-72 max-w-100 pl-4 pr-8 pt-6 pb-4.5 inline-flex items-center relative;
+
+  & + & {
+    @apply mt-4;
+  }
+
+  &-close {
+    @apply h-14px top-4 right-4 w-14px absolute;
+  }
+
+  &-checked {
+    @apply cursor-pointer h-6 text-primary mr-5 w-6;
+  }
+
+  &-text {
+    @apply mb-2 text-primary2 u-title2;
+  }
+
+  &-link {
+    @apply text-primary u-body2 hover:underline;
+  }
+
+  &-bar {
+    @apply bg-primary h-0.5 right-2.5 bottom-0 left-2.5 absolute;
+
+    transform-origin: left;
+    transition: transform 1s linear;
+    will-change: transform;
+  }
+
+  &.status-failed {
+    .u-transaction-waiting {
+      &-checked {
+        @apply text-error;
+      }
+
+      &-link {
+        @apply text-error;
+      }
+
+      &-bar {
+        @apply bg-error;
+      }
+    }
+  }
+}

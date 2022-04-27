@@ -1,4 +1,4 @@
-import { UButton, ULogo } from '@comunion/components'
+import { UButton, ULogo, UTransactionWaiting, UTransactionContainer } from '@comunion/components'
 import { PlusOutlined } from '@comunion/icons'
 import { defineComponent } from 'vue'
 import { RouterLink, RouterView } from 'vue-router'
@@ -7,13 +7,15 @@ import CreateStartupBlock from '@/blocks/Startup/Create'
 import UserAvatar from '@/components/UserAvatar'
 import WalletInfo from '@/components/WalletInfo'
 import { FOOTER_LINKS } from '@/constants'
+import { useContractStore } from '@/stores/contract'
 
 const DefaultLayout = defineComponent({
   name: 'DefaultLayout',
   setup() {
+    const contractStore = useContractStore()
     return () => (
       <div class="bg-purple flex flex-col h-full min-h-screen text-[14px] relative">
-        <div class="flex-1 u-page-container">
+        <div class="flex-1 u-page-container relative">
           {/* Header */}
           <div class="flex h-24 items-center">
             <ULogo height={32} withText theme="colorful" />
@@ -36,6 +38,16 @@ const DefaultLayout = defineComponent({
             <UserAvatar class="ml-4" />
             <WalletInfo class="ml-2" />
           </div>
+          {/* TransactionWaiting */}
+          <UTransactionContainer>
+            {contractStore.transacations.map(transaction => (
+              <UTransactionWaiting
+                key={transaction.hash}
+                {...transaction}
+                onClose={() => contractStore.closeTransaction(transaction)}
+              />
+            ))}
+          </UTransactionContainer>
           {/* Body */}
           <RouterView />
         </div>
