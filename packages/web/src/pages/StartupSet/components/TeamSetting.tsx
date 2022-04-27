@@ -1,4 +1,4 @@
-import { UInput, UInputGroup, UButton } from '@comunion/components'
+import { UInput, UInputGroup, UButton, message } from '@comunion/components'
 import { defineComponent, PropType, ref, provide, onMounted } from 'vue'
 import TeamModal from './TeamModal'
 import TeamCard from '@/pages/StartupSet/components/TeamCard'
@@ -14,8 +14,6 @@ const TeamSetting = defineComponent({
     }
   },
   setup(props, ctx) {
-    console.log(props.startup)
-    console.log
     const success = ref(false)
     const paramsList = ref({
       id: props.startup?.id,
@@ -23,85 +21,88 @@ const TeamSetting = defineComponent({
       roles: null,
       name: props.startup?.name,
       tokenContractAddress: props.startup?.tokenContractAddress,
+      pageSize: 99,
+      page: 1,
       comerProfile: Object
     })
-    const searchMember = () => {
-      console.log(inputMember.value)
-      success.value = true
-    }
+    const comerProfile = ref<object>({})
+    const teamMembers = ref<StartupItem[]>([])
     const inputMember = ref<string>('')
-    // TODO: after backend completed, get data from backend
-    const teamMembers = [
-      {
-        ID: 7709685793311477,
-        CreatedAt: 'magna sunt aute',
-        UpdatedAt: 'et dolor',
-        comerID: 8397756524493314,
-        startupID: 10213386430842146,
-        position: 'aute quis voluptate incididunt',
-        comer: {
-          id: '43455592614327095',
-          createdAt: 'Ut',
-          updatedAt: 'exercitation nostrud id',
-          isDeleted: true,
-          Address: 'tempor'
-        },
-        comerProfile: {
-          id: 1793687679410097,
-          createdAt: 'consequat sit sed ipsum pariatur',
-          updatedAt: 'ad est',
-          isDeleted: true,
-          comerID: '15660611372087225',
-          name: 'proident enim anim incididunt',
-          avatar: 'aliqua',
-          location: 'aute proident reprehenderit incididunt sint',
-          website: 'consequat magna',
-          bio: 'nulla amet nisi',
-          skills: null,
-          roles: 'develop'
+
+    const searchMember = async () => {
+      if (inputMember.value) {
+        const { data } = await services['account@comer-info-get-by-address']({
+          address: inputMember.value
+        })
+        console.log(typeof data)
+        if (!data) {
+          message.error('Search no results!')
+          throw new Error('Search no results!')
         }
+        const filterData = teamMembers.value.filter(
+          item => item!.comerID === data.comerProfile!.comerID
+        )
+        if (filterData.length) {
+          message.error('Already exists!')
+        } else {
+          comerProfile.value = data!
+          success.value = true
+        }
+      } else {
+        message.info('Please enter the content!')
+        throw new Error('Please enter the content!')
       }
-    ]
+    }
+
     const teamList = async () => {
-      const { error, data } = await services['startup@start-team-meabers-list']({
+      const { data } = await services['startup@start-team-meabers-list']({
         startupId: paramsList.value.id,
-        limit: 10,
-        offset: 1
+        limit: paramsList.value.pageSize,
+        offset: paramsList.value.pageSize * (paramsList.value.page - 1)
       })
-      if (!error) {
-        console.log(data)
+      if (data?.list.length) {
+        teamMembers.value.length = 0
+        teamMembers.value.push(...(data!.list as unknown as StartupItem[]))
+      } else {
+        teamMembers.value.length = 0
       }
     }
+
     const teamCreate = async (val: any) => {
-      const { error, data } = await services['startup@start-team-meabers-create']({
+      const { data } = await services['startup@start-team-meabers-create']({
         startupId: paramsList.value.id,
-        comerId: paramsList.value.comerID,
-        position: val.roles
-      })
-      if (!error) {
-        console.log(data)
-        teamList()
-      }
-    }
-    const teamUpdata = async (val: any) => {
-      console.log(val)
-      const { error, data } = await services['startup@start-team-meabers-update']({
-        startupId: val.id,
         comerId: val.comerId,
         position: val.roles
       })
-      if (!error) {
-        console.log(data)
+      if (!data) {
+        message.success('Role created successfully!')
         teamList()
       }
     }
+
+    const teamUpdata = async (val: any) => {
+      console.log(val)
+      const { data } = await services['startup@start-team-meabers-update']({
+        startupId: paramsList.value.id,
+        comerId: val.comerId,
+        position: val.roles
+      })
+      if (!data) {
+        message.success('Role modified successfully!')
+        teamList()
+      }
+    }
+
     const PARENT_PROVIDE = 'parentProvide'
     provide(PARENT_PROVIDE, root)
     provide(`${PARENT_PROVIDE}/teamCreate`, teamCreate)
     provide(`${PARENT_PROVIDE}/teamUpdata`, teamUpdata)
+    provide(`${PARENT_PROVIDE}/teamList`, teamList)
+
     onMounted(() => {
       teamList()
     })
+
     return () => (
       <div class="team-setting">
         {/*  title */}
@@ -125,15 +126,15 @@ const TeamSetting = defineComponent({
         </div>
         {/* startup team */}
         <div class="team-list mt-10">
-          {teamMembers?.map(teamMember => (
-            <TeamCard teamMember={teamMember} v-model:teamUpdata={teamUpdata} />
-          ))}
+          {teamMembers.value.length
+            ? teamMembers.value.map(teamMember => (
+                <TeamCard v-model:teamMember={teamMember} v-model:teamUpdata={teamUpdata} />
+              ))
+            : null}
         </div>
-        <TeamModal
-          v-model:show={success.value}
-          teamList={paramsList.value}
-          v-model:teamCreate={teamCreate}
-        />
+        {comerProfile.value ? (
+          <TeamModal v-model:show={success.value} teamList={comerProfile.value} />
+        ) : null}
       </div>
     )
   }

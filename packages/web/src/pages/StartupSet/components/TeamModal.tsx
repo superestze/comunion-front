@@ -1,15 +1,15 @@
 import { UModal, UFormItemsFactory, UButton } from '@comunion/components'
 import ULazyImage from '@comunion/components/src/ULazyImage/LazyImage'
-import { defineComponent, PropType, inject, reactive } from 'vue'
+import { defineComponent, inject, reactive, ref } from 'vue'
 
-interface teamList {
-  id: number | null | undefined
-  comerID: number | null | undefined
-  roles: string | null | undefined
-  name: string | null | undefined
-  tokenContractAddress: string | null | undefined
-  comerProfile: any | null | undefined
-}
+// interface teamList {
+//   comerProfile: any | null | undefined
+//   comer: any | null | undefined
+//   Address: any | null | undefined
+//   startupID: number | null | undefined
+//   comerID: number | null | undefined
+//   position: string | null | undefined
+// }
 
 const TeamModal = defineComponent({
   name: 'TeamModal',
@@ -23,7 +23,7 @@ const TeamModal = defineComponent({
       default: ''
     },
     teamList: {
-      type: Object as PropType<teamList>,
+      type: Object,
       required: true
     }
   },
@@ -38,12 +38,18 @@ const TeamModal = defineComponent({
         placeholder: 'Plealse position, link developer...'
       }
     ]
-    const defaultModel = {
-      roles: props.teamList?.roles,
-      id: props.teamList?.id,
-      comerId: props.teamList?.comerID
-    }
 
+    const address = ref<string>('')
+    const defaultModel = {
+      roles: props.teamList?.position,
+      id: props.teamList?.startupID,
+      comerId: props.teamList.comerProfile?.comerID
+    }
+    if (props.teamList?.comer) {
+      address.value = props.teamList?.comer.Address
+    } else {
+      address.value = props.teamList?.Address
+    }
     const value = reactive({
       ...{
         ...defaultModel
@@ -66,7 +72,7 @@ const TeamModal = defineComponent({
       ctx.emit('update:show', false)
     }
     const onSubmit = () => {
-      if (props.teamList?.roles) {
+      if (props.teamList?.comer) {
         parentUpDataFun?.(value)
       } else {
         parentTestFun?.(value)
@@ -101,8 +107,8 @@ const TeamModal = defineComponent({
                 </div>
                 <div class="flex-7 ">
                   {!props.show}
-                  <div class="font-bold text-25px mt-5">{props.teamList?.name}</div>
-                  <div class="text-primary mt-5">{props.teamList?.tokenContractAddress}</div>
+                  <div class="font-bold text-25px mt-5">{props.teamList.comerProfile?.name}</div>
+                  <div class="text-primary mt-5">{address.value}</div>
                 </div>
               </div>
             </div>

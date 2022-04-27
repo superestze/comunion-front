@@ -1,20 +1,21 @@
-import { ULazyImage } from '@comunion/components'
+import { ULazyImage, message } from '@comunion/components'
 import { EditFilled, DeleteFilled } from '@comunion/icons'
-import { defineComponent, PropType, ref, inject, provide } from 'vue'
+import { defineComponent, ref, inject, provide } from 'vue'
 import TeamModal from './TeamModal'
 import { services } from '@/services'
 export const root = ref(null)
-
-interface TeamMember {
-  comerID: number
-  comerProfile: any
-}
+// interface TeamMember {
+//   comerID: number | null | undefined
+//   comerProfile: any | null | undefined
+//   startupID: number | null | undefined
+//   position: string | null | undefined
+// }
 
 const TeamCard = defineComponent({
   name: 'TeamCard',
   props: {
     teamMember: {
-      type: Object as PropType<TeamMember>
+      type: Object
     }
   },
   setup(props, ctx) {
@@ -24,13 +25,15 @@ const TeamCard = defineComponent({
       success.value = true
     }
     const paramsList = ref({
-      startupId: props.teamMember?.comerProfile.id,
-      comerID: props.teamMember?.comerProfile.comerID
+      startupId: props.teamMember?.startupID,
+      comerID: props.teamMember?.comerProfile.comerID,
+      teamList: props.teamMember
     })
 
     const PARENT_PROVIDE = 'parentProvide'
     // const parent = inject(PARENT_PROVIDE)
     const parentUpDataFun: any = inject(`${PARENT_PROVIDE}/teamUpdata`)
+    const parentTeamListFun: any = inject(`${PARENT_PROVIDE}/teamList`)
 
     const upData = (values: object) => {
       ctx.emit('update:show', false)
@@ -41,12 +44,14 @@ const TeamCard = defineComponent({
     provide(`${PARENT_PROVIDE}/upData`, upData)
 
     const teamDelete = async () => {
-      const { error, data } = await services['startup@start-team-meabers-delete']({
+      const { data } = await services['startup@start-team-meabers-delete']({
         startupId: paramsList.value.startupId,
         comerId: paramsList.value.comerID
       })
-      if (!error) {
+      if (!data) {
+        message.success('Deleted successfully!')
         console.log(data)
+        parentTeamListFun?.(data)
       }
     }
 
@@ -65,15 +70,15 @@ const TeamCard = defineComponent({
         <div class="avatar">
           <ULazyImage
             src={props.teamMember?.comerProfile?.avatar ?? ''}
-            class="h-20 w-20 rounded-1\/2 "
+            class="h-16 w-16 rounded-1\/2 mt-2 ml-5"
           />
         </div>
         <div class="w-45 member-info flex flex-col justify-center ml-6">
-          <div class="u-label font-orbitron font-700 text-[18px] tracking-2px uppercase mb-1 ">
+          <div class="u-label font-orbitron font-700 text-[15px] tracking-2px uppercase mb-1 ">
             {props.teamMember?.comerProfile?.name}
           </div>
-          <div class="u-title font-opensans font-400 text-[14px] leading-5 h-5  ">
-            {props.teamMember?.comerProfile?.roles}
+          <div class="u-title font-opensans font-400 text-[13px] leading-5 h-5  ">
+            {props.teamMember?.position}
           </div>
         </div>
         {showTooltipRef.value && (
@@ -93,7 +98,7 @@ const TeamCard = defineComponent({
           </div>
         )}
         {success.value && (
-          <TeamModal v-model:show={success.value} teamList={props.teamMember?.comerProfile} />
+          <TeamModal v-model:show={success.value} teamList={props.teamMember as any} />
         )}
       </div>
     )
