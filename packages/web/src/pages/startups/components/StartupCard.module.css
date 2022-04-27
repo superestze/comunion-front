@@ -7,11 +7,11 @@
 }
 
 .team_members {
-  @apply absolute bottom-3;
+  @apply absolute bottom-3 flex;
 }
 
 .members_svg {
-  @apply w-7 h-7 bg-blue-100;
+  @apply w-7 h-7 bg-[#F5F6FA];
 
   border-radius: 50%;
 }
