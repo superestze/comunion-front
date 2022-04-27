@@ -27,7 +27,7 @@ const UTransactionWaiting = defineComponent({
   props: UTransactionWaitingProps,
   emits: ['close'],
   setup(props, ctx) {
-    const show = ref(true)
+    const show = ref(false)
     const { left, cancel, setLeft } = useMockCountdown()
 
     watchEffect(() => {
@@ -38,6 +38,8 @@ const UTransactionWaiting = defineComponent({
         }, 1000)
       } else if (props.status === 'failed') {
         setLeft(0)
+      } else {
+        show.value = true
       }
     })
 
@@ -49,12 +51,13 @@ const UTransactionWaiting = defineComponent({
 
     return () =>
       show.value ? (
-        <div class={['u-transaction-waiting', `status-${props.status}`]}>
+        <div class="u-transaction-waiting">
           <CloseOutlined class="u-transaction-waiting-close" onClick={close} />
           <CheckedFilled class="u-transaction-waiting-checked" />
           <div>
             <div class="u-transaction-waiting-text">{props.text}</div>
             <a
+              target="_blank"
               class="u-transaction-waiting-link"
               href={`https://goerli.etherscan.io/tx/${props.hash}`}
             >
@@ -64,7 +67,7 @@ const UTransactionWaiting = defineComponent({
           <div
             class="u-transaction-waiting-bar"
             style={{
-              width: `${left.value}%`
+              transform: `scaleX(${left.value / 100})`
             }}
           ></div>
         </div>

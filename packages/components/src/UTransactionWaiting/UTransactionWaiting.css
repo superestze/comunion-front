@@ -1,7 +1,9 @@
 .u-transaction-waiting {
-  @apply bg-white rounded-md min-w-72 px-4 pt-6 pb-4.5 right-0 z-100 inline-flex absolute items-center;
+  @apply bg-white rounded-md min-w-72 max-w-100 pl-4 pr-8 pt-6 pb-4.5 inline-flex items-center relative;
 
-  top: var(--u-app-header-height, 102px);
+  & + & {
+    @apply mt-4;
+  }
 
   &-close {
     @apply h-14px top-4 right-4 w-14px absolute;
@@ -16,14 +18,15 @@
   }
 
   &-link {
-    @apply text-primary u-body2;
+    @apply text-primary u-body2 hover:underline;
   }
 
   &-bar {
     @apply bg-primary h-0.5 right-2.5 bottom-0 left-2.5 absolute;
 
-    transition: width 1s linear;
-    will-change: width;
+    transform-origin: left;
+    transition: transform 1s linear;
+    will-change: transform;
   }
 
   &.status-failed {
@@ -34,6 +37,10 @@
 
       &-link {
         @apply text-error;
+      }
+
+      &-bar {
+        @apply bg-error;
       }
     }
   }
