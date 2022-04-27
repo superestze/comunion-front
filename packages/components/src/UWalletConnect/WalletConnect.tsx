@@ -24,7 +24,7 @@ const UWalletConnect = defineComponent({
   props: UWalletConnectProps,
   setup(props) {
     return () => (
-      <NModal show={props.show} onUpdateShow={props.onUpdateShow}>
+      <NModal show={props.show} onUpdateShow={props.onUpdateShow} mask-closable={true}>
         <div class="u-wallet-connect">
           <p class="u-wallet-connect__title">Select a Wallet</p>
           <p class="u-wallet-connect__subtitle">Please select a wallet to connect to Comunion</p>

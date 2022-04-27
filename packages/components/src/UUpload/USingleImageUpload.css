@@ -8,10 +8,10 @@
   }
 
   &-preview {
-    @apply flex flex-col bg-[rgba(0,0,0,0.3)] transform translate-y-full transition top-0 bottom-0 left-0 absolute items-center justify-center group-hover:translate-y-0;
+    @apply flex flex-col bg-[rgba(0, 0, 0, 0.3)] transform translate-y-full transition top-0 bottom-0 left-0 absolute items-center justify-center group-hover: translate-y-0;
 
     &__icon {
-      @apply cursor-pointer mb-1 text-light-900 w-5 hover:text-white;
+      @apply cursor-pointer mb-1 text-light-900 w-5 hover: text-white;
     }
   }
 
@@ -24,6 +24,6 @@
   }
 
   &-txt {
-    @apply text-primary ml-5 u-title2;
+    @apply w-46 h-9 border-1 text-center leading-9 border-[#3F2D99] rounded-xl text-primary ml-5 u-title2;
   }
 }
