@@ -15,7 +15,6 @@ import {
 import { CloseOutlined, PlusOutlined } from '@comunion/icons'
 import dayjs from 'dayjs'
 import { utils } from 'ethers'
-// import { NImage } from 'naive-ui'
 import { defineComponent, PropType, reactive, ref, onMounted, h } from 'vue'
 import avalanche from '@/assets/avalanche.png'
 import bsc from '@/assets/bsc.png'
