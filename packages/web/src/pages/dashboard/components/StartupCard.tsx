@@ -19,7 +19,7 @@ const StartupCard = defineComponent({
       router.push({ path: '/startupset', query: { startupId: props.startup!.id } })
     }
     const financeSetting = () => {
-      // TODO: qinghua, link to finance setting page
+      router.push({ path: '/financeset', query: { startupId: props.startup!.id } })
     }
     return () => (
       <div class="h-28 w-full flex items-center">

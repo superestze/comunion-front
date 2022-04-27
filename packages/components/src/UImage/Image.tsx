@@ -7,6 +7,7 @@ export type UImagePropsType = ImageProps
 const UImage = defineComponent({
   name: 'UImage',
   extends: NImage,
+  inheritAttrs: true,
   setup(props, ctx) {
     return () => <NImage {...props} v-slots={ctx.slots} />
   }
