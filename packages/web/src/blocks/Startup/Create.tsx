@@ -13,7 +13,9 @@ const CreateStartupBlock = defineComponent({
       show.value = false
     }
 
-    const onClick = async () => {
+    const onClick = async (e: Event) => {
+      e.preventDefault()
+      e.stopPropagation()
       await walletStore.ensureWalletConnected()
       show.value = true
     }
