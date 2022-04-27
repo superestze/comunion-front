@@ -1,11 +1,8 @@
-import { UButton, ULogo, UTransactionWaiting, UTransactionContainer } from '@comunion/components'
-import { PlusOutlined } from '@comunion/icons'
+import { ULogo, UTransactionWaiting, UTransactionContainer } from '@comunion/components'
 import { defineComponent } from 'vue'
 import { RouterLink, RouterView } from 'vue-router'
+import TheHeader from './components/TheHeader'
 import styles from './default.module.css'
-import CreateStartupBlock from '@/blocks/Startup/Create'
-import UserAvatar from '@/components/UserAvatar'
-import WalletInfo from '@/components/WalletInfo'
 import { FOOTER_LINKS } from '@/constants'
 import { useContractStore } from '@/stores/contract'
 
@@ -17,27 +14,7 @@ const DefaultLayout = defineComponent({
       <div class="bg-purple flex flex-col h-full min-h-screen text-[14px] relative">
         <div class="flex-1 u-page-container relative">
           {/* Header */}
-          <div class="flex h-24 items-center">
-            <ULogo height={32} withText theme="colorful" />
-            <RouterLink
-              class="ml-22 transition u-label1 hover:text-primary"
-              activeClass="text-primary"
-              to="/startups"
-            >
-              STARTUPS
-            </RouterLink>
-            <CreateStartupBlock>
-              <UButton class="rounded-lg ml-auto h-40px text-primary w-33" type="primary" ghost>
-                <PlusOutlined class="h-4 mr-3 w-4" />
-                <span class="text-primary u-label1">CREATE</span>
-              </UButton>
-            </CreateStartupBlock>
-            <RouterLink to="/dashboard" class="text-primary ml-16 u-label1">
-              MY DASHBOARD
-            </RouterLink>
-            <UserAvatar class="ml-4" />
-            <WalletInfo class="ml-2" />
-          </div>
+          <TheHeader />
           {/* TransactionWaiting */}
           <UTransactionContainer>
             {contractStore.transacations.map(transaction => (
