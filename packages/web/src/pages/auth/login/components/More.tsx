@@ -1,6 +1,6 @@
 import { UPopupMenu } from '@comunion/components'
 import {
-  ChatFilled,
+  HelpFilled,
   WebsiteFilled,
   DiscordFilled,
   TelegramFilled,
@@ -24,7 +24,7 @@ const MoreNavigationPage = defineComponent({
             <DropItem
               openUrl="https://docs.comunion.org/"
               text="About Comunion"
-              icon={ChatFilled}
+              icon={HelpFilled}
             />,
             {}
           )
