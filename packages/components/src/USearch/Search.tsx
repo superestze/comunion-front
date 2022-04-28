@@ -8,6 +8,7 @@ export type USearchPropsType = InputProps
 
 const USearch = defineComponent({
   extends: NInput,
+  inheritAttrs: true,
   setup(props) {
     return () => (
       <NInput {...props} class="u-search" placeholder={props.placeholder || 'Search'}>

@@ -6,6 +6,7 @@ export type USelectPropsType = SelectProps
 
 const USelect = defineComponent({
   name: 'USelect',
+  inheritAttrs: true,
   extends: NSelect,
   setup(props, ctx) {
     return () => <NSelect {...props} v-slots={ctx.slots} />

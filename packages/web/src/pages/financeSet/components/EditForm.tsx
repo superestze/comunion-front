@@ -14,6 +14,7 @@ import {
 } from '@comunion/components'
 import { CloseOutlined, PlusOutlined } from '@comunion/icons'
 import dayjs from 'dayjs'
+import utc from 'dayjs/plugin/utc'
 import { utils } from 'ethers'
 import { defineComponent, PropType, reactive, ref, onMounted, h } from 'vue'
 import avalanche from '@/assets/avalanche.png'
@@ -24,6 +25,7 @@ import polygon from '@/assets/polygon.png'
 import { useErc20Contract } from '@/contracts'
 import { services } from '@/services'
 import { StartupItem } from '@/types'
+dayjs.extend(utc)
 
 const EditStartupForm = defineComponent({
   name: 'EditStartupForm',
@@ -38,8 +40,8 @@ const EditStartupForm = defineComponent({
   },
   setup(props, ctx) {
     const defaultModel = {
-      presaleDate: ref(new Date().getTime()),
-      launchDate: ref(new Date().getTime()),
+      presaleDate: props.startup?.presaleDate || null,
+      launchDate: props.startup?.launchDate || null,
       contract: props.startup!.tokenContractAddress || '',
       network: 'Ethereum',
       composes:
@@ -94,6 +96,7 @@ const EditStartupForm = defineComponent({
       holders: null as number | null
     }
     const formRef = ref<FormInst>()
+    const formLabel = ref<string>('font-size:16px;font-weight:600')
     const loading = ref(false)
     const model = reactive({
       ...{
@@ -102,8 +105,8 @@ const EditStartupForm = defineComponent({
       }
     })
 
-    const dateToISO = (dataTime: number) => {
-      return dayjs(dataTime).format('YYYY-MM-DD')
+    const dateToISO = (dataTime: string | null) => {
+      return dayjs.utc(dataTime).format()
     }
 
     const tokenInfo = reactive({ ...defaultTokenInfo })
@@ -182,7 +185,7 @@ const EditStartupForm = defineComponent({
             token.
           </li>
         </ul>
-        <UFormItem label="Launch Network" class="font-600 text-16px">
+        <UFormItem label="Launch Network" required={true} labelStyle={formLabel.value}>
           <div class="w-full">
             <USelect
               v-model:value={model.network}
@@ -196,39 +199,39 @@ const EditStartupForm = defineComponent({
             />
           </div>
         </UFormItem>
-        <UFormItem label="Token Name" class="font-600 text-16px">
+        <UFormItem label="Token Name" labelStyle={formLabel.value} class="font-600">
           <div class="w-full">
             <UInput v-model:value={tokenInfo.name} placeholder="Please enter your Token Name" />
           </div>
         </UFormItem>
-        <UFormItem label="Token Symbol" class="font-600 text-16px">
+        <UFormItem label="Token Symbol" labelStyle={formLabel.value} class="font-600">
           <div class="w-full">
             <UInput v-model:value={tokenInfo.symbol} placeholder="Please enter your Token Symbol" />
           </div>
         </UFormItem>
-        <UFormItem label="Token Supply" class="font-600 text-16px">
+        <UFormItem label="Token Supply" labelStyle={formLabel.value} class="font-600">
           <div class="w-full">
             <UInput v-model:value={tokenInfo.supply} placeholder="Please enter your Token Supply" />
           </div>
         </UFormItem>
-        <UFormItem label="Token Contract">
+        <UFormItem label="Token Contract" labelStyle={formLabel.value}>
           <UAddressInput
             placeholder="Please enter your token contract address"
             v-model:value={model.contract}
             onChange={onTokenContractChange}
           />
         </UFormItem>
-        <UFormItem label="Presale date" class="font-600 text-16px">
+        <UFormItem label="Presale date" labelStyle={formLabel.value}>
           <div class="w-full">
             <UDatePicker v-model:value={model.presaleDate} type="date" />
           </div>
         </UFormItem>
-        <UFormItem label="Launch date">
+        <UFormItem label="Launch date" labelStyle={formLabel.value}>
           <div class="w-full">
             <UDatePicker v-model:value={model.launchDate} type="date" />
           </div>
         </UFormItem>
-        <UFormItem label="Wallet">
+        <UFormItem label="Wallet" labelStyle={formLabel.value}>
           <div class="w-full">
             {model.composes.map((compose, index) => (
               <div class="flex mb-6 w-full items-center">
