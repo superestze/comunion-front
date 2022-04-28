@@ -1,0 +1,17 @@
+.u-tabs {
+  .n-tabs-nav {
+    @apply border-b border-grey5;
+
+    .n-tabs-tab {
+      @apply py-4 px-8;
+
+      & > .n-tabs-tab__label {
+        @apply u-label2 text-primary1;
+      }
+    }
+
+    .n-tabs-tab--active > .n-tabs-tab__label {
+      @apply u-label2 !text-primary;
+    }
+  }
+}

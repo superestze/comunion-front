@@ -6,7 +6,7 @@ const Proposals = defineComponent({
   name: 'Proposal',
   setup(props, ctx) {
     return () => (
-      <UCard title="PROPOSALS" size="small" class="p-10 font-700 font-4 leading-6 tracking-2px">
+      <UCard title="PROPOSALS">
         <UTabs>
           <UTabPane name="PARTICIPATED" tab="PARTICIPATED">
             <UDeveloping>

@@ -48,7 +48,6 @@ const DashboardPage = defineComponent({
         <UCard
           title="MY PROFILE"
           size="small"
-          class="p-6 leading-6 tracking-2px"
           v-slots={{
             'header-extra': () => !!myProfile.value && <EditProfile myProfile={myProfile.value} />
           }}
