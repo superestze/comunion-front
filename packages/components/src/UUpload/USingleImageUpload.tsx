@@ -1,3 +1,4 @@
+import { UploadFilled } from '@comunion/icons'
 import { sizeFormat } from '@comunion/utils'
 import { NImage, NProgress, NUpload } from 'naive-ui'
 import { CustomRequest, OnBeforeUpload } from 'naive-ui/lib/upload/src/interface'
@@ -119,7 +120,7 @@ const USingleImageUpload = defineComponent({
                     <path d="M22 12c-2.667 4.667-6 7-10 7s-7.333-2.333-10-7c2.667-4.667 6-7 10-7s7.333 2.333 10 7"></path>
                   </g>
                 </svg>
-                {/* remove */}
+                {/*remove*/}
                 <svg viewBox="0 0 24 24" class="u-single-upload-preview__icon" onClick={remove}>
                   <g
                     fill="none"
@@ -146,7 +147,9 @@ const USingleImageUpload = defineComponent({
                 style={sizeStyle.value}
               />
             ) : (
-              <div class="u-single-upload-img" style={sizeStyle.value} />
+              <div class="u-single-upload-img" style={sizeStyle.value}>
+                <UploadFilled />
+              </div>
             )}
           </div>
           {process.value < 100 && (
