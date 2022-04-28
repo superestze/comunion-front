@@ -174,34 +174,34 @@ const EditStartupForm = defineComponent({
 
     return () => (
       <>
-        <UForm model={infoModel}>
+        <UForm model={infoModel} class="bg-white p-10">
           <p class="mb-7 u-card-title1 text-primary1">INFO SETTING</p>
           {/* startup */}
           <UFormItemsFactory fields={infoFields} values={infoModel} />
         </UForm>
-        <div class="bg-purple h-10 my-8"></div>
+        <div class="bg-purple h-10"></div>
 
-        <UForm model={securityModel}>
+        <UForm model={securityModel} class="bg-white p-10">
           <p class="mb-7 u-card-title1 text-primary1">SECURITY SETTING</p>
           {/* security setting */}
           <UFormItemsFactory fields={securityInfo} values={securityModel} />
         </UForm>
-        <div class="bg-purple h-10 my-8"></div>
+        <div class="bg-purple h-10"></div>
 
-        <UForm model={socialModel}>
+        <UForm model={socialModel} class="bg-white p-10">
           <p class="mb-7 u-card-title1 text-primary1">SOCIAL SETTING</p>
           {/* social setting */}
           <UFormItemsFactory fields={socialInfo} values={socialModel} />
         </UForm>
 
         <div class="flex mt-16 items-center justify-end">
-          <UButton type="default" size="large" class="mr-4 w-41" onClick={onCancel}>
+          <UButton type="default" size="large" class="mr-4 w-41 u-title2" onClick={onCancel}>
             Cancel
           </UButton>
           <UButton
             type="primary"
             size="large"
-            class="w-41"
+            class="w-41 u-title2 bg-primary1 text-white"
             loading={loading.value}
             onClick={onSubmit}
           >
