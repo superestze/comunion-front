@@ -55,7 +55,7 @@ const UHashInput = defineComponent({
       <NSelect
         // @ts-ignore
         {...props}
-        placeholder="#UI design#  #UX design#"
+        // placeholder="#UI design#  #UX design#"
         consistentMenuWidth={false}
         clearable
         loading={loading.value}

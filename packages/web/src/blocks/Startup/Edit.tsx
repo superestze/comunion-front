@@ -137,36 +137,36 @@ const EditStartupForm = defineComponent({
         title: 'Hashtag',
         category: 'startup',
         name: 'tags',
-        placeholder: '#Enter you startup tag'
+        placeholder: '#Input your startup tag'
       },
       {
         t: 'string',
-        title: 'website',
+        title: 'Website',
         name: 'website',
         placeholder: 'Input startup website'
       },
       {
         t: 'string',
-        title: 'discord',
+        title: 'Discord',
         name: 'discord',
         placeholder: 'Input startup discord'
       },
 
       {
         t: 'string',
-        title: 'twitter',
+        title: 'Twitter',
         name: 'twitter',
         placeholder: 'Input twitter link'
       },
       {
         t: 'string',
-        title: 'telegram',
+        title: 'Telegram',
         name: 'telegram',
         placeholder: 'Input telegram link'
       },
       {
         t: 'string',
-        title: 'docs',
+        title: 'Docs',
         name: 'docs',
         placeholder: 'Input docs link'
       }
