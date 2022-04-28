@@ -25,6 +25,7 @@ export default defineConfig({
         grey3: 'var(--u-grey-3-color)',
         grey4: 'var(--u-grey-4-color)',
         grey5: 'var(--u-grey-5-color)',
+        green1: 'var(--u-green-1-color)',
         purple: 'var(--u-purple-color)',
         'purple-light': 'var(--u-purple-light-color)',
         'purple-gradient': 'var(--u-purple-gradient-color)'
