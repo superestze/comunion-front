@@ -54,7 +54,7 @@ const SocialLinks = defineComponent({
           </div>
         </div>
         <div>
-          <div class="u-title1 text-primary2 mb-4">Associated Wallet Links</div>
+          <div class="u-title1 text-primary2 mb-4">Wallet Link</div>
           <div class="rounded bg-white flex items-center overflow-hidden py-2.5 px-4">
             <WalletOutlined class="text-primary mr-4" />
             {userStore.profile?.walletAddress ? (

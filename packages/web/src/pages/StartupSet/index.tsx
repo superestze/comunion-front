@@ -29,9 +29,7 @@ const StartupSetPage = defineComponent({
 
     return () => (
       <div class="startup-set grid grid-cols-[1fr,0.52fr] grid-rows-1 gap-x-[40px] mb-38">
-        <div class="startup bg-white p-10">
-          {startup.value && <StartupSetting startup={startup.value} />}
-        </div>
+        <div class="startup">{startup.value && <StartupSetting startup={startup.value} />}</div>
         <div class="team bg-white p-10">
           {startup.value && <TeamSetting startup={startup.value} />}
         </div>
