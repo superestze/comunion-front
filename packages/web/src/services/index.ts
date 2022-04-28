@@ -46,6 +46,40 @@ export const services = {
       ...extract('GET', args, [], ['comerId'])
     })
   },
+  'account@comer-info-get-by-address'(args: { address: any }) {
+    return requestAdapter<{
+      id: number
+      createdAt: string
+      updatedAt: string
+      isDeleted: boolean
+      Address: string
+      comerProfile?: {
+        id: number
+        createdAt: string
+        updatedAt: string
+        isDeleted: boolean
+        comerID: number
+        name: string
+        avatar: string
+        location: string
+        website: string
+        bio: string
+        skills: {
+          id: number
+          createdAt: string
+          updatedAt: string
+          isDeleted: boolean
+          name: string
+          category: string
+          isIndex: boolean
+        }[]
+      }
+    }>({
+      url: replacePath('/account/comer/address/{address}', args),
+      method: 'GET',
+      ...extract('GET', args, [], ['address'])
+    })
+  },
   'account@wallet-login'(args: { signature: string; address: string }) {
     return requestAdapter<{
       name: string
