@@ -43,15 +43,15 @@ const StartupsPage = defineComponent({
             <UDropdownFilter
               options={STARTUP_TYPES.map(item => ({ label: item, value: item }))}
               placeholder="Startup Type"
-              class="ml-6 w-37 h-10 border-1 rounded border-[#e5e7eb] "
+              class="ml-6 w-37 h-10 border-1 rounded"
               clearable
               v-model:value={startupType.value}
             />
-            <UInputGroup class="w-37 h-10 ml-6 rounded-sm border-[#E0E0E0]">
+            <UInputGroup class="w-37 h-10 ml-6 ">
               <USearch
                 v-model:value={inputMember.value}
                 placeholder="Search"
-                class="bg-[#f5f6fa] -my-0\.5 rounded-sm"
+                class="bg-transparent -my-0\.5 "
               />
             </UInputGroup>
           </div>
