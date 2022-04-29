@@ -63,7 +63,11 @@ const DashboardPage = defineComponent({
                       ID
                     </div>
                     {walletStore.address && (
-                      <UAddress class="ml-1.5 u-body2 text-primary" address={walletStore.address} />
+                      <UAddress
+                        autoSlice={true}
+                        class="ml-1.5 u-body2 text-primary"
+                        address={walletStore.address}
+                      />
                     )}
                   </div>
                 </div>
