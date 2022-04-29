@@ -24,7 +24,7 @@ const Startups = defineComponent({
     const slots = {
       'header-extra': () => (
         <CreateStartupBlock>
-          <span class="flex flex-row items-center text-primary font-opensans font-700 text-[14px] tracking-2px cursor-pointer">
+          <span class="cursor-pointer u-label2 flex flex-row text-primary items-center">
             <PlusOutlined class="h-4 mr-3 w-4" />
             CREATE NEW
           </span>
@@ -55,13 +55,13 @@ const Startups = defineComponent({
 
     return () => (
       <UCard title="STARTUPS" v-slots={slots}>
-        <UTabs>
-          <UTabPane name="PARTICIPATED" tab="PARTICIPATED">
+        <UTabs class="mr-10">
+          <UTabPane name="PARTICIPATED" disabled={true} tab="PARTICIPATED">
             <UDeveloping>
               <EmptyFilled class="mt-34" />
             </UDeveloping>
           </UTabPane>
-          <UTabPane name="CREATED BY ME" tab="CREATED BY ME" class="h-112">
+          <UTabPane name="CREATED BY ME" tab="CREATED BY ME" class="h-112 mr-10">
             <UScrollList
               triggered={pagination.loading}
               page={pagination.page}
