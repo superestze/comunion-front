@@ -48,7 +48,7 @@ const EditStartupForm = defineComponent({
     })
     console.log(new Date(dateList.value.launchDate).getTime())
     const defaultModel = {
-      presaleDate: new Date(dateList.value.presaleDate).getTime(),
+      presaleDate: new Date(dateList.value.presaleDate).getTime() || null,
       launchDate: new Date(dateList.value.launchDate).getTime() || null,
       contract: props.startup!.tokenContractAddress || '',
       network: 'Ethereum',
