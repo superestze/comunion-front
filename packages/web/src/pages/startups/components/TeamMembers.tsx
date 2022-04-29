@@ -21,7 +21,7 @@ const UTeamMembers = defineComponent({
           <span class={styles.members_svg}>
             <GroupOutlined class="text-primary m-2" />
           </span>
-          <span class="u-body3 pl-2   pt-1">
+          <span class="u-body3 pl-2 pt-1">
             <i class={styles.members_span_i}>1,223</i>
           </span>
         </div>
