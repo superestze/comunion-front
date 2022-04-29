@@ -16,7 +16,7 @@
   }
 
   &-img {
-    @apply bg-purple rounded-full;
+    @apply bg-purple rounded-full flex justify-center items-center;
   }
 
   &-progress {
