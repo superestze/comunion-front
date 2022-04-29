@@ -53,7 +53,7 @@ const Recommend = defineComponent({
             Recommended for you
           </div>
           <div class="content">
-            <UTabs>
+            <UTabs tab-style={{ 'font-weight': '700' }}>
               <UTabPane name="Startups" tab="STARTUPS">
                 {startups.value.length !== 0 ? (
                   startups.value.map(startup => <StartupCard startup={startup} />)

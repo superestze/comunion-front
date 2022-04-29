@@ -1,4 +1,10 @@
-import { UDropdownFilter, UPaginatedList, UPaginatedListPropsType } from '@comunion/components'
+import {
+  UDropdownFilter,
+  UPaginatedList,
+  UPaginatedListPropsType,
+  UInputGroup,
+  USearch
+} from '@comunion/components'
 import { defineComponent, ref, computed } from 'vue'
 import StartupCard from './components/StartupCard'
 import { StartupTypesType, STARTUP_TYPES } from '@/constants'
@@ -9,6 +15,7 @@ const StartupsPage = defineComponent({
   name: 'StartupsPage',
   setup() {
     const startupType = ref<string | undefined>(undefined)
+    const inputMember = ref<string>('')
     const total = ref(0)
     const dataService = computed<UPaginatedListPropsType['service']>(
       () => async (page, pageSize) => {
@@ -19,7 +26,7 @@ const StartupsPage = defineComponent({
             startupType.value !== undefined
               ? STARTUP_TYPES.indexOf(startupType.value as StartupTypesType) + 1
               : undefined,
-          keyword: ''
+          keyword: inputMember.value
         })
         const _total = error ? 0 : data!.total
         total.value = _total
@@ -31,15 +38,22 @@ const StartupsPage = defineComponent({
       <div class="mb-10">
         <div class="flex my-4">
           <h3 class="text-grey1 u-h3">{total.value.toLocaleString()} Startups</h3>
-          <div class="flex ml-auto self-end items-center u-title2">
+          <div class="flex ml-auto self-end items-center u-title2 ">
             Filter by:
             <UDropdownFilter
               options={STARTUP_TYPES.map(item => ({ label: item, value: item }))}
               placeholder="Startup Type"
-              class="ml-8 w-37"
+              class="ml-6 w-37 h-10 border-1 rounded"
               clearable
               v-model:value={startupType.value}
             />
+            <UInputGroup class="w-37 h-10 ml-6 ">
+              <USearch
+                v-model:value={inputMember.value}
+                placeholder="Search"
+                class="bg-transparent -my-0\.5 "
+              />
+            </UInputGroup>
           </div>
         </div>
         <UPaginatedList

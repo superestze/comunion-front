@@ -14,6 +14,7 @@ import {
 } from '@comunion/components'
 import { CloseOutlined, PlusOutlined } from '@comunion/icons'
 import dayjs from 'dayjs'
+import utc from 'dayjs/plugin/utc'
 import { utils } from 'ethers'
 import { defineComponent, PropType, reactive, ref, onMounted, h } from 'vue'
 import avalanche from '@/assets/avalanche.png'
@@ -24,6 +25,7 @@ import polygon from '@/assets/polygon.png'
 import { useErc20Contract } from '@/contracts'
 import { services } from '@/services'
 import { StartupItem } from '@/types'
+dayjs.extend(utc)
 
 const EditStartupForm = defineComponent({
   name: 'EditStartupForm',
@@ -37,9 +39,17 @@ const EditStartupForm = defineComponent({
     }
   },
   setup(props, ctx) {
+    const dateToISO = (dataTime: string | null | number) => {
+      return dayjs(dataTime).format('YYYY-MM-DD')
+    }
+    const dateList = ref({
+      presaleDate: props.startup?.presaleDate || '',
+      launchDate: props.startup?.launchDate || ''
+    })
+    console.log(new Date(dateList.value.launchDate).getTime())
     const defaultModel = {
-      presaleDate: ref(new Date().getTime()),
-      launchDate: ref(new Date().getTime()),
+      presaleDate: new Date(dateList.value.presaleDate).getTime() || null,
+      launchDate: new Date(dateList.value.launchDate).getTime() || null,
       contract: props.startup!.tokenContractAddress || '',
       network: 'Ethereum',
       composes:
@@ -102,10 +112,6 @@ const EditStartupForm = defineComponent({
       }
     })
 
-    const dateToISO = (dataTime: number) => {
-      return dayjs(dataTime).format('YYYY-MM-DD')
-    }
-
     const tokenInfo = reactive({ ...defaultTokenInfo })
 
     async function onTokenContractChange(addr: string) {
@@ -115,6 +121,7 @@ const EditStartupForm = defineComponent({
       tokenInfo.symbol = await contract.symbol()
       tokenInfo.supply = +utils.formatUnits(await contract.totalSupply(), 18)
     }
+
     onMounted(() => {
       onTokenContractChange(defaultModel.contract)
     })
@@ -168,10 +175,17 @@ const EditStartupForm = defineComponent({
         }
       })
     }
+
     const allRules: Record<string, FormItemRule[]> = {
       tokenContract: [{ required: true, message: 'Token contract is required', trigger: 'blur' }],
       composes: [{ required: true, type: 'array', min: 1 }]
     }
+
+    const divStyle = {
+      'font-weight': '600',
+      'font-size': '16px'
+    }
+
     return () => (
       <UForm ref={formRef} rules={allRules} model={model}>
         <p class="mb-7 uppercase u-card-title1 text-[#3F2D99]">FINANCE SETTING</p>
@@ -182,7 +196,7 @@ const EditStartupForm = defineComponent({
             token.
           </li>
         </ul>
-        <UFormItem label="Launch Network" class="font-600 text-16px">
+        <UFormItem label="Launch Network" required={true} label-style={divStyle}>
           <div class="w-full">
             <USelect
               v-model:value={model.network}
@@ -196,39 +210,47 @@ const EditStartupForm = defineComponent({
             />
           </div>
         </UFormItem>
-        <UFormItem label="Token Name" class="font-600 text-16px">
+        <UFormItem label="Token Name" label-style={divStyle} class="font-600">
           <div class="w-full">
             <UInput v-model:value={tokenInfo.name} placeholder="Please enter your Token Name" />
           </div>
         </UFormItem>
-        <UFormItem label="Token Symbol" class="font-600 text-16px">
+        <UFormItem label="Token Symbol" label-style={divStyle} class="font-600">
           <div class="w-full">
             <UInput v-model:value={tokenInfo.symbol} placeholder="Please enter your Token Symbol" />
           </div>
         </UFormItem>
-        <UFormItem label="Token Supply" class="font-600 text-16px">
+        <UFormItem label="Token Supply" label-style={divStyle} class="font-600">
           <div class="w-full">
             <UInput v-model:value={tokenInfo.supply} placeholder="Please enter your Token Supply" />
           </div>
         </UFormItem>
-        <UFormItem label="Token Contract">
+        <UFormItem label="Token Contract" label-style={divStyle}>
           <UAddressInput
             placeholder="Please enter your token contract address"
             v-model:value={model.contract}
             onChange={onTokenContractChange}
           />
         </UFormItem>
-        <UFormItem label="Presale date" class="font-600 text-16px">
+        <UFormItem label="Presale date" label-style={divStyle}>
           <div class="w-full">
-            <UDatePicker v-model:value={model.presaleDate} type="date" />
+            <UDatePicker
+              v-model:value={model.presaleDate}
+              type="date"
+              placeholder="dd-mm-dd(UTC time zone)"
+            />
           </div>
         </UFormItem>
-        <UFormItem label="Launch date">
+        <UFormItem label="Launch date" label-style={divStyle}>
           <div class="w-full">
-            <UDatePicker v-model:value={model.launchDate} type="date" />
+            <UDatePicker
+              v-model:value={model.launchDate}
+              type="date"
+              placeholder="dd-mm-dd(UTC time zone)"
+            />
           </div>
         </UFormItem>
-        <UFormItem label="Wallet">
+        <UFormItem label="Wallet" label-style={divStyle}>
           <div class="w-full">
             {model.composes.map((compose, index) => (
               <div class="flex mb-6 w-full items-center">

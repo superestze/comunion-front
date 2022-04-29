@@ -7,23 +7,23 @@ const HowWork = defineComponent({
     const steps = [
       {
         index: 1,
-        title: 'Look for a comeup',
-        desc: 'Browse and find a comeup that interest you.'
+        title: 'Look for a startup',
+        desc: 'Browse and find a startup that interest you.'
       },
       {
         index: 2,
         title: 'Sign up for a bounty',
-        desc: 'Apply and sign up for a bounty to contribute to the comeup’s growth.'
+        desc: 'Apply and sign up for a bounty to contribute to the startup’s growth.'
       },
       {
         index: 3,
         title: 'Select a contract',
-        desc: 'Choose a contract for your bounty duty and establish your relationship with the comeup on the blockchain. '
+        desc: 'Choose a contract for your bounty duty and establish your relationship with the startup on the blockchain. '
       },
       {
         index: 4,
         title: 'Get paid',
-        desc: 'Complete the bounty to get paid by the company token, and you will become a new comer for the comeup.'
+        desc: 'Complete the bounty to get paid by the company token, and you will become a new comer for the startup.'
       }
     ]
     return () => (
@@ -39,7 +39,7 @@ const HowWork = defineComponent({
             Want to become a founder?
           </div>
           <div class="u-body1 font-opensans font-normal font-400 text-[16px] leading-5 text-grey1 text-center mt-6 mb-6">
-            Create your own comeup portfolio on Comunion and recruite for talents.
+            Create your own startup portfolio on Comunion and recruite for talents.
           </div>
           <UButton class="bg-primary1 rounded-6px h-48px text-white text-bold text-16px leading-40px w-180px self-center">
             Create
