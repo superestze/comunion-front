@@ -37,6 +37,7 @@ const SocialLinks = defineComponent({
                   <link.avatar class="w-6 h-6 mr-3.5" />
                   <span class="u-title2 u-primary2">{link.label}</span>
                   <UButton
+                    disabled
                     class="ml-auto bg-white rounded-lg w-30 text-primary2"
                     size="small"
                     type="primary"
@@ -54,8 +55,9 @@ const SocialLinks = defineComponent({
           </div>
         </div>
         <div>
-          <div class="u-title1 text-primary2 mb-4">Wallet Link</div>
-          <div class="rounded bg-white flex items-center overflow-hidden py-2.5 px-4">
+          {/*TODO zehui: after finished this , please remove invisible class */}
+          <div class="invisible u-title1 text-primary2 mb-4">Wallet Link</div>
+          <div class="invisible rounded bg-white flex items-center overflow-hidden py-2.5 px-4">
             <WalletOutlined class="text-primary mr-4" />
             {userStore.profile?.walletAddress ? (
               <UAddress address={userStore.profile.walletAddress} autoSlice={true} />
