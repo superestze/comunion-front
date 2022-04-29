@@ -11,7 +11,7 @@
 }
 
 .members_svg {
-  @apply w-7 h-7 bg-[#F5F6FA];
+  @apply w-7 h-7 bg-gray-50;
 
   border-radius: 50%;
 }
