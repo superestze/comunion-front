@@ -39,9 +39,17 @@ const EditStartupForm = defineComponent({
     }
   },
   setup(props, ctx) {
+    const dateToISO = (dataTime: string | null | number) => {
+      return dayjs(dataTime).format('YYYY-MM-DD')
+    }
+    const dateList = ref({
+      presaleDate: props.startup?.presaleDate || '',
+      launchDate: props.startup?.launchDate || ''
+    })
+    console.log(new Date(dateList.value.launchDate).getTime())
     const defaultModel = {
-      presaleDate: props.startup?.presaleDate || null,
-      launchDate: props.startup?.launchDate || null,
+      presaleDate: new Date(dateList.value.presaleDate).getTime(),
+      launchDate: new Date(dateList.value.launchDate).getTime() || null,
       contract: props.startup!.tokenContractAddress || '',
       network: 'Ethereum',
       composes:
@@ -103,10 +111,6 @@ const EditStartupForm = defineComponent({
         composes: [...defaultModel.composes]
       }
     })
-
-    const dateToISO = (dataTime: string | null) => {
-      return dayjs.utc(dataTime).format()
-    }
 
     const tokenInfo = reactive({ ...defaultTokenInfo })
 
@@ -230,12 +234,20 @@ const EditStartupForm = defineComponent({
         </UFormItem>
         <UFormItem label="Presale date" label-style={divStyle}>
           <div class="w-full">
-            <UDatePicker v-model:value={model.presaleDate} type="date" />
+            <UDatePicker
+              v-model:value={model.presaleDate}
+              type="date"
+              placeholder="dd-mm-dd(UTC time zone)"
+            />
           </div>
         </UFormItem>
         <UFormItem label="Launch date" label-style={divStyle}>
           <div class="w-full">
-            <UDatePicker v-model:value={model.launchDate} type="date" />
+            <UDatePicker
+              v-model:value={model.launchDate}
+              type="date"
+              placeholder="dd-mm-dd(UTC time zone)"
+            />
           </div>
         </UFormItem>
         <UFormItem label="Wallet" label-style={divStyle}>
