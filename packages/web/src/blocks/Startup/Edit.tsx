@@ -1,5 +1,5 @@
-import { UForm, UFormItemsFactory, UButton, FormFactoryField } from '@comunion/components'
-import { defineComponent, PropType, reactive, ref } from 'vue'
+import { UForm, UFormItemsFactory, UButton, FormFactoryField, UAddress } from '@comunion/components'
+import { defineComponent, PropType, h, reactive, ref } from 'vue'
 import { getStartupTypeFromNumber, STARTUP_TYPES } from '@/constants'
 import { services } from '@/services'
 import { StartupItem } from '@/types'
@@ -73,6 +73,15 @@ const EditStartupForm = defineComponent({
         text: 'Upload startup Logo'
       },
       {
+        t: 'custom',
+        title: 'BlockChainAddress',
+        name: 'blockChainAddress',
+        required: true,
+        render: () => {
+          return h(<UAddress address={props.startup!.contractAudit} />, {})
+        }
+      },
+      {
         t: 'string',
         title: 'Name',
         name: 'name',
@@ -128,7 +137,7 @@ const EditStartupForm = defineComponent({
         t: 'string',
         title: 'Contract Audit',
         name: 'contractAudit',
-        placeholder: 'Input  startup contract audit'
+        placeholder: 'Input startup contract audit'
       }
     ]
     const socialInfo: FormFactoryField[] = [
@@ -175,21 +184,21 @@ const EditStartupForm = defineComponent({
     return () => (
       <>
         <UForm model={infoModel} class="bg-white p-10">
-          <p class="mb-7 u-card-title1 text-primary1">INFO SETTING</p>
+          <p class="mb-7 text-primary1 u-card-title1">INFO SETTING</p>
           {/* startup */}
           <UFormItemsFactory fields={infoFields} values={infoModel} />
         </UForm>
         <div class="bg-purple h-10"></div>
 
         <UForm model={securityModel} class="bg-white p-10">
-          <p class="mb-7 u-card-title1 text-primary1">SECURITY SETTING</p>
+          <p class="mb-7 text-primary1 u-card-title1">SECURITY SETTING</p>
           {/* security setting */}
           <UFormItemsFactory fields={securityInfo} values={securityModel} />
         </UForm>
         <div class="bg-purple h-10"></div>
 
         <UForm model={socialModel} class="bg-white p-10">
-          <p class="mb-7 u-card-title1 text-primary1">SOCIAL SETTING</p>
+          <p class="mb-7 text-primary1 u-card-title1">SOCIAL SETTING</p>
           {/* social setting */}
           <UFormItemsFactory fields={socialInfo} values={socialModel} />
         </UForm>
@@ -201,7 +210,7 @@ const EditStartupForm = defineComponent({
           <UButton
             type="primary"
             size="large"
-            class="w-41 u-title2 bg-primary1 text-white"
+            class="bg-primary1 text-white w-41 u-title2"
             loading={loading.value}
             onClick={onSubmit}
           >

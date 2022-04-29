@@ -24,7 +24,7 @@ const Startups = defineComponent({
     const slots = {
       'header-extra': () => (
         <CreateStartupBlock>
-          <span class="flex flex-row items-center text-primary font-opensans font-700 text-[14px] tracking-2px cursor-pointer">
+          <span class="cursor-pointer flex flex-row font-opensans font-700 text-primary text-[14px] tracking-2px items-center">
             <PlusOutlined class="h-4 mr-3 w-4" />
             CREATE NEW
           </span>
