@@ -20,6 +20,9 @@ const NetworkSwitcher = defineComponent({
         trigger="click"
         value={currentNetwork.value?.chainId}
         placement="bottom-start"
+        themeOverrides={{
+          optionOpacityDisabled: '0.4'
+        }}
         options={[
           {
             type: 'group',
