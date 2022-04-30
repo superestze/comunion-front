@@ -25,5 +25,10 @@
     & > svg {
       @apply h-8 w-8;
     }
+
+    /* TODO zehui: after OK， remove this */
+    &.u-not-allow {
+      @apply cursor-not-allowed;
+    }
   }
 }

@@ -36,10 +36,12 @@ const UWalletConnect = defineComponent({
               </div>
             </NGridItem>
             <NGridItem>
-              <div
-                class="u-wallet-connect__wallet"
-                onClick={() => props.onClick?.('WalletConnect')}
-              >
+              {/*TODO zehui: after this OK, please uncomment this*/}
+              {/*<div*/}
+              {/*  class="u-wallet-connect__wallet"*/}
+              {/*  onClick={() => props.onClick?.('WalletConnect')}*/}
+              {/*>*/}
+              <div class="u-wallet-connect__wallet u-not-allow">
                 <WalletConnectFilled />
                 Wallet Connect
               </div>
