@@ -1,4 +1,4 @@
-import { TeamOutlined, GroupOutlined } from '@comunion/icons'
+import { TeamOutlined, GroupFilled } from '@comunion/icons'
 import { defineComponent } from 'vue'
 import styles from './StartupCard.module.css'
 
@@ -19,7 +19,7 @@ const UTeamMembers = defineComponent({
         </div>
         <div class="flex-4 flex align-center ">
           <span class={styles.members_svg}>
-            <GroupOutlined class="text-primary m-2" />
+            <GroupFilled class="text-primary m-2" />
           </span>
           <span class="u-body3 pl-2 pt-1">
             <i class={styles.members_span_i}>1,223</i>
