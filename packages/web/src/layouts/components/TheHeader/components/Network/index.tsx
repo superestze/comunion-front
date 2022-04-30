@@ -1,6 +1,7 @@
 import { UDropdown, UButton } from '@comunion/components'
 import { ArrowDownOutlined } from '@comunion/icons'
 import { defineComponent, computed } from 'vue'
+import styles from './index.module.css'
 import { networks } from '@/constants'
 import { useWalletStore } from '@/stores'
 
@@ -15,9 +16,13 @@ const NetworkSwitcher = defineComponent({
 
     return () => (
       <UDropdown
+        class={styles.dropdown}
         trigger="click"
         value={currentNetwork.value?.chainId}
-        width={204}
+        placement="bottom-start"
+        themeOverrides={{
+          optionOpacityDisabled: '0.4'
+        }}
         options={[
           {
             type: 'group',

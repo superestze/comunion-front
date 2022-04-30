@@ -1,8 +1,8 @@
 .u-address {
-  @apply flex items-center text-primary w-full;
+  @apply flex items-center text-primary;
 
   &__link {
-    @apply flex-1 text-[16px] font-600;
+    @apply u-title2 flex-1 mr-10 text-primary;
   }
 
   &__copy {

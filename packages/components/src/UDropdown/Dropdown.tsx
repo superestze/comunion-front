@@ -7,6 +7,7 @@ export type UDropdownPropsType = DropdownProps
 const UDropdown = defineComponent({
   name: 'UDropdown',
   extends: NDropdown,
+  inheritAttrs: true,
   setup(props, ctx) {
     return () => <NDropdown {...props} v-slots={ctx.slots} />
   }

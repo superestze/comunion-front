@@ -1,6 +1,12 @@
 import { UButton, UDropdown } from '@comunion/components'
-import { PlusOutlined } from '@comunion/icons'
+import {
+  PlusOutlined,
+  CreateStartupFilled,
+  CreateBountyFilled,
+  CreateOfferingFilled
+} from '@comunion/icons'
 import { defineComponent } from 'vue'
+import styles from './index.module.css'
 import CreateStartupBlock from '@/blocks/Startup/Create'
 
 const CreateBlock = defineComponent({
@@ -10,8 +16,10 @@ const CreateBlock = defineComponent({
       <UDropdown
         trigger="click"
         width={343}
+        class={styles.dropdown}
+        placement="bottom-start"
         themeOverrides={{
-          optionHeightMedium: '58px'
+          optionOpacityDisabled: '0.4'
         }}
         options={[
           {
@@ -23,15 +31,50 @@ const CreateBlock = defineComponent({
                 key: 'startup',
                 label: () => (
                   <CreateStartupBlock>
-                    <div class="flex p-3 items-center">
+                    <div class="flex items-center">
+                      <div class="rounded flex bg-[#f8f8f8] h-8 mr-4 w-8 items-center justify-center">
+                        <CreateStartupFilled />
+                      </div>
                       <div>
                         <div class="text-primary2 u-title2">Startup</div>
-                        <div class="mt-1 text-grey4 u-body2">
+                        <div class="mt-1 text-grey2 u-body2">
                           Create your Startup, initial your dream
                         </div>
                       </div>
                     </div>
                   </CreateStartupBlock>
+                )
+              },
+              {
+                key: 'bounty',
+                disabled: true,
+                label: () => (
+                  <div class="flex items-center">
+                    <div class="rounded flex bg-[#f8f8f8] h-8 mr-4 w-8 items-center justify-center">
+                      <CreateBountyFilled />
+                    </div>
+                    <div>
+                      <div class="text-primary2 u-title2">Bounty</div>
+                      <div class="mt-1 text-grey2 u-body2">
+                        Post your bounty to expand your startup
+                      </div>
+                    </div>
+                  </div>
+                )
+              },
+              {
+                key: 'Offering',
+                disabled: true,
+                label: () => (
+                  <div class="flex items-center">
+                    <div class="rounded flex bg-[#f8f8f8] h-8 mr-4 w-8 items-center justify-center">
+                      <CreateOfferingFilled />
+                    </div>
+                    <div>
+                      <div class="text-primary2 u-title2">Offering</div>
+                      <div class="mt-1 text-grey2 u-body2">Show your skills to earn much more</div>
+                    </div>
+                  </div>
                 )
               }
             ]

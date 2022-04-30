@@ -14,6 +14,11 @@ export const networks = [
     chainId: 1
   },
   {
+    name: 'Goerli Testnet',
+    logo: ethereum,
+    chainId: 5
+  },
+  {
     name: 'Avalanche',
     logo: avalanche,
     chainId: 43114,

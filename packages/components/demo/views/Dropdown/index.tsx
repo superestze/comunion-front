@@ -9,7 +9,8 @@ const DropdownDemoPage = defineComponent({
       <>
         <h4>Dropdown</h4>
         <UDropdown
-          trigger="hover"
+          class="ccc"
+          trigger="click"
           options={[
             { label: '1', key: 1 },
             { label: '2', key: 2 }

@@ -120,6 +120,8 @@ function renderField(field: FormFactoryField, values: FormData) {
           v-model:value={values[field.name]}
         />
       )
+    case 'custom':
+      return field.render()
     default:
       return <NInput {...(props as UInputPropsType)} v-model:value={values[field.name]} />
   }

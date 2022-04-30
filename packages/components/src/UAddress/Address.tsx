@@ -1,4 +1,5 @@
 import { CopyOutlined } from '@comunion/icons'
+import { shortenAddress } from '@comunion/utils/src'
 import copy from 'copy-to-clipboard'
 import { defineComponent, toRefs, ref } from 'vue'
 import { UTooltip } from '../UTooltip'
@@ -33,7 +34,7 @@ const UAddress = defineComponent({
   setup(props, { attrs }) {
     const showTooltipRef = ref<boolean>(false)
 
-    const { address, autoSlice, prefixLength, suffixLength } = toRefs(props)
+    const { address, autoSlice } = toRefs(props)
 
     return () => {
       let addressVal = address.value
@@ -42,14 +43,13 @@ const UAddress = defineComponent({
       }
 
       if (autoSlice.value) {
-        const len = address.value.length || 0
-        addressVal = address.value.replace(/[A-Za-z0-9]/gi, (c: string, i) => {
-          if (i > prefixLength.value && i < len - suffixLength.value) {
-            return '*'
-          }
-
-          return c
-        })
+        addressVal = shortenAddress(address.value)
+        // addressVal = address.value.replace(/[A-Za-z0-9]/gi, (c: string, i) => {
+        //   if (i > prefixLength.value && i < len - suffixLength.value) {
+        //     return '*'
+        //   }
+        //   return c
+        // })
       }
 
       return (

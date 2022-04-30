@@ -13,7 +13,7 @@ const UserWelcomePage = defineComponent({
             Welcome to Comunion!
           </div>
           <div class="font-opensans font-600 text-[16px] font-normal text-grey1">
-            Discover and join the comeups that you like.
+            Discover and join the startups that you like.
           </div>
           <section class="flex flex-row mt-10">
             <div class="left flex-1 mr-10">

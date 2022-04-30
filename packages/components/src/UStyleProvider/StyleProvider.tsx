@@ -53,6 +53,10 @@ export const UStyleProviderProps = {
     type: String,
     default: '#E0E0E0'
   },
+  green1Color: {
+    type: String,
+    default: '#219653'
+  },
   purpleBg: {
     type: String,
     default: '#F5F6FA'
@@ -87,6 +91,7 @@ const UStyleProvider = defineComponent({
       --u-grey-3-color: ${props.grey3Color};
       --u-grey-4-color: ${props.grey4Color};
       --u-grey-5-color: ${props.grey5Color};
+      --u-green-1-color: ${props.green1Color};
       --u-purple-color: ${props.purpleBg};
       --u-purple-light-color: ${props.purpleLightBg};
       --u-purple-gradient-color: ${props.purpleGradientBg};
