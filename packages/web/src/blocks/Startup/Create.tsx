@@ -1,46 +1,35 @@
 import { UDrawer } from '@comunion/components'
-import { defineComponent, ref, VNode } from 'vue'
+import { defineComponent, ref } from 'vue'
 import CreateStartupForm from './CreateForm'
 import { useWalletStore } from '@/stores'
+
+export type CreateStartupRef = {
+  show: () => void
+  close: () => void
+}
 
 const CreateStartupBlock = defineComponent({
   name: 'CreateStartupBlock',
   setup() {
-    const show = ref(false)
+    const visible = ref(false)
     const walletStore = useWalletStore()
 
-    const onClose = () => {
-      show.value = false
-    }
-
-    const onClick = async (e: Event) => {
-      e.preventDefault()
-      e.stopPropagation()
+    const show = async () => {
+      visible.value = true
       await walletStore.ensureWalletConnected()
-      show.value = true
     }
 
-    return { onClose, onClick, show }
+    const close = () => {
+      visible.value = false
+    }
+
+    return { show, close, visible }
   },
   render() {
-    const { $slots, onClick, onClose } = this
-    let trigger: VNode | null = null
-    // add trigger action
-    if ($slots.default) {
-      trigger = $slots.default()?.[0]
-      if (trigger) {
-        trigger.props = trigger.props || {}
-        trigger.props.onClick = onClick
-      }
-    }
-
     return (
-      <>
-        {trigger}
-        <UDrawer title="Create startup" maskClosable={false} v-model:show={this.show}>
-          {this.show && <CreateStartupForm onCancel={onClose} />}
-        </UDrawer>
-      </>
+      <UDrawer title="Create startup" maskClosable={false} v-model:show={this.visible}>
+        {this.visible && <CreateStartupForm onCancel={this.close} />}
+      </UDrawer>
     )
   }
 })

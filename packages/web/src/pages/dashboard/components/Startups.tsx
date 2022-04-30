@@ -2,13 +2,14 @@ import { UCard, UDeveloping, UScrollList, UTabPane, UTabs } from '@comunion/comp
 import { EmptyFilled, PlusOutlined } from '@comunion/icons'
 import { defineComponent, onMounted, reactive, ref } from 'vue'
 import StartupCard from './StartupCard'
-import CreateStartupBlock from '@/blocks/Startup/Create'
+import CreateStartupBlock, { CreateStartupRef } from '@/blocks/Startup/Create'
 import { services } from '@/services'
 import { StartupItem } from '@/types'
 
 const Startups = defineComponent({
   name: 'Startups',
-  setup(prop, ctx) {
+  setup() {
+    const createRef = ref<CreateStartupRef>()
     const pagination = reactive<{
       pageSize: number
       total: number
@@ -21,16 +22,6 @@ const Startups = defineComponent({
       loading: false
     })
     const myCreatedStartups = ref<StartupItem[]>([])
-    const slots = {
-      'header-extra': () => (
-        <CreateStartupBlock>
-          <span class="cursor-pointer u-label2 flex flex-row text-primary items-center">
-            <PlusOutlined class="h-4 mr-3 w-4" />
-            CREATE NEW
-          </span>
-        </CreateStartupBlock>
-      )
-    }
     const getCreatedStartups = async () => {
       const { error, data } = await services['startup@startup-list-me']({
         limit: pagination.pageSize,
@@ -49,12 +40,30 @@ const Startups = defineComponent({
       pagination.loading = false
     }
 
+    const createNewStartup = () => {
+      createRef.value?.show()
+    }
+
     onMounted(() => {
       getCreatedStartups()
     })
 
     return () => (
-      <UCard title="STARTUPS" v-slots={slots}>
+      <UCard
+        title="STARTUPS"
+        v-slots={{
+          'header-extra': () => (
+            <span
+              class="cursor-pointer flex flex-row text-primary items-center u-label2"
+              onClick={createNewStartup}
+            >
+              <PlusOutlined class="h-4 mr-3 w-4" />
+              CREATE NEW
+            </span>
+          )
+        }}
+      >
+        <CreateStartupBlock ref={createRef} />
         <UTabs>
           {/* TODO @zehui if PARTICIPATED list finished, PARTICIPATED list should before "created by me" startup list */}
           <UTabPane name="CREATED BY ME" tab="CREATED BY ME" class="h-112">
