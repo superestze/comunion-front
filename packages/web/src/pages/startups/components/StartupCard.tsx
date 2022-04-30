@@ -33,7 +33,7 @@ const StartupCard = defineComponent({
               </UTag>
             )}
           </div>
-          <h3 class="my-2 u-h3">{props.startup!.name}</h3>
+          <div class="u-h3 my-2 text-24px ">{props.startup!.name}</div>
           <p class="h-10 mb-6 u-body1 line-clamp-2">{props.startup!.mission}</p>
           <div class="flex flex-wrap gap-2">
             {hashtagsArray.map((key, value) => {
