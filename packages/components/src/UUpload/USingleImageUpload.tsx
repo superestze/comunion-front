@@ -163,7 +163,7 @@ const USingleImageUpload = defineComponent({
               showIndicator={false}
             />
           )}
-          <span class="u-single-upload-txt">{props.text}</span>
+          <div class="u-single-upload-txt">{props.text}</div>
         </div>
       </NUpload>
     )
