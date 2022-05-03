@@ -34,7 +34,7 @@ const StartupCard = defineComponent({
             )}
           </div>
           <div class="u-h3 my-2 text-24px ">{props.startup!.name}</div>
-          <p class="h-10 mb-6 u-body1 line-clamp-2">{props.startup!.mission}</p>
+          <p class="h-10 mb-6 u-body1 line-clamp-2 break-all">{props.startup!.mission}</p>
           <div class="flex flex-wrap gap-2">
             {hashtagsArray.map((key, value) => {
               return value + 1 < 4 ? <UTag key={value}>{key}</UTag> : <UTag key={value}>+1</UTag>
