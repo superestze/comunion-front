@@ -50,5 +50,12 @@ export default defineConfig({
     'u-body3': 'font-opensans font-bold tracking-normal text-[16px] text-grey1 leading-5 italic',
     'u-caption': 'font-opensans font-normal tracking-normal text-[14px] text-grey1 leading-5',
     'u-tag': 'font-opensans font-normal tracking-normal text-[12px] text-grey1 leading-4'
-  }
+  },
+  extend: {
+    lineClamp: {
+      sm: '3',
+      lg: '10'
+    }
+  },
+  plugins: [require('windicss/plugin/line-clamp')]
 })
