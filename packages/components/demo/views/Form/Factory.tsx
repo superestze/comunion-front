@@ -29,7 +29,7 @@ const FormFactoryDemoPage = defineComponent({
         title: 'Skills',
         name: 'skills',
         required: true,
-        placeholder: '#UI design  #UX design'
+        placeholder: '#Enter you skill tag'
       },
       {
         title: 'Bio',
