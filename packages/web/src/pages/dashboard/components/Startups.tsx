@@ -81,7 +81,9 @@ const Startups = defineComponent({
               {myCreatedStartups.value.length ? (
                 myCreatedStartups.value.map(startup => <StartupCard startup={startup} />)
               ) : (
-                <UDeveloping />
+                <UDeveloping>
+                  <EmptyFilled class="mt-34" />
+                </UDeveloping>
               )}
             </UScrollList>
           </UTabPane>
