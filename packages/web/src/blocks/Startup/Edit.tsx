@@ -78,7 +78,7 @@ const EditStartupForm = defineComponent({
         name: 'blockChainAddress',
         required: true,
         render: () => {
-          return h(<UAddress autoSlice={true} address={props.startup!.contractAudit} />, {})
+          return h(<UAddress autoSlice={true} address={props.startup!.blockChainAddress} />, {})
         }
       },
       {

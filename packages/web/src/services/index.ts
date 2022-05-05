@@ -394,6 +394,7 @@ export const services = {
       isSet: boolean
       kyc: string
       contractAudit: string
+      blockChainAddress: string
       hashTags: {
         id: number
         createdAt: string
@@ -454,6 +455,7 @@ export const services = {
         isSet: boolean
         kyc: string
         contractAudit: string
+        blockChainAddress: string
         hashTags: {
           id: number
           createdAt: string
