@@ -217,12 +217,13 @@ export const UFormFactory = defineComponent({
           if (props.removeNil) {
             Object.keys(_values).forEach(key => {
               if (
-                _values[key] === '' ||
+                // _values[key] === '' ||
                 _values[key] === null ||
                 _values[key] === undefined ||
                 (Array.isArray(_values[key]) && _values[key].length === 0)
               ) {
-                delete _values[key]
+                // delete _values[key]
+                _values[key] = ''
               }
             })
           }

@@ -25,7 +25,7 @@ const DashboardPage = defineComponent({
       return [
         {
           label: 'Location',
-          value: myProfile.value?.location
+          value: myProfile.value?.location || '--'
         },
         {
           label: 'Website',
