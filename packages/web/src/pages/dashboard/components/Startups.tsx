@@ -65,7 +65,11 @@ const Startups = defineComponent({
       >
         <CreateStartupBlock ref={createRef} />
         <UTabs>
-          {/* TODO @zehui if PARTICIPATED list finished, PARTICIPATED list should before "created by me" startup list */}
+          <UTabPane name="PARTICIPATED" tab="PARTICIPATED">
+            <UDeveloping>
+              <EmptyFilled class="mt-34" />
+            </UDeveloping>
+          </UTabPane>
           <UTabPane name="CREATED BY ME" tab="CREATED BY ME" class="h-112">
             <UScrollList
               triggered={pagination.loading}
@@ -77,14 +81,11 @@ const Startups = defineComponent({
               {myCreatedStartups.value.length ? (
                 myCreatedStartups.value.map(startup => <StartupCard startup={startup} />)
               ) : (
-                <UDeveloping />
+                <UDeveloping>
+                  <EmptyFilled class="mt-34" />
+                </UDeveloping>
               )}
             </UScrollList>
-          </UTabPane>
-          <UTabPane name="PARTICIPATED" tab="PARTICIPATED">
-            <UDeveloping>
-              <EmptyFilled class="mt-34" />
-            </UDeveloping>
           </UTabPane>
         </UTabs>
       </UCard>
