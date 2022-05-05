@@ -47,7 +47,7 @@ const UWalletConnect = defineComponent({
               </div>
             </NGridItem>
           </NGrid>
-          <a class="text-primary">What is wallet？</a>
+          {/* <a class="text-primary">What is wallet？</a> */}
         </div>
       </NModal>
     )

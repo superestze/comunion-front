@@ -5,10 +5,9 @@ import styles from './StartupCard.module.css'
 const UTeamMembers = defineComponent({
   name: 'Proposal',
   setup(props, ctx) {
-    console.log(props)
     return () => (
       <div class={styles.team_members}>
-        <div class="flex-6 flex align-center mr-12">
+        <div class="float-left flex align-center">
           <span class={styles.members_svg}>
             <TeamOutlined class="text-primary m-0.5-0.5" />
           </span>
@@ -17,7 +16,7 @@ const UTeamMembers = defineComponent({
           </span>
           <span class="u-body2 m-auto ml-3">Members</span>
         </div>
-        <div class="flex-4 flex align-center ">
+        <div class="float-right flex align-center">
           <span class={styles.members_svg}>
             <GroupFilled class="text-primary m-2" />
           </span>

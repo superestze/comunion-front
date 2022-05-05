@@ -32,15 +32,17 @@ const StartupCard = defineComponent({
               {props.startup!.name}
             </div>
             <div class="divide-x">
-              {props.startup!.hashTags.map((tag, i) => (
-                <span
-                  class={`${
-                    i !== 0 ? 'pl-2' : ''
-                  } pr-2 tracking-normal font-opensans font-400 text-[14px] leading-5`}
-                >
-                  {tag.name}
-                </span>
-              ))}
+              {props.startup!.hashTags.map((tag, i) => {
+                return i + 1 < 4 ? (
+                  <span
+                    class={`${
+                      i !== 0 ? 'pl-2' : ''
+                    } pr-2 tracking-normal font-opensans font-400 text-[14px] leading-5`}
+                  >
+                    {tag.name}
+                  </span>
+                ) : null
+              })}
             </div>
           </div>
           <div class="justify-end ml-auto mr-1">

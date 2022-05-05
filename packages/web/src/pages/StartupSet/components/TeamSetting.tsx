@@ -15,6 +15,7 @@ const TeamSetting = defineComponent({
   },
   setup(props, ctx) {
     const success = ref(false)
+    console.log(props, 'teamSetting,teamSetting,teamSetting')
     const paramsList = ref({
       id: props.startup?.id,
       comerID: props.startup?.comerID,
@@ -45,7 +46,7 @@ const TeamSetting = defineComponent({
         if (filterData.length) {
           message.error('Already exists!')
         } else {
-          comerProfile.value = data!
+          comerProfile.value = data
           success.value = true
         }
       } else {
@@ -69,6 +70,7 @@ const TeamSetting = defineComponent({
     }
 
     const teamCreate = async (val: any) => {
+      console.log(val)
       const { data } = await services['startup@start-team-meabers-create']({
         startupId: paramsList.value.id,
         comerId: val.comerId,
@@ -128,11 +130,15 @@ const TeamSetting = defineComponent({
         <div class="team-list mt-10">
           {teamMembers.value.length
             ? teamMembers.value.map(teamMember => (
-                <TeamCard v-model:teamMember={teamMember} v-model:teamUpdata={teamUpdata} />
+                <TeamCard
+                  v-model:teamMember={teamMember}
+                  v-model:teamUpdata={teamUpdata}
+                  v-model:paramsList={paramsList.value.comerID}
+                />
               ))
             : null}
         </div>
-        {comerProfile.value ? (
+        {JSON.stringify(comerProfile.value) !== '{}' ? (
           <TeamModal v-model:show={success.value} teamList={comerProfile.value} />
         ) : null}
       </div>

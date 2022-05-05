@@ -14,11 +14,18 @@ const DashboardPage = defineComponent({
   setup() {
     const walletStore = useWalletStore()
     const myProfile = ref<ServiceReturn<'account@comer-profile-get'>>()
-    onMounted(async () => {
+    const dataList = async () => {
       const { error, data } = await services['account@comer-profile-get']()
       if (!error) {
         myProfile.value = data
       }
+    }
+    onMounted(() => {
+      // const { error, data } = await services['account@comer-profile-get']()
+      // if (!error) {
+      //   myProfile.value = data
+      // }
+      dataList()
     })
 
     const myInfo = computed(() => {
@@ -49,7 +56,8 @@ const DashboardPage = defineComponent({
           title="MY PROFILE"
           size="small"
           v-slots={{
-            'header-extra': () => !!myProfile.value && <EditProfile myProfile={myProfile.value} />
+            'header-extra': () =>
+              !!myProfile.value && <EditProfile myProfile={myProfile.value} dataList={dataList} />
           }}
         >
           <div class="flex">

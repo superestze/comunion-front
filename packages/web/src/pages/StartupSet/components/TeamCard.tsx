@@ -16,9 +16,13 @@ const TeamCard = defineComponent({
   props: {
     teamMember: {
       type: Object
+    },
+    paramsList: {
+      type: Number
     }
   },
   setup(props, ctx) {
+    console.log(props, 'teamCard,teamCard,teamCard,teamCard,teamCard,teamCard,teamCard,teamCard')
     const showTooltipRef = ref<boolean>(false)
     const success = ref(false)
     const teamClick = () => {
@@ -89,12 +93,14 @@ const TeamCard = defineComponent({
                 onClick={teamClick}
               />
             </div>
-            <div class="w-7 h-7  rounded-md  bg-light-50 leading-10 text-green">
-              <DeleteFilled
-                class="w-5 h-5 m-auto leading-8 mt-1 cursor-pointer"
-                onClick={teamDelete}
-              />
-            </div>
+            {props.paramsList != paramsList.value.comerID ? (
+              <div class="w-7 h-7  rounded-md  bg-light-50 leading-10 text-green">
+                <DeleteFilled
+                  class="w-5 h-5 m-auto leading-8 mt-1 cursor-pointer"
+                  onClick={teamDelete}
+                />
+              </div>
+            ) : null}
           </div>
         )}
         {success.value && (
