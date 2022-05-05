@@ -6,7 +6,7 @@
       "",
       "const $1Page = defineComponent({",
       "  name: '$1Page',",
-      "  setup(_, ctx) {",
+      "  setup() {",
       "    return () => ($2)",
       "  }",
       "})",

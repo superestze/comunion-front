@@ -1,4 +1,10 @@
-export default {
+import vueJsx from '@vitejs/plugin-vue-jsx'
+import { DemoComponentPlugin } from './plugin/index'
+import windicssPlugin from 'vite-plugin-windicss'
+
+import type { UserConfig } from 'vitepress/types/index'
+
+const config: UserConfig = {
   lang: 'en-US',
   title: 'Comunion Frontend Developer',
   description: 'Comunion frontend developer documents',
@@ -67,6 +73,7 @@ export default {
             { text: '快速开始', link: '/zh/guide/getting-started' },
             { text: '编辑器配置', link: '/zh/guide/ide' },
             { text: '开发规范', link: '/zh/guide/specification' },
+            { text: '组件开发规范', link: '/zh/guide/component' },
             { text: '代码结构', link: '/zh/guide/structure' },
             { text: 'Git 规范', link: '/zh/guide/git' },
             { text: '上链交互', link: '/zh/guide/chain' },
@@ -76,31 +83,39 @@ export default {
             {
               text: '基础',
               children: [
-                { text: '全局样式', link: '/zh/components/styles' },
-                { text: '图标', link: '/zh/components/icons' }
+                { text: '排版', link: '/zh/components/typography' },
+                { text: '图标', link: '/zh/components/icons' },
+                { text: '按钮', link: '/zh/components/button' }
               ]
             },
             {
-              text: '显示',
-              children: []
+              text: '表单',
+              children: [{ text: '输入框', link: '/zh/components/input' }]
             },
             {
-              text: '排版',
-              children: []
+              text: '显示',
+              children: [
+                { text: 'tag', link: '/zh/components/tag' },
+                { text: '开发中', link: '/zh/components/developing' },
+                { text: 'star', link: '/zh/components/star' }
+              ]
+            },
+            {
+              text: '导航',
+              children: [
+                { text: '返回', link: '/zh/components/back' },
+                { text: '查看更多', link: '/zh/components/viewMore' }
+              ]
             }
           ],
           '/zh/libraries/': [
             {
               text: 'hooks',
-              children: [
-                { text: '用户', link: '/zh/libraries/hooks/useUser' }
-              ]
+              children: [{ text: '用户', link: '/zh/libraries/hooks/useUser' }]
             },
             {
               text: '函数库',
-              children: [
-                { text: '链', link: '/zh/libraries/utils/chain' }
-              ]
+              children: [{ text: '链', link: '/zh/libraries/utils/chain' }]
             }
           ]
         }
@@ -112,12 +127,21 @@ export default {
     //   indexName: 'vitepress'
     // },
   },
-  // markdown: {
-  //   plugins: [
-  //     'markdown-it-task-lists'
-  //   ],
-  //   extendMarkdown: md => {
-  //     md.use(require('markdown-it-task-lists'))
-  //   }
-  // }
+  markdown: {
+    config: md => {
+      md.use(require('markdown-it-task-lists'))
+      md.use(DemoComponentPlugin)
+      // md.use(HelloComponentPlugin)
+    }
+  },
+  vite: {
+    plugins: [
+      vueJsx({
+        enableObjectSlots: true
+      }),
+      windicssPlugin()
+    ]
+  }
 }
+
+export default config

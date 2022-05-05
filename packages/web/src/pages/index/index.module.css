@@ -1,0 +1,6 @@
+.contentBox {
+  background-image: url('@/assets/content-bg.gif');
+  background-repeat: no-repeat;
+  background-position: right bottom;
+  background-size: 1110px auto;
+}

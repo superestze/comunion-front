@@ -1,0 +1,16 @@
+/** Pagination */
+.u-pagination {
+  user-select: none;
+}
+
+.u-pagination .n-pagination-item {
+  color: var(--n-button-icon-color);
+  background: var(--n-button-color);
+  border: var(--n-button-border);
+}
+
+.u-pagination .n-pagination-item:not(.n-pagination-item--disabled):hover {
+  color: var(--n-item-text-color-active);
+  background: var(--n-item-color-hover);
+  border: var(--n-item-border-active);
+}

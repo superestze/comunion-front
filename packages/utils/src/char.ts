@@ -5,10 +5,10 @@
  */
 export function convertCamelCase(originStr: string, firstUpper = false): string {
   return originStr
-    .replace(/^[a-z]/, s => {
-      return firstUpper ? s.toUpperCase() : s.toLowerCase()
-    })
-    .replace(/_[a-zA-Z]/, s => s[1].toUpperCase())
+    .replace(/\s(.)/g, x => x.toUpperCase())
+    .replace(/\s/g, '')
+    .replace(/^(.)/, y => (firstUpper ? y.toUpperCase() : y.toLowerCase()))
+    .replace(/[_-][a-zA-Z]/g, s => s[1].toUpperCase())
 }
 
 /**
@@ -16,5 +16,5 @@ export function convertCamelCase(originStr: string, firstUpper = false): string 
  * @returns Random string
  */
 export function randomStr() {
-  return Math.random().toString(36).substr(2)
+  return Math.random().toString(36).substring(2)
 }

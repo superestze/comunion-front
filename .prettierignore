@@ -1,3 +1,8 @@
 lib/
 dist/
-packages/generator/templates
+scripts/templates/
+node_modules/
+*.json
+.npmrc
+pnpm-lock.yaml
+pnpm-workspace.yaml

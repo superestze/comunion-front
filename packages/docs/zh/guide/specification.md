@@ -5,29 +5,30 @@ sidebar: true
 
 ## 代码规范
 
-随着团队人数的增加，每个人的代码编写喜好不同，代码风格也迥然不同。如果team统一了代码风格和编程规范可以带来很多裨益：
+随着团队人数的增加，每个人的代码编写喜好不同，代码风格也迥然不同。如果 team 统一了代码风格和编程规范可以带来很多裨益：
 
 1. 降低新成员融入团队的成本, 同时也一定程度避免挖坑；
 2. 提高开发效率、团队协作效率, 降低沟通成本；
-3. 实现高度统一的代码风格，方便review, 另外一方面可以提高项目的可维护性；
+3. 实现高度统一的代码风格，方便 review, 另外一方面可以提高项目的可维护性；
 4. 提高代码的可测试性，有利于前端自动化的落地；
 
-### 基础es6+语法规范
+### 基础 es6+语法规范
 
 1. [Style Guide](https://bestofjs.org/projects/airbnb-style-guide)
 
 2. [Clean Code](https://bestofjs.org/projects/clean-code)
 
 ### 代码命名规范，要求见名知意
-*基础要求代码级注释，特殊业务添加注释说明*
+
+_基础要求代码级注释，特殊业务添加注释说明_
 
 常用命名规则：大驼峰命名（TestCode）、小驼峰命名（testCode）、中划线命名（test-code）、下划线命名（test_code）、大写的蛇形（TEST_CODE）
 
-* 大驼峰命名：一般应用于Class、interface、构造函数、组件名称等；
-* 小驼峰命名：变量命名、函数等；
-* 中划线命名：一般用于文件名的命名方式、枚举数据的值、object的key等；
-* 下划线命名：使用方式同小驼峰命名，对于我们自己项目中使用的是比较少的；
-* 大写的蛇形命名:  一般用于常量命名；
+- 大驼峰命名：一般应用于 Class、interface、构造函数、组件名称等；
+- 小驼峰命名：变量命名、函数等；
+- 中划线命名：一般用于文件名的命名方式、枚举数据的值、object 的 key 等；
+- 下划线命名：使用方式同小驼峰命名，对于我们自己项目中使用的是比较少的；
+- 大写的蛇形命名: 一般用于常量命名；
 
 ##### 变量命名
 
@@ -42,24 +43,24 @@ sidebar: true
 
 动词 + 名词
 
-|  请求方式   |        函数前缀          |          举例               |         说明          |
-|   :----:  |          :----          |          :-------           |         :------      |
-|    GET    |       get / list        |      getUser / listUsers    |       获取用户信息     |
-|    POST   |  create / submit / save |    createUser / submitUser  |      创建用户信息      |
-|    PUT    |    update / modify      |    updateUser / modifyUser  |      更新用户信息      |
-|    DELETE |    del / delete         |    delUser / deleteUser     |      删除用户信息      | 
-|    xxx    |           xxx           |             xxx             |         其他扩展      |
+| 请求方式 | 函数前缀               | 举例                    | 说明         |
+| :------: | :--------------------- | :---------------------- | :----------- |
+|   GET    | get / list             | getUser / listUsers     | 获取用户信息 |
+|   POST   | create / submit / save | createUser / submitUser | 创建用户信息 |
+|   PUT    | update / modify        | updateUser / modifyUser | 更新用户信息 |
+|  DELETE  | del / delete           | delUser / deleteUser    | 删除用户信息 |
+|   xxx    | xxx                    | xxx                     | 其他扩展     |
 
 ##### 事件函数命名规范
 
-1. `onXXXChange: onUserChange` 主要涉及到表单控件事件命名。如果组件是明确的，如：`UserSelect` ,`change`事件可以简单命名为onChange（注：组件需要遵从单一职责规范）
+1. `onXXXChange: onUserChange` 主要涉及到表单控件事件命名。如果组件是明确的，如：`UserSelect` ,`change`事件可以简单命名为 onChange（注：组件需要遵从单一职责规范）
 
 2. 业务函数遵从“动词 + 名词”的命名规范：简单代码示例
 
 ```ts
-bind/unbind + XXX   // bindUser, 绑定用户
+bind / unbind + XXX // bindUser, 绑定用户
 
-disable/enable + XXX  // disableUser, 禁用用户
+disable / enable + XXX // disableUser, 禁用用户
 ```
 
 ##### hooks 命名规范
@@ -68,7 +69,7 @@ disable/enable + XXX  // disableUser, 禁用用户
 useXXX // useUser, 涉及用户信息的 hook 业务函数
 ```
 
-### vue3书写规范
+### vue3 书写规范
 
 对引入文件进行分组排版，更方便阅读和文件查找
 
@@ -100,7 +101,7 @@ export default defineComponent({
     onXXX: Function as PropType<Func>,
   },
   setup(props, ctx) {
-    // useXXX: hooks 命名规范，前缀是use 
+    // useXXX: hooks 命名规范，前缀是use
     const { ... } = useXXX();
 
     return () => <></>;

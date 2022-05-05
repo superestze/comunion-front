@@ -4,7 +4,7 @@ sidebar: true
 ---
 
 - [ ] 交易上链
-  - [ ] 同时支持 Metamask 和 WalletCollect 以实现多钱包支持
+  - [ ] 同时支持 Metamask 和 WalletConnect 以实现多钱包支持
   - [ ] 交易和上链单独封装，尤其是错误处理
   - [ ] 支持二维码和 DeepLink 2 种方式以便使用手机端钱包 App
   - [ ] 支持多链切换
@@ -25,4 +25,4 @@ sidebar: true
   - [ ] 与后端约定当前所用语言
   - [ ] 翻译辅助工具
 - 项目基础
-  - [ ] Github CI，ISSUE模板
+  - [ ] Github CI，ISSUE 模板
