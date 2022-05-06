@@ -71,6 +71,9 @@ const Startups = defineComponent({
             </UDeveloping>
           </UTabPane>
           <UTabPane name="CREATED BY ME" tab="CREATED BY ME" class="h-112">
+            <EmptyFilled class="mt-34" />
+          </UTabPane>
+          <UTabPane name="PARTICIPATED" tab="PARTICIPATED">
             <UScrollList
               triggered={pagination.loading}
               page={pagination.page}

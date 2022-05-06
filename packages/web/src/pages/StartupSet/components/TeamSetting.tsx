@@ -15,6 +15,7 @@ const TeamSetting = defineComponent({
   },
   setup(props, ctx) {
     const success = ref(false)
+    console.log(props, 'teamSetting,teamSetting,teamSetting')
     const paramsList = ref({
       id: props.startup?.id,
       comerID: props.startup?.comerID,
@@ -45,7 +46,7 @@ const TeamSetting = defineComponent({
         if (filterData.length) {
           message.error('Already exists!')
         } else {
-          comerProfile.value = data!
+          comerProfile.value = data
           success.value = true
         }
       } else {
@@ -69,6 +70,7 @@ const TeamSetting = defineComponent({
     }
 
     const teamCreate = async (val: any) => {
+      console.log(val)
       const { data } = await services['startup@start-team-meabers-create']({
         startupId: paramsList.value.id,
         comerId: val.comerId,
@@ -80,7 +82,7 @@ const TeamSetting = defineComponent({
       }
     }
 
-    const teamUpdata = async (val: any) => {
+    const teamUpdate = async (val: any) => {
       console.log(val)
       const { data } = await services['startup@start-team-meabers-update']({
         startupId: paramsList.value.id,
@@ -96,7 +98,7 @@ const TeamSetting = defineComponent({
     const PARENT_PROVIDE = 'parentProvide'
     provide(PARENT_PROVIDE, root)
     provide(`${PARENT_PROVIDE}/teamCreate`, teamCreate)
-    provide(`${PARENT_PROVIDE}/teamUpdata`, teamUpdata)
+    provide(`${PARENT_PROVIDE}/teamUpdate`, teamUpdate)
     provide(`${PARENT_PROVIDE}/teamList`, teamList)
 
     onMounted(() => {
@@ -128,13 +130,17 @@ const TeamSetting = defineComponent({
         <div class="team-list mt-10">
           {teamMembers.value.length
             ? teamMembers.value.map(teamMember => (
-                <TeamCard v-model:teamMember={teamMember} v-model:teamUpdata={teamUpdata} />
+                <TeamCard
+                  v-model:teamMember={teamMember}
+                  v-model:teamUpdate={teamUpdate}
+                  v-model:paramsList={paramsList.value}
+                />
               ))
             : null}
         </div>
-        {comerProfile.value ? (
+        {Object.keys(comerProfile.value).length === 0 ? null : (
           <TeamModal v-model:show={success.value} teamList={comerProfile.value} />
-        ) : null}
+        )}
       </div>
     )
   }

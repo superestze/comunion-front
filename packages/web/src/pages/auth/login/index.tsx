@@ -76,7 +76,7 @@ const LoginPage = defineComponent({
             <WalletOutlined class="h-8 top-4 left-4 w-8 absolute" />
             Sign in with Wallet
           </UButton>
-          <a class="text-primary">What is wallet？</a>
+          {/* <a class="text-primary">What is wallet？</a> */}
           <div class="flex my-10 items-center">
             <div class="bg-[#d8d8d8] h-[1px] w-[90px]" />
             <div class="mx-3 text-[#999] text-[18px] leading-5">Sign in with social accout</div>

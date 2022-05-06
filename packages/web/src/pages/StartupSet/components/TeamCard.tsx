@@ -1,21 +1,33 @@
 import { ULazyImage, message } from '@comunion/components'
 import { EditFilled, DeleteFilled } from '@comunion/icons'
-import { defineComponent, ref, inject, provide } from 'vue'
+import { defineComponent, ref, inject, provide, PropType } from 'vue'
 import TeamModal from './TeamModal'
 import { services } from '@/services'
 export const root = ref(null)
-// interface TeamMember {
-//   comerID: number | null | undefined
-//   comerProfile: any | null | undefined
-//   startupID: number | null | undefined
-//   position: string | null | undefined
-// }
+interface TeamMember {
+  comerID: number | null | undefined
+  comerProfile: any | null | undefined
+  startupID: number | null | undefined
+  CreatedAt: string | null | undefined
+  ID: string | null | undefined
+  UpdatedAt: string | null | undefined
+  comer: object | null | undefined
+  position: string | null | undefined
+}
 
 const TeamCard = defineComponent({
   name: 'TeamCard',
   props: {
     teamMember: {
-      type: Object
+      type: Object as PropType<TeamMember>,
+      require: true
+    },
+    paramsList: {
+      type: Object,
+      require: true
+    },
+    teamUpdate: {
+      type: Function as PropType<() => void>
     }
   },
   setup(props, ctx) {
@@ -32,16 +44,16 @@ const TeamCard = defineComponent({
 
     const PARENT_PROVIDE = 'parentProvide'
     // const parent = inject(PARENT_PROVIDE)
-    const parentUpDataFun: any = inject(`${PARENT_PROVIDE}/teamUpdata`)
+    const parentUpDateFun: any = inject(`${PARENT_PROVIDE}/teamUpdate`)
     const parentTeamListFun: any = inject(`${PARENT_PROVIDE}/teamList`)
 
-    const upData = (values: object) => {
+    const upDate = (values: object) => {
       ctx.emit('update:show', false)
-      parentUpDataFun?.(values)
+      parentUpDateFun?.(values)
     }
 
     provide(PARENT_PROVIDE, root)
-    provide(`${PARENT_PROVIDE}/upData`, upData)
+    provide(`${PARENT_PROVIDE}/upDate`, upDate)
 
     const teamDelete = async () => {
       const { data } = await services['startup@start-team-meabers-delete']({
@@ -83,18 +95,20 @@ const TeamCard = defineComponent({
         </div>
         {showTooltipRef.value && (
           <div class="flex flex-row justify-center m-auto text-center">
-            <div class="w-7 h-7  rounded-md bg-light-50 mr-3 leading-10 text-blue-900">
+            <div class="w-7 h-7 rounded-md bg-white mr-3 leading-10 ">
               <EditFilled
                 class="w-5 h-5 m-auto leading-8 mt-1 cursor-pointer"
                 onClick={teamClick}
               />
             </div>
-            <div class="w-7 h-7  rounded-md  bg-light-50 leading-10 text-green">
-              <DeleteFilled
-                class="w-5 h-5 m-auto leading-8 mt-1 cursor-pointer"
-                onClick={teamDelete}
-              />
-            </div>
+            {props.paramsList?.comerID === paramsList.value.comerID ? null : (
+              <div class="w-7 h-7 rounded-md bg-white leading-10">
+                <DeleteFilled
+                  class="w-5 h-5 m-auto leading-8 mt-1 cursor-pointer"
+                  onClick={teamDelete}
+                />
+              </div>
+            )}
           </div>
         )}
         {success.value && (

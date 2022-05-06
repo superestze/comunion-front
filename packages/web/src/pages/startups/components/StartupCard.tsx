@@ -41,8 +41,8 @@ const StartupCard = defineComponent({
             })}
           </div>
           {/* <UTeam */}
-          <UTeamMembers />
         </div>
+        <UTeamMembers />
       </div>
     )
   }
