@@ -1,6 +1,5 @@
-import { UDeveloping, UTabPane, UTabs } from '@comunion/components'
+import { UDeveloping, UTabPane, UTabs, UScrollbar } from '@comunion/components'
 import { defineComponent, onMounted, ref, provide } from 'vue'
-import MPagination from './MPagination'
 import StartupCard from '@/pages/welcome/components/StartupCard'
 import { services } from '@/services'
 import { StartupItem } from '@/types'
@@ -13,7 +12,7 @@ const Recommend = defineComponent({
     const startups = ref<StartupItem[]>([])
     // TODO: use load more component
     const pagination = ref({
-      pageSize: 8,
+      pageSize: 99,
       page: 1
     })
     const pageList = {
@@ -48,27 +47,29 @@ const Recommend = defineComponent({
     })
     return () => (
       <>
-        <section class="recommend p-10 bg-white" ref="Recommend">
-          <div class="font-orbitron font-style font-700 text-[18px] leading-6 tracking-2px uppercase text-primary mb-11">
-            Recommended for you
-          </div>
-          <div class="content">
-            <UTabs tab-style={{ 'font-weight': '700' }}>
+        <section class="recommend bg-white h-234 " ref="Recommend">
+          <div class="px-10 pt-10 u-card-title1 text-primary1 mb-11">RECOMMENDED FOR YOU</div>
+          <div class="content relative">
+            <UTabs tab-style={{ 'font-weight': '700' }} class="px-10">
               <UTabPane name="Startups" tab="STARTUPS">
-                {startups.value.length !== 0 ? (
-                  startups.value.map(startup => <StartupCard startup={startup} />)
-                ) : (
-                  <UDeveloping />
-                )}
-                <div class="u-paginated-list mt-3">
-                  {pageList.total && (
-                    <MPagination
-                      pageList={pageList}
-                      v-model:updatePage={updatePage}
-                      ref="pageList"
-                    />
-                  )}
-                </div>
+                <UScrollbar class="h-185 absolute right-0">
+                  <div class="px-10">
+                    {startups.value.length !== 0 ? (
+                      startups.value.map(startup => <StartupCard startup={startup} />)
+                    ) : (
+                      <UDeveloping />
+                    )}
+                    {/* <div class="u-paginated-list mt-3">
+                    {pageList.total && (
+                      <MPagination
+                        pageList={pageList}
+                        v-model:updatePage={updatePage}
+                        ref="pageList"
+                      />
+                    )}
+                  </div> */}
+                  </div>
+                </UScrollbar>
               </UTabPane>
             </UTabs>
           </div>

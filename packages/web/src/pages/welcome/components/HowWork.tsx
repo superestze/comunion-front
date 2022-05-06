@@ -28,14 +28,14 @@ const HowWork = defineComponent({
     ]
     return () => (
       <>
-        <div class="w-full p-10 bg-white">
-          <div class="font-orbitron font-normal font-700 text-[18px] leading-6 tracking-2px uppercase text-primary mb-10">
+        <div class=" w-full p-10 bg-white">
+          <div class=" u-card-title1 text-primary1 leading-6 tracking-2px uppercase mb-10">
             How it works
           </div>
           <UGuideStep steps={steps} class="u-label2" />
         </div>
-        <div class="w-full p-10 bg-white mt-10 flex flex-col justify-center">
-          <div class="u-headline3 font-orbitron font-normal font-700 text-[24px] leading-8 text-center tracking-2px text-primary">
+        <div class="h-74 w-full p-10 bg-white mt-10 flex flex-col justify-center">
+          <div class="u-headline3 font-orbitron font-normal font-700 text-[24px] leading-8 text-center tracking-2px text-primary1">
             Want to become a founder?
           </div>
           <div class="u-body1 font-opensans font-normal font-400 text-[16px] leading-5 text-grey1 text-center mt-6 mb-6">
