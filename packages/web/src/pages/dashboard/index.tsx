@@ -85,7 +85,7 @@ const DashboardPage = defineComponent({
               <div class="mt-2">
                 {myInfo.value?.map(info => {
                   return (
-                    <div class="flex mb-3 mt-3 break-words">
+                    <div key={info.label} class="flex mb-3 mt-3 break-words">
                       <div class="u-label2 uppercase text-grey3 w-50">{info.label}</div>
                       <div class="u-body2 text-grey1 flex-1 break-all max-h-37 overflow-auto">
                         {info.value}
