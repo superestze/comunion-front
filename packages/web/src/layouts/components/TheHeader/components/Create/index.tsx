@@ -40,7 +40,7 @@ const CreateBlock = defineComponent({
                   label: () => (
                     <div class="flex items-center" onClick={onCreateStartup}>
                       <div class="rounded flex bg-[#f8f8f8] h-8 mr-4 w-8 items-center justify-center">
-                        <CreateStartupFilled />
+                        <CreateStartupFilled class="text-primary" />
                       </div>
                       <div>
                         <div class="text-primary1 u-title2">Startup</div>
@@ -57,7 +57,7 @@ const CreateBlock = defineComponent({
                   label: () => (
                     <div class="flex items-center">
                       <div class="rounded flex bg-[#f8f8f8] h-8 mr-4 w-8 items-center justify-center">
-                        <CreateBountyFilled />
+                        <CreateBountyFilled class="text-primary" />
                       </div>
                       <div>
                         <div class="text-primary1 u-title2">Bounty</div>
@@ -74,7 +74,7 @@ const CreateBlock = defineComponent({
                   label: () => (
                     <div class="flex items-center">
                       <div class="rounded flex bg-[#f8f8f8] h-8 mr-4 w-8 items-center justify-center">
-                        <CreateOfferingFilled />
+                        <CreateOfferingFilled class="text-primary" />
                       </div>
                       <div>
                         <div class="text-primary1 u-title2">Offering</div>

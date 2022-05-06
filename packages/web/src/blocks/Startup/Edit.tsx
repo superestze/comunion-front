@@ -210,7 +210,7 @@ const EditStartupForm = defineComponent({
           <UButton
             type="primary"
             size="large"
-            class="bg-primary1 text-white w-41 u-title2"
+            class="w-41 "
             loading={loading.value}
             onClick={onSubmit}
           >
