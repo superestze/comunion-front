@@ -40,6 +40,9 @@ const avatars = [
   },
   {
     src: 'https://comunion-avatars.s3.ap-northeast-1.amazonaws.com/users/female9.svg'
+  },
+  {
+    src: 'https://comunion-avatars.s3.ap-northeast-1.amazonaws.com/avatar1.svg'
   }
 ]
 

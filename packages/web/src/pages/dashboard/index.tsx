@@ -87,7 +87,7 @@ const DashboardPage = defineComponent({
               <div class="mt-2">
                 {myInfo.value?.map((info, i) => {
                   return (
-                    <div class="flex mb-3 mt-3 break-words">
+                    <div key={info.label} class="flex mb-3 mt-3 break-words">
                       <div class="u-label2 uppercase text-grey3 w-50">{info.label}</div>
                       {i + 1 === 4 ? (
                         <UScrollbar class="flex-1">

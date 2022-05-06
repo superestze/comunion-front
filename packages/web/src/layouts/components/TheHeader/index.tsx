@@ -16,8 +16,10 @@ const TheHeader = defineComponent({
     }
 
     return () => (
-      <div class="flex h-98px items-center">
-        <ULogo height={32} withText theme="colorful" />
+      <div class="flex h-24 items-center">
+        <RouterLink to="/welcome">
+          <ULogo height={32} withText theme="colorful" />
+        </RouterLink>
         <RouterLink
           class="ml-20 transition u-label1 hover:text-primary"
           activeClass="text-primary"
