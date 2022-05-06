@@ -11,6 +11,9 @@ const EditProfile = defineComponent({
     myProfile: {
       type: Object as PropType<ServiceReturn<'account@comer-profile-get'>>,
       required: true
+    },
+    getDataList: {
+      type: Function as PropType<() => void>
     }
   },
   setup(props, ctx) {
@@ -27,7 +30,8 @@ const EditProfile = defineComponent({
         title: 'Name',
         name: 'name',
         required: true,
-        placeholder: 'what do you want people to call you ?'
+        placeholder: 'what do you want people to call you ?',
+        maxlength: 24
       },
       {
         title: 'Location',
@@ -78,9 +82,10 @@ const EditProfile = defineComponent({
         ...(values as ServiceArg<'account@comer-profile-update'>),
         avatar: avatar.value
       })
-
+      console.log(error)
       if (!error) {
         userStore.mergeProfile(values)
+        props.getDataList?.()
       }
       show.value = false
     }

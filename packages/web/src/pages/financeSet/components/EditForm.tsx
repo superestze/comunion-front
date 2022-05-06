@@ -98,7 +98,7 @@ const EditStartupForm = defineComponent({
     const defaultTokenInfo = {
       name: '',
       symbol: '',
-      supply: null as number | null,
+      supply: null as number | null | string,
       liquidity: null as number | null,
       txns: null as number | null,
       holders: null as number | null
@@ -210,19 +210,33 @@ const EditStartupForm = defineComponent({
             />
           </div>
         </UFormItem>
-        <UFormItem label="Token Name" label-style={divStyle} class="font-600">
+        <UFormItem label="Token Name" label-style={divStyle}>
           <div class="w-full">
-            <UInput v-model:value={tokenInfo.name} placeholder="Please enter your Token Name" />
+            <UInput
+              v-model:value={tokenInfo.name}
+              placeholder="Please enter your Token Name"
+              maxlength={50}
+            />
           </div>
         </UFormItem>
-        <UFormItem label="Token Symbol" label-style={divStyle} class="font-600">
+        <UFormItem label="Token Symbol" label-style={divStyle}>
           <div class="w-full">
-            <UInput v-model:value={tokenInfo.symbol} placeholder="Please enter your Token Symbol" />
+            <UInput
+              v-model:value={tokenInfo.symbol}
+              placeholder="Please enter your Token Symbol"
+              maxlength={10}
+            />
           </div>
         </UFormItem>
-        <UFormItem label="Token Supply" label-style={divStyle} class="font-600">
+        <UFormItem label="Token Supply" label-style={divStyle}>
           <div class="w-full">
-            <UInput v-model:value={tokenInfo.supply} placeholder="Please enter your Token Supply" />
+            <UInput
+              v-model:value={tokenInfo.supply}
+              placeholder="Please enter your Token Supply"
+              onInput={value => {
+                tokenInfo.supply = value.replace(/[^\d]/g, '')
+              }}
+            />
           </div>
         </UFormItem>
         <UFormItem label="Token Contract" label-style={divStyle}>
@@ -237,7 +251,7 @@ const EditStartupForm = defineComponent({
             <UDatePicker
               v-model:value={model.presaleDate}
               type="date"
-              placeholder="dd-mm-dd(UTC time zone)"
+              placeholder="yy-mm-dd (UTC time zone)"
             />
           </div>
         </UFormItem>
@@ -246,7 +260,7 @@ const EditStartupForm = defineComponent({
             <UDatePicker
               v-model:value={model.launchDate}
               type="date"
-              placeholder="dd-mm-dd(UTC time zone)"
+              placeholder="yy-mm-dd (UTC time zone)"
             />
           </div>
         </UFormItem>

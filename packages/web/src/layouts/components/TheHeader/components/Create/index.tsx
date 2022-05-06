@@ -43,7 +43,7 @@ const CreateBlock = defineComponent({
                         <CreateStartupFilled />
                       </div>
                       <div>
-                        <div class="text-primary2 u-title2">Startup</div>
+                        <div class="text-primary1 u-title2">Startup</div>
                         <div class="mt-1 text-grey2 u-body2">
                           Create your Startup, initial your dream
                         </div>
@@ -60,7 +60,7 @@ const CreateBlock = defineComponent({
                         <CreateBountyFilled />
                       </div>
                       <div>
-                        <div class="text-primary2 u-title2">Bounty</div>
+                        <div class="text-primary1 u-title2">Bounty</div>
                         <div class="mt-1 text-grey2 u-body2">
                           Post your bounty to expand your startup
                         </div>
@@ -77,7 +77,7 @@ const CreateBlock = defineComponent({
                         <CreateOfferingFilled />
                       </div>
                       <div>
-                        <div class="text-primary2 u-title2">Offering</div>
+                        <div class="text-primary1 u-title2">Offering</div>
                         <div class="mt-1 text-grey2 u-body2">
                           Show your skills to earn much more
                         </div>
