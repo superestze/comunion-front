@@ -263,7 +263,7 @@ const EditStartupForm = defineComponent({
                   <UAddressInput
                     v-model:value={compose.walletAddress}
                     class="flex-1"
-                    placeholder="Please entre wallet address"
+                    placeholder="Please enter wallet address"
                   />
                 </UInputGroup>
                 {model.composes.length > 1 && (

@@ -184,6 +184,7 @@ const CreateStartupForm = defineComponent({
         type: 'textarea',
         rules: [
           {
+            min: 100,
             required: true,
             message: 'Please enter a description of at least 100 letters'
           }
