@@ -7,7 +7,7 @@ const UTeamMembers = defineComponent({
   setup(props, ctx) {
     return () => (
       <div class={styles.team_members}>
-        <div class="float-left flex align-center">
+        <div class="flex align-center">
           <span class={styles.members_svg}>
             <TeamOutlined class="text-primary m-0.5-0.5" />
           </span>
@@ -16,7 +16,8 @@ const UTeamMembers = defineComponent({
           </span>
           <span class="u-body2 m-auto ml-3">Members</span>
         </div>
-        <div class="float-right flex align-center">
+        <div class="flex-1"></div>
+        <div class="flex align-center ">
           <span class={styles.members_svg}>
             <GroupFilled class="text-primary m-2" />
           </span>

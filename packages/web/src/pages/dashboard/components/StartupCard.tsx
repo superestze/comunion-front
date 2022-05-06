@@ -21,6 +21,9 @@ const StartupCard = defineComponent({
     const financeSetting = () => {
       router.push({ path: '/financeset', query: { startupId: props.startup!.id } })
     }
+    const styles = {
+      combinationStyle: 'pr-2 tracking-normal font-opensans font-400 text-[14px] leading-5'
+    }
     return () => (
       <div class="h-28 w-full flex items-center">
         <div class="h-full flex items-center w-22">
@@ -34,13 +37,7 @@ const StartupCard = defineComponent({
             <div class="divide-x">
               {props.startup!.hashTags.map((tag, i) => {
                 return i + 1 < 4 ? (
-                  <span
-                    class={`${
-                      i !== 0 ? 'pl-2' : ''
-                    } pr-2 tracking-normal font-opensans font-400 text-[14px] leading-5`}
-                  >
-                    {tag.name}
-                  </span>
+                  <span class={[i === 0 ? '' : 'pl-2', styles.combinationStyle]}>{tag.name}</span>
                 ) : null
               })}
             </div>

@@ -41,7 +41,6 @@ const TeamModal = defineComponent({
     ]
 
     const address = ref<string>('')
-    console.log(props, '------------------------')
     const defaultModel = {
       roles: props.teamList?.position,
       id: props.teamList?.startupID,
@@ -60,7 +59,7 @@ const TeamModal = defineComponent({
     const PARENT_PROVIDE = 'parentProvide'
     // const parent = inject(PARENT_PROVIDE)
     const parentTestFun: any = inject(`${PARENT_PROVIDE}/teamCreate`)
-    const parentUpDataFun: any = inject(`${PARENT_PROVIDE}/upData`)
+    const parentUpDateFun: any = inject(`${PARENT_PROVIDE}/upDate`)
     // const cancel = () => {
     //   ctx.emit('update:show', false)
     //   selectedAvatar.value = ''
@@ -75,7 +74,7 @@ const TeamModal = defineComponent({
     }
     const onSubmit = () => {
       if (props.teamList?.comer) {
-        parentUpDataFun?.(value)
+        parentUpDateFun?.(value)
       } else {
         parentTestFun?.(value)
       }

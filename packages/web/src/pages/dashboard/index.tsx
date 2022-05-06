@@ -14,7 +14,7 @@ const DashboardPage = defineComponent({
   setup() {
     const walletStore = useWalletStore()
     const myProfile = ref<ServiceReturn<'account@comer-profile-get'>>()
-    const dataList = async () => {
+    const getDataList = async () => {
       const { error, data } = await services['account@comer-profile-get']()
       if (!error) {
         myProfile.value = data
@@ -25,7 +25,7 @@ const DashboardPage = defineComponent({
       // if (!error) {
       //   myProfile.value = data
       // }
-      dataList()
+      getDataList()
     })
 
     const myInfo = computed(() => {
@@ -57,7 +57,9 @@ const DashboardPage = defineComponent({
           size="small"
           v-slots={{
             'header-extra': () =>
-              !!myProfile.value && <EditProfile myProfile={myProfile.value} dataList={dataList} />
+              !!myProfile.value && (
+                <EditProfile myProfile={myProfile.value} getDataList={getDataList} />
+              )
           }}
         >
           <div class="flex">

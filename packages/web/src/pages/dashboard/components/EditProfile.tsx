@@ -12,7 +12,7 @@ const EditProfile = defineComponent({
       type: Object as PropType<ServiceReturn<'account@comer-profile-get'>>,
       required: true
     },
-    dataList: {
+    getDataList: {
       type: Function as PropType<() => void>
     }
   },
@@ -85,7 +85,7 @@ const EditProfile = defineComponent({
       console.log(error)
       if (!error) {
         userStore.mergeProfile(values)
-        props.dataList?.()
+        props.getDataList?.()
       }
       show.value = false
     }

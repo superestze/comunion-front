@@ -82,7 +82,7 @@ const TeamSetting = defineComponent({
       }
     }
 
-    const teamUpdata = async (val: any) => {
+    const teamUpdate = async (val: any) => {
       console.log(val)
       const { data } = await services['startup@start-team-meabers-update']({
         startupId: paramsList.value.id,
@@ -98,7 +98,7 @@ const TeamSetting = defineComponent({
     const PARENT_PROVIDE = 'parentProvide'
     provide(PARENT_PROVIDE, root)
     provide(`${PARENT_PROVIDE}/teamCreate`, teamCreate)
-    provide(`${PARENT_PROVIDE}/teamUpdata`, teamUpdata)
+    provide(`${PARENT_PROVIDE}/teamUpdate`, teamUpdate)
     provide(`${PARENT_PROVIDE}/teamList`, teamList)
 
     onMounted(() => {
@@ -132,15 +132,15 @@ const TeamSetting = defineComponent({
             ? teamMembers.value.map(teamMember => (
                 <TeamCard
                   v-model:teamMember={teamMember}
-                  v-model:teamUpdata={teamUpdata}
-                  v-model:paramsList={paramsList.value.comerID}
+                  v-model:teamUpdate={teamUpdate}
+                  v-model:paramsList={paramsList.value}
                 />
               ))
             : null}
         </div>
-        {JSON.stringify(comerProfile.value) !== '{}' ? (
+        {Object.keys(comerProfile.value).length === 0 ? null : (
           <TeamModal v-model:show={success.value} teamList={comerProfile.value} />
-        ) : null}
+        )}
       </div>
     )
   }
