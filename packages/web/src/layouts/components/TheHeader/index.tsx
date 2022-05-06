@@ -1,20 +1,13 @@
-import { UButton, ULogo } from '@comunion/components'
-import { shortenAddress } from '@comunion/utils'
+import { ULogo } from '@comunion/components'
 import { defineComponent } from 'vue'
 import { RouterLink } from 'vue-router'
+import HeaderAddress from './components/Address'
 import CreateBlock from './components/Create'
 import NetworkSwitcher from './components/Network'
-import { useWalletStore } from '@/stores'
 
 const TheHeader = defineComponent({
   name: 'TheHeader',
   setup(props, ctx) {
-    const walletStore = useWalletStore()
-
-    const connectWallet = () => {
-      walletStore.ensureWalletConnected()
-    }
-
     return () => (
       <div class="flex h-24 items-center">
         <RouterLink to="/welcome">
@@ -29,11 +22,7 @@ const TheHeader = defineComponent({
         </RouterLink>
         <CreateBlock class="ml-auto" />
         <NetworkSwitcher class="ml-6" />
-        <UButton class="ml-6 px-5" type="primary" ghost onClick={connectWallet}>
-          {walletStore.connected && walletStore.address
-            ? shortenAddress(walletStore.address)
-            : 'Connect Wallet'}
-        </UButton>
+        <HeaderAddress class="ml-6" />
         <RouterLink to="/dashboard" class="text-primary ml-10 u-label1">
           MY DASHBOARD
         </RouterLink>

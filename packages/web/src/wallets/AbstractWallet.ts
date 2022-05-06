@@ -1,5 +1,6 @@
 import type { JsonRpcProvider } from '@ethersproject/providers'
 import type { providers } from 'ethers'
+import { ChainNetworkType } from '@/constants'
 
 export default abstract class AbstractWallet {
   _name: string
@@ -22,4 +23,6 @@ export default abstract class AbstractWallet {
   sign(nonce: string): Promise<string> {
     return this._provider.getSigner().signMessage(nonce)
   }
+  abstract addNetwork(network: ChainNetworkType): Promise<boolean>
+  abstract switchNetwork(chainId: number): Promise<boolean>
 }

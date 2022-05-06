@@ -1,0 +1,25 @@
+.dropdown {
+  --active-bg: rgb(94 24 254 / 10%);
+
+  box-shadow: 0 2px 10px rgb(0 0 0 / 9.75%);
+  @apply !rounded-lg !mt-5 !ml-0 !py-5 !px-3;
+
+  :global {
+    .n-dropdown-option-body {
+      @apply rounded-md min-w-20 !h-auto !p-3;
+
+      &__prefix,
+      &__suffix {
+        @apply !hidden;
+      }
+
+      &--group {
+        @apply !h-auto !leading-none !mb-1;
+
+        .n-dropdown-option-body {
+          /** */
+        }
+      }
+    }
+  }
+}

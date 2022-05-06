@@ -4,11 +4,13 @@ import { RouterLink, RouterView } from 'vue-router'
 import TheHeader from './components/TheHeader'
 import styles from './default.module.css'
 import { FOOTER_LINKS } from '@/constants'
+import { useWalletStore } from '@/stores'
 import { useContractStore } from '@/stores/contract'
 
 const DefaultLayout = defineComponent({
   name: 'DefaultLayout',
   setup() {
+    const walletStore = useWalletStore()
     const contractStore = useContractStore()
     return () => (
       <div class="bg-purple flex flex-col h-full min-h-screen text-[14px] relative">
@@ -21,6 +23,7 @@ const DefaultLayout = defineComponent({
               <UTransactionWaiting
                 key={transaction.hash}
                 {...transaction}
+                blockchainExplorerUrl={walletStore.blockchainExplorerUrl}
                 onClose={() => contractStore.closeTransaction(transaction)}
               />
             ))}

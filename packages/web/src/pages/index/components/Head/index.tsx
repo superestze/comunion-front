@@ -1,5 +1,5 @@
 import { defineComponent, reactive, onMounted, onUnmounted } from 'vue'
-import { RouterLink } from 'vue-router'
+import { RouterLink, useRouter } from 'vue-router'
 import closeMenu from '@/assets/close-menu.png'
 import logo from '@/assets/logo.png'
 import openMenu from '@/assets/open-menu.png'
@@ -10,7 +10,7 @@ export default defineComponent({
   name: 'Head',
   setup() {
     const userStore = useUserStore()
-    // const router = useRouter()
+    const router = useRouter()
     const state = reactive({ showMenu: false, showHead: true })
 
     const onScroll = () => {
@@ -25,9 +25,9 @@ export default defineComponent({
       }
     }
 
-    // const createStartup = () => {
-    //   router.push(userStore.logged ? '/startups' : '/auth/login')
-    // }
+    const createStartup = () => {
+      router.push(userStore.logged ? '/startups' : '/auth/login')
+    }
 
     onMounted(() => {
       window.addEventListener('scroll', onScroll, true)
@@ -70,8 +70,10 @@ export default defineComponent({
               onClick={() => (state.showMenu = true)}
             />
             <div class="flex items-center <sm:hidden">
-              {/* onClick={createStartup} */}
-              <span class="bg-gray-300 cursor-pointer rounded-4px h-32px text-white text-bold mr-32px text-center text-14px leading-32px w-146px">
+              <span
+                class="bg-primary cursor-pointer rounded-4px h-32px text-white text-bold mr-32px text-center text-14px leading-32px w-146px"
+                onClick={createStartup}
+              >
                 + New Startup
               </span>
 
@@ -84,15 +86,12 @@ export default defineComponent({
                   Launch App
                 </RouterLink>
               ) : (
-                // <RouterLink
-                //   class="border-primary border-1 rounded-4px h-32px text-primary text-bold text-center text-14px leading-32px w-146px"
-                //   to="/auth/login"
-                // >
-                //   Connect account
-                // </RouterLink>
-                <span class="bg-gray-300 cursor-pointer rounded-4px h-32px text-white text-bold mr-32px text-center text-14px leading-32px w-146px">
+                <RouterLink
+                  class="border-primary border-1 rounded-4px h-32px text-primary text-bold text-center text-14px leading-32px w-146px"
+                  to="/auth/login"
+                >
                   Connect account
-                </span>
+                </RouterLink>
               )}
             </div>
           </div>
