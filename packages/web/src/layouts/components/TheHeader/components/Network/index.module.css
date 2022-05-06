@@ -6,7 +6,7 @@
 
   :global {
     .n-dropdown-option-body {
-      @apply rounded-md w-180px;
+      @apply rounded-md min-w-180px;
 
       &.n-dropdown-option-body--pending:not(.n-dropdown-option-body--disabled) {
         background-color: var(--active-bg) !important;
@@ -31,7 +31,7 @@
 
         .n-dropdown-option-body {
           &__suffix {
-            @apply rounded-lg bg-green1 h-2 mr-10px w-2 self-center !min-w-0 !p-0 !block;
+            @apply rounded-lg bg-green1 h-2 mr-10px ml-2 w-2 self-center !min-w-0 !p-0 !block;
           }
         }
       }

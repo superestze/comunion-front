@@ -1,7 +1,14 @@
 import AbstractWallet from './AbstractWallet'
 import { WalletConnectProvider } from './provider/WalletConnectProvider'
+import { ChainNetworkType } from '@/constants'
 
 export default class WalletConnectWallet extends AbstractWallet {
+  addNetwork(network: ChainNetworkType): Promise<boolean> {
+    throw new Error('Method not implemented.')
+  }
+  switchNetwork(chainId: number): Promise<boolean> {
+    throw new Error('Method not implemented.')
+  }
   walletConnectProvider: WalletConnectProvider
   constructor() {
     // const walletConnectProvider = new WalletConnectProvider({

@@ -14,6 +14,9 @@ export const UWalletConnectProps = {
   },
   onClick: {
     type: Function as PropType<(type: 'MetaMask' | 'WalletConnect') => void>
+  },
+  onClose: {
+    type: Function as PropType<() => void>
   }
 } as const
 
@@ -24,7 +27,12 @@ const UWalletConnect = defineComponent({
   props: UWalletConnectProps,
   setup(props) {
     return () => (
-      <NModal show={props.show} onUpdateShow={props.onUpdateShow} maskClosable>
+      <NModal
+        show={props.show}
+        onUpdateShow={props.onUpdateShow}
+        maskClosable
+        onMaskClick={props.onClose}
+      >
         <div class="u-wallet-connect">
           <p class="u-wallet-connect__title">Select a Wallet</p>
           <p class="u-wallet-connect__subtitle">Please select a wallet to connect to Comunion</p>
