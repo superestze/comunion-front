@@ -203,7 +203,7 @@ const EditStartupForm = defineComponent({
           <UFormItemsFactory fields={socialInfo} values={socialModel} />
         </UForm>
 
-        <div class="flex mt-16 items-center justify-end">
+        <div class="flex mt-10 items-center justify-end">
           <UButton type="default" size="large" class="mr-4 w-41 u-title2" onClick={onCancel}>
             Cancel
           </UButton>

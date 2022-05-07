@@ -19,9 +19,7 @@ const StartupCard = defineComponent({
             <ULazyImage src={props.startup!.logo} class="h-20 w-20" />
           </div>
           <div class="content flex flex-col flex-1">
-            <div class="title font-orbitron font-normal font-700 text-[24px] leading-8 text-grey1 mb-2">
-              {props.startup!.name}
-            </div>
+            <div class="u-h3 text-grey1 mb-2">{props.startup!.name}</div>
             <div
               class="line-clamp-2 text-ellipsis content font-opensans font-normal font-400 text-[16px] leading-5 text-grey2 max-w-180 max-h-10 break-all cursor-pointer"
               title={props.startup!.mission}
