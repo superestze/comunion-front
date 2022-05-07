@@ -1,5 +1,6 @@
 import { UButton, UModal } from '@comunion/components'
 import ULazyImage from '@comunion/components/src/ULazyImage/LazyImage'
+import { HookFilled } from '@comunion/icons'
 import { defineComponent, ref } from 'vue'
 import avatars from '@/components/Profile/avatars'
 
@@ -20,7 +21,6 @@ const AvatarSelect = defineComponent({
 
     const cancel = () => {
       ctx.emit('update:show', false)
-      selectedAvatar.value = ''
     }
 
     const submit = () => {
@@ -50,21 +50,32 @@ const AvatarSelect = defineComponent({
         <section>
           <UModal
             bordered={false}
+            display-directive="if"
             size="small"
             preset="card"
             v-model:show={props.show}
             mask-closable={false}
             class="w-136 h-128 bg-white overflow-hidden"
             on-update:show={cancel}
+            positive-text={'Submit'}
             v-slots={slots}
           >
             <div class="px-2 flex flex-wrap mt-6">
               {avatars.map(avatar => (
                 <div key={avatar.src} onClick={() => select(avatar.src)}>
-                  <ULazyImage
-                    src={avatar.src}
-                    class="h-20 w-20 rounded justify-between mb-6 mr-4 cursor-pointer"
-                  />
+                  <div>
+                    <div
+                      class={`h-20 w-20 rounded-1/2 bg-grey1 opacity-50 absolute cursor-pointer flex items-center justify-center ${
+                        selectedAvatar.value === avatar.src ? 'z-1' : '-z-1'
+                      }`}
+                    >
+                      <HookFilled />
+                    </div>
+                    <ULazyImage
+                      src={avatar.src}
+                      class="h-20 w-20 rounded justify-between mb-6 mr-4 cursor-pointer"
+                    />
+                  </div>
                 </div>
               ))}
             </div>
