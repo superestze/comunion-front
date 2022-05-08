@@ -69,7 +69,7 @@ const AvatarSelect = defineComponent({
                         selectedAvatar.value === avatar.src ? 'z-1' : '-z-1'
                       }`}
                     >
-                      <HookFilled />
+                      <HookFilled class="text-white" />
                     </div>
                     <ULazyImage
                       src={avatar.src}
