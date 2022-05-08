@@ -17,6 +17,9 @@ export const UTransactionWaitingProps = {
     type: String as PropType<'pending' | 'success' | 'failed'>,
     required: true,
     default: 'pending'
+  },
+  blockchainExplorerUrl: {
+    type: String
   }
 } as const
 
@@ -56,13 +59,15 @@ const UTransactionWaiting = defineComponent({
           <CheckedFilled class="u-transaction-waiting-checked" />
           <div>
             <div class="u-transaction-waiting-text">{props.text}</div>
-            <a
-              target="_blank"
-              class="u-transaction-waiting-link"
-              href={`https://goerli.etherscan.io/tx/${props.hash}`}
-            >
-              View on Etherscan
-            </a>
+            {props.blockchainExplorerUrl && (
+              <a
+                target="_blank"
+                class="u-transaction-waiting-link"
+                href={`${props.blockchainExplorerUrl}/tx/${props.hash}`}
+              >
+                View on blockchain
+              </a>
+            )}
           </div>
           <div
             class="u-transaction-waiting-bar"

@@ -40,9 +40,13 @@ const LoginPage = defineComponent({
 
     const walletLogin = async () => {
       loading.value = true
-      await walletStore.ensureWalletConnected(true)
-      if (userStore.logged) {
-        onLogin()
+      try {
+        await walletStore.ensureWalletConnected(true)
+        if (userStore.logged) {
+          onLogin()
+        }
+      } catch (error) {
+        // do nothing
       }
       loading.value = false
     }
