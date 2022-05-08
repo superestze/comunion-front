@@ -2,7 +2,7 @@ import { UButton, ULogo } from '@comunion/components'
 import { GithubFilled, GoogleFilled, WalletOutlined } from '@comunion/icons'
 // import { randomStr } from '@comunion/utils'
 import { defineComponent, ref } from 'vue'
-import leftBgImg from './assets/bg.jpg'
+import leftBgImg from './assets/bg.png'
 import styles from './index.module.css'
 // import {
 //   GITHUB_CALLBACK_URL,
@@ -53,19 +53,20 @@ const LoginPage = defineComponent({
 
     return () => (
       <div class="flex min-h-screen">
-        <div
-          class="bg-primary bg-bottom bg-no-repeat bg-cover text-white min-w-100 px-5 pt-15 w-1/3 lg:px-10 2xl:pt-19 2xl:pl-12"
-          style={{
-            backgroundImage: `url(${leftBgImg})`
-          }}
-        >
-          <ULogo height={32} withText theme="white" />
-          <h1 class="mt-[90px] u-h1 !text-white">Incubate ZERO To ONE</h1>
-          <h2 class="mt-[14px] text-[24px] leading-8 tracking-[1px]">Comunion is a metatech</h2>
-          <p class="mt-10 text-base leading-[22px]">
-            We reorganize labor,resources and capital in a decentralized way within the shared
-            online space,and empower super individuals to change the world
-          </p>
+        <div class="bg-primary flex-shrink-0 text-white px-4 pt-15 w-117 relative lg:px-7 lg:w-132 2xl:px-10 2xl:w-147">
+          <div class="z-1 relative">
+            <ULogo height={32} withText theme="white" />
+            <h1 class="mt-22 u-h2 !text-white lg:mt-20 2xl:mt-18">Incubate ZERO To ONE</h1>
+            <h2 class="mt-7.5 text-white u-title1">Comunion is a metatech</h2>
+            <p class="mt-2.5 text-white u-body1">
+              We reorganize labor,resources and capital in a decentralized way within the shared
+              online space,and empower super individuals to change the world
+            </p>
+          </div>
+          <img
+            src={leftBgImg}
+            class="object-cover transform transition bottom-0 left-1/2 w-96 -translate-x-48 absolute lg:w-108 lg:-translate-x-54 2xl:w-120 2xl:-translate-x-60"
+          />
         </div>
         <div class="flex flex-col flex-1 pl-1/8 relative justify-center lg:pl-1/5">
           <MoreNavigationPage />
