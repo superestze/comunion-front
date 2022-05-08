@@ -28,6 +28,7 @@ function onErrorHandler(error: any) {
       message.error('The token expired, please re-login')
       userStore.onLogout()
       window.location.href = '/auth/login'
+      return { error: true, data: null }
     }
   } catch (error) {
     //

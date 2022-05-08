@@ -6,8 +6,11 @@ import type { SupportedWalletTypes } from '@/types/wallet'
 export async function getWallet(
   walletName: SupportedWalletTypes
 ): Promise<AbstractWallet | undefined> {
-  const wallet = walletName === 'WalletConnect' ? new WalletConnectWallet() : new MetamaskWallet()
-  if (wallet.checkAvaliable()) {
+  const wallet =
+    walletName === 'WalletConnect'
+      ? WalletConnectWallet.getInstance()
+      : MetamaskWallet.getInstance()
+  if (wallet) {
     try {
       await wallet.prepare()
       return wallet
