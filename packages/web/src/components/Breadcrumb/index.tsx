@@ -1,6 +1,6 @@
 import { UBreadcrumb, UBreadcrumbItem } from '@comunion/components'
 import { ArrowLeftOutlined } from '@comunion/icons'
-import { defineComponent, reactive, watch } from 'vue'
+import { computed, defineComponent } from 'vue'
 import { RouteRecordName, useRoute, useRouter } from 'vue-router'
 
 const Breadcrumb = defineComponent({
@@ -9,53 +9,40 @@ const Breadcrumb = defineComponent({
     const route = useRoute()
     const router = useRouter()
 
-    /**
-     * TODO: the routes should add parent route info in meta, includes name, path, parent route and so on, so the data get by route directly
-     **/
-    const breadcrumbData = reactive<{ path: string; name: RouteRecordName | undefined }[]>([
-      {
-        path: '/dashboard',
-        name: 'my dashboard'
-      }
-    ])
-    const getBreadcrumbData = () => {
+    const breadcrumbData = computed(() => {
+      // TODO: the routes should add parent route info in meta, includes name, path, parent route and so on, so the data get by route directly
+      const result: { path: string; name: RouteRecordName | undefined }[] = [
+        {
+          path: '/dashboard',
+          name: 'my dashboard'
+        }
+      ]
       const r = route.matched.find(r => r.name && r.path)
       if (r) {
-        breadcrumbData.push({
+        result.push({
           name: r.name,
           path: r.path
         })
       }
-    }
+      return result
+    })
 
     const onLinkClick = (path: string) => {
       router.push(path)
     }
 
-    watch(
-      route,
-      () => {
-        getBreadcrumbData()
-      },
-      { immediate: true }
-    )
+    const slots = {
+      separator: () => <ArrowLeftOutlined />
+    }
+
     return () => (
       <>
         <div class="mb-10">
           <UBreadcrumb class="flex items-center">
-            <UBreadcrumbItem
-              v-slots={{
-                separator: () => <ArrowLeftOutlined />
-              }}
-            ></UBreadcrumbItem>
-            {breadcrumbData.map((item, index) => (
-              <UBreadcrumbItem
-                key={item.path}
-                v-slots={{
-                  separator: () => <ArrowLeftOutlined />
-                }}
-              >
-                {index == breadcrumbData.length - 1 ? (
+            <UBreadcrumbItem v-slots={slots}></UBreadcrumbItem>
+            {breadcrumbData.value.map((item, index) => (
+              <UBreadcrumbItem key={item.path} v-slots={slots}>
+                {index == breadcrumbData.value.length - 1 ? (
                   <span class="u-label2 uppercase text-primary">{item.name}</span>
                 ) : (
                   <span
