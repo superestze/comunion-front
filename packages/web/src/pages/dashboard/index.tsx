@@ -78,6 +78,7 @@ const DashboardPage = defineComponent({
                       <UAddress
                         autoSlice={true}
                         class="ml-1.5 u-body2 text-primary"
+                        blockchainExplorerUrl={walletStore.blockchainExplorerUrl}
                         address={walletStore.address}
                       />
                     )}
