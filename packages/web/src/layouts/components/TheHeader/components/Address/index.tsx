@@ -1,4 +1,4 @@
-import { UButton, UDropdown } from '@comunion/components'
+import { message, UButton, UDropdown } from '@comunion/components'
 import { shortenAddress } from '@comunion/utils'
 import { defineComponent } from 'vue'
 import { useRouter } from 'vue-router'
@@ -18,7 +18,11 @@ const HeaderAddress = defineComponent({
 
     function logout() {
       userStore.onLogout()
+      message.info('You have been logged out')
       router.replace('/auth/login')
+      // setTimeout(() => {
+      //   window.location.reload()
+      // }, 1500)
     }
 
     return () => (
