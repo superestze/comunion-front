@@ -53,19 +53,19 @@ const LoginPage = defineComponent({
 
     return () => (
       <div class="flex min-h-screen">
-        <div class="bg-primary flex-shrink-0 text-white px-4 pt-15 w-117 relative lg:px-7 lg:w-132 2xl:px-10 2xl:w-147">
-          <div class="z-1 relative">
+        <div class="bg-primary flex-shrink-0 text-white px-13 pt-14 w-108 relative lg:px-14 lg:w-112 2xl:px-15 2xl:w-114">
+          <div class="mt-17 z-1 relative">
             <ULogo height={32} withText theme="white" />
-            <h1 class="mt-22 u-h2 !text-white lg:mt-20 2xl:mt-18">Incubate ZERO To ONE</h1>
-            <h2 class="mt-7.5 text-white u-title1">Comunion is a metatech</h2>
-            <p class="mt-2.5 text-white u-body1">
+            <h1 class="mt-16.5 u-h3 !text-white 2xl:mt-18 2xl:u-h2">Incubate ZERO To ONE</h1>
+            <h2 class="mt-6.5 text-white u-title2 2xl:u-title1">Comunion is a metatech</h2>
+            <p class="mt-2.5 text-white u-body2 2xl:u-body1">
               We reorganize labor,resources and capital in a decentralized way within the shared
               online space,and empower super individuals to change the world
             </p>
           </div>
           <img
             src={leftBgImg}
-            class="object-cover transform transition bottom-0 left-1/2 w-96 -translate-x-48 absolute lg:w-108 lg:-translate-x-54 2xl:w-120 2xl:-translate-x-60"
+            class="object-cover transform transition bottom-0 left-1/2 w-90 -translate-x-45 absolute lg:w-94 lg:-translate-x-47 2xl:w-98 2xl:-translate-x-49"
           />
         </div>
         <div class="flex flex-col flex-1 pl-1/8 relative justify-center lg:pl-1/5">
