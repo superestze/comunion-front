@@ -1,5 +1,6 @@
 import { UGuideStep, UButton } from '@comunion/components'
-import { defineComponent } from 'vue'
+import { defineComponent, ref } from 'vue'
+import CreateStartupBlock, { CreateStartupRef } from '@/blocks/Startup/Create'
 
 const HowWork = defineComponent({
   name: 'HowWork',
@@ -26,8 +27,15 @@ const HowWork = defineComponent({
         desc: 'Complete the bounty to get paid by the company token, and you will become a new comer for the startup.'
       }
     ]
+    const createRef = ref<CreateStartupRef>()
+    const createNewStartup = () => {
+      createRef.value?.show()
+    }
+
     return () => (
       <>
+        <CreateStartupBlock ref={createRef} />
+
         <div class=" w-full p-10 bg-white">
           <div class="u-card-title1 text-primary1 leading-6 tracking-2px uppercase mb-10">
             How it works
@@ -41,7 +49,12 @@ const HowWork = defineComponent({
           <div class="u-body1 font-opensans font-normal font-400 text-[16px] leading-5 text-grey1 text-center mt-6 mb-6">
             Create your own startup portfolio on Comunion and recruite for talents.
           </div>
-          <UButton class="bg-primary1 rounded-6px h-48px text-white text-bold text-16px leading-40px w-180px self-center">
+          <UButton
+            type="primary"
+            size="large"
+            class="bg-primary1 rounded-2 h-12 w-45 text-white text-bold text-16px self-center"
+            onClick={createNewStartup}
+          >
             Create
           </UButton>
         </div>

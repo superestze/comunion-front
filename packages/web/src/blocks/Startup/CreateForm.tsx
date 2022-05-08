@@ -271,7 +271,7 @@ const CreateStartupForm = defineComponent({
           <PlusOutlined class="mr-2" />
           ADD ANOTHER WALLET
         </UButton> */}
-        <div class="flex mt-16 items-center justify-end">
+        <div class="flex mt-10 items-center justify-end">
           <UButton type="default" size="large" class="mr-4 w-41" onClick={onCancel}>
             Cancel
           </UButton>
