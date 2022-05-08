@@ -3,7 +3,30 @@ import AbstractWallet from './AbstractWallet'
 import { MetamaskProvider } from './provider/MetamaskProvider'
 import { allNetworks, ChainNetworkType } from '@/constants'
 
+let _instance: MetamaskWallet | undefined
+
 export default class MetamaskWallet extends AbstractWallet {
+  constructor() {
+    super('Metamask', new MetamaskProvider(window.ethereum))
+  }
+
+  static getInstance(): AbstractWallet | undefined {
+    if (!_instance) {
+      if (!MetamaskWallet.checkAvaliable()) {
+        window.open('https://metamask.io/', 'metamask')
+        return undefined
+      }
+      _instance = new MetamaskWallet()
+    }
+    return _instance
+  }
+
+  static checkAvaliable(): boolean {
+    return !!window.ethereum
+  }
+  prepare() {
+    return window.ethereum.request?.({ method: 'eth_requestAccounts' })
+  }
   async addNetwork(network: ChainNetworkType): Promise<boolean> {
     if (!window.ethereum) return Promise.resolve(false)
     try {
@@ -48,14 +71,5 @@ export default class MetamaskWallet extends AbstractWallet {
       console.error(e)
       return false
     }
-  }
-  constructor() {
-    super('Metamask', new MetamaskProvider(window.ethereum))
-  }
-  checkAvaliable(): boolean {
-    return !!window.ethereum
-  }
-  prepare() {
-    return window.ethereum.request?.({ method: 'eth_requestAccounts' })
   }
 }

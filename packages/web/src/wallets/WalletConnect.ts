@@ -2,13 +2,8 @@ import AbstractWallet from './AbstractWallet'
 import { WalletConnectProvider } from './provider/WalletConnectProvider'
 import { ChainNetworkType } from '@/constants'
 
+let _instance: WalletConnectWallet | undefined
 export default class WalletConnectWallet extends AbstractWallet {
-  addNetwork(network: ChainNetworkType): Promise<boolean> {
-    throw new Error('Method not implemented.')
-  }
-  switchNetwork(chainId: number): Promise<boolean> {
-    throw new Error('Method not implemented.')
-  }
   walletConnectProvider: WalletConnectProvider
   constructor() {
     // const walletConnectProvider = new WalletConnectProvider({
@@ -34,7 +29,13 @@ export default class WalletConnectWallet extends AbstractWallet {
     super('WalletConnect', provider)
     this.walletConnectProvider = provider
   }
-  checkAvaliable(): boolean {
+  static getInstance(): AbstractWallet | undefined {
+    if (!_instance) {
+      _instance = new WalletConnectWallet()
+    }
+    return _instance
+  }
+  static checkAvaliable(): boolean {
     return true
   }
   async prepare() {
@@ -44,5 +45,11 @@ export default class WalletConnectWallet extends AbstractWallet {
     } catch (error) {
       return undefined
     }
+  }
+  addNetwork(network: ChainNetworkType): Promise<boolean> {
+    throw new Error('Method not implemented.')
+  }
+  switchNetwork(chainId: number): Promise<boolean> {
+    throw new Error('Method not implemented.')
   }
 }
