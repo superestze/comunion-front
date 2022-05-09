@@ -3,7 +3,7 @@ export const FOOTER_LINKS = [
     title: 'Connect with us',
     links: [
       {
-        title: 'DOCS',
+        title: 'Docs',
         url: 'https://docs.comunion.org'
       },
       {

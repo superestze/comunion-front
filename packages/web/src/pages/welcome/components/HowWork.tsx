@@ -8,23 +8,23 @@ const HowWork = defineComponent({
     const steps = [
       {
         index: 1,
-        title: 'Look for a startup',
-        desc: 'Browse and find a startup that interest you.'
+        title: 'CREATE NEW STARTUP',
+        desc: 'The next unicorn will be created with your dream.'
       },
       {
         index: 2,
-        title: 'Sign up for a bounty',
-        desc: 'Apply and sign up for a bounty to contribute to the startup’s growth.'
+        title: 'POST BOUNTY FOR BUILDING',
+        desc: 'Work to build-earn-invest startup with your skills.'
       },
       {
         index: 3,
-        title: 'Select a contract',
-        desc: 'Choose a contract for your bounty duty and establish your relationship with the startup on the blockchain. '
+        title: 'LAUNCHPAD PROTOCOL',
+        desc: 'A suite of protocols and tools to help you launch your startup under safe and fair.'
       },
       {
         index: 4,
-        title: 'Get paid',
-        desc: 'Complete the bounty to get paid by the company token, and you will become a new comer for the startup.'
+        title: 'NCO GOVERNANCE',
+        desc: 'Protocols for your NCO governance needs.'
       }
     ]
     const createRef = ref<CreateStartupRef>()
@@ -47,7 +47,7 @@ const HowWork = defineComponent({
             Want to become a founder?
           </div>
           <div class="u-body1 font-opensans font-normal font-400 text-[16px] leading-5 text-grey1 text-center mt-6 mb-6">
-            Create your own startup portfolio on Comunion and recruite for talents.
+            Create a startup with your brilliant idea.
           </div>
           <UButton
             type="primary"

@@ -57,10 +57,10 @@ const LoginPage = defineComponent({
           <div class="z-1 relative">
             <ULogo height={32} withText theme="white" />
             <h1 class="mt-22 u-h2 !text-white lg:mt-20 2xl:mt-18">Incubate ZERO To ONE</h1>
-            <h2 class="mt-7.5 text-white u-title1">Comunion is a metatech</h2>
+            <h2 class="mt-7.5 text-white u-title1">Comunion is startup protocol</h2>
             <p class="mt-2.5 text-white u-body1">
-              We reorganize labor,resources and capital in a decentralized way within the shared
-              online space,and empower super individuals to change the world
+              A revolutionary innovative decentralized multi-chain protocol dedicated to building a
+              thriving and collaborative work ecosystem, community, and economy.
             </p>
           </div>
           <img

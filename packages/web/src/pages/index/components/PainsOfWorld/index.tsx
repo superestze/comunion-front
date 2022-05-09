@@ -100,8 +100,8 @@ export default defineComponent({
                 Workers excluded from capital gain
               </p>
               <p class="text-bold text-white text-18px leading-24px mt-12px w-457px">
-                High entry barriers for individuals to participate within the current VC/PE
-                ecosystem; Big tech monopoly, rich gets richer
+                High entry barriers for individuals to participate in the current VC/PE ecosystem;
+                Big tech monopoly, the rich gets richer
               </p>
             </div>
           </div>

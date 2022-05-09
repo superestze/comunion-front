@@ -10,7 +10,9 @@ const UserWelcomePage = defineComponent({
       <>
         <article class="mb-20">
           <div class="u-h2 text-primary">Welcome to Comunion!</div>
-          <div class="u-title2 text-grey1">Discover and join the startups that you like.</div>
+          <div class="u-title2 text-grey1">
+            The first decentralized startup and security protocol.
+          </div>
           <section class="flex flex-row mt-10">
             <div class="left flex-1 mr-10">
               <Recommend />

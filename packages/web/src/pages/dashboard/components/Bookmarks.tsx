@@ -6,7 +6,7 @@ const Bookmarks = defineComponent({
   name: 'Proposal',
   setup(props, ctx) {
     return () => (
-      <UCard title="BOOKMARKS">
+      <UCard title="LAUNCHPADS">
         <UTabs>
           <UTabPane name="STARTUPS" tab="STARTUPS">
             <UDeveloping>

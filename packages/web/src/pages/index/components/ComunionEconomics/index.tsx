@@ -22,8 +22,8 @@ export default defineComponent({
           <div class="m-auto mt-23px text-white text-12px text-opacity-80 leading-15px w-311px sm:mt-37px sm:text-18px sm:leading-30px sm:w-1110px">
             <p class="text-left">
               We believe the forms of organization in the future will be more fluid. Companies, or
-              rather teams will be self-organizing and consensus driven. Comunion Economics is
-              piloting the study and expirements on organizing decentralized workforce into
+              rather teams, will be self-organized and consensus driven. Comunion Economics is
+              piloting the study and experiments on organizing decentralized workforce into
               productive teams.
             </p>
           </div>

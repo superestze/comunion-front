@@ -35,8 +35,9 @@ const UWalletConnect = defineComponent({
       >
         <div class="u-wallet-connect">
           <CloseOutlined class="u-wallet-connect__close-icon" onClick={props.onClose} />
-          <p class="u-wallet-connect__title">Select a Wallet</p>
-          <p class="u-wallet-connect__subtitle">Please select a wallet to connect to Comunion</p>
+          <p class="u-wallet-connect__subtitle">
+            please connect your MeteMask or scan with WalletConnect
+          </p>
           <NGrid xGap={16} yGap={16} cols={2} class="u-wallet-connect__wallets">
             <NGridItem>
               <div class="u-wallet-connect__wallet" onClick={() => props.onClick?.('MetaMask')}>
