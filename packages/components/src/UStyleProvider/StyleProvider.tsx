@@ -121,7 +121,7 @@ const UStyleProvider = defineComponent({
         asteriskColor: props.errorColor
       },
       Button: {
-        colorHoverPrimary: props.primary1Color,
+        colorHoverPrimary: props.primaryColor,
         colorPressedPrimary: props.primary1Color,
         colorFocusPrimary: props.primary1Color,
         textColorGhostPrimary: props.primaryColor,

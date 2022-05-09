@@ -1,5 +1,9 @@
 .u-wallet-connect {
-  @apply bg-white rounded-2xl py-8 px-14 w-145;
+  @apply bg-white rounded-2xl py-8 px-14 w-145 relative;
+
+  &__close-icon {
+    @apply absolute top-3 right-5.25 w-6 h-6 text-grey6 cursor-pointer;
+  }
 
   &__title {
     @apply text-2xl leading-6;
