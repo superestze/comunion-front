@@ -53,7 +53,7 @@ const LoginPage = defineComponent({
 
     return () => (
       <div class="flex min-h-screen">
-        <div class="bg-primary flex-shrink-0 text-white px-13 pt-14 2xl:pt-17 w-108 relative lg:px-14 lg:w-112 2xl:px-15 2xl:w-114 overflow-hidden">
+        <div class="bg-primary flex-shrink-0 text-white px-13 pt-14 w-108 relative overflow-hidden lg:px-14 lg:w-114 2xl:px-15 2xl:pt-17 2xl:w-118">
           <div class="z-1 relative">
             <ULogo height={32} withText theme="white" />
             <h1 class="mt-16.5 u-h3 !text-white 2xl:mt-18 2xl:u-h2">Incubate ZERO To ONE</h1>
@@ -65,38 +65,40 @@ const LoginPage = defineComponent({
           </div>
           <img
             src={leftBgImg}
-            class="object-cover transform transition -bottom-2 left-1/2 w-90 -translate-x-45 absolute lg:w-94 lg:-translate-x-47 2xl:w-98 2xl:-translate-x-49"
+            class="object-cover transform transition bottom-2 left-1/2 w-100 -translate-x-50 absolute lg:w-104 lg:-translate-x-52 2xl:w-108 2xl:-translate-x-54"
           />
         </div>
-        <div class="flex flex-col flex-1 pl-1/8 relative justify-center lg:pl-1/5">
-          <MoreNavigationPage />
-          <h2 class="text-[36px] leading-9">Sign to Comunion</h2>
-          <UButton
-            class="h-16 mt-[30px] text-white mb-3 text-[21px] w-105 relative"
-            size="large"
-            type="primary"
-            loading={loading.value}
-            onClick={walletLogin}
-          >
-            <WalletOutlined class="h-8 top-4 left-4 w-8 absolute" />
-            Sign in with Wallet
-          </UButton>
-          {/* <a class="text-primary">What is wallet？</a> */}
-          <div class="flex my-10 items-center">
-            <div class="bg-[#d8d8d8] h-[1px] w-[90px]" />
-            <div class="mx-3 text-[#999] text-[18px] leading-5">Sign in with social accout</div>
-            <div class="bg-[#d8d8d8] h-[1px] w-[90px]" />
-          </div>
-          <div class="flex items-center">
-            {/* TODO zehui after finished this , please uncomment this */}
-            {/*<div class={styles.oauthBtn} onClick={googleLogin}>*/}
-            <div class={styles.oauthBtn}>
-              <GoogleFilled />
+        <div class="flex flex-col flex-1 px-1/8 relative justify-center lg:pl-1/5">
+          <div class="mx-auto w-105">
+            <MoreNavigationPage />
+            <h2 class="text-[36px] leading-9">Sign to Comunion</h2>
+            <UButton
+              class="h-16 mt-[30px] text-white mb-3 text-[21px] w-105 relative"
+              size="large"
+              type="primary"
+              loading={loading.value}
+              onClick={walletLogin}
+            >
+              <WalletOutlined class="h-8 top-4 left-4 w-8 absolute" />
+              Sign in with Wallet
+            </UButton>
+            {/* <a class="text-primary">What is wallet？</a> */}
+            <div class="flex my-10 items-center">
+              <div class="bg-[#d8d8d8] h-[1px] w-[90px]" />
+              <div class="mx-3 text-[#999] text-[18px] leading-5">Sign in with social accout</div>
+              <div class="bg-[#d8d8d8] h-[1px] w-[90px]" />
             </div>
-            {/* TODO zehui after finished this , please uncomment this */}
-            {/*<div class={styles.oauthBtn} onClick={githubLogin}>*/}
-            <div class={styles.oauthBtn}>
-              <GithubFilled class="text-primary" />
+            <div class="flex items-center">
+              {/* TODO zehui after finished this , please uncomment this */}
+              {/*<div class={styles.oauthBtn} onClick={googleLogin}>*/}
+              <div class={styles.oauthBtn}>
+                <GoogleFilled />
+              </div>
+              {/* TODO zehui after finished this , please uncomment this */}
+              {/*<div class={styles.oauthBtn} onClick={githubLogin}>*/}
+              <div class={styles.oauthBtn}>
+                <GithubFilled class="text-primary" />
+              </div>
             </div>
           </div>
         </div>
