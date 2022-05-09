@@ -2,6 +2,7 @@ import { UForm, UFormItemsFactory, UButton, FormFactoryField, UAddress } from '@
 import { defineComponent, PropType, h, reactive, ref } from 'vue'
 import { getStartupTypeFromNumber, STARTUP_TYPES } from '@/constants'
 import { services } from '@/services'
+import { useWalletStore } from '@/stores'
 import { StartupItem } from '@/types'
 
 const EditStartupForm = defineComponent({
@@ -24,6 +25,7 @@ const EditStartupForm = defineComponent({
       mission: props.startup!.mission || '',
       overview: props.startup!.overview || ''
     })
+    const walletStore = useWalletStore()
 
     const securityModel = reactive({
       kyc: props.startup!.kyc || '',
@@ -78,7 +80,14 @@ const EditStartupForm = defineComponent({
         name: 'blockChainAddress',
         required: true,
         render: () => {
-          return h(<UAddress autoSlice={true} address={props.startup!.blockChainAddress} />, {})
+          return h(
+            <UAddress
+              autoSlice={true}
+              blockchainExplorerUrl={walletStore.blockchainExplorerUrl}
+              address={props.startup!.blockChainAddress}
+            />,
+            {}
+          )
         }
       },
       {
@@ -203,7 +212,7 @@ const EditStartupForm = defineComponent({
           <UFormItemsFactory fields={socialInfo} values={socialModel} />
         </UForm>
 
-        <div class="flex mt-16 items-center justify-end">
+        <div class="flex mt-10 items-center justify-end">
           <UButton type="default" size="large" class="mr-4 w-41 u-title2" onClick={onCancel}>
             Cancel
           </UButton>

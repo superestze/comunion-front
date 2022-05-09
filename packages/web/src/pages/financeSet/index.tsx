@@ -1,6 +1,7 @@
 import { defineComponent, onMounted, ref } from 'vue'
 import { useRoute, useRouter } from 'vue-router'
 import EditForm from './components/EditForm'
+import Breadcrumb from '@/components/Breadcrumb'
 import { services } from '@/services'
 import { StartupItem } from '@/types'
 
@@ -31,11 +32,14 @@ const financeSetPage = defineComponent({
     })
 
     return () => (
-      <div class="startup-set grid grid-rows-1 gap-x-[40px] mb-38">
-        <div class="startup bg-white p-10">
-          {startup.value && <EditForm startup={startup.value} onCancel={onCancel} />}
+      <>
+        <Breadcrumb />
+        <div class="startup-set grid grid-rows-1 gap-x-[40px] mb-38">
+          <div class="startup bg-white p-10">
+            {startup.value && <EditForm startup={startup.value} onCancel={onCancel} />}
+          </div>
         </div>
-      </div>
+      </>
     )
   }
 })

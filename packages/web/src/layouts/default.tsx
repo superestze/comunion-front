@@ -1,17 +1,26 @@
 import { ULogo, UTransactionWaiting, UTransactionContainer } from '@comunion/components'
-import { defineComponent } from 'vue'
-import { RouterLink, RouterView } from 'vue-router'
+import { defineComponent, watchEffect } from 'vue'
+import { RouterLink, RouterView, useRouter } from 'vue-router'
 import TheHeader from './components/TheHeader'
 import styles from './default.module.css'
 import { FOOTER_LINKS } from '@/constants'
-import { useWalletStore } from '@/stores'
+import { useUserStore, useWalletStore } from '@/stores'
 import { useContractStore } from '@/stores/contract'
 
 const DefaultLayout = defineComponent({
   name: 'DefaultLayout',
   setup() {
+    const router = useRouter()
     const walletStore = useWalletStore()
     const contractStore = useContractStore()
+    const userStore = useUserStore()
+
+    watchEffect(() => {
+      if (!userStore.logged) {
+        router.replace('/auth/login')
+      }
+    })
+
     return () => (
       <div class="bg-purple flex flex-col h-full min-h-screen text-[14px] relative">
         <div class="flex-1 u-page-container relative">

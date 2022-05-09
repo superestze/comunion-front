@@ -23,6 +23,9 @@ export const UAddressProps = {
   address: {
     type: String,
     required: true
+  },
+  blockchainExplorerUrl: {
+    type: String
   }
 } as const
 
@@ -55,7 +58,14 @@ const UAddress = defineComponent({
       return (
         <div class={`u-address ${attrs?.class || ''}`}>
           <span class="u-address__link">
-            <a target="_blank" href={`https://cn.etherscan.com/tx/${address.value}`}>
+            <a
+              target="_blank"
+              href={
+                props.blockchainExplorerUrl
+                  ? `${props.blockchainExplorerUrl}/tx/${address.value}`
+                  : '#'
+              }
+            >
               {addressVal}
             </a>
           </span>
