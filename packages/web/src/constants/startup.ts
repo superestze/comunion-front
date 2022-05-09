@@ -21,5 +21,8 @@ export function getStartupTypeFromNumber(mode: number) {
  * @return 0:NONE,1:ESG,2:NGO,3:DAO,4:COM
  */
 export function getStartupNumberFromType(type: StartupTypesType) {
+  if (type === undefined) {
+    return 0
+  }
   return STARTUP_TYPES.indexOf(type) + 1
 }
