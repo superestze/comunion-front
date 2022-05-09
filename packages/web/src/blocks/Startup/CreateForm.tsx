@@ -105,7 +105,9 @@ const CreateStartupForm = defineComponent({
               await startupContract().newStartup(
                 [
                   model.name,
-                  getStartupNumberFromType(model.type as StartupTypesType),
+                  model.type === undefined
+                    ? 0
+                    : getStartupNumberFromType(model.type as StartupTypesType),
                   // model.tags,
                   model.logo,
                   model.mission,
