@@ -1,4 +1,4 @@
-import { WalletConnectFilled, MetamaskFilled } from '@comunion/icons'
+import { WalletConnectFilled, MetamaskFilled, CloseOutlined } from '@comunion/icons'
 import { NGrid, NGridItem, NModal } from 'naive-ui'
 import type { ExtractPropTypes, PropType } from 'vue'
 import { defineComponent } from 'vue'
@@ -34,6 +34,7 @@ const UWalletConnect = defineComponent({
         onMaskClick={props.onClose}
       >
         <div class="u-wallet-connect">
+          <CloseOutlined class="u-wallet-connect__close-icon" onClick={props.onClose} />
           <p class="u-wallet-connect__title">Select a Wallet</p>
           <p class="u-wallet-connect__subtitle">Please select a wallet to connect to Comunion</p>
           <NGrid xGap={16} yGap={16} cols={2} class="u-wallet-connect__wallets">

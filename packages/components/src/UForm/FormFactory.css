@@ -3,5 +3,11 @@
     .n-form-item-label {
       @apply u-title2;
     }
+
+    .n-form-item-feedback-wrapper {
+      .n-form-item-feedback {
+        @apply mb-4.5;
+      }
+    }
   }
 }
