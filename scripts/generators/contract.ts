@@ -22,30 +22,42 @@ interface ABIItem {
   type: 'constructor' | 'event' | 'function' | 'fallback' | 'receive' | 'send'
 }
 
+type ContractAddressConfiguration = {
+  // contract name
+  name: string
+  abiUrl: string
+  addresses: {
+    chainId: number
+    chainName: string
+    // deployed address
+    address: string
+  }[]
+}[]
+
 interface ContractItem {
   title: string
-  address: string
+  addresses: Omit<ContractAddressConfiguration[number]['addresses'][number], 'chainName'>[]
   abi: string
   abiArr: ABIItem[]
 }
 
-async function fetchABIs(env: string) {
+async function fetchContracts(): Promise<ContractItem[]> {
   const res = await fetch(
     `https://${GITHUB_RAW_PROXY_URL}/comunion-io/comunion-contract/main/contractAddress.json`
   )
-  const contractConfig = JSON.parse(res)
+  const configurations = JSON.parse(res) as ContractAddressConfiguration
   const contracts: ContractItem[] = []
-  for (const element of contractConfig[env]) {
+  for (const element of configurations) {
     const response = await fetch(
       join(`https://${GITHUB_RAW_PROXY_URL}/comunion-io/comunion-contract/main/${element.abiUrl}`)
     )
 
-    const abis = (JSON.parse(response).abi as ABIItem[]).filter(abi => abi.type === 'function')
+    const abis = JSON.parse(response).filter(abi => abi.type === 'function')
     contracts.push({
       title: element.name,
       abi: JSON.stringify(abis),
       abiArr: abis,
-      address: element.address
+      addresses: element.addresses
     })
   }
   return contracts
@@ -62,11 +74,11 @@ const contractTypeMap = {
   tuple: '[]'
 } as const
 
-export async function generateContracts(env: string) {
+export async function generateContracts() {
   // const ora = await import('ora')
   // const spinner = ora('Parsing contracts').start()
   const contractFolder = resolve(__dirname, '../../packages/web/src/contracts')
-  const contracts = await fetchABIs(env)
+  const contracts = await fetchContracts()
   // spinner.text = 'Writing files'
   for (const contract of contracts) {
     await renderToFile(

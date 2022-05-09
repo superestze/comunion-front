@@ -14,7 +14,8 @@ const NetworkSwitcher = defineComponent({
       return supportedNetworks.find(network => network.chainId === walletStore.chainId ?? 1)
     })
 
-    function onSelectNetwork(chainId: number) {
+    async function onSelectNetwork(chainId: number) {
+      await walletStore.ensureWalletConnected()
       walletStore.wallet?.switchNetwork(chainId)
     }
 
@@ -43,7 +44,7 @@ const NetworkSwitcher = defineComponent({
         onSelect={onSelectNetwork}
       >
         <UButton class={['px-5', ctx.attrs.class]} type="primary" ghost>
-          {walletStore.isNetworkSupported ? (
+          {currentNetwork.value ? (
             <img src={currentNetwork.value?.logo} class="rounded-xl h-5 mr-2 w-5" />
           ) : (
             'Disconnected'
