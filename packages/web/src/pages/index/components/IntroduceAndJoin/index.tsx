@@ -53,7 +53,7 @@ export default defineComponent({
           <div class="m-auto mt-95px text-white w-560px <sm:hidden">
             <p class="text-20px leading-28px">I want to…</p>
             <div class="flex mt-30px text-12px leading-17px items-center justify-between">
-              <a class="cursor-pointer flex items-center group">
+              <a href="javascript:void(0)" class="cursor-pointer flex items-center group">
                 <span
                   class={`opacity-81 transform transition group-hover:-translate-y-2px ${styles.wantToText}`}
                 >
@@ -64,7 +64,7 @@ export default defineComponent({
                   class="ml-4px transform transition w-12px group-hover:-translate-y-2px"
                 />
               </a>
-              <a class="cursor-pointer flex items-center group">
+              <a href="javascript:void(0)" class="cursor-pointer flex items-center group">
                 <span
                   class={`opacity-81 transform transition group-hover:-translate-y-2px ${styles.wantToText}`}
                 >
@@ -75,7 +75,7 @@ export default defineComponent({
                   class="ml-4px transform transition w-12px group-hover:-translate-y-2px"
                 />
               </a>
-              <a class="cursor-pointer flex items-center group">
+              <a href="javascript:void(0)" class="cursor-pointer flex items-center group">
                 <span
                   class={`opacity-81 transform transition group-hover:-translate-y-2px ${styles.wantToText}`}
                 >
@@ -86,7 +86,7 @@ export default defineComponent({
                   class="ml-4px transform transition w-12px group-hover:-translate-y-2px"
                 />
               </a>
-              <a class="cursor-pointer flex items-center group">
+              <a href="javascript:void(0)" class="cursor-pointer flex items-center group">
                 <span
                   class={`opacity-81 transform transition group-hover:-translate-y-2px ${styles.wantToText}`}
                 >
@@ -102,21 +102,21 @@ export default defineComponent({
           <div class="m-auto mt-60px text-white w-311px sm:hidden">
             <p class="text-14px leading-20px">I want to…</p>
             <div class="flex mt-20px text-12px leading-12px items-center">
-              <a class="flex w-166px items-center">
+              <a href="javascript:void(0)" class="flex w-166px items-center">
                 <span class={`opacity-81 ${styles.h5WantToText}`}>Build a Startup</span>
                 <img src={rightArrowIcon} class="ml-4px w-12px" />
               </a>
-              <a class="flex items-center">
+              <a href="javascript:void(0)" class="flex items-center">
                 <span class={`opacity-81 ${styles.h5WantToText}`}>Seek remote work</span>
                 <img src={rightArrowIcon} class="ml-4px w-12px" />
               </a>
             </div>
             <div class="flex mt-20px text-12px leading-12px items-center">
-              <a class="flex w-166px items-center">
+              <a href="javascript:void(0)" class="flex w-166px items-center">
                 <span class={`opacity-81 ${styles.h5WantToText}`}>Invest</span>
                 <img src={rightArrowIcon} class="ml-4px w-12px" />
               </a>
-              <a class="flex items-center">
+              <a href="javascript:void(0)" class="flex items-center">
                 <span class={`opacity-81 ${styles.h5WantToText}`}>Setup a DAO</span>
                 <img src={rightArrowIcon} class="ml-4px w-12px" />
               </a>
