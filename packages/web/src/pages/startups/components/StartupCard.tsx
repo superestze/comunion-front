@@ -1,4 +1,5 @@
-import { UTag, ULazyImage } from '@comunion/components'
+import { UTag, ULazyImage, UStartupLogo } from '@comunion/components'
+// import { StartupLogoOutlined } from '@comunion/icons'
 import { defineComponent, PropType } from 'vue'
 import styles from './StartupCard.module.css'
 import UTeamMembers from './TeamMembers'
@@ -26,7 +27,13 @@ const StartupCard = defineComponent({
         <div class={styles.cardBorder}></div>
         <div class="p-6">
           <div class="flex">
-            <ULazyImage src={props.startup!.logo} class="rounded h-10 w-10" />
+            {props.startup!.logo ? (
+              <div class="rounded w-10 h-10 border-1 border-primary1 flex">
+                <UStartupLogo class="w-4 h-7 m-auto" />
+              </div>
+            ) : (
+              <ULazyImage src={props.startup!.logo} class="rounded h-10 w-10" />
+            )}
             {props.startup!.mode > 0 && (
               <UTag class="ml-auto" type="filled" bgColor={STARTUP_TYPES_COLOR_MAP[modeName]}>
                 {modeName}

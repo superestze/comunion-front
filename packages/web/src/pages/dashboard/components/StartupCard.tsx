@@ -1,4 +1,4 @@
-import { ULazyImage } from '@comunion/components'
+import { ULazyImage, UStartupLogo } from '@comunion/components'
 import { BasicSettingFilled, FinanceSettingFilled } from '@comunion/icons'
 import { defineComponent, PropType } from 'vue'
 import { useRouter } from 'vue-router'
@@ -27,7 +27,13 @@ const StartupCard = defineComponent({
     return () => (
       <div class="h-28 w-full flex items-center">
         <div class="h-full flex items-center w-22">
-          <ULazyImage src={props.startup!.logo} class="h-18 w-18 rounded" />
+          {props.startup!.logo === undefined || props.startup!.logo === '' ? (
+            <div class="rounded w-18 h-18 border-1 border-primary1 flex">
+              <UStartupLogo class="w-7 h-10 m-auto" />
+            </div>
+          ) : (
+            <ULazyImage src={props.startup!.logo} class="h-18 w-18 rounded" />
+          )}
         </div>
         <div class="border-b-1 h-full w-full flex items-center ml-6 border-gray-5">
           <div class="content">
