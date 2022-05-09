@@ -53,8 +53,8 @@ const LoginPage = defineComponent({
 
     return () => (
       <div class="flex min-h-screen">
-        <div class="bg-primary flex-shrink-0 text-white px-13 pt-14 w-108 relative lg:px-14 lg:w-112 2xl:px-15 2xl:w-114">
-          <div class="mt-17 z-1 relative">
+        <div class="bg-primary flex-shrink-0 text-white px-13 pt-14 2xl:pt-17 w-108 relative lg:px-14 lg:w-112 2xl:px-15 2xl:w-114 overflow-hidden">
+          <div class="z-1 relative">
             <ULogo height={32} withText theme="white" />
             <h1 class="mt-16.5 u-h3 !text-white 2xl:mt-18 2xl:u-h2">Incubate ZERO To ONE</h1>
             <h2 class="mt-6.5 text-white u-title2 2xl:u-title1">Comunion is a metatech</h2>
@@ -65,7 +65,7 @@ const LoginPage = defineComponent({
           </div>
           <img
             src={leftBgImg}
-            class="object-cover transform transition bottom-0 left-1/2 w-90 -translate-x-45 absolute lg:w-94 lg:-translate-x-47 2xl:w-98 2xl:-translate-x-49"
+            class="object-cover transform transition -bottom-2 left-1/2 w-90 -translate-x-45 absolute lg:w-94 lg:-translate-x-47 2xl:w-98 2xl:-translate-x-49"
           />
         </div>
         <div class="flex flex-col flex-1 pl-1/8 relative justify-center lg:pl-1/5">
