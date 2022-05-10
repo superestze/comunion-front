@@ -1,10 +1,9 @@
 name: Production environment deployment
 
 on:
-  pull_request:
+  push:
     branches:
       - main
-    types: [closed]
 
 jobs:
   build:
@@ -12,24 +11,29 @@ jobs:
 
     steps:
       - uses: actions/checkout@v2
-      - uses: actions/setup-node@v2
+      - uses: actions/setup-node@v3
         with:
-          node-version: '14'
+          node-version: 16
+      - uses: pnpm/action-setup@v2.1.0
+        with:
+          version: 6.0.2
       - name: Install dependencies
-        run: yarn setup
+        run: pnpm i
       - name: Build
-        run: yarn build:web
-      - name: Configure AWS Credentials
-        uses: aws-actions/configure-aws-credentials@v1
+        run: pnpm build
+        env:
+          VITE_SUPPORTED_CHAIN_ID: 43114
+      - name: Deploy
+        uses: appleboy/scp-action@master
         with:
-          aws-access-key-id: ${{ secrets.AWS_ACCESS_KEY_ID }}
-          aws-secret-access-key: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
-          aws-region: ap-northeast-1
-      - name: Deploy static site to S3 bucket
-        run: |
-          cd packages/web/dist
-          aws s3 sync . s3://comunion-production --delete --acl public-read
-          aws cloudfront create-invalidation --distribution-id E1HPMK2YTSD0L1 --paths '/index.html' '/service-worker.js' '/manifest.json'
+          host: ${{ secrets.PROD_HOST }}
+          username: ${{ secrets.PROD_USERNAME }}
+          passphrase: ${{ secrets.PROD_PASSPHRASE }}
+          key: ${{ secrets.PROD_KEY }}
+          port: ${{ secrets.PROD_PORT }}
+          source: 'packages/web/dist/*'
+          target: '/app/web/prod'
+          strip_components: 3
       - name: Notification
         uses: erguotou520/instant-access-action@0.0.4
         if: ${{ success() }}

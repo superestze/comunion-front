@@ -1,5 +1,9 @@
-import routes from 'virtual:generated-pages'
+import { loadingBar } from '@comunion/components'
+import { setupLayouts } from 'virtual:generated-layouts'
+import generatedRoutes from 'virtual:generated-pages'
 import { createRouter, createWebHistory } from 'vue-router'
+
+const routes = setupLayouts(generatedRoutes)
 
 console.log(routes)
 
@@ -10,6 +14,14 @@ const router = createRouter({
   scrollBehavior(to, from, savedPosition) {
     window.scrollTo({ top: savedPosition?.top ?? 0 })
   }
+})
+
+router.beforeEach(() => {
+  loadingBar.start()
+})
+
+router.afterEach(() => {
+  loadingBar.finish()
 })
 
 export default router

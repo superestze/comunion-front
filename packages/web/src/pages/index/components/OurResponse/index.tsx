@@ -1,8 +1,8 @@
+import { defineComponent } from 'vue'
 import response1 from '@/assets/response-1.png'
 import response2 from '@/assets/response-2.png'
 import response3 from '@/assets/response-3.png'
 import response4 from '@/assets/response-4.png'
-import { defineComponent } from 'vue'
 
 export default defineComponent({
   name: 'OurResponse',
@@ -19,7 +19,7 @@ export default defineComponent({
           <div class="mt-15px sm:mt-38px text-12px sm:text-18px text-white text-opacity-80 leading-15px sm:leading-30px w-311px sm:w-1110px m-auto">
             <p class="text-left text-justify sm:text-center">
               Comunion aims to construct a new startup paradigm for the digital age, support
-              individuals to kick start their business, incubate these organizations from 0 to 1 and
+              individuals to kickstart their business, incubate these organizations from 0 to 1 and
               help these organizations to grow into unicorns
             </p>
           </div>

@@ -1,0 +1,15 @@
+.u-address {
+  @apply flex items-center text-primary;
+
+  &__link {
+    @apply u-title2 flex-1 mr-10 text-primary;
+  }
+
+  &__copy {
+    @apply ml-8px text-[16px] cursor-pointer;
+  }
+
+  &__icon {
+    outline: none;
+  }
+}

@@ -1,0 +1,19 @@
+@import '@comunion/components/dist/es/index.css';
+
+body {
+  @apply font-opensans text-grey1 text-[16px] leading-5;
+}
+
+::-webkit-scrollbar {
+  @apply h-1 w-1;
+
+  background: none;
+}
+
+::-webkit-scrollbar-thumb {
+  @apply bg-primary1 rounded h-1 w-1;
+}
+
+::-webkit-scrollbar-track {
+  background: none;
+}

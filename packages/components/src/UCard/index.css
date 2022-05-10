@@ -1,0 +1,15 @@
+.u-card {
+  @apply p-10;
+
+  .n-card-header {
+    @apply p-0 pb-[10px] !important;
+
+    .n-card-header__main {
+      @apply u-card-title1 text-primary1;
+    }
+  }
+
+  .n-card__content {
+    @apply px-0 py-0;
+  }
+}

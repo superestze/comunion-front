@@ -7,20 +7,24 @@
   "types": "dist",
   "scripts": {
     "build": "tsup --dts --format cjs,esm --clean src",
-    "dev": "tsup --dts --format cjs,esm --clean --watch src"
+    "dev": "tsup --dts --format cjs,esm --clean --watch src",
+    "test": "jest"
   },
   "repository": "comunion-io/front-next.git",
-  "keywords": [
-    "typescript",
-    "utils"
-  ],
+  "keywords": ["typescript", "utils"],
   "license": "GPL-3.0-or-later",
   "bugs": {
     "url": "https://github.com/comunion-io/front-next/issues"
   },
   "homepage": "https://github.com/comunion-io/front-next#readme",
   "devDependencies": {
-    "@types/node": "^14.14.31",
+    "@babel/core": "^7.17.5",
+    "@babel/preset-env": "^7.16.11",
+    "@babel/preset-typescript": "^7.16.7",
+    "@types/jest": "^27.4.1",
+    "@types/node": "^17.0.21",
+    "babel-jest": "^27.5.1",
+    "jest": "^27.5.1",
     "tsup": "^4.12.0"
   }
 }

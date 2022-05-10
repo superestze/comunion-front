@@ -1,8 +1,8 @@
+import { defineComponent, reactive, onMounted, onUnmounted } from 'vue'
+import { RouterLink } from 'vue-router'
 import closeMenu from '@/assets/close-menu.png'
 import logo from '@/assets/logo.png'
 import openMenu from '@/assets/open-menu.png'
-import { defineComponent, reactive } from 'vue'
-import { RouterLink } from 'vue-router'
 
 let top = 0
 export default defineComponent({
@@ -10,21 +10,26 @@ export default defineComponent({
   setup() {
     const state = reactive({ showMenu: false, showHead: true })
 
-    window.addEventListener(
-      'scroll',
-      () => {
-        const scrollTop =
-          window.pageYOffset || document.documentElement.scrollTop || document.body.scrollTop
-        const scroll = scrollTop - top
-        top = scrollTop
-        if (scroll < 0) {
-          state.showHead = true
-        } else {
-          state.showHead = false
-        }
-      },
-      true
-    )
+    const onScroll = () => {
+      const scrollTop =
+        window.pageYOffset || document.documentElement.scrollTop || document.body.scrollTop
+      const scroll = scrollTop - top
+      top = scrollTop
+      if (scroll < 0) {
+        state.showHead = true
+      } else {
+        state.showHead = false
+      }
+    }
+
+    onMounted(() => {
+      window.addEventListener('scroll', onScroll, true)
+    })
+
+    onUnmounted(() => {
+      window.removeEventListener('scroll', onScroll, true)
+      top = 0
+    })
 
     return () => (
       <div>
@@ -33,45 +38,38 @@ export default defineComponent({
             !state.showHead && '-top-66px'
           }`}
         >
-          <div class="m-auto <sm:h-66px h-60px w-1110px <sm:w-full h-full flex justify-between items-center <sm:pl-32px <sm:pr-33px">
-            <div class="flex items-center h-full">
+          <div class="flex h-full m-auto h-60px w-1110px justify-between items-center <sm:h-66px <sm:w-full <sm:pr-33px <sm:pl-32px">
+            <div class="flex h-full items-center">
               {/* logo */}
               <img src={logo} class="w-136px <sm:w-119px" />
-              <a
-                class="text-[#333333] text-16px text-bold ml-54px  hover:text-primary <sm:hidden"
+              {/* <a
+                class="text-bold ml-54px text-[#333333] text-16px  <sm:hidden hover:text-primary"
                 href="https://wiki.comunion.io/comunion-economics"
                 target="_blank"
               >
                 Economics
               </a>
               <a
-                class="text-[#333333] text-16px text-bold ml-30px hover:text-primary <sm:hidden"
+                class="text-bold ml-30px text-[#333333] text-16px <sm:hidden hover:text-primary"
                 href="/"
               >
                 Foundation
-              </a>
+              </a> */}
             </div>
             {/* menu-icon */}
             <img
               src={openMenu}
-              class="w-13px h-11px sm:hidden"
+              class="h-11px w-13px sm:hidden"
               onClick={() => (state.showMenu = true)}
             />
             <div class="flex items-center <sm:hidden">
-              <a
-                class="w-146px h-32px rounded-4px bg-primary text-white leading-32px text-14px text-bold mr-32px text-center"
-                href="https://dev.comunion.io/b/guide"
-                target="_blank"
+              <RouterLink
+                to="/auth/login"
+                class="bg-primary cursor-pointer rounded-4px h-32px text-white text-bold mr-32px text-center text-14px leading-32px w-146px"
               >
-                + New Startup
-              </a>
-              <a
-                class="w-146px h-32px rounded-4px border-1 border-primary text-primary leading-32px text-14px text-bold text-center"
-                href="https://dev.comunion.io/b/guide"
-                target="_blank"
-              >
-                Connect account
-              </a>
+                {/* <UserAvatar /> */}
+                Launch App
+              </RouterLink>
             </div>
           </div>
         </div>
@@ -82,24 +80,27 @@ export default defineComponent({
             state.showMenu ? 'left-0' : 'left-1/1'
           }`}
         >
-          <div class="w-1/1 h-60px flex items-center justify-end pr-32px mb-18px">
+          <div class="flex h-60px mb-18px pr-32px w-1/1 items-center justify-end">
             {/* close-icon */}
             <img src={closeMenu} class="w-12px" onClick={() => (state.showMenu = false)} />
           </div>
-          <div class="m-auto w-311px leading-24px text-bold text-16px text-[#333333]">
-            <RouterLink to="/" class="block mb-30px">
+          <div class="m-auto text-bold text-16px text-[#333333] leading-24px w-311px">
+            <RouterLink to="/" class="mb-30px block">
               Economics
             </RouterLink>
-            <RouterLink to="/" class="block mb-30px">
+            <RouterLink to="/" class="mb-30px block">
               Foundation
             </RouterLink>
             <div class="flex items-center justify-between">
-              <button class="w-128px h-48px rounded-6px bg-primary text-white leading-48px text-13px text-bold">
+              <button class="bg-primary rounded-6px h-48px text-white text-bold text-13px leading-48px w-128px">
                 + New Startup
               </button>
-              <button class="w-128px h-48px rounded-6px border-1 border-primary text-primary leading-48px text-13px text-bold">
+              <RouterLink
+                to="/auth/login"
+                class="border-primary border-1 rounded-6px h-48px text-primary text-bold text-13px leading-48px w-128px"
+              >
                 Connect account
-              </button>
+              </RouterLink>
             </div>
           </div>
         </div>

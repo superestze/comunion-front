@@ -1,3 +1,11 @@
+import { defineComponent } from 'vue'
+import styles from './index.module.css'
+import FranceChart from '@/assets/France-chart.svg'
+import GermanyChart from '@/assets/Germany-chart.svg'
+import SpainChart from '@/assets/Spain-chart.svg'
+import SwedenChart from '@/assets/Sweden-chart.svg'
+import UnitedKingdomChart from '@/assets/United-Kingdom-icon.svg'
+import UnitedStatesChart from '@/assets/UnitedStates-chart.svg'
 import chartPath1 from '@/assets/chart-path-1.svg'
 import chartPath11 from '@/assets/chart-path-11.svg'
 import chartPath2 from '@/assets/chart-path-2.svg'
@@ -8,14 +16,6 @@ import chartPath6 from '@/assets/chart-path-6.svg'
 import chartPath7 from '@/assets/chart-path-7.svg'
 import chartPath8 from '@/assets/chart-path-8.svg'
 import { default as chartPath10, default as chartPath9 } from '@/assets/chart-path-9.svg'
-import FranceChart from '@/assets/France-chart.svg'
-import GermanyChart from '@/assets/Germany-chart.svg'
-import SpainChart from '@/assets/Spain-chart.svg'
-import SwedenChart from '@/assets/Sweden-chart.svg'
-import UnitedKingdomChart from '@/assets/United-Kingdom-icon.svg'
-import UnitedStatesChart from '@/assets/UnitedStates-chart.svg'
-import { defineComponent } from 'vue'
-import styles from './index.module.css'
 
 export default defineComponent({
   name: 'UseCases',
@@ -100,8 +100,8 @@ export default defineComponent({
                 Workers excluded from capital gain
               </p>
               <p class="text-bold text-white text-18px leading-24px mt-12px w-457px">
-                High entry barriers for individuals to participate within the current VC/PE
-                ecosystem; Big tech monopoly, rich gets richer
+                High entry barriers for individuals to participate in the current VC/PE ecosystem;
+                Big tech monopoly, the rich gets richer
               </p>
             </div>
           </div>

@@ -1,6 +1,6 @@
-import rightArrowWhite from '@/assets/right-arrow-white.png'
 import { defineComponent, reactive } from 'vue'
 import styles from './index.module.css'
+import rightArrowWhite from '@/assets/right-arrow-white.png'
 
 export default defineComponent({
   name: 'Mission',
@@ -38,7 +38,7 @@ export default defineComponent({
     ]
 
     return () => (
-      <div class="h-813px w-full overflow-hidden relative sm:h-854px after:bg-gradient-to-b after:from-pageBgColor after:to-primary after:h-full after:rounded-br-1/2 after:rounded-bl-1/2 after:bottom-0 after:-left-1/1 after:w-3/1 after:content-[] after:absolute after:sm:h-761px ">
+      <div class="h-813px w-full overflow-hidden relative sm:h-854px after:bg-gradient-to-b after:from-home-bg after:to-primary after:h-full after:rounded-br-1/2 after:rounded-bl-1/2 after:bottom-0 after:-left-1/1 after:w-3/1 after:content-[] after:absolute after:sm:h-761px ">
         <div class={`${styles.missionBox} <sm:hidden`}></div>
         <div class={`${styles.missionBoxH5} sm:hidden`}></div>
         <div class="m-auto w-311px z-1 relative sm:w-1110px">
@@ -49,8 +49,8 @@ export default defineComponent({
           {/* introduce */}
           <div class="mt-12px text-white text-12px text-opacity-80 leading-15px sm:mt-15px sm:text-18px">
             <p class="text-left text-justify sm:m-auto sm:text-center sm:w-852px">
-              Internet, AI and automation have fuled GDP growth, new social problems have emerged
-              which can't be dealt with the conventional ways.
+              Internet, AI and automation have fueled GDP growth, new social problems which can not
+              be dealt with conventional ways have emerged.
             </p>
           </div>
           {/* devoted to */}
@@ -91,7 +91,7 @@ export default defineComponent({
                 )
             )}
           </div>
-          <div class="sm:hidden pt-60px">
+          <div class="pt-60px sm:hidden">
             {infoList.map((item, index) => (
               <div key={index}>
                 <button
@@ -114,7 +114,7 @@ export default defineComponent({
                   <p class="mt-20px text-white text-20px leading-26px">{item.title}</p>
                 )}
                 {data.current === index && (
-                  <p class="mt-10px text-white text-justify text-12px leading-18px mb-30px">
+                  <p class="mt-10px text-white text-justify mb-30px text-12px leading-18px">
                     {item.content}
                   </p>
                 )}

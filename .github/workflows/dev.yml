@@ -4,10 +4,6 @@ on:
   push:
     branches:
       - develop
-  pull_request:
-    branches:
-      - develop
-    types: [closed]
 
 jobs:
   build:
@@ -15,13 +11,18 @@ jobs:
 
     steps:
       - uses: actions/checkout@v2
-      - uses: actions/setup-node@v2
+      - uses: actions/setup-node@v3
         with:
-          node-version: '14'
+          node-version: 16
+      - uses: pnpm/action-setup@v2.1.0
+        with:
+          version: 6.0.2
       - name: Install dependencies
-        run: yarn setup
+        run: pnpm i
       - name: Build
-        run: yarn build:web
+        run: pnpm build
+        env:
+          VITE_SUPPORTED_CHAIN_ID: 43113
       - name: Configure AWS Credentials
         uses: aws-actions/configure-aws-credentials@v1
         with:

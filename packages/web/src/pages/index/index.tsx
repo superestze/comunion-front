@@ -2,7 +2,7 @@
 import { defineComponent } from 'vue'
 import ComunionEconomics from './components/ComunionEconomics'
 // Fotter
-import Fotter from './components/Fotter'
+import Footer from './components/Footer'
 // Head
 import Head from './components/Head'
 // introduce_and_join
@@ -16,13 +16,16 @@ import PainsOfWorld from './components/PainsOfWorld'
 // UseCases
 import UseCases from './components/UseCases'
 import styles from './index.module.css'
+import { useContractStore } from '@/stores/contract'
 
 export default defineComponent({
   name: 'HomePage',
-  props: {},
   setup() {
+    const contractStore = useContractStore()
+    // @ts-ignore
+    window.contract = contractStore
     return () => (
-      <div class="bg-pageBgColor">
+      <div class="bg-home-bg">
         {/* Head */}
         <Head />
         {/* content */}
@@ -40,8 +43,8 @@ export default defineComponent({
           {/* UseCases */}
           <UseCases />
         </div>
-        {/* Fotter */}
-        <Fotter />
+        {/* Footer */}
+        <Footer />
       </div>
     )
   }

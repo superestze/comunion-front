@@ -12,6 +12,6 @@ footer: MIT Licensed | Copyright © 2021-present Comunion
 ```bash
 git clone https://github.com/comunion-io/comunion-front
 cd comunion-front
-yarn
-yarn dev
+pnpm install
+pnpm dev
 ```

@@ -6,14 +6,12 @@
     "esModuleInterop": true,
     "forceConsistentCasingInFileNames": true,
     "jsx": "preserve",
-    "lib": [
-      "es2015",
-      "es5",
-      "dom"
-    ],
+    "lib": ["es2015", "es5", "dom"],
     "module": "esnext",
     "moduleResolution": "node",
-    "noEmitOnError": true,
+    "strict": true,
+    "noEmitOnError": false,
+    "noImplicitThis": true,
     "noFallthroughCasesInSwitch": true,
     "noImplicitAny": true,
     "noImplicitReturns": true,
