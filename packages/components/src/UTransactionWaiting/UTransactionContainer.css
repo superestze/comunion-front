@@ -1,5 +1,5 @@
 .u-transaction-container {
-  @apply right-0 z-100 absolute flex flex-col overflow-hidden;
+  @apply flex flex-col right-0 z-100 absolute;
 
   top: var(--u-app-header-height, 102px);
 }

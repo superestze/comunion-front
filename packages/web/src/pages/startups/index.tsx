@@ -35,19 +35,19 @@ const StartupsPage = defineComponent({
     )
 
     return () => (
-      <div class="mb-10">
-        <div class="flex my-4">
+      <div class="mt-10 mb-16">
+        <div class="flex mb-8">
           <h3 class="text-grey1 u-h3">{total.value.toLocaleString()} Startups</h3>
           <div class="flex ml-auto self-end items-center u-title2 ">
             Filter by:
             <UDropdownFilter
               options={STARTUP_TYPES.map(item => ({ label: item, value: item }))}
               placeholder="Startup Type"
-              class="ml-6 w-37 h-10 border-1 rounded"
+              class="rounded border-1 h-10 ml-6 w-37"
               clearable
               v-model:value={startupType.value}
             />
-            <UInputGroup class="w-37 h-10 ml-6 ">
+            <UInputGroup class="h-10 ml-6 w-37 ">
               <USearch
                 v-model:value={inputMember.value}
                 placeholder="Search"
