@@ -18,8 +18,8 @@ const StartupCard = defineComponent({
           <div class="logo mr-4">
             <UStartupLogo
               src={props.startup!.logo}
-              width="40"
-              height="40"
+              width="10"
+              height="10"
               class="w-20 h-20 rounded"
             />
           </div>

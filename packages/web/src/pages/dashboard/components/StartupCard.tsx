@@ -27,12 +27,7 @@ const StartupCard = defineComponent({
     return () => (
       <div class="h-28 w-full flex items-center">
         <div class="h-full flex items-center w-22">
-          <UStartupLogo
-            src={props.startup!.logo}
-            width="35"
-            height="35"
-            class="w-18 h-18 rounded"
-          />
+          <UStartupLogo src={props.startup!.logo} width="8" height="8" class="w-18 h-18 rounded" />
         </div>
         <div class="border-b-1 h-full w-full flex items-center ml-6 border-gray-5">
           <div class="content">

@@ -30,8 +30,8 @@ const StartupCard = defineComponent({
           <div class="flex">
             <UStartupLogo
               src={props.startup!.logo}
-              width="20"
-              height="20"
+              width="4"
+              height="6"
               class="w-10 h-10 rounded"
             />
             {props.startup!.mode > 0 && (
