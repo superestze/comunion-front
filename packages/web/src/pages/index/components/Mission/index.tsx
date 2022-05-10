@@ -49,8 +49,8 @@ export default defineComponent({
           {/* introduce */}
           <div class="mt-12px text-white text-12px text-opacity-80 leading-15px sm:mt-15px sm:text-18px">
             <p class="text-left text-justify sm:m-auto sm:text-center sm:w-852px">
-              Internet, AI and automation have fuled GDP growth, new social problems have emerged
-              which can't be dealt with the conventional ways.
+              Internet, AI and automation have fueled GDP growth, new social problems which can not
+              be dealt with conventional ways have emerged.
             </p>
           </div>
           {/* devoted to */}

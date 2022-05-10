@@ -24,7 +24,7 @@ const CreateStartupForm = defineComponent({
     const defaultModel = {
       logo: '',
       name: '',
-      type: '',
+      type: undefined,
       mission: '',
       overview: ''
       // tokenContract: '',
@@ -105,7 +105,9 @@ const CreateStartupForm = defineComponent({
               await startupContract().newStartup(
                 [
                   model.name,
-                  getStartupNumberFromType(model.type as StartupTypesType),
+                  model.type === undefined
+                    ? 0
+                    : getStartupNumberFromType(model.type as StartupTypesType),
                   // model.tags,
                   model.logo,
                   model.mission,
@@ -140,14 +142,14 @@ const CreateStartupForm = defineComponent({
         t: 'singleImageUpload',
         title: '',
         name: 'logo',
-        text: 'Upload new picture'
+        text: 'Upload'
       },
       {
         t: 'string',
         title: 'Name',
         name: 'name',
         required: true,
-        placeholder: 'Please enter your startup name',
+        placeholder: 'Input startup name',
         maxlength: 24
       },
       {
@@ -170,7 +172,7 @@ const CreateStartupForm = defineComponent({
         t: 'string',
         title: 'Mission',
         name: 'mission',
-        placeholder: 'Please enter your startup mission',
+        placeholder: 'Input startup mission',
         maxlength: 100,
         required: true
       },
@@ -178,7 +180,7 @@ const CreateStartupForm = defineComponent({
         t: 'string',
         title: 'Overview',
         name: 'overview',
-        placeholder: 'Describe your startup',
+        placeholder: 'Add overview for introducing your startup',
         minlength: 100,
         required: true,
         type: 'textarea',
@@ -284,12 +286,6 @@ const CreateStartupForm = defineComponent({
           >
             Submit
           </UButton>
-        </div>
-        <div class="mt-6 text-grey3 u-caption">
-          When you click submit button，you have entered all informations of start-up that will be
-          submited to Blockchain. It's similar to how you register a company in the Trade and
-          Industry Bureau，meanwhile you have builded your start-up in blockchain with zero cost and
-          much more efficient.
         </div>
       </UForm>
     )
