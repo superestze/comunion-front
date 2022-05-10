@@ -1,5 +1,5 @@
 import { UModal, UFormItemsFactory, UButton, UAddress, ULazyImage } from '@comunion/components'
-import { defineComponent, inject, reactive, ref } from 'vue'
+import { defineComponent, inject, reactive, ref, PropType } from 'vue'
 
 // interface teamList {
 //   comerProfile: any | null | undefined
@@ -24,6 +24,9 @@ const TeamModal = defineComponent({
     teamList: {
       type: Object,
       required: true
+    },
+    onCancel: {
+      type: Function as PropType<() => void>
     }
   },
   setup(props, ctx) {
@@ -70,6 +73,7 @@ const TeamModal = defineComponent({
         }
       })
       ctx.emit('update:show', false)
+      props.onCancel?.()
     }
     const onSubmit = () => {
       if (props.teamList?.comer) {
@@ -83,6 +87,7 @@ const TeamModal = defineComponent({
     const slots = {
       header: () => <div class="px-2 py-3 u-title1 text-20px">Team Setting</div>
     }
+
     return () => (
       <>
         <section>
