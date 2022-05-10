@@ -1,7 +1,7 @@
 import { UInput, UInputGroup, UButton, message } from '@comunion/components'
 import { defineComponent, PropType, ref, provide, onMounted } from 'vue'
 import TeamModal from './TeamModal'
-import TeamCard from '@/pages/StartupSet/components/TeamCard'
+import TeamCard from '@/pages/basicSetting/components/TeamCard'
 import { services } from '@/services'
 import { StartupItem } from '@/types'
 export const root = ref(null)

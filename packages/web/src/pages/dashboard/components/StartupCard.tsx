@@ -16,10 +16,10 @@ const StartupCard = defineComponent({
     const router = useRouter()
 
     const basicSetting = () => {
-      router.push({ path: '/startupset', query: { startupId: props.startup!.id } })
+      router.push({ path: '/basicsetting', query: { startupId: props.startup!.id } })
     }
     const financeSetting = () => {
-      router.push({ path: '/financeset', query: { startupId: props.startup!.id } })
+      router.push({ path: '/financesetting', query: { startupId: props.startup!.id } })
     }
     const styles = {
       combinationStyle: 'pr-2 tracking-normal font-opensans font-400 text-[14px] leading-5'
