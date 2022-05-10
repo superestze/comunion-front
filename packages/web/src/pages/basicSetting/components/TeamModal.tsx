@@ -1,5 +1,4 @@
-import { UModal, UFormItemsFactory, UButton, UAddress } from '@comunion/components'
-import ULazyImage from '@comunion/components/src/ULazyImage/LazyImage'
+import { UModal, UFormItemsFactory, UButton, UAddress, ULazyImage } from '@comunion/components'
 import { defineComponent, inject, reactive, ref } from 'vue'
 
 // interface teamList {
@@ -102,7 +101,7 @@ const TeamModal = defineComponent({
               <div class="flex flex-row">
                 <div class="flex-3">
                   <ULazyImage
-                    src="https://img0.baidu.com/it/u=636628865,1288536139&fm=253&fmt=auto&app=138&f=JPEG?w=500&h=667"
+                    src={props.teamList.comerProfile?.avatar}
                     class="h-18 w-18 rounded justify-between mb-6 mr-4 cursor-pointer rounded-1\/2 ml-4 mt-4"
                   />
                 </div>

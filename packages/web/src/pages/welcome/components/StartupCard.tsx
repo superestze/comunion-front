@@ -1,4 +1,4 @@
-import { ULazyImage } from '@comunion/components'
+import { UStartupLogo } from '@comunion/components'
 import { TeamOutlined } from '@comunion/icons'
 import { defineComponent, PropType } from 'vue'
 import { StartupItem } from '@/types'
@@ -16,7 +16,12 @@ const StartupCard = defineComponent({
       <>
         <div class="flex flex-row h-45 pt-6 pb-6 border-b border-grey5">
           <div class="logo mr-4">
-            <ULazyImage src={props.startup!.logo} class="h-20 w-20" />
+            <UStartupLogo
+              src={props.startup!.logo}
+              width="10"
+              height="10"
+              class="w-20 h-20 rounded"
+            />
           </div>
           <div class="content flex flex-col flex-1">
             <div class="u-h3 text-grey1 mb-2">{props.startup!.name}</div>

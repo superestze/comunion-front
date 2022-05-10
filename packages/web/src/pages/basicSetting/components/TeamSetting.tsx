@@ -15,7 +15,6 @@ const TeamSetting = defineComponent({
   },
   setup(props, ctx) {
     const success = ref(false)
-    console.log(props, 'teamSetting,teamSetting,teamSetting')
     const paramsList = ref({
       id: props.startup?.id,
       comerID: props.startup?.comerID,
