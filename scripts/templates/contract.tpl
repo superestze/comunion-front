@@ -4,8 +4,7 @@ import { getContract, GetContractArgs, wrapTransaction } from './share'
 import { useWalletStore } from '@/stores'
 
 const addresses: Record<number, string> = {<% addresses.forEach(function(network) { %>
-  <%= network.chainId %>: '<%= network.address %>',
-})
+  <%= network.chainId %>: '<%= network.address %>',<% }) %>}
 
 const abi = '<%= abi %>'
 
@@ -24,7 +23,7 @@ export function use<%= title %>Contract(): {
   })
   return {
     getContract: () => getContract(getContractArgs.value),
-    <% abiArr.forEach(function(func, index) { %><%= func.name %>: wrapTransaction(_contract.<%= func.name %>),
+    <% abiArr.forEach(function(func, index) { %><%= func.name %>: wrapTransaction(getContractArgs.value, '<%= func.name %>'),
     <% }) %>
   }
 }

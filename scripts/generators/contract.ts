@@ -52,12 +52,14 @@ async function fetchContracts(): Promise<ContractItem[]> {
       join(`https://${GITHUB_RAW_PROXY_URL}/comunion-io/comunion-contract/main/${element.abiUrl}`)
     )
 
-    const abis = JSON.parse(response).filter(abi => abi.type === 'function')
+    const abis = (JSON.parse(response) as { abi: ABIItem[] }).abi.filter(
+      abi => abi.type === 'function'
+    )
     contracts.push({
       title: element.name,
       abi: JSON.stringify(abis),
       abiArr: abis,
-      addresses: element.addresses
+      addresses: element.addresses.filter(network => !!network.address)
     })
   }
   return contracts

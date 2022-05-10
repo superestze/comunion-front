@@ -102,7 +102,7 @@ const CreateStartupForm = defineComponent({
               throw new Error('Startup name already exists')
             }
             try {
-              await startupContract().newStartup(
+              await startupContract.newStartup(
                 [
                   model.name,
                   getStartupNumberFromType(model.type as StartupTypesType),
