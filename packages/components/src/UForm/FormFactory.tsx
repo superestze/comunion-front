@@ -44,6 +44,7 @@ export type FormFactoryField = {
   name: string
   required?: boolean
   rules?: FormItemRule[]
+  disabled?: boolean
 } & (
   | FormFactoryInputField
   | FormFactoryAddrssInputField
