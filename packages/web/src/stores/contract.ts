@@ -66,5 +66,3 @@ export const useContractStore = defineStore('contract', {
     }
   }
 })
-
-window.useContractStore = useContractStore
