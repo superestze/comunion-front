@@ -1,3 +1,4 @@
+import { message } from '@comunion/components'
 import { Contract } from 'ethers'
 import { useContractStore } from '@/stores/contract'
 import AbstractWallet from '@/wallets/AbstractWallet'
@@ -26,6 +27,10 @@ export function wrapTransaction(
       .catch((e: any) => {
         console.error(e)
         contractStore.endContract('failed', { success: false })
+        if (e.data?.message) {
+          message.error(e.data.message)
+        }
+        throw e
       })
   }
 }
