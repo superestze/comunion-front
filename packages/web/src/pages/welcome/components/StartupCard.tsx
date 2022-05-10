@@ -14,34 +14,41 @@ const StartupCard = defineComponent({
   setup(props, ctx) {
     return () => (
       <>
-        <div class="flex flex-row h-45 pt-6 pb-6 border-b border-grey5">
-          <div class="logo mr-4">
+        <div class="border-b flex flex-row border-grey5 h-45 pt-6 pb-6">
+          <div class="mr-4 logo">
             <UStartupLogo
               src={props.startup!.logo}
               width="10"
               height="10"
-              class="w-20 h-20 rounded"
+              class="rounded h-20 w-20 !object-contain"
             />
           </div>
-          <div class="content flex flex-col flex-1">
-            <div class="u-h3 text-grey1 mb-2">{props.startup!.name}</div>
+          <div class="flex flex-col flex-1 content">
+            <div class="mb-2 text-grey1 u-h3">{props.startup!.name}</div>
             <div
-              class="line-clamp-2 text-ellipsis content font-opensans font-normal font-400 text-[16px] leading-5 text-grey2 max-w-180 max-h-10 break-all cursor-pointer"
+              class="cursor-pointer font-opensans font-normal font-400 text-ellipsis max-w-180 max-h-10 text-[16px] text-grey2 leading-5 content break-all line-clamp-2"
               title={props.startup!.mission}
             >
               {props.startup!.mission}
             </div>
-            <div class="foot flex justify-between mt-7">
-              <div class="p-1 font-opensans font-normal font-400 text-[12px] leading-3  border border-fuchsia-400 rounded  ">
-                {/*{startup?.hashTags.slice(0, 5).map(t => t.name)}*/}
-                Data processing
-              </div>
-              <div class="flex items-center ">
-                <TeamOutlined class="h-6 mr-2 w-6 bg-blue-100 text-primary rounded-1/2" />
-                <span class="font-opensans italic font-700 text-[16px] leading-5 text-grey1 mr-2">
+            <div class="flex mt-7 gap-x-2">
+              {props.startup?.hashTags.slice(0, 5).map(t => (
+                <div
+                  key={t.id}
+                  class="rounded p-1px"
+                  style={{
+                    background: `radial-gradient(circle, #250283 0%, #5F1193 50%, #B46AF9 100%)`
+                  }}
+                >
+                  <div class="bg-white rounded p-1 u-tag">{t.name}</div>
+                </div>
+              ))}
+              <div class="flex ml-auto items-center">
+                <TeamOutlined class="bg-blue-100 rounded-1/2 h-6 mr-2 text-primary w-6" />
+                <span class="font-opensans font-700 mr-2 text-[16px] text-grey1 leading-5 italic">
                   {props.startup!.memberCount}
                 </span>
-                <span class="font-opensans font-normal font-400 text-[14px] leading-5 text-grey1">
+                <span class="font-opensans font-normal font-400 text-[14px] text-grey1 leading-5">
                   Members
                 </span>
               </div>

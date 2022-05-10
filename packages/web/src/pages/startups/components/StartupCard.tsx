@@ -32,7 +32,7 @@ const StartupCard = defineComponent({
               src={props.startup!.logo}
               width="4"
               height="6"
-              class="w-10 h-10 rounded"
+              class="rounded h-10 w-10 !object-contain"
             />
             {props.startup!.mode > 0 && (
               <UTag class="ml-auto" type="filled" bgColor={STARTUP_TYPES_COLOR_MAP[modeName]}>

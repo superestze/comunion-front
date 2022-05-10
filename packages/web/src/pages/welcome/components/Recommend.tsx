@@ -1,5 +1,4 @@
-import { UDeveloping, UTabPane, UTabs, UScrollbar } from '@comunion/components'
-import { EmptyFilled } from '@comunion/icons'
+import { UTabPane, UTabs, UScrollbar } from '@comunion/components'
 import { defineComponent, onMounted, ref, provide } from 'vue'
 import StartupCard from '@/pages/welcome/components/StartupCard'
 import { services } from '@/services'
@@ -48,21 +47,17 @@ const Recommend = defineComponent({
     })
     return () => (
       <>
-        <section class="recommend bg-white h-234 " ref="Recommend">
-          <div class="px-10 pt-10 u-card-title1 text-primary1 mb-11">RECOMMENDED FOR YOU</div>
+        <section class="bg-white h-234 recommend " ref="Recommend">
+          <div class="mb-7 px-10 pt-10 text-primary1 u-card-title1">RECOMMENDED FOR YOU</div>
           <div class="content relative">
             <UTabs tab-style={{ 'font-weight': '700' }} class="px-10">
               <UTabPane name="Startups" tab="STARTUPS">
-                <UScrollbar class="h-185 absolute right-0">
+                <UScrollbar class="h-185 right-0 absolute">
                   <div class="px-10">
-                    {startups.value.length !== 0 ? (
-                      startups.value.map(startup => <StartupCard startup={startup} />)
-                    ) : (
-                      <UDeveloping>
-                        <EmptyFilled class="mt-34" />
-                      </UDeveloping>
-                    )}
-                    {/* <div class="u-paginated-list mt-3">
+                    {startups.value.map(startup => (
+                      <StartupCard startup={startup} />
+                    ))}
+                    {/* <div class="mt-3 u-paginated-list">
                     {pageList.total && (
                       <MPagination
                         pageList={pageList}

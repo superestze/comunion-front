@@ -53,7 +53,7 @@ const DashboardPage = defineComponent({
     }
     return () => (
       <div>
-        <div class="text-primary u-h2 mb-6">My Dashboard</div>
+        <div class="mt-50px text-primary mb-10 u-h2">My Dashboard</div>
         <UCard
           title="MY PROFILE"
           size="small"
@@ -67,17 +67,17 @@ const DashboardPage = defineComponent({
           <div class="flex">
             <div class="flex flex-col flex-1 mt-7 pr-8">
               <div class="flex">
-                <ULazyImage class="w-16 h-16 rounded-1/2" src={myProfile.value?.avatar ?? ''} />
-                <div class="flex flex-col justify-center ml-5">
-                  <div class="u-title1 mb-3">{myProfile.value?.name}</div>
+                <ULazyImage class="rounded-1/2 h-16 w-16" src={myProfile.value?.avatar ?? ''} />
+                <div class="flex flex-col ml-5 justify-center">
+                  <div class="mb-3 u-title1">{myProfile.value?.name}</div>
                   <div class="flex items-center">
-                    <div class="w-5 h-5 rounded-full bg-grey3 flex items-center justify-center text-white text-sm tracking-tighter">
+                    <div class="rounded-full flex bg-grey3 h-5 text-white text-sm tracking-tighter w-5 items-center justify-center">
                       ID
                     </div>
                     {walletStore.address && (
                       <UAddress
                         autoSlice={true}
-                        class="ml-1.5 u-body2 text-primary"
+                        class="text-primary ml-1.5 u-body2"
                         blockchainExplorerUrl={walletStore.blockchainExplorerUrl}
                         address={walletStore.address}
                       />
@@ -88,8 +88,8 @@ const DashboardPage = defineComponent({
               <div class="mt-2">
                 {myInfo.value?.map((info, i) => {
                   return (
-                    <div key={info.label} class="flex mb-3 mt-3 break-words">
-                      <div class="u-label2 uppercase text-grey3 w-50">{info.label}</div>
+                    <div key={info.label} class="flex mt-3 mb-3 break-words">
+                      <div class="text-grey3 w-50 uppercase u-label2">{info.label}</div>
                       {i + 1 === 4 ? (
                         <UScrollbar class="flex-1">
                           <div class={[i + 1 === 4 ? 'h-148' : '', style.currency]}>
@@ -105,16 +105,16 @@ const DashboardPage = defineComponent({
                 })}
               </div>
             </div>
-            <div class="flex flex-col px-6 p-4 rounded-lg bg-purple">
+            <div class="bg-purple rounded-lg flex flex-col p-4 px-6">
               <SocialLinks />
             </div>
           </div>
         </UCard>
-        <div class="grid grid-cols-2 grid-rows-2 gap-x-6 gap-y-6 mt-6 mb-20">
-          <Startups class="h-155 border-lg border-1 box-border bg-white border-grey5" />
-          <Bounties class="h-155 border-lg border-1 box-border bg-white border-grey5" />
-          <Proposals class="h-155 border-lg border-1 box-border bg-white border-grey5" />
-          <Bookmarks class="h-155 border-lg border-1 box-border bg-white border-grey5" />
+        <div class="mt-6 mb-20 grid gap-x-6 gap-y-6 grid-cols-2 grid-rows-2">
+          <Startups class="bg-white border-lg border-1 border-grey5 h-155 box-border" />
+          <Bounties class="bg-white border-lg border-1 border-grey5 h-155 box-border" />
+          <Proposals class="bg-white border-lg border-1 border-grey5 h-155 box-border" />
+          <Bookmarks class="bg-white border-lg border-1 border-grey5 h-155 box-border" />
         </div>
       </div>
     )
