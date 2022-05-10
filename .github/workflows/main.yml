@@ -31,8 +31,8 @@ jobs:
           passphrase: ${{ secrets.PROD_PASSPHRASE }}
           key: ${{ secrets.PROD_KEY }}
           port: ${{ secrets.PROD_PORT }}
-          source: "packages/web/dist/*"
-          target: "/app/web/prod"
+          source: 'packages/web/dist/*'
+          target: '/app/web/prod'
           strip_components: 3
       - name: Notification
         uses: erguotou520/instant-access-action@0.0.4
