@@ -62,7 +62,6 @@ const TeamCard = defineComponent({
       })
       if (!data) {
         message.success('Deleted successfully!')
-        console.log(data)
         parentTeamListFun?.(data)
       }
     }

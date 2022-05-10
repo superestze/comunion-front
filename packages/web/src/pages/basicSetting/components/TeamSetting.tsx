@@ -25,7 +25,8 @@ const TeamSetting = defineComponent({
       page: 1,
       comerProfile: Object
     })
-    const comerProfile = ref<object>({})
+
+    const comerProfile = ref({})
     const teamMembers = ref<StartupItem[]>([])
     const inputMember = ref<string>('')
 
@@ -34,7 +35,6 @@ const TeamSetting = defineComponent({
         const { data } = await services['account@comer-info-get-by-address']({
           address: inputMember.value
         })
-        console.log(typeof data)
         if (!data) {
           message.error('Search no results!')
           throw new Error('Search no results!')
@@ -42,6 +42,7 @@ const TeamSetting = defineComponent({
         const filterData = teamMembers.value.filter(
           item => item!.comerID === data.comerProfile!.comerID
         )
+        comerProfile.value = {}
         if (filterData.length) {
           message.error('Already exists!')
         } else {
@@ -60,8 +61,8 @@ const TeamSetting = defineComponent({
         limit: paramsList.value.pageSize,
         offset: paramsList.value.pageSize * (paramsList.value.page - 1)
       })
-      if (data?.list.length) {
-        teamMembers.value.length = 0
+      teamMembers.value.length = 0
+      if (data!.list.length) {
         teamMembers.value.push(...(data!.list as unknown as StartupItem[]))
       } else {
         teamMembers.value.length = 0
@@ -69,7 +70,6 @@ const TeamSetting = defineComponent({
     }
 
     const teamCreate = async (val: any) => {
-      console.log(val)
       const { data } = await services['startup@start-team-meabers-create']({
         startupId: paramsList.value.id,
         comerId: val.comerId,
@@ -82,7 +82,6 @@ const TeamSetting = defineComponent({
     }
 
     const teamUpdate = async (val: any) => {
-      console.log(val)
       const { data } = await services['startup@start-team-meabers-update']({
         startupId: paramsList.value.id,
         comerId: val.comerId,
@@ -92,6 +91,11 @@ const TeamSetting = defineComponent({
         message.success('Role modified successfully!')
         teamList()
       }
+    }
+
+    const onCancel = () => {
+      success.value = false
+      comerProfile.value = {}
     }
 
     const PARENT_PROVIDE = 'parentProvide'
@@ -132,13 +136,19 @@ const TeamSetting = defineComponent({
                 <TeamCard
                   v-model:teamMember={teamMember}
                   v-model:teamUpdate={teamUpdate}
-                  v-model:paramsList={paramsList.value}
+                  paramsList={paramsList.value}
                 />
               ))
             : null}
         </div>
-        {Object.keys(comerProfile.value).length === 0 ? null : (
-          <TeamModal v-model:show={success.value} teamList={comerProfile.value} />
+        {Object.keys(comerProfile.value).length == 0 ? (
+          ''
+        ) : (
+          <TeamModal
+            onCancel={onCancel}
+            v-model:show={success.value}
+            teamList={comerProfile.value}
+          />
         )}
       </div>
     )
