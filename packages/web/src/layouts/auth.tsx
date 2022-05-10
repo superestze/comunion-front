@@ -1,10 +1,11 @@
 import { defineComponent, watchEffect } from 'vue'
-import { RouterView, useRouter } from 'vue-router'
+import { RouterView, useRouter, useRoute } from 'vue-router'
 import { useUserStore } from '@/stores'
 
 const AuthLayout = defineComponent({
   name: 'AuthLayout',
   setup(_, ctx) {
+    const { path } = useRoute()
     const { replace } = useRouter()
     const userStore = useUserStore()
 
@@ -14,7 +15,9 @@ const AuthLayout = defineComponent({
         if (userStore.isProfiled) {
           replace('/welcome')
         } else {
-          replace('/auth/register/intro')
+          if (!path.startsWith('/auth')) {
+            replace('/auth/register/intro')
+          }
         }
       } else {
         replace('/auth/login')
