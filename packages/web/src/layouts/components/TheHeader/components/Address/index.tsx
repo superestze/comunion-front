@@ -25,36 +25,44 @@ const HeaderAddress = defineComponent({
       // }, 1500)
     }
 
-    return () => (
-      <UDropdown
-        trigger="click"
-        width={200}
-        class={styles.dropdown}
-        placement="bottom-start"
-        themeOverrides={{
-          optionHeightMedium: 'auto'
-        }}
-        options={[
-          {
-            type: 'group',
-            label: 'Connected',
-            key: 'label',
-            children: [
-              {
-                key: 'logout',
-                label: () => <div onClick={logout}>Logout</div>
-              }
-            ]
-          }
-        ]}
-      >
+    return () => {
+      const btn = (
         <UButton class={['px-5', ctx.attrs.class]} type="primary" ghost onClick={connectWallet}>
           {walletStore.connected && walletStore.address
             ? shortenAddress(walletStore.address)
             : 'Connect Wallet'}
         </UButton>
-      </UDropdown>
-    )
+      )
+
+      return walletStore.connected ? (
+        <UDropdown
+          trigger="click"
+          width={200}
+          class={styles.dropdown}
+          placement="bottom-start"
+          themeOverrides={{
+            optionHeightMedium: 'auto'
+          }}
+          options={[
+            {
+              type: 'group',
+              label: 'Connected',
+              key: 'label',
+              children: [
+                {
+                  key: 'logout',
+                  label: () => <div onClick={logout}>Logout</div>
+                }
+              ]
+            }
+          ]}
+        >
+          {btn}
+        </UDropdown>
+      ) : (
+        btn
+      )
+    }
   }
 })
 

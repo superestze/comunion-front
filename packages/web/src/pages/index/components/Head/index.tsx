@@ -77,22 +77,13 @@ export default defineComponent({
                 + New Startup
               </span>
 
-              {userStore.logged ? (
-                <RouterLink
-                  to="/welcome"
-                  class="bg-primary cursor-pointer rounded-4px h-32px text-white text-bold mr-32px text-center text-14px leading-32px w-146px"
-                >
-                  {/* <UserAvatar /> */}
-                  Launch App
-                </RouterLink>
-              ) : (
-                <RouterLink
-                  class="border-primary border-1 rounded-4px h-32px text-primary text-bold text-center text-14px leading-32px w-146px"
-                  to="/auth/login"
-                >
-                  Connect account
-                </RouterLink>
-              )}
+              <RouterLink
+                to="/auth/login"
+                class="bg-primary cursor-pointer rounded-4px h-32px text-white text-bold mr-32px text-center text-14px leading-32px w-146px"
+              >
+                {/* <UserAvatar /> */}
+                Launch App
+              </RouterLink>
             </div>
           </div>
         </div>

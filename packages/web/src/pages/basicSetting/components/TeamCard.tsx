@@ -68,7 +68,7 @@ const TeamCard = defineComponent({
 
     return () => (
       <div
-        class="team-card flex flex-row leading-20 h-20 mb-6 hover:bg-blue-600 hover:rounded-lg hover:text-light-50 hover:cursor-pointer"
+        class="team-card flex flex-row leading-20 h-20 mb-6 hover:bg-primary hover:rounded-lg hover:text-white hover:cursor-pointer"
         onMouseleave={e => {
           e.stopPropagation()
           showTooltipRef.value = false
