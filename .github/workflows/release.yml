@@ -31,8 +31,9 @@ jobs:
           passphrase: ${{ secrets.RELEASE_PASSPHRASE }}
           key: ${{ secrets.RELEASE_KEY }}
           port: ${{ secrets.RELEASE_PORT }}
-          source: 'packages/web/dist/**/*.*'
-          target: '/app/web/release'
+          source: "packages/web/dist/*"
+          target: "/app/web/release"
+          strip_components: 3
       - name: Notification
         uses: erguotou520/instant-access-action@0.0.4
         if: ${{ success() }}
