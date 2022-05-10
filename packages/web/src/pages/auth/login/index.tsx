@@ -59,8 +59,8 @@ const LoginPage = defineComponent({
             <h1 class="mt-16.5 u-h3 !text-white 2xl:mt-18 2xl:u-h2">Incubate ZERO To ONE</h1>
             <h2 class="mt-6.5 text-white u-title2 2xl:u-title1">Comunion is startup protocol</h2>
             <p class="mt-2.5 text-white u-body2 2xl:u-body1">
-              A revolutionary innovative decentralized multi-chain protocol dedicated to building a
-              thriving and collaborative work ecosystem, community, and economy.
+              A revolutionary decentralized multi-chain protocol dedicated to building a thriving
+              and collaborative work ecosystem, community and economy.
             </p>
           </div>
           <img
