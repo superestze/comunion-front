@@ -411,6 +411,8 @@ export const services = {
       docs: string
       presaleDate: string
       launchDate: string
+      memberCount: number
+      followCount: number
       wallets: {
         id: number
         createdAt: string
@@ -472,6 +474,8 @@ export const services = {
         docs: string
         presaleDate: string
         launchDate: string
+        memberCount: number
+        followCount: number
         wallets: {
           id: number
           createdAt: string
