@@ -39,8 +39,7 @@ const StartupCard = defineComponent({
               <div class="flex items-center ">
                 <TeamOutlined class="h-6 mr-2 w-6 bg-blue-100 text-primary rounded-1/2" />
                 <span class="font-opensans italic font-700 text-[16px] leading-5 text-grey1 mr-2">
-                  {/*  TODO after recommend interface finished in backend, please replace this by real data */}
-                  {Math.floor(Math.random() * 200) + 800}
+                  {props.startup!.memberCount}
                 </span>
                 <span class="font-opensans font-normal font-400 text-[14px] leading-5 text-grey1">
                   Members
