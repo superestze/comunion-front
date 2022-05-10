@@ -1,4 +1,4 @@
-import { defineComponent, onBeforeMount } from 'vue'
+import { defineComponent, watchEffect } from 'vue'
 import { RouterView, useRouter } from 'vue-router'
 import { useUserStore } from '@/stores'
 
@@ -7,7 +7,8 @@ const AuthLayout = defineComponent({
   setup(_, ctx) {
     const { replace } = useRouter()
     const userStore = useUserStore()
-    onBeforeMount(() => {
+
+    watchEffect(() => {
       if (userStore.logged) {
         // when logged and profiled, you need not stay in auth page
         if (userStore.isProfiled) {
@@ -19,6 +20,7 @@ const AuthLayout = defineComponent({
         replace('/auth/login')
       }
     })
+
     return () => (userStore.logged && userStore.isProfiled ? null : <RouterView />)
   }
 })
