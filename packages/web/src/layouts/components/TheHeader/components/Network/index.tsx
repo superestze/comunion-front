@@ -1,6 +1,6 @@
 import { UDropdown, UButton } from '@comunion/components'
 import { ArrowDownOutlined } from '@comunion/icons'
-import { defineComponent, computed } from 'vue'
+import { defineComponent, computed, ref } from 'vue'
 import styles from './index.module.css'
 import { supportedNetworks } from '@/constants'
 import { useWalletStore } from '@/stores'
@@ -8,15 +8,21 @@ import { useWalletStore } from '@/stores'
 const NetworkSwitcher = defineComponent({
   name: 'NetworkSwitcher',
   setup(props, ctx) {
+    const btnRef = ref<HTMLButtonElement>()
     const walletStore = useWalletStore()
 
     const currentNetwork = computed(() => {
       return supportedNetworks.find(network => network.chainId === walletStore.chainId ?? 1)
     })
 
-    function onSelectNetwork(chainId: number) {
+    async function onSelectNetwork(chainId: number) {
+      await walletStore.ensureWalletConnected()
       walletStore.wallet?.switchNetwork(chainId)
     }
+
+    walletStore.setOpenNetworkSwitcher(() => {
+      btnRef.value?.click()
+    })
 
     return () => (
       <UDropdown
@@ -43,13 +49,15 @@ const NetworkSwitcher = defineComponent({
         onSelect={onSelectNetwork}
       >
         <UButton class={['px-5', ctx.attrs.class]} type="primary" ghost>
-          {walletStore.isNetworkSupported ? (
-            <img src={currentNetwork.value?.logo} class="rounded-xl h-5 mr-2 w-5" />
-          ) : (
-            'Disconnected'
-          )}
-          {currentNetwork.value?.shortName ?? currentNetwork.value?.name}
-          <ArrowDownOutlined class="h-4 ml-2 w-4" />
+          <div class="flex items-center flex-nowrap" ref={btnRef}>
+            {currentNetwork.value ? (
+              <img src={currentNetwork.value?.logo} class="rounded-xl h-5 mr-2 w-5" />
+            ) : (
+              'Disconnected'
+            )}
+            {currentNetwork.value?.shortName ?? currentNetwork.value?.name}
+            <ArrowDownOutlined class="h-4 ml-2 w-4" />
+          </div>
         </UButton>
       </UDropdown>
     )

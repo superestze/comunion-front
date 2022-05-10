@@ -7,7 +7,7 @@ async function run() {
     case 'component':
       return generateComponent(args[1])
     case 'contract':
-      return generateContracts(args[1])
+      return generateContracts()
     default:
       break
   }

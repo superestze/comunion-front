@@ -65,7 +65,7 @@ const LoginPage = defineComponent({
           </div>
           <img
             src={leftBgImg}
-            class="object-cover transform transition bottom-2 left-1/2 w-100 -translate-x-50 absolute lg:w-104 lg:-translate-x-52 2xl:w-108 2xl:-translate-x-54"
+            class="object-cover mb-[8vh] transform transition bottom-2 left-1/2 w-100 -translate-x-50 translate-y-12 absolute lg:w-104 lg:-translate-x-52 2xl:w-108 2xl:-translate-x-54"
           />
         </div>
         <div class="flex flex-col flex-1 px-1/8 relative justify-center lg:pl-1/5">

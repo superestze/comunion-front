@@ -35,6 +35,9 @@ export type WalletState = {
 let _resolve: (() => void) | undefined
 let _reject: (() => void) | undefined
 
+// hack
+let _openNetworkSwitcher: () => void | undefined
+
 export const useWalletStore = defineStore('wallet', {
   state: (): WalletState => ({
     inited: false,
@@ -146,6 +149,16 @@ export const useWalletStore = defineStore('wallet', {
           _reject = reject
         })
       }
+    },
+    // open network switcher
+    openNetworkSwitcher() {
+      _openNetworkSwitcher?.()
+    },
+    // set network switcher function
+    setOpenNetworkSwitcher(fn: () => void) {
+      _openNetworkSwitcher = fn
     }
   }
 })
+
+export type WalletStore = ReturnType<typeof useWalletStore>
