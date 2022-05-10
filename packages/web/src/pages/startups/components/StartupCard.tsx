@@ -53,7 +53,10 @@ const StartupCard = defineComponent({
           </div>
           {/* <UTeam */}
         </div>
-        <UTeamMembers />
+        <UTeamMembers
+          memberCount={props.startup!.memberCount}
+          // followCount={props.startup!.followCount}
+        />
       </div>
     )
   }
