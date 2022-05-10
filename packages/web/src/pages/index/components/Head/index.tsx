@@ -70,12 +70,12 @@ export default defineComponent({
               onClick={() => (state.showMenu = true)}
             />
             <div class="flex items-center <sm:hidden">
-              <span
+              {/* <span
                 class="bg-primary cursor-pointer rounded-4px h-32px text-white text-bold mr-32px text-center text-14px leading-32px w-146px"
                 onClick={createStartup}
               >
                 + New Startup
-              </span>
+              </span> */}
 
               <RouterLink
                 to="/auth/login"

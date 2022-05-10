@@ -28,13 +28,10 @@ export default defineComponent({
           </h1>
           {/* introduce */}
           <div class="mt-24px text-center text-white text-13px text-opacity-80 leading-15px sm:mt-36px sm:text-22px sm:leading-30px">
-            <p class="text-bold">Comunion is Metaverse</p>
+            <p class="text-bold">Comunion is startup protocol</p>
             <p class="m-auto mt-19px w-330px sm:w-780px">
-              A New generation start-up paradigm crypto economy growth on multi-chain network. It
-              uses modern internet ability to attract intensive talents around the Global and the
-              application of Blockchain technology to improve finance and capital. Productivity
-              tools are gathered to build innovative start-ups under the paradigm of Comunion (DAO)
-              ; this form ultimately maximizes economic development through start-ups.
+              A revolutionary innovative decentralized multi-chain protocol dedicated to building a
+              thriving and collaborative work ecosystem, community, and economy.
             </p>
           </div>
           {/* Join Comunion*/}
