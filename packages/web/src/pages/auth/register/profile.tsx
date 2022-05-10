@@ -67,11 +67,11 @@ const RegisterProfilePage = defineComponent({
     }
 
     const toHomePage = () => {
-      router.replace('/startups')
+      router.replace('/welcome')
     }
 
-    const toMyWorkbench = () => {
-      router.replace('/my/workbench')
+    const toMyDashboard = () => {
+      router.replace('/dashboard')
     }
 
     return () => (
@@ -79,7 +79,7 @@ const RegisterProfilePage = defineComponent({
         <div class="mx-auto max-w-226 py-[10vh]">
           <h1 class="u-h3">Basic Profile</h1>
           <p class="mt-2 mb-6 text-grey2 u-body2">
-            Add your profile , a short bio , and links to your other online websites.
+            Add your profile, a short bio, and links to your other online websites.
           </p>
           <div class="bg-white border rounded-lg border-grey5 pt-10 pb-5">
             <div class="mx-auto w-200">
@@ -89,10 +89,10 @@ const RegisterProfilePage = defineComponent({
                   <img src={successImg} class="h-40 mt-18 w-110" />
                   <div class="flex mt-12 items-center">
                     <UButton type="primary" ghost size="large" onClick={toHomePage}>
-                      Go to homepage
+                      Welcome
                     </UButton>
-                    <UButton class="ml-4" type="primary" size="large" onClick={toMyWorkbench}>
-                      View my Startup
+                    <UButton class="ml-4" type="primary" size="large" onClick={toMyDashboard}>
+                      My profile
                     </UButton>
                   </div>
                 </div>
