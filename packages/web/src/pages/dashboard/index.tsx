@@ -1,4 +1,4 @@
-import { UCard, UAddress, ULazyImage } from '@comunion/components'
+import { UCard, UAddress, ULazyImage, UScrollbar } from '@comunion/components'
 import { computed, defineComponent, onMounted, ref } from 'vue'
 import Bookmarks from './components/Bookmarks'
 import Bounties from './components/Bounties'
@@ -14,11 +14,18 @@ const DashboardPage = defineComponent({
   setup() {
     const walletStore = useWalletStore()
     const myProfile = ref<ServiceReturn<'account@comer-profile-get'>>()
-    onMounted(async () => {
+    const getDataList = async () => {
       const { error, data } = await services['account@comer-profile-get']()
       if (!error) {
         myProfile.value = data
       }
+    }
+    onMounted(() => {
+      // const { error, data } = await services['account@comer-profile-get']()
+      // if (!error) {
+      //   myProfile.value = data
+      // }
+      getDataList()
     })
 
     const myInfo = computed(() => {
@@ -41,7 +48,9 @@ const DashboardPage = defineComponent({
         }
       ]
     })
-
+    const style = {
+      currency: 'u-body2 text-grey1 flex-1 break-all max-h-37 overflow-auto'
+    }
     return () => (
       <div>
         <div class="text-primary u-h2 mb-6">My Dashboard</div>
@@ -49,7 +58,10 @@ const DashboardPage = defineComponent({
           title="MY PROFILE"
           size="small"
           v-slots={{
-            'header-extra': () => !!myProfile.value && <EditProfile myProfile={myProfile.value} />
+            'header-extra': () =>
+              !!myProfile.value && (
+                <EditProfile myProfile={myProfile.value} getDataList={getDataList} />
+              )
           }}
         >
           <div class="flex">
@@ -66,6 +78,7 @@ const DashboardPage = defineComponent({
                       <UAddress
                         autoSlice={true}
                         class="ml-1.5 u-body2 text-primary"
+                        blockchainExplorerUrl={walletStore.blockchainExplorerUrl}
                         address={walletStore.address}
                       />
                     )}
@@ -73,13 +86,20 @@ const DashboardPage = defineComponent({
                 </div>
               </div>
               <div class="mt-2">
-                {myInfo.value?.map(info => {
+                {myInfo.value?.map((info, i) => {
                   return (
-                    <div class="flex mb-3 mt-3 break-words">
+                    <div key={info.label} class="flex mb-3 mt-3 break-words">
                       <div class="u-label2 uppercase text-grey3 w-50">{info.label}</div>
-                      <div class="u-body2 text-grey1 flex-1 break-all max-h-37 overflow-auto">
-                        {info.value}
-                      </div>
+                      {i + 1 === 4 ? (
+                        <UScrollbar class="flex-1">
+                          <div class={[i + 1 === 4 ? 'h-148' : '', style.currency]}>
+                            {info.value}
+                          </div>
+                        </UScrollbar>
+                      ) : (
+                        <div class={[i + 1 === 4 ? 'h-148' : '', style.currency]}>{info.value}</div>
+                      )}
+                      {/* <div class={[i + 1 === 4 ? 'h-148' : '', style.currency]}>{info.value}</div> */}
                     </div>
                   )
                 })}

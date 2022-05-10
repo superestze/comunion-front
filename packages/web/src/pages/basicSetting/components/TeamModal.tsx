@@ -1,6 +1,5 @@
-import { UModal, UFormItemsFactory, UButton } from '@comunion/components'
-import ULazyImage from '@comunion/components/src/ULazyImage/LazyImage'
-import { defineComponent, inject, reactive, ref } from 'vue'
+import { UModal, UFormItemsFactory, UButton, UAddress, ULazyImage } from '@comunion/components'
+import { defineComponent, inject, reactive, ref, PropType } from 'vue'
 
 // interface teamList {
 //   comerProfile: any | null | undefined
@@ -25,6 +24,9 @@ const TeamModal = defineComponent({
     teamList: {
       type: Object,
       required: true
+    },
+    onCancel: {
+      type: Function as PropType<() => void>
     }
   },
   setup(props, ctx) {
@@ -35,7 +37,8 @@ const TeamModal = defineComponent({
         name: 'roles',
         roles: '',
         required: true,
-        placeholder: 'Plealse position, link developer...'
+        placeholder: 'Enter roles,link developer...',
+        maxlength: 50
       }
     ]
 
@@ -58,7 +61,7 @@ const TeamModal = defineComponent({
     const PARENT_PROVIDE = 'parentProvide'
     // const parent = inject(PARENT_PROVIDE)
     const parentTestFun: any = inject(`${PARENT_PROVIDE}/teamCreate`)
-    const parentUpDataFun: any = inject(`${PARENT_PROVIDE}/upData`)
+    const parentUpDateFun: any = inject(`${PARENT_PROVIDE}/upDate`)
     // const cancel = () => {
     //   ctx.emit('update:show', false)
     //   selectedAvatar.value = ''
@@ -70,10 +73,11 @@ const TeamModal = defineComponent({
         }
       })
       ctx.emit('update:show', false)
+      props.onCancel?.()
     }
     const onSubmit = () => {
       if (props.teamList?.comer) {
-        parentUpDataFun?.(value)
+        parentUpDateFun?.(value)
       } else {
         parentTestFun?.(value)
       }
@@ -83,6 +87,7 @@ const TeamModal = defineComponent({
     const slots = {
       header: () => <div class="px-2 py-3 u-title1 text-20px">Team Setting</div>
     }
+
     return () => (
       <>
         <section>
@@ -101,14 +106,20 @@ const TeamModal = defineComponent({
               <div class="flex flex-row">
                 <div class="flex-3">
                   <ULazyImage
-                    src="https://img0.baidu.com/it/u=636628865,1288536139&fm=253&fmt=auto&app=138&f=JPEG?w=500&h=667"
+                    src={props.teamList.comerProfile?.avatar}
                     class="h-18 w-18 rounded justify-between mb-6 mr-4 cursor-pointer rounded-1\/2 ml-4 mt-4"
                   />
                 </div>
                 <div class="flex-7 ">
                   {!props.show}
                   <div class="font-bold text-25px mt-5">{props.teamList.comerProfile?.name}</div>
-                  <div class="text-primary mt-5">{address.value}</div>
+                  <div class="text-primary mt-5">
+                    <UAddress
+                      autoSlice={true}
+                      class="ml-1.5 u-body2 text-primary"
+                      address={address.value}
+                    />
+                  </div>
                 </div>
               </div>
             </div>

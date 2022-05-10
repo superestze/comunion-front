@@ -115,13 +115,14 @@ const UStyleProvider = defineComponent({
         primaryColorHover: props.primaryColor,
         primaryColorPressed: props.primaryColor,
         successColorHover: props.successColor,
-        successColorPressed: props.successColor
+        successColorPressed: props.successColor,
+        textColor2: props.grey1Color
       },
       Form: {
         asteriskColor: props.errorColor
       },
       Button: {
-        colorHoverPrimary: props.primary1Color,
+        colorHoverPrimary: props.primaryColor,
         colorPressedPrimary: props.primary1Color,
         colorFocusPrimary: props.primary1Color,
         textColorGhostPrimary: props.primaryColor,
@@ -142,7 +143,7 @@ const UStyleProvider = defineComponent({
         borderError: `1px solid ${props.errorColor}`,
         borderDisabled: `1px solid ${props.grey5Color}`,
         placeholderColor: props.grey3Color,
-        textColor: props.grey3Color,
+        // textColor: props.grey3Color,
         fontSizeLarge: '16px',
         paddingLarge: '16px'
       },

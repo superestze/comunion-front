@@ -2,7 +2,12 @@ import { readObject, removeObject, storeObject } from '@comunion/utils'
 import type { providers } from 'ethers'
 import { defineStore } from 'pinia'
 import { markRaw } from 'vue'
-import { STORE_KEY_WALLET_CONNECTED, STORE_KEY_WALLET_TYPE } from '@/constants'
+import {
+  STORE_KEY_WALLET_CONNECTED,
+  STORE_KEY_WALLET_TYPE,
+  allNetworks,
+  supportedChainIds
+} from '@/constants'
 import { SupportedWalletTypes } from '@/types/wallet'
 import { getWallet } from '@/wallets'
 import AbstractWallet from '@/wallets/AbstractWallet'
@@ -12,10 +17,10 @@ export type WalletState = {
   inited: boolean
   // wallet address
   address?: string
-  // current chain name
-  chainName?: string
   // current chain id
   chainId?: number
+  // current chain name
+  chainName?: string
   // connected wallet type
   walletType?: SupportedWalletTypes
   // wallet instance
@@ -30,6 +35,9 @@ export type WalletState = {
 let _resolve: (() => void) | undefined
 let _reject: (() => void) | undefined
 
+// hack
+let _openNetworkSwitcher: () => void | undefined
+
 export const useWalletStore = defineStore('wallet', {
   state: (): WalletState => ({
     inited: false,
@@ -41,6 +49,11 @@ export const useWalletStore = defineStore('wallet', {
     wallet: undefined,
     connectModalOpened: false
   }),
+  getters: {
+    isNetworkSupported: state =>
+      state.chainId ? supportedChainIds.includes(state.chainId) : false,
+    blockchainExplorerUrl: state => allNetworks.find(n => n.chainId === state.chainId)?.explorerUrl
+  },
   actions: {
     async init() {
       if (this.inited) return
@@ -105,6 +118,10 @@ export const useWalletStore = defineStore('wallet', {
     openConnectModal() {
       this.connectModalOpened = true
     },
+    closeConnectModal() {
+      this.connectModalOpened = false
+      this.resolveWalletConnect(false)
+    },
     async onSelectWallet(walletType: SupportedWalletTypes) {
       const wallet = await getWallet(walletType)
       if (wallet) {
@@ -132,6 +149,16 @@ export const useWalletStore = defineStore('wallet', {
           _reject = reject
         })
       }
+    },
+    // open network switcher
+    openNetworkSwitcher() {
+      _openNetworkSwitcher?.()
+    },
+    // set network switcher function
+    setOpenNetworkSwitcher(fn: () => void) {
+      _openNetworkSwitcher = fn
     }
   }
 })
+
+export type WalletStore = ReturnType<typeof useWalletStore>

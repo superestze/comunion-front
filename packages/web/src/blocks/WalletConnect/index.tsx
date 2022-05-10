@@ -19,11 +19,16 @@ const WalletConnectBlock = defineComponent({
       walletStore.connectModalOpened = value
     }
 
+    const onWalletCancel = () => {
+      walletStore.closeConnectModal()
+    }
+
     return () => (
       <UWalletConnect
         show={walletStore.connectModalOpened}
         onUpdateShow={updateModalOpened}
         onClick={onWalletClick}
+        onClose={onWalletCancel}
       />
     )
   }

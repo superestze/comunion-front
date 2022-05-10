@@ -7,7 +7,7 @@
 }
 
 .team_members {
-  @apply absolute bottom-3 flex;
+  @apply py-3 px-6 w-full absolute bottom-3 flex;
 }
 
 .members_svg {

@@ -1,4 +1,4 @@
-import { WalletConnectFilled, MetamaskFilled } from '@comunion/icons'
+import { WalletConnectFilled, MetamaskFilled, CloseOutlined } from '@comunion/icons'
 import { NGrid, NGridItem, NModal } from 'naive-ui'
 import type { ExtractPropTypes, PropType } from 'vue'
 import { defineComponent } from 'vue'
@@ -14,6 +14,9 @@ export const UWalletConnectProps = {
   },
   onClick: {
     type: Function as PropType<(type: 'MetaMask' | 'WalletConnect') => void>
+  },
+  onClose: {
+    type: Function as PropType<() => void>
   }
 } as const
 
@@ -24,10 +27,17 @@ const UWalletConnect = defineComponent({
   props: UWalletConnectProps,
   setup(props) {
     return () => (
-      <NModal show={props.show} onUpdateShow={props.onUpdateShow} maskClosable>
+      <NModal
+        show={props.show}
+        onUpdateShow={props.onUpdateShow}
+        maskClosable
+        onMaskClick={props.onClose}
+      >
         <div class="u-wallet-connect">
-          <p class="u-wallet-connect__title">Select a Wallet</p>
-          <p class="u-wallet-connect__subtitle">Please select a wallet to connect to Comunion</p>
+          <CloseOutlined class="u-wallet-connect__close-icon" onClick={props.onClose} />
+          <p class="u-wallet-connect__subtitle">
+            Please connect your MeteMask or scan with WalletConnect
+          </p>
           <NGrid xGap={16} yGap={16} cols={2} class="u-wallet-connect__wallets">
             <NGridItem>
               <div class="u-wallet-connect__wallet" onClick={() => props.onClick?.('MetaMask')}>
@@ -47,7 +57,7 @@ const UWalletConnect = defineComponent({
               </div>
             </NGridItem>
           </NGrid>
-          <a class="text-primary">What is wallet？</a>
+          {/* <a class="text-primary">What is wallet？</a> */}
         </div>
       </NModal>
     )

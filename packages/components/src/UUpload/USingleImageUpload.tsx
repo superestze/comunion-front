@@ -30,6 +30,10 @@ export const USingleImageUploadProps = {
     type: Number,
     required: false,
     default: 1024 * 1024 * 10
+  },
+  disabled: {
+    type: Boolean,
+    default: false
   }
 } as const
 
@@ -95,6 +99,7 @@ const USingleImageUpload = defineComponent({
         accept={props.accept}
         onBeforeUpload={onBeforeUpload}
         customRequest={customRequest}
+        disabled={props.disabled}
       >
         <div class="u-single-upload-inner">
           {/* image wrapper */}

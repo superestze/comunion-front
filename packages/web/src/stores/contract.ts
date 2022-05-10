@@ -4,6 +4,7 @@ import type {
 } from '@comunion/components'
 
 import { defineStore } from 'pinia'
+import { reactive } from 'vue'
 import { DeepWriteable } from '@/utils/type'
 
 export type TransacationType = {
@@ -42,14 +43,15 @@ export const useContractStore = defineStore('contract', {
     ) {
       this.contract.status = status as UContractInteractionStatus
       if (ret.success) {
-        const transaction: ContractState['transacations'][number] = {
+        const transaction: ContractState['transacations'][number] = reactive({
           hash: ret.hash,
           text: ret.text,
           status: 'pending'
-        }
+        })
         this.transacations.push(transaction)
         try {
           await ret.promiseFn()
+          console.log(`tx ${ret.hash} success`)
           transaction.status = 'success'
         } catch (error) {
           transaction.status = 'failed'

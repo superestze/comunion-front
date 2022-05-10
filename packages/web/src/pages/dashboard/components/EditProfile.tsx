@@ -11,6 +11,9 @@ const EditProfile = defineComponent({
     myProfile: {
       type: Object as PropType<ServiceReturn<'account@comer-profile-get'>>,
       required: true
+    },
+    getDataList: {
+      type: Function as PropType<() => void>
     }
   },
   setup(props, ctx) {
@@ -27,18 +30,19 @@ const EditProfile = defineComponent({
         title: 'Name',
         name: 'name',
         required: true,
-        placeholder: 'what do you want people to call you ?'
+        placeholder: 'Input your name',
+        maxlength: 24
       },
       {
         title: 'Location',
         name: 'location',
-        placeholder: 'Please enter the city of residence'
+        placeholder: 'Add your location'
       },
       {
         t: 'website',
         title: 'Website',
         name: 'website',
-        placeholder: 'Your home page, blog, or company site'
+        placeholder: 'Add your homepage,blog,website .etc'
       },
       {
         t: 'hashInput',
@@ -46,7 +50,7 @@ const EditProfile = defineComponent({
         title: 'Skills',
         name: 'skills',
         required: true,
-        placeholder: '#Enter you skill tag'
+        placeholder: 'Add your skill tag'
       },
       {
         title: 'Bio',
@@ -78,9 +82,10 @@ const EditProfile = defineComponent({
         ...(values as ServiceArg<'account@comer-profile-update'>),
         avatar: avatar.value
       })
-
+      console.log(error)
       if (!error) {
         userStore.mergeProfile(values)
+        props.getDataList?.()
       }
       show.value = false
     }
@@ -104,7 +109,7 @@ const EditProfile = defineComponent({
                   <ULazyImage src={avatar.value} class="h-20 w-20 rounded" />
                 </div>
                 <a class="u-title2 text-primary cursor-pointer" onClick={showAvatarSelect}>
-                  Choose your avatar
+                  Update
                 </a>
               </div>
 
@@ -112,7 +117,7 @@ const EditProfile = defineComponent({
                 initialValues={profileInfo}
                 fields={fields}
                 showCancel={true}
-                submitText="Confirm"
+                submitText="Submit"
                 cancelText="Cancel"
                 onSubmit={onSubmit}
                 onCancel={onCancel}
