@@ -1,6 +1,6 @@
 import { ULazyImage, message } from '@comunion/components'
 import { EditFilled, DeleteFilled } from '@comunion/icons'
-import { defineComponent, ref, inject, provide, PropType } from 'vue'
+import { defineComponent, ref, inject, provide, PropType, watch } from 'vue'
 import TeamModal from './TeamModal'
 import { services } from '@/services'
 export const root = ref(null)
@@ -41,7 +41,13 @@ const TeamCard = defineComponent({
       comerID: props.teamMember?.comerProfile.comerID,
       teamList: props.teamMember
     })
-
+    watch(
+      () => props.teamMember,
+      n => {
+        console.log(n)
+        paramsList.value.comerID = n!.comerProfile.comerID
+      }
+    )
     const PARENT_PROVIDE = 'parentProvide'
     // const parent = inject(PARENT_PROVIDE)
     const parentUpDateFun: any = inject(`${PARENT_PROVIDE}/teamUpdate`)
