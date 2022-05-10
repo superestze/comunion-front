@@ -1,4 +1,5 @@
 import { UDeveloping, UTabPane, UTabs, UScrollbar } from '@comunion/components'
+import { EmptyFilled } from '@comunion/icons'
 import { defineComponent, onMounted, ref, provide } from 'vue'
 import StartupCard from '@/pages/welcome/components/StartupCard'
 import { services } from '@/services'
@@ -57,7 +58,9 @@ const Recommend = defineComponent({
                     {startups.value.length !== 0 ? (
                       startups.value.map(startup => <StartupCard startup={startup} />)
                     ) : (
-                      <UDeveloping />
+                      <UDeveloping>
+                        <EmptyFilled class="mt-34" />
+                      </UDeveloping>
                     )}
                     {/* <div class="u-paginated-list mt-3">
                     {pageList.total && (
