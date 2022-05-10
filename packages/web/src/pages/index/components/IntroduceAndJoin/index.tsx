@@ -30,8 +30,8 @@ export default defineComponent({
           <div class="mt-24px text-center text-white text-13px text-opacity-80 leading-15px sm:mt-36px sm:text-22px sm:leading-30px">
             <p class="text-bold">Comunion is startup protocol</p>
             <p class="m-auto mt-19px w-330px sm:w-780px">
-              A revolutionary innovative decentralized multi-chain protocol dedicated to building a
-              thriving and collaborative work ecosystem, community, and economy.
+              A revolutionary decentralized multi-chain protocol dedicated to building a thriving
+              and collaborative work ecosystem, community and economy.
             </p>
           </div>
           {/* Join Comunion*/}
