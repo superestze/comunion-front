@@ -72,7 +72,8 @@ const EditStartupForm = defineComponent({
         t: 'singleImageUpload',
         title: '',
         name: 'logo',
-        text: 'Update'
+        text: 'Update',
+        disabled: true
       },
       {
         t: 'custom',

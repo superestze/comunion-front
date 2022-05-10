@@ -4,7 +4,9 @@ import {
   UMessage,
   UMessageProvider,
   UContractInteraction,
-  UUploadProvider
+  UUploadProvider,
+  ULoadingBarProvider,
+  ULoadingBar
 } from '@comunion/components'
 import { defineComponent } from 'vue'
 import { RouterView } from 'vue-router'
@@ -43,12 +45,15 @@ export default defineComponent({
           <UMessage />
         </UMessageProvider>
         <UContractInteraction {...contractStore.contract} />
-        <UUploadProvider onUpload={onUpload}>
-          <UHashInputProvider onSearch={onSearchHash}>
-            {/* {userStore.inited && walletStore.inited && <RouterView />} */}
-            <RouterView />
-          </UHashInputProvider>
-        </UUploadProvider>
+        <ULoadingBarProvider>
+          <ULoadingBar />
+          <UUploadProvider onUpload={onUpload}>
+            <UHashInputProvider onSearch={onSearchHash}>
+              {/* {userStore.inited && walletStore.inited && <RouterView />} */}
+              <RouterView />
+            </UHashInputProvider>
+          </UUploadProvider>
+        </ULoadingBarProvider>
         <WalletConnectBlock />
       </UStyleProvider>
     )

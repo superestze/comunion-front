@@ -9,7 +9,7 @@ const TheHeader = defineComponent({
   name: 'TheHeader',
   setup(props, ctx) {
     return () => (
-      <div class="flex h-24 items-center">
+      <div class="flex h-24.5 items-center">
         <RouterLink to="/welcome">
           <ULogo height={32} withText theme="colorful" />
         </RouterLink>

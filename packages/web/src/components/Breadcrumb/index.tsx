@@ -43,7 +43,7 @@ const Breadcrumb = defineComponent({
             {breadcrumbData.value.map((item, index) => (
               <UBreadcrumbItem key={item.path} v-slots={slots}>
                 {index == breadcrumbData.value.length - 1 ? (
-                  <span class="u-label2 uppercase text-primary">{item.name}</span>
+                  <span class="u-label1 uppercase text-primary">{item.name}</span>
                 ) : (
                   <span
                     class="u-label1 uppercase text-primary"
