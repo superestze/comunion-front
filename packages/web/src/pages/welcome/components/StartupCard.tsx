@@ -14,7 +14,7 @@ const StartupCard = defineComponent({
   setup(props, ctx) {
     return () => (
       <>
-        <div class="flex flex-row h-45 pt-6 pb-6 border-b border-grey5">
+        <div class="flex flex-row h-50 pt-6 pb-6 border-b border-grey5">
           <div class="logo mr-4">
             <UStartupLogo
               src={props.startup!.logo}
