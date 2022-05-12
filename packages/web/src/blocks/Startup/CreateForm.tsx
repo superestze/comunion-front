@@ -125,8 +125,8 @@ const CreateStartupForm = defineComponent({
               )
               onCancel()
             } catch (error) {
-              message.error('Failed to create startup, please check your network and contract')
-              console.error(error)
+              // message.error('Failed to create startup, please check your network and contract')
+              // console.error(error)
               // message.error(error.message)
             }
           } catch (e) {
@@ -142,7 +142,7 @@ const CreateStartupForm = defineComponent({
         t: 'singleImageUpload',
         title: '',
         name: 'logo',
-        text: 'Upload'
+        text: 'Update'
       },
       {
         t: 'string',
@@ -190,7 +190,11 @@ const CreateStartupForm = defineComponent({
             required: true,
             message: 'Please enter a description of at least 100 letters'
           }
-        ]
+        ],
+        autosize: {
+          minRows: 5,
+          maxRows: 8
+        }
       }
     ]
     const infoRules = getFieldsRules(infoFields)
