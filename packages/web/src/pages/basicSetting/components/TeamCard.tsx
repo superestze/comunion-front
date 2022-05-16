@@ -107,7 +107,7 @@ const TeamCard = defineComponent({
               />
             </div>
             {props.paramsList?.comerID === paramsList.value.comerID ? null : (
-              <div class="w-7 h-7 rounded-md bg-white leading-10">
+              <div class="w-7 h-7 rounded-md bg-white leading-10 mr-5">
                 <DeleteFilled
                   class="w-5 h-5 m-auto leading-8 mt-1 cursor-pointer"
                   onClick={teamDelete}
