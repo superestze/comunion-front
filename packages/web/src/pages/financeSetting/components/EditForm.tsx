@@ -43,15 +43,17 @@ const EditStartupForm = defineComponent({
       return dayjs(dataTime).format('YYYY-MM-DD')
     }
     const dateList = ref({
+      // presaleDate: props.startup?.presaleDate || [],
       presaleDate: props.startup?.presaleDate || '',
       launchDate: props.startup?.launchDate || ''
     })
     console.log(new Date(dateList.value.launchDate).getTime())
     const defaultModel = {
+      // presaleDate: presaleDateChange1(dateList.value.presaleDate),
       presaleDate: new Date(dateList.value.presaleDate).getTime() || null,
       launchDate: new Date(dateList.value.launchDate).getTime() || null,
       contract: props.startup!.tokenContractAddress || '',
-      network: 'Ethereum',
+      network: null,
       composes:
         props.startup!.wallets?.length > 0
           ? props.startup!.wallets.map(w => ({
@@ -65,6 +67,14 @@ const EditStartupForm = defineComponent({
               }
             ]
     }
+
+    // function presaleDateChange1(val: any) {
+    //   const date = []
+    //   date[0] = new Date(val[0]).getTime()
+    //   date[1] = new Date(val[1]).getTime()
+    //   return date
+    // }
+
     const networkList = ref([
       {
         label: 'Ethereum',
@@ -176,6 +186,13 @@ const EditStartupForm = defineComponent({
       })
     }
 
+    function presaleDateChange() {
+      const date = []
+      date[0] = new Date(dateList.value.presaleDate[0]).getTime() || null
+      date[1] = new Date(dateList.value.presaleDate[1]).getTime() || null
+      // return date
+    }
+
     const allRules: Record<string, FormItemRule[]> = {
       tokenContract: [{ required: true, message: 'Token contract is required', trigger: 'blur' }],
       composes: [{ required: true, type: 'array', min: 1 }]
@@ -201,6 +218,7 @@ const EditStartupForm = defineComponent({
             <USelect
               v-model:value={model.network}
               options={networkList.value}
+              placeholder="Select your launch network"
               renderLabel={(option: any) => {
                 return [
                   h(<UImage src={option.src} class="w-5 h-5 inline float-left mr-2" />),
@@ -246,20 +264,24 @@ const EditStartupForm = defineComponent({
             onChange={onTokenContractChange}
           />
         </UFormItem>
-        <UFormItem label="Presale date" label-style={divStyle}>
+        <UFormItem label="Presale" label-style={divStyle}>
           <div class="w-full">
             <UDatePicker
               v-model:value={model.presaleDate}
-              type="date"
-              placeholder="yy-mm-dd (UTC time zone)"
+              onChange={presaleDateChange}
+              type="daterange"
+              clearable
+              startPlaceholder="yy-mm-dd (UTC time zone)"
+              endPlaceholder="yy-mm-dd (UTC time zone)"
             />
           </div>
         </UFormItem>
-        <UFormItem label="Launch date" label-style={divStyle}>
+        <UFormItem label="Launch" label-style={divStyle}>
           <div class="w-full">
             <UDatePicker
               v-model:value={model.launchDate}
               type="date"
+              clearable
               placeholder="yy-mm-dd (UTC time zone)"
             />
           </div>
