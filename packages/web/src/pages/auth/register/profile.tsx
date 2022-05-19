@@ -4,6 +4,7 @@ import { defineComponent, ref } from 'vue'
 import { useRouter } from 'vue-router'
 import successImg from './assets/success.svg'
 import RegisterLayout from './components/Layout'
+import { UTC_OPTIONS } from '@/constants'
 import { ServiceArg, services } from '@/services'
 import { useUserStore } from '@/stores'
 
@@ -52,6 +53,39 @@ const RegisterProfilePage = defineComponent({
           minRows: 5,
           maxRows: 10
         }
+      },
+      {
+        title: 'Email',
+        name: 'email',
+        required: true,
+        placeholder: 'enter the correct email address'
+      },
+      {
+        t: 'website',
+        title: 'Twitter',
+        name: 'twitter'
+      },
+      {
+        t: 'website',
+        title: 'Discord',
+        name: 'discord'
+      },
+      {
+        t: 'website',
+        title: 'Telegram',
+        name: 'telegram'
+      },
+      {
+        t: 'website',
+        title: 'Medium',
+        name: 'medium'
+      },
+      {
+        t: 'select',
+        title: 'Time Zone',
+        name: 'timeZone',
+        required: true,
+        options: UTC_OPTIONS.map(item => ({ label: item, value: item }))
       }
     ]
 

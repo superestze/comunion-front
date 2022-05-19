@@ -6,6 +6,7 @@ import {
   USearch
 } from '@comunion/components'
 import { defineComponent, ref, computed } from 'vue'
+import { useRouter } from 'vue-router'
 import StartupCard from './components/StartupCard'
 import { StartupTypesType, STARTUP_TYPES } from '@/constants'
 import { services } from '@/services'
@@ -14,6 +15,7 @@ import { StartupItem } from '@/types'
 const StartupsPage = defineComponent({
   name: 'StartupsPage',
   setup() {
+    const router = useRouter()
     const startupType = ref<string | undefined>(undefined)
     const inputMember = ref<string>('')
     const total = ref(0)
@@ -33,6 +35,10 @@ const StartupsPage = defineComponent({
         return { items: error ? [] : data!.list!, total: _total }
       }
     )
+
+    const toStartDetail = (startupInfo: StartupItem) => {
+      router.push({ path: '/startupdetail', query: { startupId: startupInfo!.id } })
+    }
 
     return () => (
       <div class="mt-10 mb-16">
@@ -62,7 +68,7 @@ const StartupsPage = defineComponent({
             return (
               <div class="grid pb-6 gap-8 grid-cols-1 md:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4">
                 {startups.map(startup => (
-                  <StartupCard key={startup!.id} startup={startup} />
+                  <StartupCard key={startup!.id} startup={startup} onClick={toStartDetail} />
                 ))}
               </div>
             )

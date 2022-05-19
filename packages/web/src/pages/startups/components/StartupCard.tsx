@@ -8,6 +8,7 @@ import { StartupItem } from '@/types'
 
 const StartupCard = defineComponent({
   name: 'StartupCard',
+  emits: ['click'],
   props: {
     startup: {
       type: Object as PropType<StartupItem>,
@@ -24,7 +25,10 @@ const StartupCard = defineComponent({
     const modeName = getStartupTypeFromNumber(props.startup!.mode) as StartupTypesType
 
     return () => (
-      <div class="bg-white rounded h-80 relative">
+      <div
+        class="bg-white rounded h-80 relative cursor-pointer"
+        onClick={() => ctx.emit('click', props.startup)}
+      >
         <div class={styles.cardBorder}></div>
         <div class="p-6">
           <div class="flex">
