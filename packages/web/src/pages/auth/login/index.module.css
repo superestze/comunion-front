@@ -1,6 +1,6 @@
 .oauthBtn {
   /* TODO after finished social login, please remove cursor-not-allowed and change border-grey-5 to border-primary */
-  @apply border-grey-5 rounded cursor-pointer cursor-not-allowed flex border-[2px] h-16 transition-all w-16 duration-500 items-center justify-center;
+  @apply rounded cursor-pointer flex border-grey-5 border-[2px] h-16 transition-all w-16 duration-500 items-center justify-center;
 
   &:hover {
     @apply rounded-4xl;
