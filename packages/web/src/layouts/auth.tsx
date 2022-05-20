@@ -21,7 +21,7 @@ const AuthLayout = defineComponent({
       }
     })
 
-    return () => (userStore.logged && userStore.isProfiled ? <RouterView /> : null)
+    return () => (userStore.logged && userStore.isProfiled ? null : <RouterView />)
   }
 })
 

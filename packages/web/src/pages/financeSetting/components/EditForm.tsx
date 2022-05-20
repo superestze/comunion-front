@@ -1,7 +1,6 @@
 import {
   FormInst,
   FormItemRule,
-  message,
   UForm,
   UFormItem,
   UAddressInput,
@@ -10,7 +9,8 @@ import {
   UButton,
   UDatePicker,
   USelect,
-  UImage
+  UImage,
+  message
 } from '@comunion/components'
 import { CloseOutlined, PlusOutlined } from '@comunion/icons'
 import dayjs from 'dayjs'
@@ -45,12 +45,14 @@ const EditStartupForm = defineComponent({
     const dateList = ref({
       // presaleDate: props.startup?.presaleDate || [],
       presaleDate: props.startup?.presaleDate || '',
-      launchDate: props.startup?.launchDate || ''
+      launchDate: props.startup?.launchDate || '',
+      presaleStartDate: null || 0,
+      presaleEndDate: null || 0
     })
-    console.log(new Date(dateList.value.launchDate).getTime())
     const defaultModel = {
-      // presaleDate: presaleDateChange1(dateList.value.presaleDate),
       presaleDate: new Date(dateList.value.presaleDate).getTime() || null,
+      // presaleDate: Number([]),
+      // presaleDate: ref<number | [number, number] | null>(null),
       launchDate: new Date(dateList.value.launchDate).getTime() || null,
       contract: props.startup!.tokenContractAddress || '',
       network: null,
@@ -134,6 +136,8 @@ const EditStartupForm = defineComponent({
 
     onMounted(() => {
       onTokenContractChange(defaultModel.contract)
+      // const date = [new Date('2021-10-2').getTime(), new Date('2021-10-2').getTime()]
+      // defaultModel.presaleDate.value = date
     })
 
     function addCompose() {
@@ -185,12 +189,9 @@ const EditStartupForm = defineComponent({
         }
       })
     }
-
-    function presaleDateChange() {
-      const date = []
-      date[0] = new Date(dateList.value.presaleDate[0]).getTime() || null
-      date[1] = new Date(dateList.value.presaleDate[1]).getTime() || null
-      // return date
+    function presaleDateChange(val: any) {
+      dateList.value.presaleStartDate = new Date(val[0]).getTime()
+      dateList.value.presaleEndDate = new Date(val[1]).getTime()
     }
 
     const allRules: Record<string, FormItemRule[]> = {
@@ -268,11 +269,12 @@ const EditStartupForm = defineComponent({
           <div class="w-full">
             <UDatePicker
               v-model:value={model.presaleDate}
-              onChange={presaleDateChange}
               type="daterange"
               clearable
               startPlaceholder="yy-mm-dd (UTC time zone)"
               endPlaceholder="yy-mm-dd (UTC time zone)"
+              onChange={presaleDateChange}
+              update:value={presaleDateChange}
             />
           </div>
         </UFormItem>
