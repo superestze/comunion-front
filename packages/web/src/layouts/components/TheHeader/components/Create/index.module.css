@@ -35,3 +35,13 @@
     }
   }
 }
+
+.btn {
+  @apply border-none flex outline-none rounded-3xl h-10 text-white pr-5 pl-4 transition-all items-center appearance-none;
+
+  background: linear-gradient(270deg, #8d6ff6 0%, #5192f6 100%);
+
+  &:hover {
+    background: linear-gradient(270deg, #5192f6 0%, #8d6ff6 100%);
+  }
+}
