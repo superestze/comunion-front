@@ -27,10 +27,23 @@ const RegisterProfilePage = defineComponent({
         placeholder: 'Please enter the city of residence'
       },
       {
+        t: 'select',
+        title: 'Time Zone',
+        name: 'timeZone',
+        required: true,
+        options: UTC_OPTIONS.map(item => ({ label: item, value: item }))
+      },
+      {
         t: 'website',
         title: 'Website',
         name: 'website',
         placeholder: 'Your home page, blog, or company site'
+      },
+      {
+        title: 'Email',
+        name: 'email',
+        required: true,
+        placeholder: 'enter the correct email address'
       },
       {
         t: 'hashInput',
@@ -39,26 +52,6 @@ const RegisterProfilePage = defineComponent({
         name: 'skills',
         required: true,
         placeholder: '#Enter you skill tag'
-      },
-      {
-        title: 'Bio',
-        name: 'bio',
-        required: true,
-        type: 'textarea',
-        placeholder: 'Tell us about yourself, at least 100 characters',
-        minlength: 100,
-        rules: [{ min: 100, message: 'Tell us about yourself, at least 100 characters' }],
-        // @ts-ignore
-        autosize: {
-          minRows: 5,
-          maxRows: 10
-        }
-      },
-      {
-        title: 'Email',
-        name: 'email',
-        required: true,
-        placeholder: 'enter the correct email address'
       },
       {
         t: 'website',
@@ -81,11 +74,18 @@ const RegisterProfilePage = defineComponent({
         name: 'medium'
       },
       {
-        t: 'select',
-        title: 'Time Zone',
-        name: 'timeZone',
+        title: 'Bio',
+        name: 'bio',
         required: true,
-        options: UTC_OPTIONS.map(item => ({ label: item, value: item }))
+        type: 'textarea',
+        placeholder: 'Tell us about yourself, at least 100 characters',
+        minlength: 100,
+        rules: [{ min: 100, message: 'Tell us about yourself, at least 100 characters' }],
+        // @ts-ignore
+        autosize: {
+          minRows: 5,
+          maxRows: 10
+        }
       }
     ]
 
