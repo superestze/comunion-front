@@ -1,4 +1,4 @@
-import { UButton, UDropdown } from '@comunion/components'
+import { UDropdown } from '@comunion/components'
 import {
   PlusOutlined,
   CreateStartupFilled,
@@ -89,10 +89,10 @@ const CreateBlock = defineComponent({
             }
           ]}
         >
-          <UButton class={['rounded-lg text-primary px-5', ctx.attrs.class]} type="primary" ghost>
-            <PlusOutlined class="h-4 mr-3 w-4" />
-            <span class="text-primary u-label1">CREATE</span>
-          </UButton>
+          <button class={[styles.btn, ctx.attrs.class]}>
+            <PlusOutlined class="h-6 mr-1.5 text-white w-6" />
+            <span class="text-white u-body1">CREATE</span>
+          </button>
         </UDropdown>
       </>
     )

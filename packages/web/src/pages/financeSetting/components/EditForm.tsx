@@ -50,11 +50,11 @@ const EditStartupForm = defineComponent({
     const defaultModel = {
       presaleDate: new Date(dateList.value.presaleDate).getTime() || null,
       launchDate: new Date(dateList.value.launchDate).getTime() || null,
-      contract: props.startup!.tokenContractAddress || '',
+      contract: props.startup.tokenContractAddress || '',
       network: 'Ethereum',
       composes:
-        props.startup!.wallets?.length > 0
-          ? props.startup!.wallets.map(w => ({
+        props.startup.wallets?.length > 0
+          ? props.startup.wallets.map(w => ({
               walletName: w.walletName,
               walletAddress: w.walletAddress
             }))
@@ -154,8 +154,8 @@ const EditStartupForm = defineComponent({
           loading.value = true
           try {
             const { data } = await services['startup@startup-finance-setting-update']({
-              startupId: props.startup!.id,
-              tokenContractAddress: props.startup!.tokenContractAddress,
+              startupId: props.startup.id,
+              tokenContractAddress: props.startup.tokenContractAddress,
               presaleDate: dateToISO(model.presaleDate),
               launchDate: dateToISO(model.launchDate),
               wallets: model.composes
@@ -188,8 +188,8 @@ const EditStartupForm = defineComponent({
 
     return () => (
       <UForm ref={formRef} rules={allRules} model={model}>
-        <p class="mb-7 uppercase u-card-title1 text-[#3F2D99]">FINANCE SETTING</p>
-        <ul class="u-body1 border rounded-lg list-disc border-grey5 mb-6 p-4 pl-8 text-body1 relative">
+        <p class="mb-7 text-[#3F2D99] uppercase u-card-title1">FINANCE SETTING</p>
+        <ul class="border rounded-lg list-disc border-grey5 mb-6 p-4 pl-8 text-body1 relative u-body1">
           <li>First, shilling startup by filling token information</li>
           <li>
             If you have not a token yet， please contact comunion team help you to create your
@@ -203,7 +203,7 @@ const EditStartupForm = defineComponent({
               options={networkList.value}
               renderLabel={(option: any) => {
                 return [
-                  h(<UImage src={option.src} class="w-5 h-5 inline float-left mr-2" />),
+                  h(<UImage src={option.src} class="h-5 mr-2 w-5 inline float-left" />),
                   option.label as string
                 ]
               }}

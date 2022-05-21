@@ -1,3 +1,3 @@
 import { ServiceReturn } from '@/services'
 
-export type StartupItem = ServiceReturn<'startup@startup-get'>
+export type StartupItem = NonNullable<ServiceReturn<'startup@startup-list'>>['list'][number]
