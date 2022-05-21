@@ -21,8 +21,8 @@ function getHeaders(): AxiosRequestHeaders {
 }
 
 function onErrorHandler(error: any): {
-  error: true,
-  data: null,
+  error: true
+  data: null
   message?: string
 } {
   const userStore = useUserStore()
