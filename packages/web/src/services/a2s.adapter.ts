@@ -20,7 +20,11 @@ function getHeaders(): AxiosRequestHeaders {
     : {}
 }
 
-function onErrorHandler(error: any) {
+function onErrorHandler(error: any): {
+  error: true,
+  data: null,
+  message?: string
+} {
   const userStore = useUserStore()
   try {
     const rep: BaseResponse = error.response.data

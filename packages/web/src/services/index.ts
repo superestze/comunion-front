@@ -251,6 +251,7 @@ export const services = {
       ...extract('GET', args, [], [])
     })
   },
+
   'startup@startup-get'(args: { startupId: any }) {
     return requestAdapter<{
       id: number
@@ -297,6 +298,8 @@ export const services = {
         walletName: string
         walletAddress: string
       }[]
+      memberCount: number
+      followCount: number
     }>({
       url: replacePath('/cores/startups/{startupId}', args),
       method: 'GET',
