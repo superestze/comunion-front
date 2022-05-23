@@ -1,11 +1,12 @@
-import { UButton, ULazyImage, UTag } from '@comunion/components'
+import { UButton, UStartupLogo, UTag } from '@comunion/components'
 import {
   WebsiteFilled,
   DiscordFilled,
   TelegramFilled,
   TwitterFilled,
   DocsFilled,
-  HookFilled
+  HookFilled,
+  PlusOutlined
 } from '@comunion/icons'
 import dayjs from 'dayjs'
 import utcPlugin from 'dayjs/plugin/utc'
@@ -24,7 +25,7 @@ export const StartupInfo = defineComponent({
     const router = useRouter()
     const route = useRoute()
     const startupId = route.query.startupId
-    console.log('startupId==>', startupId)
+    const userIsFollow = ref(false)
 
     const startup = ref<StartupItem>()
     const hashtagsArray = startup.value?.hashTags.map(key => {
@@ -55,15 +56,40 @@ export const StartupInfo = defineComponent({
       }
     }
 
+    const getUserIsFollow = async () => {
+      const { data } = await services['startup@startup-followed-by-me']({
+        startupId
+      })
+      userIsFollow.value = data!.isFollowed
+    }
+
+    const followStartup = async () => {
+      await services['startup@startup-follow']({
+        startupId
+      })
+      getUserIsFollow()
+    }
+
+    const unfollowStartup = async () => {
+      await services['startup@startup-unfollow']({
+        startupId
+      })
+      getUserIsFollow()
+    }
+
     onMounted(() => {
       getStartup()
+      getUserIsFollow()
     })
     return () => (
-      <div class="bg-white p-10">
-        <div class="flex gap-10">
-          <div class="h-20 w-20">
-            <ULazyImage src={startup.value?.logo || ''} class="rounded" />
-          </div>
+      <div class="bg-white p-10 mb-20">
+        <div class="flex items-start gap-10">
+          <UStartupLogo
+            src={startup.value?.logo || ''}
+            width="20"
+            height="20"
+            class="rounded !object-contain"
+          />
           <div class="flex-1">
             <div class="flex justify-between items-center">
               <div class="flex flex-col">
@@ -90,21 +116,40 @@ export const StartupInfo = defineComponent({
                 </div>
               </div>
               <div>
-                <UButton
-                  type="primary"
-                  ghost
-                  v-slots={{
-                    icon: () => {
-                      return (
-                        <div class="flex items-center w-4.5">
-                          <HookFilled />
-                        </div>
-                      )
-                    }
-                  }}
-                >
-                  Unfollow
-                </UButton>
+                {userIsFollow.value ? (
+                  <UButton
+                    type="primary"
+                    ghost
+                    onClick={() => unfollowStartup()}
+                    v-slots={{
+                      icon: () => {
+                        return (
+                          <div class="flex items-center w-4.5">
+                            <HookFilled />
+                          </div>
+                        )
+                      }
+                    }}
+                  >
+                    Unfollow
+                  </UButton>
+                ) : (
+                  <UButton
+                    type="primary"
+                    onClick={() => followStartup()}
+                    v-slots={{
+                      icon: () => {
+                        return (
+                          <div class="flex items-center w-4.5">
+                            <PlusOutlined />
+                          </div>
+                        )
+                      }
+                    }}
+                  >
+                    Follow
+                  </UButton>
+                )}
               </div>
             </div>
             <p class="h-10 mb-10 mt-14 break-all u-body1 line-clamp-5">{startup.value?.mission}</p>

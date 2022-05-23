@@ -1,5 +1,6 @@
-import { UNoContent } from '@comunion/components'
+import { UAddress, UNoContent } from '@comunion/components'
 import { EmptyFilled } from '@comunion/icons'
+import dayjs from 'dayjs'
 import { defineComponent, PropType, ref, computed } from 'vue'
 import { StartupItem } from '@/types'
 
@@ -14,31 +15,41 @@ export const Finance = defineComponent({
     const financeBasic = ref([
       {
         name: 'LAUNCH NETWORK:',
-        value: ''
+        value: props.startup?.launchNetwork
       },
       {
         name: 'TOKEN NAME:',
-        value: ''
+        value: props.startup?.tokenName
       },
       {
         name: 'TOKEN SYMBOL:',
-        value: ''
+        value: props.startup?.tokenSymbol
       },
       {
         name: 'TOKEN SUPPLY:',
-        value: ''
+        value: props.startup?.totalSupply
       },
       {
         name: 'TOKEN CONTRACT:',
-        value: props.startup?.tokenContractAddress
+        value: props.startup?.tokenContractAddress ? (
+          <UAddress autoSlice address={props.startup?.tokenContractAddress} />
+        ) : (
+          ''
+        )
       },
       {
         name: 'PRESALE:',
-        value: props.startup?.presaleDate
+        value: props.startup?.presaleStart
+          ? `${dayjs.utc(props.startup?.presaleStart).format('YYYY-MM-DD')} ~ ${dayjs
+              .utc(props.startup?.presaleEnd)
+              .format('YYYY-MM-DD UTC')}`
+          : null
       },
       {
         name: 'LAUNCH:',
         value: props.startup?.launchDate
+          ? dayjs.utc(props.startup?.launchDate).format('YYYY-MM-DD UTC')
+          : null
       }
     ])
 
@@ -57,14 +68,14 @@ export const Finance = defineComponent({
         <section class="mt-10">
           {this.financeBasic.map(item => {
             return (
-              <div class="mb-4">
-                <span class="u-label2 text-grey3 min-w-1/3">{item.name}</span>
-                <span class="u-title2">{item.value}</span>
+              <div class="mb-4 flex">
+                <div class="u-label2 text-grey3 whitespace-nowrap basis-42 mr-4">{item.name}</div>
+                <div class="u-title2">{item.value}</div>
               </div>
             )
           })}
         </section>
-        <section class="bg-purple rounded py-10 px-6">
+        <section class="bg-purple rounded py-10 px-6 max-w-95 w-full">
           {(this.wallets || []).length ? (
             (this.wallets || []).map(item => {
               return (
@@ -75,7 +86,7 @@ export const Finance = defineComponent({
               )
             })
           ) : (
-            <UNoContent class="px-26" textTip="NO WALLET ADDRESS">
+            <UNoContent textTip="NO WALLET ADDRESS">
               <EmptyFilled />
             </UNoContent>
           )}

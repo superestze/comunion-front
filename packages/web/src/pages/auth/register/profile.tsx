@@ -31,7 +31,7 @@ const RegisterProfilePage = defineComponent({
         title: 'Time Zone',
         name: 'timeZone',
         required: true,
-        options: UTC_OPTIONS.map(item => ({ label: item, value: item }))
+        options: UTC_OPTIONS.map(item => ({ label: item.value, value: item.value }))
       },
       {
         t: 'website',
@@ -43,7 +43,11 @@ const RegisterProfilePage = defineComponent({
         title: 'Email',
         name: 'email',
         required: true,
-        placeholder: 'enter the correct email address'
+        rules: [
+          { type: 'string', message: 'Your contact email' },
+          { type: 'email', message: 'Enter the correct email address' }
+        ],
+        placeholder: 'Your contact email'
       },
       {
         t: 'hashInput',
@@ -55,23 +59,31 @@ const RegisterProfilePage = defineComponent({
       },
       {
         t: 'website',
+        defaultValue: '',
         title: 'Twitter',
-        name: 'twitter'
+        name: 'twitter',
+        placeholder: 'Enter twitter'
       },
       {
         t: 'website',
+        defaultValue: '',
         title: 'Discord',
-        name: 'discord'
+        name: 'discord',
+        placeholder: 'Enter discord'
       },
       {
         t: 'website',
+        defaultValue: '',
         title: 'Telegram',
-        name: 'telegram'
+        name: 'telegram',
+        placeholder: 'Enter telegram'
       },
       {
         t: 'website',
+        defaultValue: '',
         title: 'Medium',
-        name: 'medium'
+        name: 'medium',
+        placeholder: 'Enter medium'
       },
       {
         title: 'Bio',

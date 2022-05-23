@@ -1,4 +1,4 @@
-import { UButton, ULazyImage, UTag } from '@comunion/components'
+import { UButton, UStartupLogo, UTag } from '@comunion/components'
 import {
   WebsiteFilled,
   DiscordFilled,
@@ -6,7 +6,8 @@ import {
   TwitterFilled,
   DocsFilled,
   ArrowRightOutlined,
-  HookFilled
+  HookFilled,
+  PlusOutlined
 } from '@comunion/icons'
 import { defineComponent, PropType } from 'vue'
 import { useRouter } from 'vue-router'
@@ -16,12 +17,16 @@ import { StartupItem } from '@/types'
 
 export const StartupBasicInfo = defineComponent({
   name: 'StartupBasicInfo',
+  emits: ['followStartup', 'unfollowStartup'],
   props: {
     startup: {
       type: Object as PropType<StartupItem>
+    },
+    userIsFollow: {
+      type: Boolean
     }
   },
-  setup(props) {
+  setup(props, ctx) {
     const router = useRouter()
     const hashtagsArray = props.startup!.hashTags.map(key => {
       return key.name
@@ -34,9 +39,14 @@ export const StartupBasicInfo = defineComponent({
       router.push({ path: '/startupinfo', query: { startupId: props.startup?.id } })
     }
     return () => (
-      <div class="flex gap-10">
-        <div class="h-20 w-20">
-          <ULazyImage src={props.startup?.logo ?? ''} class="rounded" />
+      <div class="flex items-start gap-10">
+        <div class="max-w-20 max-h-20">
+          <UStartupLogo
+            src={props.startup?.logo || ''}
+            width="20"
+            height="20"
+            class="rounded !object-contain"
+          />
         </div>
         <div class="flex-1">
           <div class="flex justify-between items-center">
@@ -58,27 +68,46 @@ export const StartupBasicInfo = defineComponent({
               </div>
             </div>
             <div>
-              <UButton
-                type="primary"
-                ghost
-                v-slots={{
-                  icon: () => {
-                    return (
-                      <div class="flex items-center w-4.5">
-                        <HookFilled />
-                      </div>
-                    )
-                  }
-                }}
-              >
-                Unfollow
-              </UButton>
+              {props.userIsFollow ? (
+                <UButton
+                  type="primary"
+                  ghost
+                  onClick={() => ctx.emit('unfollowStartup')}
+                  v-slots={{
+                    icon: () => {
+                      return (
+                        <div class="flex items-center w-4.5">
+                          <HookFilled />
+                        </div>
+                      )
+                    }
+                  }}
+                >
+                  Unfollow
+                </UButton>
+              ) : (
+                <UButton
+                  type="primary"
+                  onClick={() => ctx.emit('followStartup')}
+                  v-slots={{
+                    icon: () => {
+                      return (
+                        <div class="flex items-center w-4.5">
+                          <PlusOutlined />
+                        </div>
+                      )
+                    }
+                  }}
+                >
+                  Follow
+                </UButton>
+              )}
             </div>
           </div>
           <p class="h-10 mb-10 mt-14 break-all u-body1 line-clamp-5">{props.startup!.mission}</p>
           <p class="mb-4.5">
             <span class="u-label2 text-grey3">KYC:</span>
-            <span class="u-title2">{props.startup!.kyc || '--'}</span>
+            <a class="u-title2">{props.startup!.kyc || '--'}</a>
           </p>
           <p>
             <span class="u-label2 text-grey3 whitespace-nowrap">CONTRACT AUDIT:</span>

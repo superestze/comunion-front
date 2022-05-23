@@ -14,7 +14,7 @@ const AuthLayout = defineComponent({
         if (userStore.isProfiled) {
           replace('/welcome')
         } else {
-          replace('/auth/register/intro')
+          // replace('/auth/register/intro')
         }
       } else {
         replace('/auth/login')
