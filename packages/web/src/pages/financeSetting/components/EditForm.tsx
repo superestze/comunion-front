@@ -44,18 +44,24 @@ const EditStartupForm = defineComponent({
     }
     const dateList = ref({
       // presaleDate: props.startup?.presaleDate || [],
-      presaleDate: props.startup?.presaleDate || '',
+      // presaleDate: props.startup?.presaleDate || '',
       launchDate: props.startup?.launchDate || '',
-      presaleStartDate: null || 0,
-      presaleEndDate: null || 0
+      presaleStart: props.startup!.presaleStart || '',
+      presaleEnd: props.startup!.presaleEnd || ''
     })
+    console.log(props.startup)
     const defaultModel = {
-      presaleDate: new Date(dateList.value.presaleDate).getTime() || null,
+      // presaleDate: new Date(dateList.value.presaleDate).getTime() || null,
       // presaleDate: Number([]),
-      // presaleDate: ref<number | [number, number] | null>(null),
+      presaleDate: dateList.value.presaleStart
+        ? ref<number | [number, number] | null>([
+            new Date(dateList.value.presaleStart).getTime(),
+            new Date(dateList.value.presaleEnd).getTime()
+          ])
+        : null,
       launchDate: new Date(dateList.value.launchDate).getTime() || null,
       contract: props.startup!.tokenContractAddress || '',
-      network: null,
+      network: null as number | null | string,
       composes:
         props.startup!.wallets?.length > 0
           ? props.startup!.wallets.map(w => ({
@@ -80,27 +86,27 @@ const EditStartupForm = defineComponent({
     const networkList = ref([
       {
         label: 'Ethereum',
-        value: 'Ethereum',
+        value: 1,
         src: ethereum
       },
       {
         label: 'Avalanche',
-        value: 'Avalanche',
+        value: 43114,
         src: avalanche
       },
       {
         label: 'Fantom',
-        value: 'Fantom',
+        value: 250,
         src: fantom
       },
       {
         label: 'BSC',
-        value: 'BSC',
+        value: 56,
         src: bsc
       },
       {
         label: 'Polygon',
-        value: 'Polygon',
+        value: 137,
         src: polygon
       }
     ])
@@ -166,21 +172,34 @@ const EditStartupForm = defineComponent({
       formRef.value?.validate(async error => {
         if (!error) {
           loading.value = true
+
           try {
-            const { data } = await services['startup@startup-finance-setting-update']({
-              startupId: props.startup!.id,
-              tokenContractAddress: props.startup!.tokenContractAddress,
-              presaleDate: dateToISO(model.presaleDate),
-              launchDate: dateToISO(model.launchDate),
-              wallets: model.composes
-            })
-            if (data) {
-              console.log(data)
+            try {
+              const { data } = await services['startup@startup-finance-setting-update']({
+                startupId: props.startup!.id,
+                tokenContractAddress: props.startup!.tokenContractAddress,
+                launchNetwork: Number(model.network),
+                // presaleDate: dateToISO(model.presaleDate),
+                presaleStart: String(dateList.value.presaleStart),
+                presaleEnd: String(dateList.value.presaleEnd),
+                launchDate: dateToISO(model.launchDate),
+                wallets: model.composes,
+                tokenName: tokenInfo.name,
+                tokenSymbol: tokenInfo.symbol,
+                totalSupply: Number(tokenInfo.supply)
+              })
+              if (data) {
+                console.log(data)
+              }
+              message.success(
+                'Success send transaction to the chain, please wait for the confirmation'
+              )
+              onCancel()
+            } catch (error) {
+              // message.error('Failed to create startup, please check your network and contract')
+              // console.error(error)
+              // message.error(error.message)
             }
-            message.success(
-              'Success send transaction to the chain, please wait for the confirmation'
-            )
-            onCancel()
           } catch (e) {
             ctx.emit('error', e)
           } finally {
@@ -190,8 +209,14 @@ const EditStartupForm = defineComponent({
       })
     }
     function presaleDateChange(val: any) {
-      dateList.value.presaleStartDate = new Date(val[0]).getTime()
-      dateList.value.presaleEndDate = new Date(val[1]).getTime()
+      console.log(val)
+      if (val) {
+        dateList.value.presaleStart = String(dateToISO(val[0]))
+        dateList.value.presaleEnd = String(dateToISO(val[1]))
+      } else {
+        dateList.value.presaleStart = ''
+        dateList.value.presaleEnd = ''
+      }
     }
 
     const allRules: Record<string, FormItemRule[]> = {
@@ -274,7 +299,6 @@ const EditStartupForm = defineComponent({
               startPlaceholder="yy-mm-dd (UTC time zone)"
               endPlaceholder="yy-mm-dd (UTC time zone)"
               onChange={presaleDateChange}
-              update:value={presaleDateChange}
             />
           </div>
         </UFormItem>
