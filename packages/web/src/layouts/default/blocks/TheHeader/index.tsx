@@ -1,10 +1,10 @@
 import { ULogo } from '@comunion/components'
 import { defineComponent } from 'vue'
 import { RouterLink } from 'vue-router'
-import WalletAddress from './components/Address'
-import CreateBlock from './components/Create'
-import NetworkSwitcher from './components/Network'
-import UserAvatar from './components/UserAvatar'
+import WalletAddress from '../Address'
+import CreateBlock from '../Create'
+import NetworkSwitcher from '../Network'
+import UserAvatar from '../UserAvatar'
 
 const TheHeader = defineComponent({
   name: 'TheHeader',
@@ -16,15 +16,18 @@ const TheHeader = defineComponent({
       },
       {
         name: 'bounty',
-        url: '/bounty/list'
+        url: '/bounty/list',
+        disabled: true
       },
       {
         name: 'launch',
-        url: '/launch/list'
+        url: '/launch/list',
+        disabled: true
       },
       {
         name: 'governance',
-        url: '/governance/list'
+        url: '/governance/list',
+        disabled: true
       }
     ]
     return () => (
@@ -36,9 +39,12 @@ const TheHeader = defineComponent({
           {navigations.map(nav => (
             <RouterLink
               key={nav.name}
-              class="transition uppercase u-label1 hover:text-primary"
+              class={[
+                'transition uppercase u-label1 hover:text-primary',
+                nav.disabled ? '!text-grey4 cursor-default' : ''
+              ]}
               activeClass="text-primary"
-              to={nav.url}
+              to={nav.disabled ? '' : nav.url}
             >
               {nav.name}
             </RouterLink>

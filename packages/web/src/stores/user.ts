@@ -87,7 +87,7 @@ export const useUserStore = defineStore('user', {
       this.token = ''
       this.profile = null
       removeObject(STORE_KEY_TOKEN)
-      walletStore._onWalletDisconnected()
+      walletStore.disconnectWallet()
     }
   }
 })
