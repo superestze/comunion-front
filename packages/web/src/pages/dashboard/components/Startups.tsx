@@ -1,6 +1,7 @@
 import { UCard, UDeveloping, UScrollList, UTabPane, UTabs } from '@comunion/components'
 import { EmptyFilled, PlusOutlined } from '@comunion/icons'
 import { defineComponent, onMounted, reactive, ref } from 'vue'
+import ParticipatedCard from './ParticipatedCard'
 import StartupCard from './StartupCard'
 import CreateStartupBlock, { CreateStartupRef } from '@/blocks/Startup/Create'
 import { services } from '@/services'
@@ -22,6 +23,7 @@ const Startups = defineComponent({
       loading: false
     })
     const myCreatedStartups = ref<StartupItem[]>([])
+    const myParticipatedStartups = ref<StartupItem[]>([])
     const getCreatedStartups = async () => {
       const { error, data } = await services['startup@startup-list-me']({
         limit: pagination.pageSize,
@@ -32,10 +34,22 @@ const Startups = defineComponent({
         pagination.total = data!.total
       }
     }
+    const getParticipatedStartups = async () => {
+      const { error, data } = await services['startup@startup-list-participated']({
+        limit: pagination.pageSize,
+        offset: pagination.pageSize * (pagination.page - 1),
+        keyword: null,
+        mode: null
+      })
+      if (!error) {
+        myParticipatedStartups.value.push(...(data!.list as unknown as StartupItem[]))
+      }
+    }
 
     const onLoadMore = async (p: number) => {
       pagination.loading = true
       pagination.page = p
+      await getParticipatedStartups()
       await getCreatedStartups()
       pagination.loading = false
     }
@@ -45,6 +59,7 @@ const Startups = defineComponent({
     }
 
     onMounted(() => {
+      getParticipatedStartups()
       getCreatedStartups()
     })
 
@@ -66,9 +81,21 @@ const Startups = defineComponent({
         <CreateStartupBlock ref={createRef} />
         <UTabs>
           <UTabPane name="PARTICIPATED" tab="PARTICIPATED">
-            <UDeveloping>
-              <EmptyFilled class="mt-34" />
-            </UDeveloping>
+            <UScrollList
+              triggered={pagination.loading}
+              page={pagination.page}
+              pageSize={pagination.pageSize}
+              total={pagination.total}
+              onLoadMore={onLoadMore}
+            >
+              {myParticipatedStartups.value.length ? (
+                myParticipatedStartups.value.map(startup => <ParticipatedCard startup={startup} />)
+              ) : (
+                <UDeveloping>
+                  <EmptyFilled class="mt-34" />
+                </UDeveloping>
+              )}
+            </UScrollList>
           </UTabPane>
           <UTabPane name="CREATED BY ME" tab="CREATED BY ME" class="h-112">
             <UScrollList
