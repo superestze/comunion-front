@@ -1,11 +1,12 @@
-import { message, UButton, UDropdown } from '@comunion/components'
+import { message, UDropdown } from '@comunion/components'
 import { shortenAddress } from '@comunion/utils'
 import { defineComponent } from 'vue'
 import { useRouter } from 'vue-router'
+import HeaderButton from '../Button'
 import styles from './index.module.css'
 import { useUserStore, useWalletStore } from '@/stores'
 
-const HeaderAddress = defineComponent({
+const WalletAddress = defineComponent({
   name: 'HeaderAddress',
   setup(props, ctx) {
     const userStore = useUserStore()
@@ -27,11 +28,11 @@ const HeaderAddress = defineComponent({
 
     return () => {
       const btn = (
-        <UButton class={['px-5', ctx.attrs.class]} type="primary" ghost onClick={connectWallet}>
+        <HeaderButton class={ctx.attrs.class} onClick={connectWallet}>
           {walletStore.connected && walletStore.address
             ? shortenAddress(walletStore.address)
             : 'Connect Wallet'}
-        </UButton>
+        </HeaderButton>
       )
 
       return walletStore.connected ? (
@@ -66,4 +67,4 @@ const HeaderAddress = defineComponent({
   }
 })
 
-export default HeaderAddress
+export default WalletAddress

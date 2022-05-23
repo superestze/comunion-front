@@ -440,7 +440,7 @@ export const services = {
       method: 'POST',
       ...extract('POST', args, [], ['startupId'])
     })
-  },
+  }, 
   'startup@startup-unfollow'(args: {
     /**
      * @example 1
@@ -452,7 +452,7 @@ export const services = {
       method: 'DELETE',
       ...extract('DELETE', args, [], ['startupId'])
     })
-  },
+  },  
   'startup@startup-list-followed'(args: {
     limit: any
     offset: any
@@ -624,12 +624,7 @@ export const services = {
       startupId: any
     } & {
       tokenContractAddress: string
-      launchNetwork: number
-      tokenName: string
-      tokenSymbol: string
-      totalSupply: number
-      presaleStart: string
-      presaleEnd: string
+      presaleDate: string
       launchDate: string
       wallets: {
         walletName: string

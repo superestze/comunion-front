@@ -64,8 +64,6 @@ const DashboardPage = defineComponent({
       ]
     })
 
-    const count = ref(0)
-
     const socialLinks = [
       {
         avatar: GoogleFilled,

@@ -62,7 +62,7 @@ const StartupsPage = defineComponent({
             return (
               <div class="grid pb-6 gap-8 grid-cols-1 md:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4">
                 {startups.map(startup => (
-                  <StartupCard key={startup!.id} startup={startup} />
+                  <StartupCard key={startup.id} startup={startup} />
                 ))}
               </div>
             )

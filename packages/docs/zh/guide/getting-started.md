@@ -53,8 +53,9 @@ TODO
 
 ## 如何调用后端接口
 
-1. 在根目录或 `web` 目录执行 `pnpm gen:api` 来生成、更新 api 文件
-2. 然后使用 `services[api-group@api-name]` 的形式调用，所有参数都通过第一个参数传递，具体可查看[a2s 文档](https://www.npmjs.com/package/@zidong/a2s)
+1. 复制`packages/web`目录下的`.a2s.js.example`到同目录下并重命名为`.a2s.js`，修改`dataSourceOptions.yapi`里的`token`和`headers.Cookie`里的值，其中`token`从[yapi 项目](https://yapi.comunion.io/project/39/setting)里的`设置->token配置`页面找到，而`cookie`从`yapi`登录后的页面`cookie`里获取
+2. 在根目录或 `web` 目录执行 `pnpm gen:api` 来生成、更新 api 文件
+3. 然后使用 `services[api-group@api-name]` 的形式调用，所有参数都通过第一个参数传递，具体可查看[a2s 文档](https://www.npmjs.com/package/@zidong/a2s)
 
 ## 如何发起上链操作
 

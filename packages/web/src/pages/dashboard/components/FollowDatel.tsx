@@ -18,11 +18,8 @@ const FollowDatel = defineComponent({
     const startupDate = ref(props.startup)
     const showAvatarModal = ref(false)
     const success = ref(false)
-    const plusShow = ref(true)
-    const checkedShow = ref(false)
     const funFolow = () => {
       success.value = true
-      plusShow.value = true
     }
     const styles = {
       combinationStyle: 'pr-2 tracking-normal font-opensans font-400 text-[14px] leading-5'
