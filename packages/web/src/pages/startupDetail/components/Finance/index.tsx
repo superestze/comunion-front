@@ -1,8 +1,11 @@
-import { UAddress, UNoContent } from '@comunion/components'
+import { UAddress, UNoContent, UScrollbar } from '@comunion/components'
 import { EmptyFilled } from '@comunion/icons'
+import { formatNumber } from '@comunion/utils'
 import dayjs from 'dayjs'
+import utcPlugin from 'dayjs/plugin/utc'
 import { defineComponent, PropType, ref, computed } from 'vue'
 import { StartupItem } from '@/types'
+dayjs.extend(utcPlugin)
 
 export const Finance = defineComponent({
   name: 'StartupFinance',
@@ -15,26 +18,26 @@ export const Finance = defineComponent({
     const financeBasic = ref([
       {
         name: 'LAUNCH NETWORK:',
-        value: props.startup?.launchNetwork
+        value: props.startup?.launchNetwork || '--'
       },
       {
         name: 'TOKEN NAME:',
-        value: props.startup?.tokenName
+        value: props.startup?.tokenName || '--'
       },
       {
         name: 'TOKEN SYMBOL:',
-        value: props.startup?.tokenSymbol
+        value: props.startup?.tokenSymbol || '--'
       },
       {
         name: 'TOKEN SUPPLY:',
-        value: props.startup?.totalSupply
+        value: props.startup?.totalSupply ? formatNumber(props.startup?.totalSupply) : '--'
       },
       {
         name: 'TOKEN CONTRACT:',
         value: props.startup?.tokenContractAddress ? (
           <UAddress autoSlice address={props.startup?.tokenContractAddress} />
         ) : (
-          ''
+          '--'
         )
       },
       {
@@ -43,17 +46,18 @@ export const Finance = defineComponent({
           ? `${dayjs.utc(props.startup?.presaleStart).format('YYYY-MM-DD')} ~ ${dayjs
               .utc(props.startup?.presaleEnd)
               .format('YYYY-MM-DD UTC')}`
-          : null
+          : '--'
       },
       {
         name: 'LAUNCH:',
         value: props.startup?.launchDate
           ? dayjs.utc(props.startup?.launchDate).format('YYYY-MM-DD UTC')
-          : null
+          : '--'
       }
     ])
 
     const wallets = computed(() => {
+      // return [{ name: 'skkskkskssksksk', value: 'skdflsjflsjdfj' }]
       return props.startup?.wallets.map(item => ({
         name: item.walletName,
         value: item.walletAddress
@@ -64,33 +68,37 @@ export const Finance = defineComponent({
   },
   render() {
     return (
-      <div class="flex justify-between">
+      <div class="max-h-115 h-full overflow-hidden flex gap-6 justify-between items-stretch">
         <section class="mt-10">
           {this.financeBasic.map(item => {
             return (
-              <div class="mb-4 flex">
-                <div class="u-label2 text-grey3 whitespace-nowrap basis-42 mr-4">{item.name}</div>
-                <div class="u-title2">{item.value}</div>
+              <div class="mb-2 flex flex-wrap">
+                <div class="u-label2 text-grey3 whitespace-nowrap w-42 mr-4 flex-0 mb-2">
+                  {item.name}
+                </div>
+                <div class="u-title2 flex-auto">{item.value}</div>
               </div>
             )
           })}
         </section>
-        <section class="bg-purple rounded py-10 px-6 max-w-95 w-full">
-          {(this.wallets || []).length ? (
-            (this.wallets || []).map(item => {
-              return (
-                <div>
-                  <div>{item.name}</div>
-                  <div>{item.value}</div>
-                </div>
-              )
-            })
-          ) : (
-            <UNoContent textTip="NO WALLET ADDRESS">
-              <EmptyFilled />
-            </UNoContent>
-          )}
-        </section>
+        <UScrollbar class="bg-purple rounded px-6 max-h-115 basis-2/5 min-w-90">
+          <div class="py-10">
+            {(this.wallets || []).length ? (
+              (this.wallets || []).map(item => {
+                return (
+                  <div>
+                    <div class="u-label2">{item.name}:</div>
+                    <UAddress class="text-primary u-title2" autoSlice address={item.value} />
+                  </div>
+                )
+              })
+            ) : (
+              <UNoContent textTip="NO WALLET ADDRESS">
+                <EmptyFilled />
+              </UNoContent>
+            )}
+          </div>
+        </UScrollbar>
       </div>
     )
   }

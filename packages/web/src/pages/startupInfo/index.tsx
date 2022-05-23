@@ -1,4 +1,4 @@
-import { UButton, UStartupLogo, UTag } from '@comunion/components'
+import { UAddress, UButton, UStartupLogo, UTag } from '@comunion/components'
 import {
   WebsiteFilled,
   DiscordFilled,
@@ -41,7 +41,7 @@ export const StartupInfo = defineComponent({
 
     const toSocialEnd = (url: string | undefined) => {
       if (url) {
-        router.push(url)
+        window.open(url)
       }
     }
 
@@ -84,12 +84,14 @@ export const StartupInfo = defineComponent({
     return () => (
       <div class="bg-white p-10 mb-20">
         <div class="flex items-start gap-10">
-          <UStartupLogo
-            src={startup.value?.logo || ''}
-            width="20"
-            height="20"
-            class="rounded !object-contain"
-          />
+          <div class="w-20 h-20">
+            <UStartupLogo
+              src={startup.value?.logo || ''}
+              width="20"
+              height="20"
+              class="rounded !object-contain"
+            />
+          </div>
           <div class="flex-1">
             <div class="flex justify-between items-center">
               <div class="flex flex-col">
@@ -111,7 +113,7 @@ export const StartupInfo = defineComponent({
                 </div>
                 <div class="flex flex-wrap gap-2 mt-2">
                   {startup.value?.hashTags?.map((hashTag, value) => {
-                    return value + 1 < 4 && <UTag key={value}>{hashTag.name}</UTag>
+                    return <UTag key={value}>{hashTag.name}</UTag>
                   })}
                 </div>
               </div>
@@ -203,22 +205,34 @@ export const StartupInfo = defineComponent({
           <p class="mb-4.5">
             <span class="u-label2 text-grey3">KYC:</span>
             <span class="u-title2 ml-4">
-              {startup.value?.kyc ? <a href={startup.value?.kyc}>{startup.value?.kyc}</a> : '--'}
-            </span>
-          </p>
-          <p class="mb-4.5">
-            <span class="u-label2 text-grey3 whitespace-nowrap">CONTRACT AUDIT:</span>
-            <span class="u-title2 ml-4">
-              {startup.value?.contractAudit ? (
-                <a href={startup.value?.contractAudit}>{startup.value?.contractAudit}</a>
+              {startup.value?.kyc ? (
+                <a href={startup.value?.kyc} class="u-title2 text-primary">
+                  {startup.value?.kyc}
+                </a>
               ) : (
                 '--'
               )}
             </span>
           </p>
           <p class="mb-4.5">
-            <span class="u-label2 text-grey3 whitespace-nowrap">BLOCKCHAIN ADDRESS:</span>
-            <span class="u-title2 ml-4">{startup.value?.blockChainAddress || '--'}</span>
+            <span class="u-label2 text-grey3 whitespace-nowrap">CONTRACT AUDIT:</span>
+            <span class="u-title2 ml-4">
+              {startup.value?.contractAudit ? (
+                <a href={startup.value?.contractAudit} class="u-title2 text-primary">
+                  {startup.value?.contractAudit}
+                </a>
+              ) : (
+                '--'
+              )}
+            </span>
+          </p>
+          <p class="mb-4.5 flex items-center">
+            <span class="u-label2 text-grey3 whitespace-nowrap mr-4">BLOCKCHAIN ADDRESS:</span>
+            {startup.value?.blockChainAddress ? (
+              <UAddress address={startup.value?.blockChainAddress} class="u-title2" />
+            ) : (
+              <span class="u-title2">--</span>
+            )}
           </p>
           <p class="mt-6 u-body1 break-all">{startup.value?.overview}</p>
         </section>

@@ -3,7 +3,7 @@ import { ArrowRightOutlined } from '@comunion/icons'
 import { defineComponent, ref } from 'vue'
 import { StartupTeamCard } from './TeamCard'
 
-const MAX_SHOW_COUNT = 1
+const MAX_SHOW_COUNT = 5
 
 export const Team = defineComponent({
   name: 'Team',

@@ -1,17 +1,18 @@
-import { UCard, UDeveloping } from '@comunion/components'
-import { EmptyFilled } from '@comunion/icons'
+import { UCard, UDeveloping, UBreadcrumb, UBreadcrumbItem } from '@comunion/components'
+
+import { ArrowLeftOutlined, EmptyFilled } from '@comunion/icons'
 import { defineComponent, onMounted, ref } from 'vue'
-import { useRoute } from 'vue-router'
+import { useRoute, useRouter } from 'vue-router'
 import { Finance } from './components/Finance'
 import { StartupBasicInfo } from './components/StartupBasicInfo'
 import { Team } from './components/Teams'
-import Breadcrumb from '@/components/Breadcrumb'
 import { services } from '@/services'
 import { StartupItem } from '@/types'
 
 const StartupDetailPage = defineComponent({
   name: 'StartupDetailPage',
   setup() {
+    const router = useRouter()
     const route = useRoute()
     const startupId = route.query.startupId
     const startup = ref<StartupItem>()
@@ -78,7 +79,19 @@ const StartupDetailPage = defineComponent({
 
     return () => (
       <div>
-        <Breadcrumb />
+        <UBreadcrumb class="mb-10 mt-10">
+          <UBreadcrumbItem v-slots={{ separator: () => <ArrowLeftOutlined /> }} />
+          <UBreadcrumbItem>
+            <span
+              class="u-label2 cursor-pointer uppercase text-primary"
+              onClick={() => {
+                router.back()
+              }}
+            >
+              Back
+            </span>
+          </UBreadcrumbItem>
+        </UBreadcrumb>
         <div class="flex gap-10 mb-20">
           <div class="basis-2/3">
             <div class="bg-white p-10 rounded border mb-10">
@@ -91,7 +104,7 @@ const StartupDetailPage = defineComponent({
                 />
               )}
             </div>
-            <UCard title="FINANCE" class="mb-10">
+            <UCard title="FINANCE" class="mb-10 h-115">
               <Finance startup={startup.value} />
             </UCard>
             <UCard title="BOUNTIES" class="mb-10">

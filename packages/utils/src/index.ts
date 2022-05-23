@@ -9,3 +9,4 @@ export * from './address'
 export * from './color'
 
 export * from './type'
+export * from './number'

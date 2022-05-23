@@ -33,7 +33,7 @@ export const StartupBasicInfo = defineComponent({
     })
     const modeName = getStartupTypeFromNumber(props.startup!.mode) as StartupTypesType
     const toSocialEnd = (url: string) => {
-      router.push(url)
+      window.open(url)
     }
     const toStartupInfo = () => {
       router.push({ path: '/startupinfo', query: { startupId: props.startup?.id } })
@@ -106,12 +106,24 @@ export const StartupBasicInfo = defineComponent({
           </div>
           <p class="h-10 mb-10 mt-14 break-all u-body1 line-clamp-5">{props.startup!.mission}</p>
           <p class="mb-4.5">
-            <span class="u-label2 text-grey3">KYC:</span>
-            <a class="u-title2">{props.startup!.kyc || '--'}</a>
+            <span class="u-label2 text-grey3 mr-4">KYC:</span>
+            {props.startup!.kyc ? (
+              <a href={props.startup!.kyc} class="u-title2 text-primary">
+                {props.startup!.kyc}
+              </a>
+            ) : (
+              '--'
+            )}
           </p>
           <p>
-            <span class="u-label2 text-grey3 whitespace-nowrap">CONTRACT AUDIT:</span>
-            <span class="u-title2">{props.startup!.contractAudit || '--'}</span>
+            <span class="u-label2 text-grey3 whitespace-nowrap mr-4">CONTRACT AUDIT:</span>
+            {props.startup!.contractAudit ? (
+              <a href={props.startup!.contractAudit} class="u-title2 text-primary">
+                {props.startup!.contractAudit}
+              </a>
+            ) : (
+              '--'
+            )}
           </p>
           <div class="flex gap-4 mt-7">
             <div class={styles.startupSocialItem}>
