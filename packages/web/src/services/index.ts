@@ -235,7 +235,13 @@ export const services = {
       name?: string
       avatar?: string
       location?: string
+      timeZone: string
       website?: string
+      email: string
+      twitter: string
+      discord: string
+      telegram: string
+      medium: string
       bio?: string
       skills?: {
         id?: number
@@ -309,6 +315,314 @@ export const services = {
       url: replacePath('/cores/startups/{startupId}', args),
       method: 'GET',
       ...extract('GET', args, [], ['startupId'])
+    })
+  },
+  'startup@startup-list-participated_copy'(args: {
+    limit: any
+    offset: any
+    keyword: any
+    /**
+     * @description NONE,ESG,NGO,DAO,COM
+     */
+    mode: any
+  }) {
+    return requestAdapter<{
+      list: {
+        id: number
+        createdAt: string
+        updatedAt: string
+        isDeleted: boolean
+        comerID: number
+        name: string
+        /**
+         * @description NONE,ESG,NGO,DAO,COM
+         */
+        mode: string
+        logo: string
+        mission: string
+        blockChainAddress: string
+        tokenContractAddress: string
+        isSet: boolean
+        wallets: {
+          id: number
+          createdAt: string
+          updatedAt: string
+          isDeleted: boolean
+          comerID: number
+          startupID: number
+          walletName: string
+          walletAddress: string
+        }[]
+      }[]
+      total: number
+    }>({
+      url: replacePath('/cores/startups/participate_1653317930008', args),
+      method: 'GET',
+      ...extract('GET', args, ['limit', 'offset', 'keyword', 'mode'], [])
+    })
+  },
+  'startup@get@/cores/startups/participate_1653317930068'(args: {
+    limit: any
+    offset: any
+    keyword: any
+    /**
+     * @description NONE,ESG,NGO,DAO,COM
+     */
+    mode: any
+  }) {
+    return requestAdapter<{
+      list: {
+        id: number
+        createdAt: string
+        updatedAt: string
+        isDeleted: boolean
+        comerID: number
+        name: string
+        /**
+         * @description NONE,ESG,NGO,DAO,COM
+         */
+        mode: string
+        logo: string
+        mission: string
+        blockChainAddress: string
+        tokenContractAddress: string
+        isSet: boolean
+        wallets: {
+          id: number
+          createdAt: string
+          updatedAt: string
+          isDeleted: boolean
+          comerID: number
+          startupID: number
+          walletName: string
+          walletAddress: string
+        }[]
+      }[]
+      total: number
+    }>({
+      url: replacePath('/cores/startups/participate_1653317930068', args),
+      method: 'GET',
+      ...extract('GET', args, ['limit', 'offset', 'keyword', 'mode'], [])
+    })
+  },
+  'startup@get@/cores/startups/participate_1653317930103'(args: {
+    limit: any
+    offset: any
+    keyword: any
+    /**
+     * @description NONE,ESG,NGO,DAO,COM
+     */
+    mode: any
+  }) {
+    return requestAdapter<{
+      list: {
+        id: number
+        createdAt: string
+        updatedAt: string
+        isDeleted: boolean
+        comerID: number
+        name: string
+        /**
+         * @description NONE,ESG,NGO,DAO,COM
+         */
+        mode: string
+        logo: string
+        mission: string
+        blockChainAddress: string
+        tokenContractAddress: string
+        isSet: boolean
+        wallets: {
+          id: number
+          createdAt: string
+          updatedAt: string
+          isDeleted: boolean
+          comerID: number
+          startupID: number
+          walletName: string
+          walletAddress: string
+        }[]
+      }[]
+      total: number
+    }>({
+      url: replacePath('/cores/startups/participate_1653317930103', args),
+      method: 'GET',
+      ...extract('GET', args, ['limit', 'offset', 'keyword', 'mode'], [])
+    })
+  },
+  'startup@get@/cores/startups/participate_1653317930148'(args: {
+    limit: any
+    offset: any
+    keyword: any
+    /**
+     * @description NONE,ESG,NGO,DAO,COM
+     */
+    mode: any
+  }) {
+    return requestAdapter<{
+      list: {
+        id: number
+        createdAt: string
+        updatedAt: string
+        isDeleted: boolean
+        comerID: number
+        name: string
+        /**
+         * @description NONE,ESG,NGO,DAO,COM
+         */
+        mode: string
+        logo: string
+        mission: string
+        blockChainAddress: string
+        tokenContractAddress: string
+        isSet: boolean
+        wallets: {
+          id: number
+          createdAt: string
+          updatedAt: string
+          isDeleted: boolean
+          comerID: number
+          startupID: number
+          walletName: string
+          walletAddress: string
+        }[]
+      }[]
+      total: number
+    }>({
+      url: replacePath('/cores/startups/participate_1653317930148', args),
+      method: 'GET',
+      ...extract('GET', args, ['limit', 'offset', 'keyword', 'mode'], [])
+    })
+  },
+  'startup@get@/cores/startups/participate_1653317930124'(args: {
+    limit: any
+    offset: any
+    keyword: any
+    /**
+     * @description NONE,ESG,NGO,DAO,COM
+     */
+    mode: any
+  }) {
+    return requestAdapter<{
+      list: {
+        id: number
+        createdAt: string
+        updatedAt: string
+        isDeleted: boolean
+        comerID: number
+        name: string
+        /**
+         * @description NONE,ESG,NGO,DAO,COM
+         */
+        mode: string
+        logo: string
+        mission: string
+        blockChainAddress: string
+        tokenContractAddress: string
+        isSet: boolean
+        wallets: {
+          id: number
+          createdAt: string
+          updatedAt: string
+          isDeleted: boolean
+          comerID: number
+          startupID: number
+          walletName: string
+          walletAddress: string
+        }[]
+      }[]
+      total: number
+    }>({
+      url: replacePath('/cores/startups/participate_1653317930124', args),
+      method: 'GET',
+      ...extract('GET', args, ['limit', 'offset', 'keyword', 'mode'], [])
+    })
+  },
+  'startup@get@/cores/startups/participate_1653317930167'(args: {
+    limit: any
+    offset: any
+    keyword: any
+    /**
+     * @description NONE,ESG,NGO,DAO,COM
+     */
+    mode: any
+  }) {
+    return requestAdapter<{
+      list: {
+        id: number
+        createdAt: string
+        updatedAt: string
+        isDeleted: boolean
+        comerID: number
+        name: string
+        /**
+         * @description NONE,ESG,NGO,DAO,COM
+         */
+        mode: string
+        logo: string
+        mission: string
+        blockChainAddress: string
+        tokenContractAddress: string
+        isSet: boolean
+        wallets: {
+          id: number
+          createdAt: string
+          updatedAt: string
+          isDeleted: boolean
+          comerID: number
+          startupID: number
+          walletName: string
+          walletAddress: string
+        }[]
+      }[]
+      total: number
+    }>({
+      url: replacePath('/cores/startups/participate_1653317930167', args),
+      method: 'GET',
+      ...extract('GET', args, ['limit', 'offset', 'keyword', 'mode'], [])
+    })
+  },
+  'startup@get@/cores/startups/participate_1653317930185'(args: {
+    limit: any
+    offset: any
+    keyword: any
+    /**
+     * @description NONE,ESG,NGO,DAO,COM
+     */
+    mode: any
+  }) {
+    return requestAdapter<{
+      list: {
+        id: number
+        createdAt: string
+        updatedAt: string
+        isDeleted: boolean
+        comerID: number
+        name: string
+        /**
+         * @description NONE,ESG,NGO,DAO,COM
+         */
+        mode: string
+        logo: string
+        mission: string
+        blockChainAddress: string
+        tokenContractAddress: string
+        isSet: boolean
+        wallets: {
+          id: number
+          createdAt: string
+          updatedAt: string
+          isDeleted: boolean
+          comerID: number
+          startupID: number
+          walletName: string
+          walletAddress: string
+        }[]
+      }[]
+      total: number
+    }>({
+      url: replacePath('/cores/startups/participate_1653317930185', args),
+      method: 'GET',
+      ...extract('GET', args, ['limit', 'offset', 'keyword', 'mode'], [])
     })
   },
   'startup@startup-list'(args: {
@@ -437,6 +751,18 @@ export const services = {
       url: replacePath('/cores/startups/{startupId}/follow', args),
       method: 'POST',
       ...extract('POST', args, [], ['startupId'])
+    })
+  },
+  'startup@startup-unfollow'(args: {
+    /**
+     * @example 1
+     */
+    startupId: any
+  }) {
+    return requestAdapter<{}>({
+      url: replacePath('/cores/startups/{startupId}/unfollow', args),
+      method: 'DELETE',
+      ...extract('DELETE', args, [], ['startupId'])
     })
   },
   'startup@startup-list-followed'(args: {
@@ -610,7 +936,12 @@ export const services = {
       startupId: any
     } & {
       tokenContractAddress: string
-      presaleDate: string
+      launchNetwork: number
+      tokenName: string
+      tokenSymbol: string
+      totalSupply: number
+      presaleStart: string
+      presaleEnd: string
       launchDate: string
       wallets: {
         walletName: string
@@ -666,6 +997,15 @@ export const services = {
       url: replacePath('/cores/startups/participate', args),
       method: 'GET',
       ...extract('GET', args, ['limit', 'offset', 'keyword', 'mode'], [])
+    })
+  },
+  'startup@startup-followed-by-me'(args: { startupId: any }) {
+    return requestAdapter<{
+      isFollowed: boolean
+    }>({
+      url: replacePath('/cores/startups/{startupId}/followedByMe', args),
+      method: 'GET',
+      ...extract('GET', args, [], ['startupId'])
     })
   },
   'startup@startup-list-me_copy'(args: {
