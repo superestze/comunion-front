@@ -238,7 +238,11 @@ importers:
       '@types/node': 17.0.29
       '@vitejs/plugin-vue': 2.3.1_vite@2.9.6+vue@3.2.33
       '@vitejs/plugin-vue-jsx': 1.3.10
+<<<<<<< HEAD
       '@zidong/a2s': registry.npmmirror.com/@zidong/a2s/0.0.13
+=======
+      '@zidong/a2s': 0.0.13
+>>>>>>> develop
       postcss-nested: 5.0.6
       typescript: 4.6.3
       vite: 2.9.6
@@ -3152,7 +3156,19 @@ packages:
     transitivePeerDependencies:
       - supports-color
     dev: true
-
+  /@zidong/a2s/0.0.13:
+    resolution: {integrity: sha512-DcCPXk8jeUjwv8UquNaLraWLA6OmiGigcxvTmUlyXzwVvUgCaoOwTVpYDl0DlLTXOBTGGMGgVzaVSvc6pqhIgA==}
+    hasBin: true
+    dependencies:
+      axios: 0.26.1
+      eta: 1.12.3
+      fs-extra: 10.1.0
+      inquirer: 8.2.4
+      ora: 5.4.1
+      prettier: 2.6.2
+    transitivePeerDependencies:
+      - debug
+    dev: true
   /JSONStream/1.3.5:
     resolution: {integrity: sha512-E+iruNOY8VV9s4JEbe1aNEm6MiszPRr/UfcHMz0TQh1BXSxHK+ASV1R6W4HpjBhSeS+54PIsAMCBmwD06LLsqQ==}
     hasBin: true
@@ -3858,7 +3874,7 @@ packages:
     dev: true
 
   /brorand/1.1.0:
-    resolution: {integrity: sha1-EsJe/kCkXjwyPrhnWgoM5XsiNx8=}
+    resolution: {integrity: sha512-cKV8tMCEpQs4hK/ik71d6LrPOnpkpGBR0wzxqr68g2m/LB2GxVYQroAjMJZRVM1Y4BCjCKc3vAamxSzOY2RP+w==}
     dev: false
 
   /browser-process-hrtime/1.0.0:
@@ -3888,7 +3904,7 @@ packages:
       picocolors: 1.0.0
 
   /bs58/4.0.1:
-    resolution: {integrity: sha1-vhYedsNU9veIrkBx9j806MTwpCo=}
+    resolution: {integrity: sha512-Ok3Wdf5vOIlBrgCvTq96gBkJw+JUEzdBgyaza5HLtPm7yTHkjRy8+JzNyHF7BHa0bNWOQIp3m5YF0nnFcOIKLw==}
     dependencies:
       base-x: 3.0.9
     dev: false
@@ -3932,7 +3948,7 @@ packages:
     resolution: {integrity: sha512-E+XQCRwSbaaiChtv6k6Dwgc+bx+Bs6vuKJHHl5kox/BaKbhiXzqQOwK4cO22yElGp2OCmjwVhT3HmxgyPGnJfQ==}
 
   /buffer-xor/1.0.3:
-    resolution: {integrity: sha1-JuYe0UIvtw3ULm42cp7VHYVf6Nk=}
+    resolution: {integrity: sha512-571s0T7nZWK6vB67HI5dyUF7wXiNcfaPPPTl6zYCNApANjIvYJTg7hlud/+cJpdAhS7dVzqMLmfhfHR3rAcOjQ==}
     dev: false
 
   /buffer/6.0.3:
@@ -6943,7 +6959,26 @@ packages:
       strip-ansi: 5.2.0
       through: 2.3.8
     dev: false
-
+  /inquirer/8.2.4:
+    resolution: {integrity: sha512-nn4F01dxU8VeKfq192IjLsxu0/OmMZ4Lg3xKAns148rCaXP6ntAoEkVYZThWjwON8AlzdZZi6oqnhNbxUG9hVg==}
+    engines: {node: '>=12.0.0'}
+    dependencies:
+      ansi-escapes: 4.3.2
+      chalk: 4.1.2
+      cli-cursor: 3.1.0
+      cli-width: 3.0.0
+      external-editor: 3.1.0
+      figures: 3.2.0
+      lodash: 4.17.21
+      mute-stream: 0.0.8
+      ora: 5.4.1
+      run-async: 2.4.1
+      rxjs: 7.5.5
+      string-width: 4.2.3
+      strip-ansi: 6.0.1
+      through: 2.3.8
+      wrap-ansi: 7.0.0
+    dev: true
   /internal-slot/1.0.3:
     resolution: {integrity: sha512-O0DB1JC/sPyZl7cIo78n5dR7eUSwwpYPiXRhTzNxZVAMUuB8vlnRFyLxdrVToks6XPLVnFfbzaVd5WLjhgg+vA==}
     engines: {node: '>= 0.4'}

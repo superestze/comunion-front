@@ -58,8 +58,8 @@ const EditStartupForm = defineComponent({
       contract: props.startup!.tokenContractAddress || '',
       network: null as number | null | string,
       composes:
-        props.startup!.wallets?.length > 0
-          ? props.startup!.wallets.map(w => ({
+        props.startup.wallets?.length > 0
+          ? props.startup.wallets.map(w => ({
               walletName: w.walletName,
               walletAddress: w.walletAddress
             }))
@@ -165,7 +165,6 @@ const EditStartupForm = defineComponent({
                 startupId: props.startup!.id,
                 tokenContractAddress: props.startup!.tokenContractAddress,
                 launchNetwork: Number(model.network),
-                // presaleDate: dateToISO(model.presaleDate),
                 presaleStart: String(dateList.value.presaleStart),
                 presaleEnd: String(dateList.value.presaleEnd),
                 launchDate: dateToISO(model.launchDate),
@@ -217,8 +216,8 @@ const EditStartupForm = defineComponent({
 
     return () => (
       <UForm ref={formRef} rules={allRules} model={model}>
-        <p class="mb-7 uppercase u-card-title1 text-[#3F2D99]">FINANCE SETTING</p>
-        <ul class="u-body1 border rounded-lg list-disc border-grey5 mb-6 p-4 pl-8 text-body1 relative">
+        <p class="mb-7 text-[#3F2D99] uppercase u-card-title1">FINANCE SETTING</p>
+        <ul class="border rounded-lg list-disc border-grey5 mb-6 p-4 pl-8 text-body1 relative u-body1">
           <li>First, shilling startup by filling token information</li>
           <li>
             If you have not a token yet， please contact comunion team help you to create your
@@ -233,7 +232,7 @@ const EditStartupForm = defineComponent({
               placeholder="Select your launch network"
               renderLabel={(option: any) => {
                 return [
-                  h(<UImage src={option.src} class="w-5 h-5 inline float-left mr-2" />),
+                  h(<UImage src={option.src} class="h-5 mr-2 w-5 inline float-left" />),
                   option.label as string
                 ]
               }}

@@ -439,18 +439,6 @@ export const services = {
       ...extract('POST', args, [], ['startupId'])
     })
   },
-  'startup@startup-unfollow'(args: {
-    /**
-     * @example 1
-     */
-    startupId: any
-  }) {
-    return requestAdapter<{}>({
-      url: replacePath('/cores/startups/{startupId}/unfollow', args),
-      method: 'DELETE',
-      ...extract('DELETE', args, [], ['startupId'])
-    })
-  },
   'startup@startup-list-followed'(args: {
     limit: any
     offset: any
@@ -622,12 +610,7 @@ export const services = {
       startupId: any
     } & {
       tokenContractAddress: string
-      launchNetwork: number
-      tokenName: string
-      tokenSymbol: string
-      totalSupply: number
-      presaleStart: string
-      presaleEnd: string
+      presaleDate: string
       launchDate: string
       wallets: {
         walletName: string
@@ -683,15 +666,6 @@ export const services = {
       url: replacePath('/cores/startups/participate', args),
       method: 'GET',
       ...extract('GET', args, ['limit', 'offset', 'keyword', 'mode'], [])
-    })
-  },
-  'startup@startup-followed-by-me'(args: { startupId: any }) {
-    return requestAdapter<{
-      isFollowed: boolean
-    }>({
-      url: replacePath('/cores/startups/{startupId}/followedByMe', args),
-      method: 'GET',
-      ...extract('GET', args, [], ['startupId'])
     })
   },
   'startup@startup-list-me_copy'(args: {

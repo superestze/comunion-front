@@ -1,8 +1,9 @@
-import { UDropdown, UButton } from '@comunion/components'
+import { UDropdown } from '@comunion/components'
 import { ArrowDownOutlined } from '@comunion/icons'
-import { defineComponent, computed, ref } from 'vue'
+import { defineComponent, computed, ref, watchEffect } from 'vue'
+import HeaderButton from '../Button'
 import styles from './index.module.css'
-import { supportedNetworks } from '@/constants'
+import { ChainNetworkType, supportedNetworks } from '@/constants'
 import { useWalletStore } from '@/stores'
 
 const NetworkSwitcher = defineComponent({
@@ -10,9 +11,19 @@ const NetworkSwitcher = defineComponent({
   setup(props, ctx) {
     const btnRef = ref<HTMLButtonElement>()
     const walletStore = useWalletStore()
+    const networkCache = ref<ChainNetworkType>()
 
     const currentNetwork = computed(() => {
       return supportedNetworks.find(network => network.chainId === walletStore.chainId ?? 1)
+    })
+
+    watchEffect(() => {
+      if (currentNetwork.value?.chainId) {
+        networkCache.value = currentNetwork.value
+      }
+      if (!networkCache.value) {
+        networkCache.value = supportedNetworks[0]
+      }
     })
 
     async function onSelectNetwork(chainId: number) {
@@ -48,17 +59,17 @@ const NetworkSwitcher = defineComponent({
         ]}
         onSelect={onSelectNetwork}
       >
-        <UButton class={['px-5', ctx.attrs.class]} type="primary" ghost>
-          <div class="flex items-center flex-nowrap" ref={btnRef}>
-            {currentNetwork.value ? (
-              <img src={currentNetwork.value?.logo} class="rounded-xl h-5 mr-2 w-5" />
-            ) : (
-              'Disconnected'
+        <HeaderButton class={ctx.attrs.class}>
+          <div class="flex flex-nowrap items-center" ref={btnRef}>
+            {networkCache.value && (
+              <>
+                <img src={networkCache.value?.logo} class="rounded-xl h-5 mr-2 w-5" />
+                {networkCache.value?.shortName}
+              </>
             )}
-            {currentNetwork.value?.shortName ?? currentNetwork.value?.name}
             <ArrowDownOutlined class="h-4 ml-2 w-4" />
           </div>
-        </UButton>
+        </HeaderButton>
       </UDropdown>
     )
   }

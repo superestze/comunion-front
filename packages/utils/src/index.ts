@@ -6,5 +6,6 @@ export * from './obj'
 export * from './validators'
 export * from './size'
 export * from './address'
+export * from './color'
 
 export * from './type'
