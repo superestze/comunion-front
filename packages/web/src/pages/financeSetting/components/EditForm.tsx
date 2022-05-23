@@ -43,16 +43,11 @@ const EditStartupForm = defineComponent({
       return dayjs(dataTime).format('YYYY-MM-DD')
     }
     const dateList = ref({
-      // presaleDate: props.startup?.presaleDate || [],
-      // presaleDate: props.startup?.presaleDate || '',
       launchDate: props.startup?.launchDate || '',
       presaleStart: props.startup!.presaleStart || '',
       presaleEnd: props.startup!.presaleEnd || ''
     })
-    console.log(props.startup)
     const defaultModel = {
-      // presaleDate: new Date(dateList.value.presaleDate).getTime() || null,
-      // presaleDate: Number([]),
       presaleDate: dateList.value.presaleStart
         ? ref<number | [number, number] | null>([
             new Date(dateList.value.presaleStart).getTime(),
@@ -75,13 +70,6 @@ const EditStartupForm = defineComponent({
               }
             ]
     }
-
-    // function presaleDateChange1(val: any) {
-    //   const date = []
-    //   date[0] = new Date(val[0]).getTime()
-    //   date[1] = new Date(val[1]).getTime()
-    //   return date
-    // }
 
     const networkList = ref([
       {
@@ -142,8 +130,6 @@ const EditStartupForm = defineComponent({
 
     onMounted(() => {
       onTokenContractChange(defaultModel.contract)
-      // const date = [new Date('2021-10-2').getTime(), new Date('2021-10-2').getTime()]
-      // defaultModel.presaleDate.value = date
     })
 
     function addCompose() {
