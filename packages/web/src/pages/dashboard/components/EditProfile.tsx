@@ -50,7 +50,8 @@ const EditProfile = defineComponent({
         title: 'Skills',
         name: 'skills',
         required: true,
-        placeholder: 'Add your skill tag'
+        maxTagCount: 3,
+        placeholder: 'Choose your skill tag'
       },
       {
         title: 'Bio',

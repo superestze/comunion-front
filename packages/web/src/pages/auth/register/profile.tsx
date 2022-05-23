@@ -37,7 +37,8 @@ const RegisterProfilePage = defineComponent({
         title: 'Skills',
         name: 'skills',
         required: true,
-        placeholder: '#Enter you skill tag'
+        maxTagCount: 3,
+        placeholder: 'Choose your skill tag'
       },
       {
         title: 'Bio',
