@@ -231,7 +231,6 @@ const EditStartupForm = defineComponent({
             <USelect
               v-model:value={model.network}
               options={dateList.value.allNetworksList}
-              label={dateList.value.allNetworksList}
               placeholder="Select your launch network"
               clearable
               renderLabel={(option: any) => {
