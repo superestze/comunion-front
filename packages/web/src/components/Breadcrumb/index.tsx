@@ -18,9 +18,16 @@ const Breadcrumb = defineComponent({
         }
       ]
       const r = route.matched.find(r => r.name && r.path)
+
       if (r) {
+        if (r.name == 'basicSetting') {
+          r.name = 'basic setting'
+        }
+        if (r.name == 'financeSetting') {
+          r.name = 'finance setting'
+        }
         result.push({
-          name: r.name,
+          name: r.name === 'basicSetting' ? 'basic setting' : r.name,
           path: r.path
         })
       }
