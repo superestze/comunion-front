@@ -1,6 +1,5 @@
 import { UAddress, UNoContent, UScrollbar } from '@comunion/components'
 import { EmptyFilled } from '@comunion/icons'
-import { formatNumber } from '@comunion/utils'
 import dayjs from 'dayjs'
 import utcPlugin from 'dayjs/plugin/utc'
 import { defineComponent, PropType, ref, computed } from 'vue'
@@ -30,7 +29,9 @@ export const Finance = defineComponent({
       },
       {
         name: 'TOKEN SUPPLY:',
-        value: props.startup?.totalSupply ? formatNumber(props.startup?.totalSupply) : '--'
+        value: props.startup?.totalSupply
+          ? Number(props.startup?.totalSupply).toLocaleString()
+          : '--'
       },
       {
         name: 'TOKEN CONTRACT:',
