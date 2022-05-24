@@ -110,7 +110,7 @@ const StartupDetailPage = defineComponent({
                 />
               )}
             </div>
-            <UCard title="FINANCE" class="mb-10 h-115">
+            <UCard title="FINANCE" class="mb-10 min-h-115">
               <Finance startup={startup.value} />
             </UCard>
             <UCard title="BOUNTIES" class="mb-10">
