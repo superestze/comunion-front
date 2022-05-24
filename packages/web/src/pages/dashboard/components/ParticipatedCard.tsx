@@ -1,7 +1,5 @@
 import { UStartupLogo } from '@comunion/components'
-import { BasicSettingFilled, FinanceSettingFilled } from '@comunion/icons'
 import { defineComponent, PropType } from 'vue'
-import { useRouter } from 'vue-router'
 import { StartupItem } from '@/types'
 
 const StartupCard = defineComponent({
@@ -13,16 +11,8 @@ const StartupCard = defineComponent({
     }
   },
   setup(props, context) {
-    const router = useRouter()
-
-    const basicSetting = () => {
-      router.push({ path: '/basicsetting', query: { startupId: props.startup.id } })
-    }
-    const financeSetting = () => {
-      router.push({ path: '/financesetting', query: { startupId: props.startup.id } })
-    }
     const styles = {
-      combinationStyle: 'u-body1 pr-2 tracking-normal font-opensans font-400 text-[14px] leading-5'
+      combinationStyle: 'u-body1 pr-2 tracking-normal font-opensans leading-5'
     }
     return () => (
       <div class="flex h-28 w-full items-center">
@@ -31,7 +21,7 @@ const StartupCard = defineComponent({
         </div>
         <div class="flex h-full border-b-1 ml-6 w-full items-center">
           <div class="content">
-            <div class="u-title1 font-opensans mb-2 leading-6">{props.startup.name}</div>
+            <div class="u-title1 font-opensans leading-6">{props.startup.name}</div>
             <div class="divide-x">
               {props.startup.hashTags.map((tag, i) => {
                 return i + 1 < 4 ? (
@@ -41,16 +31,6 @@ const StartupCard = defineComponent({
                 ) : null
               })}
             </div>
-          </div>
-          <div class="ml-auto mr-1 justify-end">
-            <BasicSettingFilled
-              class="cursor-pointer rounded-2 h-12 mr-3 w-12"
-              onClick={basicSetting}
-            />
-            <FinanceSettingFilled
-              class="cursor-pointer rounded-2 h-12 w-12"
-              onClick={financeSetting}
-            />
           </div>
         </div>
       </div>
