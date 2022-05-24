@@ -1,8 +1,7 @@
-import { UDropdown } from '@comunion/components'
 import { ArrowDownOutlined } from '@comunion/icons'
 import { defineComponent, computed, ref, watchEffect } from 'vue'
-import HeaderButton from '../Button'
-import styles from './index.module.css'
+import HeaderButton from '../../components/HeaderButton'
+import HeaderDropdown from '../../components/HeaderDropdown'
 import { ChainNetworkType, supportedNetworks } from '@/constants'
 import { useWalletStore } from '@/stores'
 
@@ -36,27 +35,15 @@ const NetworkSwitcher = defineComponent({
     })
 
     return () => (
-      <UDropdown
-        class={styles.dropdown}
-        trigger="click"
+      <HeaderDropdown
         value={currentNetwork.value?.chainId}
-        placement="bottom-start"
-        themeOverrides={{
-          optionOpacityDisabled: '0.4'
-        }}
-        options={[
-          {
-            type: 'group',
-            label: 'Supported network',
-            key: 'label',
-            children: supportedNetworks.map(network => ({
-              key: network.chainId,
-              icon: () => <img src={network.logo} class="rounded-full h-5 w-5" />,
-              // disabled: network.disabled,
-              label: network.shortName ?? network.name
-            }))
-          }
-        ]}
+        title="Supported network"
+        options={supportedNetworks.map(network => ({
+          key: network.chainId,
+          // disabled: network.disabled,
+          icon: () => <img src={network.logo} class="rounded-full h-5 w-5" />,
+          label: network.shortName ?? network.name
+        }))}
         onSelect={onSelectNetwork}
       >
         <HeaderButton class={ctx.attrs.class}>
@@ -70,7 +57,7 @@ const NetworkSwitcher = defineComponent({
             <ArrowDownOutlined class="h-4 ml-2 w-4" />
           </div>
         </HeaderButton>
-      </UDropdown>
+      </HeaderDropdown>
     )
   }
 })
