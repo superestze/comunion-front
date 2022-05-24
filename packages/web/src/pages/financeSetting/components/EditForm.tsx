@@ -17,11 +17,6 @@ import dayjs from 'dayjs'
 import utc from 'dayjs/plugin/utc'
 import { utils } from 'ethers'
 import { defineComponent, PropType, reactive, ref, onMounted, h } from 'vue'
-// import avalanche from '@/assets/avalanche.png'
-// import bsc from '@/assets/bsc.png'
-// import ethereum from '@/assets/ethereum-eth-logo.png'
-// import fantom from '@/assets/fantom.png'
-// import polygon from '@/assets/polygon.png'
 import { allNetworks } from '@/constants'
 import { useErc20Contract } from '@/contracts'
 import { services } from '@/services'
@@ -73,34 +68,6 @@ const EditStartupForm = defineComponent({
             ]
     }
 
-    // const networkList = ref([
-    //   {
-    //     label: 'Ethereum',
-    //     value: 1,
-    //     src: ethereum
-    //   },
-    //   {
-    //     label: 'Avalanche',
-    //     value: 43114,
-    //     src: avalanche
-    //   },
-    //   {
-    //     label: 'Fantom',
-    //     value: 250,
-    //     src: fantom
-    //   },
-    //   {
-    //     label: 'BSC',
-    //     value: 56,
-    //     src: bsc
-    //   },
-    //   {
-    //     label: 'Polygon',
-    //     value: 137,
-    //     src: polygon
-    //   }
-    // ])
-
     const erc20ContractFactory = useErc20Contract()
 
     const defaultTokenInfo = {
@@ -130,6 +97,17 @@ const EditStartupForm = defineComponent({
       tokenInfo.supply = +utils.formatUnits(await contract.totalSupply(), 18)
     }
 
+    const networkDateList = dateList.value.allNetworksList.map((item, index) => {
+      const obj = {
+        logo: '',
+        label: '',
+        value: ''
+      }
+      obj.logo = item.logo
+      obj.label = item.name
+      obj.value = String(item.chainId)
+      return obj
+    })
     onMounted(() => {
       onTokenContractChange(defaultModel.contract)
     })
@@ -230,12 +208,13 @@ const EditStartupForm = defineComponent({
           <div class="w-full">
             <USelect
               v-model:value={model.network}
+              options={networkDateList}
               placeholder="Select your launch network"
               clearable
               renderLabel={(option: any) => {
                 return [
                   h(<UImage src={option.logo} class="h-5 mr-2 w-5 inline float-left" />),
-                  option.name as string
+                  option.label as string
                 ]
               }}
             />

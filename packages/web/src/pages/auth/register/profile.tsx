@@ -53,12 +53,10 @@ const RegisterProfilePage = defineComponent({
         placeholder: 'Your contact email'
       },
       {
-        t: 'hashInput',
-        category: 'comerSkill',
+        t: 'skillTags',
         title: 'Skills',
         name: 'skills',
-        required: true,
-        placeholder: '#Enter you skill tag'
+        required: true
       },
       {
         t: 'website',

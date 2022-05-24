@@ -63,12 +63,10 @@ const EditProfile = defineComponent({
         placeholder: 'Your contact email'
       },
       {
-        t: 'hashInput',
-        category: 'comerSkill',
+        t: 'skillTags',
         title: 'Skills',
         name: 'skills',
-        required: true,
-        placeholder: 'Add your skill tag'
+        required: true
       },
       {
         t: 'website',
@@ -140,7 +138,7 @@ const EditProfile = defineComponent({
       <>
         <span
           onClick={editProfile}
-          class="u-label2 flex flex-row items-center text-primary cursor-pointer"
+          class="cursor-pointer flex flex-row text-primary items-center u-label2"
         >
           <PlusOutlined class="h-4 mr-3 w-4" />
           EDIT
@@ -150,11 +148,11 @@ const EditProfile = defineComponent({
         <UDrawer title="Edit" v-model:show={show.value}>
           {show.value && (
             <>
-              <div class="flex flex-row items-center mb-6">
+              <div class="flex flex-row mb-6 items-center">
                 <div class="mr-4">
-                  <ULazyImage src={avatar.value} class="h-20 w-20 rounded" />
+                  <ULazyImage src={avatar.value} class="rounded h-20 w-20" />
                 </div>
-                <a class="u-title2 text-primary cursor-pointer" onClick={showAvatarSelect}>
+                <a class="cursor-pointer text-primary u-title2" onClick={showAvatarSelect}>
                   Update
                 </a>
               </div>
