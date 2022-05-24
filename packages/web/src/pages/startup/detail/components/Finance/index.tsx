@@ -2,7 +2,8 @@ import { UAddress, UNoContent, UScrollbar } from '@comunion/components'
 import { EmptyFilled } from '@comunion/icons'
 import dayjs from 'dayjs'
 import utcPlugin from 'dayjs/plugin/utc'
-import { defineComponent, PropType, ref, computed } from 'vue'
+import { defineComponent, PropType, computed } from 'vue'
+import { allNetworks } from '@/constants'
 import { StartupItem } from '@/types'
 dayjs.extend(utcPlugin)
 
@@ -14,55 +15,61 @@ export const Finance = defineComponent({
     }
   },
   setup(props) {
-    const financeBasic = ref([
-      {
-        name: 'LAUNCH NETWORK:',
-        value: props.startup?.launchNetwork || '--'
-      },
-      {
-        name: 'TOKEN NAME:',
-        value: props.startup?.tokenName || '--'
-      },
-      {
-        name: 'TOKEN SYMBOL:',
-        value: props.startup?.tokenSymbol || '--'
-      },
-      {
-        name: 'TOKEN SUPPLY:',
-        value: props.startup?.totalSupply
-          ? Number(props.startup?.totalSupply).toLocaleString()
-          : '--'
-      },
-      {
-        name: 'TOKEN CONTRACT:',
-        value: props.startup?.tokenContractAddress ? (
-          <UAddress autoSlice address={props.startup?.tokenContractAddress} />
-        ) : (
-          '--'
-        )
-      },
-      {
-        name: 'PRESALE:',
-        value: props.startup?.presaleStart
-          ? `${dayjs.utc(props.startup?.presaleStart).format('YYYY-MM-DD')} ~ ${dayjs
-              .utc(props.startup?.presaleEnd)
-              .format('YYYY-MM-DD UTC')}`
-          : '--'
-      },
-      {
-        name: 'LAUNCH:',
-        value: props.startup?.launchDate
-          ? dayjs.utc(props.startup?.launchDate).format('YYYY-MM-DD UTC')
-          : '--'
-      }
-    ])
+    const financeBasic = computed(() => {
+      const findNet = allNetworks.find(network => network.chainId === props.startup?.launchNetwork)
+      return [
+        {
+          name: 'LAUNCH NETWORK:',
+          value: findNet ? findNet.name : '--'
+        },
+        {
+          name: 'TOKEN NAME:',
+          value: props.startup?.tokenName || '--'
+        },
+        {
+          name: 'TOKEN SYMBOL:',
+          value: props.startup?.tokenSymbol || '--'
+        },
+        {
+          name: 'TOKEN SUPPLY:',
+          value: props.startup?.totalSupply
+            ? Number(props.startup?.totalSupply).toLocaleString()
+            : '--'
+        },
+        {
+          name: 'TOKEN CONTRACT:',
+          value: props.startup?.tokenContractAddress ? (
+            <UAddress autoSlice address={props.startup?.tokenContractAddress} />
+          ) : (
+            '--'
+          )
+        },
+        {
+          name: 'PRESALE:',
+          value:
+            props.startup?.presaleStart && props.startup?.presaleEnd
+              ? `${dayjs.utc(props.startup?.presaleStart).format('YYYY-MM-DD')} ~ ${dayjs
+                  .utc(props.startup?.presaleEnd)
+                  .format('YYYY-MM-DD UTC')}`
+              : '--'
+        },
+        {
+          name: 'LAUNCH:',
+          value: props.startup?.launchDate
+            ? dayjs.utc(props.startup?.launchDate).format('YYYY-MM-DD UTC')
+            : '--'
+        }
+      ]
+    })
 
     const wallets = computed(() => {
       // return [{ name: 'skkskkskssksksk', value: 'skdflsjflsjdfj' }]
-      return props.startup?.wallets.map(item => ({
-        name: item.walletName,
-        value: item.walletAddress
-      }))
+      return props.startup?.wallets
+        .filter(wallet => wallet.walletName && wallet.walletAddress)
+        .map(item => ({
+          name: item.walletName,
+          value: item.walletAddress
+        }))
     })
 
     return { financeBasic, wallets }
