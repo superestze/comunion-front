@@ -152,12 +152,9 @@ const EditStartupForm = defineComponent({
     ]
     const socialInfo: FormFactoryField[] = [
       {
-        t: 'hashInput',
+        t: 'startupTags',
         title: 'Tag',
-        category: 'startup',
-        name: 'tags',
-        maxTagCount: 8,
-        placeholder: 'Choose your startup tag'
+        name: 'tags'
       },
       {
         t: 'string',

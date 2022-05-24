@@ -32,13 +32,10 @@ const RegisterProfilePage = defineComponent({
         placeholder: 'Your home page, blog, or company site'
       },
       {
-        t: 'hashInput',
-        category: 'comerSkill',
+        t: 'skillTags',
         title: 'Skills',
         name: 'skills',
-        required: true,
-        maxTagCount: 3,
-        placeholder: 'Choose your skill tag'
+        required: true
       },
       {
         title: 'Bio',

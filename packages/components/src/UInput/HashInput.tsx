@@ -3,7 +3,6 @@ import { NSelect, SelectProps } from 'naive-ui'
 import type { SelectBaseOption } from 'naive-ui/lib/select/src/interface'
 import type { InjectionKey, PropType } from 'vue'
 import { provide, inject, defineComponent, ref, computed } from 'vue'
-import { DEFAULT_SKILLS, DEFAULT_STARTUP_TAGS } from './default.options'
 
 export type UHashInputOnSearch = (
   value: string,
@@ -25,14 +24,14 @@ const UHashInput = defineComponent({
     category: {
       type: String as PropType<'comerSkill' | 'startup' | 'bounty'>,
       required: true
-    },
+    }
     /**
      * max bytes for custom input
      */
-    byteMaxLength: {
-      type: Number,
-      default: 16
-    }
+    // byteMaxLength: {
+    //   type: Number,
+    //   default: 16
+    // }
   },
   setup(props, ctx) {
     const searchingValue = ref('')
@@ -40,28 +39,28 @@ const UHashInput = defineComponent({
     const options = ref<SelectBaseOption[]>([])
 
     const computedOptions = computed(() => {
-      if (props.category === 'comerSkill') {
-        if (!searchingValue.value) {
-          return DEFAULT_SKILLS
-        }
-        return [
-          ...DEFAULT_SKILLS.filter(tag =>
-            tag.label.toLowerCase().includes(searchingValue.value.toLowerCase())
-          ),
-          ...(options.value ?? [])
-        ]
-      }
-      if (props.category === 'startup') {
-        if (!searchingValue.value) {
-          return DEFAULT_STARTUP_TAGS
-        }
-        return [
-          ...DEFAULT_STARTUP_TAGS.filter(tag =>
-            tag.label.toLowerCase().includes(searchingValue.value.toLowerCase())
-          ),
-          ...options.value
-        ]
-      }
+      // if (props.category === 'comerSkill') {
+      //   if (!searchingValue.value) {
+      //     return DEFAULT_SKILLS
+      //   }
+      //   return [
+      //     ...DEFAULT_SKILLS.filter(tag =>
+      //       tag.label.toLowerCase().includes(searchingValue.value.toLowerCase())
+      //     ),
+      //     ...(options.value ?? [])
+      //   ]
+      // }
+      // if (props.category === 'startup') {
+      //   if (!searchingValue.value) {
+      //     return DEFAULT_STARTUP_TAGS
+      //   }
+      //   return [
+      //     ...DEFAULT_STARTUP_TAGS.filter(tag =>
+      //       tag.label.toLowerCase().includes(searchingValue.value.toLowerCase())
+      //     ),
+      //     ...options.value
+      //   ]
+      // }
       return options.value
     })
 
@@ -88,12 +87,12 @@ const UHashInput = defineComponent({
           return
         }
         searchingValue.value = value
-        if (props.byteMaxLength) {
-          const byteLength = new Blob([value]).size
-          if (byteLength > props.byteMaxLength) {
-            return
-          }
-        }
+        // if (props.byteMaxLength) {
+        //   const byteLength = new Blob([value]).size
+        //   if (byteLength > props.byteMaxLength) {
+        //     return
+        //   }
+        // }
         loading.value = true
         options.value = await remoteSearch(value)
         loading.value = false
