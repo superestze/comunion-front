@@ -9,7 +9,7 @@ import {
   HookFilled,
   PlusOutlined
 } from '@comunion/icons'
-import { defineComponent, PropType } from 'vue'
+import { computed, defineComponent, PropType } from 'vue'
 import { useRouter } from 'vue-router'
 import styles from './style.module.css'
 import { getStartupTypeFromNumber, StartupTypesType, STARTUP_TYPES_COLOR_MAP } from '@/constants'
@@ -20,7 +20,8 @@ export const StartupBasicInfo = defineComponent({
   emits: ['followStartup', 'unfollowStartup'],
   props: {
     startup: {
-      type: Object as PropType<StartupItem>
+      type: Object as PropType<StartupItem>,
+      required: true
     },
     userIsFollow: {
       type: Boolean
@@ -28,10 +29,14 @@ export const StartupBasicInfo = defineComponent({
   },
   setup(props, ctx) {
     const router = useRouter()
-    const hashtagsArray = props.startup!.hashTags.map(key => {
-      return key.name
-    })
-    const modeName = getStartupTypeFromNumber(props.startup!.mode) as StartupTypesType
+    const hashtagsArray = computed(() =>
+      props.startup!.hashTags.map(key => {
+        return key.name
+      })
+    )
+    const modeName = computed(
+      () => getStartupTypeFromNumber(props.startup!.mode) as StartupTypesType
+    )
     const toSocialEnd = (url: string) => {
       window.open(url)
     }
@@ -54,17 +59,23 @@ export const StartupBasicInfo = defineComponent({
               <div class="flex items-center">
                 <span class="u-h2">{props.startup!.name}</span>
                 {props.startup!.mode > 0 && (
-                  <UTag class="ml-5" type="filled" bgColor={STARTUP_TYPES_COLOR_MAP[modeName]}>
-                    {modeName}
+                  <UTag
+                    class="ml-5"
+                    type="filled"
+                    bgColor={STARTUP_TYPES_COLOR_MAP[modeName.value]}
+                  >
+                    {modeName.value}
                   </UTag>
                 )}
               </div>
               <div class="flex flex-wrap gap-2 mt-2">
-                {hashtagsArray.slice(0, 4).map((key, value) => {
+                {hashtagsArray.value.slice(0, 4).map((key, value) => {
                   return value + 1 < 4 && <UTag key={value}>{key}</UTag>
                 })}
 
-                {hashtagsArray.length - 3 > 1 ? <UTag>+ {hashtagsArray.length - 3}</UTag> : null}
+                {hashtagsArray.value.length - 3 > 1 ? (
+                  <UTag>+ {hashtagsArray.value.length - 3}</UTag>
+                ) : null}
               </div>
             </div>
             <div>

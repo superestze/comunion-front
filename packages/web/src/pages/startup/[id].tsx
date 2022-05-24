@@ -53,24 +53,30 @@ export const StartupInfo = defineComponent({
     }
 
     const getUserIsFollow = async () => {
-      const { data } = await services['startup@startup-followed-by-me']({
+      const { error, data } = await services['startup@startup-followed-by-me']({
         startupId
       })
-      userIsFollow.value = data!.isFollowed
+      if (!error) {
+        userIsFollow.value = data!.isFollowed
+      }
     }
 
     const followStartup = async () => {
-      await services['startup@startup-follow']({
+      const { error } = await services['startup@startup-follow']({
         startupId
       })
-      getUserIsFollow()
+      if (!error) {
+        getUserIsFollow()
+      }
     }
 
     const unfollowStartup = async () => {
-      await services['startup@startup-unfollow']({
+      const { error } = await services['startup@startup-unfollow']({
         startupId
       })
-      getUserIsFollow()
+      if (!error) {
+        getUserIsFollow()
+      }
     }
 
     onMounted(() => {

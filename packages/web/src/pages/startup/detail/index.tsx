@@ -32,25 +32,29 @@ const StartupDetailPage = defineComponent({
     }
 
     const teamList = async (limit = 5) => {
-      const { data } = await services['startup@start-team-meabers-list']({
+      const { error, data } = await services['startup@start-team-meabers-list']({
         startupId,
         limit,
         offset: 0
       })
-      teamMembers.value.length = 0
-      totalTeamMembers.value = data?.total
-      if (data!.list.length) {
-        teamMembers.value.push(...(data!.list as unknown as StartupItem[]))
-      } else {
+      if (!error) {
         teamMembers.value.length = 0
+        totalTeamMembers.value = data?.total
+        if (data!.list.length) {
+          teamMembers.value.push(...(data!.list as unknown as StartupItem[]))
+        } else {
+          teamMembers.value.length = 0
+        }
       }
     }
 
     const getUserIsFollow = async () => {
-      const { data } = await services['startup@startup-followed-by-me']({
+      const { error, data } = await services['startup@startup-followed-by-me']({
         startupId
       })
-      userIsFollow.value = data!.isFollowed
+      if (!error) {
+        userIsFollow.value = data!.isFollowed
+      }
     }
 
     const followStartup = async () => {
@@ -61,10 +65,12 @@ const StartupDetailPage = defineComponent({
     }
 
     const unfollowStartup = async () => {
-      await services['startup@startup-unfollow']({
+      const { error } = await services['startup@startup-unfollow']({
         startupId
       })
-      getUserIsFollow()
+      if (!error) {
+        getUserIsFollow()
+      }
     }
 
     const viewAllMembers = () => {

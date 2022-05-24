@@ -11,6 +11,10 @@ export const Team = defineComponent({
   emits: ['viewAllMembers'],
   setup(props, ctx) {
     const visible = ref(false)
+    const viewAllMembers = () => {
+      ctx.emit('viewAllMembers')
+      visible.value = true
+    }
     return () => (
       <div class="mt-8">
         {props.teamMembers.length
@@ -20,13 +24,7 @@ export const Team = defineComponent({
           : null}
         {props.teamMembers.length > MAX_SHOW_COUNT && (
           <div class="text-primary flex items-center justify-end">
-            <div
-              class="cursor-pointer flex items-center"
-              onClick={() => {
-                ctx.emit('viewAllMembers')
-                visible.value = true
-              }}
-            >
+            <div class="cursor-pointer flex items-center" onClick={viewAllMembers}>
               <span class="u-title2 text-primary mr-2 ">View all {props.memberCount} members</span>
               <ArrowRightOutlined class="" />
             </div>
