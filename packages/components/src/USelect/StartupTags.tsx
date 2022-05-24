@@ -40,7 +40,7 @@ const StartupTags = defineComponent({
         clearable
         maxTagCount="responsive"
         multiple
-        options={DEFAULT_STARTUP_TAGS}
+        options={options.value}
         tag
         filterable
         inputProps={{
