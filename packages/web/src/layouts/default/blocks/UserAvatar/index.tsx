@@ -1,4 +1,4 @@
-import { message, ULazyImage } from '@comunion/components'
+import { ULazyImage } from '@comunion/components'
 import { SignOutFilled, UserFilled } from '@comunion/icons'
 import { defineComponent } from 'vue'
 import { useRouter } from 'vue-router'
@@ -12,9 +12,7 @@ const UserAvatar = defineComponent({
     const userStore = useUserStore()
     const onClick = (v: string) => {
       if (v === 'logout') {
-        userStore.onLogout()
-        message.info('You have been logged out')
-        router.replace('/auth/login')
+        userStore.logout()
       } else {
         router.push('/dashboard')
       }
