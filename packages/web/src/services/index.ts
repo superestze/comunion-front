@@ -801,7 +801,19 @@ export const services = {
           name: string
           category: string
           isIndex: boolean
-        }[]
+        }[] 
+        website: string
+        discord: string
+        twitter: string
+        telegram: string
+        docs: string
+        launchNetwork: number
+        tokenName: string
+        tokenSymbol: string
+        totalSupply: string
+        presaleStart: string
+        presaleEnd: string
+        launchDate: string 
         wallets: {
           id: number
           createdAt: string

@@ -122,11 +122,11 @@ const TeamSetting = defineComponent({
               onClick={searchMember}
               class="w-34 h-12 bg-primary1 font-opensans font-600 text-[16px] text-white"
             >
-              Search
+              Add
             </UButton>
           </UInputGroup>
           <span class="font-opensans inline-block mt-2 text-grey3 font-400 text-[12px]">
-            Please enter comerid to search and add team member
+            Search for comer with wallet address
           </span>
         </div>
         {/* startup team */}

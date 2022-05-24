@@ -67,7 +67,6 @@ const EditStartupForm = defineComponent({
               }
             ]
     }
-
     const erc20ContractFactory = useErc20Contract()
 
     const defaultTokenInfo = {
