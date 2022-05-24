@@ -2,7 +2,7 @@ import { debounce } from '@comunion/utils'
 import { NSelect, SelectProps } from 'naive-ui'
 import type { SelectBaseOption } from 'naive-ui/lib/select/src/interface'
 import type { InjectionKey, PropType } from 'vue'
-import { provide, inject, defineComponent, ref } from 'vue'
+import { provide, inject, defineComponent, ref, computed } from 'vue'
 
 export type UHashInputOnSearch = (
   value: string,
@@ -25,31 +25,90 @@ const UHashInput = defineComponent({
       type: String as PropType<'comerSkill' | 'startup' | 'bounty'>,
       required: true
     }
+    /**
+     * max bytes for custom input
+     */
+    // byteMaxLength: {
+    //   type: Number,
+    //   default: 16
+    // }
   },
-  setup(props) {
+  setup(props, ctx) {
+    const searchingValue = ref('')
     const loading = ref(false)
     const options = ref<SelectBaseOption[]>([])
+
+    const computedOptions = computed(() => {
+      // if (props.category === 'comerSkill') {
+      //   if (!searchingValue.value) {
+      //     return DEFAULT_SKILLS
+      //   }
+      //   return [
+      //     ...DEFAULT_SKILLS.filter(tag =>
+      //       tag.label.toLowerCase().includes(searchingValue.value.toLowerCase())
+      //     ),
+      //     ...(options.value ?? [])
+      //   ]
+      // }
+      // if (props.category === 'startup') {
+      //   if (!searchingValue.value) {
+      //     return DEFAULT_STARTUP_TAGS
+      //   }
+      //   return [
+      //     ...DEFAULT_STARTUP_TAGS.filter(tag =>
+      //       tag.label.toLowerCase().includes(searchingValue.value.toLowerCase())
+      //     ),
+      //     ...options.value
+      //   ]
+      // }
+      return options.value
+    })
 
     const hashInputState = inject(UHashInputSymbol)
     if (!hashInputState) {
       throw new Error('UHashInput must be used in UHashInputProvider')
     }
 
-    const doSearch = debounce(async (inputValue: string) => {
-      const value = inputValue.replace(/^#+/, '').replace(/#+$/, '')
-      if (!value) {
-        options.value = []
-        return
-      }
-      loading.value = true
+    const remoteSearch = debounce(async (value: string) => {
       const result = await hashInputState.onSearch?.(value, props.category)
       if (result.some(item => item.value === value)) {
         options.value = result
       } else {
         options.value = [...result, { label: `#${value}#(new)`, value: value }]
       }
-      loading.value = false
+      return result
     }, 500)
+
+    const doSearch = async (inputValue: string) => {
+      if (inputValue.startsWith('#')) {
+        const value = inputValue.replace(/^#+/, '').replace(/#+$/, '')
+        if (!value) {
+          searchingValue.value = ''
+          return
+        }
+        searchingValue.value = value
+        // if (props.byteMaxLength) {
+        //   const byteLength = new Blob([value]).size
+        //   if (byteLength > props.byteMaxLength) {
+        //     return
+        //   }
+        // }
+        loading.value = true
+        options.value = await remoteSearch(value)
+        loading.value = false
+      } else {
+        options.value = []
+        loading.value = false
+        searchingValue.value = inputValue.replace(/^#+/, '').replace(/#+$/, '')
+      }
+    }
+
+    const onChange = (value: string | string[]) => {
+      ctx.emit('update:value', value)
+      searchingValue.value = ''
+      options.value = []
+      loading.value = false
+    }
 
     return () => (
       <NSelect
@@ -62,7 +121,7 @@ const UHashInput = defineComponent({
         maxTagCount={props.maxTagCount ?? 5}
         multiple
         remote
-        options={options.value}
+        options={computedOptions.value}
         // renderLabel={({ option }: { option: SelectOption }) =>
         //   option.label.toString().replace(/^#/, '').replace(/#$/, '')
         // }
@@ -70,6 +129,7 @@ const UHashInput = defineComponent({
         tag
         filterable
         onSearch={doSearch}
+        onUpdateValue={onChange}
       />
     )
   }
