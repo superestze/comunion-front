@@ -1,5 +1,5 @@
 import { UCard, ULazyImage, UTooltip, UButton } from '@comunion/components'
-import { GithubFilled, GoogleFilled, ConnectFilled, ArrowRightOutlined } from '@comunion/icons'
+import { GithubFilled, GoogleFilled, ConnectOutlined, ArrowRightOutlined } from '@comunion/icons'
 import { computed, defineComponent, onMounted, ref } from 'vue'
 import Bookmarks from './components/Bookmarks'
 import Bounties from './components/Bounties'
@@ -136,7 +136,7 @@ const DashboardPage = defineComponent({
                   <div class="mt-2">
                     {myProfile.value?.website && (
                       <div class="flex align-center cursor-pointer">
-                        <ConnectFilled />
+                        <ConnectOutlined class="text-primary" />
                         <span class=" pl-2 font-400 text-14px text-primary">
                           {myProfile.value?.website}
                         </span>
