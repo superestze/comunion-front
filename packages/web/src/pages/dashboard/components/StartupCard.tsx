@@ -35,7 +35,13 @@ const StartupCard = defineComponent({
             <div class="divide-x">
               {props.startup.hashTags.map((tag, i) => {
                 return i + 1 < 4 ? (
-                  <span class={[i === 0 ? '' : 'pl-2', styles.combinationStyle]} key={i}>
+                  <span
+                    class={[
+                      i === 0 ? '' : 'pl-2',
+                      'u-body1 pr-2 tracking-normal font-opensans font-400 text-[14px] leading-5'
+                    ]}
+                    key={i}
+                  >
                     {tag.name}
                   </span>
                 ) : null

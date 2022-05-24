@@ -21,15 +21,13 @@ const FollowDateil = defineComponent({
     const funFolow = () => {
       success.value = true
     }
-    const styles = {
-      combinationStyle: 'pr-2 tracking-normal font-opensans font-400 text-[14px] leading-5'
-    }
+
     const plusStatusClick = async (val: any) => {
       const { error } = await services['startup@startup-follow']({
         startupId: val.id
       })
       if (!error) {
-        startupDate.value?.map((item: any) => {
+        startupDate.value?.forEach((item: any) => {
           if (item.id === val.id) {
             item.isDeleted = !item.isDeleted
           }
@@ -41,7 +39,7 @@ const FollowDateil = defineComponent({
         startupId: val.id
       })
       if (!error) {
-        startupDate.value?.map((item: any) => {
+        startupDate.value?.forEach((item: any) => {
           if (item.id === val.id) {
             item.isDeleted = !item.isDeleted
           }
@@ -77,7 +75,10 @@ const FollowDateil = defineComponent({
                                   ? item?.hashTags.map((tag: any, i: any) => {
                                       return i + 1 < 4 ? (
                                         <span
-                                          class={[i === 0 ? '' : 'pl-2', styles.combinationStyle]}
+                                          class={[
+                                            i === 0 ? '' : 'pl-2',
+                                            'u-body1 pr-2 tracking-normal font-opensans font-400 text-[14px] leading-5'
+                                          ]}
                                           key={i}
                                         >
                                           {tag.name}
