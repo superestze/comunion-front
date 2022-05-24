@@ -29,9 +29,7 @@ function onErrorHandler(error: any): {
   try {
     const rep: BaseResponse = error.response.data
     if (rep.code === 401 && location.pathname !== '/auth/login') {
-      message.error('The token expired, please re-login')
-      userStore.onLogout()
-      window.location.href = '/auth/login'
+      userStore.logout('The token expired, please re-login')
       return { error: true, data: null }
     }
   } catch (error) {
