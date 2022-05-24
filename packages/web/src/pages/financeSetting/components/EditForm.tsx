@@ -101,11 +101,11 @@ const EditStartupForm = defineComponent({
       const obj = {
         logo: '',
         label: '',
-        value: 1
+        value: ''
       }
       obj.logo = item.logo
       obj.label = item.name
-      obj.value = item.chainId
+      obj.value = String(item.chainId)
       return obj
     })
     onMounted(() => {
