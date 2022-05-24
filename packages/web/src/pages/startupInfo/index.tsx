@@ -11,7 +11,7 @@ import {
 import dayjs from 'dayjs'
 import utcPlugin from 'dayjs/plugin/utc'
 import { defineComponent, onMounted, ref, computed } from 'vue'
-import { useRoute, useRouter } from 'vue-router'
+import { useRoute } from 'vue-router'
 import styles from './style.module.css'
 import { getStartupTypeFromNumber, StartupTypesType, STARTUP_TYPES_COLOR_MAP } from '@/constants'
 import { services } from '@/services'
@@ -22,15 +22,11 @@ dayjs.extend(utcPlugin)
 export const StartupInfo = defineComponent({
   name: 'StartupInfo',
   setup(props) {
-    const router = useRouter()
     const route = useRoute()
     const startupId = route.query.startupId
     const userIsFollow = ref(false)
 
     const startup = ref<StartupItem>()
-    const hashtagsArray = startup.value?.hashTags.map(key => {
-      return key.name
-    })
     const modeName = computed(() => {
       console.log('startup.value?.mode', startup.value?.mode)
 
