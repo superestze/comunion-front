@@ -8,15 +8,14 @@ import FollowDateil from './components/FollowDateil'
 import Proposals from './components/Proposals'
 import Startups from './components/Startups'
 import { ServiceReturn, services } from '@/services'
-import { StartupItem } from '@/types'
+// import { StartupItem } from '@/types'
 // import { useWalletStore } from '@/stores'
 
 const DashboardPage = defineComponent({
   name: 'Dashboard',
   setup() {
-    // const walletStore = useWalletStore()
     const myProfile = ref<ServiceReturn<'account@comer-profile-get'>>()
-    const folowDate = ref<StartupItem[]>([])
+    const folowDate = ref<object[]>([])
     const getDataList = async () => {
       const { error, data } = await services['account@comer-profile-get']()
       if (!error) {
@@ -31,14 +30,10 @@ const DashboardPage = defineComponent({
         mode: null
       })
       if (!error) {
-        folowDate.value = !data || []
+        folowDate.value = data.list
       }
     }
     onMounted(() => {
-      // const { error, data } = await services['account@comer-profile-get']()
-      // if (!error) {
-      //   myProfile.value = data
-      // }
       getDataList()
       getFollowList()
     })

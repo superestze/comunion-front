@@ -69,16 +69,13 @@ const FollowDateil = defineComponent({
                               />
                             </div>
                             <div>
-                              <div class="u-title1 font-opensans mb-2 leading-6">{item.name}</div>
+                              <div class="u-title1 mb-2 ">{item.name}</div>
                               <div class="divide-x">
                                 {item.hashTags
                                   ? item?.hashTags.map((tag: any, i: any) => {
                                       return i + 1 < 4 ? (
                                         <span
-                                          class={[
-                                            i === 0 ? '' : 'pl-2',
-                                            'u-body1 pr-2 tracking-normal font-opensans leading-5'
-                                          ]}
+                                          class={[i === 0 ? '' : 'pl-2', 'u-body1 pr-2']}
                                           key={i}
                                         >
                                           {tag.name}
