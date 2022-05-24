@@ -66,7 +66,7 @@ export default defineConfig({
             }
           }
           if (!route.meta?.layout) {
-            addLayout('default')
+            addLayout('default/index')
           }
         }
         return route

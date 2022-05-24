@@ -16,8 +16,6 @@ export type ChainNetworkType = {
   currencySymbol: string
   rpcUrl: string
   explorerUrl: string
-  label: string
-  value: number
 }
 
 /**
@@ -27,8 +25,6 @@ export const allNetworks: ChainNetworkType[] = [
   {
     logo: ethereum,
     chainId: 1,
-    value: 1,
-    label: 'Ethereum',
     name: 'Ethereum',
     currencySymbol: 'ETH',
     rpcUrl: 'https://mainnet.infura.io/v3/',
@@ -37,8 +33,6 @@ export const allNetworks: ChainNetworkType[] = [
   {
     logo: ethereum,
     chainId: 5,
-    value: 5,
-    label: 'Goerli Testnet',
     name: 'Goerli Testnet',
     currencySymbol: 'ETH',
     rpcUrl: 'https://goerli.infura.io/v3/',
@@ -47,8 +41,6 @@ export const allNetworks: ChainNetworkType[] = [
   {
     logo: avalanche,
     chainId: 43114,
-    value: 43114,
-    label: 'Avalanche C-Chain',
     name: 'Avalanche C-Chain',
     shortName: 'Avalanche',
     currencySymbol: 'AVAX',
@@ -58,8 +50,6 @@ export const allNetworks: ChainNetworkType[] = [
   {
     logo: avalanche,
     chainId: 43113,
-    value: 43113,
-    label: 'Avalanche Fuji Testnet',
     name: 'Avalanche Fuji Testnet',
     shortName: 'Avalanche Testnet',
     currencySymbol: 'AVAX',
@@ -69,8 +59,6 @@ export const allNetworks: ChainNetworkType[] = [
   {
     logo: fantom,
     chainId: 250,
-    value: 250,
-    label: 'Fantom Opera',
     name: 'Fantom Opera',
     shortName: 'Fantom',
     currencySymbol: 'FTM',
@@ -80,8 +68,6 @@ export const allNetworks: ChainNetworkType[] = [
   {
     logo: fantom,
     chainId: 4002,
-    value: 4002,
-    label: 'Fantom Testnet',
     name: 'Fantom Testnet',
     currencySymbol: 'FTM',
     rpcUrl: 'https://rpc.testnet.fantom.network',
@@ -90,8 +76,6 @@ export const allNetworks: ChainNetworkType[] = [
   {
     logo: binance,
     chainId: 56,
-    value: 56,
-    label: 'Binance Smart Chain Mainnet',
     name: 'Binance Smart Chain Mainnet',
     shortName: 'BSC',
     currencySymbol: 'BNB',
@@ -101,8 +85,6 @@ export const allNetworks: ChainNetworkType[] = [
   {
     logo: binance,
     chainId: 97,
-    value: 97,
-    label: 'Binance Smart Chain Testnet',
     name: 'Binance Smart Chain Testnet',
     shortName: 'BSC Testnet',
     currencySymbol: 'tBNB',
@@ -112,8 +94,6 @@ export const allNetworks: ChainNetworkType[] = [
   {
     logo: polygon,
     chainId: 137,
-    value: 137,
-    label: 'Polygon Mainnet',
     name: 'Polygon Mainnet',
     shortName: 'Polygon',
     currencySymbol: 'MATIC',
