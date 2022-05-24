@@ -22,6 +22,17 @@ const Startups = defineComponent({
       page: 1,
       loading: false
     })
+    const ParticipatedPagination = reactive<{
+      pageSize: number
+      total: number
+      page: number
+      loading: boolean
+    }>({
+      pageSize: 4,
+      total: 0,
+      page: 1,
+      loading: false
+    })
     const myCreatedStartups = ref<StartupItem[]>([])
     const myParticipatedStartups = ref<StartupItem[]>([])
     const getCreatedStartups = async () => {
@@ -36,22 +47,28 @@ const Startups = defineComponent({
     }
     const getParticipatedStartups = async () => {
       const { error, data } = await services['startup@startup-list-participated']({
-        limit: pagination.pageSize,
-        offset: pagination.pageSize * (pagination.page - 1),
+        limit: ParticipatedPagination.pageSize,
+        offset: ParticipatedPagination.pageSize * (ParticipatedPagination.page - 1),
         keyword: null,
         mode: null
       })
       if (!error) {
         myParticipatedStartups.value.push(...(data!.list as unknown as StartupItem[]))
+        ParticipatedPagination.total = data!.total
       }
     }
 
     const onLoadMore = async (p: number) => {
       pagination.loading = true
       pagination.page = p
-      await getParticipatedStartups()
       await getCreatedStartups()
       pagination.loading = false
+    }
+    const ParticipatedLoadMore = async (p: number) => {
+      ParticipatedPagination.loading = true
+      ParticipatedPagination.page = p
+      await getParticipatedStartups()
+      ParticipatedPagination.loading = false
     }
 
     const createNewStartup = () => {
@@ -82,14 +99,16 @@ const Startups = defineComponent({
         <UTabs>
           <UTabPane name="PARTICIPATED" tab="PARTICIPATED">
             <UScrollList
-              triggered={pagination.loading}
-              page={pagination.page}
-              pageSize={pagination.pageSize}
-              total={pagination.total}
-              onLoadMore={onLoadMore}
+              triggered={ParticipatedPagination.loading}
+              page={ParticipatedPagination.page}
+              pageSize={ParticipatedPagination.pageSize}
+              total={ParticipatedPagination.total}
+              onLoadMore={ParticipatedLoadMore}
             >
               {myParticipatedStartups.value.length ? (
-                myParticipatedStartups.value.map(startup => <ParticipatedCard startup={startup} />)
+                myParticipatedStartups.value.map((startup, i) => (
+                  <ParticipatedCard startup={startup} key={i} />
+                ))
               ) : (
                 <UDeveloping>
                   <EmptyFilled class="mt-34" />
@@ -106,7 +125,9 @@ const Startups = defineComponent({
               onLoadMore={onLoadMore}
             >
               {myCreatedStartups.value.length ? (
-                myCreatedStartups.value.map(startup => <StartupCard startup={startup} />)
+                myCreatedStartups.value.map((startup, i) => (
+                  <StartupCard startup={startup} key={i} />
+                ))
               ) : (
                 <UDeveloping>
                   <EmptyFilled class="mt-34" />
