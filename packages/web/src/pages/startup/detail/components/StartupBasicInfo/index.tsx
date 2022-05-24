@@ -36,7 +36,7 @@ export const StartupBasicInfo = defineComponent({
       window.open(url)
     }
     const toStartupInfo = () => {
-      router.push({ path: '/startupinfo', query: { startupId: props.startup?.id } })
+      router.push({ path: `/startup/${props.startup?.id}` })
     }
     return () => (
       <div class="flex items-start gap-10">

@@ -44,7 +44,7 @@ const EditProfile = defineComponent({
         title: 'Time Zone',
         name: 'timeZone',
         required: true,
-        options: UTC_OPTIONS.map(item => ({ label: item.value, value: item.value }))
+        options: UTC_OPTIONS.map(item => ({ label: item.label, value: item.label }))
       },
       {
         t: 'website',

@@ -14,6 +14,9 @@ const RegisterProfilePage = defineComponent({
     const router = useRouter()
     const userStore = useUserStore()
     const success = ref(false)
+    const fieldInitValues = {
+      timeZone: '(UTC) UTC'
+    }
     const fields: FormFactoryField[] = [
       {
         title: 'Name',
@@ -31,7 +34,7 @@ const RegisterProfilePage = defineComponent({
         title: 'Time Zone',
         name: 'timeZone',
         required: true,
-        options: UTC_OPTIONS.map(item => ({ label: item.value, value: item.value }))
+        options: UTC_OPTIONS.map(item => ({ label: item.label, value: item.label }))
       },
       {
         t: 'website',
@@ -129,7 +132,12 @@ const RegisterProfilePage = defineComponent({
           </p>
           <div class="bg-white border rounded-lg border-grey5 pt-10 pb-5">
             <div class="mx-auto w-200">
-              <UFormFactory fields={fields} submitText="Next step" onSubmit={onSubmit} />
+              <UFormFactory
+                fields={fields}
+                initialValues={fieldInitValues}
+                submitText="Next step"
+                onSubmit={onSubmit}
+              />
               <UModal v-model:show={success.value} closable={false} maskClosable={false}>
                 <div class="bg-white rounded-lg flex flex-col h-88 w-150 items-center">
                   <img src={successImg} class="h-40 mt-18 w-110" />

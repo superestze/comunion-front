@@ -1,6 +1,7 @@
 import { UTag, UStartupLogo } from '@comunion/components'
 // import { StartupLogoOutlined } from '@comunion/icons'
 import { defineComponent, PropType } from 'vue'
+import { useRouter } from 'vue-router'
 import styles from './StartupCard.module.css'
 import UTeamMembers from './TeamMembers'
 import { getStartupTypeFromNumber, StartupTypesType, STARTUP_TYPES_COLOR_MAP } from '@/constants'
@@ -8,7 +9,6 @@ import { StartupItem } from '@/types'
 
 const StartupCard = defineComponent({
   name: 'StartupCard',
-  emits: ['click'],
   props: {
     startup: {
       type: Object as PropType<StartupItem>,
@@ -24,10 +24,16 @@ const StartupCard = defineComponent({
     })
     const modeName = getStartupTypeFromNumber(props.startup.mode) as StartupTypesType
 
+    const router = useRouter()
+
+    const toStartDetail = (startupInfo: StartupItem) => {
+      router.push({ path: '/startup/detail', query: { startupId: startupInfo.id } })
+    }
+
     return () => (
       <div
         class="bg-white rounded h-80 relative cursor-pointer"
-        onClick={() => ctx.emit('click', props.startup)}
+        onClick={() => toStartDetail(props.startup)}
       >
         <div class={styles.cardBorder}></div>
         <div class="p-6">

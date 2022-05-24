@@ -23,7 +23,7 @@ export const StartupInfo = defineComponent({
   name: 'StartupInfo',
   setup(props) {
     const route = useRoute()
-    const startupId = route.query.startupId
+    const startupId = route.params.id
     const userIsFollow = ref(false)
 
     const startup = ref<StartupItem>()
