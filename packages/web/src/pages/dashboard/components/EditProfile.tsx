@@ -2,6 +2,7 @@ import { FormFactoryField, UDrawer, UFormFactory, ULazyImage } from '@comunion/c
 import { PlusOutlined } from '@comunion/icons'
 import { defineComponent, PropType, reactive, ref } from 'vue'
 import AvatarSelect from '@/components/Profile/AvatarSelect'
+import { UTC_OPTIONS } from '@/constants'
 import { ServiceArg, ServiceReturn, services } from '@/services'
 import { useUserStore } from '@/stores'
 
@@ -39,16 +40,61 @@ const EditProfile = defineComponent({
         placeholder: 'Add your location'
       },
       {
+        t: 'select',
+        title: 'Time Zone',
+        name: 'timeZone',
+        required: true,
+        options: UTC_OPTIONS.map(item => ({ label: item.label, value: item.label }))
+      },
+      {
         t: 'website',
         title: 'Website',
         name: 'website',
         placeholder: 'Add your homepage,blog,website .etc'
       },
       {
+        title: 'Email',
+        name: 'email',
+        required: true,
+        rules: [
+          { type: 'string', message: 'Your contact email' },
+          { type: 'email', message: 'Enter the correct email address' }
+        ],
+        placeholder: 'Your contact email'
+      },
+      {
         t: 'skillTags',
         title: 'Skills',
         name: 'skills',
         required: true
+      },
+      {
+        t: 'website',
+        defaultValue: '',
+        title: 'Twitter',
+        name: 'twitter',
+        placeholder: 'Enter twitter'
+      },
+      {
+        t: 'website',
+        defaultValue: '',
+        title: 'Discord',
+        name: 'discord',
+        placeholder: 'Enter discord'
+      },
+      {
+        t: 'website',
+        defaultValue: '',
+        title: 'Telegram',
+        name: 'telegram',
+        placeholder: 'Enter telegram'
+      },
+      {
+        t: 'website',
+        defaultValue: '',
+        title: 'Medium',
+        name: 'medium',
+        placeholder: 'Enter medium'
       },
       {
         title: 'Bio',
