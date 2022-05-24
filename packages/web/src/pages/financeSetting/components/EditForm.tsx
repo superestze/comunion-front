@@ -17,11 +17,12 @@ import dayjs from 'dayjs'
 import utc from 'dayjs/plugin/utc'
 import { utils } from 'ethers'
 import { defineComponent, PropType, reactive, ref, onMounted, h } from 'vue'
-import avalanche from '@/assets/avalanche.png'
-import bsc from '@/assets/bsc.png'
-import ethereum from '@/assets/ethereum-eth-logo.png'
-import fantom from '@/assets/fantom.png'
-import polygon from '@/assets/polygon.png'
+// import avalanche from '@/assets/avalanche.png'
+// import bsc from '@/assets/bsc.png'
+// import ethereum from '@/assets/ethereum-eth-logo.png'
+// import fantom from '@/assets/fantom.png'
+// import polygon from '@/assets/polygon.png'
+import { allNetworks } from '@/constants'
 import { useErc20Contract } from '@/contracts'
 import { services } from '@/services'
 import { StartupItem } from '@/types'
@@ -45,7 +46,8 @@ const EditStartupForm = defineComponent({
     const dateList = ref({
       launchDate: props.startup?.launchDate || '',
       presaleStart: props.startup!.presaleStart || '',
-      presaleEnd: props.startup!.presaleEnd || ''
+      presaleEnd: props.startup!.presaleEnd || '',
+      allNetworksList: allNetworks
     })
     const defaultModel = {
       presaleDate: dateList.value.presaleStart
@@ -71,33 +73,33 @@ const EditStartupForm = defineComponent({
             ]
     }
 
-    const networkList = ref([
-      {
-        label: 'Ethereum',
-        value: 1,
-        src: ethereum
-      },
-      {
-        label: 'Avalanche',
-        value: 43114,
-        src: avalanche
-      },
-      {
-        label: 'Fantom',
-        value: 250,
-        src: fantom
-      },
-      {
-        label: 'BSC',
-        value: 56,
-        src: bsc
-      },
-      {
-        label: 'Polygon',
-        value: 137,
-        src: polygon
-      }
-    ])
+    // const networkList = ref([
+    //   {
+    //     label: 'Ethereum',
+    //     value: 1,
+    //     src: ethereum
+    //   },
+    //   {
+    //     label: 'Avalanche',
+    //     value: 43114,
+    //     src: avalanche
+    //   },
+    //   {
+    //     label: 'Fantom',
+    //     value: 250,
+    //     src: fantom
+    //   },
+    //   {
+    //     label: 'BSC',
+    //     value: 56,
+    //     src: bsc
+    //   },
+    //   {
+    //     label: 'Polygon',
+    //     value: 137,
+    //     src: polygon
+    //   }
+    // ])
 
     const erc20ContractFactory = useErc20Contract()
 
@@ -161,7 +163,7 @@ const EditStartupForm = defineComponent({
 
           try {
             try {
-              const { data } = await services['startup@startup-finance-setting-update']({
+              const { error } = await services['startup@startup-finance-setting-update']({
                 startupId: props.startup!.id,
                 tokenContractAddress: props.startup!.tokenContractAddress,
                 launchNetwork: Number(model.network),
@@ -173,8 +175,8 @@ const EditStartupForm = defineComponent({
                 tokenSymbol: tokenInfo.symbol,
                 totalSupply: Number(tokenInfo.supply)
               })
-              if (data) {
-                console.log(data)
+              if (!error) {
+                console.log(error)
               }
               message.success(
                 'Success send transaction to the chain, please wait for the confirmation'
@@ -228,12 +230,14 @@ const EditStartupForm = defineComponent({
           <div class="w-full">
             <USelect
               v-model:value={model.network}
-              options={networkList.value}
+              options={dateList.value.allNetworksList}
+              label={dateList.value.allNetworksList}
               placeholder="Select your launch network"
+              clearable
               renderLabel={(option: any) => {
                 return [
-                  h(<UImage src={option.src} class="h-5 mr-2 w-5 inline float-left" />),
-                  option.label as string
+                  h(<UImage src={option.logo} class="h-5 mr-2 w-5 inline float-left" />),
+                  option.name as string
                 ]
               }}
             />
