@@ -235,7 +235,13 @@ export const services = {
       name?: string
       avatar?: string
       location?: string
+      timeZone: string
       website?: string
+      email: string
+      twitter: string
+      discord: string
+      telegram: string
+      medium: string
       bio?: string
       skills?: {
         id?: number
@@ -477,6 +483,29 @@ export const services = {
         blockChainAddress: string
         tokenContractAddress: string
         isSet: boolean
+        kyc: string
+        contractAudit: string
+        hashTags: {
+          id: number
+          createdAt: string
+          updatedAt: string
+          isDeleted: boolean
+          name: string
+          category: string
+          isIndex: boolean
+        }[]
+        website: string
+        discord: string
+        twitter: string
+        telegram: string
+        docs: string
+        launchNetwork: number
+        tokenName: string
+        tokenSymbol: string
+        totalSupply: string
+        presaleStart: string
+        presaleEnd: string
+        launchDate: string
         wallets: {
           id: number
           createdAt: string
