@@ -4,7 +4,7 @@ import { computed, defineComponent, onMounted, ref } from 'vue'
 import Bookmarks from './components/Bookmarks'
 import Bounties from './components/Bounties'
 import EditProfile from './components/EditProfile'
-import FollowDatel from './components/FollowDatel'
+import FollowDateil from './components/FollowDateil'
 import Proposals from './components/Proposals'
 import Startups from './components/Startups'
 import { ServiceReturn, services } from '@/services'
@@ -144,9 +144,9 @@ const DashboardPage = defineComponent({
                     )}
                   </div>
                   <div class="mt-5 flex">
-                    {socialLinks.map(link => {
+                    {socialLinks.map((link, index) => {
                       return (
-                        <div class="mr-4">
+                        <div class="mr-4" key={index}>
                           <UButton
                             disabled
                             class="ml-auto bg-white rounded-lg w-35 h-10"
@@ -195,9 +195,9 @@ const DashboardPage = defineComponent({
                   </div>
                   <div class="flex align-center ml-4 mt-4 cursor-pointer">
                     {folowDate.value.length ? (
-                      <FollowDatel startup={folowDate.value} />
+                      <FollowDateil startup={folowDate.value} />
                     ) : (
-                      <div class="u-body2  text-primary">Startup</div>
+                      <div class="u-body2 text-primary">Startup</div>
                     )}
                     <div class="flex-1"></div>
                     {folowDate.value.length ? (
@@ -208,7 +208,7 @@ const DashboardPage = defineComponent({
                 <div class="w-40 h-25 rounded-lg bg-blue-50">
                   <div class="u-headline2 text-32px font-700 text-primary mt-4 ml-4">0</div>
                   <div class="flex align-center ml-4 mt-4 cursor-pointer">
-                    <div class="u-body2  text-primary">Comer</div>
+                    <div class="u-body2 text-primary">Comer</div>
                     <div class="flex-1"></div>
                   </div>
                 </div>

@@ -4,8 +4,8 @@ import { defineComponent, ref } from 'vue'
 import AvatarSelect from '@/components/Profile/AvatarSelect'
 import { services } from '@/services'
 
-const FollowDatel = defineComponent({
-  name: 'FollowDatel',
+const FollowDateil = defineComponent({
+  name: 'FollowDateil',
   props: {
     startup: {
       type: Array,
@@ -59,27 +59,26 @@ const FollowDatel = defineComponent({
               {startupDate.value.length
                 ? startupDate.value.map((item: any, index) => {
                     return (
-                      <div class="h-28 w-full flex items-center mb-5">
-                        <div class="border-b-1 h-full w-full flex items-center border-gray-5 pb-5">
+                      <div class="h-28 w-full flex items-center mb-5" key={index}>
+                        <div class="border-b-1 h-full w-full flex items-center pb-5">
                           <div class="content flex items-center">
                             <div class="h-full w-22 mr-5">
                               <UStartupLogo
                                 src={item!.logo}
                                 width="8"
                                 height="8"
-                                class="w-20 h-20 rounded"
+                                class="w-20 h-20"
                               />
                             </div>
                             <div>
-                              <div class="font-opensans font-700 text-[18px] mb-2 leading-6">
-                                {item.name}
-                              </div>
+                              <div class="u-title1 font-opensans mb-2 leading-6">{item.name}</div>
                               <div class="divide-x">
                                 {item.hashTags
                                   ? item?.hashTags.map((tag: any, i: any) => {
                                       return i + 1 < 4 ? (
                                         <span
                                           class={[i === 0 ? '' : 'pl-2', styles.combinationStyle]}
+                                          key={i}
                                         >
                                           {tag.name}
                                         </span>
@@ -131,4 +130,4 @@ const FollowDatel = defineComponent({
   }
 })
 
-export default FollowDatel
+export default FollowDateil
