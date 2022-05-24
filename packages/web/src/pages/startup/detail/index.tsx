@@ -58,10 +58,12 @@ const StartupDetailPage = defineComponent({
     }
 
     const followStartup = async () => {
-      await services['startup@startup-follow']({
+      const { error } = await services['startup@startup-follow']({
         startupId
       })
-      getUserIsFollow()
+      if (!error) {
+        getUserIsFollow()
+      }
     }
 
     const unfollowStartup = async () => {
