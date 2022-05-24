@@ -15,7 +15,7 @@ const DashboardPage = defineComponent({
   name: 'Dashboard',
   setup() {
     const myProfile = ref<ServiceReturn<'account@comer-profile-get'>>()
-    const folowDate = ref<object[]>([])
+    const followedStartups = ref<object[]>([])
     const getDataList = async () => {
       const { error, data } = await services['account@comer-profile-get']()
       if (!error) {
@@ -30,7 +30,7 @@ const DashboardPage = defineComponent({
         mode: null
       })
       if (!error) {
-        folowDate.value = data.list
+        followedStartups.value = data.list ?? []
       }
     }
     onMounted(() => {
@@ -186,16 +186,16 @@ const DashboardPage = defineComponent({
               <div class="flex">
                 <div class="w-40 h-25 rounded-lg bg-violet-50 mr-4">
                   <div class="u-headline2 text-32px font-700 text-primary mt-4 ml-4">
-                    {folowDate.value.length}
+                    {followedStartups.value.length}
                   </div>
                   <div class="flex align-center ml-4 mt-4 cursor-pointer">
-                    {folowDate.value.length ? (
-                      <FollowDateil startup={folowDate.value} />
+                    {followedStartups.value.length ? (
+                      <FollowDateil startup={followedStartups.value} />
                     ) : (
                       <div class="u-body2 text-primary">Startup</div>
                     )}
                     <div class="flex-1"></div>
-                    {folowDate.value.length ? (
+                    {followedStartups.value.length ? (
                       <ArrowRightOutlined class="mt-1 mr-3 w-4 h-4 text-primary" />
                     ) : null}
                   </div>
