@@ -78,7 +78,7 @@ const DashboardPage = defineComponent({
     return () => (
       <div>
         <div class="mt-50px text-primary mb-10 u-h2">My Dashboard</div>
-        <div class="flex">
+        <div class="flex mb-20">
           <div class="flex-1 mr-6">
             <UCard
               title="MY PROFILE"
@@ -209,12 +209,15 @@ const DashboardPage = defineComponent({
                 </div>
               </div>
             </UCard>
+            <Bounties class="bg-white border-lg border-1 border-grey5 h-301 h-auto box-border mt-6" />
           </div>
           <div class="flex-1">
-            <Startups class="bg-white border-lg border-1 border-grey5 h-155 box-border" />
+            <Startups class="bg-white border-lg border-1 border-grey5 h-155 box-border " />
+            <Proposals class="bg-white border-lg border-1 border-grey5 h-155 box-border mb-4 mt-6" />
+            <Bookmarks class="bg-white border-lg border-1 border-grey5 h-155 box-border mt-6" />
           </div>
         </div>
-        <div class="mt-6 mb-20">
+        {/* <div class="mt-6 mb-20">
           <div class="flex">
             <div class="flex-1  mr-6">
               <Bounties class="bg-white border-lg border-1 border-grey5 h-310 box-border" />
@@ -224,7 +227,7 @@ const DashboardPage = defineComponent({
               <Bookmarks class="bg-white border-lg border-1 border-grey5 h-153 box-border" />
             </div>
           </div>
-        </div>
+        </div> */}
         {/* {count.value &&} */}
       </div>
     )
