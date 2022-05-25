@@ -1,5 +1,5 @@
 import { UDrawer, UStartupLogo } from '@comunion/components'
-import { PlusOutlined, CheckedFilled } from '@comunion/icons'
+import { PlusOutlined, ConfirmOutlined, ArrowRightOutlined } from '@comunion/icons'
 import { defineComponent, ref } from 'vue'
 import AvatarSelect from '@/components/Profile/AvatarSelect'
 import { services } from '@/services'
@@ -18,7 +18,7 @@ const FollowDateil = defineComponent({
     const startupDate = ref(props.startup)
     const showAvatarModal = ref(false)
     const success = ref(false)
-    const funFolow = () => {
+    const funFollow = () => {
       success.value = true
     }
 
@@ -48,8 +48,12 @@ const FollowDateil = defineComponent({
     }
     return () => (
       <>
-        <div class="u-body2  text-primary" onClick={funFolow}>
-          Startup
+        <div class="flex w-full">
+          <div class="u-body2  text-primary" onClick={funFollow}>
+            Startup
+          </div>
+          <div class="flex-1"></div>
+          <ArrowRightOutlined class="mt-1 mr-3 w-4 h-4 text-primary" onClick={funFollow} />
         </div>
         <UDrawer title="FOLLOW STARTUP" v-model:show={success.value}>
           {success.value && (
@@ -89,12 +93,12 @@ const FollowDateil = defineComponent({
                           <div class="justify-end ml-auto mr-1">
                             {item.isDeleted && (
                               <div
-                                class=" border-1 rounded-lg border-primary text-primary w-30 h-10 flex cursor-pointer"
+                                class="border-1 rounded-lg border-primary bg-primary text-primary w-30 h-10 flex cursor-pointer"
                                 onClick={() => plusStatusClick(item)}
                               >
                                 <div class="m-auto flex align-center">
-                                  <PlusOutlined class="mr-2 text-primary w-6 h-6 align-center" />
-                                  <span class="u-title2 align-center text-primary mt-2px">
+                                  <PlusOutlined class="mr-2 text-white w-6 h-6 align-center" />
+                                  <span class="u-title2 align-center text-white mt-2px">
                                     Follow
                                   </span>
                                 </div>
@@ -102,14 +106,12 @@ const FollowDateil = defineComponent({
                             )}
                             {!item.isDeleted && (
                               <div
-                                class=" border-1 rounded-lg border-primary bg-primary text-white w-30 h-10 flex cursor-pointer"
+                                class="border-1 rounded-lg border-primary text-white w-30 h-10 flex cursor-pointer"
                                 onClick={() => checkedStatusClick(item)}
                               >
                                 <div class="m-auto flex align-center">
-                                  <CheckedFilled class="mr-2 text-primary w-6 h-6 align-center" />
-                                  <span class="u-title2 align-center text-white mt-1px">
-                                    Unfollow
-                                  </span>
+                                  <ConfirmOutlined class="mr-2 text-primary w-4 h-3 align-center mt-1" />
+                                  <span class="u-title2 align-center text-primary">Unfollow</span>
                                 </div>
                               </div>
                             )}

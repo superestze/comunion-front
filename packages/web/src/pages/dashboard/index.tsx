@@ -1,6 +1,6 @@
-import { UCard, ULazyImage, UTooltip, UButton } from '@comunion/components'
-import { GithubFilled, GoogleFilled, ConnectOutlined, ArrowRightOutlined } from '@comunion/icons'
-import { computed, defineComponent, onMounted, ref } from 'vue'
+import { UCard, ULazyImage, UTooltip, UButton, UScrollbar } from '@comunion/components'
+import { GithubFilled, GoogleFilled, ConnectOutlined } from '@comunion/icons'
+import { computed, defineComponent, onMounted, ref, h } from 'vue'
 import Bookmarks from './components/Bookmarks'
 import Bounties from './components/Bounties'
 import EditProfile from './components/EditProfile'
@@ -97,9 +97,12 @@ const DashboardPage = defineComponent({
                     <div class="flex flex-col ml-5 justify-center">
                       <div class="mb-2 u-title1">{myProfile.value?.name}</div>
                       <div class="mb-2">{myInfo.value[2]?.value}</div>
-                      <div class="mb-2 u-body2">{myProfile.value?.email}</div>
-                      <div class="mb-2 u-body2">· {myProfile.value?.location}</div>
-                      <div class="mb-2 u-body2">, {myProfile.value?.timeZone}</div>
+                      <div class="mb-2 ">
+                        <span class="u-body2">{myProfile.value?.email}</span>
+                        <span class="u-body2">· {myProfile.value?.location}</span>
+                        <span class="u-body2">· {myProfile.value?.timeZone}</span>
+                      </div>
+
                       {/* <div class="flex items-center">
                     <div class="rounded-full flex bg-grey3 h-5 text-white text-sm tracking-tighter w-5 items-center justify-center">
                       ID
@@ -117,13 +120,25 @@ const DashboardPage = defineComponent({
                   </div>
                   <div class="mt-2">
                     <div class="flex mb-3 break-words cursor-pointer max-w-145 max-h-25 leading-5 content break-all line-clamp-5">
-                      <UTooltip showArrow={false} overlap={true} width={600}>
+                      <UTooltip
+                        showArrow={false}
+                        overlap={true}
+                        width={600}
+                        style={{
+                          background: 'var(--u-primary-2-color)',
+                          opacity: '80%'
+                        }}
+                      >
                         {/* <div class={[style.currency]}>{myInfo.value[3]?.value}</div> */}
                         {{
                           trigger: () => (
                             <div class={[style.currency]}>{myInfo.value[3]?.value}</div>
                           ),
-                          default: () => myInfo.value[3]?.value
+                          default: () => {
+                            return h(
+                              <UScrollbar class="max-h-100">{myInfo.value[3]?.value}</UScrollbar>
+                            )
+                          }
                         }}
                       </UTooltip>
                     </div>
@@ -194,10 +209,6 @@ const DashboardPage = defineComponent({
                     ) : (
                       <div class="u-body2 text-primary">Startup</div>
                     )}
-                    <div class="flex-1"></div>
-                    {followedStartups.value.length ? (
-                      <ArrowRightOutlined class="mt-1 mr-3 w-4 h-4 text-primary" />
-                    ) : null}
                   </div>
                 </div>
                 <div class="w-40 h-25 rounded-lg bg-blue-50">

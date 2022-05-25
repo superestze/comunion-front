@@ -26,7 +26,7 @@ const StartupCard = defineComponent({
           <div class="flex flex-col flex-1 content h-35">
             <div class="mb-2 text-grey1 u-h3">{props.startup!.name}</div>
             <div
-              class="cursor-pointer font-opensans font-normal font-400 text-ellipsis max-w-180 max-h-10 text-[16px] text-grey2 leading-5 content break-all line-clamp-2"
+              class="cursor-pointer font-opensans font-normal font-400 text-ellipsis max-w-180 max-h-10 text-[16px] text-grey2 leading-5 content line-clamp-2"
               title={props.startup.mission}
             >
               {props.startup.mission}

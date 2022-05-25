@@ -97,7 +97,7 @@ const Startups = defineComponent({
       >
         <CreateStartupBlock ref={createRef} />
         <UTabs>
-          <UTabPane name="PARTICIPATED" tab="PARTICIPATED">
+          <UTabPane name="PARTICIPATED" tab="PARTICIPATED" class="h-112">
             <UScrollList
               triggered={ParticipatedPagination.loading}
               page={ParticipatedPagination.page}
