@@ -1,7 +1,7 @@
 import { NSelect } from 'naive-ui'
-import { defineComponent, PropType, computed } from 'vue'
+import { defineComponent, PropType } from 'vue'
 import { DEFAULT_STARTUP_TAGS } from '../constants'
-import type { SelectOption } from '../constants'
+import useLimitTags from './tag.select'
 
 const StartupTags = defineComponent({
   name: 'StartupTags',
@@ -15,24 +15,17 @@ const StartupTags = defineComponent({
       type: String,
       default: 'Choose your startup tag'
     },
-    maxLength: {
+    tagLimit: {
       type: Number,
-      default: 8
+      default: 3
+    },
+    charLimit: {
+      type: Number,
+      default: 16
     }
   },
-  setup(props, ctx) {
-    const options = computed<SelectOption[]>(() => {
-      if (!props.value) {
-        return DEFAULT_STARTUP_TAGS
-      }
-      if (props.value.length >= props.maxLength) {
-        return DEFAULT_STARTUP_TAGS.map<SelectOption>(tag => ({
-          ...tag,
-          disabled: !props.value!.includes(tag.value)
-        }))
-      }
-      return DEFAULT_STARTUP_TAGS
-    })
+  setup(props) {
+    const { options, inputProps, onSearch } = useLimitTags(props, DEFAULT_STARTUP_TAGS)
     return () => (
       <NSelect
         {...props}
@@ -43,9 +36,8 @@ const StartupTags = defineComponent({
         options={options.value}
         tag
         filterable
-        inputProps={{
-          maxlength: 16
-        }}
+        onSearch={onSearch}
+        inputProps={inputProps.value}
       />
     )
   }
