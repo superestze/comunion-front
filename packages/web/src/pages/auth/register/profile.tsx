@@ -4,6 +4,7 @@ import { defineComponent, ref } from 'vue'
 import { useRouter } from 'vue-router'
 import successImg from './assets/success.svg'
 import RegisterLayout from './components/Layout'
+import { UTC_OPTIONS } from '@/constants'
 import { ServiceArg, services } from '@/services'
 import { useUserStore } from '@/stores'
 
@@ -13,6 +14,9 @@ const RegisterProfilePage = defineComponent({
     const router = useRouter()
     const userStore = useUserStore()
     const success = ref(false)
+    const fieldInitValues = {
+      timeZone: '(UTC) UTC'
+    }
     const fields: FormFactoryField[] = [
       {
         title: 'Name',
@@ -26,18 +30,61 @@ const RegisterProfilePage = defineComponent({
         placeholder: 'Please enter the city of residence'
       },
       {
+        t: 'select',
+        title: 'Time Zone',
+        name: 'timeZone',
+        required: true,
+        options: UTC_OPTIONS.map(item => ({ label: item.label, value: item.label }))
+      },
+      {
         t: 'website',
         title: 'Website',
         name: 'website',
         placeholder: 'Your home page, blog, or company site'
       },
       {
-        t: 'hashInput',
-        category: 'comerSkill',
+        title: 'Email',
+        name: 'email',
+        required: true,
+        rules: [
+          { type: 'string', message: 'Your contact email' },
+          { type: 'email', message: 'Enter the correct email address' }
+        ],
+        placeholder: 'Your contact email'
+      },
+      {
+        t: 'skillTags',
         title: 'Skills',
         name: 'skills',
-        required: true,
-        placeholder: '#Enter you skill tag'
+        required: true
+      },
+      {
+        t: 'website',
+        defaultValue: '',
+        title: 'Twitter',
+        name: 'twitter',
+        placeholder: 'Enter twitter'
+      },
+      {
+        t: 'website',
+        defaultValue: '',
+        title: 'Discord',
+        name: 'discord',
+        placeholder: 'Enter discord'
+      },
+      {
+        t: 'website',
+        defaultValue: '',
+        title: 'Telegram',
+        name: 'telegram',
+        placeholder: 'Enter telegram'
+      },
+      {
+        t: 'website',
+        defaultValue: '',
+        title: 'Medium',
+        name: 'medium',
+        placeholder: 'Enter medium'
       },
       {
         title: 'Bio',
@@ -83,7 +130,12 @@ const RegisterProfilePage = defineComponent({
           </p>
           <div class="bg-white border rounded-lg border-grey5 pt-10 pb-5">
             <div class="mx-auto w-200">
-              <UFormFactory fields={fields} submitText="Next step" onSubmit={onSubmit} />
+              <UFormFactory
+                fields={fields}
+                initialValues={fieldInitValues}
+                submitText="Next step"
+                onSubmit={onSubmit}
+              />
               <UModal v-model:show={success.value} closable={false} maskClosable={false}>
                 <div class="bg-white rounded-lg flex flex-col h-88 w-150 items-center">
                   <img src={successImg} class="h-40 mt-18 w-110" />

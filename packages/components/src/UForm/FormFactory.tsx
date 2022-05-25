@@ -4,8 +4,9 @@ import { NForm, NFormItem, NInput } from 'naive-ui'
 import type { PropType, VNode } from 'vue'
 import { defineComponent, ref, reactive, toRaw, computed } from 'vue'
 import { UAddressInput, UAddressInputPropsType } from '../UInput'
+import { USkillTags, UStartupTags } from '../USelect'
 import { USingleImageUpload, USingleImageUploadPropsType } from '../UUpload'
-import { UInputPropsType, UHashInput, USelect, UButton, USelectPropsType } from '../index'
+import { UInputPropsType, USelect, UButton, USelectPropsType } from '../index'
 import type { ExtractPropTypes } from '../utils'
 import './FormFactory.css'
 
@@ -25,9 +26,21 @@ export type FormFactorySelectField = {
   t: 'select'
 } & USelectPropsType
 
-export type FormFactoryHashInputField = {
-  t: 'hashInput'
-  category: 'comerSkill' | 'startup' | 'bounty'
+// export type FormFactoryHashInputField = {
+//   t: 'hashInput'
+//   category: 'comerSkill' | 'startup' | 'bounty'
+// } & USelectPropsType
+
+export type FormFactorySkillTagsField = {
+  value?: string[]
+  t: 'skillTags'
+  maxLength?: number
+} & USelectPropsType
+
+export type FormFactoryStartupTagsField = {
+  value?: string[]
+  t: 'startupTags'
+  maxLength?: number
 } & USelectPropsType
 
 export type FormFactorySingleUploadField = {
@@ -36,7 +49,7 @@ export type FormFactorySingleUploadField = {
 
 export type FormFactoryCustomField = {
   t: 'custom'
-  render: () => VNode
+  render: (value: any) => VNode
 }
 
 export type FormFactoryField = {
@@ -49,7 +62,8 @@ export type FormFactoryField = {
   | FormFactoryInputField
   | FormFactoryAddrssInputField
   | FormFactoryWebsiteField
-  | FormFactoryHashInputField
+  | FormFactorySkillTagsField
+  | FormFactoryStartupTagsField
   | FormFactorySelectField
   | FormFactorySingleUploadField
   | FormFactoryCustomField
@@ -102,10 +116,26 @@ function renderField(field: FormFactoryField, values: FormData) {
       return (
         <UAddressInput {...(props as UAddressInputPropsType)} v-model:value={values[field.name]} />
       )
-    case 'hashInput':
+    // case 'hashInput':
+    //   return (
+    //     <UHashInput
+    //       {...(props as USelectPropsType & { category: 'comerSkill' | 'startup' | 'bounty' })}
+    //       v-model:value={values[field.name]}
+    //       clearable
+    //     />
+    //   )
+    case 'skillTags':
       return (
-        <UHashInput
-          {...(props as USelectPropsType & { category: 'comerSkill' | 'startup' | 'bounty' })}
+        <USkillTags
+          {...(props as FormFactorySkillTagsField)}
+          v-model:value={values[field.name]}
+          clearable
+        />
+      )
+    case 'startupTags':
+      return (
+        <UStartupTags
+          {...(props as FormFactoryStartupTagsField)}
           v-model:value={values[field.name]}
           clearable
         />
@@ -122,7 +152,7 @@ function renderField(field: FormFactoryField, values: FormData) {
         />
       )
     case 'custom':
-      return field.render()
+      return field.render(values[field.name])
     default:
       return <NInput {...(props as UInputPropsType)} v-model:value={values[field.name]} />
   }
@@ -151,7 +181,9 @@ export function getFieldsRules(fields: FormFactoryField[]) {
         required: true,
         message: `${field.title} is required`,
         trigger: 'blur',
-        type: field.t === 'hashInput' ? 'array' : field.rules?.[0]?.type ?? 'string'
+        type: ['skillTags', 'startupTags'].includes(field.t ?? '')
+          ? 'array'
+          : field.rules?.[0]?.type ?? 'string'
       })
     }
     if (field.t === 'address') {

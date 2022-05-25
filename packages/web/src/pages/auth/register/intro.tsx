@@ -18,15 +18,14 @@ const RegisterIntroductionPage = defineComponent({
 
     return () => (
       <RegisterLayout>
-        <h1 class="text-primary pt-[9vh] u-h1">About to enter the decentralized network！</h1>
+        <h1 class="text-primary pt-[9vh] u-h1">Welcome to come into Comunion Universal！</h1>
         <h2 class="mt-3 text-primary u-h1">You're a comer now！</h2>
-        <p class="mt-6 text-grey3 u-body2">
+        {/* <p class="mt-6 text-grey3 u-body2">
           Comunion is a next, new startup paradigm of digital economic growth
-        </p>
+        </p> */}
         <p class="mt-2 text-grey3 u-body2">
-          Through the comunization form, Integrating remaining productivity of labor to construct a
-          new startup mutual network, that is comunion economic paradigm, promote success rate of
-          startup, in this process, realize labor-capitalized , enhance labor value liquidity
+          Comunion Universal is a revolutionary multi-chain protocol and decentralized organization
+          dedicated to building a thriving and collaborative work ecosystem, community, and economy.
         </p>
         <div class="mt-18 grid gap-10 grid-cols-1 sm:grid-cols-2 md:grid-cols-4">
           <img src={IntroImg1} class="w-full max-w-[315px]" />

@@ -1,6 +1,8 @@
+import { message } from '@comunion/components'
 import { readObject, removeObject, storeObject } from '@comunion/utils'
 import { defineStore } from 'pinia'
 import { STORE_KEY_TOKEN } from '@/constants'
+import router from '@/router'
 import { services } from '@/services'
 import { useWalletStore } from '@/stores'
 import type { UserProfileState } from '@/types'
@@ -87,7 +89,14 @@ export const useUserStore = defineStore('user', {
       this.token = ''
       this.profile = null
       removeObject(STORE_KEY_TOKEN)
-      walletStore._onWalletDisconnected()
+      walletStore.disconnectWallet()
+    },
+    logout(msg?: false | string) {
+      this.onLogout()
+      if (msg) {
+        message.info(typeof msg === 'string' ? msg : 'You have been logged out')
+      }
+      router.replace('/auth/login')
     }
   }
 })

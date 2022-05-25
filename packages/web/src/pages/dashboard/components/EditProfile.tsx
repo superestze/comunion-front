@@ -2,6 +2,7 @@ import { FormFactoryField, UDrawer, UFormFactory, ULazyImage } from '@comunion/c
 import { PlusOutlined } from '@comunion/icons'
 import { defineComponent, PropType, reactive, ref } from 'vue'
 import AvatarSelect from '@/components/Profile/AvatarSelect'
+import { UTC_OPTIONS } from '@/constants'
 import { ServiceArg, ServiceReturn, services } from '@/services'
 import { useUserStore } from '@/stores'
 
@@ -39,18 +40,61 @@ const EditProfile = defineComponent({
         placeholder: 'Add your location'
       },
       {
+        t: 'select',
+        title: 'Time Zone',
+        name: 'timeZone',
+        required: true,
+        options: UTC_OPTIONS.map(item => ({ label: item.label, value: item.label }))
+      },
+      {
         t: 'website',
         title: 'Website',
         name: 'website',
         placeholder: 'Add your homepage,blog,website .etc'
       },
       {
-        t: 'hashInput',
-        category: 'comerSkill',
+        title: 'Email',
+        name: 'email',
+        required: true,
+        rules: [
+          { type: 'string', message: 'Your contact email' },
+          { type: 'email', message: 'Enter the correct email address' }
+        ],
+        placeholder: 'Your contact email'
+      },
+      {
+        t: 'skillTags',
         title: 'Skills',
         name: 'skills',
-        required: true,
-        placeholder: 'Add your skill tag'
+        required: true
+      },
+      {
+        t: 'website',
+        defaultValue: '',
+        title: 'Twitter',
+        name: 'twitter',
+        placeholder: 'Enter twitter'
+      },
+      {
+        t: 'website',
+        defaultValue: '',
+        title: 'Discord',
+        name: 'discord',
+        placeholder: 'Enter discord'
+      },
+      {
+        t: 'website',
+        defaultValue: '',
+        title: 'Telegram',
+        name: 'telegram',
+        placeholder: 'Enter telegram'
+      },
+      {
+        t: 'website',
+        defaultValue: '',
+        title: 'Medium',
+        name: 'medium',
+        placeholder: 'Enter medium'
       },
       {
         title: 'Bio',
@@ -94,7 +138,7 @@ const EditProfile = defineComponent({
       <>
         <span
           onClick={editProfile}
-          class="u-label2 flex flex-row items-center text-primary cursor-pointer"
+          class="cursor-pointer flex flex-row text-primary items-center u-label2"
         >
           <PlusOutlined class="h-4 mr-3 w-4" />
           EDIT
@@ -104,11 +148,11 @@ const EditProfile = defineComponent({
         <UDrawer title="Edit" v-model:show={show.value}>
           {show.value && (
             <>
-              <div class="flex flex-row items-center mb-6">
+              <div class="flex flex-row mb-6 items-center">
                 <div class="mr-4">
-                  <ULazyImage src={avatar.value} class="h-20 w-20 rounded" />
+                  <ULazyImage src={avatar.value} class="rounded h-20 w-20" />
                 </div>
-                <a class="u-title2 text-primary cursor-pointer" onClick={showAvatarSelect}>
+                <a class="cursor-pointer text-primary u-title2" onClick={showAvatarSelect}>
                   Update
                 </a>
               </div>

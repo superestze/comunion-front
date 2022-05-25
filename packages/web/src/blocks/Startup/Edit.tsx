@@ -18,27 +18,27 @@ const EditStartupForm = defineComponent({
   },
   setup(props, ctx) {
     const infoModel = reactive({
-      logo: props.startup!.logo || '',
-      name: props.startup!.name || '',
-      type: getStartupTypeFromNumber(props.startup!.mode) || '',
-      // tags: (props.startup!.hashTags || []).map(t => t.name) as string[],
-      mission: props.startup!.mission || '',
-      overview: props.startup!.overview || ''
+      logo: props.startup.logo || '',
+      name: props.startup.name || '',
+      type: getStartupTypeFromNumber(props.startup.mode) || '',
+      // tags: (props.startup.hashTags || []).map(t => t.name) as string[],
+      mission: props.startup.mission || '',
+      overview: props.startup.overview || ''
     })
     const walletStore = useWalletStore()
 
     const securityModel = reactive({
-      kyc: props.startup!.kyc || '',
-      contractAudit: props.startup!.contractAudit || ''
+      kyc: props.startup.kyc || '',
+      contractAudit: props.startup.contractAudit || ''
     })
 
     const socialModel = reactive({
-      tags: (props.startup!.hashTags || []).map(t => t.name) as string[],
-      website: props.startup!.website || '',
-      discord: props.startup!.discord || '',
-      twitter: props.startup!.twitter || '',
-      telegram: props.startup!.telegram || '',
-      docs: props.startup!.docs || ''
+      tags: (props.startup.hashTags || []).map(t => t.name) as string[],
+      website: props.startup.website || '',
+      discord: props.startup.discord || '',
+      twitter: props.startup.twitter || '',
+      telegram: props.startup.telegram || '',
+      docs: props.startup.docs || ''
     })
     const loading = ref(false)
 
@@ -52,7 +52,7 @@ const EditStartupForm = defineComponent({
     async function onSubmit() {
       loading.value = true
       const { error } = await services['startup@startup-basic-setting-update']({
-        startupId: props.startup!.id,
+        startupId: props.startup.id,
         kyc: securityModel.kyc,
         contractAudit: securityModel.contractAudit,
         hashTags: socialModel.tags,
@@ -85,7 +85,7 @@ const EditStartupForm = defineComponent({
             <UAddress
               autoSlice={true}
               blockchainExplorerUrl={walletStore.blockchainExplorerUrl}
-              address={props.startup!.blockChainAddress}
+              address={props.startup.blockChainAddress}
             />,
             {}
           )
@@ -152,11 +152,9 @@ const EditStartupForm = defineComponent({
     ]
     const socialInfo: FormFactoryField[] = [
       {
-        t: 'hashInput',
-        title: 'Hashtag',
-        category: 'startup',
-        name: 'tags',
-        placeholder: '#Input your startup tag'
+        t: 'startupTags',
+        title: 'Tag',
+        name: 'tags'
       },
       {
         t: 'string',
