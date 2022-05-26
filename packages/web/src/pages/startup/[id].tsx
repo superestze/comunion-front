@@ -13,6 +13,7 @@ import utcPlugin from 'dayjs/plugin/utc'
 import { defineComponent, onMounted, ref, computed } from 'vue'
 import { useRoute } from 'vue-router'
 import styles from './style.module.css'
+import { LoadingWrap } from '@/components/LoadingWrap'
 import { getStartupTypeFromNumber, StartupTypesType, STARTUP_TYPES_COLOR_MAP } from '@/constants'
 import { services } from '@/services'
 import { StartupItem } from '@/types'
@@ -25,6 +26,7 @@ export const StartupInfo = defineComponent({
     const route = useRoute()
     const startupId = route.params.id
     const userIsFollow = ref(false)
+    const pageLoading = ref(false)
 
     const startup = ref<StartupItem>()
     const modeName = computed(() => {
@@ -61,22 +63,17 @@ export const StartupInfo = defineComponent({
       }
     }
 
-    const followStartup = async () => {
-      const { error } = await services['startup@startup-follow']({
+    const toggleFollowStartup = async (type: 'follow' | 'unfollow') => {
+      pageLoading.value = true
+      const { error } = await services[
+        type === 'follow' ? 'startup@startup-follow' : 'startup@startup-unfollow'
+      ]({
         startupId
       })
       if (!error) {
-        getUserIsFollow()
+        await getUserIsFollow()
       }
-    }
-
-    const unfollowStartup = async () => {
-      const { error } = await services['startup@startup-unfollow']({
-        startupId
-      })
-      if (!error) {
-        getUserIsFollow()
-      }
+      pageLoading.value = false
     }
 
     onMounted(() => {
@@ -84,7 +81,7 @@ export const StartupInfo = defineComponent({
       getUserIsFollow()
     })
     return () => (
-      <div class="bg-white p-10 mb-20">
+      <LoadingWrap show={pageLoading.value} class="bg-white p-10 mb-20">
         <div class="flex items-start gap-10">
           <div class="w-20 h-20">
             <UStartupLogo
@@ -124,7 +121,7 @@ export const StartupInfo = defineComponent({
                   <UButton
                     type="primary"
                     ghost
-                    onClick={() => unfollowStartup()}
+                    onClick={() => toggleFollowStartup('unfollow')}
                     v-slots={{
                       icon: () => {
                         return (
@@ -140,7 +137,7 @@ export const StartupInfo = defineComponent({
                 ) : (
                   <UButton
                     type="primary"
-                    onClick={() => followStartup()}
+                    onClick={() => toggleFollowStartup('follow')}
                     v-slots={{
                       icon: () => {
                         return (
@@ -238,7 +235,7 @@ export const StartupInfo = defineComponent({
           </p>
           <p class="mt-6 u-body1 break-all">{startup.value?.overview}</p>
         </section>
-      </div>
+      </LoadingWrap>
     )
   }
 })
