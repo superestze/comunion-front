@@ -110,8 +110,10 @@ const FollowDateil = defineComponent({
                                 onClick={() => checkedStatusClick(item)}
                               >
                                 <div class="m-auto flex align-center">
-                                  <ConfirmOutlined class="mr-2 text-primary w-4 h-3 align-center mt-1" />
-                                  <span class="u-title2 align-center text-primary">Unfollow</span>
+                                  <ConfirmOutlined class="mr-2 text-primary bg-white h-6 items-center align-center" />
+                                  <span class="u-title2 align-center text-primary mt-2px">
+                                    Unfollow
+                                  </span>
                                 </div>
                               </div>
                             )}
