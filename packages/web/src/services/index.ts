@@ -188,15 +188,15 @@ export const services = {
   'account@comer-profile-create'(args: {
     name: string
     avatar: string
-    location: string
+    location?: string
     timeZone: string
-    website: string
+    website?: string
     email: string
     skills: string[]
-    twitter: string
-    discord: string
-    telegram: string
-    medium: string
+    twitter?: string
+    discord?: string
+    telegram?: string
+    medium?: string
     bio: string
   }) {
     return requestAdapter<{}>({

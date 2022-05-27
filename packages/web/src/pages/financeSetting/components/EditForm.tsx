@@ -53,7 +53,10 @@ const EditStartupForm = defineComponent({
         : null,
       launchDate: new Date(dateList.value.launchDate).getTime() || null,
       contract: props.startup!.tokenContractAddress || '',
-      network: null as number | null | string,
+      network: Number(props.startup!.launchNetwork) || null,
+      tokenName: props.startup!.tokenName,
+      tokenSymbol: props.startup!.tokenSymbol,
+      totalSupply: props.startup!.totalSupply,
       composes:
         props.startup.wallets?.length > 0
           ? props.startup.wallets.map(w => ({
@@ -96,18 +99,8 @@ const EditStartupForm = defineComponent({
       tokenInfo.supply = +utils.formatUnits(await contract.totalSupply(), 18)
     }
 
-    const networkDateList = dateList.value.allNetworksList.map((item, index) => {
-      const obj = {
-        logo: '',
-        label: '',
-        value: ''
-      }
-      obj.logo = item.logo
-      obj.label = item.name
-      obj.value = String(item.chainId)
-      return obj
-    })
     onMounted(() => {
+      console.log(defaultModel.contract)
       onTokenContractChange(defaultModel.contract)
     })
 
@@ -142,15 +135,15 @@ const EditStartupForm = defineComponent({
             try {
               const { error } = await services['startup@startup-finance-setting-update']({
                 startupId: props.startup!.id,
-                tokenContractAddress: props.startup!.tokenContractAddress,
+                tokenContractAddress: model.contract,
                 launchNetwork: Number(model.network),
                 presaleStart: String(dateList.value.presaleStart),
                 presaleEnd: String(dateList.value.presaleEnd),
                 launchDate: dateToISO(model.launchDate),
                 wallets: model.composes,
-                tokenName: tokenInfo.name,
-                tokenSymbol: tokenInfo.symbol,
-                totalSupply: Number(tokenInfo.supply)
+                tokenName: model.tokenName,
+                tokenSymbol: model.tokenSymbol,
+                totalSupply: Number(model.totalSupply)
               })
               if (!error) {
                 console.log(error)
@@ -207,7 +200,7 @@ const EditStartupForm = defineComponent({
           <div class="w-full">
             <USelect
               v-model:value={model.network}
-              options={networkDateList}
+              // options={networkDateList}
               placeholder="Select your launch network"
               clearable
               renderLabel={(option: any) => {
@@ -216,13 +209,18 @@ const EditStartupForm = defineComponent({
                   option.label as string
                 ]
               }}
+              options={dateList.value.allNetworksList.map(item => ({
+                label: item.name,
+                value: item.chainId,
+                logo: item.logo
+              }))}
             />
           </div>
         </UFormItem>
         <UFormItem label="Token Name" label-style={divStyle}>
           <div class="w-full">
             <UInput
-              v-model:value={tokenInfo.name}
+              v-model:value={model.tokenName}
               placeholder="Please enter your Token Name"
               maxlength={50}
             />
@@ -231,7 +229,7 @@ const EditStartupForm = defineComponent({
         <UFormItem label="Token Symbol" label-style={divStyle}>
           <div class="w-full">
             <UInput
-              v-model:value={tokenInfo.symbol}
+              v-model:value={model.tokenSymbol}
               placeholder="Please enter your Token Symbol"
               maxlength={10}
             />
@@ -240,10 +238,10 @@ const EditStartupForm = defineComponent({
         <UFormItem label="Token Supply" label-style={divStyle}>
           <div class="w-full">
             <UInput
-              v-model:value={tokenInfo.supply}
+              v-model:value={model.totalSupply}
               placeholder="Please enter your Token Supply"
               onInput={value => {
-                tokenInfo.supply = value.replace(/[^\d]/g, '')
+                model.totalSupply = Number(value.replace(/[^\d]/g, ''))
               }}
             />
           </div>

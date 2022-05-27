@@ -149,6 +149,9 @@ const UStyleProvider = defineComponent({
       const { r, g, b } = hex2rgb(props.primaryColor)
       style.innerHTML = `:root {
         --u-primary-value: ${r}, ${g}, ${b};
+        --u-primary2-value: ${hex2rgb(props.primary2Color).r},${hex2rgb(props.primary2Color).g},${
+        hex2rgb(props.primary2Color).b
+      };
         --u-primary-color: ${props.primaryColor};
         --u-primary-1-color: ${props.primary1Color};
         --u-primary-2-color: ${props.primary2Color};
