@@ -124,9 +124,9 @@ const DashboardPage = defineComponent({
                         showArrow={false}
                         overlap={true}
                         width={600}
+                        duration={50000}
                         style={{
-                          background: 'var(--u-primary-2-color)',
-                          opacity: '80%'
+                          background: 'rgba(var(--u-primary2-value), 0.8)'
                         }}
                       >
                         {/* <div class={[style.currency]}>{myInfo.value[3]?.value}</div> */}
@@ -136,7 +136,7 @@ const DashboardPage = defineComponent({
                           ),
                           default: () => {
                             return h(
-                              <UScrollbar class="max-h-100">{myInfo.value[3]?.value}</UScrollbar>
+                              <UScrollbar class="max-h-100 ">{myInfo.value[3]?.value}</UScrollbar>
                             )
                           }
                         }}
