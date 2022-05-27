@@ -124,7 +124,6 @@ const DashboardPage = defineComponent({
                         showArrow={false}
                         overlap={true}
                         width={600}
-                        duration={50000}
                         style={{
                           background: 'rgba(var(--u-primary2-value), 0.8)'
                         }}
