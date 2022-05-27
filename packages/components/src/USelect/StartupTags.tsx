@@ -17,7 +17,7 @@ const StartupTags = defineComponent({
     },
     tagLimit: {
       type: Number,
-      default: 3
+      default: 8
     },
     charLimit: {
       type: Number,

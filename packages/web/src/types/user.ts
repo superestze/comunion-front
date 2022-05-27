@@ -8,13 +8,19 @@ export interface UserResponse {
 
 export interface UserProfileState {
   // token: string
-  avatar?: string
-  name?: string
+  avatar: string
+  name: string
   isProfiled?: boolean
   location?: string
   website?: string
-  skills?: string[]
-  bio?: string
+  skills: string[]
+  timeZone: string
+  email: string
+  bio: string
+  twitter?: string
+  discord?: string
+  telegram?: string
+  medium?: string
   oauth?: {
     github?: string
     google?: string

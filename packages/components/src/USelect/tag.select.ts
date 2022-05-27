@@ -37,8 +37,12 @@ export default function useLimitTags(props: TagLimitedProps, defaultOptions: Sel
   })
 
   const inputProps = computed<InputHTMLAttributes>(() => {
+    const charCount = countChars(searchText.value)
     return {
-      maxlength: countChars(searchText.value) >= props.charLimit - 1 ? 0 : props.charLimit,
+      maxlength:
+        charCount >= props.charLimit - 1
+          ? 0
+          : props.charLimit - charCount + searchText.value.length - 1,
       readonly: props.value ? props.value.length >= props.tagLimit : false
     }
   })

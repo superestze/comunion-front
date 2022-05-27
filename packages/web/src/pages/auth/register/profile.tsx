@@ -7,6 +7,7 @@ import RegisterLayout from './components/Layout'
 import { UTC_OPTIONS } from '@/constants'
 import { ServiceArg, services } from '@/services'
 import { useUserStore } from '@/stores'
+import { UserProfileState } from '@/types'
 
 const RegisterProfilePage = defineComponent({
   name: 'RegisterProfilePage',
@@ -103,12 +104,13 @@ const RegisterProfilePage = defineComponent({
     ]
 
     const onSubmit = async (values: Record<string, any>) => {
-      const { error } = await services['account@comer-profile-create']({
+      const newUser: UserProfileState = {
         ...(values as ServiceArg<'account@comer-profile-create'>),
         avatar: 'https://comunion-avatars.s3.ap-northeast-1.amazonaws.com/avatar1.svg'
-      })
+      }
+      const { error } = await services['account@comer-profile-create'](newUser)
       if (!error) {
-        userStore.mergeProfile(values)
+        userStore.mergeProfile(newUser)
         success.value = true
       }
     }

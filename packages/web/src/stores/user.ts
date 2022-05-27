@@ -33,12 +33,18 @@ export const useUserStore = defineStore('user', {
       if (this.logged) {
         const { error, data } = await services['account@user-info']()
         if (!error) {
-          this.profile = data
+          this.profile = data as unknown as UserProfileState
         } else {
           // anything to do?
         }
       }
       this.inited = true
+    },
+    async refreshMe() {
+      const { error, data } = await services['account@user-info']()
+      if (!error) {
+        this.profile = data as unknown as UserProfileState
+      }
     },
     setProfile(profile: UserProfileState) {
       this.profile = profile
@@ -69,7 +75,7 @@ export const useUserStore = defineStore('user', {
         })
         if (!error2) {
           const { token, ...user } = data2!
-          this.onLogin(token, user)
+          this.onLogin(token, user as unknown as UserProfileState)
         } else {
           // TODO handle error
           console.error('Login failed when parse signature')
