@@ -17,6 +17,7 @@ const DefaultLayout = defineComponent({
 
     watchEffect(() => {
       if (!userStore.logged) {
+        userStore.logout(false)
         router.replace('/auth/login')
       }
     })

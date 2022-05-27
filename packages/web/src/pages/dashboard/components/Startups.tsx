@@ -53,7 +53,7 @@ const Startups = defineComponent({
         mode: null
       })
       if (!error) {
-        myParticipatedStartups.value.push(...(data!.list as unknown as StartupItem[]))
+        myParticipatedStartups.value.push(...((data.list ?? []) as unknown as StartupItem[]))
         ParticipatedPagination.total = data!.total
       }
     }

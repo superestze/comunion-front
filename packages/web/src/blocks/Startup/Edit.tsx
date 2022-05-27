@@ -153,6 +153,7 @@ const EditStartupForm = defineComponent({
     const socialInfo: FormFactoryField[] = [
       {
         t: 'startupTags',
+        required: true,
         title: 'Tag',
         name: 'tags'
       },
