@@ -1,11 +1,3 @@
-export interface UserResponse {
-  address?: string
-  avatar?: string
-  nick?: string
-  token: string
-  isProfiled: boolean
-}
-
 export interface UserProfileState {
   // token: string
   avatar: string
@@ -26,4 +18,12 @@ export interface UserProfileState {
     google?: string
   }
   walletAddress?: string
+}
+
+export interface UserResponse
+  extends Omit<UserProfileState, 'oauth' | 'walletAddress' | 'isProfiled'> {
+  address?: string
+  nick?: string
+  token: string
+  isProfiled: boolean
 }
