@@ -127,7 +127,7 @@ export const StartupInfo = defineComponent({
                     <span class="u-h2">{startup.value?.name}</span>
                     {startup.value && startup.value?.mode > 0 && (
                       <UTag
-                        class="ml-5"
+                        class="ml-5 u-body3"
                         type="filled"
                         bgColor={
                           modeName.value
