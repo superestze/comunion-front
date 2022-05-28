@@ -146,9 +146,13 @@ const DashboardPage = defineComponent({
                     {myProfile.value?.website && (
                       <div class="flex align-center cursor-pointer">
                         <ConnectOutlined class="text-primary" />
-                        <span class=" pl-2 font-400 text-14px text-primary">
+                        <a
+                          href={myProfile.value?.website}
+                          target="_blank"
+                          class="pl-2 font-400 text-14px text-primary"
+                        >
                           {myProfile.value?.website}
-                        </span>
+                        </a>
                       </div>
                     )}
                   </div>

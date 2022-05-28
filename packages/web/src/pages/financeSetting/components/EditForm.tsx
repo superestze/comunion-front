@@ -9,16 +9,15 @@ import {
   UButton,
   UDatePicker,
   USelect,
-  UImage,
-  message
+  UImage
 } from '@comunion/components'
 import { CloseOutlined, PlusOutlined } from '@comunion/icons'
 import dayjs from 'dayjs'
 import utc from 'dayjs/plugin/utc'
-import { utils } from 'ethers'
+// import { utils } from 'ethers'
 import { defineComponent, PropType, reactive, ref, onMounted, h } from 'vue'
 import { allNetworks } from '@/constants'
-import { useErc20Contract } from '@/contracts'
+// import { useErc20Contract } from '@/contracts'
 import { services } from '@/services'
 import { StartupItem } from '@/types'
 dayjs.extend(utc)
@@ -35,6 +34,7 @@ const EditStartupForm = defineComponent({
     }
   },
   setup(props, ctx) {
+    console.log(props.startup)
     const dateToISO = (dataTime: string | null | number) => {
       return dayjs(dataTime).format('YYYY-MM-DD')
     }
@@ -70,7 +70,7 @@ const EditStartupForm = defineComponent({
               }
             ]
     }
-    const erc20ContractFactory = useErc20Contract()
+    // const erc20ContractFactory = useErc20Contract()
 
     const defaultTokenInfo = {
       name: '',
@@ -91,17 +91,16 @@ const EditStartupForm = defineComponent({
 
     const tokenInfo = reactive({ ...defaultTokenInfo })
 
-    async function onTokenContractChange(addr: string) {
-      const contract = erc20ContractFactory(addr)
-      // await contract.deployTransaction.wait()
-      tokenInfo.name = await contract.name()
-      tokenInfo.symbol = await contract.symbol()
-      tokenInfo.supply = +utils.formatUnits(await contract.totalSupply(), 18)
-    }
+    // async function onTokenContractChange(addr: string) {
+    //   const contract = erc20ContractFactory(addr)
+    //   // await contract.deployTransaction.wait()
+    //   tokenInfo.name = await contract.name()
+    //   tokenInfo.symbol = await contract.symbol()
+    //   tokenInfo.supply = +utils.formatUnits(await contract.totalSupply(), 18)
+    // }
 
     onMounted(() => {
-      console.log(defaultModel.contract)
-      onTokenContractChange(defaultModel.contract)
+      // onTokenContractChange(defaultModel.contract)
     })
 
     function addCompose() {
@@ -148,9 +147,9 @@ const EditStartupForm = defineComponent({
               if (!error) {
                 console.log(error)
               }
-              message.success(
-                'Success send transaction to the chain, please wait for the confirmation'
-              )
+              // message.success(
+              //   'Success send transaction to the chain, please wait for the confirmation'
+              // )
               onCancel()
             } catch (error) {
               // message.error('Failed to create startup, please check your network and contract')
@@ -250,9 +249,9 @@ const EditStartupForm = defineComponent({
           <UAddressInput
             placeholder="Please enter your token contract address"
             v-model:value={model.contract}
-            onChange={onTokenContractChange}
           />
         </UFormItem>
+        {/* onChange={onTokenContractChange} */}
         <UFormItem label="Presale" label-style={divStyle}>
           <div class="w-full">
             <UDatePicker
