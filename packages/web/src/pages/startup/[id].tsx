@@ -229,7 +229,7 @@ export const StartupInfo = defineComponent({
                   />
                 </div>
                 <span class="ml-auto u-body1">
-                  Create due: {dayjs.utc(startup.value?.createdAt).format('YYYY-MM-DD UTC')}
+                  Create date: {dayjs.utc(startup.value?.createdAt).format('YYYY-MM-DD UTC')}
                 </span>
               </div>
             </div>
