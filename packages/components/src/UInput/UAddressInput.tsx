@@ -30,7 +30,7 @@ const UAddressInput = defineComponent({
     const showValue = computed(() => {
       const v = props.value
       return disabled.value && v && isValidAddress(v)
-        ? `0x${v.substring(0, 8)}...${v.substring(v.length - 10)}`
+        ? `${v.substring(0, 8)}...${v.substring(v.length - 10)}`
         : v
     })
     const onInput = (v: string) => {
