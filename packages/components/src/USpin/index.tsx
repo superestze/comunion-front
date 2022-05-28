@@ -2,7 +2,7 @@ import { NSpin } from 'naive-ui'
 import { defineComponent, computed } from 'vue'
 import './style.css'
 
-export const LoadingWrap = defineComponent({
+export const USpin = defineComponent({
   name: 'LoadingWrap',
   props: ['show'],
   setup(props, ctx) {

@@ -1,11 +1,10 @@
-import { UCard, UDeveloping, UBreadcrumb, UBreadcrumbItem } from '@comunion/components'
+import { UCard, UDeveloping, UBreadcrumb, UBreadcrumbItem, USpin } from '@comunion/components'
 import { ArrowLeftOutlined, EmptyFilled } from '@comunion/icons'
 import { defineComponent, onMounted, ref } from 'vue'
 import { useRoute, useRouter } from 'vue-router'
 import { Finance } from './components/Finance'
 import { StartupBasicInfo } from './components/StartupBasicInfo'
 import { Team } from './components/Teams'
-import { LoadingWrap } from '@/components/LoadingWrap'
 import { services } from '@/services'
 import { StartupItem } from '@/types'
 
@@ -82,7 +81,7 @@ const StartupDetailPage = defineComponent({
     })
 
     return () => (
-      <LoadingWrap show={pageLoading.value}>
+      <USpin show={pageLoading.value}>
         {/* <template v-slot="description">123kkj</template> */}
         <UBreadcrumb class="mb-10 mt-10">
           <UBreadcrumbItem v-slots={{ separator: () => <ArrowLeftOutlined /> }} />
@@ -143,7 +142,7 @@ const StartupDetailPage = defineComponent({
             </UCard>
           </div>
         </div>
-      </LoadingWrap>
+      </USpin>
     )
   }
 })

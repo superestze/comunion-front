@@ -1,4 +1,4 @@
-import { UAddress, UButton, UStartupLogo, UTag } from '@comunion/components'
+import { UAddress, UButton, UStartupLogo, UTag, USpin } from '@comunion/components'
 import {
   WebsiteFilled,
   DiscordFilled,
@@ -13,7 +13,6 @@ import utcPlugin from 'dayjs/plugin/utc'
 import { defineComponent, onMounted, ref, computed } from 'vue'
 import { useRoute } from 'vue-router'
 import styles from './style.module.css'
-import { LoadingWrap } from '@/components/LoadingWrap'
 import { getStartupTypeFromNumber, StartupTypesType, STARTUP_TYPES_COLOR_MAP } from '@/constants'
 import { services } from '@/services'
 import { StartupItem } from '@/types'
@@ -81,7 +80,7 @@ export const StartupInfo = defineComponent({
       getUserIsFollow()
     })
     return () => (
-      <LoadingWrap show={pageLoading.value} class="bg-white p-10 mb-20">
+      <USpin show={pageLoading.value} class="bg-white p-10 mb-20">
         <div class="flex items-start gap-10">
           <div class="w-20 h-20">
             <UStartupLogo
@@ -235,7 +234,7 @@ export const StartupInfo = defineComponent({
           </p>
           <p class="mt-6 u-body1 break-all">{startup.value?.overview}</p>
         </section>
-      </LoadingWrap>
+      </USpin>
     )
   }
 })
