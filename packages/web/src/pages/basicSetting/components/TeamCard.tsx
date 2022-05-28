@@ -84,12 +84,12 @@ const TeamCard = defineComponent({
           showTooltipRef.value = true
         }}
       >
-        <div class="avatar">
-          <ULazyImage
-            src={props.teamMember?.comerProfile?.avatar ?? ''}
-            class="h-16 w-16 rounded-1\/2 mt-2 ml-5"
-          />
-        </div>
+        {/* <div class="avatar"> */}
+        <ULazyImage
+          src={props.teamMember?.comerProfile?.avatar ?? ''}
+          class="h-16 w-16 rounded-1\/2 mt-2 ml-5"
+        />
+        {/* </div> */}
         <div class="w-45 member-info flex flex-col justify-center ml-6">
           <div class="u-label font-orbitron font-700 text-[15px] tracking-2px uppercase mb-1 ">
             {props.teamMember?.comerProfile?.name}

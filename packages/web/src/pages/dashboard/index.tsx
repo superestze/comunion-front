@@ -196,7 +196,7 @@ const DashboardPage = defineComponent({
                   <SocialLinks />
                 </div> */}
               </div>
-              <div class="u-title1 text-primary1 mt-6 mb-6">Follow</div>
+              <div class="u-title1 text-primary1 mt-6 mb-6">Following</div>
               <div class="flex">
                 <div class="w-40 h-25 rounded-lg bg-violet-50 mr-4">
                   <div class="u-headline2 text-32px font-700 text-primary mt-4 ml-4">
