@@ -61,12 +61,14 @@ const EditStartupForm = defineComponent({
         props.startup.wallets?.length > 0
           ? props.startup.wallets.map(w => ({
               walletName: w.walletName,
-              walletAddress: w.walletAddress
+              walletAddress: w.walletAddress,
+              id: w.id
             }))
           : [
               {
                 walletName: '',
-                walletAddress: ''
+                walletAddress: '',
+                id: 0
               }
             ]
     }
@@ -106,7 +108,8 @@ const EditStartupForm = defineComponent({
     function addCompose() {
       model.composes.push({
         walletName: '',
-        walletAddress: ''
+        walletAddress: '',
+        id: 0
       })
     }
 
