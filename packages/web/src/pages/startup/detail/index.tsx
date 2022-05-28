@@ -1,5 +1,4 @@
-import { UCard, UDeveloping, UBreadcrumb, UBreadcrumbItem } from '@comunion/components'
-
+import { UCard, UDeveloping, UBreadcrumb, UBreadcrumbItem, USpin } from '@comunion/components'
 import { ArrowLeftOutlined, EmptyFilled } from '@comunion/icons'
 import { defineComponent, onMounted, ref } from 'vue'
 import { useRoute, useRouter } from 'vue-router'
@@ -19,6 +18,7 @@ const StartupDetailPage = defineComponent({
     const teamMembers = ref<StartupItem[]>([])
     const totalTeamMembers = ref()
     const userIsFollow = ref(false)
+    const pageLoading = ref(false)
 
     const getStartup = async () => {
       if (startupId) {
@@ -57,22 +57,17 @@ const StartupDetailPage = defineComponent({
       }
     }
 
-    const followStartup = async () => {
-      const { error } = await services['startup@startup-follow']({
+    const toggleFollowStartup = async (type: string) => {
+      pageLoading.value = true
+      const { error } = await services[
+        type === 'follow' ? 'startup@startup-follow' : 'startup@startup-unfollow'
+      ]({
         startupId
       })
       if (!error) {
-        getUserIsFollow()
+        await getUserIsFollow()
       }
-    }
-
-    const unfollowStartup = async () => {
-      const { error } = await services['startup@startup-unfollow']({
-        startupId
-      })
-      if (!error) {
-        getUserIsFollow()
-      }
+      pageLoading.value = false
     }
 
     const viewAllMembers = () => {
@@ -86,7 +81,8 @@ const StartupDetailPage = defineComponent({
     })
 
     return () => (
-      <div>
+      <USpin show={pageLoading.value}>
+        {/* <template v-slot="description">123kkj</template> */}
         <UBreadcrumb class="mb-10 mt-10">
           <UBreadcrumbItem v-slots={{ separator: () => <ArrowLeftOutlined /> }} />
           <UBreadcrumbItem>
@@ -107,8 +103,8 @@ const StartupDetailPage = defineComponent({
                 <StartupBasicInfo
                   startup={startup.value}
                   userIsFollow={userIsFollow.value}
-                  onFollowStartup={followStartup}
-                  onUnfollowStartup={unfollowStartup}
+                  onFollowStartup={() => toggleFollowStartup('follow')}
+                  onUnfollowStartup={() => toggleFollowStartup('unfollow')}
                 />
               )}
             </div>
@@ -146,7 +142,7 @@ const StartupDetailPage = defineComponent({
             </UCard>
           </div>
         </div>
-      </div>
+      </USpin>
     )
   }
 })

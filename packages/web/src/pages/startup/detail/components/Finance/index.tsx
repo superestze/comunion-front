@@ -76,8 +76,8 @@ export const Finance = defineComponent({
   },
   render() {
     return (
-      <div class="max-h-115 h-full overflow-hidden flex gap-6 justify-between items-stretch">
-        <section class="mt-10">
+      <div class="overflow-hidden flex flex-wrap gap-6 justify-between">
+        <section class="flex-1 mt-10">
           {this.financeBasic.map(item => {
             return (
               <div class="mb-2 flex flex-wrap">
@@ -89,14 +89,14 @@ export const Finance = defineComponent({
             )
           })}
         </section>
-        <UScrollbar class="bg-purple rounded px-6 max-h-115 basis-2/5 min-w-90">
-          <div class="py-10">
+        <UScrollbar class="flex-1 bg-purple rounded px-6 min-w-90 max-h-95">
+          <div class="pt-6 pb-2">
             {(this.wallets || []).length ? (
               (this.wallets || []).map(item => {
                 return (
                   <div>
-                    <div class="u-label2">{item.name}:</div>
-                    <UAddress class="text-primary u-title2" autoSlice address={item.value} />
+                    <div class="u-label2 mb-2">{item.name}:</div>
+                    <UAddress class="text-primary u-title2 mb-4" autoSlice address={item.value} />
                   </div>
                 )
               })
