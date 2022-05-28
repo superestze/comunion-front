@@ -45,7 +45,15 @@ const StartupCard = defineComponent({
               class="rounded h-10 w-10 !object-contain"
             />
             {props.startup.mode > 0 && (
-              <UTag class="ml-auto" type="filled" bgColor={STARTUP_TYPES_COLOR_MAP[modeName]}>
+              <UTag
+                class="u-body3 ml-auto"
+                type="filled"
+                bgColor={STARTUP_TYPES_COLOR_MAP[modeName]}
+                style={{
+                  'font-weight': '700',
+                  'font-size': '14px'
+                }}
+              >
                 {modeName}
               </UTag>
             )}
