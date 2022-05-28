@@ -4,7 +4,8 @@ import {
   UBreadcrumbItem,
   UButton,
   UStartupLogo,
-  UTag
+  UTag,
+  USpin
 } from '@comunion/components'
 import {
   WebsiteFilled,
@@ -34,6 +35,7 @@ export const StartupInfo = defineComponent({
     const route = useRoute()
     const startupId = route.params.id
     const userIsFollow = ref(false)
+    const pageLoading = ref(false)
 
     const startup = ref<StartupItem>()
     const modeName = computed(() => {
@@ -70,22 +72,17 @@ export const StartupInfo = defineComponent({
       }
     }
 
-    const followStartup = async () => {
-      const { error } = await services['startup@startup-follow']({
+    const toggleFollowStartup = async (type: 'follow' | 'unfollow') => {
+      pageLoading.value = true
+      const { error } = await services[
+        type === 'follow' ? 'startup@startup-follow' : 'startup@startup-unfollow'
+      ]({
         startupId
       })
       if (!error) {
-        getUserIsFollow()
+        await getUserIsFollow()
       }
-    }
-
-    const unfollowStartup = async () => {
-      const { error } = await services['startup@startup-unfollow']({
-        startupId
-      })
-      if (!error) {
-        getUserIsFollow()
-      }
+      pageLoading.value = false
     }
 
     onMounted(() => {
@@ -93,7 +90,7 @@ export const StartupInfo = defineComponent({
       getUserIsFollow()
     })
     return () => (
-      <div>
+      <USpin show={pageLoading.value}>
         <UBreadcrumb class="mb-10 mt-10">
           <UBreadcrumbItem v-slots={{ separator: () => <ArrowLeftOutlined /> }} />
           <UBreadcrumbItem v-slots={{ separator: () => <ArrowLeftOutlined /> }}>
@@ -150,7 +147,7 @@ export const StartupInfo = defineComponent({
                     <UButton
                       type="primary"
                       ghost
-                      onClick={() => unfollowStartup()}
+                      onClick={() => toggleFollowStartup('unfollow')}
                       v-slots={{
                         icon: () => {
                           return (
@@ -166,7 +163,7 @@ export const StartupInfo = defineComponent({
                   ) : (
                     <UButton
                       type="primary"
-                      onClick={() => followStartup()}
+                      onClick={() => toggleFollowStartup('follow')}
                       v-slots={{
                         icon: () => {
                           return (
@@ -271,7 +268,7 @@ export const StartupInfo = defineComponent({
             <p class="mt-6 u-body1 break-all">{startup.value?.overview}</p>
           </section>
         </div>
-      </div>
+      </USpin>
     )
   }
 })
