@@ -46,9 +46,11 @@ export const StartupInfo = defineComponent({
         : ''
     })
 
-    const toSocialEnd = (url: string | undefined) => {
-      if (url) {
+    const toSocialEnd = (url: string) => {
+      if (url.startsWith('http')) {
         window.open(url)
+      } else {
+        window.open('//' + url)
       }
     }
 
@@ -187,7 +189,9 @@ export const StartupInfo = defineComponent({
                   <WebsiteFilled
                     class={startup.value?.website ? 'cursor-pointer' : 'cursor-not-allowed'}
                     onClick={
-                      startup.value?.website ? () => toSocialEnd(startup.value?.website) : undefined
+                      startup.value?.website
+                        ? () => toSocialEnd(startup.value!.website!)
+                        : undefined
                     }
                   />
                 </div>
@@ -195,7 +199,7 @@ export const StartupInfo = defineComponent({
                   <DiscordFilled
                     class={startup.value?.discord ? 'cursor-pointer' : 'cursor-not-allowed'}
                     onClick={
-                      startup.value?.discord ? () => toSocialEnd(startup.value?.discord) : undefined
+                      startup.value?.discord ? () => toSocialEnd(startup.value!.discord) : undefined
                     }
                   />
                 </div>
@@ -204,7 +208,7 @@ export const StartupInfo = defineComponent({
                     class={startup.value?.telegram ? 'cursor-pointer' : 'cursor-not-allowed'}
                     onClick={
                       startup.value?.telegram
-                        ? () => toSocialEnd(startup.value?.telegram)
+                        ? () => toSocialEnd(startup.value!.telegram)
                         : undefined
                     }
                   />
@@ -213,7 +217,7 @@ export const StartupInfo = defineComponent({
                   <TwitterFilled
                     class={startup.value?.twitter ? 'cursor-pointer' : 'cursor-not-allowed'}
                     onClick={
-                      startup.value?.twitter ? () => toSocialEnd(startup.value?.twitter) : undefined
+                      startup.value?.twitter ? () => toSocialEnd(startup.value!.twitter) : undefined
                     }
                   />
                 </div>
@@ -221,7 +225,7 @@ export const StartupInfo = defineComponent({
                   <DocsFilled
                     class={startup.value?.docs ? 'cursor-pointer' : 'cursor-not-allowed'}
                     onClick={
-                      startup.value?.docs ? () => toSocialEnd(startup.value?.docs) : undefined
+                      startup.value?.docs ? () => toSocialEnd(startup.value!.docs) : undefined
                     }
                   />
                 </div>
@@ -237,7 +241,11 @@ export const StartupInfo = defineComponent({
               <span class="u-label2 text-grey3">KYC:</span>
               <span class="u-title2 ml-4">
                 {startup.value?.kyc ? (
-                  <a href={startup.value?.kyc} class="u-title2 text-primary">
+                  <a
+                    href="javascript:void(0)"
+                    onClick={() => toSocialEnd(startup.value!.kyc)}
+                    class="u-title2 text-primary"
+                  >
                     {startup.value?.kyc}
                   </a>
                 ) : (
@@ -249,7 +257,11 @@ export const StartupInfo = defineComponent({
               <span class="u-label2 text-grey3 whitespace-nowrap">CONTRACT AUDIT:</span>
               <span class="u-title2 ml-4">
                 {startup.value?.contractAudit ? (
-                  <a href={startup.value?.contractAudit} class="u-title2 text-primary">
+                  <a
+                    href="javascript:void(0)"
+                    onClick={() => toSocialEnd(startup.value!.contractAudit)}
+                    class="u-title2 text-primary"
+                  >
                     {startup.value?.contractAudit}
                   </a>
                 ) : (
