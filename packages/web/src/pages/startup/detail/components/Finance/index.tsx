@@ -76,21 +76,21 @@ export const Finance = defineComponent({
   },
   render() {
     return (
-      <div class="overflow-hidden flex flex-wrap gap-6 justify-between">
-        <section class="flex-1 mt-10">
+      <div class="flex flex-wrap gap-6 justify-between">
+        <section class="flex-1 mt-30px">
           {this.financeBasic.map(item => {
             return (
-              <div class="mb-2 flex flex-wrap">
+              <div class="mb-2 flex flex-wrap items-start">
                 <div class="u-label2 text-grey3 whitespace-nowrap w-42 mr-4 flex-0 mb-2">
                   {item.name}
                 </div>
-                <div class="u-title2 flex-auto">{item.value}</div>
+                <div class="u-title2 flex-1">{item.value}</div>
               </div>
             )
           })}
         </section>
-        <UScrollbar class="flex-1 bg-purple rounded px-6 min-w-90 max-h-95">
-          <div class="pt-6 pb-2">
+        <UScrollbar class="flex-1 bg-purple rounded px-6 min-w-90 h-275px">
+          <div class="py-30px">
             {(this.wallets || []).length ? (
               (this.wallets || []).map(item => {
                 return (

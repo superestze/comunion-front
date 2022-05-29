@@ -96,7 +96,7 @@ const StartupDetailPage = defineComponent({
             </span>
           </UBreadcrumbItem>
         </UBreadcrumb>
-        <div class="flex gap-10 mb-20">
+        <div class="flex gap-6 mb-20">
           <div class="basis-2/3">
             <div class="bg-white p-10 rounded border mb-10">
               {startup.value && (
@@ -108,7 +108,7 @@ const StartupDetailPage = defineComponent({
                 />
               )}
             </div>
-            <UCard title="FINANCE" class="mb-10 min-h-115">
+            <UCard title="FINANCE" class="mb-10 !pb-32px">
               <Finance startup={startup.value} />
             </UCard>
             <UCard title="BOUNTIES" class="mb-10">
