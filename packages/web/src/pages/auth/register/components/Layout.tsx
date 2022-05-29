@@ -1,5 +1,4 @@
 import { defineComponent } from 'vue'
-import SwitchAccount from '../../components/SwitchAccount'
 
 const RegisterLayout = defineComponent({
   name: 'RegisterLayout',
@@ -8,7 +7,7 @@ const RegisterLayout = defineComponent({
       <div class="bg-purple h-full min-h-screen text-[14px] relative">
         <div class="u-page-container">
           {ctx.slots.default?.()}
-          <SwitchAccount />
+          {/* <SwitchAccount /> */}
         </div>
       </div>
     )

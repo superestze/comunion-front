@@ -27,25 +27,29 @@ const WalletAddress = defineComponent({
         </HeaderButton>
       )
 
-      return walletStore.connected ? (
-        <HeaderDropdown
-          placement="bottom-end"
-          options={[
-            {
-              key: 'disconnect',
-              icon: () => <SignOutFilled class="bg-purple rounded-3xl text-primary" />,
-              label: () => (
-                <div class="flex items-center" onClick={disconnect}>
-                  Disconnect
-                </div>
-              )
-            }
-          ]}
-        >
-          {btn}
-        </HeaderDropdown>
-      ) : (
-        btn
+      return (
+        <div class="h-10 leading-normal">
+          {walletStore.connected ? (
+            <HeaderDropdown
+              placement="bottom-end"
+              options={[
+                {
+                  key: 'disconnect',
+                  icon: () => <SignOutFilled class="bg-purple rounded-3xl text-primary" />,
+                  label: () => (
+                    <div class="flex items-center" onClick={disconnect}>
+                      Disconnect
+                    </div>
+                  )
+                }
+              ]}
+            >
+              {btn}
+            </HeaderDropdown>
+          ) : (
+            btn
+          )}
+        </div>
       )
     }
   }

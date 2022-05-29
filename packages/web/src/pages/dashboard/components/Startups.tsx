@@ -1,4 +1,4 @@
-import { UCard, UDeveloping, UScrollList, UTabPane, UTabs } from '@comunion/components'
+import { UCard, UDeveloping, UScrollList, UTabPane, UTabs, UNoContent } from '@comunion/components'
 import { EmptyFilled, PlusOutlined } from '@comunion/icons'
 import { defineComponent, onMounted, reactive, ref } from 'vue'
 import ParticipatedCard from './ParticipatedCard'
@@ -53,7 +53,7 @@ const Startups = defineComponent({
         mode: null
       })
       if (!error) {
-        myParticipatedStartups.value.push(...((data.list ?? []) as unknown as StartupItem[]))
+        myParticipatedStartups.value.push(...(data!.list as unknown as StartupItem[]))
         ParticipatedPagination.total = data!.total
       }
     }
@@ -76,9 +76,17 @@ const Startups = defineComponent({
     }
 
     onMounted(() => {
-      getParticipatedStartups()
+      // getParticipatedStartups()
       getCreatedStartups()
     })
+
+    const tabsDateChnage = (value: string) => {
+      if (value === 'CREATED BY ME') {
+        getCreatedStartups()
+      } else if (value === 'PARTICIPATED') {
+        getParticipatedStartups()
+      }
+    }
 
     return () => (
       <UCard
@@ -96,26 +104,7 @@ const Startups = defineComponent({
         }}
       >
         <CreateStartupBlock ref={createRef} />
-        <UTabs>
-          <UTabPane name="PARTICIPATED" tab="PARTICIPATED" class="h-112">
-            <UScrollList
-              triggered={ParticipatedPagination.loading}
-              page={ParticipatedPagination.page}
-              pageSize={ParticipatedPagination.pageSize}
-              total={ParticipatedPagination.total}
-              onLoadMore={ParticipatedLoadMore}
-            >
-              {myParticipatedStartups.value.length ? (
-                myParticipatedStartups.value.map((startup, i) => (
-                  <ParticipatedCard startup={startup} key={i} />
-                ))
-              ) : (
-                <UDeveloping>
-                  <EmptyFilled class="mt-34" />
-                </UDeveloping>
-              )}
-            </UScrollList>
-          </UTabPane>
+        <UTabs onUpdateValue={tabsDateChnage}>
           <UTabPane name="CREATED BY ME" tab="CREATED BY ME" class="h-112">
             <UScrollList
               triggered={pagination.loading}
@@ -127,6 +116,28 @@ const Startups = defineComponent({
               {myCreatedStartups.value.length ? (
                 myCreatedStartups.value.map((startup, i) => (
                   <StartupCard startup={startup} key={i} />
+                ))
+              ) : (
+                // <UDeveloping>
+                //   <EmptyFilled class="mt-34" />
+                // </UDeveloping>
+                <UNoContent textTip="TO BE EMPTY">
+                  <EmptyFilled class="mt-34" />
+                </UNoContent>
+              )}
+            </UScrollList>
+          </UTabPane>
+          <UTabPane name="PARTICIPATED" tab="PARTICIPATED" class="h-112">
+            <UScrollList
+              triggered={ParticipatedPagination.loading}
+              page={ParticipatedPagination.page}
+              pageSize={ParticipatedPagination.pageSize}
+              total={ParticipatedPagination.total}
+              onLoadMore={ParticipatedLoadMore}
+            >
+              {myParticipatedStartups.value.length ? (
+                myParticipatedStartups.value.map((startup, i) => (
+                  <ParticipatedCard startup={startup} key={i} />
                 ))
               ) : (
                 <UDeveloping>

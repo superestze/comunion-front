@@ -37,7 +37,8 @@ const EditProfile = defineComponent({
       {
         title: 'Location',
         name: 'location',
-        placeholder: 'Add your location'
+        placeholder: 'Add your location',
+        required: true
       },
       {
         t: 'select',

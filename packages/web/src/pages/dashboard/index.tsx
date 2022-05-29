@@ -146,9 +146,13 @@ const DashboardPage = defineComponent({
                     {myProfile.value?.website && (
                       <div class="flex align-center cursor-pointer">
                         <ConnectOutlined class="text-primary" />
-                        <span class=" pl-2 font-400 text-14px text-primary">
+                        <a
+                          href={myProfile.value?.website}
+                          target="_blank"
+                          class="pl-2 font-400 text-14px text-primary"
+                        >
                           {myProfile.value?.website}
-                        </span>
+                        </a>
                       </div>
                     )}
                   </div>
@@ -196,7 +200,7 @@ const DashboardPage = defineComponent({
                   <SocialLinks />
                 </div> */}
               </div>
-              <div class="u-title1 text-primary1 mt-6 mb-6">Follow</div>
+              <div class="u-title1 text-primary1 mt-6 mb-6">Following</div>
               <div class="flex">
                 <div class="w-40 h-25 rounded-lg bg-violet-50 mr-4">
                   <div class="u-headline2 text-32px font-700 text-primary mt-4 ml-4">

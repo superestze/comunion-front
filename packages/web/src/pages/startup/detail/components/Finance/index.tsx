@@ -76,27 +76,27 @@ export const Finance = defineComponent({
   },
   render() {
     return (
-      <div class="max-h-115 h-full overflow-hidden flex gap-6 justify-between items-stretch">
-        <section class="mt-10">
+      <div class="flex flex-wrap gap-6 justify-between">
+        <section class="flex-1 mt-30px">
           {this.financeBasic.map(item => {
             return (
-              <div class="mb-2 flex flex-wrap">
+              <div class="mb-2 flex flex-wrap items-start">
                 <div class="u-label2 text-grey3 whitespace-nowrap w-42 mr-4 flex-0 mb-2">
                   {item.name}
                 </div>
-                <div class="u-title2 flex-auto">{item.value}</div>
+                <div class="u-title2 flex-1">{item.value}</div>
               </div>
             )
           })}
         </section>
-        <UScrollbar class="bg-purple rounded px-6 max-h-115 basis-2/5 min-w-90">
-          <div class="py-10">
+        <UScrollbar class="flex-1 bg-purple rounded px-6 min-w-90 h-275px">
+          <div class="py-30px">
             {(this.wallets || []).length ? (
               (this.wallets || []).map(item => {
                 return (
                   <div>
-                    <div class="u-label2">{item.name}:</div>
-                    <UAddress class="text-primary u-title2" autoSlice address={item.value} />
+                    <div class="u-label2 mb-2">{item.name}:</div>
+                    <UAddress class="text-primary u-title2 mb-4" autoSlice address={item.value} />
                   </div>
                 )
               })

@@ -60,7 +60,7 @@ export const StartupBasicInfo = defineComponent({
                 <span class="u-h2">{props.startup!.name}</span>
                 {props.startup!.mode > 0 && (
                   <UTag
-                    class="ml-5"
+                    class="ml-5 u-body3"
                     type="filled"
                     bgColor={STARTUP_TYPES_COLOR_MAP[modeName.value]}
                   >
