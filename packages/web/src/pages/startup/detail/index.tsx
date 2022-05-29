@@ -108,7 +108,7 @@ const StartupDetailPage = defineComponent({
                 />
               )}
             </div>
-            <UCard title="FINANCE" class="mb-10 !pb-32px">
+            <UCard title="FINANCE" class="mb-10 !pb-8">
               <Finance startup={startup.value} />
             </UCard>
             <UCard title="BOUNTIES" class="mb-10">
