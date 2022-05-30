@@ -53,9 +53,12 @@ const UDrawer = defineComponent({
           <span class="u-drawer-header__title">{props.title}</span>
           <CloseOutlined class="u-drawer-header__close" onClick={close} />
         </div>
-        <div class="u-drawer-container">
-          <UCard class="u-drawer-content">{ctx.slots.default?.()}</UCard>
-        </div>
+        {ctx.slots.default && (
+          <div class="u-drawer-container">
+            <UCard class="u-drawer-content">{ctx.slots.default?.()}</UCard>
+          </div>
+        )}
+        {ctx.slots.whiteBoard && <div>{ctx.slots.whiteBoard?.()}</div>}
       </NDrawer>
     )
   }

@@ -1,7 +1,7 @@
 @import '@comunion/components/dist/es/index.css';
 
 body {
-  @apply font-opensans text-grey1 text-[16px] leading-5;
+  @apply font-opensans text-grey1 text-[16px] leading-5 break-words;
 }
 
 ::-webkit-scrollbar {
@@ -11,7 +11,7 @@ body {
 }
 
 ::-webkit-scrollbar-thumb {
-  @apply bg-primary1 rounded h-1 w-1;
+  @apply rounded bg-primary1 h-1 w-1;
 }
 
 ::-webkit-scrollbar-track {

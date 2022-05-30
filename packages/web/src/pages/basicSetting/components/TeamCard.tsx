@@ -84,12 +84,12 @@ const TeamCard = defineComponent({
           showTooltipRef.value = true
         }}
       >
-        <div class="avatar">
-          <ULazyImage
-            src={props.teamMember?.comerProfile?.avatar ?? ''}
-            class="h-16 w-16 rounded-1\/2 mt-2 ml-5"
-          />
-        </div>
+        {/* <div class="avatar"> */}
+        <ULazyImage
+          src={props.teamMember?.comerProfile?.avatar ?? ''}
+          class="h-16 w-16 rounded-1\/2 mt-2 ml-5"
+        />
+        {/* </div> */}
         <div class="w-45 member-info flex flex-col justify-center ml-6">
           <div class="u-label font-orbitron font-700 text-[15px] tracking-2px uppercase mb-1 ">
             {props.teamMember?.comerProfile?.name}
@@ -107,7 +107,7 @@ const TeamCard = defineComponent({
               />
             </div>
             {props.paramsList?.comerID === paramsList.value.comerID ? null : (
-              <div class="w-7 h-7 rounded-md bg-white leading-10">
+              <div class="w-7 h-7 rounded-md bg-white leading-10 mr-5">
                 <DeleteFilled
                   class="w-5 h-5 m-auto leading-8 mt-1 cursor-pointer"
                   onClick={teamDelete}

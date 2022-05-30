@@ -1,6 +1,5 @@
 import { UButton, ULogo } from '@comunion/components'
 import { GithubFilled, GoogleFilled, WalletOutlined } from '@comunion/icons'
-// import { randomStr } from '@comunion/utils'
 import { defineComponent, ref } from 'vue'
 import leftBgImg from './assets/bg.png'
 import styles from './index.module.css'
@@ -32,7 +31,7 @@ const LoginPage = defineComponent({
     //   (window.location.href = `https://accounts.google.com/o/oauth2/v2/auth?response_type=code&scope=openid%20email&client_id=${GOOGLE_CLIENT_ID}&redirect_uri=${GOOGLE_CALLBACK_URL}&state=u${
     //     isLocal ? '0' : '1'
     //   }${state}`)
-    //
+
     // const githubLogin = () =>
     //   (window.location.href = `https://github.com/login/oauth/authorize?client_id=${GITHUB_CLIENT_ID}&redirect_uri=${GITHUB_CALLBACK_URL}&state=u${
     //     isLocal ? '0' : '1'
@@ -85,17 +84,13 @@ const LoginPage = defineComponent({
             {/* <a class="text-primary">What is wallet？</a> */}
             <div class="flex my-10 items-center">
               <div class="bg-[#d8d8d8] h-[1px] w-[90px]" />
-              <div class="mx-3 text-[#999] text-[18px] leading-5">Sign in with social accout</div>
+              <div class="mx-3 text-[#999] text-[18px] leading-5">Sign in with social account</div>
               <div class="bg-[#d8d8d8] h-[1px] w-[90px]" />
             </div>
             <div class="flex items-center">
-              {/* TODO zehui after finished this , please uncomment this */}
-              {/*<div class={styles.oauthBtn} onClick={googleLogin}>*/}
               <div class={styles.oauthBtn}>
                 <GoogleFilled />
               </div>
-              {/* TODO zehui after finished this , please uncomment this */}
-              {/*<div class={styles.oauthBtn} onClick={githubLogin}>*/}
               <div class={styles.oauthBtn}>
                 <GithubFilled class="text-primary" />
               </div>

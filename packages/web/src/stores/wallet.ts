@@ -1,13 +1,16 @@
+import { message } from '@comunion/components'
 import { readObject, removeObject, storeObject } from '@comunion/utils'
 import type { providers } from 'ethers'
 import { defineStore } from 'pinia'
 import { markRaw } from 'vue'
+import { useUserStore } from './user'
 import {
   STORE_KEY_WALLET_CONNECTED,
   STORE_KEY_WALLET_TYPE,
   allNetworks,
   supportedChainIds
 } from '@/constants'
+import router from '@/router'
 import { SupportedWalletTypes } from '@/types/wallet'
 import { getWallet } from '@/wallets'
 import AbstractWallet from '@/wallets/AbstractWallet'
@@ -87,18 +90,28 @@ export const useWalletStore = defineStore('wallet', {
         provider.off('network', this._onNetworkChange)
       }
     },
-    // TODO
     _onAccountsChanged(account: string, oldAccount: string) {
+      const userStore = useUserStore()
       // change address means change user, so we need to disconnect
       console.log('You have changed the account', account, oldAccount)
       if (account) {
         this.address = account
       } else {
-        this._onWalletDisconnected()
+        this.disconnectWallet()
       }
-      // TODO
+      // account switched
+      if (
+        account &&
+        oldAccount &&
+        account !== oldAccount &&
+        window.location.pathname !== '/auth/login'
+      ) {
+        message.info('Account switched, please re-login')
+        userStore.onLogout()
+        router.replace('/auth/login')
+      }
     },
-    _onWalletDisconnected() {
+    disconnectWallet() {
       this.connected = false
       removeObject(STORE_KEY_WALLET_CONNECTED)
       this.address = undefined

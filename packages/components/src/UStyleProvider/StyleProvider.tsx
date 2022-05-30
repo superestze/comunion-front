@@ -1,7 +1,8 @@
+import { hex2rgb } from '@comunion/utils'
 import type { GlobalThemeOverrides } from 'naive-ui'
 import { NConfigProvider } from 'naive-ui'
+import { computed, defineComponent, watchEffect } from 'vue'
 import type { ExtractPropTypes } from 'vue'
-import { computed, defineComponent } from 'vue'
 import '../UTypography/font.css'
 
 export const UStyleProviderProps = {
@@ -78,24 +79,7 @@ const UStyleProvider = defineComponent({
   props: UStyleProviderProps,
   setup(props, ctx) {
     const style = document.createElement('style')
-    style.innerHTML = `:root {
-      --u-primary-color: ${props.primaryColor};
-      --u-primary-1-color: ${props.primary1Color};
-      --u-primary-2-color: ${props.primary2Color};
-      --u-error-color: ${props.errorColor};
-      --u-success-color: ${props.successColor};
-      --u-warning-color: ${props.warningColor};
-      --u-info-color: ${props.infoColor};
-      --u-grey-1-color: ${props.grey1Color};
-      --u-grey-2-color: ${props.grey2Color};
-      --u-grey-3-color: ${props.grey3Color};
-      --u-grey-4-color: ${props.grey4Color};
-      --u-grey-5-color: ${props.grey5Color};
-      --u-green-1-color: ${props.green1Color};
-      --u-purple-color: ${props.purpleBg};
-      --u-purple-light-color: ${props.purpleLightBg};
-      --u-purple-gradient-color: ${props.purpleGradientBg};
-    }`
+
     document.head.appendChild(style)
 
     const naiveThemeOverrides = computed<GlobalThemeOverrides>(() => ({
@@ -160,6 +144,32 @@ const UStyleProvider = defineComponent({
         borderColor: props.grey5Color
       }
     }))
+
+    watchEffect(() => {
+      const { r, g, b } = hex2rgb(props.primaryColor)
+      style.innerHTML = `:root {
+        --u-primary-value: ${r}, ${g}, ${b};
+        --u-primary2-value: ${hex2rgb(props.primary2Color).r},${hex2rgb(props.primary2Color).g},${
+        hex2rgb(props.primary2Color).b
+      };
+        --u-primary-color: ${props.primaryColor};
+        --u-primary-1-color: ${props.primary1Color};
+        --u-primary-2-color: ${props.primary2Color};
+        --u-error-color: ${props.errorColor};
+        --u-success-color: ${props.successColor};
+        --u-warning-color: ${props.warningColor};
+        --u-info-color: ${props.infoColor};
+        --u-grey-1-color: ${props.grey1Color};
+        --u-grey-2-color: ${props.grey2Color};
+        --u-grey-3-color: ${props.grey3Color};
+        --u-grey-4-color: ${props.grey4Color};
+        --u-grey-5-color: ${props.grey5Color};
+        --u-green-1-color: ${props.green1Color};
+        --u-purple-color: ${props.purpleBg};
+        --u-purple-light-color: ${props.purpleLightBg};
+        --u-purple-gradient-color: ${props.purpleGradientBg};
+      }`
+    })
 
     return () => (
       <NConfigProvider themeOverrides={naiveThemeOverrides.value}>

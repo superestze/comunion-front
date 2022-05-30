@@ -1,6 +1,8 @@
+import { message } from '@comunion/components'
 import { readObject, removeObject, storeObject } from '@comunion/utils'
 import { defineStore } from 'pinia'
 import { STORE_KEY_TOKEN } from '@/constants'
+import router from '@/router'
 import { services } from '@/services'
 import { useWalletStore } from '@/stores'
 import type { UserProfileState } from '@/types'
@@ -31,12 +33,18 @@ export const useUserStore = defineStore('user', {
       if (this.logged) {
         const { error, data } = await services['account@user-info']()
         if (!error) {
-          this.profile = data
+          this.profile = data as unknown as UserProfileState
         } else {
           // anything to do?
         }
       }
       this.inited = true
+    },
+    async refreshMe() {
+      const { error, data } = await services['account@user-info']()
+      if (!error) {
+        this.profile = data as unknown as UserProfileState
+      }
     },
     setProfile(profile: UserProfileState) {
       this.profile = profile
@@ -67,7 +75,7 @@ export const useUserStore = defineStore('user', {
         })
         if (!error2) {
           const { token, ...user } = data2!
-          this.onLogin(token, user)
+          this.onLogin(token, user as unknown as UserProfileState)
         } else {
           // TODO handle error
           console.error('Login failed when parse signature')
@@ -87,7 +95,14 @@ export const useUserStore = defineStore('user', {
       this.token = ''
       this.profile = null
       removeObject(STORE_KEY_TOKEN)
-      walletStore._onWalletDisconnected()
+      walletStore.disconnectWallet()
+    },
+    logout(msg?: false | string) {
+      this.onLogout()
+      if (msg) {
+        message.info(typeof msg === 'string' ? msg : 'You have been logged out')
+      }
+      router.replace('/auth/login')
     }
   }
 })

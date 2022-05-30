@@ -43,7 +43,8 @@ export default defineConfig({
       pagesDir: 'src/pages',
       exclude: ['**/components/**/*.*', '**/blocks/**/*.*', '**/hooks/**/*.*', '**/_*.*'],
       importMode: 'async',
-      nuxtStyle: true,
+      routeStyle: 'next',
+      // nuxtStyle: true,
       extendRoute(route) {
         function addLayout(layout: string) {
           route.meta = route.meta || {}
@@ -66,7 +67,7 @@ export default defineConfig({
             }
           }
           if (!route.meta?.layout) {
-            addLayout('default')
+            addLayout('default/index')
           }
         }
         return route

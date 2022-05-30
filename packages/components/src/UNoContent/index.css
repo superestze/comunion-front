@@ -1,0 +1,9 @@
+.u-developing {
+  &__img {
+    @apply flex items-center justify-center;
+  }
+
+  &__text {
+    @apply flex items-center justify-center h-full text-center uppercase text-primary u-label2;
+  }
+}

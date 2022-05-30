@@ -1,7 +1,6 @@
 import {
   FormInst,
   FormItemRule,
-  message,
   UForm,
   UFormItem,
   UAddressInput,
@@ -15,14 +14,10 @@ import {
 import { CloseOutlined, PlusOutlined } from '@comunion/icons'
 import dayjs from 'dayjs'
 import utc from 'dayjs/plugin/utc'
-import { utils } from 'ethers'
+// import { utils } from 'ethers'
 import { defineComponent, PropType, reactive, ref, onMounted, h } from 'vue'
-import avalanche from '@/assets/avalanche.png'
-import bsc from '@/assets/bsc.png'
-import ethereum from '@/assets/ethereum-eth-logo.png'
-import fantom from '@/assets/fantom.png'
-import polygon from '@/assets/polygon.png'
-import { useErc20Contract } from '@/contracts'
+import { allNetworks } from '@/constants'
+// import { useErc20Contract } from '@/contracts'
 import { services } from '@/services'
 import { StartupItem } from '@/types'
 dayjs.extend(utc)
@@ -39,61 +34,45 @@ const EditStartupForm = defineComponent({
     }
   },
   setup(props, ctx) {
+    console.log(props.startup)
     const dateToISO = (dataTime: string | null | number) => {
       return dayjs(dataTime).format('YYYY-MM-DD')
     }
     const dateList = ref({
-      presaleDate: props.startup?.presaleDate || '',
-      launchDate: props.startup?.launchDate || ''
+      launchDate: props.startup?.launchDate || '',
+      presaleStart: props.startup!.presaleStart || '',
+      presaleEnd: props.startup!.presaleEnd || '',
+      allNetworksList: allNetworks
     })
-    console.log(new Date(dateList.value.launchDate).getTime())
     const defaultModel = {
-      presaleDate: new Date(dateList.value.presaleDate).getTime() || null,
+      presaleDate: dateList.value.presaleStart
+        ? ref<number | [number, number] | null>([
+            new Date(dateList.value.presaleStart).getTime(),
+            new Date(dateList.value.presaleEnd).getTime()
+          ])
+        : null,
       launchDate: new Date(dateList.value.launchDate).getTime() || null,
       contract: props.startup!.tokenContractAddress || '',
-      network: 'Ethereum',
+      network: Number(props.startup!.launchNetwork) || null,
+      tokenName: props.startup!.tokenName,
+      tokenSymbol: props.startup!.tokenSymbol,
+      totalSupply: props.startup!.totalSupply,
       composes:
-        props.startup!.wallets?.length > 0
-          ? props.startup!.wallets.map(w => ({
+        props.startup.wallets?.length > 0
+          ? props.startup.wallets.map(w => ({
               walletName: w.walletName,
-              walletAddress: w.walletAddress
+              walletAddress: w.walletAddress,
+              id: w.id
             }))
           : [
               {
                 walletName: '',
-                walletAddress: ''
+                walletAddress: '',
+                id: 0
               }
             ]
     }
-    const networkList = ref([
-      {
-        label: 'Ethereum',
-        value: 'Ethereum',
-        src: ethereum
-      },
-      {
-        label: 'Avalanche',
-        value: 'Avalanche',
-        src: avalanche
-      },
-      {
-        label: 'Fantom',
-        value: 'Fantom',
-        src: fantom
-      },
-      {
-        label: 'BSC',
-        value: 'BSC',
-        src: bsc
-      },
-      {
-        label: 'Polygon',
-        value: 'Polygon',
-        src: polygon
-      }
-    ])
-
-    const erc20ContractFactory = useErc20Contract()
+    // const erc20ContractFactory = useErc20Contract()
 
     const defaultTokenInfo = {
       name: '',
@@ -114,22 +93,23 @@ const EditStartupForm = defineComponent({
 
     const tokenInfo = reactive({ ...defaultTokenInfo })
 
-    async function onTokenContractChange(addr: string) {
-      const contract = erc20ContractFactory(addr)
-      // await contract.deployTransaction.wait()
-      tokenInfo.name = await contract.name()
-      tokenInfo.symbol = await contract.symbol()
-      tokenInfo.supply = +utils.formatUnits(await contract.totalSupply(), 18)
-    }
+    // async function onTokenContractChange(addr: string) {
+    //   const contract = erc20ContractFactory(addr)
+    //   // await contract.deployTransaction.wait()
+    //   tokenInfo.name = await contract.name()
+    //   tokenInfo.symbol = await contract.symbol()
+    //   tokenInfo.supply = +utils.formatUnits(await contract.totalSupply(), 18)
+    // }
 
     onMounted(() => {
-      onTokenContractChange(defaultModel.contract)
+      // onTokenContractChange(defaultModel.contract)
     })
 
     function addCompose() {
       model.composes.push({
         walletName: '',
-        walletAddress: ''
+        walletAddress: '',
+        id: 0
       })
     }
 
@@ -152,21 +132,33 @@ const EditStartupForm = defineComponent({
       formRef.value?.validate(async error => {
         if (!error) {
           loading.value = true
+
           try {
-            const { data } = await services['startup@startup-finance-setting-update']({
-              startupId: props.startup!.id,
-              tokenContractAddress: props.startup!.tokenContractAddress,
-              presaleDate: dateToISO(model.presaleDate),
-              launchDate: dateToISO(model.launchDate),
-              wallets: model.composes
-            })
-            if (data) {
-              console.log(data)
+            try {
+              const { error } = await services['startup@startup-finance-setting-update']({
+                startupId: props.startup!.id,
+                tokenContractAddress: model.contract,
+                launchNetwork: Number(model.network),
+                presaleStart: String(dateList.value.presaleStart),
+                presaleEnd: String(dateList.value.presaleEnd),
+                launchDate: dateToISO(model.launchDate),
+                wallets: model.composes,
+                tokenName: model.tokenName,
+                tokenSymbol: model.tokenSymbol,
+                totalSupply: Number(model.totalSupply)
+              })
+              if (!error) {
+                console.log(error)
+              }
+              // message.success(
+              //   'Success send transaction to the chain, please wait for the confirmation'
+              // )
+              onCancel()
+            } catch (error) {
+              // message.error('Failed to create startup, please check your network and contract')
+              // console.error(error)
+              // message.error(error.message)
             }
-            message.success(
-              'Success send transaction to the chain, please wait for the confirmation'
-            )
-            onCancel()
           } catch (e) {
             ctx.emit('error', e)
           } finally {
@@ -174,6 +166,16 @@ const EditStartupForm = defineComponent({
           }
         }
       })
+    }
+    function presaleDateChange(val: any) {
+      console.log(val)
+      if (val) {
+        dateList.value.presaleStart = String(dateToISO(val[0]))
+        dateList.value.presaleEnd = String(dateToISO(val[1]))
+      } else {
+        dateList.value.presaleStart = ''
+        dateList.value.presaleEnd = ''
+      }
     }
 
     const allRules: Record<string, FormItemRule[]> = {
@@ -188,8 +190,8 @@ const EditStartupForm = defineComponent({
 
     return () => (
       <UForm ref={formRef} rules={allRules} model={model}>
-        <p class="mb-7 uppercase u-card-title1 text-[#3F2D99]">FINANCE SETTING</p>
-        <ul class="u-body1 border rounded-lg list-disc border-grey5 mb-6 p-4 pl-8 text-body1 relative">
+        <p class="mb-7 text-[#3F2D99] uppercase u-card-title1">FINANCE SETTING</p>
+        <ul class="border rounded-lg list-disc border-grey5 mb-6 p-4 pl-8 text-body1 relative u-body1">
           <li>First, shilling startup by filling token information</li>
           <li>
             If you have not a token yet， please contact comunion team help you to create your
@@ -200,20 +202,27 @@ const EditStartupForm = defineComponent({
           <div class="w-full">
             <USelect
               v-model:value={model.network}
-              options={networkList.value}
+              // options={networkDateList}
+              placeholder="Select your launch network"
+              clearable
               renderLabel={(option: any) => {
                 return [
-                  h(<UImage src={option.src} class="w-5 h-5 inline float-left mr-2" />),
+                  h(<UImage src={option.logo} class="h-5 mr-2 w-5 inline float-left" />),
                   option.label as string
                 ]
               }}
+              options={dateList.value.allNetworksList.map(item => ({
+                label: item.name,
+                value: item.chainId,
+                logo: item.logo
+              }))}
             />
           </div>
         </UFormItem>
         <UFormItem label="Token Name" label-style={divStyle}>
           <div class="w-full">
             <UInput
-              v-model:value={tokenInfo.name}
+              v-model:value={model.tokenName}
               placeholder="Please enter your Token Name"
               maxlength={50}
             />
@@ -222,7 +231,7 @@ const EditStartupForm = defineComponent({
         <UFormItem label="Token Symbol" label-style={divStyle}>
           <div class="w-full">
             <UInput
-              v-model:value={tokenInfo.symbol}
+              v-model:value={model.tokenSymbol}
               placeholder="Please enter your Token Symbol"
               maxlength={10}
             />
@@ -231,10 +240,10 @@ const EditStartupForm = defineComponent({
         <UFormItem label="Token Supply" label-style={divStyle}>
           <div class="w-full">
             <UInput
-              v-model:value={tokenInfo.supply}
+              v-model:value={model.totalSupply}
               placeholder="Please enter your Token Supply"
               onInput={value => {
-                tokenInfo.supply = value.replace(/[^\d]/g, '')
+                model.totalSupply = Number(value.replace(/[^\d]/g, ''))
               }}
             />
           </div>
@@ -243,23 +252,27 @@ const EditStartupForm = defineComponent({
           <UAddressInput
             placeholder="Please enter your token contract address"
             v-model:value={model.contract}
-            onChange={onTokenContractChange}
           />
         </UFormItem>
-        <UFormItem label="Presale date" label-style={divStyle}>
+        {/* onChange={onTokenContractChange} */}
+        <UFormItem label="Presale" label-style={divStyle}>
           <div class="w-full">
             <UDatePicker
               v-model:value={model.presaleDate}
-              type="date"
-              placeholder="yy-mm-dd (UTC time zone)"
+              type="daterange"
+              clearable
+              startPlaceholder="yy-mm-dd (UTC time zone)"
+              endPlaceholder="yy-mm-dd (UTC time zone)"
+              onChange={presaleDateChange}
             />
           </div>
         </UFormItem>
-        <UFormItem label="Launch date" label-style={divStyle}>
+        <UFormItem label="Launch" label-style={divStyle}>
           <div class="w-full">
             <UDatePicker
               v-model:value={model.launchDate}
               type="date"
+              clearable
               placeholder="yy-mm-dd (UTC time zone)"
             />
           </div>
