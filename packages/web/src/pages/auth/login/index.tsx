@@ -1,15 +1,14 @@
 import { UButton, ULogo } from '@comunion/components'
 import { GithubFilled, GoogleFilled, WalletOutlined } from '@comunion/icons'
-import { randomStr } from '@comunion/utils'
 import { defineComponent, ref } from 'vue'
 import leftBgImg from './assets/bg.png'
 import styles from './index.module.css'
-import {
-  GITHUB_CALLBACK_URL,
-  GITHUB_CLIENT_ID,
-  GOOGLE_CALLBACK_URL,
-  GOOGLE_CLIENT_ID
-} from '@/constants'
+// import {
+//   GITHUB_CALLBACK_URL,
+//   GITHUB_CLIENT_ID,
+//   GOOGLE_CALLBACK_URL,
+//   GOOGLE_CLIENT_ID
+// } from '@/constants'
 import { useOnLoggedIn } from '@/hooks'
 import MoreNavigationPage from '@/pages/auth/login/components/More'
 import { useUserStore, useWalletStore } from '@/stores'
@@ -17,10 +16,10 @@ import { useUserStore, useWalletStore } from '@/stores'
 const LoginPage = defineComponent({
   name: 'LoginPage',
   setup() {
-    const isLocal = process.env.NODE_ENV === 'development'
+    // const isLocal = process.env.NODE_ENV === 'development'
     const walletStore = useWalletStore()
     const userStore = useUserStore()
-    const state = randomStr()
+    // const state = randomStr()
     const onLogin = useOnLoggedIn()
     const loading = ref(false)
 
@@ -28,15 +27,15 @@ const LoginPage = defineComponent({
     //   logout()
     // }
 
-    const googleLogin = () =>
-      (window.location.href = `https://accounts.google.com/o/oauth2/v2/auth?response_type=code&scope=openid%20email&client_id=${GOOGLE_CLIENT_ID}&redirect_uri=${GOOGLE_CALLBACK_URL}&state=u${
-        isLocal ? '0' : '1'
-      }${state}`)
+    // const googleLogin = () =>
+    //   (window.location.href = `https://accounts.google.com/o/oauth2/v2/auth?response_type=code&scope=openid%20email&client_id=${GOOGLE_CLIENT_ID}&redirect_uri=${GOOGLE_CALLBACK_URL}&state=u${
+    //     isLocal ? '0' : '1'
+    //   }${state}`)
 
-    const githubLogin = () =>
-      (window.location.href = `https://github.com/login/oauth/authorize?client_id=${GITHUB_CLIENT_ID}&redirect_uri=${GITHUB_CALLBACK_URL}&state=u${
-        isLocal ? '0' : '1'
-      }${state}`)
+    // const githubLogin = () =>
+    //   (window.location.href = `https://github.com/login/oauth/authorize?client_id=${GITHUB_CLIENT_ID}&redirect_uri=${GITHUB_CALLBACK_URL}&state=u${
+    //     isLocal ? '0' : '1'
+    //   }${state}`)
 
     const walletLogin = async () => {
       loading.value = true
@@ -85,14 +84,14 @@ const LoginPage = defineComponent({
             {/* <a class="text-primary">What is wallet？</a> */}
             <div class="flex my-10 items-center">
               <div class="bg-[#d8d8d8] h-[1px] w-[90px]" />
-              <div class="mx-3 text-[#999] text-[18px] leading-5">Sign in with social accout</div>
+              <div class="mx-3 text-[#999] text-[18px] leading-5">Sign in with social account</div>
               <div class="bg-[#d8d8d8] h-[1px] w-[90px]" />
             </div>
             <div class="flex items-center">
-              <div class={styles.oauthBtn} onClick={googleLogin}>
+              <div class={styles.oauthBtn}>
                 <GoogleFilled />
               </div>
-              <div class={styles.oauthBtn} onClick={githubLogin}>
+              <div class={styles.oauthBtn}>
                 <GithubFilled class="text-primary" />
               </div>
             </div>
