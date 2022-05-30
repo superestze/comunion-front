@@ -2,6 +2,7 @@ import { CopyOutlined } from '@comunion/icons'
 import { shortenAddress } from '@comunion/utils/src'
 import copy from 'copy-to-clipboard'
 import { defineComponent, toRefs, ref } from 'vue'
+import type { PropType } from 'vue'
 import { UTooltip } from '../UTooltip'
 import { ExtractPropTypes } from '../utils'
 
@@ -23,6 +24,10 @@ export const UAddressProps = {
   address: {
     type: String,
     required: true
+  },
+  type: {
+    type: String as PropType<'tx' | 'address'>,
+    default: 'tx'
   },
   blockchainExplorerUrl: {
     type: String
