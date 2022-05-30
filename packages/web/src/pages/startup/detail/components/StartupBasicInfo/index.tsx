@@ -14,6 +14,7 @@ import { useRouter } from 'vue-router'
 import styles from './style.module.css'
 import { getStartupTypeFromNumber, StartupTypesType, STARTUP_TYPES_COLOR_MAP } from '@/constants'
 import { StartupItem } from '@/types'
+import { toSocialEnd } from '@/utils/socialJump'
 
 export const StartupBasicInfo = defineComponent({
   name: 'StartupBasicInfo',
@@ -37,13 +38,6 @@ export const StartupBasicInfo = defineComponent({
     const modeName = computed(
       () => getStartupTypeFromNumber(props.startup!.mode) as StartupTypesType
     )
-    const toSocialEnd = (url: string) => {
-      if (url.startsWith('http')) {
-        window.open(url)
-      } else {
-        window.open('//' + url)
-      }
-    }
     const toStartupInfo = () => {
       router.push({ path: `/startup/${props.startup?.id}` })
     }

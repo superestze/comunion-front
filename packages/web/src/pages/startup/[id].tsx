@@ -26,6 +26,7 @@ import { getStartupTypeFromNumber, StartupTypesType, STARTUP_TYPES_COLOR_MAP } f
 import router from '@/router'
 import { services } from '@/services'
 import { StartupItem } from '@/types'
+import { toSocialEnd } from '@/utils/socialJump'
 
 dayjs.extend(utcPlugin)
 
@@ -45,14 +46,6 @@ export const StartupInfo = defineComponent({
         ? (getStartupTypeFromNumber(startup.value?.mode) as StartupTypesType)
         : ''
     })
-
-    const toSocialEnd = (url: string) => {
-      if (url.startsWith('http')) {
-        window.open(url)
-      } else {
-        window.open('//' + url)
-      }
-    }
 
     const getStartup = async () => {
       if (startupId) {
