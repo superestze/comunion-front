@@ -14,6 +14,7 @@ import { useRouter } from 'vue-router'
 import styles from './style.module.css'
 import { getStartupTypeFromNumber, StartupTypesType, STARTUP_TYPES_COLOR_MAP } from '@/constants'
 import { StartupItem } from '@/types'
+import { toSocialEnd } from '@/utils/socialJump'
 
 export const StartupBasicInfo = defineComponent({
   name: 'StartupBasicInfo',
@@ -37,9 +38,6 @@ export const StartupBasicInfo = defineComponent({
     const modeName = computed(
       () => getStartupTypeFromNumber(props.startup!.mode) as StartupTypesType
     )
-    const toSocialEnd = (url: string) => {
-      window.open(url)
-    }
     const toStartupInfo = () => {
       router.push({ path: `/startup/${props.startup?.id}` })
     }
@@ -119,7 +117,11 @@ export const StartupBasicInfo = defineComponent({
           <p class="mb-4.5">
             <span class="u-label2 text-grey3 mr-4">KYC:</span>
             {props.startup!.kyc ? (
-              <a href={props.startup!.kyc} class="u-title2 text-primary">
+              <a
+                href="javascript:void(0)"
+                onClick={() => toSocialEnd(props.startup!.kyc)}
+                class="u-title2 text-primary"
+              >
                 {props.startup!.kyc}
               </a>
             ) : (
@@ -129,7 +131,11 @@ export const StartupBasicInfo = defineComponent({
           <p>
             <span class="u-label2 text-grey3 whitespace-nowrap mr-4">CONTRACT AUDIT:</span>
             {props.startup!.contractAudit ? (
-              <a href={props.startup!.contractAudit} class="u-title2 text-primary">
+              <a
+                href="javascript:void(0)"
+                onClick={() => toSocialEnd(props.startup!.contractAudit)}
+                class="u-title2 text-primary"
+              >
                 {props.startup!.contractAudit}
               </a>
             ) : (
