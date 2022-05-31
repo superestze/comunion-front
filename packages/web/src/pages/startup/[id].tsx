@@ -25,6 +25,7 @@ import styles from './style.module.css'
 import { getStartupTypeFromNumber, StartupTypesType, STARTUP_TYPES_COLOR_MAP } from '@/constants'
 import router from '@/router'
 import { services } from '@/services'
+import { useWalletStore } from '@/stores'
 import { StartupItem } from '@/types'
 import { toSocialEnd } from '@/utils/socialJump'
 
@@ -33,6 +34,7 @@ dayjs.extend(utcPlugin)
 export const StartupInfo = defineComponent({
   name: 'StartupInfo',
   setup(props) {
+    const walletStore = useWalletStore()
     const route = useRoute()
     const startupId = route.params.id
     const userIsFollow = ref(false)
@@ -86,11 +88,11 @@ export const StartupInfo = defineComponent({
     })
     return () => (
       <USpin show={pageLoading.value}>
-        <UBreadcrumb class="mb-10 mt-10">
+        <UBreadcrumb class="mt-10 mb-10">
           <UBreadcrumbItem v-slots={{ separator: () => <ArrowLeftOutlined /> }} />
           <UBreadcrumbItem v-slots={{ separator: () => <ArrowLeftOutlined /> }}>
             <span
-              class="u-label2 cursor-pointer uppercase text-primary"
+              class="cursor-pointer text-primary uppercase u-label2"
               onClick={() => {
                 router.replace(`/startup/detail?startupId=${startupId}`)
               }}
@@ -99,12 +101,12 @@ export const StartupInfo = defineComponent({
             </span>
           </UBreadcrumbItem>
           <UBreadcrumbItem v-slots={{ separator: () => <ArrowLeftOutlined /> }}>
-            <span class="u-label2 cursor-pointer uppercase text-primary">Info</span>
+            <span class="cursor-pointer text-primary uppercase u-label2">Info</span>
           </UBreadcrumbItem>
         </UBreadcrumb>
-        <div class="bg-white p-10 mb-20">
-          <div class="flex items-start gap-10">
-            <div class="w-20 h-20">
+        <div class="bg-white mb-20 p-10">
+          <div class="flex gap-10 items-start">
+            <div class="h-20 w-20">
               <UStartupLogo
                 src={startup.value?.logo || ''}
                 width="20"
@@ -131,7 +133,7 @@ export const StartupInfo = defineComponent({
                       </UTag>
                     )}
                   </div>
-                  <div class="flex flex-wrap gap-2 mt-2">
+                  <div class="flex flex-wrap mt-2 gap-2">
                     {startup.value?.hashTags?.map((hashTag, value) => {
                       return <UTag key={value}>{hashTag.name}</UTag>
                     })}
@@ -146,7 +148,7 @@ export const StartupInfo = defineComponent({
                       v-slots={{
                         icon: () => {
                           return (
-                            <div class="flex items-center w-4.5">
+                            <div class="flex w-4.5 items-center">
                               <HookFilled />
                             </div>
                           )
@@ -162,7 +164,7 @@ export const StartupInfo = defineComponent({
                       v-slots={{
                         icon: () => {
                           return (
-                            <div class="flex items-center w-4.5">
+                            <div class="flex w-4.5 items-center">
                               <PlusOutlined />
                             </div>
                           )
@@ -174,10 +176,10 @@ export const StartupInfo = defineComponent({
                   )}
                 </div>
               </div>
-              <p class="h-10 mb-10 mt-14 break-all u-body1 line-clamp-5">
+              <p class="h-10 mt-14 mb-10 break-all u-body1 line-clamp-5">
                 {startup.value?.mission}
               </p>
-              <div class="flex items-center gap-4 mt-7">
+              <div class="flex mt-7 gap-4 items-center">
                 <div class={styles.startupSocialItem}>
                   <WebsiteFilled
                     class={startup.value?.website ? 'cursor-pointer' : 'cursor-not-allowed'}
@@ -228,16 +230,16 @@ export const StartupInfo = defineComponent({
               </div>
             </div>
           </div>
-          <div class="w-full h-1px bg-grey5 mt-10"></div>
-          <section class="ml-30 mt-10">
+          <div class="bg-grey5 h-1px mt-10 w-full"></div>
+          <section class="mt-10 ml-30">
             <p class="mb-4.5">
-              <span class="u-label2 text-grey3">KYC:</span>
-              <span class="u-title2 ml-4">
+              <span class="text-grey3 u-label2">KYC:</span>
+              <span class="ml-4 u-title2">
                 {startup.value?.kyc ? (
                   <a
                     href="javascript:void(0)"
                     onClick={() => toSocialEnd(startup.value!.kyc)}
-                    class="u-title2 text-primary"
+                    class="text-primary u-title2"
                   >
                     {startup.value?.kyc}
                   </a>
@@ -247,13 +249,13 @@ export const StartupInfo = defineComponent({
               </span>
             </p>
             <p class="mb-4.5">
-              <span class="u-label2 text-grey3 whitespace-nowrap">CONTRACT AUDIT:</span>
-              <span class="u-title2 ml-4">
+              <span class="text-grey3 whitespace-nowrap u-label2">CONTRACT AUDIT:</span>
+              <span class="ml-4 u-title2">
                 {startup.value?.contractAudit ? (
                   <a
                     href="javascript:void(0)"
                     onClick={() => toSocialEnd(startup.value!.contractAudit)}
-                    class="u-title2 text-primary"
+                    class="text-primary u-title2"
                   >
                     {startup.value?.contractAudit}
                   </a>
@@ -262,15 +264,19 @@ export const StartupInfo = defineComponent({
                 )}
               </span>
             </p>
-            <p class="mb-4.5 flex items-center">
-              <span class="u-label2 text-grey3 whitespace-nowrap mr-4">BLOCKCHAIN ADDRESS:</span>
+            <p class="flex mb-4.5 items-center">
+              <span class="mr-4 text-grey3 whitespace-nowrap u-label2">BLOCKCHAIN ADDRESS:</span>
               {startup.value?.blockChainAddress ? (
-                <UAddress address={startup.value?.blockChainAddress} class="u-title2" />
+                <UAddress
+                  address={startup.value?.blockChainAddress}
+                  class="u-title2"
+                  blockchainExplorerUrl={walletStore.blockchainExplorerUrl}
+                />
               ) : (
                 <span class="u-title2">--</span>
               )}
             </p>
-            <p class="mt-6 u-body1 break-all">{startup.value?.overview}</p>
+            <p class="mt-6 break-all u-body1">{startup.value?.overview}</p>
           </section>
         </div>
       </USpin>
