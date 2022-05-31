@@ -80,17 +80,21 @@ const Startups = defineComponent({
       getCreatedStartups()
     })
 
-    const tabsDateChnage = (value: string) => {
+    const tabsDateChnage = async (value: string) => {
       if (value === 'CREATED BY ME') {
         myCreatedStartups.value = []
+        pagination.loading = true
         pagination.pageSize = 4
         pagination.page = 1
-        getCreatedStartups()
+        await getCreatedStartups()
+        pagination.loading = false
       } else if (value === 'PARTICIPATED') {
         myParticipatedStartups.value = []
+        ParticipatedPagination.loading = true
         ParticipatedPagination.pageSize = 4
         ParticipatedPagination.page = 1
-        getParticipatedStartups()
+        await getParticipatedStartups()
+        ParticipatedPagination.loading = false
       }
     }
 
