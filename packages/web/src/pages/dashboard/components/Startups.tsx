@@ -82,8 +82,14 @@ const Startups = defineComponent({
 
     const tabsDateChnage = (value: string) => {
       if (value === 'CREATED BY ME') {
+        myCreatedStartups.value = []
+        pagination.pageSize = 4
+        pagination.page = 1
         getCreatedStartups()
       } else if (value === 'PARTICIPATED') {
+        myParticipatedStartups.value = []
+        ParticipatedPagination.pageSize = 4
+        ParticipatedPagination.page = 1
         getParticipatedStartups()
       }
     }
