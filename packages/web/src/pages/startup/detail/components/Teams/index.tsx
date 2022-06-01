@@ -22,7 +22,7 @@ export const Team = defineComponent({
               .slice(0, MAX_SHOW_COUNT)
               .map((teamMember: any) => <StartupTeamCard teamMember={teamMember} />)
           : null}
-        {props.teamMembers.length > MAX_SHOW_COUNT && (
+        {props.memberCount > MAX_SHOW_COUNT && (
           <div class="text-primary flex items-center justify-end">
             <div class="cursor-pointer flex items-center" onClick={viewAllMembers}>
               <span class="u-title2 text-primary mr-2 ">View all {props.memberCount} members</span>
