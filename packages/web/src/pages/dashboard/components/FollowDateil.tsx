@@ -26,7 +26,6 @@ const FollowDateil = defineComponent({
     }
 
     const plusStatusClick = async (val: any, e: Event) => {
-      // const e: any = Event
       e.stopPropagation()
       const { error } = await services['startup@startup-follow']({
         startupId: val.id
@@ -40,7 +39,6 @@ const FollowDateil = defineComponent({
       }
     }
     const checkedStatusClick = async (val: any, e: Event) => {
-      // const e: any = Event
       e.stopPropagation()
       const { error } = await services['startup@startup-unfollow']({
         startupId: val.id
