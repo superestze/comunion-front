@@ -16,16 +16,12 @@ import PainsOfWorld from './components/PainsOfWorld'
 // UseCases
 import UseCases from './components/UseCases'
 import styles from './index.module.css'
-import { useContractStore } from '@/stores/contract'
 
 export default defineComponent({
   name: 'HomePage',
   setup() {
-    const contractStore = useContractStore()
-    // @ts-ignore
-    window.contract = contractStore
     return () => (
-      <div class="bg-home-bg">
+      <div class="bg-[#151515]">
         {/* Head */}
         <Head />
         {/* content */}

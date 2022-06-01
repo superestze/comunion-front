@@ -1,8 +1,8 @@
 import { defineComponent, reactive, onMounted, onUnmounted } from 'vue'
-import { RouterLink } from 'vue-router'
 import closeMenu from '@/assets/close-menu.png'
 import logo from '@/assets/logo.png'
 import openMenu from '@/assets/open-menu.png'
+import { joinComunion } from '@/utils'
 
 let top = 0
 export default defineComponent({
@@ -63,13 +63,12 @@ export default defineComponent({
               onClick={() => (state.showMenu = true)}
             />
             <div class="flex items-center <sm:hidden">
-              <RouterLink
-                to="/auth/login"
+              <div
+                onClick={joinComunion}
                 class="bg-primary cursor-pointer rounded-4px h-32px text-white text-bold mr-32px text-center text-14px leading-32px w-146px"
               >
-                {/* <UserAvatar /> */}
                 Launch App
-              </RouterLink>
+              </div>
             </div>
           </div>
         </div>
@@ -85,22 +84,11 @@ export default defineComponent({
             <img src={closeMenu} class="w-12px" onClick={() => (state.showMenu = false)} />
           </div>
           <div class="m-auto text-bold text-16px text-[#333333] leading-24px w-311px">
-            <RouterLink to="/" class="mb-30px block">
-              Economics
-            </RouterLink>
-            <RouterLink to="/" class="mb-30px block">
-              Foundation
-            </RouterLink>
-            <div class="flex items-center justify-between">
-              <button class="bg-primary rounded-6px h-48px text-white text-bold text-13px leading-48px w-128px">
-                + New Startup
-              </button>
-              <RouterLink
-                to="/auth/login"
-                class="border-primary border-1 rounded-6px h-48px text-primary text-bold text-13px leading-48px w-128px"
-              >
-                Connect account
-              </RouterLink>
+            <div
+              onClick={joinComunion}
+              class="border-primary border-1 rounded-6px h-48px text-primary text-bold text-13px leading-48px w-128px"
+            >
+              Connect account
             </div>
           </div>
         </div>
