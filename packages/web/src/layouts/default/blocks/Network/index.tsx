@@ -37,7 +37,7 @@ const NetworkSwitcher = defineComponent({
     return () => (
       <HeaderDropdown
         value={currentNetwork.value?.chainId}
-        title="Supported network"
+        title="Support network"
         options={supportedNetworks.map(network => ({
           key: network.chainId,
           // disabled: network.disabled,

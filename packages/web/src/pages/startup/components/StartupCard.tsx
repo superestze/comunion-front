@@ -23,6 +23,8 @@ const StartupCard = defineComponent({
       return key.name
     })
     const modeName = getStartupTypeFromNumber(props.startup.mode) as StartupTypesType
+    const kycName = getStartupTypeFromNumber(5) as StartupTypesType
+    const auditName = getStartupTypeFromNumber(6) as StartupTypesType
 
     const router = useRouter()
 
@@ -44,9 +46,36 @@ const StartupCard = defineComponent({
               height="6"
               class="rounded h-10 w-10 !object-contain"
             />
+            <div class="flex-1"></div>
+            {props.startup.kyc && (
+              <UTag
+                class="u-body3 mr-1"
+                type="filled"
+                bgColor={STARTUP_TYPES_COLOR_MAP[kycName]}
+                style={{
+                  'font-weight': '700',
+                  'font-size': '14px'
+                }}
+              >
+                KYC
+              </UTag>
+            )}
+            {props.startup.contractAudit && (
+              <UTag
+                class="u-body3 mr-1"
+                type="filled"
+                bgColor={STARTUP_TYPES_COLOR_MAP[auditName]}
+                style={{
+                  'font-weight': '700',
+                  'font-size': '14px'
+                }}
+              >
+                AUDIT
+              </UTag>
+            )}
             {props.startup.mode > 0 && (
               <UTag
-                class="u-body3 ml-auto"
+                class="u-body3"
                 type="filled"
                 bgColor={STARTUP_TYPES_COLOR_MAP[modeName]}
                 style={{
@@ -73,7 +102,7 @@ const StartupCard = defineComponent({
         </div>
         <UTeamMembers
           memberCount={props.startup.memberCount}
-          // followCount={props.startup.followCount}
+          followCount={props.startup.followCount}
         />
       </div>
     )

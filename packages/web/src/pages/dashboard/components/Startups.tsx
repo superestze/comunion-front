@@ -80,22 +80,23 @@ const Startups = defineComponent({
       getCreatedStartups()
     })
 
-    const tabsDateChnage = async (value: string) => {
+    const tabsDateChange = async (value: string) => {
       if (value === 'CREATED BY ME') {
         myCreatedStartups.value = []
-        pagination.loading = true
-        pagination.pageSize = 4
-        pagination.page = 1
+        await tabsDateChangeFun(pagination)
         await getCreatedStartups()
         pagination.loading = false
       } else if (value === 'PARTICIPATED') {
         myParticipatedStartups.value = []
-        ParticipatedPagination.loading = true
-        ParticipatedPagination.pageSize = 4
-        ParticipatedPagination.page = 1
+        await tabsDateChangeFun(ParticipatedPagination)
         await getParticipatedStartups()
         ParticipatedPagination.loading = false
       }
+    }
+    const tabsDateChangeFun = async (val: any) => {
+      val.loading = true
+      val.pageSize = 4
+      val.page = 1
     }
 
     return () => (
@@ -114,7 +115,7 @@ const Startups = defineComponent({
         }}
       >
         <CreateStartupBlock ref={createRef} />
-        <UTabs onUpdateValue={tabsDateChnage}>
+        <UTabs onUpdateValue={tabsDateChange}>
           <UTabPane name="CREATED BY ME" tab="CREATED BY ME" class="h-112">
             <UScrollList
               triggered={pagination.loading}
