@@ -98,7 +98,7 @@ const StartupDetailPage = defineComponent({
         </UBreadcrumb>
         <div class="flex gap-6 mb-20">
           <div class="basis-2/3">
-            <div class="bg-white p-10 rounded border mb-10">
+            <div class="bg-white p-10 rounded border mb-6">
               {startup.value && (
                 <StartupBasicInfo
                   startup={startup.value}
@@ -108,10 +108,10 @@ const StartupDetailPage = defineComponent({
                 />
               )}
             </div>
-            <UCard title="FINANCE" class="mb-10 !pb-8">
+            <UCard title="FINANCE" class="mb-6 !pb-8">
               <Finance startup={startup.value} />
             </UCard>
-            <UCard title="BOUNTIES" class="mb-10">
+            <UCard title="BOUNTIES" class="mb-6">
               <UDeveloping class="my-10">
                 <EmptyFilled />
               </UDeveloping>
@@ -123,14 +123,14 @@ const StartupDetailPage = defineComponent({
             </UCard>
           </div>
           <div class="basis-1/3">
-            <UCard title="TEAM" class="mb-10">
+            <UCard title="TEAM" class="mb-6">
               <Team
                 teamMembers={teamMembers.value}
                 memberCount={totalTeamMembers.value}
                 onViewAllMembers={viewAllMembers}
               />
             </UCard>
-            <UCard title="LAUNCH" class="mb-10">
+            <UCard title="LAUNCH" class="mb-6">
               <UDeveloping class="my-10">
                 <EmptyFilled />
               </UDeveloping>
