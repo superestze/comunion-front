@@ -18,10 +18,6 @@ export const UStyleProviderProps = {
     type: String,
     default: '#211B42'
   },
-  primary3Color: {
-    type: String,
-    default: '#5331F4'
-  },
   errorColor: {
     type: String,
     default: '#DF4F51'
@@ -57,10 +53,6 @@ export const UStyleProviderProps = {
   grey5Color: {
     type: String,
     default: '#E0E0E0'
-  },
-  grey6Color: {
-    type: String,
-    default: '#5331F4'
   },
   green1Color: {
     type: String,
@@ -162,8 +154,7 @@ const UStyleProvider = defineComponent({
       };
         --u-primary-color: ${props.primaryColor};
         --u-primary-1-color: ${props.primary1Color};
-        --u-primary-2-color: ${props.primary2Color};
-        --u-primary-3-color: ${props.primary3Color};
+        --u-primary-2-color: ${props.primary2Color}; 
         --u-error-color: ${props.errorColor};
         --u-success-color: ${props.successColor};
         --u-warning-color: ${props.warningColor};
@@ -172,8 +163,7 @@ const UStyleProvider = defineComponent({
         --u-grey-2-color: ${props.grey2Color};
         --u-grey-3-color: ${props.grey3Color};
         --u-grey-4-color: ${props.grey4Color};
-        --u-grey-5-color: ${props.grey5Color};
-        --u-grey-6-color: ${props.grey6Color};
+        --u-grey-5-color: ${props.grey5Color}; 
         --u-green-1-color: ${props.green1Color};
         --u-purple-color: ${props.purpleBg};
         --u-purple-light-color: ${props.purpleLightBg};

@@ -49,7 +49,7 @@ const StartupCard = defineComponent({
               <UTag
                 class="u-body3 mr-1"
                 type="filled"
-                bgColor="grey6"
+                bgColor="#EC53A4"
                 style={{
                   'font-weight': '700',
                   'font-size': '14px'
@@ -62,7 +62,7 @@ const StartupCard = defineComponent({
               <UTag
                 class="u-body3 mr-1"
                 type="filled"
-                bgColor="primary3"
+                bgColor="#5331F4"
                 style={{
                   'font-weight': '700',
                   'font-size': '14px'
