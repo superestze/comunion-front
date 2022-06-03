@@ -1,4 +1,4 @@
-import { TeamOutlined } from '@comunion/icons'
+import { TeamOutlined, GroupFilled } from '@comunion/icons'
 import { defineComponent } from 'vue'
 import styles from './StartupCard.module.css'
 
@@ -8,11 +8,11 @@ const UTeamMembers = defineComponent({
     memberCount: {
       memberCount: Number,
       required: true
+    },
+    followCount: {
+      memberCount: Number,
+      required: true
     }
-    // followCount: {
-    //   memberCount: Number,
-    //   required: true
-    // }
   },
   setup(props, ctx) {
     return () => (
@@ -28,12 +28,12 @@ const UTeamMembers = defineComponent({
         </div>
         <div class="flex-1"></div>
         <div class="flex align-center ">
-          {/* <span class={styles.members_svg}>
+          <span class={styles.members_svg}>
             <GroupFilled class="text-primary m-2" />
           </span>
           <span class="u-body3 pl-2 pt-1">
             <i class={styles.members_span_i}>{props.followCount}</i>
-          </span> */}
+          </span>
         </div>
       </div>
     )

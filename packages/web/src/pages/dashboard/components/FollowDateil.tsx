@@ -1,6 +1,7 @@
 import { UDrawer, UStartupLogo } from '@comunion/components'
 import { PlusOutlined, ConfirmOutlined, ArrowRightOutlined } from '@comunion/icons'
 import { defineComponent, ref } from 'vue'
+import { useRouter } from 'vue-router'
 import AvatarSelect from '@/components/Profile/AvatarSelect'
 import { services } from '@/services'
 
@@ -15,6 +16,8 @@ const FollowDateil = defineComponent({
   setup(props, ctx) {
     // const selectedAvatar = ref(props.avatar)
     console.log(props.startup)
+    const router = useRouter()
+
     const startupDate = ref(props.startup)
     const showAvatarModal = ref(false)
     const success = ref(false)
@@ -22,7 +25,8 @@ const FollowDateil = defineComponent({
       success.value = true
     }
 
-    const plusStatusClick = async (val: any) => {
+    const plusStatusClick = async (val: any, e: Event) => {
+      e.stopPropagation()
       const { error } = await services['startup@startup-follow']({
         startupId: val.id
       })
@@ -34,7 +38,8 @@ const FollowDateil = defineComponent({
         })
       }
     }
-    const checkedStatusClick = async (val: any) => {
+    const checkedStatusClick = async (val: any, e: Event) => {
+      e.stopPropagation()
       const { error } = await services['startup@startup-unfollow']({
         startupId: val.id
       })
@@ -45,6 +50,9 @@ const FollowDateil = defineComponent({
           }
         })
       }
+    }
+    const toStartDetail = (val: number) => {
+      router.push({ path: '/startup/detail', query: { startupId: val } })
     }
     return () => (
       <>
@@ -61,7 +69,13 @@ const FollowDateil = defineComponent({
               {startupDate.value.length
                 ? startupDate.value.map((item: any, index) => {
                     return (
-                      <div class="h-28 w-full flex items-center mb-5" key={index}>
+                      <div
+                        class="h-28 w-full flex items-center mb-5 cursor-pointer"
+                        onClick={() => {
+                          toStartDetail(item.id)
+                        }}
+                        key={index}
+                      >
                         <div class="border-b-1 h-full w-full flex items-center pb-5">
                           <div class="content flex items-center">
                             <div class="h-full w-22 mr-5">
@@ -94,7 +108,7 @@ const FollowDateil = defineComponent({
                             {item.isDeleted && (
                               <div
                                 class="border-1 rounded-lg border-primary bg-primary text-primary w-30 h-10 flex cursor-pointer"
-                                onClick={() => plusStatusClick(item)}
+                                onClick={(e: Event) => plusStatusClick(item, e)}
                               >
                                 <div class="m-auto flex align-center">
                                   <PlusOutlined class="mr-2 text-white w-6 h-6 align-center" />
@@ -107,7 +121,7 @@ const FollowDateil = defineComponent({
                             {!item.isDeleted && (
                               <div
                                 class="border-1 rounded-lg border-primary text-white w-30 h-10 flex cursor-pointer"
-                                onClick={() => checkedStatusClick(item)}
+                                onClick={(e: Event) => checkedStatusClick(item, e)}
                               >
                                 <div class="m-auto flex align-center">
                                   <ConfirmOutlined class="mr-2 text-primary bg-white h-6 items-center align-center" />
