@@ -10,7 +10,7 @@ import {
   DocsFilled,
   DocGreyFilled
 } from '@comunion/icons'
-import { defineComponent } from 'vue'
+import { defineComponent, computed } from 'vue'
 import styles from './SocialGroup.module.css'
 import { toSocialEnd } from '@/utils/socialJump'
 
@@ -18,39 +18,44 @@ export const SocialGroup = defineComponent({
   name: 'socialGroup',
   props: ['website', 'discord', 'telegram', 'twitter', 'docs'],
   setup(props) {
+    const website = computed(() => props.website)
+    const discord = computed(() => props.discord)
+    const telegram = computed(() => props.telegram)
+    const twitter = computed(() => props.twitter)
+    const docs = computed(() => props.docs)
     return () => (
       <div>
         <div class={styles.startupSocialItem}>
-          {props.website ? (
-            <WebsiteFilled class="cursor-pointer" onClick={() => toSocialEnd(props.website)} />
+          {website.value ? (
+            <WebsiteFilled class="cursor-pointer" onClick={() => toSocialEnd(website.value)} />
           ) : (
             <WebsiteGreyFilled class="cursor-not-allowed" />
           )}
         </div>
         <div class={styles.startupSocialItem}>
-          {props.discord ? (
-            <DiscordFilled class={'cursor-pointer'} onClick={() => toSocialEnd(props.discord)} />
+          {discord.value ? (
+            <DiscordFilled class={'cursor-pointer'} onClick={() => toSocialEnd(discord.value)} />
           ) : (
             <DiscordGreyFilled class="cursor-not-allowed" />
           )}
         </div>
         <div class={styles.startupSocialItem}>
-          {props.telegram ? (
-            <TelegramFilled class="cursor-pointer" onClick={() => toSocialEnd(props.telegram)} />
+          {telegram.value ? (
+            <TelegramFilled class="cursor-pointer" onClick={() => toSocialEnd(telegram.value)} />
           ) : (
             <TelegramGreyFilled class="cursor-not-allowed" />
           )}
         </div>
         <div class={styles.startupSocialItem}>
-          {props.twitter ? (
-            <TwitterFilled class="cursor-pointer" onClick={() => toSocialEnd(props.twitter)} />
+          {twitter.value ? (
+            <TwitterFilled class="cursor-pointer" onClick={() => toSocialEnd(twitter.value)} />
           ) : (
             <TwitterGreyFilled class="cursor-not-all" />
           )}
         </div>
         <div class={styles.startupSocialItem}>
-          {props.docs ? (
-            <DocsFilled class="cursor-pointer" onClick={() => toSocialEnd(props.docs)} />
+          {docs.value ? (
+            <DocsFilled class="cursor-pointer" onClick={() => toSocialEnd(docs.value)} />
           ) : (
             <DocGreyFilled class="cursor-not-allowed" />
           )}

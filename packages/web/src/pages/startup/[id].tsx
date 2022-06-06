@@ -107,7 +107,7 @@ export const StartupInfo = defineComponent({
             </div>
             <div class="flex-1">
               <div class="flex justify-between items-center">
-                <div class="flex flex-col mb-4">
+                <div class="flex flex-col mb-2">
                   <div class="flex items-center">
                     <span class="u-h2">{startup.value?.name}</span>
                     {startup.value && startup.value?.mode > 0 && (
@@ -171,7 +171,14 @@ export const StartupInfo = defineComponent({
               </div>
               <p class="h-10 mb-10 break-all u-body1 line-clamp-5">{startup.value?.mission}</p>
               <div class="flex mt-7 gap-4 items-center">
-                <SocialGroup class="flex gap-4" />
+                <SocialGroup
+                  discord={startup.value?.discord}
+                  website={startup.value?.website}
+                  telegram={startup.value?.telegram}
+                  twitter={startup.value?.twitter}
+                  docs={startup.value?.docs}
+                  class="flex gap-4"
+                />
                 <span class="ml-auto u-body1">
                   Create date: {dayjs.utc(startup.value?.createdAt).format('YYYY-MM-DD UTC')}
                 </span>

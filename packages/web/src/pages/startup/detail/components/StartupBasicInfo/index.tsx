@@ -44,7 +44,7 @@ export const StartupBasicInfo = defineComponent({
         </div>
         <div class="flex-1">
           <div class="flex justify-between items-center">
-            <div class="flex flex-col mb-4">
+            <div class="flex flex-col mb-2">
               <div class="flex items-center">
                 <span class="u-h2">{props.startup!.name}</span>
                 {props.startup!.mode > 0 && (
@@ -133,7 +133,14 @@ export const StartupBasicInfo = defineComponent({
               '--'
             )}
           </p>
-          <SocialGroup class="flex gap-4 mt-7" />
+          <SocialGroup
+            discord={props.startup.discord}
+            website={props.startup.website}
+            telegram={props.startup.telegram}
+            twitter={props.startup.twitter}
+            docs={props.startup.docs}
+            class="flex gap-4 mt-7"
+          />
           <div
             class="flex justify-end items-center text-primary cursor-pointer"
             onClick={toStartupInfo}
