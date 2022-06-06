@@ -7,21 +7,12 @@ import {
   UTag,
   USpin
 } from '@comunion/components'
-import {
-  WebsiteFilled,
-  DiscordFilled,
-  TelegramFilled,
-  TwitterFilled,
-  DocsFilled,
-  HookFilled,
-  PlusOutlined,
-  ArrowLeftOutlined
-} from '@comunion/icons'
+import { HookFilled, PlusOutlined, ArrowLeftOutlined } from '@comunion/icons'
 import dayjs from 'dayjs'
 import utcPlugin from 'dayjs/plugin/utc'
 import { defineComponent, onMounted, ref, computed } from 'vue'
 import { useRoute } from 'vue-router'
-import styles from './style.module.css'
+import { SocialGroup } from './components/SocialGroup'
 import { getStartupTypeFromNumber, StartupTypesType, STARTUP_TYPES_COLOR_MAP } from '@/constants'
 import router from '@/router'
 import { services } from '@/services'
@@ -116,12 +107,12 @@ export const StartupInfo = defineComponent({
             </div>
             <div class="flex-1">
               <div class="flex justify-between items-center">
-                <div class="flex flex-col">
+                <div class="flex flex-col mb-4">
                   <div class="flex items-center">
                     <span class="u-h2">{startup.value?.name}</span>
                     {startup.value && startup.value?.mode > 0 && (
                       <UTag
-                        class="ml-5 u-body3"
+                        class="ml-5 !u-body3-pure"
                         type="filled"
                         bgColor={
                           modeName.value
@@ -133,7 +124,9 @@ export const StartupInfo = defineComponent({
                       </UTag>
                     )}
                   </div>
-                  <div class="flex flex-wrap mt-2 gap-2">
+                  <div
+                    class={`flex flex-wrap mt-2 gap-2 ${startup.value?.hashTags.length && 'mb-14'}`}
+                  >
                     {startup.value?.hashTags?.map((hashTag, value) => {
                       return <UTag key={value}>{hashTag.name}</UTag>
                     })}
@@ -176,54 +169,9 @@ export const StartupInfo = defineComponent({
                   )}
                 </div>
               </div>
-              <p class="h-10 mt-14 mb-10 break-all u-body1 line-clamp-5">
-                {startup.value?.mission}
-              </p>
+              <p class="h-10 mb-10 break-all u-body1 line-clamp-5">{startup.value?.mission}</p>
               <div class="flex mt-7 gap-4 items-center">
-                <div class={styles.startupSocialItem}>
-                  <WebsiteFilled
-                    class={startup.value?.website ? 'cursor-pointer' : 'cursor-not-allowed'}
-                    onClick={
-                      startup.value?.website
-                        ? () => toSocialEnd(startup.value!.website!)
-                        : undefined
-                    }
-                  />
-                </div>
-                <div class={styles.startupSocialItem}>
-                  <DiscordFilled
-                    class={startup.value?.discord ? 'cursor-pointer' : 'cursor-not-allowed'}
-                    onClick={
-                      startup.value?.discord ? () => toSocialEnd(startup.value!.discord) : undefined
-                    }
-                  />
-                </div>
-                <div class={styles.startupSocialItem}>
-                  <TelegramFilled
-                    class={startup.value?.telegram ? 'cursor-pointer' : 'cursor-not-allowed'}
-                    onClick={
-                      startup.value?.telegram
-                        ? () => toSocialEnd(startup.value!.telegram)
-                        : undefined
-                    }
-                  />
-                </div>
-                <div class={styles.startupSocialItem}>
-                  <TwitterFilled
-                    class={startup.value?.twitter ? 'cursor-pointer' : 'cursor-not-allowed'}
-                    onClick={
-                      startup.value?.twitter ? () => toSocialEnd(startup.value!.twitter) : undefined
-                    }
-                  />
-                </div>
-                <div class={styles.startupSocialItem}>
-                  <DocsFilled
-                    class={startup.value?.docs ? 'cursor-pointer' : 'cursor-not-allowed'}
-                    onClick={
-                      startup.value?.docs ? () => toSocialEnd(startup.value!.docs) : undefined
-                    }
-                  />
-                </div>
+                <SocialGroup class="flex gap-4" />
                 <span class="ml-auto u-body1">
                   Create date: {dayjs.utc(startup.value?.createdAt).format('YYYY-MM-DD UTC')}
                 </span>
