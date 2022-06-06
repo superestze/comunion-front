@@ -140,14 +140,25 @@ const EditStartupForm = defineComponent({
         t: 'string',
         title: 'KYC',
         name: 'kyc',
-        placeholder: 'Input startup KYC'
+        placeholder: 'Input startup KYC',
+        onBlur: (e: Event) => {
+          const oIpt = e.target as HTMLTextAreaElement
+          if (!oIpt!.className.includes('truncate')) {
+            oIpt!.className = oIpt!.className + ' ' + 'truncate'
+          }
+        }
       },
-
       {
         t: 'string',
         title: 'Contract Audit',
         name: 'contractAudit',
-        placeholder: 'Input startup contract audit'
+        placeholder: 'Input startup contract audit',
+        onBlur: (e: Event) => {
+          const oIpt = e.target as HTMLTextAreaElement
+          if (!oIpt!.className.includes('truncate')) {
+            oIpt!.className = oIpt!.className + ' ' + 'truncate'
+          }
+        }
       }
     ]
     const socialInfo: FormFactoryField[] = [
