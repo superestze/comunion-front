@@ -55,7 +55,7 @@ async function buildSvg(suffix: string, dirPath: string, filename: string) {
   // entry file
   return [
     `export { default as ${componentName}${suffix} } from './${typeDir}/${componentName}.js'`,
-    `export function ${componentName}${suffix}(props?: { class?: string; onClick?: () => void }): ${typeDeclaration}`
+    `export function ${componentName}${suffix}(props?: { class?: string; onClick?: (e:Event) => void }): ${typeDeclaration}`
   ]
 }
 

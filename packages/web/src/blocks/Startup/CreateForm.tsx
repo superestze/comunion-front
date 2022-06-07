@@ -193,7 +193,7 @@ const CreateStartupForm = defineComponent({
         ],
         autosize: {
           minRows: 5,
-          maxRows: 8
+          maxRows: 5
         }
       }
     ]

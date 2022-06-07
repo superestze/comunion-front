@@ -15,14 +15,19 @@ const StartupCard = defineComponent({
   setup(props, context) {
     const router = useRouter()
 
-    const basicSetting = () => {
+    const basicSetting = (e: Event) => {
+      e.stopPropagation()
       router.push({ path: '/basicsetting', query: { startupId: props.startup.id } })
     }
-    const financeSetting = () => {
+    const financeSetting = (e: Event) => {
+      e.stopPropagation()
       router.push({ path: '/financesetting', query: { startupId: props.startup.id } })
     }
+    const toStartDetail = () => {
+      router.push({ path: '/startup/detail', query: { startupId: props.startup.id } })
+    }
     return () => (
-      <div class="flex h-28 w-full items-center">
+      <div class="flex h-28 w-full items-center cursor-pointer" onClick={toStartDetail}>
         <div class="flex h-full w-22 items-center">
           <UStartupLogo src={props.startup.logo} width="8" height="8" class="h-18 w-18" />
         </div>
