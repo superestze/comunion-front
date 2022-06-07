@@ -57,7 +57,7 @@ export const StartupBasicInfo = defineComponent({
                   </UTag>
                 )}
               </div>
-              <div class={`flex flex-wrap gap-2 mt-2 ${hashtagsArray.value.length && 'mb-14'}`}>
+              <div class={['flex flex-wrap gap-2 mt-2', { 'mb-14': hashtagsArray.value.length }]}>
                 {hashtagsArray.value.slice(0, 4).map((key, value) => {
                   return value + 1 < 4 && <UTag key={value}>{key}</UTag>
                 })}

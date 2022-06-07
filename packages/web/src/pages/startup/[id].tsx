@@ -125,7 +125,10 @@ export const StartupInfo = defineComponent({
                     )}
                   </div>
                   <div
-                    class={`flex flex-wrap mt-2 gap-2 ${startup.value?.hashTags.length && 'mb-14'}`}
+                    class={[
+                      'flex flex-wrap mt-2 gap-2',
+                      { 'mb-14': startup.value?.hashTags.length }
+                    ]}
                   >
                     {startup.value?.hashTags?.map((hashTag, value) => {
                       return <UTag key={value}>{hashTag.name}</UTag>

@@ -1,14 +1,9 @@
 import {
   WebsiteFilled,
-  WebsiteGreyFilled,
   DiscordFilled,
-  DiscordGreyFilled,
   TelegramFilled,
-  TelegramGreyFilled,
   TwitterFilled,
-  TwitterGreyFilled,
-  DocsFilled,
-  DocGreyFilled
+  DocsFilled
 } from '@comunion/icons'
 import { defineComponent, computed } from 'vue'
 import styles from './SocialGroup.module.css'
@@ -27,37 +22,52 @@ export const SocialGroup = defineComponent({
       <div>
         <div class={styles.startupSocialItem}>
           {website.value ? (
-            <WebsiteFilled class="cursor-pointer" onClick={() => toSocialEnd(website.value)} />
+            <WebsiteFilled
+              class={styles.activeSocialItemIcon}
+              onClick={() => toSocialEnd(website.value)}
+            />
           ) : (
-            <WebsiteGreyFilled class="cursor-not-allowed" />
+            <WebsiteFilled class={styles.inactiveSocialItemIcon} />
           )}
         </div>
         <div class={styles.startupSocialItem}>
           {discord.value ? (
-            <DiscordFilled class={'cursor-pointer'} onClick={() => toSocialEnd(discord.value)} />
+            <DiscordFilled
+              class={styles.activeSocialItemIcon}
+              onClick={() => toSocialEnd(discord.value)}
+            />
           ) : (
-            <DiscordGreyFilled class="cursor-not-allowed" />
+            <DiscordFilled class={styles.inactiveSocialItemIcon} />
           )}
         </div>
         <div class={styles.startupSocialItem}>
           {telegram.value ? (
-            <TelegramFilled class="cursor-pointer" onClick={() => toSocialEnd(telegram.value)} />
+            <TelegramFilled
+              class={styles.activeSocialItemIcon}
+              onClick={() => toSocialEnd(telegram.value)}
+            />
           ) : (
-            <TelegramGreyFilled class="cursor-not-allowed" />
+            <TelegramFilled class={styles.inactiveSocialItemIcon} />
           )}
         </div>
         <div class={styles.startupSocialItem}>
           {twitter.value ? (
-            <TwitterFilled class="cursor-pointer" onClick={() => toSocialEnd(twitter.value)} />
+            <TwitterFilled
+              class={styles.activeSocialItemIcon}
+              onClick={() => toSocialEnd(twitter.value)}
+            />
           ) : (
-            <TwitterGreyFilled class="cursor-not-all" />
+            <TwitterFilled class={styles.inactiveSocialItemIcon} />
           )}
         </div>
         <div class={styles.startupSocialItem}>
           {docs.value ? (
-            <DocsFilled class="cursor-pointer" onClick={() => toSocialEnd(docs.value)} />
+            <DocsFilled
+              class={styles.activeSocialItemIcon}
+              onClick={() => toSocialEnd(docs.value)}
+            />
           ) : (
-            <DocGreyFilled class="cursor-not-allowed" />
+            <DocsFilled class={styles.inactiveSocialItemIcon} />
           )}
         </div>
       </div>

@@ -1,3 +1,11 @@
 .startupSocialItem {
   @apply bg-purple rounded w-10 h-10 flex items-center justify-center;
 }
+
+.activeSocialItemIcon {
+  @apply cursor-pointer text-primary;
+}
+
+.inactiveSocialItemIcon {
+  @apply cursor-not-allowed text-grey4;
+}
