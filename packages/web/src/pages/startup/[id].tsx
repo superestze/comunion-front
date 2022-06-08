@@ -190,14 +190,14 @@ export const StartupInfo = defineComponent({
           </div>
           <div class="bg-grey5 h-1px mt-10 w-full"></div>
           <section class="mt-10 ml-30">
-            <p class="mb-4.5">
+            <p class="mb-4.5 flex">
               <span class="text-grey3 u-label2">KYC:</span>
               <span class="ml-4 u-title2">
                 {startup.value?.kyc ? (
                   <a
                     href="javascript:void(0)"
                     onClick={() => toSocialEnd(startup.value!.kyc)}
-                    class="text-primary u-title2"
+                    class="text-primary u-title2 break-all"
                   >
                     {startup.value?.kyc}
                   </a>
@@ -206,9 +206,9 @@ export const StartupInfo = defineComponent({
                 )}
               </span>
             </p>
-            <p class="mb-4.5">
+            <p class="mb-4.5 flex">
               <span class="text-grey3 whitespace-nowrap u-label2">CONTRACT AUDIT:</span>
-              <span class="ml-4 u-title2">
+              <span class="ml-4 u-title2 break-all">
                 {startup.value?.contractAudit ? (
                   <a
                     href="javascript:void(0)"
@@ -227,7 +227,7 @@ export const StartupInfo = defineComponent({
               {startup.value?.blockChainAddress ? (
                 <UAddress
                   address={startup.value?.blockChainAddress}
-                  class="u-title2"
+                  class="u-title2 break-all"
                   blockchainExplorerUrl={walletStore.blockchainExplorerUrl}
                 />
               ) : (

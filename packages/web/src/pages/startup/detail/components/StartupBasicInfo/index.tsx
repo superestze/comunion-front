@@ -105,13 +105,13 @@ export const StartupBasicInfo = defineComponent({
             </div>
           </div>
           <p class="h-10 mb-10 break-all u-body1 line-clamp-5">{props.startup!.mission}</p>
-          <p class="mb-4.5">
+          <p class="mb-4.5 flex">
             <span class="u-label2 text-grey3 mr-4">KYC:</span>
             {props.startup!.kyc ? (
               <a
                 href="javascript:void(0)"
                 onClick={() => toSocialEnd(props.startup!.kyc)}
-                class="u-title2 text-primary"
+                class="u-title2 text-primary break-all"
               >
                 {props.startup!.kyc}
               </a>
@@ -119,13 +119,13 @@ export const StartupBasicInfo = defineComponent({
               '--'
             )}
           </p>
-          <p>
+          <p class="flex">
             <span class="u-label2 text-grey3 whitespace-nowrap mr-4">CONTRACT AUDIT:</span>
             {props.startup!.contractAudit ? (
               <a
                 href="javascript:void(0)"
                 onClick={() => toSocialEnd(props.startup!.contractAudit)}
-                class="u-title2 text-primary"
+                class="u-title2 text-primary break-all"
               >
                 {props.startup!.contractAudit}
               </a>
