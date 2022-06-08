@@ -137,7 +137,13 @@ const DashboardPage = defineComponent({
                           ),
                           default: () => {
                             return h(
-                              <UScrollbar class="max-h-100 p-5">
+                              <UScrollbar
+                                class="max-h-100 p-5"
+                                themeOverrides={{
+                                  color: 'var(--u-primary-2-color)',
+                                  colorHover: 'var(--u-primary-2-color)'
+                                }}
+                              >
                                 {myInfo.value[3]?.value}
                               </UScrollbar>
                             )
