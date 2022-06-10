@@ -62,12 +62,12 @@ const DashboardPage = defineComponent({
     const socialLinks = [
       {
         avatar: GoogleFilled,
-        label: 'Google',
+        label: 'Link',
         link: 'https://accounts.google.com/'
       },
       {
         avatar: GithubFilled,
-        label: 'Github',
+        label: 'Linked',
         link: 'https://github.com/'
       }
     ]
@@ -75,6 +75,7 @@ const DashboardPage = defineComponent({
     const style = {
       currency: 'u-body2 text-grey1 flex-1 break-all max-h-37 '
     }
+
     return () => (
       <div>
         <div class="mt-50px text-primary mb-10 u-h2">My Dashboard</div>
@@ -125,7 +126,8 @@ const DashboardPage = defineComponent({
                         overlap={true}
                         width={600}
                         style={{
-                          background: 'rgba(var(--u-primary2-value), 0.8)'
+                          background: 'rgba(var(--u-primary2-value), 0.8)',
+                          padding: '0'
                         }}
                       >
                         {/* <div class={[style.currency]}>{myInfo.value[3]?.value}</div> */}
@@ -135,7 +137,15 @@ const DashboardPage = defineComponent({
                           ),
                           default: () => {
                             return h(
-                              <UScrollbar class="max-h-100 ">{myInfo.value[3]?.value}</UScrollbar>
+                              <UScrollbar
+                                class="max-h-100 p-5"
+                                themeOverrides={{
+                                  color: 'var(--u-primary-2-color)',
+                                  colorHover: 'var(--u-primary-2-color)'
+                                }}
+                              >
+                                {myInfo.value[3]?.value}
+                              </UScrollbar>
                             )
                           }
                         }}

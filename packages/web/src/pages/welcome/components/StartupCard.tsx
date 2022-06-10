@@ -1,6 +1,7 @@
 import { UStartupLogo } from '@comunion/components'
 import { TeamOutlined } from '@comunion/icons'
 import { defineComponent, PropType } from 'vue'
+import { useRouter } from 'vue-router'
 import { StartupItem } from '@/types'
 
 const StartupCard = defineComponent({
@@ -12,9 +13,17 @@ const StartupCard = defineComponent({
     }
   },
   setup(props, ctx) {
+    const router = useRouter()
+
+    const toStartDetail = (startupInfo: StartupItem) => {
+      router.push({ path: '/startup/detail', query: { startupId: startupInfo.id } })
+    }
     return () => (
       <>
-        <div class="border-b flex flex-row border-grey5 h-45 pt-6 pb-6">
+        <div
+          class="border-b flex flex-row border-grey5 h-45 pt-6 pb-6 cursor-pointer"
+          onClick={() => toStartDetail(props.startup)}
+        >
           <div class="mr-4 logo">
             <UStartupLogo
               src={props.startup.logo}
