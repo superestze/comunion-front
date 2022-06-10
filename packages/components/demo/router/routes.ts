@@ -8,7 +8,7 @@ const routes: RouteRecordRaw[] = [
     children: [
       {
         path: '/base',
-        name: '基础组件',
+        name: 'Basic',
         component: RouterView,
         children: [
           {
@@ -40,7 +40,7 @@ const routes: RouteRecordRaw[] = [
       },
       {
         path: '/form',
-        name: '表单组件',
+        name: 'Form',
         component: RouterView,
         children: [
           {
@@ -107,7 +107,7 @@ const routes: RouteRecordRaw[] = [
       },
       {
         path: '/table',
-        name: '表格组件',
+        name: 'Table',
         component: RouterView,
         children: [
           {
@@ -129,7 +129,7 @@ const routes: RouteRecordRaw[] = [
       },
       {
         path: '/display',
-        name: '展示组件',
+        name: 'Display',
         component: RouterView,
         children: [
           {
@@ -196,7 +196,7 @@ const routes: RouteRecordRaw[] = [
       },
       {
         path: '/navs',
-        name: '导航组件',
+        name: 'Navigation',
         component: RouterView,
         children: [
           {
@@ -208,7 +208,7 @@ const routes: RouteRecordRaw[] = [
       },
       {
         path: '/feedback',
-        name: '反馈组件',
+        name: 'Feedback',
         component: RouterView,
         children: [
           {

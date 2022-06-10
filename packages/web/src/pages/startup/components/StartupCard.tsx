@@ -16,9 +16,6 @@ const StartupCard = defineComponent({
     }
   },
   setup(props, ctx) {
-    /**
-     * 从props获取参数hashtags,进行重组（['javaScript','web']）
-     */
     const hashtagsArray = props.startup.hashTags.map(key => {
       return key.name
     })
