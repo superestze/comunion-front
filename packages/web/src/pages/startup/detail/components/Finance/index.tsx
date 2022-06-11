@@ -89,24 +89,26 @@ export const Finance = defineComponent({
             )
           })}
         </section>
-        <UScrollbar class="flex-1 bg-purple rounded px-6 min-w-90 h-275px">
-          <div class="py-30px">
-            {(this.wallets || []).length ? (
-              (this.wallets || []).map(item => {
+        {(this.wallets || []).length ? (
+          <UScrollbar class="flex-1 bg-purple rounded px-6 min-w-90 h-275px">
+            <div class="py-30px">
+              {(this.wallets || []).map(item => {
                 return (
                   <div>
                     <div class="u-label2 mb-2">{item.name}:</div>
                     <UAddress class="text-primary u-title2 mb-4" autoSlice address={item.value} />
                   </div>
                 )
-              })
-            ) : (
-              <UNoContent textTip="NO WALLET ADDRESS">
-                <EmptyFilled />
-              </UNoContent>
-            )}
+              })}
+            </div>
+          </UScrollbar>
+        ) : (
+          <div class="flex-1  bg-purple rounded px-6">
+            <UNoContent textTip="NO WALLET ADDRESS">
+              <EmptyFilled />
+            </UNoContent>
           </div>
-        </UScrollbar>
+        )}
       </div>
     )
   }
