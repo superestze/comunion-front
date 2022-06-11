@@ -7,21 +7,12 @@ import {
   UTag,
   USpin
 } from '@comunion/components'
-import {
-  WebsiteFilled,
-  DiscordFilled,
-  TelegramFilled,
-  TwitterFilled,
-  DocsFilled,
-  HookFilled,
-  PlusOutlined,
-  ArrowLeftOutlined
-} from '@comunion/icons'
+import { HookFilled, PlusOutlined, ArrowLeftOutlined } from '@comunion/icons'
 import dayjs from 'dayjs'
 import utcPlugin from 'dayjs/plugin/utc'
 import { defineComponent, onMounted, ref, computed } from 'vue'
 import { useRoute } from 'vue-router'
-import styles from './style.module.css'
+import { SocialGroup } from './components/SocialGroup'
 import { getStartupTypeFromNumber, StartupTypesType, STARTUP_TYPES_COLOR_MAP } from '@/constants'
 import router from '@/router'
 import { services } from '@/services'
@@ -116,12 +107,12 @@ export const StartupInfo = defineComponent({
             </div>
             <div class="flex-1">
               <div class="flex justify-between items-center">
-                <div class="flex flex-col">
+                <div class="flex flex-col mb-2">
                   <div class="flex items-center">
                     <span class="u-h2">{startup.value?.name}</span>
                     {startup.value && startup.value?.mode > 0 && (
                       <UTag
-                        class="ml-5 u-body3"
+                        class="ml-5 !u-body3-pure"
                         type="filled"
                         bgColor={
                           modeName.value
@@ -133,7 +124,12 @@ export const StartupInfo = defineComponent({
                       </UTag>
                     )}
                   </div>
-                  <div class="flex flex-wrap mt-2 gap-2">
+                  <div
+                    class={[
+                      'flex flex-wrap mt-2 gap-2',
+                      { 'mb-14': startup.value?.hashTags.length }
+                    ]}
+                  >
                     {startup.value?.hashTags?.map((hashTag, value) => {
                       return <UTag key={value}>{hashTag.name}</UTag>
                     })}
@@ -176,54 +172,16 @@ export const StartupInfo = defineComponent({
                   )}
                 </div>
               </div>
-              <p class="h-10 mt-14 mb-10 break-all u-body1 line-clamp-5">
-                {startup.value?.mission}
-              </p>
+              <p class="h-10 mb-10 break-all u-body1 line-clamp-5">{startup.value?.mission}</p>
               <div class="flex mt-7 gap-4 items-center">
-                <div class={styles.startupSocialItem}>
-                  <WebsiteFilled
-                    class={startup.value?.website ? 'cursor-pointer' : 'cursor-not-allowed'}
-                    onClick={
-                      startup.value?.website
-                        ? () => toSocialEnd(startup.value!.website!)
-                        : undefined
-                    }
-                  />
-                </div>
-                <div class={styles.startupSocialItem}>
-                  <DiscordFilled
-                    class={startup.value?.discord ? 'cursor-pointer' : 'cursor-not-allowed'}
-                    onClick={
-                      startup.value?.discord ? () => toSocialEnd(startup.value!.discord) : undefined
-                    }
-                  />
-                </div>
-                <div class={styles.startupSocialItem}>
-                  <TelegramFilled
-                    class={startup.value?.telegram ? 'cursor-pointer' : 'cursor-not-allowed'}
-                    onClick={
-                      startup.value?.telegram
-                        ? () => toSocialEnd(startup.value!.telegram)
-                        : undefined
-                    }
-                  />
-                </div>
-                <div class={styles.startupSocialItem}>
-                  <TwitterFilled
-                    class={startup.value?.twitter ? 'cursor-pointer' : 'cursor-not-allowed'}
-                    onClick={
-                      startup.value?.twitter ? () => toSocialEnd(startup.value!.twitter) : undefined
-                    }
-                  />
-                </div>
-                <div class={styles.startupSocialItem}>
-                  <DocsFilled
-                    class={startup.value?.docs ? 'cursor-pointer' : 'cursor-not-allowed'}
-                    onClick={
-                      startup.value?.docs ? () => toSocialEnd(startup.value!.docs) : undefined
-                    }
-                  />
-                </div>
+                <SocialGroup
+                  discord={startup.value?.discord}
+                  website={startup.value?.website}
+                  telegram={startup.value?.telegram}
+                  twitter={startup.value?.twitter}
+                  docs={startup.value?.docs}
+                  class="flex gap-4"
+                />
                 <span class="ml-auto u-body1">
                   Create date: {dayjs.utc(startup.value?.createdAt).format('YYYY-MM-DD UTC')}
                 </span>
@@ -232,14 +190,14 @@ export const StartupInfo = defineComponent({
           </div>
           <div class="bg-grey5 h-1px mt-10 w-full"></div>
           <section class="mt-10 ml-30">
-            <p class="mb-4.5">
+            <p class="mb-4.5 flex">
               <span class="text-grey3 u-label2">KYC:</span>
               <span class="ml-4 u-title2">
                 {startup.value?.kyc ? (
                   <a
                     href="javascript:void(0)"
                     onClick={() => toSocialEnd(startup.value!.kyc)}
-                    class="text-primary u-title2"
+                    class="text-primary u-title2 break-all"
                   >
                     {startup.value?.kyc}
                   </a>
@@ -248,9 +206,9 @@ export const StartupInfo = defineComponent({
                 )}
               </span>
             </p>
-            <p class="mb-4.5">
+            <p class="mb-4.5 flex">
               <span class="text-grey3 whitespace-nowrap u-label2">CONTRACT AUDIT:</span>
-              <span class="ml-4 u-title2">
+              <span class="ml-4 u-title2 break-all">
                 {startup.value?.contractAudit ? (
                   <a
                     href="javascript:void(0)"
@@ -269,7 +227,7 @@ export const StartupInfo = defineComponent({
               {startup.value?.blockChainAddress ? (
                 <UAddress
                   address={startup.value?.blockChainAddress}
-                  class="u-title2"
+                  class="u-title2 break-all"
                   blockchainExplorerUrl={walletStore.blockchainExplorerUrl}
                 />
               ) : (
