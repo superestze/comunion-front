@@ -1,7 +1,8 @@
-import { UDrawer } from '@comunion/components'
+import { UDrawer, UPopover } from '@comunion/components'
 import { ArrowRightOutlined } from '@comunion/icons'
 import { defineComponent, ref } from 'vue'
 import { StartupTeamCard } from './TeamCard'
+import { TeamHoverCard } from './TeamHoverCard'
 
 const MAX_SHOW_COUNT = 5
 
@@ -18,9 +19,24 @@ export const Team = defineComponent({
     return () => (
       <div class="mt-8">
         {props.teamMembers.length
-          ? props.teamMembers
-              .slice(0, MAX_SHOW_COUNT)
-              .map((teamMember: any) => <StartupTeamCard teamMember={teamMember} />)
+          ? props.teamMembers.slice(0, MAX_SHOW_COUNT).map((teamMember: any) => (
+              <UPopover
+                placement="left-start"
+                displayDirective="show"
+                v-slots={{
+                  trigger: () => (
+                    <div>
+                      <StartupTeamCard teamMember={teamMember} />
+                    </div>
+                  ),
+                  default: () => (
+                    <div>
+                      <TeamHoverCard teamMember={teamMember} />
+                    </div>
+                  )
+                }}
+              />
+            ))
           : null}
         {props.memberCount > MAX_SHOW_COUNT && (
           <div class="text-primary flex items-center justify-end">
