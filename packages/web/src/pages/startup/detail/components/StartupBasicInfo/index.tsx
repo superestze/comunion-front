@@ -108,13 +108,17 @@ export const StartupBasicInfo = defineComponent({
           <p class="mb-4.5 flex">
             <span class="u-label2 text-grey3 mr-4">KYC:</span>
             {props.startup!.kyc ? (
-              <a
-                href="javascript:void(0)"
-                onClick={() => toSocialEnd(props.startup!.kyc)}
-                class="u-title2 text-primary break-all"
+              <span
+                onClick={() =>
+                  /^https?:\/\//.test(props.startup!.kyc) ? toSocialEnd(props.startup!.kyc) : null
+                }
+                class={[
+                  'u-title2 break-all',
+                  { 'text-primary cursor-pointer': /^https?:\/\//.test(props.startup!.kyc) }
+                ]}
               >
                 {props.startup!.kyc}
-              </a>
+              </span>
             ) : (
               '--'
             )}
@@ -122,13 +126,21 @@ export const StartupBasicInfo = defineComponent({
           <p class="flex">
             <span class="u-label2 text-grey3 whitespace-nowrap mr-4">CONTRACT AUDIT:</span>
             {props.startup!.contractAudit ? (
-              <a
-                href="javascript:void(0)"
-                onClick={() => toSocialEnd(props.startup!.contractAudit)}
-                class="u-title2 text-primary break-all"
+              <span
+                onClick={() =>
+                  /^https?:\/\//.test(props.startup!.contractAudit)
+                    ? toSocialEnd(props.startup!.contractAudit)
+                    : null
+                }
+                class={[
+                  'u-title2 break-all',
+                  {
+                    'text-primary cursor-pointer': /^https?:\/\//.test(props.startup!.contractAudit)
+                  }
+                ]}
               >
                 {props.startup!.contractAudit}
-              </a>
+              </span>
             ) : (
               '--'
             )}

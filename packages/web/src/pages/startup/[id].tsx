@@ -194,13 +194,21 @@ export const StartupInfo = defineComponent({
               <span class="text-grey3 u-label2">KYC:</span>
               <span class="ml-4 u-title2">
                 {startup.value?.kyc ? (
-                  <a
-                    href="javascript:void(0)"
-                    onClick={() => toSocialEnd(startup.value!.kyc)}
-                    class="text-primary u-title2 break-all"
+                  <span
+                    onClick={() =>
+                      /^https?:\/\//.test(startup.value!.kyc)
+                        ? toSocialEnd(startup.value!.kyc)
+                        : null
+                    }
+                    class={[
+                      'u-title2 break-all',
+                      {
+                        'text-primary cursor-pointer': /^https?:\/\//.test(startup.value!.kyc)
+                      }
+                    ]}
                   >
                     {startup.value?.kyc}
-                  </a>
+                  </span>
                 ) : (
                   '--'
                 )}
@@ -210,13 +218,23 @@ export const StartupInfo = defineComponent({
               <span class="text-grey3 whitespace-nowrap u-label2">CONTRACT AUDIT:</span>
               <span class="ml-4 u-title2 break-all">
                 {startup.value?.contractAudit ? (
-                  <a
-                    href="javascript:void(0)"
-                    onClick={() => toSocialEnd(startup.value!.contractAudit)}
-                    class="text-primary u-title2"
+                  <span
+                    onClick={() =>
+                      /^https?:\/\//.test(startup.value!.contractAudit)
+                        ? toSocialEnd(startup.value!.contractAudit)
+                        : null
+                    }
+                    class={[
+                      'u-title2 break-all',
+                      {
+                        'text-primary cursor-pointer': /^https?:\/\//.test(
+                          startup.value!.contractAudit
+                        )
+                      }
+                    ]}
                   >
                     {startup.value?.contractAudit}
-                  </a>
+                  </span>
                 ) : (
                   '--'
                 )}
