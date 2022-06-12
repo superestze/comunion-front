@@ -10,13 +10,7 @@ console.log(routes)
 const router = createRouter({
   history: createWebHistory(),
   // ...
-  routes: [
-    ...routes,
-    {
-      path: '/',
-      redirect: '/welcome'
-    }
-  ],
+  routes,
   scrollBehavior(to, from, savedPosition) {
     window.scrollTo({ top: savedPosition?.top ?? 0 })
   }

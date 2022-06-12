@@ -1,6 +1,6 @@
 import { UButton, ULogo } from '@comunion/components'
 import { GithubFilled, GoogleFilled, WalletOutlined } from '@comunion/icons'
-import { defineComponent, ref } from 'vue'
+import { defineComponent, ref, watchEffect } from 'vue'
 import leftBgImg from './assets/bg.png'
 import styles from './index.module.css'
 // import {
@@ -49,6 +49,12 @@ const LoginPage = defineComponent({
       }
       loading.value = false
     }
+
+    watchEffect(() => {
+      if (userStore.inited && !userStore.isProfiled) {
+        userStore.logout(false)
+      }
+    })
 
     return () => (
       <div class="flex min-h-screen">
