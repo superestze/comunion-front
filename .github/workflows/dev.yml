@@ -32,7 +32,7 @@ jobs:
           cd packages/homepage/dist
           aws s3 sync . s3://comunion-dev-homepage --delete --acl public-read
           aws cloudfront create-invalidation --distribution-id EL93NFWXPZW3F --paths '/index.html' '/service-worker.js' '/manifest.json'
-          cd packages/web/dist
+          cd ../../web/dist
           aws s3 sync . s3://comunion-dev --delete --acl public-read
           aws cloudfront create-invalidation --distribution-id E2AJ2NIGHSNYL --paths '/index.html' '/service-worker.js' '/manifest.json'
       - name: Notification
