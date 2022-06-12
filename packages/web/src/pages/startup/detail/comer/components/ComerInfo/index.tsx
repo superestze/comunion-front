@@ -7,7 +7,7 @@ import {
   MediumFilled,
   PlusOutlined,
   TelegramFilled,
-  WebsiteFilled
+  TwitterFilled
 } from '@comunion/icons'
 import { defineComponent, PropType, computed, h } from 'vue'
 import { ServiceReturn } from '@/services'
@@ -37,11 +37,6 @@ export const ComerInfo = defineComponent({
     })
     const socialLinks = computed(() => [
       {
-        key: 'website',
-        component: WebsiteFilled,
-        value: props.profileInfo?.website
-      },
-      {
         key: 'discord',
         component: DiscordFilled,
         value: props.profileInfo?.discord
@@ -52,6 +47,11 @@ export const ComerInfo = defineComponent({
         value: props.profileInfo?.telegram
       },
       {
+        key: 'website',
+        component: TwitterFilled,
+        value: props.profileInfo?.twitter
+      },
+      {
         key: 'medium',
         component: MediumFilled,
         value: props.profileInfo?.medium
@@ -59,7 +59,7 @@ export const ComerInfo = defineComponent({
       {
         key: 'email',
         component: EmailFilled,
-        value: props.profileInfo?.email
+        value: props.profileInfo?.email && `mailto:${props.profileInfo?.email}`
       }
     ])
     const followToggle = (toStatus: string) => {
@@ -184,6 +184,9 @@ export const ComerInfo = defineComponent({
               class="bg-purple rounded w-10 h-10 flex items-center justify-center"
             >
               <socialLink.component
+                class={
+                  socialLink.value ? 'cursor-pointer text-primary' : 'cursor-not-allowed text-grey4'
+                }
                 onClick={() => (socialLink.value ? toSocialEnd(socialLink.value) : null)}
               />
             </div>

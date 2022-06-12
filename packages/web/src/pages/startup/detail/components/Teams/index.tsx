@@ -4,7 +4,7 @@ import { defineComponent, ref } from 'vue'
 import { StartupTeamCard } from './TeamCard'
 import { TeamHoverCard } from './TeamHoverCard'
 
-const MAX_SHOW_COUNT = 5
+const MAX_SHOW_COUNT = 0
 
 export const Team = defineComponent({
   name: 'Team',
@@ -52,10 +52,25 @@ export const Team = defineComponent({
           v-model:show={visible.value}
           v-slots={{
             whiteBoard: () => (
-              <div class="mt-10 ml-11">
+              <div>
                 {props.teamMembers.length
                   ? props.teamMembers.map((teamMember: any) => (
-                      <StartupTeamCard teamMember={teamMember} />
+                      <UPopover
+                        placement="left-start"
+                        displayDirective="show"
+                        v-slots={{
+                          trigger: () => (
+                            <div class="mt-10 ml-11">
+                              <StartupTeamCard teamMember={teamMember} />
+                            </div>
+                          ),
+                          default: () => (
+                            <div>
+                              <TeamHoverCard teamMember={teamMember} />
+                            </div>
+                          )
+                        }}
+                      />
                     ))
                   : null}
               </div>
