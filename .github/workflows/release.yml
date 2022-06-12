@@ -20,13 +20,7 @@ jobs:
       - name: Install dependencies
         run: pnpm i
       - name: Build
-        run: pnpm build
-        env:
-          VITE_SUPPORTED_CHAIN_ID: 43113
-          VITE_GITHUB_CLIENT_ID: '4b08343ccdf0e744af9d'
-          VITE_GITHUB_CALLBACK_URL: 'https://r.comunion.io/auth/callback/github'
-          VITE_GOOGLE_CLIENT_ID: '278098615581-d1t4cco3ldepiclenpj4a65kasjhvjj0.apps.googleusercontent.com'
-          VITE_GOOGLE_CALLBACK_URL: 'https://r.comunion.io/auth/callback/google'
+        run: pnpm build:release
       - name: Deploy
         uses: appleboy/scp-action@master
         with:
