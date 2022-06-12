@@ -32,6 +32,26 @@ export const StartupBasicInfo = defineComponent({
     const toStartupInfo = () => {
       router.push({ path: `/startup/${props.startup?.id}` })
     }
+    const getIdentity = (title: string, value?: string) => {
+      return (
+        <p class="mb-4.5 flex">
+          <span class="u-label2 text-grey3 mr-4">{title}</span>
+          {value ? (
+            <span
+              onClick={() => (/^https?:\/\//.test(value) ? toSocialEnd(value) : null)}
+              class={[
+                'u-title2 break-all',
+                { 'text-primary cursor-pointer': /^https?:\/\//.test(value) }
+              ]}
+            >
+              {value}
+            </span>
+          ) : (
+            '--'
+          )}
+        </p>
+      )
+    }
     return () => (
       <div class="flex items-start gap-10">
         <div class="max-w-20 max-h-20">
@@ -105,46 +125,8 @@ export const StartupBasicInfo = defineComponent({
             </div>
           </div>
           <p class="h-10 mb-10 break-all u-body1 line-clamp-5">{props.startup!.mission}</p>
-          <p class="mb-4.5 flex">
-            <span class="u-label2 text-grey3 mr-4">KYC:</span>
-            {props.startup!.kyc ? (
-              <span
-                onClick={() =>
-                  /^https?:\/\//.test(props.startup!.kyc) ? toSocialEnd(props.startup!.kyc) : null
-                }
-                class={[
-                  'u-title2 break-all',
-                  { 'text-primary cursor-pointer': /^https?:\/\//.test(props.startup!.kyc) }
-                ]}
-              >
-                {props.startup!.kyc}
-              </span>
-            ) : (
-              '--'
-            )}
-          </p>
-          <p class="flex">
-            <span class="u-label2 text-grey3 whitespace-nowrap mr-4">CONTRACT AUDIT:</span>
-            {props.startup!.contractAudit ? (
-              <span
-                onClick={() =>
-                  /^https?:\/\//.test(props.startup!.contractAudit)
-                    ? toSocialEnd(props.startup!.contractAudit)
-                    : null
-                }
-                class={[
-                  'u-title2 break-all',
-                  {
-                    'text-primary cursor-pointer': /^https?:\/\//.test(props.startup!.contractAudit)
-                  }
-                ]}
-              >
-                {props.startup!.contractAudit}
-              </span>
-            ) : (
-              '--'
-            )}
-          </p>
+          <p class="mb-4.5">{getIdentity('KYC:', props.startup?.kyc)}</p>
+          {getIdentity('CONTRACT AUDIT:', props.startup?.contractAudit)}
           <SocialGroup
             discord={props.startup.discord}
             website={props.startup.website}

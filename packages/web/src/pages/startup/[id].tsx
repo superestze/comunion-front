@@ -73,6 +73,31 @@ export const StartupInfo = defineComponent({
       pageLoading.value = false
     }
 
+    const getIdentity = (title: string, value?: string) => {
+      return (
+        <p class="mb-4.5 flex">
+          <span class="text-grey3 whitespace-nowrap u-label2">{title}</span>
+          <span class="ml-4 u-title2 break-all">
+            {value ? (
+              <span
+                onClick={() => (/^https?:\/\//.test(value) ? toSocialEnd(value) : null)}
+                class={[
+                  'u-title2 break-all',
+                  {
+                    'text-primary cursor-pointer': /^https?:\/\//.test(value)
+                  }
+                ]}
+              >
+                {value}
+              </span>
+            ) : (
+              '--'
+            )}
+          </span>
+        </p>
+      )
+    }
+
     onMounted(() => {
       getStartup()
       getUserIsFollow()
@@ -190,56 +215,8 @@ export const StartupInfo = defineComponent({
           </div>
           <div class="bg-grey5 h-1px mt-10 w-full"></div>
           <section class="mt-10 ml-30">
-            <p class="mb-4.5 flex">
-              <span class="text-grey3 u-label2">KYC:</span>
-              <span class="ml-4 u-title2">
-                {startup.value?.kyc ? (
-                  <span
-                    onClick={() =>
-                      /^https?:\/\//.test(startup.value!.kyc)
-                        ? toSocialEnd(startup.value!.kyc)
-                        : null
-                    }
-                    class={[
-                      'u-title2 break-all',
-                      {
-                        'text-primary cursor-pointer': /^https?:\/\//.test(startup.value!.kyc)
-                      }
-                    ]}
-                  >
-                    {startup.value?.kyc}
-                  </span>
-                ) : (
-                  '--'
-                )}
-              </span>
-            </p>
-            <p class="mb-4.5 flex">
-              <span class="text-grey3 whitespace-nowrap u-label2">CONTRACT AUDIT:</span>
-              <span class="ml-4 u-title2 break-all">
-                {startup.value?.contractAudit ? (
-                  <span
-                    onClick={() =>
-                      /^https?:\/\//.test(startup.value!.contractAudit)
-                        ? toSocialEnd(startup.value!.contractAudit)
-                        : null
-                    }
-                    class={[
-                      'u-title2 break-all',
-                      {
-                        'text-primary cursor-pointer': /^https?:\/\//.test(
-                          startup.value!.contractAudit
-                        )
-                      }
-                    ]}
-                  >
-                    {startup.value?.contractAudit}
-                  </span>
-                ) : (
-                  '--'
-                )}
-              </span>
-            </p>
+            {getIdentity('KYC:', startup.value?.kyc)}
+            {getIdentity('CONTRACT AUDIT:', startup.value?.contractAudit)}
             <p class="flex mb-4.5 items-center">
               <span class="mr-4 text-grey3 whitespace-nowrap u-label2">BLOCKCHAIN ADDRESS:</span>
               {startup.value?.blockChainAddress ? (
