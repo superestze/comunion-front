@@ -21,7 +21,18 @@ jobs:
         run: pnpm i
       - name: Build
         run: pnpm build:prod
-      - name: Deploy
+      - name: Deploy homepage
+        uses: appleboy/scp-action@master
+        with:
+          host: ${{ secrets.PROD_HOST }}
+          username: ${{ secrets.PROD_USERNAME }}
+          passphrase: ${{ secrets.PROD_PASSPHRASE }}
+          key: ${{ secrets.PROD_KEY }}
+          port: ${{ secrets.PROD_PORT }}
+          source: 'packages/homepage/dist/*'
+          target: '/app/homepage/prod'
+          strip_components: 3
+      - name: Deploy dashboard
         uses: appleboy/scp-action@master
         with:
           host: ${{ secrets.PROD_HOST }}
