@@ -5,7 +5,9 @@
   "scripts": {
     "dev": "vite",
     "check": "vue-tsc --noEmit",
-    "build": "npm run check && vite build",
+    "build:dev": "npm run check && vite build --mode dev",
+    "build:release": "npm run check && vite build --mode release",
+    "build:prod": "npm run check && vite build --mode prod",
     "serve": "vite preview",
     "style:analysis": "npx windicss-analysis"
   },
@@ -21,6 +23,7 @@
   },
   "homepage": "https://github.com/comunion-io/front-next#readme",
   "dependencies": {
+    "@comunion/components": "workspace:^0.0.1",
     "vue": "^3.2.31"
   },
   "devDependencies": {

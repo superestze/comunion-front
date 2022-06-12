@@ -1,4 +1,5 @@
 // Comunion Economics
+import { UStyleProvider } from '@comunion/components/src/UStyleProvider'
 import { defineComponent } from 'vue'
 import ComunionEconomics from './components/ComunionEconomics'
 // Fotter
@@ -21,27 +22,29 @@ export default defineComponent({
   name: 'HomePage',
   setup() {
     return () => (
-      <div class="bg-[#151515]">
-        {/* Head */}
-        <Head />
-        {/* content */}
-        <div class={`${styles.contentBox}`}>
-          {/* introduce_and_join */}
-          <IntroduceAndJoin />
-          {/* Comunion Economics */}
-          <ComunionEconomics />
-          {/* Mission */}
-          <Mission />
-          {/* PainsOfWorld */}
-          <PainsOfWorld />
-          {/* Response */}
-          <OurResponse />
-          {/* UseCases */}
-          <UseCases />
+      <UStyleProvider>
+        <div class="bg-[#151515]">
+          {/* Head */}
+          <Head />
+          {/* content */}
+          <div class={`${styles.contentBox}`}>
+            {/* introduce_and_join */}
+            <IntroduceAndJoin />
+            {/* Comunion Economics */}
+            <ComunionEconomics />
+            {/* Mission */}
+            <Mission />
+            {/* PainsOfWorld */}
+            <PainsOfWorld />
+            {/* Response */}
+            <OurResponse />
+            {/* UseCases */}
+            <UseCases />
+          </div>
+          {/* Footer */}
+          <Footer />
         </div>
-        {/* Footer */}
-        <Footer />
-      </div>
+      </UStyleProvider>
     )
   }
 })

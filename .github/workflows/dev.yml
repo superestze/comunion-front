@@ -20,9 +20,7 @@ jobs:
       - name: Install dependencies
         run: pnpm i
       - name: Build
-        run: pnpm build
-        env:
-          VITE_SUPPORTED_CHAIN_ID: 43113
+        run: pnpm build:dev
       - name: Configure AWS Credentials
         uses: aws-actions/configure-aws-credentials@v1
         with:
