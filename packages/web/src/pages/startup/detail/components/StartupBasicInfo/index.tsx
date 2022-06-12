@@ -1,18 +1,9 @@
 import { UButton, UStartupLogo, UTag } from '@comunion/components'
-import {
-  WebsiteFilled,
-  DiscordFilled,
-  TelegramFilled,
-  TwitterFilled,
-  DocsFilled,
-  ArrowRightOutlined,
-  HookFilled,
-  PlusOutlined
-} from '@comunion/icons'
+import { ArrowRightOutlined, HookFilled, PlusOutlined } from '@comunion/icons'
 import { computed, defineComponent, PropType } from 'vue'
 import { useRouter } from 'vue-router'
-import styles from './style.module.css'
 import { getStartupTypeFromNumber, StartupTypesType, STARTUP_TYPES_COLOR_MAP } from '@/constants'
+import { SocialGroup } from '@/pages/startup/components/SocialGroup'
 import { StartupItem } from '@/types'
 import { toSocialEnd } from '@/utils/socialJump'
 
@@ -53,12 +44,12 @@ export const StartupBasicInfo = defineComponent({
         </div>
         <div class="flex-1">
           <div class="flex justify-between items-center">
-            <div class="flex flex-col">
+            <div class="flex flex-col mb-2">
               <div class="flex items-center">
                 <span class="u-h2">{props.startup!.name}</span>
                 {props.startup!.mode > 0 && (
                   <UTag
-                    class="ml-5 u-body3"
+                    class="ml-5 !u-body3-pure"
                     type="filled"
                     bgColor={STARTUP_TYPES_COLOR_MAP[modeName.value]}
                   >
@@ -66,7 +57,7 @@ export const StartupBasicInfo = defineComponent({
                   </UTag>
                 )}
               </div>
-              <div class="flex flex-wrap gap-2 mt-2">
+              <div class={['flex flex-wrap gap-2 mt-2', { 'mb-14': hashtagsArray.value.length }]}>
                 {hashtagsArray.value.slice(0, 4).map((key, value) => {
                   return value + 1 < 4 && <UTag key={value}>{key}</UTag>
                 })}
@@ -113,14 +104,14 @@ export const StartupBasicInfo = defineComponent({
               )}
             </div>
           </div>
-          <p class="h-10 mb-10 mt-14 break-all u-body1 line-clamp-5">{props.startup!.mission}</p>
-          <p class="mb-4.5">
+          <p class="h-10 mb-10 break-all u-body1 line-clamp-5">{props.startup!.mission}</p>
+          <p class="mb-4.5 flex">
             <span class="u-label2 text-grey3 mr-4">KYC:</span>
             {props.startup!.kyc ? (
               <a
                 href="javascript:void(0)"
                 onClick={() => toSocialEnd(props.startup!.kyc)}
-                class="u-title2 text-primary"
+                class="u-title2 text-primary break-all"
               >
                 {props.startup!.kyc}
               </a>
@@ -128,13 +119,13 @@ export const StartupBasicInfo = defineComponent({
               '--'
             )}
           </p>
-          <p>
+          <p class="flex">
             <span class="u-label2 text-grey3 whitespace-nowrap mr-4">CONTRACT AUDIT:</span>
             {props.startup!.contractAudit ? (
               <a
                 href="javascript:void(0)"
                 onClick={() => toSocialEnd(props.startup!.contractAudit)}
-                class="u-title2 text-primary"
+                class="u-title2 text-primary break-all"
               >
                 {props.startup!.contractAudit}
               </a>
@@ -142,46 +133,14 @@ export const StartupBasicInfo = defineComponent({
               '--'
             )}
           </p>
-          <div class="flex gap-4 mt-7">
-            <div class={styles.startupSocialItem}>
-              <WebsiteFilled
-                class={props.startup!.website ? 'cursor-pointer' : 'cursor-not-allowed'}
-                onClick={
-                  props.startup!.website ? () => toSocialEnd(props.startup!.website) : undefined
-                }
-              />
-            </div>
-            <div class={styles.startupSocialItem}>
-              <DiscordFilled
-                class={props.startup!.discord ? 'cursor-pointer' : 'cursor-not-allowed'}
-                onClick={
-                  props.startup!.discord ? () => toSocialEnd(props.startup!.discord) : undefined
-                }
-              />
-            </div>
-            <div class={styles.startupSocialItem}>
-              <TelegramFilled
-                class={props.startup!.telegram ? 'cursor-pointer' : 'cursor-not-allowed'}
-                onClick={
-                  props.startup!.telegram ? () => toSocialEnd(props.startup!.telegram) : undefined
-                }
-              />
-            </div>
-            <div class={styles.startupSocialItem}>
-              <TwitterFilled
-                class={props.startup!.twitter ? 'cursor-pointer' : 'cursor-not-allowed'}
-                onClick={
-                  props.startup!.twitter ? () => toSocialEnd(props.startup!.twitter) : undefined
-                }
-              />
-            </div>
-            <div class={styles.startupSocialItem}>
-              <DocsFilled
-                class={props.startup!.docs ? 'cursor-pointer' : 'cursor-not-allowed'}
-                onClick={props.startup!.docs ? () => toSocialEnd(props.startup!.docs) : undefined}
-              />
-            </div>
-          </div>
+          <SocialGroup
+            discord={props.startup.discord}
+            website={props.startup.website}
+            telegram={props.startup.telegram}
+            twitter={props.startup.twitter}
+            docs={props.startup.docs}
+            class="flex gap-4 mt-7"
+          />
           <div
             class="flex justify-end items-center text-primary cursor-pointer"
             onClick={toStartupInfo}

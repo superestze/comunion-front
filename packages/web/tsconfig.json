@@ -8,7 +8,6 @@
     "composite": false,
     "lib": ["esnext", "dom"],
     "types": ["node", "vite/client", "vite-plugin-pages/client", "vite-plugin-vue-layouts/client"],
-    "typeRoots": ["./node_modules/@comunion/components/node_modules/naive-ui/lib/dropdown/src/interface"],
     "paths": {
       "@/*": ["./src/*"]
     },
@@ -16,5 +15,5 @@
   },
   "exclude": ["node_modules", "dist"],
   "extends": "../../tsconfig.package.json",
-  "include": ["./src/**/*", "./node_modules/@comunion/components/node_modules/naive-ui/lib/dropdown/src/interface"]
+  "include": ["./src/**/*"]
 }
