@@ -20,9 +20,7 @@ jobs:
       - name: Install dependencies
         run: pnpm i
       - name: Build
-        run: pnpm build
-        env:
-          VITE_SUPPORTED_CHAIN_ID: 43113
+        run: pnpm build:dev
       - name: Configure AWS Credentials
         uses: aws-actions/configure-aws-credentials@v1
         with:
@@ -31,7 +29,10 @@ jobs:
           aws-region: ap-northeast-1
       - name: Deploy static site to S3 bucket
         run: |
-          cd packages/web/dist
+          cd packages/homepage/dist
+          aws s3 sync . s3://comunion-dev-homepage --delete --acl public-read
+          aws cloudfront create-invalidation --distribution-id EL93NFWXPZW3F --paths '/index.html' '/service-worker.js' '/manifest.json'
+          cd ../../web/dist
           aws s3 sync . s3://comunion-dev --delete --acl public-read
           aws cloudfront create-invalidation --distribution-id E2AJ2NIGHSNYL --paths '/index.html' '/service-worker.js' '/manifest.json'
       - name: Notification

@@ -8,12 +8,10 @@
 packages
 |- components # 通用组件管理
 |- docs # 文档目录，基于 vitepress
-|- esbuild-plugin-svg-to-vue3 # svg 生成 vue3 组件的插件
-|- generator # 代码生成辅助工具
 |- hooks # 通用 vue hooks
-|- i8n-tools # 翻译辅助工具
 |- icons # 图标管理
 |- utils # 通用工具库管理
+|- homeage # 对外宣传页
 |- web # 前端页面
 ```
 
