@@ -1,5 +1,6 @@
 import { UStartupLogo } from '@comunion/components'
 import { defineComponent, PropType } from 'vue'
+import { useRouter } from 'vue-router'
 import { StartupItem } from '@/types'
 
 const StartupCard = defineComponent({
@@ -11,8 +12,12 @@ const StartupCard = defineComponent({
     }
   },
   setup(props, context) {
+    const router = useRouter()
+    const toStartDetail = () => {
+      router.push({ path: '/startup/detail', query: { startupId: props.startup.id } })
+    }
     return () => (
-      <div class="flex h-28 w-full items-center">
+      <div class="flex h-28 w-full items-center cursor-pointer" onClick={toStartDetail}>
         <div class="flex h-full w-22 items-center">
           <UStartupLogo src={props.startup.logo} width="8" height="8" class="h-18 w-18" />
         </div>

@@ -16,9 +16,6 @@ const StartupCard = defineComponent({
     }
   },
   setup(props, ctx) {
-    /**
-     * 从props获取参数hashtags,进行重组（['javaScript','web']）
-     */
     const hashtagsArray = props.startup.hashTags.map(key => {
       return key.name
     })
@@ -44,9 +41,36 @@ const StartupCard = defineComponent({
               height="6"
               class="rounded h-10 w-10 !object-contain"
             />
+            <div class="flex-1"></div>
+            {props.startup.kyc && (
+              <UTag
+                class="u-body3 mr-1"
+                type="filled"
+                bgColor="#EC53A4"
+                style={{
+                  'font-weight': '700',
+                  'font-size': '14px'
+                }}
+              >
+                KYC
+              </UTag>
+            )}
+            {props.startup.contractAudit && (
+              <UTag
+                class="u-body3 mr-1"
+                type="filled"
+                bgColor="#5331F4"
+                style={{
+                  'font-weight': '700',
+                  'font-size': '14px'
+                }}
+              >
+                AUDIT
+              </UTag>
+            )}
             {props.startup.mode > 0 && (
               <UTag
-                class="u-body3 ml-auto"
+                class="u-body3"
                 type="filled"
                 bgColor={STARTUP_TYPES_COLOR_MAP[modeName]}
                 style={{
@@ -73,7 +97,7 @@ const StartupCard = defineComponent({
         </div>
         <UTeamMembers
           memberCount={props.startup.memberCount}
-          // followCount={props.startup.followCount}
+          followCount={props.startup.followCount}
         />
       </div>
     )
