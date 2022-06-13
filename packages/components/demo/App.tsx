@@ -8,7 +8,8 @@ import {
   UMessage,
   ULoadingBar,
   ULoadingBarProvider,
-  UUploadProvider
+  UUploadProvider,
+  UModalProvider
 } from '@/comps/index'
 
 const onHashSearch = (value: string) => {
@@ -58,11 +59,13 @@ export default defineComponent({
           <ULoadingBarProvider>
             <ULoadingBar />
           </ULoadingBarProvider>
-          <UHashInputProvider onSearch={onHashSearch}>
-            <UUploadProvider onUpload={onUpload}>
-              <RouterView></RouterView>
-            </UUploadProvider>
-          </UHashInputProvider>
+          <UModalProvider>
+            <UHashInputProvider onSearch={onHashSearch}>
+              <UUploadProvider onUpload={onUpload}>
+                <RouterView></RouterView>
+              </UUploadProvider>
+            </UHashInputProvider>
+          </UModalProvider>
         </UStyleProvider>
       )
     }
