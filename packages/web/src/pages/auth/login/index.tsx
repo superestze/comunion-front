@@ -1,14 +1,14 @@
 import { UButton, ULogo } from '@comunion/components'
-import { GithubFilled, GoogleFilled, WalletOutlined } from '@comunion/icons'
+import { WalletOutlined } from '@comunion/icons'
 import { defineComponent, ref, watchEffect } from 'vue'
 import leftBgImg from './assets/bg.png'
-import styles from './index.module.css'
 // import {
 //   GITHUB_CALLBACK_URL,
 //   GITHUB_CLIENT_ID,
 //   GOOGLE_CALLBACK_URL,
 //   GOOGLE_CLIENT_ID
 // } from '@/constants'
+import { OAuthSignWidget } from '@/components/OAuth'
 import { useOnLoggedIn } from '@/hooks'
 import MoreNavigationPage from '@/pages/auth/login/components/More'
 import { useUserStore, useWalletStore } from '@/stores'
@@ -93,14 +93,7 @@ const LoginPage = defineComponent({
               <div class="mx-3 text-[#999] text-[18px] leading-5">Sign in with social account</div>
               <div class="bg-[#d8d8d8] h-[1px] w-[90px]" />
             </div>
-            <div class="flex items-center">
-              <div class={styles.oauthBtn}>
-                <GoogleFilled />
-              </div>
-              <div class={styles.oauthBtn}>
-                <GithubFilled class="text-primary" />
-              </div>
-            </div>
+            <OAuthSignWidget />
           </div>
         </div>
       </div>
