@@ -12,28 +12,52 @@ const ComerDetail = defineComponent({
   setup() {
     const pageLoading = ref(false)
     const comerInfo = ref<ServiceReturn<'account@comer-info-get'>>()
+    const isFollow = ref(false)
+    const startupsInfo = ref<ServiceReturn<'startup@startup-list-be-member'>>()
     const route = useRoute()
     const getComerInfo = async () => {
       pageLoading.value = true
       const { error, data } = await services['account@comer-info-get']({
         comerId: route.params.id
       })
+      const { error: followError, data: followData } = await services[
+        'account@comer-followed-by-me'
+      ]({
+        comerId: route.params.id
+      })
+      if (!followError) {
+        isFollow.value = followData.isFollowed
+      }
       if (!error) {
         comerInfo.value = data
       }
       pageLoading.value = false
     }
+    const followComer = async (toStatus: string) => {
+      if (toStatus === 'follow') {
+        await services['account@comer-follow']({
+          comerId: route.params.id
+        })
+      } else {
+        await services['account@comer-unfollow']({
+          comerId: route.params.id
+        })
+      }
+      getComerInfo()
+    }
     onMounted(() => {
       getComerInfo()
     })
     return {
+      comerId: route.params.id,
       pageLoading,
-      comerInfo
+      comerInfo,
+      isFollow,
+      startupsInfo,
+      followComer
     }
   },
   render() {
-    console.log('this.comerInfo', this.comerInfo)
-
     return (
       <USpin show={this.pageLoading}>
         <UBreadcrumb class="mt-10 mb-10">
@@ -54,13 +78,20 @@ const ComerDetail = defineComponent({
         </UBreadcrumb>
         <div class="flex gap-6 mb-20">
           <section class="basis-[420px]">
-            <ComerInfo profileInfo={this.comerInfo?.comerProfile} />
+            <ComerInfo
+              profileInfo={this.comerInfo?.comerProfile}
+              isFollow={this.isFollow}
+              address={this.comerInfo?.address}
+              followList={this.comerInfo?.follows}
+              fansList={this.comerInfo?.followed}
+              onFollowComer={this.followComer}
+            />
           </section>
           <section class="flex-1">
             <UCard title="Startup" class="mb-6 !pb-8">
-              <StartupInfo startups={[]} />
+              <StartupInfo comerId={this.comerId as string} />
             </UCard>
-            <UCard title="Bounty" class="mb-6 !pb-8">
+            <UCard title="Bounty" class="!pb-8">
               <UNoContent textTip="NO WALLET ADDRESS" class="py-20">
                 <EmptyFilled />
               </UNoContent>

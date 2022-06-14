@@ -4,7 +4,7 @@ import { defineComponent, ref } from 'vue'
 import { StartupTeamCard } from './TeamCard'
 import { TeamHoverCard } from './TeamHoverCard'
 
-const MAX_SHOW_COUNT = 0
+const MAX_SHOW_COUNT = 1
 
 export const Team = defineComponent({
   name: 'Team',

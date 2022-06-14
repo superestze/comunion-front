@@ -1,17 +1,19 @@
 import { ULazyImage, UButton } from '@comunion/components'
 import { HookFilled, PlusOutlined } from '@comunion/icons'
-import { defineComponent, computed, PropType } from 'vue'
-import { ServiceReturn } from '@/services'
+import { defineComponent, computed, PropType, onMounted, ref } from 'vue'
+import { ServiceReturn, services } from '@/services'
 
 export const TeamHoverCard = defineComponent({
   name: 'TeamHoverCard',
   props: {
     teamMember: {
-      type: Object as PropType<ServiceReturn<'account@comer-info-get'>>
+      type: Object as PropType<ServiceReturn<'account@comer-info-get'>>,
+      required: true
     }
   },
   setup(props, ctx) {
     const { teamMember } = props
+    const isFollow = ref(false)
     const skills = computed(() => {
       return teamMember?.comerProfile?.skills?.map((skill, skillIndex) => {
         return (
@@ -23,6 +25,31 @@ export const TeamHoverCard = defineComponent({
           </div>
         )
       })
+    })
+    const getIsFollow = async (comerId: number) => {
+      const { error: followError, data: followData } = await services[
+        'account@comer-followed-by-me'
+      ]({
+        comerId
+      })
+      if (!followError) {
+        isFollow.value = followData.isFollowed
+      }
+    }
+    const followComer = async (comerId: number, toStatus: string) => {
+      if (toStatus === 'follow') {
+        await services['account@comer-follow']({
+          comerId
+        })
+      } else {
+        await services['account@comer-unfollow']({
+          comerId
+        })
+      }
+      getIsFollow(comerId)
+    }
+    onMounted(() => {
+      getIsFollow(teamMember?.comerProfile?.comerID as number)
     })
     return () => (
       <div class="px-14 relative">
@@ -38,42 +65,28 @@ export const TeamHoverCard = defineComponent({
         </div>
         <div>{skills}</div>
         <div class="mt-10 text-center mb-4">
-          {teamMember?.isDeleted ? (
-            <UButton
-              type="primary"
-              size="small"
-              ghost
-              onClick={() => ctx.emit('unfollowStartup')}
-              v-slots={{
-                icon: () => {
-                  return (
-                    <div class="flex items-center w-4.5">
-                      <HookFilled />
-                    </div>
-                  )
-                }
-              }}
-            >
-              Unfollow
-            </UButton>
-          ) : (
-            <UButton
-              type="primary"
-              size="small"
-              onClick={() => ctx.emit('followStartup')}
-              v-slots={{
-                icon: () => {
-                  return (
-                    <div class="flex items-center w-4.5">
-                      <PlusOutlined />
-                    </div>
-                  )
-                }
-              }}
-            >
-              Follow
-            </UButton>
-          )}
+          <UButton
+            type="primary"
+            size="small"
+            ghost={isFollow.value}
+            onClick={() =>
+              followComer(
+                teamMember?.comerProfile?.comerID as number,
+                isFollow.value ? 'unFollow' : 'follow'
+              )
+            }
+            v-slots={{
+              icon: () => {
+                return (
+                  <div class="flex items-center w-4.5">
+                    {isFollow.value ? <HookFilled /> : <PlusOutlined />}
+                  </div>
+                )
+              }
+            }}
+          >
+            {isFollow.value ? <span>Unfollow</span> : <span>Follow</span>}
+          </UButton>
         </div>
       </div>
     )
