@@ -10,10 +10,16 @@ import {
 import { HookFilled, PlusOutlined, ArrowLeftOutlined } from '@comunion/icons'
 import dayjs from 'dayjs'
 import utcPlugin from 'dayjs/plugin/utc'
-import { defineComponent, onMounted, ref, computed } from 'vue'
+import { defineComponent, onMounted, ref, computed, watchEffect } from 'vue'
 import { useRoute } from 'vue-router'
 import { SocialGroup } from './components/SocialGroup'
-import { getStartupTypeFromNumber, StartupTypesType, STARTUP_TYPES_COLOR_MAP } from '@/constants'
+import {
+  getStartupTypeFromNumber,
+  StartupTypesType,
+  STARTUP_TYPES_COLOR_MAP,
+  supportedNetworks,
+  ChainNetworkType
+} from '@/constants'
 import router from '@/router'
 import { services } from '@/services'
 import { useWalletStore } from '@/stores'
@@ -30,8 +36,18 @@ export const StartupInfo = defineComponent({
     const startupId = route.params.id
     const userIsFollow = ref(false)
     const pageLoading = ref(false)
-
     const startup = ref<StartupItem>()
+    const networkCache = ref<ChainNetworkType>()
+
+    const currentNetwork = computed(() => {
+      return supportedNetworks.find(network => network.chainId === walletStore.chainId ?? 1)
+    })
+
+    watchEffect(() => {
+      if (currentNetwork.value?.chainId) {
+        networkCache.value = currentNetwork.value
+      }
+    })
     const modeName = computed(() => {
       console.log('startup.value?.mode', startup.value?.mode)
 
@@ -220,11 +236,14 @@ export const StartupInfo = defineComponent({
             <p class="flex mb-4.5 items-center">
               <span class="mr-4 text-grey3 whitespace-nowrap u-label2">BLOCKCHAIN ADDRESS:</span>
               {startup.value?.blockChainAddress ? (
-                <UAddress
-                  address={startup.value?.blockChainAddress}
-                  class="u-title2 break-all"
-                  blockchainExplorerUrl={walletStore.blockchainExplorerUrl}
-                />
+                <>
+                  <img src={supportedNetworks[0].logo} class="rounded-full h-5 w-5 pr-2" />
+                  <UAddress
+                    address={startup.value?.blockChainAddress}
+                    class="u-title2 break-all"
+                    blockchainExplorerUrl={walletStore.blockchainExplorerUrl}
+                  />
+                </>
               ) : (
                 <span class="u-title2">--</span>
               )}

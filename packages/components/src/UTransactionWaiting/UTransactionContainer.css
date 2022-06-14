@@ -1,7 +1,7 @@
 .u-transaction-container {
   @apply flex flex-col right-0 z-100 absolute;
 
-  top: var(--u-app-header-height, 102px);
+  /* top: var(--u-app-header-height, 102px); */
 }
 
 .transactions {
