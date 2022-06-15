@@ -5,7 +5,8 @@ import { STORE_KEY_TOKEN } from '@/constants'
 import router from '@/router'
 import { services } from '@/services'
 import { useWalletStore } from '@/stores'
-import type { UserProfileState } from '@/types'
+import type { UserProfileState, UserResponse } from '@/types'
+import { clearItem, setItem } from '@/utils/storage'
 import AbstractWallet from '@/wallets/AbstractWallet'
 
 export type UserState = {
@@ -15,13 +16,16 @@ export type UserState = {
   token: string | undefined
   // user profile
   profile: UserProfileState | null
+  // user signin response
+  userResponse: UserResponse | null
 }
 
 export const useUserStore = defineStore('user', {
   state: (): UserState => ({
     token: readObject<string>(STORE_KEY_TOKEN),
     inited: false,
-    profile: null
+    profile: null,
+    userResponse: null
   }),
   getters: {
     logged: state => !!state.token,
@@ -88,12 +92,16 @@ export const useUserStore = defineStore('user', {
     onLogin(token: string, profile: UserProfileState) {
       this.token = token
       this.profile = profile
+      this.userResponse = profile as UserResponse
+      setItem<number>('oauth:temp:oauthAccountId', this.userResponse.oauthAccountId)
       storeObject(STORE_KEY_TOKEN, token)
     },
     onLogout() {
       const walletStore = useWalletStore()
       this.token = ''
       this.profile = null
+      this.userResponse = null
+      clearItem()
       removeObject(STORE_KEY_TOKEN)
       walletStore.disconnectWallet()
     },
