@@ -248,7 +248,7 @@ export const ComerInfo = defineComponent({
             whiteBoard: () => (
               <div class="mt-10 ml-11">
                 {(this.showDrawerType === 'Fans' ? this.fansList : this.followList)?.map(comer => (
-                  <div key={comer.id} class="mb-10">
+                  <div key={comer.comerID} class="mb-10">
                     <FansItem fansItem={comer} />
                   </div>
                 ))}
