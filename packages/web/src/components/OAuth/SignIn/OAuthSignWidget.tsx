@@ -1,39 +1,40 @@
+import { UModal } from '@comunion/components'
 import { GithubFilled, GoogleFilled } from '@comunion/icons'
-import { randomStr } from '@comunion/utils'
-import { defineComponent } from 'vue'
+import { defineComponent, computed, ref, watchEffect, onUnmounted } from 'vue'
+import useOAuth from '../Hooks/useOAuth'
 import OAuthSignBtn from './OAuthSignBtn'
-import {
-  GITHUB_CALLBACK_URL,
-  GITHUB_CLIENT_ID,
-  GOOGLE_CALLBACK_URL,
-  GOOGLE_CLIENT_ID
-} from '@/constants'
+import { useUserStore } from '@/stores'
 
 export default defineComponent({
   name: 'OAuthSignWidget',
   setup() {
-    const isLocal = process.env.NODE_ENV === 'development'
+    const userStore = useUserStore()
+    const { googleLogin, githubLogin } = useOAuth()
+    const associateWalletVisible = ref<boolean>(false)
+    const dialogVisible = computed<boolean>(() => {
+      return userStore.userResponse?.comerID === 0
+    })
 
-    const state = randomStr()
-    const googleLogin = () =>
-      (window.location.href = `https://accounts.google.com/o/oauth2/v2/auth?response_type=code&scope=openid%20email&client_id=${GOOGLE_CLIENT_ID}&redirect_uri=${GOOGLE_CALLBACK_URL}&state=u${
-        isLocal ? '0' : '1'
-      }${state}`)
+    const stop = watchEffect(() => {
+      associateWalletVisible.value = dialogVisible.value
+    })
 
-    const githubLogin = () =>
-      (window.location.href = `https://github.com/login/oauth/authorize?client_id=${GITHUB_CLIENT_ID}&redirect_uri=${GITHUB_CALLBACK_URL}&state=u${
-        isLocal ? '0' : '1'
-      }${state}`)
+    onUnmounted(() => {
+      stop()
+    })
 
     return () => (
-      <div class="flex items-center">
-        <OAuthSignBtn onTriggerBtn={googleLogin}>
-          <GoogleFilled />
-        </OAuthSignBtn>
-        <OAuthSignBtn onTriggerBtn={githubLogin}>
-          <GithubFilled />
-        </OAuthSignBtn>
-      </div>
+      <>
+        <UModal show={associateWalletVisible.value}></UModal>
+        <div class="flex items-center">
+          <OAuthSignBtn onTriggerBtn={googleLogin}>
+            <GoogleFilled />
+          </OAuthSignBtn>
+          <OAuthSignBtn onTriggerBtn={githubLogin}>
+            <GithubFilled />
+          </OAuthSignBtn>
+        </div>
+      </>
     )
   }
 })

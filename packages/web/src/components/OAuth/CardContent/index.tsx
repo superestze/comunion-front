@@ -1,7 +1,7 @@
 import { UCard } from '@comunion/components'
 import { defineComponent, PropType, computed } from 'vue'
 
-export type DialogContentConfig = {
+export type CardContentConfig = {
   width: number
 }
 
@@ -17,7 +17,7 @@ export default defineComponent({
       require: true
     },
     config: {
-      type: Object as PropType<DialogContentConfig>,
+      type: Object as PropType<CardContentConfig>,
       require: true
     }
   },

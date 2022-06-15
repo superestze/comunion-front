@@ -4,6 +4,12 @@ import { defineComponent } from 'vue'
 export default defineComponent({
   name: 'OAuthLinkBtn',
   emits: ['triggerClick'],
+  props: {
+    disabled: {
+      type: Boolean,
+      required: true
+    }
+  },
   setup(props, ctx) {
     const handleClick = () => {
       ctx.emit('triggerClick')
@@ -15,6 +21,7 @@ export default defineComponent({
         size="small"
         type="primary"
         ghost
+        disabled={props.disabled}
         style={{
           '--n-border': '1px solid var(--u-primary-color)'
         }}
