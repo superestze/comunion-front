@@ -26,7 +26,10 @@ export default function useCommonCallback(
         if (typeof service === 'function') {
           user = await service(query.code as string)
         } else {
-          const { error, data } = await services[service]({ code: query.code as string })
+          const { error, data } = await services[service]({
+            code: query.code as string,
+            state: query.state as string
+          })
           if (!error) {
             user = data
           }

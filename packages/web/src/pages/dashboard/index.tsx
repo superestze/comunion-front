@@ -9,18 +9,21 @@ import Proposals from './components/Proposals'
 import Startups from './components/Startups'
 import { OAuthLinkWidget } from '@/components/OAuth'
 import { ServiceReturn, services } from '@/services'
+import { useUserStore } from '@/stores'
 // import { StartupItem } from '@/types'
 // import { useWalletStore } from '@/stores'
 
 const DashboardPage = defineComponent({
   name: 'Dashboard',
   setup() {
+    const userStore = useUserStore()
     const myProfile = ref<ServiceReturn<'account@comer-profile-get'>>()
     const followedStartups = ref<object[]>([])
     const getDataList = async () => {
       const { error, data } = await services['account@comer-profile-get']()
       if (!error) {
         myProfile.value = data
+        // userStore.setProfile(data as )/
       }
     }
     const getFollowList = async () => {
@@ -62,12 +65,6 @@ const DashboardPage = defineComponent({
 
     const style = {
       currency: 'u-body2 text-grey1 flex-1 break-all max-h-37 '
-    }
-
-    const slots = {
-      'header-extra': () => <div>Oops!</div>,
-      footer: () => <div>Footer</div>,
-      default: () => <p>Content</p>
     }
 
     return () => (
@@ -161,7 +158,7 @@ const DashboardPage = defineComponent({
                     )}
                   </div>
                   <div class="mt-5 flex">
-                    <OAuthLinkWidget />
+                    <OAuthLinkWidget comerAccounts={myProfile.value?.comerAccounts || []} />
                   </div>
                   {/* <div class="mt-2">
                 {myInfo.value?.map((info, i) => {
