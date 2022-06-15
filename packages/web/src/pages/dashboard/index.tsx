@@ -9,21 +9,18 @@ import Proposals from './components/Proposals'
 import Startups from './components/Startups'
 import { OAuthLinkWidget } from '@/components/OAuth'
 import { ServiceReturn, services } from '@/services'
-import { useUserStore } from '@/stores'
 // import { StartupItem } from '@/types'
 // import { useWalletStore } from '@/stores'
 
 const DashboardPage = defineComponent({
   name: 'Dashboard',
   setup() {
-    const userStore = useUserStore()
     const myProfile = ref<ServiceReturn<'account@comer-profile-get'>>()
     const followedStartups = ref<object[]>([])
     const getDataList = async () => {
       const { error, data } = await services['account@comer-profile-get']()
       if (!error) {
         myProfile.value = data
-        // userStore.setProfile(data as )/
       }
     }
     const getFollowList = async () => {
