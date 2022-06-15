@@ -50,11 +50,41 @@ export const services = {
        * @description follow list
        */
       follows: {
-        id: number
-        createdAt: string
-        updatedAt: string
         comerID: number
-        targetComerID: number
+        comer?: {
+          id: number
+          createdAt: string
+          updatedAt: string
+          isDeleted: boolean
+          address: string
+        }
+        comerProfile?: {
+          id: number
+          createdAt: string
+          updatedAt: string
+          isDeleted: boolean
+          comerID: number
+          name: string
+          avatar: string
+          location: string
+          timeZone: string
+          website: string
+          email: string
+          twitter: string
+          discord: string
+          telegram: string
+          medium: string
+          bio: string
+          skills: {
+            id: number
+            createdAt: string
+            updatedAt: string
+            isDeleted: boolean
+            name: string
+            category: string
+            isIndex: boolean
+          }[]
+        }
       }[]
       /**
        * @description follow number
@@ -64,11 +94,41 @@ export const services = {
        * @description fans list
        */
       followed: {
-        id: number
-        createdAt: string
-        updatedAt: string
         comerID: number
-        targetComerID: number
+        comer?: {
+          id: number
+          createdAt: string
+          updatedAt: string
+          isDeleted: boolean
+          address: string
+        }
+        comerProfile?: {
+          id: number
+          createdAt: string
+          updatedAt: string
+          isDeleted: boolean
+          comerID: number
+          name: string
+          avatar: string
+          location: string
+          timeZone: string
+          website: string
+          email: string
+          twitter: string
+          discord: string
+          telegram: string
+          medium: string
+          bio: string
+          skills: {
+            id: number
+            createdAt: string
+            updatedAt: string
+            isDeleted: boolean
+            name: string
+            category: string
+            isIndex: boolean
+          }[]
+        }
       }[]
       /**
        * @description fans number
@@ -159,18 +219,6 @@ export const services = {
       url: replacePath('/account/oauth/register', args),
       method: 'POST',
       ...extract('POST', args, [], [])
-    })
-  },
-  'account@oauth-unlink'(args: {
-    /**
-     * @description oauth帐号的comerAccountId
-     */
-    comerAccountId: number
-  }) {
-    return requestAdapter<{}>({
-      url: replacePath('/account/unlink-oauth', args),
-      method: 'PUT',
-      ...extract('PUT', args, [], [])
     })
   },
   'account@oauth-first-login-with-wallet-link'(
@@ -347,7 +395,7 @@ export const services = {
       ...extract('GET', args, [], [])
     })
   },
-  'account@account-unlink'(args: { accountID: any }) {
+  'account@oauth-account-unlink'(args: { accountID: any }) {
     return requestAdapter<any>({
       url: replacePath('/account/:accountID/unlink', args),
       method: 'DELETE',
@@ -432,6 +480,10 @@ export const services = {
          * @description 类型,1-github,2-google
          */
         accountType: number
+        /**
+         * @description accountId
+         */
+        accountId?: number
       }[]
     }>({
       url: replacePath('/account/profile', args),
@@ -958,6 +1010,30 @@ export const services = {
         blockChainAddress: string
         tokenContractAddress: string
         isSet: boolean
+        overview: string
+        kyc: string
+        contractAudit: string
+        hashTags: {
+          id: number
+          createdAt: string
+          updatedAt: string
+          isDeleted: boolean
+          name: string
+          category: string
+          isIndex: boolean
+        }[]
+        website: string
+        discord: string
+        twitter: string
+        telegram: string
+        docs: string
+        launchNetwork: number
+        tokenName: string
+        tokenSymbol: string
+        totalSupply: number
+        presaleStart: string
+        presaleEnd: string
+        launchDate: string
         wallets: {
           id: number
           createdAt: string
@@ -968,6 +1044,49 @@ export const services = {
           walletName: string
           walletAddress: string
         }[]
+        members: {
+          id: number
+          createdAt: string
+          updatedAt: string
+          comerID: number
+          startupID: number
+          position: string
+          comer?: {
+            id: number
+            createdAt: string
+            updatedAt: string
+            isDeleted: boolean
+            address: string
+          }
+          comerProfile?: {
+            id: number
+            createdAt: string
+            updatedAt: string
+            isDeleted: boolean
+            comerID: number
+            name: string
+            avatar: string
+            location: string
+            timeZone: string
+            website: string
+            email: string
+            twitter: string
+            discord: string
+            telegram: string
+            medium: string
+            bio: string
+            skills: string[]
+          }
+        }[]
+        memberCount: number
+        follows: {
+          id: number
+          createdAt: string
+          updatedAt: string
+          comerID: number
+          startupID: number
+        }[]
+        followCount: number
       }[]
       total: number
     }>({

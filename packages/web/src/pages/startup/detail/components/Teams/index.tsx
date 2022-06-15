@@ -4,7 +4,7 @@ import { defineComponent, ref } from 'vue'
 import { StartupTeamCard } from './TeamCard'
 import { TeamHoverCard } from './TeamHoverCard'
 
-const MAX_SHOW_COUNT = 1
+const MAX_SHOW_COUNT = 5
 
 export const Team = defineComponent({
   name: 'Team',
@@ -20,22 +20,15 @@ export const Team = defineComponent({
       <div class="mt-8">
         {props.teamMembers.length
           ? props.teamMembers.slice(0, MAX_SHOW_COUNT).map((teamMember: any) => (
-              <UPopover
-                placement="left-start"
-                displayDirective="show"
-                v-slots={{
-                  trigger: () => (
-                    <div>
-                      <StartupTeamCard teamMember={teamMember} />
-                    </div>
-                  ),
-                  default: () => (
-                    <div>
-                      <TeamHoverCard teamMember={teamMember} />
-                    </div>
-                  )
-                }}
-              />
+              <div>
+                <UPopover
+                  placement="left-start"
+                  v-slots={{
+                    trigger: () => <StartupTeamCard teamMember={teamMember} />,
+                    default: () => <TeamHoverCard teamMember={teamMember} />
+                  }}
+                />
+              </div>
             ))
           : null}
         {props.memberCount > MAX_SHOW_COUNT && (
@@ -52,23 +45,14 @@ export const Team = defineComponent({
           v-model:show={visible.value}
           v-slots={{
             whiteBoard: () => (
-              <div>
+              <div class="pt-10">
                 {props.teamMembers.length
                   ? props.teamMembers.map((teamMember: any) => (
                       <UPopover
                         placement="left-start"
-                        displayDirective="show"
                         v-slots={{
-                          trigger: () => (
-                            <div class="mt-10 ml-11">
-                              <StartupTeamCard teamMember={teamMember} />
-                            </div>
-                          ),
-                          default: () => (
-                            <div>
-                              <TeamHoverCard teamMember={teamMember} />
-                            </div>
-                          )
+                          trigger: () => <StartupTeamCard teamMember={teamMember} class="pl-11" />,
+                          default: () => <TeamHoverCard teamMember={teamMember} />
                         }}
                       />
                     ))

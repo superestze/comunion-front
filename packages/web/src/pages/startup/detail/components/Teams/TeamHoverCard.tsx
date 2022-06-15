@@ -18,7 +18,7 @@ export const TeamHoverCard = defineComponent({
       return teamMember?.comerProfile?.skills?.map((skill, skillIndex) => {
         return (
           <div>
-            <span>{skill.name}</span>
+            <span class="u-body2">{skill.name}</span>
             {skillIndex + 1 !== teamMember?.comerProfile?.skills?.length && (
               <span class="text-grey5 px-2">|</span>
             )}
@@ -52,7 +52,7 @@ export const TeamHoverCard = defineComponent({
       getIsFollow(teamMember?.comerProfile?.comerID as number)
     })
     return () => (
-      <div class="px-14 relative">
+      <div class="px-10 relative">
         <ULazyImage
           src={teamMember?.comerProfile?.avatar ?? ''}
           class="h-16 w-16 rounded-1\/2 absolute -top-10 left-[calc(50%_-_2rem)]"
@@ -63,8 +63,8 @@ export const TeamHoverCard = defineComponent({
         <div class="u-title font-opensans font-400 text-[13px] leading-5 text-center py-1">
           {teamMember?.comerProfile?.location}
         </div>
-        <div>{skills}</div>
-        <div class="mt-10 text-center mb-4">
+        <div class="flex justify-center">{skills.value?.map(skill => skill)}</div>
+        <div class="mt-10 text-center mb-3">
           <UButton
             type="primary"
             size="small"

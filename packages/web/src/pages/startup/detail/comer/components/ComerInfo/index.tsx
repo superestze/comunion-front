@@ -49,7 +49,7 @@ export const ComerInfo = defineComponent({
   setup(props, ctx) {
     const showDrawerType = ref<false | string>(false)
     const skills = computed(() => {
-      return props.profileInfo?.skills.map((skill, skillIndex) => {
+      return props.profileInfo?.skills?.map((skill, skillIndex) => {
         return (
           <div>
             <span class="u-body2">{skill.name}</span>
