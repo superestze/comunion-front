@@ -115,7 +115,7 @@ export const services = {
       ...extract('GET', args, [], [])
     })
   },
-  'account@oauth-link-wallet'(args: {oauthAccountId: string, address: string}){
+  'account@oauth-link-wallet'(args: { oauthAccountId: string; address: string }) {
     return requestAdapter<{
       address: string
       avatar: string
@@ -130,7 +130,6 @@ export const services = {
       method: 'GET',
       ...extract('GET', args, ['oauthAccountId', 'address'], [])
     })
-    
   },
   'account@oauth-google-login-callback'(args: { state: string; code: string }) {
     return requestAdapter<{
