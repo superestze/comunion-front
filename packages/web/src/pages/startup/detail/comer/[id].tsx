@@ -34,16 +34,18 @@ const ComerDetail = defineComponent({
       pageLoading.value = false
     }
     const followComer = async (toStatus: string) => {
-      if (toStatus === 'follow') {
-        await services['account@comer-follow']({
+      try {
+        const { error } = await services[
+          toStatus === 'follow' ? 'account@comer-follow' : 'account@comer-unfollow'
+        ]({
           comerId: route.params.id
         })
-      } else {
-        await services['account@comer-unfollow']({
-          comerId: route.params.id
-        })
+        if (!error) {
+          getComerInfo()
+        }
+      } catch (error) {
+        console.log('error', error)
       }
-      getComerInfo()
     }
     onMounted(() => {
       getComerInfo()

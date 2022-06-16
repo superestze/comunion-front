@@ -109,10 +109,10 @@ export const ComerInfo = defineComponent({
         </div>
         <div>
           <div class="mt-5 mb-1.5 flex items-center">{this.skills}</div>
-          <div class="mb-10">
-            <span class="u-body2 text-grey3">{this.profileInfo?.email}</span>
-            <span class="u-body2 text-grey3">· {this.profileInfo?.location}</span>
-            <span class="u-body2 text-grey3">· {this.profileInfo?.timeZone}</span>
+          <div class="mb-10 u-body2 text-grey3">
+            <span>{this.profileInfo?.email}</span>
+            <span>· {this.profileInfo?.location}</span>
+            <span>· {this.profileInfo?.timeZone}</span>
           </div>
         </div>
         <div>
