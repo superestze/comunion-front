@@ -13,16 +13,13 @@ export const useProfileStore = defineStore('profile', {
     value: state => state.detail
   },
   actions: {
-    get() {
-      return new Promise(resolve => {
-        services['account@comer-profile-get']().then(response => {
-          const { error, data } = response
-          if (!error) {
-            this.detail = { ...data }
-            resolve(data)
-          }
-        })
-      })
+    async get() {
+      const { error, data } = await services['account@comer-profile-get']()
+      if (!error) {
+        this.detail = { ...data }
+        return data
+      }
+      return
     }
   }
 })

@@ -192,22 +192,19 @@ export const useWalletStore = defineStore('wallet', {
             services['account@wallet-link']({
               address,
               signature
-            })
-              .then(response => {
-                if (response.error) {
-                  return
-                }
-                if (bindCbSuccess && typeof bindCbSuccess === 'function') {
-                  bindCbSuccess(response.data)
-                }
-                this.closeBindModal()
-                userStore.refreshMe()
-              })
-              .catch(() => {
+            }).then(response => {
+              if (response.error) {
                 if (bindCbFailed && typeof bindCbFailed === 'function') {
                   bindCbFailed()
                 }
-              })
+                return
+              }
+              if (bindCbSuccess && typeof bindCbSuccess === 'function') {
+                bindCbSuccess(response.data)
+              }
+              this.closeBindModal()
+              userStore.refreshMe()
+            })
           })
         } catch (error) {
           console.error('Wallet sign errored')

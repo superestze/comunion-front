@@ -3,7 +3,7 @@ import { useRoute } from 'vue-router'
 import AccountAssociation from './account'
 import WalletAssociation from './wallet'
 
-function ShouldDisplayComponent(type: string) {
+function shouldDisplayComponent(type: string) {
   if (type === 'wallet') {
     return <WalletAssociation />
   } else if (type === 'account') {
@@ -19,7 +19,7 @@ export default defineComponent({
     return () => (
       <div class="bg-purple h-full min-h-screen text-[14px] relative">
         <div class="u-page-container flex justify-center items-center h-100vh">
-          {ShouldDisplayComponent(query.type as string)}
+          {shouldDisplayComponent(query.type as string)}
         </div>
       </div>
     )

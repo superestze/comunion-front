@@ -32,7 +32,7 @@ const LoginPage = defineComponent({
       if (userStore.profile) {
         onLogin({ token: userStore.token, ...userStore.profile } as UserResponse)
       }
-      if (path === '/auth/association' || !query.state) {
+      if (path === '/auth/association' || query.state) {
         return
       }
       if (userStore.inited && !userStore.isProfiled) {

@@ -18,9 +18,7 @@ const DashboardPage = defineComponent({
   setup() {
     const profileStore = useProfileStore()
     const followedStartups = ref<object[]>([])
-    const getDataList = async () => {
-      profileStore.get()
-    }
+    const getDataList = profileStore.get
     const getFollowList = async () => {
       const { error, data } = await services['startup@startup-list-followed']({
         limit: 99,
@@ -37,9 +35,7 @@ const DashboardPage = defineComponent({
       getFollowList()
     })
 
-    const myProfile = computed(() => {
-      return profileStore.value
-    })
+    const myProfile = profileStore
 
     const myInfo = computed(() => {
       return [
