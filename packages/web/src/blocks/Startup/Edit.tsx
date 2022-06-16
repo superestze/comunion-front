@@ -51,19 +51,21 @@ const EditStartupForm = defineComponent({
      */
     async function onSubmit() {
       loading.value = true
-      const { error } = await services['startup@startup-basic-setting-update']({
-        startupId: props.startup.id,
-        kyc: securityModel.kyc,
-        contractAudit: securityModel.contractAudit,
-        hashTags: socialModel.tags,
-        website: socialModel.website,
-        discord: socialModel.discord,
-        twitter: socialModel.twitter,
-        telegram: socialModel.telegram,
-        docs: socialModel.docs
-      })
-      if (!error) {
-        onCancel()
+      if (socialModel.tags && socialModel.tags.length) {
+        const { error } = await services['startup@startup-basic-setting-update']({
+          startupId: props.startup.id,
+          kyc: securityModel.kyc,
+          contractAudit: securityModel.contractAudit,
+          hashTags: socialModel.tags,
+          website: socialModel.website,
+          discord: socialModel.discord,
+          twitter: socialModel.twitter,
+          telegram: socialModel.telegram,
+          docs: socialModel.docs
+        })
+        if (!error) {
+          onCancel()
+        }
       }
       loading.value = false
     }
