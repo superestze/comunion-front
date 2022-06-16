@@ -1,5 +1,4 @@
 /* eslint-disable */
-import { ComerAccount } from '@/components/OAuth/Link/OAuthLinkWidget'
 import { requestAdapter } from './a2s.adapter'
 import { extract, replacePath } from './a2s.utils'
 
@@ -299,23 +298,7 @@ export const services = {
       ...extract('GET', args, [], [])
     })
   },
-  'account@oauth-link-wallet'(args: { oauthAccountId: string; address: string }) {
-    return requestAdapter<{
-      address: string
-      avatar: string
-      comerID: number
-      isProfiled: boolean
-      nick: string
-      oauthAccountId: number
-      oauthLinked: boolean
-      token: string
-    }>({
-      url: replacePath('/account/oauth/login-link-by-wallet', args),
-      method: 'GET',
-      ...extract('GET', args, ['oauthAccountId', 'address'], [])
-    })
-  },
-  'account@oauth-google-login-callback'(args: { state: string; code: string }) {
+  'account@oauth-google-login-callback'(args: { state: any; code: any }) {
     return requestAdapter<{
       /**
        * @description comerId为空或0表示该oauth帐号未关联comer
@@ -477,7 +460,6 @@ export const services = {
       telegram: string
       medium: string
       bio?: string
-      comerAccounts: ComerAccount[]
       skills?: {
         id?: number
         createdAt?: string
@@ -549,6 +531,7 @@ export const services = {
       mission: string
       tokenContractAddress: string
       overview: string
+      chainID: number
       blockChainAddress: string
       isSet: boolean
       kyc: string
@@ -617,6 +600,7 @@ export const services = {
         mission: string
         tokenContractAddress: string
         overview: string
+        chainID: number
         blockChainAddress: string
         isSet: boolean
         kyc: string
@@ -685,6 +669,7 @@ export const services = {
         mode: string
         logo: string
         mission: string
+        chainID: number
         blockChainAddress: string
         tokenContractAddress: string
         isSet: boolean
@@ -755,6 +740,7 @@ export const services = {
         mode: string
         logo: string
         mission: string
+        chainID: number
         blockChainAddress: string
         tokenContractAddress: string
         isSet: boolean
@@ -968,6 +954,7 @@ export const services = {
         mode: string
         logo: string
         mission: string
+        chainID: number
         blockChainAddress: string
         tokenContractAddress: string
         isSet: boolean
@@ -1025,6 +1012,7 @@ export const services = {
         mode: string
         logo: string
         mission: string
+        chainID: number
         blockChainAddress: string
         tokenContractAddress: string
         isSet: boolean
