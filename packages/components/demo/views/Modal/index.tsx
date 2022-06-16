@@ -22,7 +22,7 @@ export default defineComponent({
             role="dialog"
             aria-modal="true"
           >
-            展示Modal
+            This is Modal
           </UCard>
         </UModal>
         <UButton type="primary" onClick={showModal}>

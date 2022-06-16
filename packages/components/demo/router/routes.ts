@@ -229,7 +229,7 @@ const routes: RouteRecordRaw[] = [
           {
             path: 'modal',
             name: 'Modal',
-            component: () => import('@/ex/views/Tooltip')
+            component: () => import('@/ex/views/Modal')
           }
         ]
       }
