@@ -30,7 +30,7 @@ dayjs.extend(utcPlugin)
 export const StartupInfo = defineComponent({
   name: 'StartupInfo',
   setup(props) {
-    const walletStore = ref<ChainNetworkType>()
+    const networkInfo = ref<ChainNetworkType>()
     const route = useRoute()
     const startupId = route.params.id
     const userIsFollow = ref(false)
@@ -52,7 +52,7 @@ export const StartupInfo = defineComponent({
         })
         if (!error) {
           startup.value = data
-          walletStore.value = allNetworks.find(item => item.chainId === startup.value?.chainID)
+          networkInfo.value = allNetworks.find(item => item.chainId === startup.value?.chainID)
         }
       }
     }
@@ -227,11 +227,11 @@ export const StartupInfo = defineComponent({
               <span class="mr-4 text-grey3 whitespace-nowrap u-label2">BLOCKCHAIN ADDRESS:</span>
               {startup.value?.blockChainAddress ? (
                 <>
-                  <img src={walletStore.value?.logo} class="rounded-full h-5 w-5 pr-2" />
+                  <img src={networkInfo.value?.logo} class="rounded-full h-5 w-5 pr-2" />
                   <UAddress
                     address={startup.value?.blockChainAddress}
                     class="u-title2 break-all"
-                    blockchainExplorerUrl={walletStore.value?.explorerUrl}
+                    blockchainExplorerUrl={networkInfo.value?.explorerUrl}
                   />
                 </>
               ) : (
