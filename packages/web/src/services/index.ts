@@ -279,7 +279,9 @@ export const services = {
     })
   },
   'account@wallet-link'(args: { signature: string; address: string }) {
-    return requestAdapter<{}>({
+    return requestAdapter<{
+      isProfiled: boolean
+    }>({
       url: replacePath('/account/eth/wallet/link', args),
       method: 'POST',
       ...extract('POST', args, [], [])

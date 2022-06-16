@@ -5,6 +5,7 @@ import { useRouter } from 'vue-router'
 import CardContent from '../CardContent'
 import OAuthLinkBtn from './OAuthLinkBtn'
 import { services } from '@/services'
+import { useProfileStore } from '@/stores/profile'
 
 export type ComerAccount = {
   linked: boolean
@@ -42,6 +43,8 @@ export default defineComponent({
   },
   setup(props) {
     const { push } = useRouter()
+    const loading = ref<boolean>(false)
+    const profileStore = useProfileStore()
     const linked = computed(() => {
       const obj: Linked = {
         google: {
@@ -97,12 +100,21 @@ export default defineComponent({
     }
 
     const unBindAccount = () => {
+      loading.value = true
       services['account@account-unlink']({ accountID: currentUnbindAccountId.value })
+        .then(() => {
+          profileStore.get().then(() => {
+            unBindVisible.value = false
+          })
+        })
+        .finally(() => {
+          loading.value = false
+        })
     }
 
     return () => (
       <>
-        <UModal show={unBindVisible.value} onMaskClick={triggerUnbindDialog}>
+        <UModal show={unBindVisible.value}>
           <CardContent
             title="Associating existing accounts"
             config={{ width: 524 }}
@@ -115,10 +127,15 @@ export default defineComponent({
               ),
               footer: () => (
                 <div class="flex justify-end mt-40px">
-                  <UButton onClick={triggerUnbindDialog} class="w-160px">
+                  <UButton onClick={triggerUnbindDialog} disabled={loading.value} class="w-160px">
                     Cancel
                   </UButton>
-                  <UButton type="primary" class="ml-10px w-160px" onClick={unBindAccount}>
+                  <UButton
+                    type="primary"
+                    class="ml-10px w-160px"
+                    onClick={unBindAccount}
+                    disabled={loading.value}
+                  >
                     Sure
                   </UButton>
                 </div>
@@ -131,12 +148,10 @@ export default defineComponent({
             onTriggerClick={handleGoogleLink(linked.value?.google.accountId)}
             disabled={false}
           >
-            <>
-              <GoogleFilled class="w-5 h-5 mr-3.5 text-primary" />
-              <span class="u-title2 text-primary">
-                {linked.value?.google.linked ? 'Linked' : 'Link'}
-              </span>
-            </>
+            <GoogleFilled class="w-5 h-5 mr-3.5 text-primary" />
+            <span class="u-title2 text-primary">
+              {linked.value?.google.linked ? 'Linked' : 'Link'}
+            </span>
           </OAuthLinkBtn>
         </div>
         <div class="mr-4">
@@ -144,12 +159,10 @@ export default defineComponent({
             onTriggerClick={handleGithubLink(linked.value?.github.accountId)}
             disabled={false}
           >
-            <>
-              <GithubFilled class="w-5 h-5 mr-3.5 text-primary" />
-              <span class="u-title2 text-primary">
-                {linked.value?.github.linked ? 'Linked' : 'Link'}
-              </span>
-            </>
+            <GithubFilled class="w-5 h-5 mr-3.5 text-primary" />
+            <span class="u-title2 text-primary">
+              {linked.value?.github.linked ? 'Linked' : 'Link'}
+            </span>
           </OAuthLinkBtn>
         </div>
       </>
