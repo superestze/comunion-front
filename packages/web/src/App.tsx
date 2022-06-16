@@ -6,7 +6,8 @@ import {
   UContractInteraction,
   UUploadProvider,
   ULoadingBarProvider,
-  ULoadingBar
+  ULoadingBar,
+  UModalProvider
 } from '@comunion/components'
 import { defineComponent } from 'vue'
 import { RouterView } from 'vue-router'
@@ -50,7 +51,9 @@ export default defineComponent({
           <UUploadProvider onUpload={onUpload}>
             <UHashInputProvider onSearch={onSearchHash}>
               {/* {userStore.inited && walletStore.inited && <RouterView />} */}
-              <RouterView />
+              <UModalProvider>
+                <RouterView />
+              </UModalProvider>
             </UHashInputProvider>
           </UUploadProvider>
         </ULoadingBarProvider>

@@ -26,4 +26,7 @@ export interface UserResponse
   nick?: string
   token: string
   isProfiled: boolean
+  comerID: number
+  oauthLinked: boolean
+  oauthAccountId: number
 }

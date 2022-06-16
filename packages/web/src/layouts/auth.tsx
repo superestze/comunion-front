@@ -10,6 +10,9 @@ const AuthLayout = defineComponent({
     const userStore = useUserStore()
 
     watchEffect(() => {
+      if (path === '/auth/association') {
+        return
+      }
       if (userStore.logged) {
         // when logged and profiled, you need not stay in auth page
         if (userStore.isProfiled) {
@@ -24,7 +27,7 @@ const AuthLayout = defineComponent({
       }
     })
 
-    return () => (userStore.logged && userStore.isProfiled ? null : <RouterView />)
+    return () => <RouterView />
   }
 })
 

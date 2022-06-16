@@ -1,14 +1,14 @@
 import { UButton, ULogo } from '@comunion/components'
-import { GithubFilled, GoogleFilled, WalletOutlined } from '@comunion/icons'
+import { WalletOutlined } from '@comunion/icons'
 import { defineComponent, ref } from 'vue'
 import leftBgImg from './assets/bg.png'
-import styles from './index.module.css'
 // import {
 //   GITHUB_CALLBACK_URL,
 //   GITHUB_CLIENT_ID,
 //   GOOGLE_CALLBACK_URL,
 //   GOOGLE_CLIENT_ID
 // } from '@/constants'
+import { OAuthSignWidget } from '@/components/OAuth'
 import { useOnLoggedIn } from '@/hooks'
 import MoreNavigationPage from '@/pages/auth/login/components/More'
 import { useUserStore, useWalletStore } from '@/stores'
@@ -50,6 +50,12 @@ const LoginPage = defineComponent({
       loading.value = false
     }
 
+    // watchEffect(() => {
+    //   if (userStore.inited && !userStore.isProfiled) {
+    //     userStore.logout(false)
+    //   }
+    // })
+
     return () => (
       <div class="flex min-h-screen">
         <div class="bg-primary flex-shrink-0 text-white px-13 pt-14 w-108 relative overflow-hidden lg:px-14 lg:w-114 2xl:px-15 2xl:pt-17 2xl:w-118">
@@ -87,14 +93,7 @@ const LoginPage = defineComponent({
               <div class="mx-3 text-[#999] text-[18px] leading-5">Sign in with social account</div>
               <div class="bg-[#d8d8d8] h-[1px] w-[90px]" />
             </div>
-            <div class="flex items-center">
-              <div class={styles.oauthBtn}>
-                <GoogleFilled />
-              </div>
-              <div class={styles.oauthBtn}>
-                <GithubFilled class="text-primary" />
-              </div>
-            </div>
+            <OAuthSignWidget />
           </div>
         </div>
       </div>

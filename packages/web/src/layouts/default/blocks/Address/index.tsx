@@ -11,7 +11,7 @@ const WalletAddress = defineComponent({
     const walletStore = useWalletStore()
 
     const connectWallet = () => {
-      walletStore.ensureWalletConnected()
+      walletStore.ensureWalletConnected(!(walletStore.connected && walletStore.address))
     }
 
     function disconnect() {
@@ -19,6 +19,7 @@ const WalletAddress = defineComponent({
     }
 
     return () => {
+      // userStore.
       const btn = (
         <HeaderButton class={ctx.attrs.class} onClick={connectWallet}>
           {walletStore.connected && walletStore.address
