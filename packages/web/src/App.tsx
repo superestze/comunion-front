@@ -11,6 +11,7 @@ import {
 } from '@comunion/components'
 import { defineComponent } from 'vue'
 import { RouterView } from 'vue-router'
+import WalletBindBlock from './blocks/WalletBind'
 import WalletConnectBlock from './blocks/WalletConnect'
 import { services } from './services'
 import { upload as onUpload } from './services/a2s.adapter'
@@ -58,6 +59,7 @@ export default defineComponent({
           </UUploadProvider>
         </ULoadingBarProvider>
         <WalletConnectBlock />
+        <WalletBindBlock />
       </UStyleProvider>
     )
   }

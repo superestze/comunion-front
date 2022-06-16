@@ -8,20 +8,18 @@ import FollowDateil from './components/FollowDateil'
 import Proposals from './components/Proposals'
 import Startups from './components/Startups'
 import { OAuthLinkWidget } from '@/components/OAuth'
-import { ServiceReturn, services } from '@/services'
+import { services } from '@/services'
+import { useProfileStore } from '@/stores/profile'
 // import { StartupItem } from '@/types'
 // import { useWalletStore } from '@/stores'
 
 const DashboardPage = defineComponent({
   name: 'Dashboard',
   setup() {
-    const myProfile = ref<ServiceReturn<'account@comer-profile-get'>>()
+    const profileStore = useProfileStore()
     const followedStartups = ref<object[]>([])
     const getDataList = async () => {
-      const { error, data } = await services['account@comer-profile-get']()
-      if (!error) {
-        myProfile.value = data
-      }
+      profileStore.get()
     }
     const getFollowList = async () => {
       const { error, data } = await services['startup@startup-list-followed']({
@@ -37,6 +35,10 @@ const DashboardPage = defineComponent({
     onMounted(() => {
       getDataList()
       getFollowList()
+    })
+
+    const myProfile = computed(() => {
+      return profileStore.value
     })
 
     const myInfo = computed(() => {

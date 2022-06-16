@@ -1,12 +1,11 @@
 import { message } from '@comunion/components'
-import { readObject, removeObject, storeObject } from '@comunion/utils'
+import { storage } from '@comunion/utils'
 import { defineStore } from 'pinia'
 import { STORE_KEY_TOKEN } from '@/constants'
 import router from '@/router'
 import { services } from '@/services'
 import { useWalletStore } from '@/stores'
 import type { UserProfileState, UserResponse } from '@/types'
-import { clearItem, setItem } from '@/utils/storage'
 import AbstractWallet from '@/wallets/AbstractWallet'
 
 export type UserState = {
@@ -22,7 +21,7 @@ export type UserState = {
 
 export const useUserStore = defineStore('user', {
   state: (): UserState => ({
-    token: readObject<string>(STORE_KEY_TOKEN),
+    token: storage('local').get<string>(STORE_KEY_TOKEN),
     inited: false,
     profile: null,
     userResponse: null
@@ -93,16 +92,16 @@ export const useUserStore = defineStore('user', {
       this.token = token
       this.profile = profile
       this.userResponse = profile as UserResponse
-      setItem<number>('oauth:temp:oauthAccountId', this.userResponse.oauthAccountId)
-      storeObject(STORE_KEY_TOKEN, token)
+      storage('session').set('oauth:info', this.userResponse)
+      storage('local').set(STORE_KEY_TOKEN, token)
     },
     onLogout() {
       const walletStore = useWalletStore()
       this.token = ''
       this.profile = null
       this.userResponse = null
-      clearItem()
-      removeObject(STORE_KEY_TOKEN)
+      storage('session').clear()
+      storage('local').remove(STORE_KEY_TOKEN)
       walletStore.disconnectWallet()
     },
     logout(msg?: false | string) {

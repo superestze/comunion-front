@@ -1,5 +1,5 @@
 import { message } from '@comunion/components'
-import { readObject, removeObject, storeObject } from '@comunion/utils'
+import { storage } from '@comunion/utils'
 import type { providers } from 'ethers'
 import { defineStore } from 'pinia'
 import { markRaw } from 'vue'
@@ -11,6 +11,7 @@ import {
   supportedChainIds
 } from '@/constants'
 import router from '@/router'
+import { ServiceReturn, services } from '@/services'
 import { SupportedWalletTypes } from '@/types/wallet'
 import { getWallet } from '@/wallets'
 import AbstractWallet from '@/wallets/AbstractWallet'
@@ -32,12 +33,16 @@ export type WalletState = {
   connected: boolean
   // is wallet connect modal opened
   connectModalOpened: boolean
+  // bind wallet modal opened
+  bindModalOpened: boolean
 }
 
 // promise resolve
 let _resolve: (() => void) | undefined
 let _reject: (() => void) | undefined
-
+// bind cb
+let bindCbSuccess!: (params: ServiceReturn<'account@wallet-link'>) => void
+let bindCbFailed!: () => void
 // hack
 let _openNetworkSwitcher: () => void | undefined
 
@@ -47,10 +52,11 @@ export const useWalletStore = defineStore('wallet', {
     address: undefined,
     chainId: undefined,
     chainName: undefined,
-    walletType: readObject<NonNullable<WalletState['walletType']>>(STORE_KEY_WALLET_TYPE),
+    walletType: storage('local').get<NonNullable<WalletState['walletType']>>(STORE_KEY_WALLET_TYPE),
     connected: false,
     wallet: undefined,
-    connectModalOpened: false
+    connectModalOpened: false,
+    bindModalOpened: false
   }),
   getters: {
     isNetworkSupported: state =>
@@ -60,7 +66,7 @@ export const useWalletStore = defineStore('wallet', {
   actions: {
     async init() {
       if (this.inited) return
-      const isConnected = readObject<string>(STORE_KEY_WALLET_CONNECTED)
+      const isConnected = storage('local').get<string>(STORE_KEY_WALLET_CONNECTED)
       // auto connect when previous session is connected
       if (isConnected && this.walletType) {
         const wallet = await getWallet(this.walletType)
@@ -113,12 +119,12 @@ export const useWalletStore = defineStore('wallet', {
     },
     disconnectWallet() {
       this.connected = false
-      removeObject(STORE_KEY_WALLET_CONNECTED)
+      storage('local').remove(STORE_KEY_WALLET_CONNECTED)
       this.address = undefined
       this.chainId = undefined
       this.chainName = undefined
       this.walletType = undefined
-      removeObject(STORE_KEY_WALLET_TYPE)
+      storage('local').remove(STORE_KEY_WALLET_TYPE)
       this.wallet = undefined
       this._removeEventListeners()
     },
@@ -139,8 +145,8 @@ export const useWalletStore = defineStore('wallet', {
       const wallet = await getWallet(walletType)
       if (wallet) {
         this._onWallectConnect(wallet)
-        storeObject(STORE_KEY_WALLET_TYPE, walletType)
-        storeObject(STORE_KEY_WALLET_CONNECTED, 1)
+        storage('local').set(STORE_KEY_WALLET_TYPE, walletType)
+        storage('local').set(STORE_KEY_WALLET_CONNECTED, 1)
       }
       this.connectModalOpened = false
       return wallet
@@ -161,6 +167,52 @@ export const useWalletStore = defineStore('wallet', {
           _resolve = resolve
           _reject = reject
         })
+      }
+    },
+    openBindModal() {
+      this.bindModalOpened = true
+      return new Promise<ServiceReturn<'account@wallet-link'> | null>((resolve, reject) => {
+        bindCbSuccess = resolve
+        bindCbFailed = reject
+      })
+    },
+    closeBindModal() {
+      this.bindModalOpened = false
+    },
+    async bindWallet(wallet: AbstractWallet) {
+      const address = await wallet.getAddress()
+      const userStore = useUserStore()
+      const { error, data } = await services['account@wallet-nonce-get']({
+        address
+      })
+      if (!error) {
+        try {
+          const signature = await wallet.sign(data!.nonce!)
+          return new Promise(() => {
+            services['account@wallet-link']({
+              address,
+              signature
+            })
+              .then(response => {
+                if (response.error) {
+                  return
+                }
+                if (bindCbSuccess && typeof bindCbSuccess === 'function') {
+                  bindCbSuccess(response.data)
+                }
+                this.closeBindModal()
+                userStore.refreshMe()
+              })
+              .catch(() => {
+                if (bindCbFailed && typeof bindCbFailed === 'function') {
+                  bindCbFailed()
+                }
+              })
+          })
+        } catch (error) {
+          console.error('Wallet sign errored')
+          return
+        }
       }
     },
     // open network switcher
