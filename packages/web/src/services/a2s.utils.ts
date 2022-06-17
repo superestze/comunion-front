@@ -2,7 +2,7 @@
 import type { Method, RequestBody, RequestQuery } from './a2s.types'
 
 /**
- * extract query and body
+ * 将参数拆分为 query 和 body
  */
 export function extract(
   method: Method,
@@ -41,7 +41,7 @@ export function extract(
 }
 
 /**
- * replace url path with values
+ * 路径参数插值
  */
 export function replacePath(path: string, pathValueMap?: any) {
   return path
