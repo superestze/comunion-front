@@ -18,6 +18,7 @@ import {
   TwitterFilled
 } from '@comunion/icons'
 import { defineComponent, PropType, computed, h, ref } from 'vue'
+import { useRouter } from 'vue-router'
 import { FansItem } from './FansItem'
 import { ServiceReturn } from '@/services'
 import { toSocialEnd } from '@/utils/socialJump'
@@ -47,6 +48,7 @@ export const ComerInfo = defineComponent({
   },
   emits: ['followComer'],
   setup(props, ctx) {
+    const router = useRouter()
     const showDrawerType = ref<false | string>(false)
     const skills = computed(() => {
       return props.profileInfo?.skills?.map((skill, skillIndex) => {
@@ -90,11 +92,15 @@ export const ComerInfo = defineComponent({
     const followToggle = async (toStatus: string) => {
       ctx.emit('followComer', toStatus)
     }
+    const toComerDetail = comerId => {
+      router.push({ path: `/startup/detail/comer/${comerId}` })
+    }
     return {
       skills,
       followToggle,
       socialLinks,
-      showDrawerType
+      showDrawerType,
+      toComerDetail
     }
   },
   render() {
@@ -221,7 +227,7 @@ export const ComerInfo = defineComponent({
             >
               {this.fansList?.length}
             </div>
-            <div class="u-body2 text-primary">Fans</div>
+            <div class="u-body2 text-primary">Followers</div>
           </div>
           <div
             class="flex-1 px-4 py-5 rounded-lg"
@@ -248,7 +254,11 @@ export const ComerInfo = defineComponent({
             whiteBoard: () => (
               <div class="mt-10 ml-11">
                 {(this.showDrawerType === 'Fans' ? this.fansList : this.followList)?.map(comer => (
-                  <div key={comer.comerID} class="mb-10">
+                  <div
+                    key={comer.comerID}
+                    class="mb-10 cursor-pointer"
+                    onClick={() => this.toComerDetail(comer.comerID)}
+                  >
                     <FansItem fansItem={comer} />
                   </div>
                 ))}

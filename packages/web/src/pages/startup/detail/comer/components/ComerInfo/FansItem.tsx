@@ -11,7 +11,7 @@ export const FansItem = defineComponent({
   },
   setup(props) {
     return () => (
-      <div class="flex items-center">
+      <div class="flex items-center cursor-pointer">
         <ULazyImage
           src={props.fansItem?.comerProfile?.avatar || ''}
           class="rounded-1/2 h-18 w-18 mr-4"
