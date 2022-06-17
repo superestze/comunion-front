@@ -4,14 +4,18 @@ import { defineComponent } from 'vue'
 import HeaderButton from '../../components/HeaderButton'
 import HeaderDropdown from '../../components/HeaderDropdown'
 import { useWalletStore } from '@/stores'
+// import { UserResponse } from '@/types'
 
 const WalletAddress = defineComponent({
   name: 'HeaderAddress',
   setup(props, ctx) {
     const walletStore = useWalletStore()
 
-    const connectWallet = () => {
-      walletStore.ensureWalletConnected()
+    const connectWallet = async () => {
+      if (walletStore.connected && walletStore.address) {
+        return
+      }
+      walletStore.openBindModal()
     }
 
     function disconnect() {
@@ -19,6 +23,7 @@ const WalletAddress = defineComponent({
     }
 
     return () => {
+      // userStore.
       const btn = (
         <HeaderButton class={ctx.attrs.class} onClick={connectWallet}>
           {walletStore.connected && walletStore.address

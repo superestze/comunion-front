@@ -10,7 +10,15 @@ export function useOnLoggedIn() {
       const { token, ..._user } = user
       userStore.onLogin(token, _user)
     }
-    if (user?.isProfiled || userStore.isProfiled) {
+    if (user?.firstLogin) {
+      replace('/auth/association?type=account')
+      return
+    }
+    if (!user?.address) {
+      replace('/auth/association?type=wallet')
+      return
+    }
+    if (user?.isProfiled || userStore.isProfiled || user?.oauthLinked) {
       replace('/welcome')
     } else {
       replace('/auth/register/intro')

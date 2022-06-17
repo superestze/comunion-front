@@ -1,3 +1,5 @@
+import { ComerAccount } from '@/components/OAuth/Link/OAuthLinkWidget'
+
 export interface UserProfileState {
   // token: string
   avatar: string
@@ -26,4 +28,9 @@ export interface UserResponse
   nick?: string
   token: string
   isProfiled: boolean
+  comerID: number
+  oauthLinked: boolean
+  oauthAccountId: number
+  firstLogin: boolean
+  comerAccounts: ComerAccount[]
 }

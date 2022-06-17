@@ -225,6 +225,11 @@ const routes: RouteRecordRaw[] = [
             path: 'tooltip',
             name: 'Tooltip',
             component: () => import('@/ex/views/Tooltip')
+          },
+          {
+            path: 'modal',
+            name: 'Modal',
+            component: () => import('@/ex/views/Modal')
           }
         ]
       }

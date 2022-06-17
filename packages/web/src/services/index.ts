@@ -3,13 +3,22 @@ import { requestAdapter } from './a2s.adapter'
 import { extract, replacePath } from './a2s.utils'
 
 export const services = {
+  'account@wallet-nonce-get'(args: { address: any }) {
+    return requestAdapter<{
+      nonce?: string
+    }>({
+      url: replacePath('/account/eth/nonce', args),
+      method: 'GET',
+      ...extract('GET', args, ['address'], [])
+    })
+  },
   'account@comer-info-get'(args: { comerId: any }) {
     return requestAdapter<{
       id: number
       createdAt: string
       updatedAt: string
       isDeleted: boolean
-      Address: string
+      address: string
       comerProfile?: {
         id: number
         createdAt: string
@@ -19,7 +28,13 @@ export const services = {
         name: string
         avatar: string
         location: string
+        timeZone: string
         website: string
+        email: string
+        twitter: string
+        discord: string
+        telegram: string
+        medium: string
         bio: string
         skills: {
           id: number
@@ -31,6 +46,94 @@ export const services = {
           isIndex: boolean
         }[]
       }
+      /**
+       * @description follow list
+       */
+      follows: {
+        comerID: number
+        comer?: {
+          id: number
+          createdAt: string
+          updatedAt: string
+          isDeleted: boolean
+          address: string
+        }
+        comerProfile?: {
+          id: number
+          createdAt: string
+          updatedAt: string
+          isDeleted: boolean
+          comerID: number
+          name: string
+          avatar: string
+          location: string
+          timeZone: string
+          website: string
+          email: string
+          twitter: string
+          discord: string
+          telegram: string
+          medium: string
+          bio: string
+          skills: {
+            id: number
+            createdAt: string
+            updatedAt: string
+            isDeleted: boolean
+            name: string
+            category: string
+            isIndex: boolean
+          }[]
+        }
+      }[]
+      /**
+       * @description follow number
+       */
+      followsCount: number
+      /**
+       * @description fans list
+       */
+      followed: {
+        comerID: number
+        comer?: {
+          id: number
+          createdAt: string
+          updatedAt: string
+          isDeleted: boolean
+          address: string
+        }
+        comerProfile?: {
+          id: number
+          createdAt: string
+          updatedAt: string
+          isDeleted: boolean
+          comerID: number
+          name: string
+          avatar: string
+          location: string
+          timeZone: string
+          website: string
+          email: string
+          twitter: string
+          discord: string
+          telegram: string
+          medium: string
+          bio: string
+          skills: {
+            id: number
+            createdAt: string
+            updatedAt: string
+            isDeleted: boolean
+            name: string
+            category: string
+            isIndex: boolean
+          }[]
+        }
+      }[]
+      /**
+       * @description fans number
+       */
+      followedCount: number
     }>({
       url: replacePath('/account/comer/{comerId}', args),
       method: 'GET',
@@ -71,13 +174,90 @@ export const services = {
       ...extract('GET', args, [], ['address'])
     })
   },
-  'account@wallet-nonce-get'(args: { address: any }) {
+  'account@oauth-register'(args: {
+    /**
+     * @description oauth帐号在系统中的comerAccount ID
+     */
+    oauthAccountId: number
+    /**
+     * @description comer-profile-create接口参数
+     */
+    profile?: {
+      name: string
+      avatar: string
+      location?: string
+      timeZone: string
+      website?: string
+      email: string
+      skills?: string[]
+      twitter?: string
+      discord?: string
+      telegram?: string
+      medium?: string
+      bio: string
+    }
+  }) {
     return requestAdapter<{
-      nonce?: string
+      /**
+       * @description comerId为空或0表示该oauth帐号未关联comer
+       */
+      comerId: number
+      nick: string
+      avatar: string
+      address: string
+      token: string
+      isProfiled: boolean
+      /**
+       * @description 该oauth帐号是否关联已经存在comer
+       */
+      oauthLinked: boolean
+      /**
+       * @description 该oauth帐号的comerAccount的ID
+       */
+      oauthAccountId: number
     }>({
-      url: replacePath('/account/eth/nonce', args),
+      url: replacePath('/account/oauth/register', args),
+      method: 'POST',
+      ...extract('POST', args, [], [])
+    })
+  },
+  'account@oauth-first-login-with-wallet-link'(
+    args: {
+      /**
+       * @description oauth-xx-login-callback接口返回的accountId
+       */
+      oauthAccountId: any
+      /**
+       * @description 钱包地址
+       */
+      address: any
+    } & {}
+  ) {
+    return requestAdapter<{
+      /**
+       * @description comerId为空或0表示该oauth帐号未关联comer
+       */
+      comerId: number
+      nick: string
+      avatar: string
+      address: string
+      token: string
+      /**
+       * @description 是否填写了简历
+       */
+      isProfiled: boolean
+      /**
+       * @description 该oauth帐号是否关联已经存在comer
+       */
+      oauthLinked: boolean
+      /**
+       * @description 该oauth帐号的comerAccount的ID
+       */
+      oauthAccountId: number
+    }>({
+      url: replacePath('/account/oauth/login-link-by-wallet', args),
       method: 'GET',
-      ...extract('GET', args, ['address'], [])
+      ...extract('GET', args, ['oauthAccountId', 'address'], [])
     })
   },
   'account@wallet-login'(args: { signature: string; address: string }) {
@@ -87,6 +267,10 @@ export const services = {
       address: string
       token: string
       isProfiled: boolean
+      /**
+       * @description 是否首次使用该钱包登录，如果为false，需要提示绑定已有oauth帐号或者注册
+       */
+      firstLogin: boolean
     }>({
       url: replacePath('/account/eth/wallet/login', args),
       method: 'POST',
@@ -94,7 +278,12 @@ export const services = {
     })
   },
   'account@wallet-link'(args: { signature: string; address: string }) {
-    return requestAdapter<{}>({
+    return requestAdapter<{
+      /**
+       * @description 是否填写简历
+       */
+      isProfiled: boolean
+    }>({
       url: replacePath('/account/eth/wallet/link', args),
       method: 'POST',
       ...extract('POST', args, [], [])
@@ -116,24 +305,57 @@ export const services = {
   },
   'account@oauth-google-login-callback'(args: { state: any; code: any }) {
     return requestAdapter<{
+      /**
+       * @description comerId为空或0表示该oauth帐号未关联comer
+       */
+      comerId: number
       nick: string
       avatar: string
       address: string
       token: string
       isProfiled: boolean
+      /**
+       * @description 该google帐号是否关联已经存在comer
+       */
+      oauthLinked: boolean
+      /**
+       * @description 该google帐号的comerAccount的ID
+       */
+      oauthAccountId: number
     }>({
       url: replacePath('/account/oauth/google/login/callback', args),
       method: 'GET',
       ...extract('GET', args, ['state', 'code'], [])
     })
   },
-  'account@oauth-github-login-callback'(args: { state: any; code: any }) {
+  'account@oauth-github-login-callback'(args: {
+    state: any
+    /**
+     * @description github返回的code码
+     */
+    code: any
+  }) {
     return requestAdapter<{
+      /**
+       * @description comer的ID，为0或空表示该oauth帐号未关联到comer
+       */
+      comerId: string
       nick: string
       avatar: string
       address: string
       token: string
+      /**
+       * @description 是否填写了profile
+       */
       isProfiled: boolean
+      /**
+       * @description 该gihub帐号是否已关联了comer
+       */
+      oauthLinked: boolean
+      /**
+       * @description 该github帐号的commerAccount的ID
+       */
+      oauthAccountId: number
     }>({
       url: replacePath('/account/oauth/github/login/callback', args),
       method: 'GET',
@@ -178,7 +400,7 @@ export const services = {
       ...extract('GET', args, [], [])
     })
   },
-  'account@account-unlink'(args: { accountID: any }) {
+  'account@oauth-account-unlink'(args: { accountID: any }) {
     return requestAdapter<any>({
       url: replacePath('/account/:accountID/unlink', args),
       method: 'DELETE',
@@ -251,10 +473,50 @@ export const services = {
         name?: string
         isIndex?: boolean
       }[]
+      /**
+       * @description 该comer下的oauth Account绑定情况(目前仅google、github)
+       */
+      comerAccounts: {
+        /**
+         * @description 是否绑定
+         */
+        linked: boolean
+        /**
+         * @description 类型,1-github,2-google
+         */
+        accountType: number
+        /**
+         * @description accountId
+         */
+        accountId?: number
+      }[]
     }>({
       url: replacePath('/account/profile', args),
       method: 'GET',
       ...extract('GET', args, [], [])
+    })
+  },
+  'account@comer-follow'(args: { comerId: any }) {
+    return requestAdapter<{}>({
+      url: replacePath('/account/comer/{comerId}/follow', args),
+      method: 'POST',
+      ...extract('POST', args, [], ['comerId'])
+    })
+  },
+  'account@comer-unfollow'(args: { comerId: any }) {
+    return requestAdapter<{}>({
+      url: replacePath('/account/comer/{comerId}/unfollow', args),
+      method: 'DELETE',
+      ...extract('DELETE', args, [], ['comerId'])
+    })
+  },
+  'account@comer-followed-by-me'(args: { comerId: any }) {
+    return requestAdapter<{
+      isFollowed: boolean
+    }>({
+      url: replacePath('/account/comer/{comerId}/followedByMe', args),
+      method: 'GET',
+      ...extract('GET', args, [], ['comerId'])
     })
   },
 
@@ -274,6 +536,7 @@ export const services = {
       mission: string
       tokenContractAddress: string
       overview: string
+      chainID: number
       blockChainAddress: string
       isSet: boolean
       kyc: string
@@ -342,6 +605,7 @@ export const services = {
         mission: string
         tokenContractAddress: string
         overview: string
+        chainID: number
         blockChainAddress: string
         isSet: boolean
         kyc: string
@@ -410,6 +674,7 @@ export const services = {
         mode: string
         logo: string
         mission: string
+        chainID: number
         blockChainAddress: string
         tokenContractAddress: string
         isSet: boolean
@@ -480,6 +745,7 @@ export const services = {
         mode: string
         logo: string
         mission: string
+        chainID: number
         blockChainAddress: string
         tokenContractAddress: string
         isSet: boolean
@@ -693,6 +959,7 @@ export const services = {
         mode: string
         logo: string
         mission: string
+        chainID: number
         blockChainAddress: string
         tokenContractAddress: string
         isSet: boolean
@@ -721,6 +988,122 @@ export const services = {
       url: replacePath('/cores/startups/{startupId}/followedByMe', args),
       method: 'GET',
       ...extract('GET', args, [], ['startupId'])
+    })
+  },
+  'startup@startup-list-be-member'(
+    args: {
+      comerId: any
+    } & {
+      limit: any
+      offset: any
+      keyword?: any
+      /**
+       * @description NONE,ESG,NGO,DAO,COM
+       */
+      mode?: any
+    }
+  ) {
+    return requestAdapter<{
+      list: {
+        id: number
+        createdAt: string
+        updatedAt: string
+        isDeleted: boolean
+        comerID: number
+        name: string
+        /**
+         * @description NONE,ESG,NGO,DAO,COM
+         */
+        mode: string
+        logo: string
+        mission: string
+        chainID: number
+        blockChainAddress: string
+        tokenContractAddress: string
+        isSet: boolean
+        overview: string
+        kyc: string
+        contractAudit: string
+        hashTags: {
+          id: number
+          createdAt: string
+          updatedAt: string
+          isDeleted: boolean
+          name: string
+          category: string
+          isIndex: boolean
+        }[]
+        website: string
+        discord: string
+        twitter: string
+        telegram: string
+        docs: string
+        launchNetwork: number
+        tokenName: string
+        tokenSymbol: string
+        totalSupply: number
+        presaleStart: string
+        presaleEnd: string
+        launchDate: string
+        wallets: {
+          id: number
+          createdAt: string
+          updatedAt: string
+          isDeleted: boolean
+          comerID: number
+          startupID: number
+          walletName: string
+          walletAddress: string
+        }[]
+        members: {
+          id: number
+          createdAt: string
+          updatedAt: string
+          comerID: number
+          startupID: number
+          position: string
+          comer?: {
+            id: number
+            createdAt: string
+            updatedAt: string
+            isDeleted: boolean
+            address: string
+          }
+          comerProfile?: {
+            id: number
+            createdAt: string
+            updatedAt: string
+            isDeleted: boolean
+            comerID: number
+            name: string
+            avatar: string
+            location: string
+            timeZone: string
+            website: string
+            email: string
+            twitter: string
+            discord: string
+            telegram: string
+            medium: string
+            bio: string
+            skills: string[]
+          }
+        }[]
+        memberCount: number
+        follows: {
+          id: number
+          createdAt: string
+          updatedAt: string
+          comerID: number
+          startupID: number
+        }[]
+        followCount: number
+      }[]
+      total: number
+    }>({
+      url: replacePath('/cores/startups/member/{comerId}', args),
+      method: 'GET',
+      ...extract('GET', args, ['limit', 'offset', 'keyword', 'mode'], ['comerId'])
     })
   },
   'startup@startup-list-me_copy'(args: {
