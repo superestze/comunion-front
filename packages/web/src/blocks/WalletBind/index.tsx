@@ -1,5 +1,5 @@
 import { UWalletConnect, UWalletConnectPropsType } from '@comunion/components'
-import { storage } from '@comunion/utils/dist'
+import { storage } from '@comunion/utils'
 import { defineComponent } from 'vue'
 import { useWalletStore, useUserStore } from '@/stores'
 import { UserResponse } from '@/types'

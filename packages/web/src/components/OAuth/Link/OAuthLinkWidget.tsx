@@ -101,7 +101,7 @@ export default defineComponent({
 
     const unBindAccount = () => {
       loading.value = true
-      services['account@account-unlink']({ accountID: currentUnbindAccountId.value })
+      services['account@oauth-account-unlink']({ accountID: currentUnbindAccountId.value })
         .then(() => {
           profileStore.get().then(() => {
             unBindVisible.value = false

@@ -8,6 +8,7 @@ import FollowDateil from './components/FollowDateil'
 import Proposals from './components/Proposals'
 import Startups from './components/Startups'
 import { OAuthLinkWidget } from '@/components/OAuth'
+import { ComerAccount } from '@/components/OAuth/Link/OAuthLinkWidget'
 import { services } from '@/services'
 import { useProfileStore } from '@/stores/profile'
 // import { StartupItem } from '@/types'
@@ -153,7 +154,9 @@ const DashboardPage = defineComponent({
                     )}
                   </div>
                   <div class="mt-5 flex">
-                    <OAuthLinkWidget comerAccounts={myProfile.value?.comerAccounts || []} />
+                    <OAuthLinkWidget
+                      comerAccounts={(myProfile.value?.comerAccounts as ComerAccount[]) || []}
+                    />
                   </div>
                   {/* <div class="mt-2">
                 {myInfo.value?.map((info, i) => {
