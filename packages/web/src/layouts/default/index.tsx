@@ -1,6 +1,6 @@
 import { ULogo, UTransactionWaiting, UTransactionContainer } from '@comunion/components'
 import { defineComponent, watchEffect } from 'vue'
-import { RouterLink, RouterView, useRouter } from 'vue-router'
+import { RouterLink, RouterView, useRouter, useRoute } from 'vue-router'
 import TheHeader from './blocks/TheHeader'
 import styles from './index.module.css'
 import { FOOTER_LINKS } from '@/constants'
@@ -11,6 +11,7 @@ const DefaultLayout = defineComponent({
   name: 'DefaultLayout',
   setup() {
     const router = useRouter()
+    const route = useRoute()
     const walletStore = useWalletStore()
     const contractStore = useContractStore()
     const userStore = useUserStore()
@@ -39,7 +40,7 @@ const DefaultLayout = defineComponent({
             ))}
           </UTransactionContainer>
           {/* Body */}
-          <RouterView />
+          <RouterView key={route.fullPath} />
         </div>
         {/* Footer */}
         <div class={styles.footer}>

@@ -92,8 +92,13 @@ export const ComerInfo = defineComponent({
     const followToggle = async (toStatus: string) => {
       ctx.emit('followComer', toStatus)
     }
-    const toComerDetail = comerId => {
-      router.push({ path: `/startup/detail/comer/${comerId}` })
+    const toComerDetail = (comerId: number) => {
+      // console.log('router.', router.getRoutes())
+      // router
+      router.replace({
+        path: `/startup/detail/comer/${comerId}`,
+        force: true
+      })
     }
     return {
       skills,
