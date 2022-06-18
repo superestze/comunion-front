@@ -105,9 +105,9 @@ export const ComerInfo = defineComponent({
   },
   render() {
     return (
-      <UCard class="h-full">
+      <UCard class="h-full" contentStyle={{ paddingTop: 0 }}>
         <div class="flex items-center">
-          <ULazyImage src={this.profileInfo?.avatar ?? ''} class="h-16 w-16 rounded-1\/2" />
+          <ULazyImage src={this.profileInfo?.avatar ?? ''} class="h-20 w-20 rounded-1\/2" />
           <div class="flex-1 ml-4">
             <div class="u-h2">{this.profileInfo?.name}</div>
             <UAddress autoSlice={true} address={this.address ?? ''} />
@@ -214,35 +214,27 @@ export const ComerInfo = defineComponent({
         <div class="bg-grey5 h-[1px]"></div>
         <div class="flex gap-4 mt-10">
           <div
-            class="flex-1 px-4 py-5 rounded-lg"
+            class={['flex-1 px-4 py-5 rounded-lg', { 'cursor-pointer': this.fansList?.length }]}
             style={{
               background: 'rgba(var(--u-primary2-value), 0.038)'
             }}
+            onClick={() => {
+              if (this.fansList?.length) this.showDrawerType = 'Fans'
+            }}
           >
-            <div
-              class={['u-h2 text-primary', { 'cursor-pointer': this.fansList?.length }]}
-              onClick={() => {
-                if (this.fansList?.length) this.showDrawerType = 'Fans'
-              }}
-            >
-              {this.fansList?.length}
-            </div>
+            <div class={['u-h2 text-primary']}>{this.fansList?.length}</div>
             <div class="u-body2 text-primary">Followers</div>
           </div>
           <div
-            class="flex-1 px-4 py-5 rounded-lg"
+            class={['flex-1 px-4 py-5 rounded-lg', { 'cursor-pointer': this.followList?.length }]}
             style={{
               background: 'rgba(var(--u-primary2-value), 0.038)'
             }}
+            onClick={() => {
+              if (this.followList?.length) this.showDrawerType = 'Follow'
+            }}
           >
-            <div
-              class={['u-h2 text-success', { 'cursor-pointer': this.followList?.length }]}
-              onClick={() => {
-                if (this.followList?.length) this.showDrawerType = 'Follow'
-              }}
-            >
-              {this.followList?.length}
-            </div>
+            <div class={['u-h2 text-success']}>{this.followList?.length}</div>
             <div class="b-body2 text-success">Follow</div>
           </div>
         </div>
