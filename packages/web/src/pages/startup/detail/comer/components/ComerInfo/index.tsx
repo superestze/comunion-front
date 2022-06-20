@@ -44,6 +44,12 @@ export const ComerInfo = defineComponent({
     },
     fansList: {
       type: Array as PropType<FansType>
+    },
+    fansCount: {
+      type: Number
+    },
+    followCount: {
+      type: Number
     }
   },
   emits: ['followComer'],
@@ -108,6 +114,8 @@ export const ComerInfo = defineComponent({
     }
   },
   render() {
+    console.log('fansCount===>', this.fansCount)
+
     return (
       <UCard class="h-full" contentStyle={{ paddingTop: 0 }}>
         <div class="flex items-center">
@@ -218,27 +226,27 @@ export const ComerInfo = defineComponent({
         <div class="bg-grey5 h-[1px]"></div>
         <div class="flex gap-4 mt-10">
           <div
-            class={['flex-1 px-4 py-5 rounded-lg', { 'cursor-pointer': this.fansList?.length }]}
+            class={['flex-1 px-4 py-5 rounded-lg', { 'cursor-pointer': this.fansCount }]}
             style={{
               background: 'rgba(var(--u-primary2-value), 0.038)'
             }}
             onClick={() => {
-              if (this.fansList?.length) this.showDrawerType = 'Fans'
+              if (this.fansCount) this.showDrawerType = 'Fans'
             }}
           >
-            <div class={['u-h2 text-primary']}>{this.fansList?.length}</div>
+            <div class={['u-h2 text-primary']}>{this.fansCount || 0}</div>
             <div class="u-body2 text-primary">Followers</div>
           </div>
           <div
-            class={['flex-1 px-4 py-5 rounded-lg', { 'cursor-pointer': this.followList?.length }]}
+            class={['flex-1 px-4 py-5 rounded-lg', { 'cursor-pointer': this.followCount }]}
             style={{
               background: 'rgba(var(--u-primary2-value), 0.038)'
             }}
             onClick={() => {
-              if (this.followList?.length) this.showDrawerType = 'Follow'
+              if (this.followCount) this.showDrawerType = 'Follow'
             }}
           >
-            <div class={['u-h2 text-success']}>{this.followList?.length}</div>
+            <div class={['u-h2 text-success']}>{this.followCount || 0}</div>
             <div class="b-body2 text-success">Follow</div>
           </div>
         </div>
