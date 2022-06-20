@@ -1,8 +1,9 @@
 import { UButton, UModal } from '@comunion/components'
 import { GithubFilled, GoogleFilled } from '@comunion/icons'
+import { storage } from '@comunion/utils'
 import { defineComponent, ref, PropType, computed } from 'vue'
-import { useRouter } from 'vue-router'
 import CardContent from '../CardContent'
+import useOAuth from '../Hooks/useOAuth'
 import OAuthLinkBtn from './OAuthLinkBtn'
 import { services } from '@/services'
 import { useProfileStore } from '@/stores/profile'
@@ -42,9 +43,9 @@ export default defineComponent({
     }
   },
   setup(props) {
-    const { push } = useRouter()
     const loading = ref<boolean>(false)
     const profileStore = useProfileStore()
+    const { googleLogin, githubLogin } = useOAuth()
     const linked = computed(() => {
       const obj: Linked = {
         google: {
@@ -82,17 +83,18 @@ export default defineComponent({
         currentUnbindAccountId.value = accountId
         return
       }
-      push('/auth/association?type=account')
+      storage('session').set('link:btn', 'google')
+      googleLogin()
     }
 
     const handleGithubLink = (accountId: number) => () => {
-      unBindVisible.value = true
       if (linked.value.github.linked) {
         unBindVisible.value = true
         currentUnbindAccountId.value = accountId
         return
       }
-      push('/auth/association?type=account')
+      storage('session').set('link:btn', 'github')
+      githubLogin()
     }
 
     const triggerUnbindDialog = () => {
