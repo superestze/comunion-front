@@ -13,6 +13,7 @@ export const TeamHoverCard = defineComponent({
   },
   setup(props, ctx) {
     const { teamMember } = props
+    const loading = ref(false)
     const isFollow = ref(false)
     const skills = computed(() => {
       return teamMember?.comerProfile?.skills?.map((skill, skillIndex) => {
@@ -27,13 +28,19 @@ export const TeamHoverCard = defineComponent({
       })
     })
     const getIsFollow = async (comerId: number) => {
-      const { error: followError, data: followData } = await services[
-        'account@comer-followed-by-me'
-      ]({
-        comerId
-      })
-      if (!followError) {
-        isFollow.value = followData.isFollowed
+      try {
+        loading.value = true
+        const { error: followError, data: followData } = await services[
+          'account@comer-followed-by-me'
+        ]({
+          comerId
+        })
+        loading.value = false
+        if (!followError) {
+          isFollow.value = followData.isFollowed
+        }
+      } catch (error) {
+        loading.value = false
       }
     }
     const followComer = async (comerId: number, toStatus: string) => {
@@ -66,6 +73,7 @@ export const TeamHoverCard = defineComponent({
         <div class="flex justify-center">{skills.value?.map(skill => skill)}</div>
         <div class="mt-10 text-center mb-3">
           <UButton
+            loading={loading.value}
             type="primary"
             size="small"
             ghost={isFollow.value}

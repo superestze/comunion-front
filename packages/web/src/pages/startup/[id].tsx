@@ -227,7 +227,7 @@ export const StartupInfo = defineComponent({
               <span class="mr-4 text-grey3 whitespace-nowrap u-label2">BLOCKCHAIN ADDRESS:</span>
               {startup.value?.blockChainAddress ? (
                 <>
-                  <img src={networkInfo.value?.logo} class="rounded-full h-5 w-5 pr-2" />
+                  <img src={networkInfo.value?.logo} class="rounded-full h-5 w-5 mr-2" />
                   <UAddress
                     address={startup.value?.blockChainAddress}
                     class="u-title2 break-all"

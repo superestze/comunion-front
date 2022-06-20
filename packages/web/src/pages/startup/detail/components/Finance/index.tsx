@@ -84,7 +84,7 @@ export const Finance = defineComponent({
                 <div class="u-label2 text-grey3 whitespace-nowrap w-42 mr-4 flex-0 mb-2">
                   {item.name}
                 </div>
-                <div class="u-title2 flex-1">{item.value}</div>
+                <div class="u-title2 flex-1 truncate">{item.value}</div>
               </div>
             )
           })}

@@ -1,10 +1,13 @@
 import { defineComponent } from 'vue'
-import { RouterView } from 'vue-router'
+import { RouterView, useRoute } from 'vue-router'
 
 const EmptyLayout = defineComponent({
   name: 'EmptyLayout',
   setup() {
-    return () => <RouterView />
+    const route = useRoute()
+    console.log('route.fullPath', route.fullPath)
+
+    return () => <RouterView key={route.fullPath} />
   }
 })
 
