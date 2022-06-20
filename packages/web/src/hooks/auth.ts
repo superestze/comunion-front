@@ -1,3 +1,4 @@
+import { storage } from '@comunion/utils'
 import { useRouter } from 'vue-router'
 import { useUserStore } from '@/stores'
 import type { UserResponse } from '@/types'
@@ -9,6 +10,13 @@ export function useOnLoggedIn() {
     if (user) {
       const { token, ..._user } = user
       userStore.onLogin(token, _user)
+    }
+    const result = storage('session').get('link:btn')
+    if (result && (result === 'google' || result === 'github')) {
+      replace('/dashboard')
+      storage('session').remove('link:btn')
+      userStore.refreshMe()
+      return
     }
     if (user?.firstLogin) {
       replace('/auth/association?type=account')
