@@ -12,10 +12,10 @@ export const StartupInfoItem = defineComponent({
   setup(props) {
     return () => (
       <div class="flex items-center">
-        <ULazyImage src={props.startupInfo?.logo || ''} class="rounded-1/2 h-17.5 w-17.5 mr-4" />
+        <ULazyImage src={props.startupInfo?.logo || ''} class="rounded-1/2 h-20 w-20 mr-4" />
         <div class="flex-1 truncate">
           <div class="u-title1 truncate">{props.startupInfo?.name}</div>
-          <div class="flex u-body1">
+          <div class="flex u-body1 mt-2">
             {props.startupInfo?.hashTags.map((hashTag, hashTagIndex) => (
               <div key={hashTag.id} class="truncate">
                 <span class="u-body1">{hashTag.name}</span>

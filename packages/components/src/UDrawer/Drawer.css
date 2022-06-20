@@ -25,3 +25,7 @@
     @apply h-full overflow-y-auto;
   }
 }
+
+.n-drawer-mask {
+  background-color: rgb(51 51 51 / 75%);
+}

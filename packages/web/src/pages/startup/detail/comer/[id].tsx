@@ -60,6 +60,8 @@ const ComerDetail = defineComponent({
     }
   },
   render() {
+    // console.log('this.comerInfo===>', this.comerInfo)
+
     return (
       <USpin show={this.pageLoading}>
         <UBreadcrumb class="mt-10 mb-10">
@@ -86,6 +88,8 @@ const ComerDetail = defineComponent({
               address={this.comerInfo?.address}
               followList={this.comerInfo?.follows}
               fansList={this.comerInfo?.followed}
+              fansCount={this.comerInfo?.followedCount}
+              followCount={this.comerInfo?.followsCount}
               onFollowComer={this.followComer}
             />
           </section>

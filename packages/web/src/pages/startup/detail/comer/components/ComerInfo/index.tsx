@@ -18,6 +18,7 @@ import {
   TwitterFilled
 } from '@comunion/icons'
 import { defineComponent, PropType, computed, h, ref } from 'vue'
+import { useRouter } from 'vue-router'
 import { FansItem } from './FansItem'
 import { ServiceReturn } from '@/services'
 import { toSocialEnd } from '@/utils/socialJump'
@@ -43,10 +44,17 @@ export const ComerInfo = defineComponent({
     },
     fansList: {
       type: Array as PropType<FansType>
+    },
+    fansCount: {
+      type: Number
+    },
+    followCount: {
+      type: Number
     }
   },
   emits: ['followComer'],
   setup(props, ctx) {
+    const router = useRouter()
     const showDrawerType = ref<false | string>(false)
     const skills = computed(() => {
       return props.profileInfo?.skills?.map((skill, skillIndex) => {
@@ -90,18 +98,28 @@ export const ComerInfo = defineComponent({
     const followToggle = async (toStatus: string) => {
       ctx.emit('followComer', toStatus)
     }
+    const toComerDetail = (comerId: number) => {
+      // console.log('router.', router.getRoutes())
+      // router
+      router.push({
+        path: `/startup/detail/comer/${comerId}`
+      })
+    }
     return {
       skills,
       followToggle,
       socialLinks,
-      showDrawerType
+      showDrawerType,
+      toComerDetail
     }
   },
   render() {
+    console.log('fansCount===>', this.fansCount)
+
     return (
-      <UCard class="h-full">
+      <UCard class="h-full" contentStyle={{ paddingTop: 0 }}>
         <div class="flex items-center">
-          <ULazyImage src={this.profileInfo?.avatar ?? ''} class="h-16 w-16 rounded-1\/2" />
+          <ULazyImage src={this.profileInfo?.avatar ?? ''} class="h-20 w-20 rounded-1\/2" />
           <div class="flex-1 ml-4">
             <div class="u-h2">{this.profileInfo?.name}</div>
             <UAddress autoSlice={true} address={this.address ?? ''} />
@@ -208,35 +226,27 @@ export const ComerInfo = defineComponent({
         <div class="bg-grey5 h-[1px]"></div>
         <div class="flex gap-4 mt-10">
           <div
-            class="flex-1 px-4 py-5 rounded-lg"
+            class={['flex-1 px-4 py-5 rounded-lg', { 'cursor-pointer': this.fansCount }]}
             style={{
               background: 'rgba(var(--u-primary2-value), 0.038)'
             }}
+            onClick={() => {
+              if (this.fansCount) this.showDrawerType = 'Fans'
+            }}
           >
-            <div
-              class={['u-h2 text-primary', { 'cursor-pointer': this.fansList?.length }]}
-              onClick={() => {
-                if (this.fansList?.length) this.showDrawerType = 'Fans'
-              }}
-            >
-              {this.fansList?.length}
-            </div>
-            <div class="u-body2 text-primary">Fans</div>
+            <div class={['u-h2 text-primary']}>{this.fansCount || 0}</div>
+            <div class="u-body2 text-primary">Followers</div>
           </div>
           <div
-            class="flex-1 px-4 py-5 rounded-lg"
+            class={['flex-1 px-4 py-5 rounded-lg', { 'cursor-pointer': this.followCount }]}
             style={{
               background: 'rgba(var(--u-primary2-value), 0.038)'
             }}
+            onClick={() => {
+              if (this.followCount) this.showDrawerType = 'Follow'
+            }}
           >
-            <div
-              class={['u-h2 text-success', { 'cursor-pointer': this.followList?.length }]}
-              onClick={() => {
-                if (this.followList?.length) this.showDrawerType = 'Follow'
-              }}
-            >
-              {this.followList?.length}
-            </div>
+            <div class={['u-h2 text-success']}>{this.followCount || 0}</div>
             <div class="b-body2 text-success">Follow</div>
           </div>
         </div>
@@ -248,7 +258,11 @@ export const ComerInfo = defineComponent({
             whiteBoard: () => (
               <div class="mt-10 ml-11">
                 {(this.showDrawerType === 'Fans' ? this.fansList : this.followList)?.map(comer => (
-                  <div key={comer.comerID} class="mb-10">
+                  <div
+                    key={comer.comerID}
+                    class="mb-10 cursor-pointer"
+                    onClick={() => this.toComerDetail(comer.comerID)}
+                  >
                     <FansItem fansItem={comer} />
                   </div>
                 ))}
