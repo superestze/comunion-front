@@ -3,15 +3,20 @@ import { defineComponent } from 'vue'
 import { useRouter } from 'vue-router'
 import CardContent from '@/components/OAuth/CardContent'
 import { ServiceReturn } from '@/services'
-import { useWalletStore } from '@/stores'
+import { useUserStore, useWalletStore } from '@/stores'
 
 export default defineComponent({
   name: 'WalletAssociation',
   setup() {
     const walletStore = useWalletStore()
+    const userStore = useUserStore()
     const { push, replace } = useRouter()
     const walletAssociating = async () => {
       walletStore.openBindModal().then((data: ServiceReturn<'account@wallet-link'>) => {
+        if (data?.token) {
+          userStore.refreshToken(data.token)
+          userStore.refreshMe()
+        }
         if (data?.isProfiled) {
           replace('/welcome')
           return

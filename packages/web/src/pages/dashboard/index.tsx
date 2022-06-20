@@ -79,7 +79,7 @@ const DashboardPage = defineComponent({
               }}
             >
               <div class="flex border-b border-grey5 pt-6 pb-6">
-                <div class="flex flex-col flex-1 mt-7 pr-8">
+                <div class="flex flex-col flex-1 mt-7">
                   <div class="flex">
                     <ULazyImage class="rounded-1/2 h-20 w-20" src={myProfile.value?.avatar ?? ''} />
                     <div class="flex flex-col ml-5 justify-center">
@@ -107,7 +107,7 @@ const DashboardPage = defineComponent({
                     </div>
                   </div>
                   <div class="mt-2">
-                    <div class="flex mb-3 break-words cursor-pointer max-w-145 max-h-25 leading-5 content break-all line-clamp-5">
+                    <div class="flex mb-3 break-words cursor-pointer max-h-25 leading-5 content break-all line-clamp-5">
                       <UTooltip
                         showArrow={false}
                         overlap={true}

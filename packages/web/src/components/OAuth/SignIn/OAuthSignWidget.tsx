@@ -12,7 +12,7 @@ export default defineComponent({
     const { googleLogin, githubLogin } = useOAuth()
     const associateWalletVisible = ref<boolean>(false)
     const dialogVisible = computed<boolean>(() => {
-      return userStore.userResponse?.comerID === 0
+      return userStore.userResponse?.comerId === 0
     })
 
     const stop = watchEffect(() => {

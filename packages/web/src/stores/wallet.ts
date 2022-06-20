@@ -181,7 +181,6 @@ export const useWalletStore = defineStore('wallet', {
     },
     async bindWallet(wallet: AbstractWallet) {
       const address = await wallet.getAddress()
-      const userStore = useUserStore()
       const { error, data } = await services['account@wallet-nonce-get']({
         address
       })
@@ -203,7 +202,6 @@ export const useWalletStore = defineStore('wallet', {
                 bindCbSuccess(response.data)
               }
               this.closeBindModal()
-              userStore.refreshMe()
             })
           })
         } catch (error) {

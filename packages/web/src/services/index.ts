@@ -283,6 +283,10 @@ export const services = {
        * @description 是否填写简历
        */
       isProfiled: boolean
+      /**
+       * @description 登录token
+       */
+      token: string
     }>({
       url: replacePath('/account/eth/wallet/link', args),
       method: 'POST',

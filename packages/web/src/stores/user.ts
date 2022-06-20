@@ -43,6 +43,10 @@ export const useUserStore = defineStore('user', {
       }
       this.inited = true
     },
+    refreshToken(token?: string) {
+      this.token = token || storage('local').get<string>(STORE_KEY_TOKEN)
+      storage('local').set(STORE_KEY_TOKEN, this.token as string)
+    },
     async refreshMe() {
       const { error, data } = await services['account@user-info']()
       if (!error) {
