@@ -21,6 +21,7 @@ import { defineComponent, PropType, computed, h, ref } from 'vue'
 import { useRouter } from 'vue-router'
 import { FansItem } from './FansItem'
 import { ServiceReturn } from '@/services'
+import { useUserStore } from '@/stores'
 import { toSocialEnd } from '@/utils/socialJump'
 
 type ProfileInfo = NonNullable<ServiceReturn<'account@comer-info-get'>>['comerProfile']
@@ -54,6 +55,9 @@ export const ComerInfo = defineComponent({
   },
   emits: ['followComer'],
   setup(props, ctx) {
+    const userStore = useUserStore()
+    console.log('userStore===>', userStore.profile?.comerID)
+
     const router = useRouter()
     const showDrawerType = ref<false | string>(false)
     const skills = computed(() => {
@@ -105,12 +109,18 @@ export const ComerInfo = defineComponent({
         path: `/startup/detail/comer/${comerId}`
       })
     }
+
+    const disableFollow = (comerID: number) => {
+      return userStore.profile?.comerID === comerID
+    }
+
     return {
       skills,
       followToggle,
       socialLinks,
       showDrawerType,
-      toComerDetail
+      toComerDetail,
+      disableFollow
     }
   },
   render() {
@@ -141,6 +151,7 @@ export const ComerInfo = defineComponent({
             ghost={this.isFollow}
             onClick={() => this.followToggle(this.isFollow ? 'unFollow' : 'follow')}
             class="u-title2"
+            disabled={this.disableFollow(this.profileInfo?.comerID as number)}
             v-slots={{
               icon: () => {
                 return (
