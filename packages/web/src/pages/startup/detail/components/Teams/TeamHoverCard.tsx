@@ -2,6 +2,7 @@ import { ULazyImage, UButton } from '@comunion/components'
 import { HookFilled, PlusOutlined } from '@comunion/icons'
 import { defineComponent, computed, PropType, onMounted, ref } from 'vue'
 import { ServiceReturn, services } from '@/services'
+import { useUserStore } from '@/stores'
 
 export const TeamHoverCard = defineComponent({
   name: 'TeamHoverCard',
@@ -13,6 +14,7 @@ export const TeamHoverCard = defineComponent({
   },
   setup(props, ctx) {
     const { teamMember } = props
+    const userStore = useUserStore()
     const loading = ref(false)
     const isFollow = ref(false)
     const skills = computed(() => {
@@ -58,6 +60,9 @@ export const TeamHoverCard = defineComponent({
     onMounted(() => {
       getIsFollow(teamMember?.comerProfile?.comerID as number)
     })
+    const disableFollow = (comerID: number) => {
+      return userStore.profile?.comerID === comerID
+    }
     return () => (
       <div class="px-10 relative">
         <ULazyImage
@@ -77,6 +82,7 @@ export const TeamHoverCard = defineComponent({
             type="primary"
             size="small"
             ghost={isFollow.value}
+            disabled={disableFollow(teamMember?.comerProfile?.comerID as number)}
             onClick={() =>
               followComer(
                 teamMember?.comerProfile?.comerID as number,

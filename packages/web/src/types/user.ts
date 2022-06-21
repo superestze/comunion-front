@@ -2,6 +2,7 @@ import { ComerAccount } from '@/components/OAuth/Link/OAuthLinkWidget'
 
 export interface UserProfileState {
   // token: string
+  comerID?: number
   avatar: string
   name: string
   isProfiled?: boolean
