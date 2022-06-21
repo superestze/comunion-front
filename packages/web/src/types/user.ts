@@ -29,7 +29,7 @@ export interface UserResponse
   nick?: string
   token: string
   isProfiled: boolean
-  comerID: number
+  comerId: number
   oauthLinked: boolean
   oauthAccountId: number
   firstLogin: boolean

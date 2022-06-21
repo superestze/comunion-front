@@ -124,7 +124,7 @@ export const StartupBasicInfo = defineComponent({
               )}
             </div>
           </div>
-          <p class="h-10 mb-10 break-all u-body1 line-clamp-5">{props.startup!.mission}</p>
+          <p class="h-10 mb-10 u-body1 line-clamp-5">{props.startup!.mission}</p>
           <p class="mb-4.5">{getIdentity('KYC:', props.startup?.kyc)}</p>
           {getIdentity('CONTRACT AUDIT:', props.startup?.contractAudit)}
           <SocialGroup

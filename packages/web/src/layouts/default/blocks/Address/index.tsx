@@ -3,19 +3,24 @@ import { shortenAddress } from '@comunion/utils'
 import { defineComponent } from 'vue'
 import HeaderButton from '../../components/HeaderButton'
 import HeaderDropdown from '../../components/HeaderDropdown'
-import { useWalletStore } from '@/stores'
-// import { UserResponse } from '@/types'
+import { useUserStore, useWalletStore } from '@/stores'
 
 const WalletAddress = defineComponent({
   name: 'HeaderAddress',
   setup(props, ctx) {
     const walletStore = useWalletStore()
+    const userStore = useUserStore()
 
     const connectWallet = async () => {
       if (walletStore.connected && walletStore.address) {
         return
       }
-      walletStore.openBindModal()
+      walletStore.openBindModal().then(data => {
+        if (data?.token) {
+          userStore.refreshToken(data.token)
+          userStore.refreshMe()
+        }
+      })
     }
 
     function disconnect() {
