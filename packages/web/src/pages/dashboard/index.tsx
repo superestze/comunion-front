@@ -78,7 +78,7 @@ const DashboardPage = defineComponent({
                   )
               }}
             >
-              <div class="flex border-b border-grey5 pt-6 pb-6">
+              <div class="flex border-b border-grey5 pt-6 pb-10">
                 <div class="flex flex-col flex-1 mt-7">
                   <div class="flex">
                     <ULazyImage class="rounded-1/2 h-20 w-20" src={myProfile.value?.avatar ?? ''} />
