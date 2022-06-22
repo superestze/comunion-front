@@ -6,10 +6,12 @@ import {
   UContractInteraction,
   UUploadProvider,
   ULoadingBarProvider,
-  ULoadingBar
+  ULoadingBar,
+  UModalProvider
 } from '@comunion/components'
 import { defineComponent } from 'vue'
 import { RouterView } from 'vue-router'
+import WalletBindBlock from './blocks/WalletBind'
 import WalletConnectBlock from './blocks/WalletConnect'
 import { services } from './services'
 import { upload as onUpload } from './services/a2s.adapter'
@@ -50,11 +52,14 @@ export default defineComponent({
           <UUploadProvider onUpload={onUpload}>
             <UHashInputProvider onSearch={onSearchHash}>
               {/* {userStore.inited && walletStore.inited && <RouterView />} */}
-              <RouterView />
+              <UModalProvider>
+                <RouterView />
+              </UModalProvider>
             </UHashInputProvider>
           </UUploadProvider>
         </ULoadingBarProvider>
         <WalletConnectBlock />
+        <WalletBindBlock />
       </UStyleProvider>
     )
   }

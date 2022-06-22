@@ -44,7 +44,7 @@ const Breadcrumb = defineComponent({
 
     return () => (
       <>
-        <div class="mb-15 mt-10">
+        <div class="mb-10 mt-15">
           <UBreadcrumb class="flex items-center">
             <UBreadcrumbItem v-slots={slots}></UBreadcrumbItem>
             {breadcrumbData.value.map((item, index) => (

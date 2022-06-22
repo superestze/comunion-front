@@ -1,5 +1,5 @@
-import { UCard, ULazyImage, UTooltip, UButton, UScrollbar } from '@comunion/components'
-import { GithubFilled, GoogleFilled, ConnectOutlined } from '@comunion/icons'
+import { UCard, ULazyImage, UTooltip, UScrollbar } from '@comunion/components'
+import { ConnectOutlined } from '@comunion/icons'
 import { computed, defineComponent, onMounted, ref, h } from 'vue'
 import Bookmarks from './components/Bookmarks'
 import Bounties from './components/Bounties'
@@ -7,21 +7,19 @@ import EditProfile from './components/EditProfile'
 import FollowDateil from './components/FollowDateil'
 import Proposals from './components/Proposals'
 import Startups from './components/Startups'
-import { ServiceReturn, services } from '@/services'
+import { OAuthLinkWidget } from '@/components/OAuth'
+import { ComerAccount } from '@/components/OAuth/Link/OAuthLinkWidget'
+import { services } from '@/services'
+import { useProfileStore } from '@/stores/profile'
 // import { StartupItem } from '@/types'
 // import { useWalletStore } from '@/stores'
 
 const DashboardPage = defineComponent({
   name: 'Dashboard',
   setup() {
-    const myProfile = ref<ServiceReturn<'account@comer-profile-get'>>()
+    const profileStore = useProfileStore()
     const followedStartups = ref<object[]>([])
-    const getDataList = async () => {
-      const { error, data } = await services['account@comer-profile-get']()
-      if (!error) {
-        myProfile.value = data
-      }
-    }
+    const getDataList = profileStore.get
     const getFollowList = async () => {
       const { error, data } = await services['startup@startup-list-followed']({
         limit: 99,
@@ -37,6 +35,8 @@ const DashboardPage = defineComponent({
       getDataList()
       getFollowList()
     })
+
+    const myProfile = profileStore
 
     const myInfo = computed(() => {
       return [
@@ -59,19 +59,6 @@ const DashboardPage = defineComponent({
       ]
     })
 
-    const socialLinks = [
-      {
-        avatar: GoogleFilled,
-        label: 'Link',
-        link: 'https://accounts.google.com/'
-      },
-      {
-        avatar: GithubFilled,
-        label: 'Linked',
-        link: 'https://github.com/'
-      }
-    ]
-
     const style = {
       currency: 'u-body2 text-grey1 flex-1 break-all max-h-37 '
     }
@@ -91,8 +78,8 @@ const DashboardPage = defineComponent({
                   )
               }}
             >
-              <div class="flex border-b border-grey5 pt-6 pb-6">
-                <div class="flex flex-col flex-1 mt-7 pr-8">
+              <div class="flex border-b border-grey5 pt-6 pb-10">
+                <div class="flex flex-col flex-1 mt-7">
                   <div class="flex">
                     <ULazyImage class="rounded-1/2 h-20 w-20" src={myProfile.value?.avatar ?? ''} />
                     <div class="flex flex-col ml-5 justify-center">
@@ -120,7 +107,7 @@ const DashboardPage = defineComponent({
                     </div>
                   </div>
                   <div class="mt-2">
-                    <div class="flex mb-3 break-words cursor-pointer max-w-145 max-h-25 leading-5 content break-all line-clamp-5">
+                    <div class="flex mb-3 break-words cursor-pointer max-h-25 leading-5 content break-all line-clamp-5">
                       <UTooltip
                         showArrow={false}
                         overlap={true}
@@ -167,25 +154,9 @@ const DashboardPage = defineComponent({
                     )}
                   </div>
                   <div class="mt-5 flex">
-                    {socialLinks.map((link, index) => {
-                      return (
-                        <div class="mr-4" key={index}>
-                          <UButton
-                            disabled
-                            class="ml-auto bg-white rounded-lg w-35 h-10"
-                            size="small"
-                            type="primary"
-                            ghost
-                            style={{
-                              '--n-border': '1px solid var(--u-primary-color)'
-                            }}
-                          >
-                            <link.avatar class="w-5 h-5 mr-3.5 text-primary" />
-                            <span class="u-title2 text-primary">{link.label}</span>
-                          </UButton>
-                        </div>
-                      )
-                    })}
+                    <OAuthLinkWidget
+                      comerAccounts={(myProfile.value?.comerAccounts as ComerAccount[]) || []}
+                    />
                   </div>
                   {/* <div class="mt-2">
                 {myInfo.value?.map((info, i) => {

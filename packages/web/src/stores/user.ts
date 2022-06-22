@@ -1,11 +1,11 @@
 import { message } from '@comunion/components'
-import { readObject, removeObject, storeObject } from '@comunion/utils'
+import { storage } from '@comunion/utils'
 import { defineStore } from 'pinia'
 import { STORE_KEY_TOKEN } from '@/constants'
 import router from '@/router'
 import { services } from '@/services'
 import { useWalletStore } from '@/stores'
-import type { UserProfileState } from '@/types'
+import type { UserProfileState, UserResponse } from '@/types'
 import AbstractWallet from '@/wallets/AbstractWallet'
 
 export type UserState = {
@@ -15,13 +15,16 @@ export type UserState = {
   token: string | undefined
   // user profile
   profile: UserProfileState | null
+  // user signin response
+  userResponse: UserResponse | null
 }
 
 export const useUserStore = defineStore('user', {
   state: (): UserState => ({
-    token: readObject<string>(STORE_KEY_TOKEN),
+    token: storage('local').get<string>(STORE_KEY_TOKEN),
     inited: false,
-    profile: null
+    profile: null,
+    userResponse: null
   }),
   getters: {
     logged: state => !!state.token,
@@ -39,6 +42,10 @@ export const useUserStore = defineStore('user', {
         }
       }
       this.inited = true
+    },
+    refreshToken(token?: string) {
+      this.token = token || storage('local').get<string>(STORE_KEY_TOKEN)
+      storage('local').set(STORE_KEY_TOKEN, this.token as string)
     },
     async refreshMe() {
       const { error, data } = await services['account@user-info']()
@@ -88,13 +95,17 @@ export const useUserStore = defineStore('user', {
     onLogin(token: string, profile: UserProfileState) {
       this.token = token
       this.profile = profile
-      storeObject(STORE_KEY_TOKEN, token)
+      this.userResponse = profile as UserResponse
+      storage('session').set('oauth:info', this.userResponse)
+      storage('local').set(STORE_KEY_TOKEN, token)
     },
     onLogout() {
       const walletStore = useWalletStore()
       this.token = ''
       this.profile = null
-      removeObject(STORE_KEY_TOKEN)
+      this.userResponse = null
+      storage('session').clear()
+      storage('local').remove(STORE_KEY_TOKEN)
       walletStore.disconnectWallet()
     },
     logout(msg?: false | string) {
