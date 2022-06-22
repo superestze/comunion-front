@@ -85,10 +85,10 @@ const DashboardPage = defineComponent({
                     <div class="flex flex-col ml-5 justify-center">
                       <div class="mb-2 u-title1">{myProfile.value?.name}</div>
                       <div class="mb-2">{myInfo.value[2]?.value}</div>
-                      <div class="mb-2 ">
-                        <span class="u-body2">{myProfile.value?.email}</span>
-                        <span class="u-body2">· {myProfile.value?.location}</span>
-                        <span class="u-body2">· {myProfile.value?.timeZone}</span>
+                      <div class="mb-2 text-grey3">
+                        <span class="u-body2 text-grey3">{myProfile.value?.email}</span>
+                        <span class="u-body2 text-grey3">· {myProfile.value?.location}</span>
+                        <span class="u-body2 text-grey3">· {myProfile.value?.timeZone}</span>
                       </div>
 
                       {/* <div class="flex items-center">
@@ -183,18 +183,18 @@ const DashboardPage = defineComponent({
               </div>
               <div class="u-title1 text-primary1 mt-6 mb-6">Following</div>
               <div class="flex">
-                <div class="w-40 h-25 rounded-lg bg-violet-50 mr-4">
-                  <div class="u-headline2 text-32px font-700 text-primary mt-4 ml-4">
-                    {followedStartups.value.length}
-                  </div>
-                  <div class="flex align-center ml-4 mt-4 cursor-pointer">
-                    {followedStartups.value.length ? (
-                      <FollowDateil startup={followedStartups.value} />
-                    ) : (
+                {followedStartups.value.length ? (
+                  <FollowDateil startup={followedStartups.value} />
+                ) : (
+                  <div class="w-40 h-25 rounded-lg bg-violet-50 mr-4">
+                    <div class="u-headline2 text-32px font-700 text-primary mt-4 ml-4">
+                      {followedStartups.value.length}
+                    </div>
+                    <div class="flex align-center ml-4 mt-4 cursor-pointer">
                       <div class="u-body2 text-primary">Startup</div>
-                    )}
+                    </div>
                   </div>
-                </div>
+                )}
                 <div class="w-40 h-25 rounded-lg bg-blue-50">
                   <div class="u-headline2 text-32px font-700 text-primary mt-4 ml-4">0</div>
                   <div class="flex align-center ml-4 mt-4 cursor-pointer">

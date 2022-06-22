@@ -15,7 +15,6 @@ const FollowDateil = defineComponent({
   },
   setup(props, ctx) {
     // const selectedAvatar = ref(props.avatar)
-    console.log(props.startup)
     const router = useRouter()
 
     const startupDate = ref(props.startup)
@@ -56,14 +55,20 @@ const FollowDateil = defineComponent({
     }
     return () => (
       <>
-        <div class="flex w-full">
-          <div class="u-body2  text-primary" onClick={funFollow}>
-            Startup
+        <div class="w-40 h-25 rounded-lg bg-violet-50 mr-4 cursor-pointer" onClick={funFollow}>
+          <div class="u-headline2 text-32px font-700 text-primary mt-4 ml-4">
+            {startupDate.value?.length}
           </div>
-          <div class="flex-1"></div>
-          <ArrowRightOutlined class="mt-1 mr-3 w-4 h-4 text-primary" onClick={funFollow} />
+          <div class="flex align-center ml-4 mt-4">
+            <div class="flex w-full">
+              <div class="u-body2  text-primary">Startup</div>
+              <div class="flex-1"></div>
+              <ArrowRightOutlined class="mt-1 mr-3 w-4 h-4 text-primary" />
+            </div>
+          </div>
         </div>
-        <UDrawer title="FOLLOW STARTUP" v-model:show={success.value}>
+
+        <UDrawer title="FOLLOW STARTUP" v-model:show={success.value} width={702}>
           {success.value && (
             <>
               {startupDate.value.length
