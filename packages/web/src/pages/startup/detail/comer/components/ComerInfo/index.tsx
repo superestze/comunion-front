@@ -185,7 +185,7 @@ export const ComerInfo = defineComponent({
           >
             {{
               trigger: () => (
-                <div class="u-body2 text-grey1 flex-1 break-all max-h-37">
+                <div class="u-body2 text-grey1 tracking-wider flex-1 break-all max-h-37">
                   {this.profileInfo?.bio}
                 </div>
               ),
@@ -237,7 +237,7 @@ export const ComerInfo = defineComponent({
         <div class="bg-grey5 h-[1px]"></div>
         <div class="flex gap-4 mt-10">
           <div
-            class={['flex-1 px-4 py-5 rounded-lg', { 'cursor-pointer': this.fansCount }]}
+            class={['flex-1 px-4 pt-5 pb-4 rounded-lg', { 'cursor-pointer': this.fansCount }]}
             style={{
               background: 'rgba(var(--u-primary2-value), 0.038)'
             }}
@@ -249,7 +249,7 @@ export const ComerInfo = defineComponent({
             <div class="u-body2 text-primary">Followers</div>
           </div>
           <div
-            class={['flex-1 px-4 py-5 rounded-lg', { 'cursor-pointer': this.followCount }]}
+            class={['flex-1 px-4 pt-5 pb-4 rounded-lg', { 'cursor-pointer': this.followCount }]}
             style={{
               background: 'rgba(var(--u-primary2-value), 0.038)'
             }}
@@ -258,7 +258,7 @@ export const ComerInfo = defineComponent({
             }}
           >
             <div class={['u-h2 text-success']}>{this.followCount || 0}</div>
-            <div class="b-body2 text-success">Follow</div>
+            <div class="u-body2 text-success">Follow</div>
           </div>
         </div>
         <UDrawer
