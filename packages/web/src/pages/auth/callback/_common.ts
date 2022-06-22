@@ -1,3 +1,4 @@
+import { message } from '@comunion/components'
 import { onMounted, ref } from 'vue'
 import { useRoute } from 'vue-router'
 import { useOnLoggedIn } from '@/hooks'
@@ -26,12 +27,15 @@ export default function useCommonCallback(
         if (typeof service === 'function') {
           user = await service(query.code as string)
         } else {
-          const { error, data } = await services[service]({
+          const response = await services[service]({
             code: query.code as string,
-            state: query.state as string
+            state: query.state as string,
+            skipMessage: true
           })
-          if (!error) {
-            user = data
+          if (!response.error) {
+            user = response.data
+          } else if (response.error && response.code === 400) {
+            message.error('Current eth wallet account is linked with another targetComer')
           }
         }
         if (!user) {
