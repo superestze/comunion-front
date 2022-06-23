@@ -195,7 +195,7 @@ export const useWalletStore = defineStore('wallet', {
             } as any).then(response => {
               if (response.error) {
                 if (response.code === 400) {
-                  message.error('Current eth wallet account is linked with another targetComer')
+                  message.error('The wallet account has been connected')
                 }
                 if (bindCbFailed && typeof bindCbFailed === 'function') {
                   bindCbFailed()

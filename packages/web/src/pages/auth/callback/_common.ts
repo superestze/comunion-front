@@ -35,7 +35,7 @@ export default function useCommonCallback(
           if (!response.error) {
             user = response.data
           } else if (response.error && response.code === 400) {
-            message.error('Current eth wallet account is linked with another targetComer')
+            message.error('The social account has been connected')
           }
         }
         if (!user) {
