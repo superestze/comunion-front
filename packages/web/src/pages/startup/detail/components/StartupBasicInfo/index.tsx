@@ -78,13 +78,13 @@ export const StartupBasicInfo = defineComponent({
                 )}
               </div>
               <div class={['flex flex-wrap gap-2 mt-2', { 'mb-14': hashtagsArray.value.length }]}>
-                {hashtagsArray.value.slice(0, 4).map((key, value) => {
-                  return value + 1 < 4 && <UTag key={value}>{key}</UTag>
+                {hashtagsArray.value.map((key, value) => {
+                  return <UTag key={value}>{key}</UTag>
                 })}
 
-                {hashtagsArray.value.length - 3 > 1 ? (
+                {/* {hashtagsArray.value.length - 3 > 1 ? (
                   <UTag>+ {hashtagsArray.value.length - 3}</UTag>
-                ) : null}
+                ) : null} */}
               </div>
             </div>
             <div>

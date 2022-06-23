@@ -20,10 +20,14 @@ function getHeaders(): AxiosRequestHeaders {
     : {}
 }
 
-function onErrorHandler(error: any): {
+function onErrorHandler(
+  error: any,
+  skipMessage = false
+): {
   error: true
   data: null
   message?: string
+  code?: number
 } {
   const userStore = useUserStore()
   try {
@@ -36,19 +40,23 @@ function onErrorHandler(error: any): {
     //
   }
   const msg = error.message ?? 'Error occured'
-  message.error(msg)
+  if (!skipMessage) {
+    message.error(msg)
+  }
   return {
     error: true,
     data: null,
-    message: msg
+    message: msg,
+    code: error?.response?.data?.code
   } as const
 }
 
 export async function requestAdapter<T = any>(
-  args: RequestFunctionArgs
+  args: RequestFunctionArgs & {
+    skipMessage?: boolean
+  }
 ): Promise<ResponseObject<T>> {
   const { url, method, query, body, done = true } = args
-
   try {
     const { data } = await axios.request({
       url,
@@ -64,7 +72,7 @@ export async function requestAdapter<T = any>(
       data: data as T
     }
   } catch (error) {
-    return onErrorHandler(error)
+    return onErrorHandler(error, query?.skipMessage as boolean)
   }
 }
 

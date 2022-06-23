@@ -98,7 +98,7 @@ const StartupDetailPage = defineComponent({
         </UBreadcrumb>
         <div class="flex gap-6 mb-20">
           <div class="basis-2/3">
-            <div class="bg-white p-10 rounded border mb-6">
+            <div class="bg-white p-10 rounded-lg border mb-6">
               {startup.value && (
                 <StartupBasicInfo
                   startup={startup.value}
