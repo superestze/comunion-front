@@ -94,7 +94,7 @@ export default defineComponent({
 
     const handleGoogleLink = (accountId: number) => () => {
       if (linked.value.google.linked) {
-        if (onlyOneBound) {
+        if (onlyOneBound.value) {
           cantUnbind.value = true
           return
         }
@@ -108,7 +108,7 @@ export default defineComponent({
 
     const handleGithubLink = (accountId: number) => () => {
       if (linked.value.github.linked) {
-        if (onlyOneBound) {
+        if (onlyOneBound.value) {
           cantUnbind.value = true
           return
         }

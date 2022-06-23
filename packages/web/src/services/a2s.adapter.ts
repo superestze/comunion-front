@@ -56,8 +56,7 @@ export async function requestAdapter<T = any>(
     skipMessage?: boolean
   }
 ): Promise<ResponseObject<T>> {
-  const { url, method, query, body, skipMessage, done = true } = args
-
+  const { url, method, query, body, done = true } = args
   try {
     const { data } = await axios.request({
       url,
@@ -73,7 +72,7 @@ export async function requestAdapter<T = any>(
       data: data as T
     }
   } catch (error) {
-    return onErrorHandler(error, skipMessage)
+    return onErrorHandler(error, query?.skipMessage as boolean)
   }
 }
 
