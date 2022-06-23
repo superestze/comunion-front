@@ -90,7 +90,7 @@ export const Finance = defineComponent({
           })}
         </section>
         {(this.wallets || []).length ? (
-          <UScrollbar class="flex-1 bg-purple rounded px-6 min-w-90 h-275px">
+          <UScrollbar class="bg-purple rounded px-6 w-61 h-275px">
             <div class="py-30px">
               {(this.wallets || []).map(item => {
                 return (
@@ -103,7 +103,7 @@ export const Finance = defineComponent({
             </div>
           </UScrollbar>
         ) : (
-          <div class="flex-1  bg-purple rounded px-6">
+          <div class="bg-purple rounded px-6">
             <UNoContent textTip="NO WALLET ADDRESS">
               <EmptyFilled />
             </UNoContent>
