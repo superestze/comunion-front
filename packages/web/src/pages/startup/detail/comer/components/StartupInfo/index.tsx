@@ -1,6 +1,7 @@
 import { UDrawer } from '@comunion/components'
 import { ArrowRightOutlined } from '@comunion/icons'
 import { defineComponent, ref, onMounted, PropType } from 'vue'
+import { useRouter } from 'vue-router'
 import { StartupInfoItem } from './StartupInfoItem'
 import { ServiceReturn, services } from '@/services'
 
@@ -15,6 +16,7 @@ export const StartupInfo = defineComponent({
     }
   },
   setup(props, ctx) {
+    const router = useRouter()
     const visibleStartups = ref(false)
     const startups = ref<ServiceReturn<'startup@startup-list-be-member'>>()
     const showAllStartups = () => {
@@ -35,10 +37,14 @@ export const StartupInfo = defineComponent({
     onMounted(() => {
       getStartupByComerId()
     })
+    const toStartupDetail = (startupId: number) => {
+      router.push(`/startup/detail?startupId=${startupId}`)
+    }
     return {
       startups,
       visibleStartups,
-      showAllStartups
+      showAllStartups,
+      toStartupDetail
     }
   },
   render() {
@@ -46,7 +52,10 @@ export const StartupInfo = defineComponent({
       <div>
         <div class="flex flex-wrap pt-10">
           {this.startups?.list.slice(0, 8).map(startup => (
-            <div class="basis-1/2 mb-10 truncate">
+            <div
+              class="basis-1/2 mb-10 truncate cursor-pointer"
+              onClick={() => this.toStartupDetail(startup.id)}
+            >
               <StartupInfoItem key={startup.id} startupInfo={startup} />
             </div>
           ))}
@@ -69,7 +78,10 @@ export const StartupInfo = defineComponent({
               <div class="mt-10 ml-11">
                 {this.startups?.list.length
                   ? this.startups?.list.map(startup => (
-                      <div class="mb-10">
+                      <div
+                        class="mb-10 cursor-pointer"
+                        onClick={() => this.toStartupDetail(startup.id)}
+                      >
                         <StartupInfoItem startupInfo={startup} />
                       </div>
                     ))
