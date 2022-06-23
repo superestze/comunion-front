@@ -20,7 +20,10 @@ function getHeaders(): AxiosRequestHeaders {
     : {}
 }
 
-function onErrorHandler(error: any, skipMessage = false): {
+function onErrorHandler(
+  error: any,
+  skipMessage = false
+): {
   error: true
   data: null
   message?: string

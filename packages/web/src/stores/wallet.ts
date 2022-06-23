@@ -190,9 +190,13 @@ export const useWalletStore = defineStore('wallet', {
           return new Promise(() => {
             services['account@wallet-link']({
               address,
-              signature
-            }).then(response => {
+              signature,
+              skipMessage: true
+            } as any).then(response => {
               if (response.error) {
+                if (response.code === 400) {
+                  message.error('The wallet account has been connected')
+                }
                 if (bindCbFailed && typeof bindCbFailed === 'function') {
                   bindCbFailed()
                 }

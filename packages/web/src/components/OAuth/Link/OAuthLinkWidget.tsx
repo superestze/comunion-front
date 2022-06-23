@@ -6,7 +6,9 @@ import CardContent from '../CardContent'
 import useOAuth from '../Hooks/useOAuth'
 import OAuthLinkBtn from './OAuthLinkBtn'
 import { services } from '@/services'
+import { useUserStore } from '@/stores'
 import { useProfileStore } from '@/stores/profile'
+import { UserResponse } from '@/types'
 
 export type ComerAccount = {
   linked: boolean
@@ -25,14 +27,14 @@ type Linked = {
   }
 }
 
-type AccountMap = {
-  [key: number]: string
-}
+// type AccountMap = {
+//   [key: number]: string
+// }
 
-const accountMap: AccountMap = {
-  1: 'Github',
-  2: 'Google'
-}
+// const accountMap: AccountMap = {
+//   1: 'Github',
+//   2: 'Google'
+// }
 
 export default defineComponent({
   name: 'OAuthLinkWidget',
@@ -46,6 +48,8 @@ export default defineComponent({
     const loading = ref<boolean>(false)
     const profileStore = useProfileStore()
     const { googleLogin, githubLogin } = useOAuth()
+    const cantUnbind = ref<boolean>(false)
+    const userStore = useUserStore()
     const linked = computed(() => {
       const obj: Linked = {
         google: {
@@ -74,11 +78,26 @@ export default defineComponent({
       return obj
     })
 
+    const onlyOneBound = computed(() => {
+      let count = 0
+      const profile = userStore.profile as UserResponse
+      props.comerAccounts.forEach(item => {
+        if (item.linked) {
+          count += 1
+        }
+      })
+      return count === 1 && profile.address === ''
+    })
+
     const unBindVisible = ref<boolean>(false)
     const currentUnbindAccountId = ref<number>(-1)
 
     const handleGoogleLink = (accountId: number) => () => {
       if (linked.value.google.linked) {
+        if (onlyOneBound) {
+          cantUnbind.value = true
+          return
+        }
         unBindVisible.value = true
         currentUnbindAccountId.value = accountId
         return
@@ -89,6 +108,10 @@ export default defineComponent({
 
     const handleGithubLink = (accountId: number) => () => {
       if (linked.value.github.linked) {
+        if (onlyOneBound) {
+          cantUnbind.value = true
+          return
+        }
         unBindVisible.value = true
         currentUnbindAccountId.value = accountId
         return
@@ -99,6 +122,10 @@ export default defineComponent({
 
     const triggerUnbindDialog = () => {
       unBindVisible.value = !unBindVisible.value
+    }
+
+    const triggerCantUnbindDialog = () => {
+      cantUnbind.value = !cantUnbind.value
     }
 
     const unBindAccount = () => {
@@ -118,13 +145,13 @@ export default defineComponent({
       <>
         <UModal show={unBindVisible.value}>
           <CardContent
-            title="Associating existing accounts"
+            title="Unbind Account"
             config={{ width: 524 }}
             v-slots={{
               content: () => (
                 <p>
-                  Do you want split association with {accountMap[currentUnbindAccountId.value]}{' '}
-                  Account?
+                  After unbinding, you will not be able to sign in to the Comunion account with this
+                  social account.
                 </p>
               ),
               footer: () => (
@@ -137,6 +164,32 @@ export default defineComponent({
                     class="ml-10px w-160px"
                     onClick={unBindAccount}
                     disabled={loading.value}
+                  >
+                    Sure
+                  </UButton>
+                </div>
+              )
+            }}
+          />
+        </UModal>
+        <UModal show={cantUnbind.value}>
+          <CardContent
+            title="Tips"
+            config={{ width: 524 }}
+            v-slots={{
+              content: () => (
+                <p>
+                  Please connect your wallet account before canceling the social account Association
+                  ！
+                </p>
+              ),
+              footer: () => (
+                <div class="flex justify-end mt-40px">
+                  <UButton
+                    type="primary"
+                    class="ml-10px w-160px"
+                    onClick={triggerCantUnbindDialog}
+                    disabled={false}
                   >
                     Sure
                   </UButton>
