@@ -1,5 +1,5 @@
 import { ULazyImage, UPopover } from '@comunion/components'
-import { defineComponent, PropType } from 'vue'
+import { defineComponent, PropType, ref } from 'vue'
 import { useRouter } from 'vue-router'
 import { TeamHoverCard } from '../../../components/Teams/TeamHoverCard'
 import { ServiceReturn } from '@/services'
@@ -17,6 +17,15 @@ export const FansItem = defineComponent({
       props.fansItem?.comerID &&
         router.push({ path: `/startup/detail/comer/${props.fansItem?.comerID}` })
     }
+    const comerID = ref({
+      comerProfile: {
+        comerID: props.fansItem?.comerProfile?.comerID,
+        avatar: props.fansItem?.comerProfile?.avatar,
+        name: props.fansItem?.comerProfile?.name,
+        location: props.fansItem?.comerProfile?.location,
+        skills: props.fansItem?.comerProfile?.skills
+      }
+    })
 
     return () => (
       <div class="flex items-center cursor-pointer" onClick={toComerDetail}>
@@ -29,7 +38,7 @@ export const FansItem = defineComponent({
                 class="rounded-1/2 h-18 w-18 mr-4"
               />
             ),
-            default: () => <TeamHoverCard teamMember={props.fansItem} />
+            default: () => <TeamHoverCard teamMember={comerID.value} />
           }}
         />
         <div class="flex-1 min-w-0">

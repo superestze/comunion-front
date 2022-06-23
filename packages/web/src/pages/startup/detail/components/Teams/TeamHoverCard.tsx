@@ -1,14 +1,14 @@
 import { ULazyImage, UButton } from '@comunion/components'
 import { HookFilled, PlusOutlined } from '@comunion/icons'
-import { defineComponent, computed, PropType, onMounted, ref } from 'vue'
-import { ServiceReturn, services } from '@/services'
+import { defineComponent, computed, onMounted, ref } from 'vue'
+import { services } from '@/services'
 import { useUserStore } from '@/stores'
 
 export const TeamHoverCard = defineComponent({
   name: 'TeamHoverCard',
   props: {
     teamMember: {
-      type: Object as PropType<ServiceReturn<'account@comer-info-get'>>,
+      type: Object,
       required: true
     }
   },
