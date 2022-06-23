@@ -1,29 +1,23 @@
 import { UStartupLogo, UPopover } from '@comunion/components'
-import { defineComponent, ref, onMounted } from 'vue'
+import { defineComponent, ref, PropType } from 'vue'
 import { TeamHoverCard } from '../../../components/Teams/TeamHoverCard'
-// import { ServiceReturn } from '@/services'
+import { ServiceReturn } from '@/services'
 
-// type StartupInfo = NonNullable<ServiceReturn<'startup@startup-list-be-member'>>['list']
+type StartupInfo = NonNullable<ServiceReturn<'startup@startup-list-be-member'>>['list']
 
 export const StartupInfoItem = defineComponent({
   name: 'StartupInfoItem',
-  // props: {
-  //   startupInfo: Object as PropType<StartupInfo[number]>
-  // },
-  props: ['startupInfo'],
+  props: {
+    startupInfo: Object as PropType<StartupInfo[number]>
+  },
   setup(props) {
-    const startupInfo = props.startupInfo
     const comerID = ref({
       comerProfile: {
-        comerID: (startupInfo.comerProfile = props.startupInfo.comerID),
-        avatar: (startupInfo.comerProfile = props.startupInfo.logo || ''),
-        name: (startupInfo.comerProfile = props.startupInfo.name),
-        location: (startupInfo.comerProfile = props.startupInfo.location),
-        skills: (startupInfo.comerProfile = props.startupInfo.hashTags)
+        comerID: props.startupInfo?.comerID,
+        avatar: props.startupInfo?.logo || '',
+        name: props.startupInfo?.name,
+        skills: props.startupInfo?.hashTags
       }
-    })
-    onMounted(() => {
-      startupInfo.comerProfile = comerID.value.comerProfile
     })
     return () => (
       <div class="flex items-center">
@@ -44,7 +38,7 @@ export const StartupInfoItem = defineComponent({
                 class="rounded-1/2 h-20 w-20 mr-4"
               />
             ),
-            default: () => <TeamHoverCard teamMember={startupInfo} />
+            default: () => <TeamHoverCard teamMember={comerID.value} />
           }}
         />
         <div class="flex-1 truncate">

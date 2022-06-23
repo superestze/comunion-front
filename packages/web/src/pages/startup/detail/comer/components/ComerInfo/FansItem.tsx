@@ -1,21 +1,21 @@
 import { ULazyImage, UPopover } from '@comunion/components'
-import { defineComponent } from 'vue'
+import { defineComponent, PropType } from 'vue'
 import { useRouter } from 'vue-router'
 import { TeamHoverCard } from '../../../components/Teams/TeamHoverCard'
-// import { ServiceReturn } from '@/services'
+import { ServiceReturn } from '@/services'
 
-// type FansType = NonNullable<ServiceReturn<'account@comer-info-get'>>['followed']
+type FansType = NonNullable<ServiceReturn<'account@comer-info-get'>>['followed']
 
 export const FansItem = defineComponent({
   name: 'FansItem',
-  // props: {
-  //   fansItem: Object as PropType<FansType[number]>
-  // },
-  props: ['fansItem'],
+  props: {
+    fansItem: Object as PropType<FansType[number]>
+  },
   setup(props) {
     const router = useRouter()
     const toComerDetail = () => {
-      router.push({ path: `/startup/detail/comer/${props.fansItem?.comerID}` })
+      props.fansItem?.comerID &&
+        router.push({ path: `/startup/detail/comer/${props.fansItem?.comerID}` })
     }
 
     return () => (

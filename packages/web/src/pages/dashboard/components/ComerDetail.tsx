@@ -5,8 +5,8 @@ import { useRouter } from 'vue-router'
 import AvatarSelect from '@/components/Profile/AvatarSelect'
 import { services } from '@/services'
 
-const FollowDateil = defineComponent({
-  name: 'FollowDateil',
+const ComerDetail = defineComponent({
+  name: 'ComerDetail',
   props: {
     startup: {
       type: Array,
@@ -31,8 +31,8 @@ const FollowDateil = defineComponent({
       })
       if (!error) {
         startupDate.value?.forEach((item: any) => {
-          if (item.id === val.id) {
-            item.isDeleted = !item.isDeleted
+          if (item.comerProfile.id === val.id) {
+            item.comerProfile.isDeleted = !item.comerProfile.isDeleted
           }
         })
       }
@@ -44,8 +44,8 @@ const FollowDateil = defineComponent({
       })
       if (!error) {
         startupDate.value?.forEach((item: any) => {
-          if (item.id === val.id) {
-            item.isDeleted = !item.isDeleted
+          if (item.comerProfile.id === val.id) {
+            item.comerProfile.isDeleted = !item.comerProfile.isDeleted
           }
         })
       }
@@ -67,8 +67,7 @@ const FollowDateil = defineComponent({
             </div>
           </div>
         </div>
-
-        <UDrawer title="FOLLOW STARTUP" v-model:show={success.value} width={702}>
+        <UDrawer title="COMER STARTUP" v-model:show={success.value} width={702}>
           {success.value && (
             <>
               {startupDate.value.length
@@ -77,7 +76,7 @@ const FollowDateil = defineComponent({
                       <div
                         class="h-28 w-full flex items-center mb-5 cursor-pointer"
                         onClick={() => {
-                          toStartDetail(item.id)
+                          toStartDetail(item.comerProfile.id)
                         }}
                         key={index}
                       >
@@ -85,17 +84,17 @@ const FollowDateil = defineComponent({
                           <div class="content flex items-center">
                             <div class="h-full w-22 mr-5">
                               <UStartupLogo
-                                src={item!.logo}
+                                src={item.comerProfile!.logo}
                                 width="8"
                                 height="8"
                                 class="w-20 h-20"
                               />
                             </div>
                             <div>
-                              <div class="u-title1 mb-2 ">{item.name}</div>
-                              <div class="divide-x">
-                                {item.hashTags
-                                  ? item?.hashTags.map((tag: any, i: any) => {
+                              <div class="u-title1 mb-2 ">{item.comerProfile.name}</div>
+                              <div class="divide-x w-80 truncate">
+                                {item.comerProfile.skills
+                                  ? item.comerProfile?.skills.map((tag: any, i: any) => {
                                       return i + 1 < 4 ? (
                                         <span
                                           class={[i === 0 ? '' : 'pl-2', 'u-body1 pr-2']}
@@ -110,10 +109,10 @@ const FollowDateil = defineComponent({
                             </div>
                           </div>
                           <div class="justify-end ml-auto mr-1">
-                            {item.isDeleted && (
+                            {item.comerProfile.isDeleted && (
                               <div
                                 class="border-1 rounded-lg border-primary bg-primary text-primary w-30 h-10 flex cursor-pointer"
-                                onClick={(e: Event) => plusStatusClick(item, e)}
+                                onClick={(e: Event) => plusStatusClick(item.comerProfile, e)}
                               >
                                 <div class="m-auto flex align-center">
                                   <PlusOutlined class="mr-2 text-white w-6 h-6 align-center" />
@@ -123,10 +122,10 @@ const FollowDateil = defineComponent({
                                 </div>
                               </div>
                             )}
-                            {!item.isDeleted && (
+                            {!item.comerProfile.isDeleted && (
                               <div
                                 class="border-1 rounded-lg border-primary text-white w-30 h-10 flex cursor-pointer"
-                                onClick={(e: Event) => checkedStatusClick(item, e)}
+                                onClick={(e: Event) => checkedStatusClick(item.comerProfile, e)}
                               >
                                 <div class="m-auto flex align-center">
                                   <ConfirmOutlined class="mr-2 text-primary bg-white h-6 items-center align-center" />
@@ -151,4 +150,4 @@ const FollowDateil = defineComponent({
   }
 })
 
-export default FollowDateil
+export default ComerDetail
