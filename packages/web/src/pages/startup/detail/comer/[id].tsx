@@ -98,7 +98,7 @@ const ComerDetail = defineComponent({
               <StartupInfo comerId={this.comerId as string} />
             </UCard>
             <UCard title="Bounty" class="!pb-8">
-              <UNoContent textTip="NO WALLET ADDRESS" class="py-20">
+              <UNoContent textTip="TO BE DEVELOPED" class="py-20">
                 <EmptyFilled />
               </UNoContent>
             </UCard>
