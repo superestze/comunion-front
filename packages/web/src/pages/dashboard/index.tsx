@@ -3,14 +3,16 @@ import { ConnectOutlined } from '@comunion/icons'
 import { computed, defineComponent, onMounted, ref, h } from 'vue'
 import Bookmarks from './components/Bookmarks'
 import Bounties from './components/Bounties'
+import ComerDetail from './components/ComerDetail'
 import EditProfile from './components/EditProfile'
-import FollowDateil from './components/FollowDateil'
+import FollowDetail from './components/FollowDetail'
 import Proposals from './components/Proposals'
 import Startups from './components/Startups'
 import { OAuthLinkWidget } from '@/components/OAuth'
 import { ComerAccount } from '@/components/OAuth/Link/OAuthLinkWidget'
 import { services } from '@/services'
 import { useProfileStore } from '@/stores/profile'
+
 // import { StartupItem } from '@/types'
 // import { useWalletStore } from '@/stores'
 
@@ -19,6 +21,9 @@ const DashboardPage = defineComponent({
   setup() {
     const profileStore = useProfileStore()
     const followedStartups = ref<object[]>([])
+    const comerList = ref<object[]>([])
+    const comerAccounts = ref<number>(0)
+    const myProfile = profileStore
     const getDataList = profileStore.get
     const getFollowList = async () => {
       const { error, data } = await services['startup@startup-list-followed']({
@@ -31,12 +36,21 @@ const DashboardPage = defineComponent({
         followedStartups.value = data.list ?? []
       }
     }
-    onMounted(() => {
-      getDataList()
-      getFollowList()
+    const getComerList = async (comerID: number | undefined) => {
+      const { error, data } = await services['account@comer-info-get']({
+        comerId: comerID
+      })
+      if (!error) {
+        // comerList.value = data
+        comerList.value = data.follows ?? []
+        comerAccounts.value = data.followsCount ?? 0
+      }
+    }
+    onMounted(async () => {
+      await getDataList()
+      await getFollowList()
+      await getComerList(myProfile.value?.comerID)
     })
-
-    const myProfile = profileStore
 
     const myInfo = computed(() => {
       return [
@@ -85,10 +99,9 @@ const DashboardPage = defineComponent({
                     <div class="flex flex-col ml-5 justify-center">
                       <div class="mb-2 u-title1">{myProfile.value?.name}</div>
                       <div class="mb-2">{myInfo.value[2]?.value}</div>
-                      <div class="mb-2 ">
-                        <span class="u-body2">{myProfile.value?.email}</span>
-                        <span class="u-body2">· {myProfile.value?.location}</span>
-                        <span class="u-body2">· {myProfile.value?.timeZone}</span>
+                      <div class="mb-2 text-grey3 u-body2">
+                        {myProfile.value?.email} · {myProfile.value?.location} ·{' '}
+                        {myProfile.value?.timeZone}
                       </div>
 
                       {/* <div class="flex items-center">
@@ -183,25 +196,29 @@ const DashboardPage = defineComponent({
               </div>
               <div class="u-title1 text-primary1 mt-6 mb-6">Following</div>
               <div class="flex">
-                <div class="w-40 h-25 rounded-lg bg-violet-50 mr-4">
-                  <div class="u-headline2 text-32px font-700 text-primary mt-4 ml-4">
-                    {followedStartups.value.length}
-                  </div>
-                  <div class="flex align-center ml-4 mt-4 cursor-pointer">
-                    {followedStartups.value.length ? (
-                      <FollowDateil startup={followedStartups.value} />
-                    ) : (
+                {followedStartups.value.length ? (
+                  <FollowDetail startup={followedStartups.value} />
+                ) : (
+                  <div class="w-40 h-25 rounded-lg bg-violet-50 mr-4">
+                    <div class="u-headline2 text-32px font-700 text-primary mt-4 ml-4">
+                      {followedStartups.value.length}
+                    </div>
+                    <div class="flex align-center ml-4 mt-4 cursor-pointer">
                       <div class="u-body2 text-primary">Startup</div>
-                    )}
+                    </div>
                   </div>
-                </div>
-                <div class="w-40 h-25 rounded-lg bg-blue-50">
-                  <div class="u-headline2 text-32px font-700 text-primary mt-4 ml-4">0</div>
-                  <div class="flex align-center ml-4 mt-4 cursor-pointer">
-                    <div class="u-body2 text-primary">Comer</div>
-                    <div class="flex-1"></div>
+                )}
+                {comerAccounts.value > 0 ? (
+                  <ComerDetail startup={comerList.value} />
+                ) : (
+                  <div class="w-40 h-25 rounded-lg bg-blue-50">
+                    <div class="u-headline2 text-32px font-700 text-primary mt-4 ml-4">0</div>
+                    <div class="flex align-center ml-4 mt-4 cursor-pointer">
+                      <div class="u-body2 text-primary">Comer</div>
+                      <div class="flex-1"></div>
+                    </div>
                   </div>
-                </div>
+                )}
               </div>
             </UCard>
             <Bounties class="bg-white border-lg border-1 border-grey5 h-301 h-auto box-border mt-6" />

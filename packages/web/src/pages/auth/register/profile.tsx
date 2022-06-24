@@ -28,7 +28,8 @@ const RegisterProfilePage = defineComponent({
       {
         title: 'Location',
         name: 'location',
-        placeholder: 'Please enter the city of residence'
+        placeholder: 'Please enter the city of residence',
+        required: true
       },
       {
         t: 'select',
