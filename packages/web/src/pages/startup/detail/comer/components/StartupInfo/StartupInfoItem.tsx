@@ -44,7 +44,7 @@ export const StartupInfoItem = defineComponent({
         <div class="flex-1 truncate">
           <div class="u-title1 truncate">{props.startupInfo?.name}</div>
           <div class="flex u-body1 mt-2">
-            {props.startupInfo?.hashTags.map((hashTag: any, hashTagIndex: any) => (
+            {props.startupInfo?.hashTags.map((hashTag, hashTagIndex) => (
               <div key={hashTag.id} class="truncate">
                 <span class="u-body1">{hashTag.name}</span>
                 {hashTagIndex + 1 !== props.startupInfo?.hashTags.length && (

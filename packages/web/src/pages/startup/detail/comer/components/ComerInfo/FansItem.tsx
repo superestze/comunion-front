@@ -44,7 +44,7 @@ export const FansItem = defineComponent({
         <div class="flex-1 min-w-0">
           <div class="u-title1">{props.fansItem?.comerProfile?.name}</div>
           <div class="truncate u-body1">
-            {props.fansItem?.comerProfile?.skills?.map((skill: any) => skill.name).join(' | ')}
+            {props.fansItem?.comerProfile?.skills?.map(skill => skill.name).join(' | ')}
             {/* map((skill, skillIndex) => (
               <span class="truncate" key={skill.id}>
                 <span class="u-body1">11111111{skill.name}</span>
