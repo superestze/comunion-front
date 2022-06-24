@@ -18,16 +18,18 @@ export const TeamHoverCard = defineComponent({
     const loading = ref(false)
     const isFollow = ref(false)
     const skills = computed(() => {
-      return teamMember?.comerProfile?.skills?.map((skill: any, skillIndex: any) => {
-        return (
-          <div>
-            <span class="u-body2">{skill.name}</span>
-            {skillIndex + 1 !== teamMember?.comerProfile?.skills?.length && (
-              <span class="text-grey5 px-2">|</span>
-            )}
-          </div>
-        )
-      })
+      return teamMember?.comerProfile?.skills?.map(
+        (skill: { name: string }, skillIndex: number) => {
+          return (
+            <div>
+              <span class="u-body2">{skill.name}</span>
+              {skillIndex + 1 !== teamMember?.comerProfile?.skills?.length && (
+                <span class="text-grey5 px-2">|</span>
+              )}
+            </div>
+          )
+        }
+      )
     })
     const getIsFollow = async (comerId: number) => {
       try {
@@ -75,7 +77,7 @@ export const TeamHoverCard = defineComponent({
         <div class="u-title font-opensans font-400 text-[13px] leading-5 text-center py-1">
           {teamMember?.comerProfile?.location}
         </div>
-        <div class="flex justify-center">{skills.value?.map((skill: any) => skill)}</div>
+        <div class="flex justify-center">{skills.value?.map((skill: string) => skill)}</div>
         <div class="mt-10 text-center mb-3">
           <UButton
             loading={loading.value}
