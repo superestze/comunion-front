@@ -1,7 +1,8 @@
-import { UDrawer, UStartupLogo } from '@comunion/components'
+import { UDrawer, UStartupLogo, UPopover } from '@comunion/components'
 import { PlusOutlined, ConfirmOutlined, ArrowRightOutlined } from '@comunion/icons'
 import { defineComponent, ref } from 'vue'
 import { useRouter } from 'vue-router'
+import { TeamHoverCard } from '../../startup/detail/components/Teams/TeamHoverCard'
 import AvatarSelect from '@/components/Profile/AvatarSelect'
 import { services } from '@/services'
 
@@ -24,10 +25,10 @@ const ComerDetail = defineComponent({
       success.value = true
     }
 
-    const plusStatusClick = async (val: { id: number }, e: Event) => {
+    const plusStatusClick = async (val: { comerID: number; id: number }, e: Event) => {
       e.stopPropagation()
-      const { error } = await services['startup@startup-follow']({
-        startupId: val.id
+      const { error } = await services['account@comer-follow']({
+        comerId: val.comerID
       })
       if (!error) {
         startupDate.value?.forEach((item: { comerProfile: { id: number; isDeleted: boolean } }) => {
@@ -37,10 +38,10 @@ const ComerDetail = defineComponent({
         })
       }
     }
-    const checkedStatusClick = async (val: { id: number }, e: Event) => {
+    const checkedStatusClick = async (val: { comerID: number; id: number }, e: Event) => {
       e.stopPropagation()
-      const { error } = await services['startup@startup-unfollow']({
-        startupId: val.id
+      const { error } = await services['account@comer-unfollow']({
+        comerId: val.comerID
       })
       if (!error) {
         startupDate.value?.forEach((item: { comerProfile: { id: number; isDeleted: boolean } }) => {
@@ -51,7 +52,8 @@ const ComerDetail = defineComponent({
       }
     }
     const toStartDetail = (val: number) => {
-      router.push({ path: '/startup/detail', query: { startupId: val } })
+      // router.push({ path: '/startup/detail', query: { startupId: val } })
+      router.push(`/startup/detail/comer/${val}`)
     }
     return () => (
       <>
@@ -61,7 +63,7 @@ const ComerDetail = defineComponent({
           </div>
           <div class="flex align-center ml-4 mt-4">
             <div class="flex w-full">
-              <div class="u-body2  text-primary">Startup</div>
+              <div class="u-body2  text-primary">Comer</div>
               <div class="flex-1"></div>
               <ArrowRightOutlined class="mt-1 mr-3 w-4 h-4 text-primary" />
             </div>
@@ -75,10 +77,12 @@ const ComerDetail = defineComponent({
                     (
                       item: {
                         comerProfile: {
-                          logo: string
+                          avatar: string
                           id: number
+                          comerID: number
                           name?: string
                           skills: Array<object>
+                          location: string
                           isDeleted?: boolean
                         }
                       },
@@ -88,18 +92,26 @@ const ComerDetail = defineComponent({
                         <div
                           class="h-28 w-full flex items-center mb-5 cursor-pointer"
                           onClick={() => {
-                            toStartDetail(item.comerProfile.id)
+                            toStartDetail(item.comerProfile.comerID)
                           }}
                           key={index}
                         >
                           <div class="border-b-1 h-full w-full flex items-center pb-5">
                             <div class="content flex items-center">
                               <div class="h-full w-22 mr-5">
-                                <UStartupLogo
-                                  src={item.comerProfile!.logo}
-                                  width="8"
-                                  height="8"
-                                  class="w-20 h-20"
+                                <UPopover
+                                  placement="left-start"
+                                  v-slots={{
+                                    trigger: () => (
+                                      <UStartupLogo
+                                        src={item.comerProfile!.avatar}
+                                        width="8"
+                                        height="8"
+                                        class="w-20 h-20"
+                                      />
+                                    ),
+                                    default: () => <TeamHoverCard teamMember={item} />
+                                  }}
                                 />
                               </div>
                               <div>

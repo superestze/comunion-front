@@ -1,4 +1,4 @@
-import { ULazyImage, UButton } from '@comunion/components'
+import { UButton, UStartupLogo } from '@comunion/components'
 import { HookFilled, PlusOutlined } from '@comunion/icons'
 import { defineComponent, computed, onMounted, ref } from 'vue'
 import { services } from '@/services'
@@ -67,9 +67,11 @@ export const TeamHoverCard = defineComponent({
     }
     return () => (
       <div class="px-10 relative">
-        <ULazyImage
+        <UStartupLogo
           src={teamMember?.comerProfile?.avatar ?? ''}
-          class="h-16 w-16 rounded-1\/2 absolute -top-10 left-[calc(50%_-_2rem)]"
+          width="16"
+          height="16"
+          class="w-16 h-16 rounded-1\/2 absolute -top-10 left-[calc(50%_-_2rem)] bg-white"
         />
         <div class="u-title1 uppercase pt-10 mb-1 text-center">
           {teamMember?.comerProfile?.name}

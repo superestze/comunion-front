@@ -1,7 +1,8 @@
-import { UDrawer, UStartupLogo } from '@comunion/components'
+import { UDrawer, UStartupLogo, UPopover } from '@comunion/components'
 import { PlusOutlined, ConfirmOutlined, ArrowRightOutlined } from '@comunion/icons'
 import { defineComponent, ref } from 'vue'
 import { useRouter } from 'vue-router'
+import { TeamHoverCard } from '../../startup/detail/components/Teams/TeamHoverCard'
 import AvatarSelect from '@/components/Profile/AvatarSelect'
 import { services } from '@/services'
 
@@ -18,19 +19,43 @@ const FollowDetail = defineComponent({
     const router = useRouter()
 
     const startupDate = ref(props.startup)
+    const startupDates = startupDate.value?.map(
+      (item: {
+        comerID: number
+        logo: string
+        name: string
+        location: string
+        hashTags: Array<object>
+        comerProfile: {
+          comerID: number
+          avatar: string
+          name: string
+          location: string
+          skills: Array<object>
+        }
+      }) => {
+        item.comerProfile = {
+          comerID: item.comerID,
+          avatar: item.logo,
+          name: item.name,
+          location: item.location ?? '',
+          skills: item.hashTags
+        }
+        return item
+      }
+    )
     const showAvatarModal = ref(false)
     const success = ref(false)
     const funFollow = () => {
       success.value = true
     }
-
     const plusStatusClick = async (val: { id: number }, e: Event) => {
       e.stopPropagation()
       const { error } = await services['startup@startup-follow']({
         startupId: val.id
       })
       if (!error) {
-        startupDate.value?.forEach((item: { id: number; isDeleted: boolean }) => {
+        startupDates?.forEach((item: { id: number; isDeleted: boolean }) => {
           if (item.id === val.id) {
             item.isDeleted = !item.isDeleted
           }
@@ -43,7 +68,7 @@ const FollowDetail = defineComponent({
         startupId: val.id
       })
       if (!error) {
-        startupDate.value?.forEach((item: { id: number; isDeleted: boolean }) => {
+        startupDates?.forEach((item: { id: number; isDeleted: boolean }) => {
           if (item.id === val.id) {
             item.isDeleted = !item.isDeleted
           }
@@ -57,7 +82,7 @@ const FollowDetail = defineComponent({
       <>
         <div class="w-40 h-25 rounded-lg bg-violet-50 mr-4 cursor-pointer" onClick={funFollow}>
           <div class="u-headline2 text-32px font-700 text-primary mt-4 ml-4">
-            {startupDate.value?.length}
+            {startupDates?.length}
           </div>
           <div class="flex align-center ml-4 mt-4">
             <div class="flex w-full">
@@ -71,10 +96,11 @@ const FollowDetail = defineComponent({
         <UDrawer title="FOLLOW STARTUP" v-model:show={success.value} width={702}>
           {success.value && (
             <>
-              {startupDate.value.length
-                ? startupDate.value.map(
+              {startupDates.length
+                ? startupDates.map(
                     (
                       item: {
+                        comerProfile: object
                         logo: string
                         id: number
                         name?: string
@@ -94,11 +120,19 @@ const FollowDetail = defineComponent({
                           <div class="border-b-1 h-full w-full flex items-center pb-5">
                             <div class="content flex items-center">
                               <div class="h-full w-22 mr-5">
-                                <UStartupLogo
-                                  src={item!.logo}
-                                  width="8"
-                                  height="8"
-                                  class="w-20 h-20"
+                                <UPopover
+                                  placement="left-start"
+                                  v-slots={{
+                                    trigger: () => (
+                                      <UStartupLogo
+                                        src={item!.logo}
+                                        width="8"
+                                        height="8"
+                                        class="w-20 h-20"
+                                      />
+                                    ),
+                                    default: () => <TeamHoverCard teamMember={item} />
+                                  }}
                                 />
                               </div>
                               <div>
