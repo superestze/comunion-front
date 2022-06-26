@@ -41,17 +41,10 @@ export const StartupInfoItem = defineComponent({
             default: () => <TeamHoverCard teamMember={comerID.value} />
           }}
         />
-        <div class="flex-1 truncate">
-          <div class="u-title1 truncate">{props.startupInfo?.name}</div>
-          <div class="flex u-body1 mt-2">
-            {props.startupInfo?.hashTags.map((hashTag, hashTagIndex) => (
-              <div key={hashTag.id} class="truncate">
-                <span class="u-body1">{hashTag.name}</span>
-                {hashTagIndex + 1 !== props.startupInfo?.hashTags.length && (
-                  <span class="u-grey5 mx-2">|</span>
-                )}
-              </div>
-            ))}
+        <div class="flex-1 min-w-0">
+          <div class="u-title1">{props.startupInfo?.name}</div>
+          <div class="u-body1 mt-2 truncate">
+            {props.startupInfo?.hashTags.map(hashTag => hashTag.name).join(' | ')}
           </div>
         </div>
       </div>
