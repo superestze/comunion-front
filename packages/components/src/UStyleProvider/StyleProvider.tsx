@@ -158,6 +158,9 @@ const UStyleProvider = defineComponent({
         --u-error-color: ${props.errorColor};
         --u-success-color: ${props.successColor};
         --u-warning-color: ${props.warningColor};
+        --u-warning2-value: ${hex2rgb(props.warningColor).r},${hex2rgb(props.warningColor).g},${
+        hex2rgb(props.warningColor).b
+      };
         --u-info-color: ${props.infoColor};
         --u-grey-1-color: ${props.grey1Color};
         --u-grey-2-color: ${props.grey2Color};

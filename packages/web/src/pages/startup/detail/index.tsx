@@ -1,7 +1,16 @@
-import { UCard, UDeveloping, UBreadcrumb, UBreadcrumbItem, USpin } from '@comunion/components'
+import {
+  UCard,
+  UDeveloping,
+  UBreadcrumb,
+  UBreadcrumbItem,
+  USpin,
+  UScrollList,
+  UNoContent
+} from '@comunion/components'
 import { ArrowLeftOutlined, EmptyFilled } from '@comunion/icons'
-import { defineComponent, onMounted, ref } from 'vue'
+import { defineComponent, onMounted, ref, reactive } from 'vue'
 import { useRoute, useRouter } from 'vue-router'
+import BountiesCard from './components/Bounties'
 import { Finance } from './components/Finance'
 import { StartupBasicInfo } from './components/StartupBasicInfo'
 import { Team } from './components/Teams'
@@ -19,6 +28,17 @@ const StartupDetailPage = defineComponent({
     const totalTeamMembers = ref()
     const userIsFollow = ref(false)
     const pageLoading = ref(false)
+    const pagination = reactive<{
+      pageSize: number
+      total: number
+      page: number
+      loading: boolean
+    }>({
+      pageSize: 4,
+      total: 0,
+      page: 1,
+      loading: false
+    })
 
     const getStartup = async () => {
       if (startupId) {
@@ -74,10 +94,31 @@ const StartupDetailPage = defineComponent({
       teamList(totalTeamMembers.value)
     }
 
+    const myCreatedStartups = ref<StartupItem[]>([])
+
+    const getCreatedStartups = async () => {
+      const { error, data } = await services['startup@startup-list-me']({
+        limit: pagination.pageSize,
+        offset: pagination.pageSize * (pagination.page - 1)
+      })
+      if (!error) {
+        myCreatedStartups.value.push(...(data!.list as unknown as StartupItem[]))
+        pagination.total = data!.total
+      }
+    }
+
+    const onLoadMore = async (p: number) => {
+      pagination.loading = true
+      pagination.page = p
+      await getCreatedStartups()
+      pagination.loading = false
+    }
+
     onMounted(() => {
       getStartup()
       teamList()
       getUserIsFollow()
+      getCreatedStartups()
     })
 
     return () => (
@@ -112,9 +153,26 @@ const StartupDetailPage = defineComponent({
               <Finance startup={startup.value} />
             </UCard>
             <UCard title="BOUNTIES" class="mb-6">
-              <UDeveloping class="my-10">
+              {/* <UDeveloping class="my-10">
                 <EmptyFilled />
-              </UDeveloping>
+              </UDeveloping> */}
+              <UScrollList
+                triggered={pagination.loading}
+                page={pagination.page}
+                pageSize={pagination.pageSize}
+                total={pagination.total}
+                onLoadMore={onLoadMore}
+              >
+                {myCreatedStartups.value.length ? (
+                  myCreatedStartups.value.map((startup, i) => (
+                    <BountiesCard startup={startup} key={i} />
+                  ))
+                ) : (
+                  <UNoContent textTip="TO BE EMPTY" class="my-10">
+                    <EmptyFilled />
+                  </UNoContent>
+                )}
+              </UScrollList>
             </UCard>
             <UCard title="GOVERNANCE">
               <UDeveloping class="my-10">

@@ -3,8 +3,8 @@ import { defineComponent, PropType } from 'vue'
 // import { useRouter } from 'vue-router'
 import { StartupItem } from '@/types'
 
-const BountiesCard = defineComponent({
-  name: 'BountiesCard',
+const AapprobedCard = defineComponent({
+  name: 'AapprobedCard',
   props: {
     startup: {
       type: Object as PropType<StartupItem>,
@@ -71,7 +71,7 @@ const BountiesCard = defineComponent({
                 <span class="u-body2 text-grey2">Deposit requirements：</span>
                 <span class="u-card-title2 text-warning">20 USDC</span>
               </div>
-              <div class="flex-1 w-65"></div>
+              <div class="flex-1 w-10"></div>
               <div class="flex justify-end">
                 <div
                   class="w-25 h-10 flex items-center justify-center rounded-md"
@@ -103,4 +103,4 @@ const BountiesCard = defineComponent({
   }
 })
 
-export default BountiesCard
+export default AapprobedCard
