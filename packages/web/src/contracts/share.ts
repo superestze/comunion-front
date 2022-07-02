@@ -15,6 +15,8 @@ export function wrapTransaction(
 
     const contract = getContract(contractArgs)
     const fn = contract[functionName]
+    console.log('contract==>', contract)
+
     return fn(...fnArgs)
       .then((res: any) => {
         contractStore.endContract('success', {
@@ -50,6 +52,7 @@ export function getContract(args: GetContractArgs) {
     throw new Error('No network selected')
   }
   const address = args.addresses[args.chainId]
+
   if (!address) {
     throw new Error('Not supported network')
   }
