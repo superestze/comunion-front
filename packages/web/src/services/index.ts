@@ -524,6 +524,74 @@ export const services = {
     })
   },
 
+  'bounty@bounty-create'(args: {
+    bountyDetail?: {
+      startupID?: number
+      comerID?: number
+      title?: string
+      expiresIn?: string
+      contact?: {
+        email?: string
+        telegram?: string
+        discord?: string
+      }[]
+      discussionLink?: string
+      applicantsSkills?: string[]
+      applicantsDeposit?: number
+      description?: string
+    }
+    payDetail?: {
+      stages?: {
+        seqNum?: number
+        token1Symbol?: string
+        token1Amount?: number
+        token2Symbol?: string
+        token2Amount?: number
+        terms?: string
+      }[]
+      period?: {
+        periodType?: string
+        hoursPerDay?: number
+        token1Symbol?: string
+        token1Amount?: number
+        token2Symbol?: string
+        token2Amount?: number
+        target?: string
+        periodAmount: number
+      }
+    }
+    deposit?: {
+      tokenSymbol?: string
+      tokenAmount?: number
+    }
+    chainInfo?: {
+      chainID?: number
+      txHash?: string
+    }
+  }) {
+    return requestAdapter<{
+      code?: number
+      data?: string
+    }>({
+      url: replacePath('/bounty/detail', args),
+      method: 'POST',
+      ...extract('POST', args, [], [])
+    })
+  },
+  'bounty@bounty-startups'(args: { comerID: any }) {
+    return requestAdapter<{
+      data?: string
+      startups?: {
+        startupID: number
+        name: string
+      }[]
+    }>({
+      url: replacePath('/bounty/startups/{comerID}', args),
+      method: 'GET',
+      ...extract('GET', args, [], ['comerID'])
+    })
+  },
+
   'startup@startup-get'(args: { startupId: any }) {
     return requestAdapter<{
       id: number

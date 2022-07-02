@@ -1,12 +1,26 @@
 import { omitObject, effectiveUrlValidator, isValidAddress } from '@comunion/utils'
-import type { FormProps, FormInst, FormItemRule } from 'naive-ui'
-import { NForm, NFormItem, NInput } from 'naive-ui'
-import type { PropType, VNode } from 'vue'
+import {
+  FormProps,
+  FormInst,
+  FormItemRule,
+  NForm,
+  NFormItem,
+  FormItemProps,
+  NInput
+} from 'naive-ui'
+import type { PropType, Slot, VNode } from 'vue'
 import { defineComponent, ref, reactive, toRaw, computed } from 'vue'
 import { UAddressInput, UAddressInputPropsType } from '../UInput'
 import { USkillTags, UStartupTags } from '../USelect'
 import { USingleImageUpload, USingleImageUploadPropsType } from '../UUpload'
-import { UInputPropsType, USelect, UButton, USelectPropsType } from '../index'
+import {
+  UInputPropsType,
+  USelect,
+  UButton,
+  USelectPropsType,
+  UDatePickerPropsType,
+  UDatePicker
+} from '../index'
 import type { ExtractPropTypes } from '../utils'
 import './FormFactory.css'
 
@@ -52,12 +66,23 @@ export type FormFactoryCustomField = {
   render: (value: any) => VNode
 }
 
+export type FormFactoryDateField = {
+  t: 'date'
+} & UDatePickerPropsType
+
+declare type InternalSlots = {
+  [name: string]: Slot | undefined
+}
+
 export type FormFactoryField = {
   title: string
   name: string
   required?: boolean
   rules?: FormItemRule[]
   disabled?: boolean
+  class?: string
+  slots?: InternalSlots
+  formItemProps?: FormItemProps
 } & (
   | FormFactoryInputField
   | FormFactoryAddrssInputField
@@ -67,6 +92,7 @@ export type FormFactoryField = {
   | FormFactorySelectField
   | FormFactorySingleUploadField
   | FormFactoryCustomField
+  | FormFactoryDateField
 )
 
 export type FormData = Record<string, any>
@@ -151,6 +177,8 @@ function renderField(field: FormFactoryField, values: FormData) {
           v-model:value={values[field.name]}
         />
       )
+    case 'date':
+      return <UDatePicker {...(props as UDatePickerPropsType)} v-model:value={values[field.name]} />
     case 'custom':
       return field.render(values[field.name])
     default:
@@ -181,7 +209,9 @@ export function getFieldsRules(fields: FormFactoryField[]) {
         required: true,
         message: `${field.title} is required`,
         trigger: 'blur',
-        type: ['skillTags', 'startupTags'].includes(field.t ?? '')
+        type: ['date'].includes(field.t ?? '')
+          ? 'number'
+          : ['skillTags', 'startupTags'].includes(field.t ?? '')
           ? 'array'
           : field.rules?.[0]?.type ?? 'string'
       })
@@ -214,6 +244,8 @@ export const UFormItemsFactory = defineComponent({
               label={field.title}
               path={field.name}
               required={field.required}
+              v-slots={field.slots}
+              {...field.formItemProps}
             >
               {renderField(field, props.values)}
             </NFormItem>

@@ -7,20 +7,27 @@ import {
 import { defineComponent, ref } from 'vue'
 import HeaderDropdown from '../../components/HeaderDropdown'
 import styles from './index.module.css'
+import CreateBountyBlock, { CreateBountyRef } from '@/blocks/Bounty/Create'
 import CreateStartupBlock, { CreateStartupRef } from '@/blocks/Startup/Create'
 
 const CreateBlock = defineComponent({
   name: 'CreateBlock',
   setup(props, ctx) {
     const createStartupRef = ref<CreateStartupRef>()
+    const createBountyRef = ref<CreateBountyRef>()
 
     const onCreateStartup = () => {
       createStartupRef.value?.show()
     }
 
+    const onCreateBounty = () => {
+      createBountyRef.value?.show()
+    }
+
     return () => (
       <>
         <CreateStartupBlock ref={createStartupRef} />
+        <CreateBountyBlock ref={createBountyRef} />
         <HeaderDropdown
           width={356}
           title="Create"
@@ -44,9 +51,8 @@ const CreateBlock = defineComponent({
             },
             {
               key: 'bounty',
-              disabled: true,
               label: () => (
-                <div class="flex items-center">
+                <div class="flex items-center" onClick={onCreateBounty}>
                   <div class="rounded flex bg-[#f8f8f8] h-8 mr-4 w-8 items-center justify-center">
                     <CreateBountyFilled class="text-primary" />
                   </div>
