@@ -531,9 +531,11 @@ export const services = {
       title?: string
       expiresIn?: string
       contact?: {
-        email?: string
-        telegram?: string
-        discord?: string
+        /**
+         * @description  1:Email 2:Discord 3:Telegram
+         */
+        contactType?: number
+        contactAddress?: string
       }[]
       discussionLink?: string
       applicantsSkills?: string[]
@@ -550,7 +552,10 @@ export const services = {
         terms?: string
       }[]
       period?: {
-        periodType?: string
+        /**
+         * @description 1:Days 2:Weeks 3:Months
+         */
+        periodType?: number
         hoursPerDay?: number
         token1Symbol?: string
         token1Amount?: number
@@ -580,13 +585,13 @@ export const services = {
   },
   'bounty@bounty-startups'(args: { comerID: any }) {
     return requestAdapter<{
-      data?: string
-      startups?: {
+      total?: number
+      list?: {
         startupID: number
         name: string
       }[]
     }>({
-      url: replacePath('/bounty/startups/{comerID}', args),
+      url: replacePath('/cores/startups/comer/{comerID}', args),
       method: 'GET',
       ...extract('GET', args, [], ['comerID'])
     })

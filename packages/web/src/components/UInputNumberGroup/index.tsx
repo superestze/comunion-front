@@ -3,7 +3,7 @@ import './style.css'
 import { UInputNumber, UInputNumberPropsType } from '@comunion/components'
 import { ArrowDownOutlined, ArrowUpOutlined } from '@comunion/icons'
 import { NInputGroup } from 'naive-ui'
-import { AllowedComponentProps, defineComponent, PropType } from 'vue'
+import { AllowedComponentProps, defineComponent, PropType, watch, ref } from 'vue'
 
 type GroupType = 'withSelect' | 'withUnit'
 
@@ -36,14 +36,21 @@ const UInputNumberGroup = defineComponent({
   },
   emits: ['update:value'],
   setup(props, ctx) {
+    const inputValue = ref(props.value)
+    watch(
+      () => inputValue.value,
+      n => {
+        ctx.emit('update:value', n)
+      }
+    )
     const addCurrentValue = () => {
-      // currentValue.value = Number(currentValue.value) + props.step
-      ctx.emit('update:value', (props.value || 0) + props.step)
+      inputValue.value = (inputValue.value || 0) + props.step
+      ctx.emit('update:value', inputValue.value)
     }
 
     const minusCurrentValue = () => {
-      // currentValue.value = Number(currentValue.value) - props.step
-      ctx.emit('update:value', (props.value || 0) - props.step)
+      inputValue.value = (inputValue.value || 0) - props.step
+      ctx.emit('update:value', inputValue.value)
     }
 
     const controlSlot = (
@@ -64,7 +71,7 @@ const UInputNumberGroup = defineComponent({
       <div class={['u-input-number-group', props.class]}>
         <NInputGroup>
           <UInputNumber
-            v-model:value={props.value}
+            v-model:value={inputValue.value}
             showButton={false}
             v-slots={{
               suffix: controlSlot

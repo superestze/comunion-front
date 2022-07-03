@@ -54,7 +54,7 @@ const UTransactionWaiting = defineComponent({
 
     return () =>
       show.value ? (
-        <div class="u-transaction-waiting">
+        <div class="u-transaction-waiting z-auto">
           <CloseOutlined class="u-transaction-waiting-close" onClick={close} />
           <CheckedFilled class="u-transaction-waiting-checked" />
           <div>
