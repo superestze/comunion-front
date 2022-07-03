@@ -115,7 +115,7 @@ const CreateBountyForm = defineComponent({
                 period: {
                   periodAmount: bountyInfo.period.periodAmount,
                   periodType: bountyInfo.period.periodType,
-                  hourPerDay: bountyInfo.period.hoursPerDay,
+                  hoursPerDay: bountyInfo.period.hoursPerDay,
                   token1Amount: bountyInfo.period.token1Amount,
                   token1Symbol: bountyInfo.token1Symbol,
                   token2Amount: bountyInfo.period.token2Amount,
