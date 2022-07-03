@@ -1,9 +1,8 @@
-import { FormInst, UForm, UFormItem, UInput } from '@comunion/components'
+import { FormInst, UForm, UFormItem, UInput, UInputNumberGroup } from '@comunion/components'
 import { MinusCircleOutlined, AddCircleOutlined } from '@comunion/icons'
 import { defineComponent, PropType, ref, computed } from 'vue'
 import { BountyInfo } from '../typing'
 import { MAX_AMOUNT, renderUnit } from './BasicInfo'
-import InputNumberGroup from '@/components/UInputNumberGroup'
 
 export interface PayDetailStageRef {
   payStageForm: FormInst | null
@@ -68,7 +67,7 @@ const PayDetailStage = defineComponent({
               <div class="text-grey1">Rewards</div>
               {/* <div class="flex items-center"> */}
               <div class="grid grid-cols-[1fr,56px,1fr]">
-                <InputNumberGroup
+                <UInputNumberGroup
                   class="flex-1"
                   type="withUnit"
                   inputProps={{
@@ -82,9 +81,9 @@ const PayDetailStage = defineComponent({
                   }}
                   v-model:value={stage.token1Amount}
                   renderUnit={() => renderUnit(this.bountyInfo.token1Symbol)}
-                ></InputNumberGroup>
+                ></UInputNumberGroup>
                 <div class="text-grey2 text-3xl px-5">+</div>
-                <InputNumberGroup
+                <UInputNumberGroup
                   class="flex-1"
                   type="withUnit"
                   inputProps={{
@@ -98,7 +97,7 @@ const PayDetailStage = defineComponent({
                   }}
                   v-model:value={stage.token2Amount}
                   renderUnit={() => renderUnit(this.bountyInfo.token2Symbol)}
-                ></InputNumberGroup>
+                ></UInputNumberGroup>
               </div>
               <div class="grid grid-cols-[1fr,56px,1fr]">
                 {!this.bountyInfo.token2Symbol && (

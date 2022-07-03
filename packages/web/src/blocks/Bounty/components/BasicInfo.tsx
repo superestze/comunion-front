@@ -6,7 +6,8 @@ import {
   UFormItemsFactory,
   UInput,
   UInputGroup,
-  USelect
+  USelect,
+  UInputNumberGroup
 } from '@comunion/components'
 import { SelectOption } from '@comunion/components/src/constants'
 import { MinusCircleOutlined, AddCircleOutlined } from '@comunion/icons'
@@ -14,7 +15,6 @@ import dayjs from 'dayjs'
 import { defineComponent, PropType, ref, computed, Ref, h, onMounted } from 'vue'
 import { BountyInfo, ContactType } from '../typing'
 import RichEditor from '@/components/Editor'
-import InputNumberGroup from '@/components/UInputNumberGroup'
 import { services } from '@/services'
 import { useUserStore } from '@/stores'
 
@@ -79,7 +79,6 @@ const BountyBasicInfo = defineComponent({
         type: 'datetime',
         title: 'Expires In',
         name: 'expiresIn',
-        shortcuts: [],
         rules: [
           { required: true, message: 'Please set the apply cutoff date' },
           {
@@ -181,7 +180,7 @@ const BountyBasicInfo = defineComponent({
         },
         render(value) {
           return (
-            <InputNumberGroup
+            <UInputNumberGroup
               v-model:value={props.bountyInfo.applicantsDeposit}
               type="withUnit"
               class="w-full"

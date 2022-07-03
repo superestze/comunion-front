@@ -1,9 +1,9 @@
 import './style.css'
 
-import { UInputNumber, UInputNumberPropsType } from '@comunion/components'
 import { ArrowDownOutlined, ArrowUpOutlined } from '@comunion/icons'
 import { NInputGroup } from 'naive-ui'
 import { AllowedComponentProps, defineComponent, PropType, watch, ref } from 'vue'
+import UInputNumber, { UInputNumberPropsType } from '../UInputNumber/InputNumber'
 
 type GroupType = 'withSelect' | 'withUnit'
 
@@ -85,4 +85,4 @@ const UInputNumberGroup = defineComponent({
   }
 })
 
-export default UInputNumberGroup
+export { UInputNumberGroup }
