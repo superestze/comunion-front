@@ -46,9 +46,9 @@ const BountyBasicInfo = defineComponent({
   emits: ['delContact', 'addContact'],
   setup(props, ctx) {
     const contactOptions = ref([
-      { label: 'Email', value: 'email' },
-      { label: 'Discord', value: 'discord' },
-      { label: 'Telegram', value: 'telegram' }
+      { label: 'Email', value: 1 },
+      { label: 'Discord', value: 2 },
+      { label: 'Telegram', value: 3 }
     ])
     const startupOptions = ref<SelectOption[]>([])
     const userStore = useUserStore()

@@ -14,13 +14,14 @@ import { BountyInfo } from './typing'
 import Steps from '@/components/Step'
 import { useBountyContract } from '@/contracts'
 import { services } from '@/services'
-import { useWalletStore } from '@/stores'
+import { useUserStore, useWalletStore } from '@/stores'
 
 const CreateBountyForm = defineComponent({
   name: 'CreateBountyForm',
   emits: ['cancel'],
   setup(props, ctx) {
     const walletStore = useWalletStore()
+    const userStore = useUserStore()
     const stepOptions = ref([{ name: 'Bounty' }, { name: 'Payment' }, { name: 'Deposit' }])
 
     const bountyContract = useBountyContract()
@@ -34,7 +35,7 @@ const CreateBountyForm = defineComponent({
       startupID: undefined,
       title: '',
       expiresIn: undefined,
-      contact: [{ type: 'email', value: '' }],
+      contact: [{ type: 1, value: '' }],
       discussionLink: '',
       applicantsSkills: [],
       applicantsDeposit: 0,
@@ -44,7 +45,7 @@ const CreateBountyForm = defineComponent({
       token2Symbol: '',
       stages: [{ token1Amount: 0, token2Amount: 0, terms: '' }],
       period: {
-        periodType: 'weeks',
+        periodType: 2,
         periodAmount: 2,
         hoursPerDay: 1,
         target: '',
@@ -56,7 +57,7 @@ const CreateBountyForm = defineComponent({
     })
 
     const addContact = () => {
-      bountyInfo.contact.push({ type: 'email', value: '' })
+      bountyInfo.contact.push({ type: 1, value: '' })
     }
 
     const delContact = (index: number) => {
@@ -98,47 +99,45 @@ const CreateBountyForm = defineComponent({
         )
 
         message.success('Success send transaction to the chain, please wait for the confirmation')
+        const payDetail =
+          bountyInfo.payDetailType === 'stage'
+            ? {
+                stages: bountyInfo.stages.map((stage, stageIndex) => ({
+                  seqNum: stageIndex + 1,
+                  token1Amount: stage.token1Amount,
+                  token1Symbol: bountyInfo.token1Symbol,
+                  token2Amount: stage.token2Amount,
+                  token2Symbol: bountyInfo.token2Symbol,
+                  terms: stage.terms
+                }))
+              }
+            : {
+                period: {
+                  periodAmount: bountyInfo.period.periodAmount,
+                  periodType: bountyInfo.period.periodType,
+                  hourPerDay: bountyInfo.period.hoursPerDay,
+                  token1Amount: bountyInfo.period.token1Amount,
+                  token1Symbol: bountyInfo.token1Symbol,
+                  token2Amount: bountyInfo.period.token2Amount,
+                  token2Symbol: bountyInfo.token2Symbol,
+                  target: bountyInfo.period.target
+                }
+              }
         await services['bounty@bounty-create']({
           bountyDetail: {
             startupID: bountyInfo.startupID as number,
+            comerID: userStore.profile?.comerID,
             title: bountyInfo.title,
             expiresIn: dayjs(bountyInfo.expiresIn).format('YYYY-MM-DD HH:mm:ss'),
             contact: bountyInfo.contact
               .filter(item => item.value)
-              .map(item => ({ [item.type]: item.value })),
+              .map(item => ({ contactType: item.type, contactAddress: item.value })),
             discussionLink: bountyInfo.discussionLink,
             applicantsSkills: bountyInfo.applicantsSkills,
             applicantsDeposit: bountyInfo.applicantsDeposit,
             description: bountyInfo.description
           },
-          payDetail: {
-            stages:
-              bountyInfo.payDetailType === 'stage'
-                ? bountyInfo.stages.map((stage, stageIndex) => ({
-                    seqNum: stageIndex + 1,
-                    token1Amount: stage.token1Amount,
-                    token1Symbol: bountyInfo.token1Symbol,
-                    token2Amount: stage.token2Amount,
-                    token2Symbol: bountyInfo.token2Symbol,
-                    terms: stage.terms
-                  }))
-                : [],
-            period:
-              bountyInfo.payDetailType === 'period'
-                ? {
-                    periodAmount: bountyInfo.period.periodAmount,
-                    periodType: bountyInfo.period.periodType,
-                    hoursPerDay: bountyInfo.period.hoursPerDay,
-                    token1Amount: bountyInfo.period.token1Amount,
-                    token1Symbol: bountyInfo.token1Symbol,
-                    token2Amount: bountyInfo.period.token2Amount,
-                    token2Symbol: bountyInfo.token2Symbol,
-                    target: bountyInfo.period.target
-                  }
-                : {
-                    periodAmount: bountyInfo.period.periodAmount
-                  }
-          },
+          payDetail,
           deposit: {
             tokenSymbol: bountyInfo.token1Symbol,
             tokenAmount: bountyInfo.deposit

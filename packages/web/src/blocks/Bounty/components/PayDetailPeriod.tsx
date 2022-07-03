@@ -27,9 +27,9 @@ const PayDetailPeriod = defineComponent({
   setup(props, ctx) {
     const payPeriodForm = ref<FormInst | null>(null)
     const periodOptions = [
-      { label: 'Days', value: 'days' },
-      { label: 'Weeks', value: 'weeks' },
-      { label: 'Months', value: 'months' }
+      { label: 'Days', value: 1 },
+      { label: 'Weeks', value: 2 },
+      { label: 'Months', value: 3 }
     ]
     const renderSelect = computed(() => (
       <USelect
