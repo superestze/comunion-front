@@ -31,11 +31,15 @@ const CreateBountyBlock = defineComponent({
       visible.value = false
     }
 
+    const closeBounty = () => {
+      createBountyFormRef.value?.showLeaveTipModal?.()
+    }
+
     const footer = () => {
       return (
         <div class="text-right pr-16 pb-4 bg-purple">
           {createBountyFormRef.value?.bountyInfo?.current === 1 && (
-            <UButton class="w-40 mr-4" type="primary" ghost>
+            <UButton class="w-40 mr-4" type="primary" ghost onClick={closeBounty}>
               Cancel
             </UButton>
           )}

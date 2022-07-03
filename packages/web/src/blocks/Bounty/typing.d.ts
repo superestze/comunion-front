@@ -1,12 +1,13 @@
+export interface ContactType {
+  type: string
+  value: string
+}
 export interface BountyInfo {
   current: number
   startupID: number | undefined
   title: string
   expiresIn: number | undefined
-  contact: {
-    type: number
-    value: string
-  }[]
+  contact: ContactType[]
   discussionLink: string
   applicantsSkills: never[]
   applicantsDeposit: number
@@ -47,6 +48,7 @@ export interface CreateBountyFormRef {
   toNext?: () => void
   onSubmit?: () => void
   onCancel?: () => void
+  showLeaveTipModal?: () => void
   payStagesTotal: ComputedRef<{
     usdcTotal: number
     tokenTotal: number
