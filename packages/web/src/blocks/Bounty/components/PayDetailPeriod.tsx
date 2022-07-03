@@ -4,13 +4,13 @@ import {
   getFieldsRules,
   UForm,
   UFormItemsFactory,
-  USelect
+  USelect,
+  UInputNumberGroup
 } from '@comunion/components'
 import { defineComponent, PropType, ref, computed } from 'vue'
 import { BountyInfo } from '../typing'
 import { MAX_AMOUNT, renderUnit } from './BasicInfo'
 import RichEditor from '@/components/Editor'
-import InputNumberGroup from '@/components/UInputNumberGroup'
 
 export interface PayDetailPeriodRef {
   payPeriodForm: FormInst | null
@@ -47,7 +47,7 @@ const PayDetailPeriod = defineComponent({
           return (
             <div class="w-full">
               <div class="flex items-center">
-                <InputNumberGroup
+                <UInputNumberGroup
                   inputProps={{
                     precision: 0,
                     min: 2
@@ -56,9 +56,9 @@ const PayDetailPeriod = defineComponent({
                   class="flex-1"
                   type="withSelect"
                   renderSelect={() => renderSelect.value}
-                ></InputNumberGroup>
+                ></UInputNumberGroup>
                 <div class="text-grey2 text-3xl px-5 invisible">+</div>
-                <InputNumberGroup
+                <UInputNumberGroup
                   inputProps={{
                     precision: 0,
                     min: 1,
@@ -68,7 +68,7 @@ const PayDetailPeriod = defineComponent({
                   class="flex-1"
                   type="withUnit"
                   renderUnit={() => renderUnit('hours/Day')}
-                ></InputNumberGroup>
+                ></UInputNumberGroup>
               </div>
             </div>
           )
@@ -81,7 +81,7 @@ const PayDetailPeriod = defineComponent({
         render(value) {
           return (
             <div class="flex items-center w-full">
-              <InputNumberGroup
+              <UInputNumberGroup
                 class="flex-1"
                 type="withUnit"
                 v-model:value={props.bountyInfo.period.token1Amount}
@@ -96,9 +96,9 @@ const PayDetailPeriod = defineComponent({
                   }
                 }}
                 renderUnit={() => renderUnit(props.bountyInfo.token1Symbol)}
-              ></InputNumberGroup>
+              ></UInputNumberGroup>
               <div class="text-grey2 text-3xl px-5">+</div>
-              <InputNumberGroup
+              <UInputNumberGroup
                 class="flex-1"
                 type="withUnit"
                 v-model:value={props.bountyInfo.period.token2Amount}
@@ -113,7 +113,7 @@ const PayDetailPeriod = defineComponent({
                   }
                 }}
                 renderUnit={() => renderUnit(props.bountyInfo.token2Symbol)}
-              ></InputNumberGroup>
+              ></UInputNumberGroup>
             </div>
           )
         }
@@ -121,10 +121,14 @@ const PayDetailPeriod = defineComponent({
       {
         t: 'custom',
         title: '',
+        // slots: {
+        //   label: () => [<div class="h-4"></div>]
+        // },
+        class: '!grid-rows-none',
         name: 'summary',
         render() {
           return (
-            <div class="bg-purple py-5.5 px-6 w-full">
+            <div class="bg-purple py-5.5 px-6 w-full mt-4">
               The current total rewards as{' '}
               <span class="text-primary">
                 {props.bountyInfo.period.token1Amount}

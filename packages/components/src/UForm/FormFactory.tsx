@@ -240,7 +240,7 @@ export const UFormItemsFactory = defineComponent({
           return (
             <NFormItem
               key={field.name}
-              class="u-form-factory_item"
+              class={['u-form-factory_item', field.class]}
               label={field.title}
               path={field.name}
               required={field.required}
