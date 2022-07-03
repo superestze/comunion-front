@@ -3,12 +3,12 @@ import {
   FormInst,
   UCheckbox,
   UForm,
-  UFormItemsFactory
+  UFormItemsFactory,
+  UInputNumberGroup
 } from '@comunion/components'
 import { defineComponent, h, PropType, ref } from 'vue'
 import { BountyInfo } from '../typing'
 import { MAX_AMOUNT, renderUnit } from './BasicInfo'
-import InputNumberGroup from '@/components/UInputNumberGroup'
 
 export interface DepositRef {
   depositForm: FormInst | null
@@ -45,7 +45,7 @@ const Deposit = defineComponent({
         },
         render(value) {
           return (
-            <InputNumberGroup
+            <UInputNumberGroup
               v-model:value={props.bountyInfo.deposit}
               class="flex-1"
               inputProps={{
@@ -60,7 +60,7 @@ const Deposit = defineComponent({
               }}
               type="withUnit"
               renderUnit={() => renderUnit(props.bountyInfo.token1Symbol)}
-            ></InputNumberGroup>
+            ></UInputNumberGroup>
           )
         }
       },

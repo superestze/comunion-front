@@ -30,32 +30,9 @@ export interface BountyInfo {
 
 export interface CreateBountyFormRef {
   bountyInfo: BountyInfo
-  modalVisibleState?: boolean
-  bountyBasicInfoFields?: Ref<FormFactoryField[]>
-  bountyBasicInfoRules?: Record<string, FormItemRule[]>
-  payDetailPeriodFields?: Ref<FormFactoryField[]>
-  payPeriodRules?: Record<string, FormItemRule[]>
-  depositFields?: Ref<FormFactoryField[]>
-  toFinanceSetting?: () => void
-  bountyDetailForm?: ref<FormInst | null>
-  payStageForm?: ref<FormInst | null>
-  payPeriodForm?: ref<FormInst | null>
-  renderUnit?: (name?: string) => JSX.Element
-  renderSelect?: (name?: string) => JSX.Element
-  delStage?: (index?: number) => void
-  addStage?: () => void
   toPreviousStep?: () => void
   toNext?: () => void
   onSubmit?: () => void
   onCancel?: () => void
   showLeaveTipModal?: () => void
-  payStagesTotal: ComputedRef<{
-    usdcTotal: number
-    tokenTotal: number
-  }>
-  stepOptions: Ref<
-    {
-      name: string
-    }[]
-  >
 }
