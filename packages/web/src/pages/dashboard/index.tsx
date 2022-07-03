@@ -16,6 +16,7 @@ import { useProfileStore } from '@/stores/profile'
 // import { StartupItem } from '@/types'
 // import { useWalletStore } from '@/stores'
 
+// dashboard
 const DashboardPage = defineComponent({
   name: 'Dashboard',
   setup() {
