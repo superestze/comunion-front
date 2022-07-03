@@ -1,5 +1,5 @@
 export interface ContactType {
-  type: string
+  type: number
   value: string
 }
 export interface BountyInfo {
@@ -17,7 +17,7 @@ export interface BountyInfo {
   token2Symbol: string
   stages: { token1Amount: number; token2Amount: number; terms: string }[]
   period: {
-    periodType: string
+    periodType: number
     periodAmount: number
     hoursPerDay: number
     target: string
