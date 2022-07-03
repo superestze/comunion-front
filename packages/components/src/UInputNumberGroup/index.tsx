@@ -65,6 +65,8 @@ const UInputNumberGroup = defineComponent({
         return props.renderUnit?.()
       } else if (props.type === 'withSelect') {
         return props.renderSelect?.()
+      } else {
+        return null
       }
     }
     return () => (
