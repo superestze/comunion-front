@@ -16,6 +16,9 @@
 
         &:not(.n-dropdown-option-body--disabled):hover {
           background-color: var(--active-bg) !important;
+          &.n-dropdown-option-body.n-dropdown-option-body--pending::before {
+            background-color: unset !important;
+          }
         }
       }
 

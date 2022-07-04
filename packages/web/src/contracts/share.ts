@@ -19,7 +19,6 @@ export function wrapTransaction(
     contractStore.startContract(pengdingText)
 
     const contract = getContract(contractArgs)
-    console.log('contract===>', contract)
 
     const fn = contract[functionName]
 
