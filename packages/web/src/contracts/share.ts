@@ -11,11 +11,19 @@ export function wrapTransaction(
   return (...fnArgs: any[]) => {
     const waitingText = fnArgs.pop()
     const pengdingText = fnArgs.pop()
+    let overrides = []
+
+    if (Object.prototype.toString.call(fnArgs[0]) === '[object Object]') {
+      overrides = fnArgs.shift()
+    }
     contractStore.startContract(pengdingText)
 
     const contract = getContract(contractArgs)
+    console.log('contract===>', contract)
+
     const fn = contract[functionName]
-    return fn(...fnArgs)
+
+    return fn(...fnArgs, overrides)
       .then((res: any) => {
         contractStore.endContract('success', {
           success: true,
@@ -23,6 +31,7 @@ export function wrapTransaction(
           text: waitingText,
           promiseFn: res.wait
         })
+        return res
       })
       .catch((e: any) => {
         console.error(e)
@@ -50,6 +59,7 @@ export function getContract(args: GetContractArgs) {
     throw new Error('No network selected')
   }
   const address = args.addresses[args.chainId]
+
   if (!address) {
     throw new Error('Not supported network')
   }

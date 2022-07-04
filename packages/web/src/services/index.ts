@@ -656,8 +656,8 @@ export const services = {
          */
         applicationSkills: string[]
       }[]
-    }>({
-      url: replacePath('/bounty/list', args),
+    }>({ 
+      url: replacePath('/bounty/list', args), 
       method: 'POST',
       ...extract('POST', args, [], [])
     })
@@ -680,6 +680,7 @@ export const services = {
      * @description 第几页，默认1
      */
     page: number
+ 
   }) {
     return requestAdapter<{
       /**
@@ -744,8 +745,8 @@ export const services = {
          */
         applicationSkills: string[]
       }[]
-    }>({
-      url: replacePath('/bounty/my-participated', args),
+    }>({ 
+      url: replacePath('/bounty/my-participated', args), 
       method: 'POST',
       ...extract('POST', args, [], [])
     })
@@ -754,7 +755,7 @@ export const services = {
     /**
      * @description 第几页，默认1
      */
-    page: number
+    page: number 
   }) {
     return requestAdapter<{
       /**
@@ -819,8 +820,8 @@ export const services = {
          */
         applicationSkills: string[]
       }[]
-    }>({
-      url: replacePath('/bounty/my-posted', args),
+    }>({ 
+      url: replacePath('/bounty/my-posted', args), 
       method: 'POST',
       ...extract('POST', args, [], [])
     })
@@ -833,6 +834,7 @@ export const services = {
        * @description 第几页，默认1
        */
       page: number
+ 
     }
   ) {
     return requestAdapter<{
@@ -898,8 +900,8 @@ export const services = {
          */
         applicationSkills: string[]
       }[]
-    }>({
-      url: replacePath('/bounty/:startupId/bounties', args),
+    }>({ 
+      url: replacePath('/bounty/:startupId/bounties', args), 
       method: 'POST',
       ...extract('POST', args, [], ['startupId'])
     })

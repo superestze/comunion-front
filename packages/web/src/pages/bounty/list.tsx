@@ -26,8 +26,10 @@ const StartupsPage = defineComponent({
         page: page,
         sort: startupType.value
       })
-      pagination.total = data?.totalRows
-      myCreatedStartups.value = data!.rows ?? []
+      if (!error) {
+        pagination.total = data?.totalRows
+        myCreatedStartups.value = data!.rows ?? []
+      }
     }
     const updatePages = (page: number) => {
       pagination.page = page

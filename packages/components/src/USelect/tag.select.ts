@@ -2,7 +2,7 @@ import { computed, InputHTMLAttributes, ref } from 'vue'
 import { SelectOption } from '../constants'
 
 export type TagLimitedProps = {
-  value?: string[]
+  value?: (string | number)[]
   tagLimit: number
   charLimit: number
 }
