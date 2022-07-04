@@ -97,13 +97,13 @@ const StartupDetailPage = defineComponent({
     const myCreatedStartups = ref<StartupItem[]>([])
 
     const getCreatedStartups = async () => {
-      const { error, data } = await services['startup@startup-list-me']({
-        limit: pagination.pageSize,
-        offset: pagination.pageSize * (pagination.page - 1)
+      const { error, data } = await services['bounty@startup-bounty-list']({
+        startupId: startupId,
+        page: pagination.page
       })
       if (!error) {
-        myCreatedStartups.value.push(...(data!.list as unknown as StartupItem[]))
-        pagination.total = data!.total
+        myCreatedStartups.value.push(...(data!.rows as unknown as StartupItem[]))
+        pagination.total = data!.totalRows
       }
     }
 

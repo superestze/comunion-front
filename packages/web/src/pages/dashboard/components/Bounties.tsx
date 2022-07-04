@@ -73,13 +73,13 @@ const Bounties = defineComponent({
       getCreatedStartups()
     })
 
-    const tabsDateChange = async (value: string) => {
-      if (value === 'APPROVED') {
+    const tabsDateChange = async (value: number) => {
+      if (value) {
         myCreatedStartups.value = []
         await tabsDateChangeFun(pagination)
         await getCreatedStartups()
         pagination.loading = false
-      } else if (value === 'POSTED BY ME') {
+      } else {
         myParticipatedStartups.value = []
         await tabsDateChangeFun(ParticipatedPagination)
         await getParticipatedStartups()
@@ -98,8 +98,13 @@ const Bounties = defineComponent({
     }
     return () => (
       <UCard title="BOUNTIES">
-        <UTabs onUpdateValue={tabsDateChange}>
-          <UTabPane name="APPROVED" tab="APPROVED">
+        {/* onUpdateValue={tabsDateChange} */}
+        <UTabs
+          onUpdateValue={value => {
+            tabsDateChange(value)
+          }}
+        >
+          <UTabPane name={1} tab="APPROVED">
             <UScrollList
               triggered={pagination.loading}
               page={pagination.page}
@@ -118,7 +123,7 @@ const Bounties = defineComponent({
               )}
             </UScrollList>
           </UTabPane>
-          <UTabPane name="POSTED BY ME" tab="POSTED BY ME">
+          <UTabPane name={0} tab="POSTED BY ME">
             <UScrollList
               triggered={ParticipatedPagination.loading}
               page={ParticipatedPagination.page}

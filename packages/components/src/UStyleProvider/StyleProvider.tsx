@@ -147,20 +147,18 @@ const UStyleProvider = defineComponent({
 
     watchEffect(() => {
       const { r, g, b } = hex2rgb(props.primaryColor)
+      const primary2Color = hex2rgb(props.primary2Color)
+      const warningColor = hex2rgb(props.warningColor)
       style.innerHTML = `:root {
         --u-primary-value: ${r}, ${g}, ${b};
-        --u-primary2-value: ${hex2rgb(props.primary2Color).r},${hex2rgb(props.primary2Color).g},${
-        hex2rgb(props.primary2Color).b
-      };
+        --u-primary2-value: ${primary2Color.r},${primary2Color.g},${primary2Color.b};
         --u-primary-color: ${props.primaryColor};
         --u-primary-1-color: ${props.primary1Color};
         --u-primary-2-color: ${props.primary2Color}; 
         --u-error-color: ${props.errorColor};
         --u-success-color: ${props.successColor};
         --u-warning-color: ${props.warningColor};
-        --u-warning2-value: ${hex2rgb(props.warningColor).r},${hex2rgb(props.warningColor).g},${
-        hex2rgb(props.warningColor).b
-      };
+        --u-warning2-value: ${warningColor.r},${warningColor.g},${warningColor.b};
         --u-info-color: ${props.infoColor};
         --u-grey-1-color: ${props.grey1Color};
         --u-grey-2-color: ${props.grey2Color};
