@@ -80,6 +80,7 @@ const BountyBasicInfo = defineComponent({
         type: 'datetime',
         title: 'Expires In',
         name: 'expiresIn',
+        actions: ['clear', 'confirm'],
         rules: [
           { required: true, message: 'Please set the apply cutoff date' },
           {
@@ -91,7 +92,7 @@ const BountyBasicInfo = defineComponent({
             trigger: 'blur'
           }
         ],
-        placeholder: 'Apply Cutoff Date',
+        placeholder: 'Apply Cutoff Date (UTC)',
         isDateDisabled: (current: number) => {
           return dayjs(current) < dayjs()
         }
