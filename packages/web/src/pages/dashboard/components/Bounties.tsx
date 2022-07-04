@@ -1,12 +1,11 @@
 import { UCard, UDeveloping, UTabPane, UTabs, UScrollList, UNoContent } from '@comunion/components'
 import { EmptyFilled, PlusOutlined } from '@comunion/icons'
 import { defineComponent, ref, watch, onMounted, reactive } from 'vue'
-import ApprovedCard from './ApprovedCard'
+import BountiesCard from '../../startup/detail/components/Bounties'
 import CreateBountyBlock, { CreateBountyRef } from '@/blocks/Bounty/Create'
 import NoStartupTip from '@/layouts/default/blocks/Create/components/NoStartupTip'
 import { services } from '@/services'
 import { useUserStore } from '@/stores'
-import { StartupItem } from '@/types'
 
 const Bounties = defineComponent({
   name: 'Bounties',
@@ -22,71 +21,52 @@ const Bounties = defineComponent({
       page: 1,
       loading: false
     })
-    const ParticipatedPagination = reactive<{
-      pageSize: number
-      total: number
-      page: number
-      loading: boolean
-    }>({
-      pageSize: 4,
-      total: 0,
-      page: 1,
-      loading: false
-    })
-    const myCreatedStartups = ref<StartupItem[]>([])
-    const myParticipatedStartups = ref<StartupItem[]>([])
+    const myCreatedStartups = ref<object[]>([])
     const getCreatedStartups = async () => {
-      const { error, data } = await services['startup@startup-list-me']({
-        limit: pagination.pageSize,
-        offset: pagination.pageSize * (pagination.page - 1)
+      const { error, data } = await services['bounty@my-posted-bounty-list']({
+        page: pagination.page
       })
       if (!error) {
-        myCreatedStartups.value.push(...(data!.list as unknown as StartupItem[]))
-        pagination.total = data!.total
+        myCreatedStartups.value.push(...(data!.rows ?? []))
+        pagination.total = data!.totalRows
       }
     }
     const getParticipatedStartups = async () => {
-      const { error, data } = await services['startup@startup-list-participated']({
-        limit: ParticipatedPagination.pageSize,
-        offset: ParticipatedPagination.pageSize * (ParticipatedPagination.page - 1),
-        keyword: null,
-        mode: null
+      const { error, data } = await services['bounty@my-participated-bounty-list']({
+        // const { error, data } = await services['bounty@my-posted-bounty-list']({
+        page: pagination.page
       })
       if (!error) {
-        myParticipatedStartups.value.push(...(data!.list as unknown as StartupItem[]))
-        ParticipatedPagination.total = data!.total
+        myCreatedStartups.value.push(...(data!.rows ?? []))
+        pagination.total = data!.totalRows
       }
     }
 
-    const onLoadMore = async (p: number) => {
+    const onLoadMore = async (p: number, val: number) => {
       pagination.loading = true
       pagination.page = p
-      await getCreatedStartups()
+      if (val) {
+        await getCreatedStartups()
+      } else {
+        await getParticipatedStartups()
+      }
       pagination.loading = false
-    }
-    const ParticipatedLoadMore = async (p: number) => {
-      ParticipatedPagination.loading = true
-      ParticipatedPagination.page = p
-      await getParticipatedStartups()
-      ParticipatedPagination.loading = false
     }
 
     onMounted(() => {
-      // getParticipatedStartups()
       getCreatedStartups()
     })
 
     const tabsDateChange = async (value: number) => {
+      pagination.total = 0
+      pagination.page = 1
+      pagination.loading = false
+      myCreatedStartups.value = []
+      await tabsDateChangeFun(pagination)
       if (value) {
-        myCreatedStartups.value = []
-        await tabsDateChangeFun(pagination)
         await getCreatedStartups()
-        pagination.loading = false
       } else {
-        myParticipatedStartups.value = []
-        await tabsDateChangeFun(ParticipatedPagination)
         await getParticipatedStartups()
-        ParticipatedPagination.loading = false
       }
     }
     const tabsDateChangeFun = async (val: {
@@ -164,11 +144,13 @@ const Bounties = defineComponent({
               page={pagination.page}
               pageSize={pagination.pageSize}
               total={pagination.total}
-              onLoadMore={onLoadMore}
+              onLoadMore={() => {
+                onLoadMore(pagination.page, 1)
+              }}
             >
               {myCreatedStartups.value.length ? (
-                myCreatedStartups.value.map((startup: any, i: any) => (
-                  <ApprovedCard startup={startup} key={i} />
+                myCreatedStartups.value.map((startup, i) => (
+                  <BountiesCard startup={startup} key={i} />
                 ))
               ) : (
                 <UNoContent textTip="TO BE EMPTY">
@@ -179,15 +161,17 @@ const Bounties = defineComponent({
           </UTabPane>
           <UTabPane name={0} tab="POSTED BY ME">
             <UScrollList
-              triggered={ParticipatedPagination.loading}
-              page={ParticipatedPagination.page}
-              pageSize={ParticipatedPagination.pageSize}
-              total={ParticipatedPagination.total}
-              onLoadMore={ParticipatedLoadMore}
+              triggered={pagination.loading}
+              page={pagination.page}
+              pageSize={pagination.pageSize}
+              total={pagination.total}
+              onLoadMore={() => {
+                onLoadMore(pagination.page, 0)
+              }}
             >
-              {myParticipatedStartups.value.length ? (
-                myParticipatedStartups.value.map((startup: any, i: any) => (
-                  <ApprovedCard startup={startup} key={i} />
+              {myCreatedStartups.value.length ? (
+                myCreatedStartups.value.map((startup, i) => (
+                  <BountiesCard startup={startup} key={i} />
                 ))
               ) : (
                 <UDeveloping>

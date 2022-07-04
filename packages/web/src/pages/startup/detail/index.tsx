@@ -94,7 +94,7 @@ const StartupDetailPage = defineComponent({
       teamList(totalTeamMembers.value)
     }
 
-    const myCreatedStartups = ref<StartupItem[]>([])
+    const myCreatedStartups = ref<object[]>([])
 
     const getCreatedStartups = async () => {
       const { error, data } = await services['bounty@startup-bounty-list']({
@@ -102,7 +102,7 @@ const StartupDetailPage = defineComponent({
         page: pagination.page
       })
       if (!error) {
-        myCreatedStartups.value.push(...(data!.rows as unknown as StartupItem[]))
+        myCreatedStartups.value = data!.rows ?? []
         pagination.total = data!.totalRows
       }
     }

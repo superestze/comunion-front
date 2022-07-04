@@ -12,16 +12,6 @@ const StartupCard = defineComponent({
     }
   },
   setup(props, ctx) {
-    // const hashtagsArray = props.startup.hashTags.map(key => {
-    //   return key.name
-    // })
-    // const modeName = getStartupTypeFromNumber(props.startup.mode) as StartupTypesType
-
-    // const router = useRouter()
-
-    // const toStartDetail = (startupInfo: StartupItem) => {
-    //   router.push({ path: '/startup/detail', query: { startupId: startupInfo.id } })
-    // }
     const color = BOUNTY_TYPES_COLOR_MAP.filter(item => item.label === props.startup.status)
     return () => (
       <div class="flex h-40 w-full items-center cursor-pointer border-b-1">
@@ -71,7 +61,7 @@ const StartupCard = defineComponent({
             <div class="content">
               <div class="flex justify-end">
                 {props.startup.rewards &&
-                  props.startup.rewards.map((item: { tokenSymbol: string; amount: any }) => {
+                  props.startup.rewards.map((item: { tokenSymbol: string; amount: string }) => {
                     return (
                       <div
                         class="w-32.5 h-12 flex items-center justify-center rounded-md"
@@ -79,7 +69,7 @@ const StartupCard = defineComponent({
                           background:
                             item.tokenSymbol === 'UVU'
                               ? 'linear-gradient(to right, rgba(var(--u-primary-value), 0.8),rgba(var(--u-primary-value), 1))'
-                              : 'linear-gradient(to right, rgba(var(--u-primary-value), 0.8),rgba(var(--u-primary-value), 1))',
+                              : 'linear-gradient(to right, rgba(var( --u-warning2-value), 0.8),rgba(var( --u-warning2-value), 1))',
                           'margin-right': item.tokenSymbol === 'UVU' ? '0px' : '1.25rem'
                         }}
                       >
@@ -91,7 +81,9 @@ const StartupCard = defineComponent({
               </div>
               <div class="flex justify-end mt-10">
                 <span class="u-body2 text-grey2">Deposit requirements：</span>
-                <span class="u-card-title2 text-warning">0 USDC</span>
+                <span class="u-card-title2 text-warning">
+                  {props.startup.depositRequirements} USDC
+                </span>
               </div>
             </div>
           </div>
