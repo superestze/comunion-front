@@ -11,11 +11,10 @@ export function wrapTransaction(
   return (...fnArgs: any[]) => {
     const waitingText = fnArgs.pop()
     const pengdingText = fnArgs.pop()
-    const overrides = fnArgs[0]
-    console.log('overrides', overrides)
+    let overrides = []
 
-    if (Object.prototype.toString.call(overrides) === '[object Object]') {
-      fnArgs.shift()
+    if (Object.prototype.toString.call(fnArgs[0]) === '[object Object]') {
+      overrides = fnArgs.shift()
     }
     contractStore.startContract(pengdingText)
 
