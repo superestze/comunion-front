@@ -29,7 +29,7 @@ const DefaultLayout = defineComponent({
         <div class="flex-1 u-page-container relative">
           {/* Header */}
           {/* TransactionWaiting */}
-          <UTransactionContainer>
+          <UTransactionContainer style={{ zIndex: '2099' }}>
             {contractStore.transacations.map(transaction => (
               <UTransactionWaiting
                 key={transaction.hash}

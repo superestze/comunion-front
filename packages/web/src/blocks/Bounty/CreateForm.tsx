@@ -3,7 +3,7 @@ import { UButton, UCard, UModal, UTabPane, UTabs, message } from '@comunion/comp
 import { PeriodOutlined, StageOutlined, WarningFilled } from '@comunion/icons'
 import dayjs from 'dayjs'
 
-import { BigNumber } from 'ethers'
+import { BigNumber, Contract } from 'ethers'
 import { defineComponent, ref, reactive, watch } from 'vue'
 import { useRouter } from 'vue-router'
 import BountyBasicInfo, { BountyBasicInfoRef, MAX_AMOUNT } from './components/BasicInfo'
@@ -17,6 +17,7 @@ import { addresses as bountyAddresses } from '@/contracts/bounty'
 import { AVAX_USDC_ADDR } from '@/contracts/utils'
 import { services } from '@/services'
 import { useUserStore, useWalletStore } from '@/stores'
+import { useContractStore } from '@/stores/contract'
 
 const CreateBountyForm = defineComponent({
   name: 'CreateBountyForm',
@@ -25,6 +26,7 @@ const CreateBountyForm = defineComponent({
     const walletStore = useWalletStore()
     const userStore = useUserStore()
     const usdcTokenContract = useErc20Contract(true)
+    const contractStore = useContractStore()
     const stepOptions = ref([{ name: 'Bounty' }, { name: 'Payment' }, { name: 'Deposit' }])
 
     const bountyContract = useBountyContract()
@@ -92,24 +94,47 @@ const CreateBountyForm = defineComponent({
       modalVisibleState.value = true
     }
 
-    const postSubmit = async () => {
+    const contractSubmit = async () => {
+      const approvePendingText = 'Waiting to submit all contents to blockchain for approval deposit'
       const value = bountyInfo.deposit
       const usdcTokenAddress = AVAX_USDC_ADDR[walletStore.chainId!]
       const bountyFactoryAddress = bountyAddresses[walletStore.chainId!]
+      const usdcRes = await usdcTokenContract(usdcTokenAddress)
+      const decimal = await usdcRes.decimals()
+      const bountyAmount = BigNumber.from(value).mul(BigNumber.from(10).pow(decimal))
+      // first approve amount to bountyFactory
       try {
-        const usdcRes = await usdcTokenContract(usdcTokenAddress)
-        const decimal = await usdcRes.decimals()
-        const bountyAmount = BigNumber.from(value).mul(BigNumber.from(10).pow(decimal))
-        // first approve amount to bountyFactory
-        await usdcRes.approve(bountyFactoryAddress, bountyAmount)
+        contractStore.startContract(approvePendingText)
+        const approveRes: Contract = await usdcRes.approve(bountyFactoryAddress, bountyAmount)
+        await contractStore.endContract('success', {
+          success: true,
+          hash: approveRes.hash,
+          text: approvePendingText,
+          promiseFn: approveRes.wait
+        })
         // second send tx to bountyFactory create bounty
         const contractRes: any = await bountyContract.createBounty(
           bountyAmount,
           'Waiting to submit all contents to blockchain for creating bounty',
-          `Bounty "${bountyInfo.title}" is Creating`
+          <div class="flex items-center">
+            Bounty "<span class="truncate max-w-20">{bountyInfo.title}</span>" is Creating
+          </div>
         )
+        return contractRes
+      } catch (e: any) {
+        console.error(e)
+        contractStore.endContract('failed', { success: false })
+        if (e.data?.message) {
+          message.error(e.data.message)
+        }
+      }
+      return null
+    }
 
-        message.success('Success send transaction to the chain, please wait for the confirmation')
+    const postSubmit = async () => {
+      try {
+        const contractRes = await contractSubmit()
+        if (!contractRes) return
         const payDetail =
           bountyInfo.payDetailType === 'stage'
             ? {

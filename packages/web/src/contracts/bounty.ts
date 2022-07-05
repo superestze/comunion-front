@@ -15,7 +15,7 @@ export function useBountyContract(): {
   createBounty: (
     amount: number | BigNumber,
     pendingText: string,
-    waitingText: string
+    waitingText: string | JSX.Element
   ) => Promise<[]>
   invest: (
     id: string,
