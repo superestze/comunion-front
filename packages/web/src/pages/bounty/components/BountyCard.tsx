@@ -78,26 +78,25 @@ const StartupCard = defineComponent({
           <div class="flex h-full ml-6 w-full items-center">
             <div class="content">
               <div class="flex justify-end">
-                {props.startup.rewards &&
-                  props.startup.rewards?.map((item: { tokenSymbol: string; amount: string }, i) => {
-                    return (
-                      <div
-                        key={i}
-                        class="w-32.5 h-12 flex items-center justify-center rounded-md"
-                        style={{
-                          background:
-                            item.tokenSymbol === bountyInfo.token2Symbol
-                              ? 'linear-gradient(to right, rgba(var(--u-primary-value), 0.8),rgba(var(--u-primary-value), 1))'
-                              : 'linear-gradient(to right, rgba(var( --u-warning2-value), 0.8),rgba(var( --u-warning2-value), 1))',
-                          marginRight:
-                            item.tokenSymbol === bountyInfo.token2Symbol ? '0px' : '1.25rem'
-                        }}
-                      >
-                        <span class="pr-1 u-title1 w-11.5 text-white truncate">{item.amount}</span>
-                        <span class="pl-1 u-title2 text-white">{item.tokenSymbol}</span>
-                      </div>
-                    )
-                  })}
+                {props.startup.rewards?.map((item: { tokenSymbol: string; amount: string }, i) => {
+                  return (
+                    <div
+                      key={i}
+                      class="w-32.5 h-12 flex items-center justify-center rounded-md"
+                      style={{
+                        background:
+                          item.tokenSymbol === bountyInfo.token2Symbol
+                            ? 'linear-gradient(to right, rgba(var(--u-primary-value), 0.8),rgba(var(--u-primary-value), 1))'
+                            : 'linear-gradient(to right, rgba(var( --u-warning2-value), 0.8),rgba(var( --u-warning2-value), 1))',
+                        marginRight:
+                          item.tokenSymbol === bountyInfo.token2Symbol ? '0px' : '1.25rem'
+                      }}
+                    >
+                      <span class="pr-1 u-title1 w-11.5 text-white truncate">{item.amount}</span>
+                      <span class="pl-1 u-title2 text-white">{item.tokenSymbol}</span>
+                    </div>
+                  )
+                })}
               </div>
               <div class="flex justify-end mt-10">
                 <span class="u-body2 text-grey2">Deposit requirements：</span>
