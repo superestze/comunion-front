@@ -106,7 +106,7 @@ const CreateBountyForm = defineComponent({
                   seqNum: stageIndex + 1,
                   token1Amount: stage.token1Amount,
                   token1Symbol: bountyInfo.token1Symbol,
-                  token2Amount: stage.token2Amount,
+                  token2Amount: bountyInfo.token2Symbol ? stage.token2Amount : 0,
                   token2Symbol: bountyInfo.token2Symbol,
                   terms: stage.terms
                 }))
@@ -153,6 +153,11 @@ const CreateBountyForm = defineComponent({
       }
     }
 
+    const closeDrawer = () => {
+      modalVisibleState.value = false
+      ctx.emit('cancel')
+    }
+
     const onSubmit = async () => {
       // const value = new Big(bountyInfo.deposit).times(Math.pow(10, 18)).toNumber()
       postSubmit()
@@ -188,6 +193,12 @@ const CreateBountyForm = defineComponent({
           }
         })
       } else if (bountyInfo.current === 2 && bountyInfo.payDetailType === 'stage') {
+        if (
+          (payStageRef.value?.payStagesTotal.usdcTotal as number) > 9999 ||
+          (payStageRef.value?.payStagesTotal?.tokenTotal as number) > 9999
+        ) {
+          return
+        }
         payStageRef.value?.payStageForm?.validate(error => {
           if (!error) {
             bountyInfo.current += 1
@@ -227,7 +238,8 @@ const CreateBountyForm = defineComponent({
       renderUnit,
       delStage,
       addStage,
-      showLeaveTipModal
+      showLeaveTipModal,
+      closeDrawer
     }
   },
 
@@ -309,7 +321,7 @@ const CreateBountyForm = defineComponent({
               >
                 Cancel
               </UButton>
-              <UButton size="large" type="primary" class="w-41" onClick={this.toFinanceSetting}>
+              <UButton size="large" type="primary" class="w-41" onClick={this.closeDrawer}>
                 Yes
               </UButton>
             </div>
