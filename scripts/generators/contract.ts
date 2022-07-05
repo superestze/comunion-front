@@ -70,7 +70,7 @@ const contractTypeMap = {
   string: 'string',
   address: 'string',
   bytes: 'string',
-  uint256: 'number',
+  uint256: 'number | BigNumber',
   uint8: 'number',
   'string[]': 'string[]',
   'tuple[]': '[][]',

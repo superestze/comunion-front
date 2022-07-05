@@ -2,17 +2,19 @@ import './style.css'
 import { UButton, UCard, UModal, UTabPane, UTabs, message } from '@comunion/components'
 import { PeriodOutlined, StageOutlined, WarningFilled } from '@comunion/icons'
 import dayjs from 'dayjs'
-import { utils } from 'ethers'
 
+import { BigNumber } from 'ethers'
 import { defineComponent, ref, reactive, watch } from 'vue'
 import { useRouter } from 'vue-router'
-import BountyBasicInfo, { BountyBasicInfoRef } from './components/BasicInfo'
+import BountyBasicInfo, { BountyBasicInfoRef, MAX_AMOUNT } from './components/BasicInfo'
 import Deposit from './components/Deposit'
 import PayDetailPeriod, { PayDetailPeriodRef } from './components/PayDetailPeriod'
 import PayDetailStage, { PayDetailStageRef } from './components/PayDetailStage'
 import { BountyInfo } from './typing'
 import Steps from '@/components/Step'
-import { useBountyContract } from '@/contracts'
+import { useBountyContract, useErc20Contract } from '@/contracts'
+import { addresses as bountyAddresses } from '@/contracts/bounty'
+import { AVAX_USDC_ADDR } from '@/contracts/utils'
 import { services } from '@/services'
 import { useUserStore, useWalletStore } from '@/stores'
 
@@ -22,6 +24,7 @@ const CreateBountyForm = defineComponent({
   setup(props, ctx) {
     const walletStore = useWalletStore()
     const userStore = useUserStore()
+    const usdcTokenContract = useErc20Contract(true)
     const stepOptions = ref([{ name: 'Bounty' }, { name: 'Payment' }, { name: 'Deposit' }])
 
     const bountyContract = useBountyContract()
@@ -90,10 +93,18 @@ const CreateBountyForm = defineComponent({
     }
 
     const postSubmit = async () => {
-      const value = utils.parseEther(bountyInfo.deposit.toString())
+      const value = bountyInfo.deposit
+      const usdcTokenAddress = AVAX_USDC_ADDR[walletStore.chainId!]
+      const bountyFactoryAddress = bountyAddresses[walletStore.chainId!]
       try {
-        const contractRes: { hash: string } = await bountyContract.createBounty(
-          { value },
+        const usdcRes = await usdcTokenContract(usdcTokenAddress)
+        const decimal = await usdcRes.decimals()
+        const bountyAmount = BigNumber.from(value).mul(BigNumber.from(10).pow(decimal))
+        // first approve amount to bountyFactory
+        await usdcRes.approve(bountyFactoryAddress, bountyAmount)
+        // second send tx to bountyFactory create bounty
+        const contractRes: any = await bountyContract.createBounty(
+          bountyAmount,
           'Waiting to submit all contents to blockchain for creating bounty',
           `Bounty "${bountyInfo.title}" is Creating`
         )
@@ -104,10 +115,10 @@ const CreateBountyForm = defineComponent({
             ? {
                 stages: bountyInfo.stages.map((stage, stageIndex) => ({
                   seqNum: stageIndex + 1,
-                  token1Amount: stage.token1Amount,
-                  token1Symbol: bountyInfo.token1Symbol,
-                  token2Amount: bountyInfo.token2Symbol ? stage.token2Amount : 0,
-                  token2Symbol: bountyInfo.token2Symbol,
+                  token1Amount: stage.token1Amount, // usdc amount
+                  token1Symbol: bountyInfo.token1Symbol, // usdc symbol
+                  token2Amount: bountyInfo.token2Symbol ? stage.token2Amount : 0, // finance setting token amount
+                  token2Symbol: bountyInfo.token2Symbol, // finance setting token symbol
                   terms: stage.terms
                 }))
               }
@@ -116,10 +127,10 @@ const CreateBountyForm = defineComponent({
                   periodAmount: bountyInfo.period.periodAmount,
                   periodType: bountyInfo.period.periodType,
                   hoursPerDay: bountyInfo.period.hoursPerDay,
-                  token1Amount: bountyInfo.period.token1Amount,
-                  token1Symbol: bountyInfo.token1Symbol,
-                  token2Amount: bountyInfo.period.token2Amount,
-                  token2Symbol: bountyInfo.token2Symbol,
+                  token1Amount: bountyInfo.period.token1Amount, // usdc amount
+                  token1Symbol: bountyInfo.token1Symbol, // usdc symbol
+                  token2Amount: bountyInfo.period.token2Amount, // finance setting token amount
+                  token2Symbol: bountyInfo.token2Symbol, // finance setting token symbol
                   target: bountyInfo.period.target
                 }
               }
@@ -193,9 +204,10 @@ const CreateBountyForm = defineComponent({
           }
         })
       } else if (bountyInfo.current === 2 && bountyInfo.payDetailType === 'stage') {
+        // if anyone total rewards bigger than MAX_AMOUNT, go to next is not allowed
         if (
-          (payStageRef.value?.payStagesTotal.usdcTotal as number) > 9999 ||
-          (payStageRef.value?.payStagesTotal?.tokenTotal as number) > 9999
+          (payStageRef.value?.payStagesTotal.usdcTotal as number) > MAX_AMOUNT ||
+          (payStageRef.value?.payStagesTotal?.tokenTotal as number) > MAX_AMOUNT
         ) {
           return
         }

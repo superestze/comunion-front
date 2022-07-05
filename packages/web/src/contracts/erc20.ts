@@ -225,10 +225,12 @@ const erc20ABI = `[
 ]
 `
 
-export function useErc20Contract(): (address: string) => Contract {
+export function useErc20Contract(needSigner = false): (address: string) => Contract {
   const walletStore = useWalletStore()
   return (address: string) => {
-    const provider = walletStore.wallet?.getProvider()
+    const provider = needSigner
+      ? walletStore.wallet?.getSigner()
+      : walletStore.wallet?.getProvider()
     if (!provider) {
       throw new Error('Wallet is not initialized')
     }

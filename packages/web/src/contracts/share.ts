@@ -11,18 +11,12 @@ export function wrapTransaction(
   return (...fnArgs: any[]) => {
     const waitingText = fnArgs.pop()
     const pengdingText = fnArgs.pop()
-    let overrides = []
-
-    if (Object.prototype.toString.call(fnArgs[0]) === '[object Object]') {
-      overrides = fnArgs.shift()
-    }
     contractStore.startContract(pengdingText)
 
     const contract = getContract(contractArgs)
 
     const fn = contract[functionName]
-
-    return fn(...fnArgs, overrides)
+    return fn(...fnArgs)
       .then((res: any) => {
         contractStore.endContract('success', {
           success: true,
