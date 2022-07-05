@@ -44,6 +44,7 @@ export interface RequestFunctionArgs {
 
 export type ResponseObject<T> =
   | {
+      code?: number
       error: true
       data: null
       message?: string
