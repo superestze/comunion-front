@@ -2,14 +2,14 @@ import { UDropdownFilter, UPagination } from '@comunion/components'
 import { defineComponent, ref, reactive, onMounted } from 'vue'
 import BountyCard from './components/BountyCard'
 import { BOUNTY_TYPES } from '@/constants'
-import { services } from '@/services'
+import { services, ServiceReturn } from '@/services'
 
 const StartupsPage = defineComponent({
   name: 'StartupsPage',
   setup() {
-    const startupType = ref<string>('Created:Recent')
+    const startupType = ref('Created:Recent')
     const total = ref(0)
-    const myCreatedStartups = ref<object[]>([])
+    const myCreatedStartups = ref<ServiceReturn<'bounty@bounty-list(tab)'>>()
     const pagination = reactive<{
       pageSize: number
       total: number | undefined
@@ -28,7 +28,7 @@ const StartupsPage = defineComponent({
       })
       if (!error) {
         pagination.total = data?.totalRows
-        myCreatedStartups.value = data!.rows ?? []
+        myCreatedStartups.value = data
       }
     }
     const updatePages = (page: number) => {
@@ -53,9 +53,9 @@ const StartupsPage = defineComponent({
             />
           </div>
         </div>
-        {myCreatedStartups.value.length && (
+        {myCreatedStartups.value?.rows.length && (
           <div class="p-10 bg-white rounded ">
-            {myCreatedStartups.value.map((startup, i) => (
+            {myCreatedStartups.value?.rows.map((startup, i) => (
               <BountyCard key={i} startup={startup} />
             ))}
           </div>

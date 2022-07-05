@@ -14,8 +14,9 @@ import BountiesCard from './components/Bounties'
 import { Finance } from './components/Finance'
 import { StartupBasicInfo } from './components/StartupBasicInfo'
 import { Team } from './components/Teams'
-import { services } from '@/services'
+import { services, ServiceReturn } from '@/services'
 import { StartupItem } from '@/types'
+type BountyType = NonNullable<ServiceReturn<'bounty@startup-bounty-list'>>['rows']
 
 const StartupDetailPage = defineComponent({
   name: 'StartupDetailPage',
@@ -94,7 +95,7 @@ const StartupDetailPage = defineComponent({
       teamList(totalTeamMembers.value)
     }
 
-    const myCreatedStartups = ref<object[]>([])
+    const myCreatedStartups = ref<BountyType>([])
 
     const getCreatedStartups = async () => {
       const { error, data } = await services['bounty@startup-bounty-list']({
@@ -102,7 +103,7 @@ const StartupDetailPage = defineComponent({
         page: pagination.page
       })
       if (!error) {
-        myCreatedStartups.value = data!.rows ?? []
+        myCreatedStartups.value.push(...(data!.rows ?? []))
         pagination.total = data!.totalRows
       }
     }

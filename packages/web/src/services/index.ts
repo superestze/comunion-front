@@ -615,8 +615,13 @@ export const services = {
        */
       rows: {
         /**
-         * @description logo
+         * @description bountyId
          */
+        bountyId: number
+        /**
+         * @description startup id
+         */
+        startupId: number
         logo: string
         /**
          * @description 标题
@@ -709,6 +714,8 @@ export const services = {
         /**
          * @description logo
          */
+        bountyId: number
+        startupId: number
         logo: string
         /**
          * @description 标题
@@ -785,6 +792,8 @@ export const services = {
         /**
          * @description logo
          */
+        bountyId: number
+        startupId: number
         logo: string
         /**
          * @description 标题
@@ -862,9 +871,8 @@ export const services = {
        * @description 记录列表
        */
       rows: {
-        /**
-         * @description logo
-         */
+        bountyId: number
+        startupId: number
         logo: string
         /**
          * @description 标题

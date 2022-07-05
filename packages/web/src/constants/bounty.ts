@@ -4,10 +4,10 @@
 export const BOUNTY_TYPES = [
   'Created:Recent',
   'Created:Oldest',
-  ' Value:Highest',
+  'Value:Highest',
   'Value:Lowest',
   'Deposit:Highest',
-  ' Deposit:Lowest'
+  'Deposit:Lowest'
 ] as const
 
 export const BOUNTY_TYPES_COLOR_MAP = [

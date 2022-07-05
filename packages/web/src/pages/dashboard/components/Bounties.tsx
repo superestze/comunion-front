@@ -4,24 +4,20 @@ import { defineComponent, ref, watch, onMounted, reactive } from 'vue'
 import BountiesCard from '../../startup/detail/components/Bounties'
 import CreateBountyBlock, { CreateBountyRef } from '@/blocks/Bounty/Create'
 import NoStartupTip from '@/layouts/default/blocks/Create/components/NoStartupTip'
-import { services } from '@/services'
+import { services, ServiceReturn } from '@/services'
 import { useUserStore } from '@/stores'
+type BountyType = NonNullable<ServiceReturn<'bounty@my-posted-bounty-list'>>['rows']
 
 const Bounties = defineComponent({
   name: 'Bounties',
   setup(prop, ctx) {
-    const pagination = reactive<{
-      pageSize: number
-      total: number
-      page: number
-      loading: boolean
-    }>({
+    const pagination = reactive({
       pageSize: 4,
       total: 0,
       page: 1,
       loading: false
     })
-    const myCreatedStartups = ref<object[]>([])
+    const myCreatedStartups = ref<BountyType>([])
     const getCreatedStartups = async () => {
       const { error, data } = await services['bounty@my-posted-bounty-list']({
         page: pagination.page
@@ -33,7 +29,6 @@ const Bounties = defineComponent({
     }
     const getParticipatedStartups = async () => {
       const { error, data } = await services['bounty@my-participated-bounty-list']({
-        // const { error, data } = await services['bounty@my-posted-bounty-list']({
         page: pagination.page
       })
       if (!error) {
