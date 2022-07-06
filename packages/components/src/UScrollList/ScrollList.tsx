@@ -85,7 +85,7 @@ const UScrollList = defineComponent({
         loadMoreLock.value = true
 
         if (!isLastPage.value) {
-          onLoadMore.value(page.value + 1)
+          onLoadMore.value!(page.value + 1)
         }
       }
     }

@@ -615,8 +615,13 @@ export const services = {
        */
       rows: {
         /**
-         * @description logo
+         * @description bountyId
          */
+        bountyId: number
+        /**
+         * @description startup id
+         */
+        startupId: number
         logo: string
         /**
          * @description 标题
@@ -637,7 +642,7 @@ export const services = {
         /**
          * @description 报酬
          */
-        rewards: {
+        rewards?: {
           /**
            * @description 币类型:uvu,其他
            */
@@ -650,14 +655,18 @@ export const services = {
         /**
          * @description 申请人数
          */
-        applicantCount: string
+        applicantCount: number
+        /**
+         * @description 押金要求
+         */
+        depositRequirements: number
         /**
          * @description 技能要求
          */
         applicationSkills: string[]
       }[]
     }>({
-      url: replacePath('/list', args),
+      url: replacePath('/bounty/list', args),
       method: 'POST',
       ...extract('POST', args, [], [])
     })
@@ -680,10 +689,6 @@ export const services = {
      * @description 第几页，默认1
      */
     page: number
-    /**
-     * @description 排序：字段:asc/desc
-     */
-    sort: string
   }) {
     return requestAdapter<{
       /**
@@ -709,6 +714,8 @@ export const services = {
         /**
          * @description logo
          */
+        bountyId: number
+        startupId: number
         logo: string
         /**
          * @description 标题
@@ -742,14 +749,15 @@ export const services = {
         /**
          * @description 申请人数
          */
-        applicantCount: string
+        applicantCount: number
+        depositRequirements: number
         /**
          * @description 技能要求
          */
         applicationSkills: string[]
       }[]
     }>({
-      url: replacePath('/my-participated', args),
+      url: replacePath('/bounty/my-participated', args),
       method: 'POST',
       ...extract('POST', args, [], [])
     })
@@ -759,10 +767,6 @@ export const services = {
      * @description 第几页，默认1
      */
     page: number
-    /**
-     * @description 排序：字段:asc/desc
-     */
-    sort: string
   }) {
     return requestAdapter<{
       /**
@@ -788,6 +792,8 @@ export const services = {
         /**
          * @description logo
          */
+        bountyId: number
+        startupId: number
         logo: string
         /**
          * @description 标题
@@ -821,14 +827,15 @@ export const services = {
         /**
          * @description 申请人数
          */
-        applicantCount: string
+        applicantCount: number
+        depositRequirements: number
         /**
          * @description 技能要求
          */
         applicationSkills: string[]
       }[]
     }>({
-      url: replacePath('/my-posted', args),
+      url: replacePath('/bounty/my-posted', args),
       method: 'POST',
       ...extract('POST', args, [], [])
     })
@@ -841,10 +848,6 @@ export const services = {
        * @description 第几页，默认1
        */
       page: number
-      /**
-       * @description 排序：字段:asc/desc
-       */
-      sort: string
     }
   ) {
     return requestAdapter<{
@@ -868,9 +871,8 @@ export const services = {
        * @description 记录列表
        */
       rows: {
-        /**
-         * @description logo
-         */
+        bountyId: number
+        startupId: number
         logo: string
         /**
          * @description 标题
@@ -904,14 +906,15 @@ export const services = {
         /**
          * @description 申请人数
          */
-        applicantCount: string
+        applicantCount: number
+        depositRequirements: number
         /**
          * @description 技能要求
          */
         applicationSkills: string[]
       }[]
     }>({
-      url: replacePath('/:startupId/bounties', args),
+      url: replacePath('/bounty/:startupId/bounties', args),
       method: 'POST',
       ...extract('POST', args, [], ['startupId'])
     })

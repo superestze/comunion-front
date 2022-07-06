@@ -17,6 +17,7 @@ import { BountyInfo, ContactType } from '../typing'
 import RichEditor from '@/components/Editor'
 import { services } from '@/services'
 import { useUserStore } from '@/stores'
+import { validateEmail } from '@/utils/type'
 
 export const MAX_AMOUNT = 9999
 
@@ -79,19 +80,21 @@ const BountyBasicInfo = defineComponent({
         type: 'datetime',
         title: 'Expires In',
         name: 'expiresIn',
+        actions: ['clear', 'confirm'],
         rules: [
           { required: true, message: 'Please set the apply cutoff date' },
           {
             validator: (rule, value) => {
               if (!value) return true
-              return dayjs(value) > dayjs().hour(23).minute(59).second(59)
+              return dayjs(value) > dayjs()
             },
-            message: 'Please set the reasonable cutoff date'
+            message: 'Please set the reasonable cutoff date',
+            trigger: 'blur'
           }
         ],
-        placeholder: 'Apply Cutoff Date',
+        placeholder: 'Apply Cutoff Date (UTC)',
         isDateDisabled: (current: number) => {
-          return dayjs(current) <= dayjs().hour(23).minute(59).second(59)
+          return dayjs(current) < dayjs()
         }
       },
       {
@@ -108,34 +111,67 @@ const BountyBasicInfo = defineComponent({
             },
             message: 'Please enter at least one contact information',
             trigger: 'blur'
+          },
+          {
+            validator: (rule, value: ContactType[]) => {
+              for (const item of value) {
+                if (item.type === 1 && !validateEmail(item.value)) {
+                  return false
+                } else {
+                  return true
+                }
+              }
+              return true
+            },
+            message: '',
+            trigger: 'blur'
           }
         ],
         render(value) {
           return (
             <div class="w-full">
               {props.bountyInfo.contact.map((item: ContactType, itemIndex: number) => (
-                <UInputGroup class={{ 'mb-4': itemIndex < props.bountyInfo.contact.length - 1 }}>
-                  <USelect options={contactOptions.value} value={item.type} class="w-50"></USelect>
-                  <UInput class="flex-1" v-model:value={item.value}></UInput>
+                <div class={{ 'mb-4': itemIndex < props.bountyInfo.contact.length - 1 }}>
+                  <div class="flex items-center">
+                    <UInputGroup>
+                      <USelect
+                        options={contactOptions.value}
+                        v-model:value={item.type}
+                        class="w-50"
+                      ></USelect>
+                      <UInput
+                        class="flex-1 rounded-r-lg"
+                        v-model:value={item.value}
+                        inputProps={{ type: item.type === 1 ? 'email' : 'text' }}
+                        status={
+                          item.type === 1 && item.value && !validateEmail(item.value)
+                            ? 'error'
+                            : undefined
+                        }
+                      ></UInput>
+                    </UInputGroup>
+                    {props.bountyInfo.contact.length > 1 && (
+                      <div
+                        class="flex items-center cursor-pointer"
+                        onClick={() => ctx.emit('delContact', itemIndex)}
+                      >
+                        <MinusCircleOutlined class="w-5 h-5 ml-4.5" />
+                      </div>
+                    )}
 
-                  {props.bountyInfo.contact.length > 1 && (
-                    <div
-                      class="flex items-center cursor-pointer"
-                      onClick={() => ctx.emit('delContact', itemIndex)}
-                    >
-                      <MinusCircleOutlined class="w-5 h-5 ml-4.5" />
-                    </div>
+                    {itemIndex + 1 === props.bountyInfo.contact.length && itemIndex < 5 && (
+                      <div
+                        class="flex items-center cursor-pointer"
+                        onClick={() => ctx.emit('addContact')}
+                      >
+                        <AddCircleOutlined class="w-5 h-5 ml-4.5" />
+                      </div>
+                    )}
+                  </div>
+                  {item.type === 1 && item.value && !validateEmail(item.value) && (
+                    <div class="ml-50 text-error">Please enter the correct email address</div>
                   )}
-
-                  {itemIndex + 1 === props.bountyInfo.contact.length && itemIndex < 5 && (
-                    <div
-                      class="flex items-center cursor-pointer"
-                      onClick={() => ctx.emit('addContact')}
-                    >
-                      <AddCircleOutlined class="w-5 h-5 ml-4.5" />
-                    </div>
-                  )}
-                </UInputGroup>
+                </div>
               ))}
             </div>
           )
@@ -203,7 +239,7 @@ const BountyBasicInfo = defineComponent({
         t: 'custom',
         title: 'Description',
         name: 'description',
-        required: true,
+        rules: [{ required: true, message: 'Describe the details of the bounty' }],
         render() {
           return (
             <RichEditor
