@@ -248,6 +248,7 @@ importers:
       vite-plugin-vue-layouts: ^0.6.0
       vite-plugin-windicss: ^1.8.3
       vue: ^3.2.31
+      vue-request: ^2.0.0-rc.2
       vue-router: ^4.0.14
       vue-tsc: ^0.33.5
       windicss: ^3.5.1
@@ -268,6 +269,7 @@ importers:
       pinia: 2.0.13_typescript@4.6.3+vue@3.2.33
       util: 0.12.4
       vue: 3.2.33
+      vue-request: 2.0.0-rc.2_vue@3.2.33
       vue-router: 4.0.14_vue@3.2.33
     devDependencies:
       '@types/node': 17.0.29
@@ -12024,6 +12026,34 @@ packages:
         optional: true
     dependencies:
       vue: 3.2.33
+    dev: false
+
+  /vue-demi/0.13.1_vue@3.2.33:
+    resolution: {integrity: sha512-xmkJ56koG3ptpLnpgmIzk9/4nFf4CqduSJbUM0OdPoU87NwRuZ6x49OLhjSa/fC15fV+5CbEnrxU4oyE022svg==}
+    engines: {node: '>=12'}
+    hasBin: true
+    requiresBuild: true
+    peerDependencies:
+      '@vue/composition-api': ^1.0.0-rc.1
+      vue: ^3.0.0-0 || ^2.6.0
+    peerDependenciesMeta:
+      '@vue/composition-api':
+        optional: true
+    dependencies:
+      vue: 3.2.33
+    dev: false
+
+  /vue-request/2.0.0-rc.2_vue@3.2.33:
+    resolution: {integrity: sha512-8KJNnWy+M3NJNfjptFFdJfz7tzhCPu2/sNM7bkCzk1+VJP/iU7l8D/sJi/0Kq+WxhJeUUIIVrx8u26c1h8orhA==}
+    peerDependencies:
+      '@vue/composition-api': ^1.0.0-rc.1
+      vue: ^2.0.0 || >=3.0.0
+    peerDependenciesMeta:
+      '@vue/composition-api':
+        optional: true
+    dependencies:
+      vue: 3.2.33
+      vue-demi: 0.13.1_vue@3.2.33
     dev: false
 
   /vue-router/4.0.14_vue@3.2.33:
