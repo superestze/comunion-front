@@ -12953,6 +12953,12 @@ packages:
       safe-buffer: registry.npmmirror.com/safe-buffer/5.2.1
     dev: false
 
+  registry.npmmirror.com/big.js/6.2.0:
+    resolution: {integrity: sha512-paIKvJiAaOYdLt6MfnvxkDo64lTOV257XYJyX3oJnJQocIclUn+48k6ZerH/c5FxWE6DGJu1TKDYis7tqHg9kg==, registry: http://registry.npm.taobao.org/, tarball: https://registry.npmmirror.com/big.js/-/big.js-6.2.0.tgz}
+    name: big.js
+    version: 6.2.0
+    dev: false
+
   registry.npmmirror.com/blakejs/1.2.1:
     resolution: {integrity: sha512-QXUSXI3QVc/gJME0dBpXrag1kbzOqCjCX8/b54ntNyW6sjtoqxqRk3LTmXzaJoh71zMsDCjM+47jS7XiwN/+fQ==, registry: https://registry.npm.taobao.org/, tarball: https://registry.npmmirror.com/blakejs/-/blakejs-1.2.1.tgz}
     name: blakejs
