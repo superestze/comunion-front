@@ -583,16 +583,29 @@ export const services = {
       ...extract('POST', args, [], [])
     })
   },
-  'bounty@bounty-list(tab)'(args: {
-    /**
-     * @description 第几页，默认1
-     */
-    page: number
-    /**
-     * @description 排序：字段:asc/desc
-     */
-    sort: string
-  }) {
+  'bounty@bounty-list(tab)'(
+    args: {
+      /**
+       * @description 当前页
+       * @example 1
+       */
+      page: any
+      /**
+       * @description Created:Recent\Created:oldest\Value:Highest\Value:Lowest\Deposit:Highest\Deposit:Lowest
+       * @example 排序
+       */
+      sort?: any
+    } & {
+      /**
+       * @description 第几页，默认1
+       */
+      page: number
+      /**
+       * @description 排序：字段:asc/desc
+       */
+      sort: string
+    }
+  ) {
     return requestAdapter<{
       /**
        * @description 每页记录数
@@ -666,9 +679,9 @@ export const services = {
         applicationSkills: string[]
       }[]
     }>({
-      url: replacePath('/bounty/list', args),
-      method: 'POST',
-      ...extract('POST', args, [], [])
+      url: replacePath('/cores/bounties', args),
+      method: 'GET',
+      ...extract('GET', args, ['page', 'sort'], [])
     })
   },
   'bounty@bounty-startups'(args: { comerID: any }) {
@@ -684,165 +697,13 @@ export const services = {
       ...extract('GET', args, [], ['comerID'])
     })
   },
-  'bounty@my-participated-bounty-list'(args: {
-    /**
-     * @description 第几页，默认1
-     */
-    page: number
-  }) {
-    return requestAdapter<{
-      /**
-       * @description 每页记录数
-       */
-      limit: number
-      /**
-       * @description 当前页
-       */
-      page: number
-      /**
-       * @description 总记录数
-       */
-      totalRows: number
-      /**
-       * @description 总页数
-       */
-      totalPages: number
-      /**
-       * @description 记录列表
-       */
-      rows: {
-        /**
-         * @description logo
-         */
-        bountyId: number
-        startupId: number
-        logo: string
-        /**
-         * @description 标题
-         */
-        title: string
-        /**
-         * @description 状态
-         */
-        status: string
-        /**
-         * @description 支付方式
-         */
-        paymentType: string
-        /**
-         * @description 创建时间
-         */
-        createdTime: number
-        /**
-         * @description 报酬
-         */
-        rewards: {
-          /**
-           * @description 币类型:uvu,其他
-           */
-          tokenSymbol: string
-          /**
-           * @description 总额
-           */
-          amount: string
-        }[]
-        /**
-         * @description 申请人数
-         */
-        applicantCount: number
-        depositRequirements: number
-        /**
-         * @description 技能要求
-         */
-        applicationSkills: string[]
-      }[]
-    }>({
-      url: replacePath('/bounty/my-participated', args),
-      method: 'POST',
-      ...extract('POST', args, [], [])
-    })
-  },
-  'bounty@my-posted-bounty-list'(args: {
-    /**
-     * @description 第几页，默认1
-     */
-    page: number
-  }) {
-    return requestAdapter<{
-      /**
-       * @description 每页记录数
-       */
-      limit: number
-      /**
-       * @description 当前页
-       */
-      page: number
-      /**
-       * @description 总记录数
-       */
-      totalRows: number
-      /**
-       * @description 总页数
-       */
-      totalPages: number
-      /**
-       * @description 记录列表
-       */
-      rows: {
-        /**
-         * @description logo
-         */
-        bountyId: number
-        startupId: number
-        logo: string
-        /**
-         * @description 标题
-         */
-        title: string
-        /**
-         * @description 状态
-         */
-        status: string
-        /**
-         * @description 支付方式
-         */
-        paymentType: string
-        /**
-         * @description 创建时间
-         */
-        createdTime: number
-        /**
-         * @description 报酬
-         */
-        rewards: {
-          /**
-           * @description 币类型:uvu,其他
-           */
-          tokenSymbol: string
-          /**
-           * @description 总额
-           */
-          amount: string
-        }[]
-        /**
-         * @description 申请人数
-         */
-        applicantCount: number
-        depositRequirements: number
-        /**
-         * @description 技能要求
-         */
-        applicationSkills: string[]
-      }[]
-    }>({
-      url: replacePath('/bounty/my-posted', args),
-      method: 'POST',
-      ...extract('POST', args, [], [])
-    })
-  },
-  'bounty@startup-bounty-list'(
+  'bounty@my-participated-bounty-list'(
     args: {
-      startupId: any
+      /**
+       * @description 当前页
+       * @example 1
+       */
+      page: any
     } & {
       /**
        * @description 第几页，默认1
@@ -871,6 +732,188 @@ export const services = {
        * @description 记录列表
        */
       rows: {
+        /**
+         * @description logo
+         */
+        bountyId: number
+        /**
+         * @description 上链状态
+         */
+        onChainStatus: string
+        startupId: number
+        logo: string
+        /**
+         * @description 标题
+         */
+        title: string
+        /**
+         * @description 状态
+         */
+        status: string
+        /**
+         * @description 支付方式
+         */
+        paymentType: string
+        /**
+         * @description 创建时间
+         */
+        createdTime: number
+        /**
+         * @description 报酬
+         */
+        rewards: {
+          /**
+           * @description 币类型:uvu,其他
+           */
+          tokenSymbol: string
+          /**
+           * @description 总额
+           */
+          amount: string
+        }[]
+        /**
+         * @description 申请人数
+         */
+        applicantCount: number
+        depositRequirements: number
+        /**
+         * @description 技能要求
+         */
+        applicationSkills: string[]
+      }[]
+    }>({
+      url: replacePath('/cores/bounties/me/participated', args),
+      method: 'GET',
+      ...extract('GET', args, ['page'], [])
+    })
+  },
+  'bounty@my-posted-bounty-list'(
+    args: {
+      /**
+       * @description 当前页
+       * @example 1
+       */
+      page: any
+    } & {
+      /**
+       * @description 第几页，默认1
+       */
+      page: number
+    }
+  ) {
+    return requestAdapter<{
+      /**
+       * @description 每页记录数
+       */
+      limit: number
+      /**
+       * @description 当前页
+       */
+      page: number
+      /**
+       * @description 总记录数
+       */
+      totalRows: number
+      /**
+       * @description 总页数
+       */
+      totalPages: number
+      /**
+       * @description 记录列表
+       */
+      rows: {
+        /**
+         * @description logo
+         */
+        bountyId: number
+        startupId: number
+        logo: string
+        /**
+         * @description 标题
+         */
+        title: string
+        /**
+         * @description 状态
+         */
+        status: string
+        /**
+         * @description 支付方式
+         */
+        paymentType: string
+        /**
+         * @description 创建时间
+         */
+        createdTime: number
+        /**
+         * @description 报酬
+         */
+        rewards: {
+          /**
+           * @description 币类型:uvu,其他
+           */
+          tokenSymbol: string
+          /**
+           * @description 总额
+           */
+          amount: string
+        }[]
+        /**
+         * @description 申请人数
+         */
+        applicantCount: number
+        depositRequirements: number
+        /**
+         * @description 技能要求
+         */
+        applicationSkills: string[]
+        /**
+         * @description 上链状态
+         */
+        onChainStatus: string
+      }[]
+    }>({
+      url: replacePath('/cores/bounties/me/posted', args),
+      method: 'GET',
+      ...extract('GET', args, ['page'], [])
+    })
+  },
+  'bounty@startup-bounty-list'(
+    args: {
+      startupId: any
+    } & {
+      /**
+       * @description 当前页
+       * @example 1
+       */
+      page: any
+    } & {
+      /**
+       * @description 第几页，默认1
+       */
+      page: number
+    }
+  ) {
+    return requestAdapter<{
+      /**
+       * @description 每页记录数
+       */
+      limit: number
+      /**
+       * @description 当前页
+       */
+      page: number
+      /**
+       * @description 总记录数
+       */
+      totalRows: number
+      /**
+       * @description 总页数
+       */
+      totalPages: number
+      /**
+       * @description 记录列表
+       */
+      rows: { 
         bountyId: number
         startupId: number
         logo: string
@@ -914,9 +957,9 @@ export const services = {
         applicationSkills: string[]
       }[]
     }>({
-      url: replacePath('/bounty/:startupId/bounties', args),
-      method: 'POST',
-      ...extract('POST', args, [], ['startupId'])
+      url: replacePath('/cores/bounties/startup/:startupId', args),
+      method: 'GET',
+      ...extract('GET', args, ['page'], ['startupId'])
     })
   },
 

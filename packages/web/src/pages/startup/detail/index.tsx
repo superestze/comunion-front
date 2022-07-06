@@ -4,7 +4,7 @@ import {
   UBreadcrumb,
   UBreadcrumbItem,
   USpin,
-  UScrollList,
+  UScrollbar,
   UNoContent
 } from '@comunion/components'
 import { ArrowLeftOutlined, EmptyFilled } from '@comunion/icons'
@@ -29,18 +29,14 @@ const StartupDetailPage = defineComponent({
     const totalTeamMembers = ref()
     const userIsFollow = ref(false)
     const pageLoading = ref(false)
-    const pagination = reactive<{
-      pageSize: number
-      total: number
-      page: number
-      loading: boolean
-    }>({
+    const PageName = ref('startup')
+    const pagination = reactive({
       pageSize: 4,
       total: 0,
       page: 1,
       loading: false
     })
-
+    const status = ref('')
     const getStartup = async () => {
       if (startupId) {
         const { error, data } = await services['startup@startup-get']({
@@ -108,12 +104,12 @@ const StartupDetailPage = defineComponent({
       }
     }
 
-    const onLoadMore = async (p: number) => {
-      pagination.loading = true
-      pagination.page = p
-      await getCreatedStartups()
-      pagination.loading = false
-    }
+    // const onLoadMore = async (p: number) => {
+    // pagination.loading = true
+    // pagination.page = p
+    // await getCreatedStartups()
+    // pagination.loading = false
+    // }
 
     onMounted(() => {
       getStartup()
@@ -154,26 +150,24 @@ const StartupDetailPage = defineComponent({
               <Finance startup={startup.value} />
             </UCard>
             <UCard title="BOUNTIES" class="mb-6">
-              {/* <UDeveloping class="my-10">
-                <EmptyFilled />
-              </UDeveloping> */}
-              <UScrollList
-                triggered={pagination.loading}
-                page={pagination.page}
-                pageSize={pagination.pageSize}
-                total={pagination.total}
-                onLoadMore={onLoadMore}
-              >
-                {myCreatedStartups.value.length ? (
-                  myCreatedStartups.value.map((startup, i) => (
-                    <BountiesCard startup={startup} key={i} />
-                  ))
-                ) : (
-                  <UNoContent textTip="TO BE EMPTY" class="my-10">
-                    <EmptyFilled />
-                  </UNoContent>
-                )}
-              </UScrollList>
+              <div class="max-h-130">
+                <UScrollbar>
+                  {myCreatedStartups.value.length ? (
+                    myCreatedStartups.value.map((startup, i) => (
+                      <BountiesCard
+                        startup={startup}
+                        key={i}
+                        name={PageName.value as string}
+                        status={status.value as string}
+                      />
+                    ))
+                  ) : (
+                    <UNoContent textTip="TO BE EMPTY" class="my-10">
+                      <EmptyFilled />
+                    </UNoContent>
+                  )}
+                </UScrollbar>
+              </div>
             </UCard>
             <UCard title="GOVERNANCE">
               <UDeveloping class="my-10">

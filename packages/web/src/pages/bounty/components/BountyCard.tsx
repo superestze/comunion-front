@@ -1,7 +1,7 @@
 import { UStartupLogo, UTag } from '@comunion/components'
-// import { StartupLogoOutlined } from '@comunion/icons'
-import { defineComponent, PropType, reactive, onMounted } from 'vue'
-import { BOUNTY_TYPES_COLOR_MAP } from '@/constants'
+// import dayjs from 'dayjs'
+import { defineComponent, PropType, reactive, onMounted, ref } from 'vue'
+import { BOUNTY_TYPES_COLOR_MAP, DateDiff } from '@/constants'
 import { ServiceReturn, services } from '@/services'
 
 type BountyType = NonNullable<ServiceReturn<'bounty@bounty-list(tab)'>>['rows']
@@ -17,6 +17,7 @@ const StartupCard = defineComponent({
     const bountyInfo = reactive({
       token2Symbol: ''
     })
+    const date = ref<string | undefined>('created 1 minutes ago')
     const getStartup = async (startupId: number) => {
       if (startupId) {
         const { error, data } = await services['startup@startup-get']({
@@ -28,6 +29,7 @@ const StartupCard = defineComponent({
       }
     }
     onMounted(() => {
+      date.value = DateDiff(props.startup.createdTime)
       getStartup(props.startup?.startupId)
     })
     const color = BOUNTY_TYPES_COLOR_MAP.filter(item => item.label === props.startup.status)
@@ -45,18 +47,40 @@ const StartupCard = defineComponent({
           <div class="content">
             <div class="u-title1 mb-2.5 max-w-200 truncate">{props.startup.title}</div>
             <div class="flex items-center flex-row">
-              <div class="mb-4 mr-5">
+              <div class="mb-4 mr-2">
                 <UTag
                   class="px-2"
                   style={{
-                    'border-color': color[0].value,
-                    color: color[0].value
+                    'border-color': color.length ? color[0].value : BOUNTY_TYPES_COLOR_MAP[0].value,
+                    color: color.length ? color[0].value : BOUNTY_TYPES_COLOR_MAP[0].value
                   }}
                 >
-                  {color[0].label}
+                  {color.length ? color[0].label : BOUNTY_TYPES_COLOR_MAP[0].label}
                 </UTag>
               </div>
-              <div class="u-body1 truncate mr-5 mb-4">{props.startup.paymentType}</div>
+              <div class="mb-4 mr-2">
+                <UTag
+                  class="px-2"
+                  style={{
+                    'border-color': 'var(--u-success-color)',
+                    color: 'var(--u-success-color)'
+                  }}
+                >
+                  {props.startup.paymentType}
+                </UTag>
+              </div>
+              <div class="mb-4 mr-2">
+                <UTag
+                  class="px-2"
+                  style={{
+                    'border-color': 'var(--u-primary-1-color)',
+                    color: 'var(--u-primary-1-color)'
+                  }}
+                >
+                  {date.value}
+                  <span></span>
+                </UTag>
+              </div>
               <div class="divide-x mb-4">
                 {props.startup.applicationSkills.length &&
                   props.startup.applicationSkills.map((tag: string, i: number) => {
@@ -82,18 +106,30 @@ const StartupCard = defineComponent({
                   return (
                     <div
                       key={i}
-                      class="w-32.5 h-12 flex items-center justify-center rounded-md"
+                      class={[
+                        i === 0
+                          ? 'mr-5 border-warning text-warning'
+                          : '0px border-primary text-primary',
+                        'w-32.5 h-12 flex items-center justify-center rounded-md border-1'
+                      ]}
                       style={{
                         background:
-                          item.tokenSymbol === bountyInfo.token2Symbol
-                            ? 'linear-gradient(to right, rgba(var(--u-primary-value), 0.8),rgba(var(--u-primary-value), 1))'
-                            : 'linear-gradient(to right, rgba(var( --u-warning2-value), 0.8),rgba(var( --u-warning2-value), 1))',
-                        marginRight:
-                          item.tokenSymbol === bountyInfo.token2Symbol ? '0px' : '1.25rem'
+                          i === 0
+                            ? 'rgba(var( --u-warning2-value), 0.1)'
+                            : 'rgba(var(--u-primary-value), 0.1)'
                       }}
                     >
-                      <span class="pr-1 u-title1 w-11.5 text-white truncate">{item.amount}</span>
-                      <span class="pl-1 u-title2 text-white">{item.tokenSymbol}</span>
+                      <span
+                        class={[
+                          i === 0 ? 'text-warning' : 'text-primary',
+                          'pr-1 u-title1 w-11.5 truncate'
+                        ]}
+                      >
+                        {item.amount}
+                      </span>
+                      <span class={[i === 0 ? 'text-warning' : 'text-primary', 'pl-1 u-title2']}>
+                        {item.tokenSymbol}
+                      </span>
                     </div>
                   )
                 })}
