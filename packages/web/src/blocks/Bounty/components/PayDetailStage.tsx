@@ -83,7 +83,7 @@ const PayDetailStage = defineComponent({
                       if (value === null) return 0
                       return Number(value)
                     },
-                    status: this.payStagesTotal.usdcTotal > 9999 ? 'error' : undefined
+                    status: this.payStagesTotal.usdcTotal > MAX_AMOUNT ? 'error' : undefined
                   }}
                   v-model:value={stage.token1Amount}
                   renderUnit={() => renderUnit(this.bountyInfo.token1Symbol)}
@@ -100,7 +100,7 @@ const PayDetailStage = defineComponent({
                       if (value === null) return 0
                       return Number(value)
                     },
-                    status: this.payStagesTotal.tokenTotal > 9999 ? 'error' : undefined
+                    status: this.payStagesTotal.tokenTotal > MAX_AMOUNT ? 'error' : undefined
                   }}
                   v-model:value={stage.token2Amount}
                   renderUnit={() => renderUnit(this.bountyInfo.token2Symbol)}
@@ -168,7 +168,7 @@ const PayDetailStage = defineComponent({
         <div class="bg-purple py-5.5 px-6 mr-20 rounded-lg">
           The current total rewards as{' '}
           <span class="text-primary">
-            <span class={[{ 'text-error': this.payStagesTotal.usdcTotal > 9999 }]}>
+            <span class={[{ 'text-error': this.payStagesTotal.usdcTotal > MAX_AMOUNT }]}>
               {this.payStagesTotal.usdcTotal}
               {this.bountyInfo.token1Symbol}
             </span>
@@ -176,15 +176,16 @@ const PayDetailStage = defineComponent({
               <span>
                 {' '}
                 +{' '}
-                <span class={[{ 'text-error': this.payStagesTotal.tokenTotal > 9999 }]}>
+                <span class={[{ 'text-error': this.payStagesTotal.tokenTotal > MAX_AMOUNT }]}>
                   {this.payStagesTotal.tokenTotal}
                   {this.bountyInfo.token2Symbol}
                 </span>
               </span>
             )}
           </span>
-          {(this.payStagesTotal.usdcTotal > 9999 || this.payStagesTotal.tokenTotal > 9999) && (
-            <span> , Please reduce your reward to under 1000</span>
+          {(this.payStagesTotal.usdcTotal > MAX_AMOUNT ||
+            this.payStagesTotal.tokenTotal > MAX_AMOUNT) && (
+            <span> , Please reduce your reward to under 10000</span>
           )}
         </div>
       </UForm>

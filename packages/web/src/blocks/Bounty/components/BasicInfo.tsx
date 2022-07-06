@@ -132,22 +132,24 @@ const BountyBasicInfo = defineComponent({
             <div class="w-full">
               {props.bountyInfo.contact.map((item: ContactType, itemIndex: number) => (
                 <div class={{ 'mb-4': itemIndex < props.bountyInfo.contact.length - 1 }}>
-                  <UInputGroup>
-                    <USelect
-                      options={contactOptions.value}
-                      v-model:value={item.type}
-                      class="w-50"
-                    ></USelect>
-                    <UInput
-                      class="flex-1"
-                      v-model:value={item.value}
-                      inputProps={{ type: item.type === 1 ? 'email' : 'text' }}
-                      status={
-                        item.type === 1 && item.value && !validateEmail(item.value)
-                          ? 'error'
-                          : undefined
-                      }
-                    ></UInput>
+                  <div class="flex items-center">
+                    <UInputGroup>
+                      <USelect
+                        options={contactOptions.value}
+                        v-model:value={item.type}
+                        class="w-50"
+                      ></USelect>
+                      <UInput
+                        class="flex-1 rounded-r-lg"
+                        v-model:value={item.value}
+                        inputProps={{ type: item.type === 1 ? 'email' : 'text' }}
+                        status={
+                          item.type === 1 && item.value && !validateEmail(item.value)
+                            ? 'error'
+                            : undefined
+                        }
+                      ></UInput>
+                    </UInputGroup>
                     {props.bountyInfo.contact.length > 1 && (
                       <div
                         class="flex items-center cursor-pointer"
@@ -165,7 +167,7 @@ const BountyBasicInfo = defineComponent({
                         <AddCircleOutlined class="w-5 h-5 ml-4.5" />
                       </div>
                     )}
-                  </UInputGroup>
+                  </div>
                   {item.type === 1 && item.value && !validateEmail(item.value) && (
                     <div class="ml-50 text-error">Please enter the correct email address</div>
                   )}
