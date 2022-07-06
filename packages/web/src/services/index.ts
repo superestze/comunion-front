@@ -583,16 +583,29 @@ export const services = {
       ...extract('POST', args, [], [])
     })
   },
-  'bounty@bounty-list(tab)'(args: {
-    /**
-     * @description 第几页，默认1
-     */
-    page: number
-    /**
-     * @description 排序：字段:asc/desc
-     */
-    sort: string
-  }) {
+  'bounty@bounty-list(tab)'(
+    args: {
+      /**
+       * @description 当前页
+       * @example 1
+       */
+      page: any
+      /**
+       * @description Created:Recent\Created:oldest\Value:Highest\Value:Lowest\Deposit:Highest\Deposit:Lowest
+       * @example 排序
+       */
+      sort?: any
+    } & {
+      /**
+       * @description 第几页，默认1
+       */
+      page: number
+      /**
+       * @description 排序：字段:asc/desc
+       */
+      sort: string
+    }
+  ) {
     return requestAdapter<{
       /**
        * @description 每页记录数
@@ -666,9 +679,9 @@ export const services = {
         applicationSkills: string[]
       }[]
     }>({
-      url: replacePath('/bounty/list', args),
-      method: 'POST',
-      ...extract('POST', args, [], [])
+      url: replacePath('/cores/bounties', args),
+      method: 'GET',
+      ...extract('GET', args, ['page', 'sort'], [])
     })
   },
   'bounty@bounty-startups'(args: { comerID: any }) {
@@ -684,12 +697,20 @@ export const services = {
       ...extract('GET', args, [], ['comerID'])
     })
   },
-  'bounty@my-participated-bounty-list'(args: {
-    /**
-     * @description 第几页，默认1
-     */
-    page: number
-  }) {
+  'bounty@my-participated-bounty-list'(
+    args: {
+      /**
+       * @description 当前页
+       * @example 1
+       */
+      page: any
+    } & {
+      /**
+       * @description 第几页，默认1
+       */
+      page: number
+    }
+  ) {
     return requestAdapter<{
       /**
        * @description 每页记录数
@@ -715,6 +736,10 @@ export const services = {
          * @description logo
          */
         bountyId: number
+        /**
+         * @description 上链状态
+         */
+        onChainStatus: string
         startupId: number
         logo: string
         /**
@@ -757,17 +782,25 @@ export const services = {
         applicationSkills: string[]
       }[]
     }>({
-      url: replacePath('/bounty/my-participated', args),
-      method: 'POST',
-      ...extract('POST', args, [], [])
+      url: replacePath('/cores/bounties/me/participated', args),
+      method: 'GET',
+      ...extract('GET', args, ['page'], [])
     })
   },
-  'bounty@my-posted-bounty-list'(args: {
-    /**
-     * @description 第几页，默认1
-     */
-    page: number
-  }) {
+  'bounty@my-posted-bounty-list'(
+    args: {
+      /**
+       * @description 当前页
+       * @example 1
+       */
+      page: any
+    } & {
+      /**
+       * @description 第几页，默认1
+       */
+      page: number
+    }
+  ) {
     return requestAdapter<{
       /**
        * @description 每页记录数
@@ -833,16 +866,26 @@ export const services = {
          * @description 技能要求
          */
         applicationSkills: string[]
+        /**
+         * @description 上链状态
+         */
+        onChainStatus: string
       }[]
     }>({
-      url: replacePath('/bounty/my-posted', args),
-      method: 'POST',
-      ...extract('POST', args, [], [])
+      url: replacePath('/cores/bounties/me/posted', args),
+      method: 'GET',
+      ...extract('GET', args, ['page'], [])
     })
   },
   'bounty@startup-bounty-list'(
     args: {
       startupId: any
+    } & {
+      /**
+       * @description 当前页
+       * @example 1
+       */
+      page: any
     } & {
       /**
        * @description 第几页，默认1
@@ -914,9 +957,9 @@ export const services = {
         applicationSkills: string[]
       }[]
     }>({
-      url: replacePath('/bounty/:startupId/bounties', args),
-      method: 'POST',
-      ...extract('POST', args, [], ['startupId'])
+      url: replacePath('/cores/bounties/startup/:startupId', args),
+      method: 'GET',
+      ...extract('GET', args, ['page'], ['startupId'])
     })
   },
 
