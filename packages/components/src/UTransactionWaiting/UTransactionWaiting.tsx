@@ -58,7 +58,7 @@ const UTransactionWaiting = defineComponent({
           <CloseOutlined class="u-transaction-waiting-close" onClick={close} />
           <CheckedFilled class="u-transaction-waiting-checked" />
           <div>
-            <div class="u-transaction-waiting-text" v-innerHTML={props.text}></div>
+            <div class="u-transaction-waiting-text" v-html={props.text}></div>
             {props.blockchainExplorerUrl && (
               <a
                 target="_blank"

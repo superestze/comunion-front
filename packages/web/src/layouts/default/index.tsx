@@ -1,4 +1,4 @@
-import { ULogo, UTransactionWaiting, UTransactionContainer } from '@comunion/components'
+import { ULogo, UTransactionContainer, UTransactionWaiting } from '@comunion/components'
 import { defineComponent, watchEffect } from 'vue'
 import { RouterLink, RouterView, useRouter, useRoute } from 'vue-router'
 import TheHeader from './blocks/TheHeader'
@@ -29,15 +29,17 @@ const DefaultLayout = defineComponent({
         <div class="flex-1 u-page-container relative">
           {/* Header */}
           {/* TransactionWaiting */}
-          <UTransactionContainer style={{ zIndex: '2099' }}>
-            {contractStore.transacations.map(transaction => (
-              <UTransactionWaiting
-                key={transaction.hash}
-                {...transaction}
-                blockchainExplorerUrl={walletStore.blockchainExplorerUrl}
-                onClose={() => contractStore.closeTransaction(transaction)}
-              />
-            ))}
+          <UTransactionContainer>
+            {contractStore.transacations.map(transaction => {
+              return (
+                <UTransactionWaiting
+                  key={transaction.hash}
+                  {...transaction}
+                  blockchainExplorerUrl={walletStore.blockchainExplorerUrl}
+                  onClose={() => contractStore.closeTransaction(transaction)}
+                />
+              )
+            })}
           </UTransactionContainer>
           {/* Body */}
           <RouterView key={route.fullPath} />

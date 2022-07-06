@@ -1,5 +1,5 @@
 import './style.css'
-import { UButton, UCard, UModal, UTabPane, UTabs, message } from '@comunion/components'
+import { UButton, UCard, UModal, UTabPane, UTabs } from '@comunion/components'
 import { PeriodOutlined, StageOutlined, WarningFilled } from '@comunion/icons'
 import dayjs from 'dayjs'
 
@@ -108,27 +108,17 @@ const CreateBountyForm = defineComponent({
         const bountyFactoryAddress = bountyAddresses[walletStore.chainId!]
         // approve amount to bounty factory contract
         const approveRes: Contract = await usdcRes.approve(bountyFactoryAddress, bountyAmount)
-        await contractStore.endContract('success', {
-          success: true,
-          hash: approveRes.hash,
-          text: approvePendingText,
-          promiseFn: approveRes.wait
-        })
+        await approveRes.wait()
         // second send tx to bountyFactory create bounty
         const contractRes: any = await bountyContract.createBounty(
           bountyAmount,
           'Waiting to submit all contents to blockchain for creating bounty',
-          <div class="flex items-center">
-            Bounty "<span class="truncate max-w-20">{bountyInfo.title}</span>" is Creating
-          </div>
+          `<div class="flex items-center">Bounty "<span class="truncate max-w-20">${bountyInfo.title}</span>" is Creating</div>`
         )
         return contractRes
       } catch (e: any) {
         console.error(e)
         contractStore.endContract('failed', { success: false })
-        if (e.data?.message) {
-          message.error(e.data.message)
-        }
       }
       return null
     }
