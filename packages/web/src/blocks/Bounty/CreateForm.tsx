@@ -25,7 +25,7 @@ const CreateBountyForm = defineComponent({
   setup(props, ctx) {
     const walletStore = useWalletStore()
     const userStore = useUserStore()
-    const usdcTokenContract = useErc20Contract(true)
+    const usdcTokenContract = useErc20Contract()
     const contractStore = useContractStore()
     const stepOptions = ref([{ name: 'Bounty' }, { name: 'Payment' }, { name: 'Deposit' }])
 
@@ -97,14 +97,16 @@ const CreateBountyForm = defineComponent({
     const contractSubmit = async () => {
       const approvePendingText = 'Waiting to submit all contents to blockchain for approval deposit'
       const value = bountyInfo.deposit
-      const usdcTokenAddress = AVAX_USDC_ADDR[walletStore.chainId!]
-      const bountyFactoryAddress = bountyAddresses[walletStore.chainId!]
-      const usdcRes = await usdcTokenContract(usdcTokenAddress)
-      const decimal = await usdcRes.decimals()
-      const bountyAmount = BigNumber.from(value).mul(BigNumber.from(10).pow(decimal))
-      // first approve amount to bountyFactory
+
       try {
+        /* first approve amount to bountyFactory */
+        const usdcTokenAddress = AVAX_USDC_ADDR[walletStore.chainId!] // get usdc contract address
+        const usdcRes = await usdcTokenContract(usdcTokenAddress) // construct erc20 contract
+        const decimal = await usdcRes.decimals()
+        const bountyAmount = BigNumber.from(value).mul(BigNumber.from(10).pow(decimal)) // convert usdc unit to wei
         contractStore.startContract(approvePendingText)
+        const bountyFactoryAddress = bountyAddresses[walletStore.chainId!]
+        // approve amount to bounty factory contract
         const approveRes: Contract = await usdcRes.approve(bountyFactoryAddress, bountyAmount)
         await contractStore.endContract('success', {
           success: true,
