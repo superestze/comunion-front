@@ -2,6 +2,7 @@ import { NSelect } from 'naive-ui'
 import { defineComponent, PropType } from 'vue'
 import { DEFAULT_SKILLS } from '../constants'
 import useLimitTags from './tag.select'
+import './SkillTags.css'
 
 const StartupTags = defineComponent({
   name: 'StartupTags',
@@ -29,6 +30,7 @@ const StartupTags = defineComponent({
     return () => (
       <NSelect
         {...props}
+        class="skill-tags"
         consistentMenuWidth={false}
         clearable
         maxTagCount="responsive"

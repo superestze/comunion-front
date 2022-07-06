@@ -1,3 +1,4 @@
+import { CalenderOutlined } from '@comunion/icons'
 import type { DatePickerProps } from 'naive-ui'
 import { NDatePicker } from 'naive-ui'
 import { defineComponent } from 'vue'
@@ -8,7 +9,9 @@ const UDatePicker = defineComponent({
   name: 'UDatePicker',
   extends: NDatePicker,
   setup(props, ctx) {
-    return () => <NDatePicker {...props} v-slots={ctx.slots} />
+    return () => (
+      <NDatePicker {...props} v-slots={{ 'date-icon': <CalenderOutlined />, ...ctx.slots }} />
+    )
   }
 })
 
