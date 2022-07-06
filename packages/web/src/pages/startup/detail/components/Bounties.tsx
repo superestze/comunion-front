@@ -22,7 +22,7 @@ const BountiesCard = defineComponent({
     }
   },
   setup(props, context) {
-    const date = ref<string | undefined>()
+    const date = ref<string>()
     const bountyInfo = reactive({
       token2Symbol: ''
     })

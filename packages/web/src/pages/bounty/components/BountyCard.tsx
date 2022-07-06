@@ -18,7 +18,7 @@ const StartupCard = defineComponent({
     const bountyInfo = reactive({
       token2Symbol: ''
     })
-    const date = ref<string | undefined>()
+    const date = ref<string>()
     const getStartup = async (startupId: number) => {
       if (startupId) {
         const { error, data } = await services['startup@startup-get']({
