@@ -34,7 +34,9 @@ const StartupCard = defineComponent({
       getStartup(props.startup?.startupId)
       date.value = format(props.startup.createdTime, 'en_US')
     })
-    const color = BOUNTY_TYPES_COLOR_MAP.find(item => item.label === props.startup.status)
+    const color = BOUNTY_TYPES_COLOR_MAP.find(
+      (item: { label: string }) => item.label === props.startup.status
+    )
     return () => (
       <div class="flex h-40 w-full items-center cursor-pointer border-b-1">
         <div class="flex h-full w-20 items-center">
