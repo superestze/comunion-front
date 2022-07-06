@@ -1,9 +1,9 @@
-import { Contract } from 'ethers'
+import { Contract, BigNumber } from 'ethers'
 import { computed } from 'vue'
 import { getContract, GetContractArgs, wrapTransaction } from './share'
 import { useWalletStore } from '@/stores'
 
-const addresses: Record<number, string> = {<% addresses.forEach(function(network) { %>
+export const addresses: Record<number, string> = {<% addresses.forEach(function(network) { %>
   <%= network.chainId %>: '<%= network.address %>',<% }) %>}
 
 const abi = '<%= abi %>'

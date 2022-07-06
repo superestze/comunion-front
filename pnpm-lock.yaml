@@ -238,7 +238,6 @@ importers:
       '@walletconnect/web3-provider': ^1.7.5
       '@zidong/a2s': ^0.0.13
       axios: ^0.26.1
-      big.js: ^6.2.0
       buffer: ^6.0.3
       dayjs: ^1.11.1
       ethers: ^5.5.4
@@ -266,7 +265,6 @@ importers:
       '@tiptap/vue-3': registry.npmmirror.com/@tiptap/vue-3/2.0.0-beta.95_vue@3.2.33
       '@walletconnect/web3-provider': 1.7.8
       axios: 0.26.1
-      big.js: registry.npmmirror.com/big.js/6.2.0
       buffer: 6.0.3
       dayjs: 1.11.1
       ethers: 5.6.4

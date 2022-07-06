@@ -25,12 +25,12 @@ const UserAvatar = defineComponent({
           options={[
             {
               key: 'dashboard',
-              icon: () => <UserFilled class="text-primary" />,
+              icon: () => <UserFilled class="!text-primary" />,
               label: () => 'My Dashboard'
             },
             {
               key: 'logout',
-              icon: () => <SignOutFilled class="bg-purple rounded-3xl text-primary" />,
+              icon: () => <SignOutFilled class="bg-purple rounded-3xl !text-primary" />,
               label: 'Sign out'
             }
           ]}
