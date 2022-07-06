@@ -913,7 +913,7 @@ export const services = {
       /**
        * @description 记录列表
        */
-      rows: { 
+      rows: {
         bountyId: number
         startupId: number
         logo: string
