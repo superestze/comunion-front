@@ -1,7 +1,8 @@
 import { UStartupLogo, UTag } from '@comunion/components'
 // import dayjs from 'dayjs'
+import { format } from 'timeago.js'
 import { defineComponent, PropType, reactive, onMounted, ref } from 'vue'
-import { BOUNTY_TYPES_COLOR_MAP, DateDiff } from '@/constants'
+import { BOUNTY_TYPES_COLOR_MAP } from '@/constants'
 import { ServiceReturn, services } from '@/services'
 
 type BountyType = NonNullable<ServiceReturn<'bounty@bounty-list(tab)'>>['rows']
@@ -17,7 +18,7 @@ const StartupCard = defineComponent({
     const bountyInfo = reactive({
       token2Symbol: ''
     })
-    const date = ref<string | undefined>('created 1 minutes ago')
+    const date = ref<string | undefined>()
     const getStartup = async (startupId: number) => {
       if (startupId) {
         const { error, data } = await services['startup@startup-get']({
@@ -28,11 +29,12 @@ const StartupCard = defineComponent({
         }
       }
     }
+
     onMounted(() => {
-      date.value = DateDiff(props.startup.createdTime)
       getStartup(props.startup?.startupId)
+      date.value = format(props.startup.createdTime, 'en_US')
     })
-    const color = BOUNTY_TYPES_COLOR_MAP.filter(item => item.label === props.startup.status)
+    const color = BOUNTY_TYPES_COLOR_MAP.find(item => item.label === props.startup.status)
     return () => (
       <div class="flex h-40 w-full items-center cursor-pointer border-b-1">
         <div class="flex h-full w-20 items-center">
@@ -51,11 +53,11 @@ const StartupCard = defineComponent({
                 <UTag
                   class="px-2"
                   style={{
-                    'border-color': color.length ? color[0].value : BOUNTY_TYPES_COLOR_MAP[0].value,
-                    color: color.length ? color[0].value : BOUNTY_TYPES_COLOR_MAP[0].value
+                    'border-color': color ? color.value : BOUNTY_TYPES_COLOR_MAP[0].value,
+                    color: color ? color.value : BOUNTY_TYPES_COLOR_MAP[0].value
                   }}
                 >
-                  {color.length ? color[0].label : BOUNTY_TYPES_COLOR_MAP[0].label}
+                  {color ? color.label : BOUNTY_TYPES_COLOR_MAP[0].label}
                 </UTag>
               </div>
               <div class="mb-4 mr-2">
@@ -77,8 +79,7 @@ const StartupCard = defineComponent({
                     color: 'var(--u-primary-1-color)'
                   }}
                 >
-                  {date.value}
-                  <span></span>
+                  created {date.value}
                 </UTag>
               </div>
               <div class="divide-x mb-4">

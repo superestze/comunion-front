@@ -1,6 +1,7 @@
 import { UStartupLogo, UTag } from '@comunion/components'
+import { format } from 'timeago.js'
 import { defineComponent, onMounted, reactive, PropType, ref } from 'vue'
-import { BOUNTY_TYPES_COLOR_MAP, DateDiff } from '@/constants'
+import { BOUNTY_TYPES_COLOR_MAP } from '@/constants'
 import { ServiceReturn, services } from '@/services'
 
 type BountyType = NonNullable<ServiceReturn<'bounty@startup-bounty-list'>>['rows']
@@ -21,7 +22,7 @@ const BountiesCard = defineComponent({
     }
   },
   setup(props, context) {
-    const date = ref<string | undefined>('created 1 minutes ago')
+    const date = ref<string | undefined>()
     const bountyInfo = reactive({
       token2Symbol: ''
     })
@@ -35,10 +36,10 @@ const BountiesCard = defineComponent({
         }
       }
     }
-    const color = BOUNTY_TYPES_COLOR_MAP.filter(item => item.label === props.startup.status)
+    const color = BOUNTY_TYPES_COLOR_MAP.find(item => item.label === props.startup.status)
     onMounted(() => {
-      date.value = DateDiff(props.startup.createdTime)
       getStartup(props.startup?.startupId)
+      date.value = format(props.startup.createdTime, 'en_US')
     })
 
     return () => (
@@ -63,7 +64,7 @@ const BountiesCard = defineComponent({
                 {props.startup.title}
               </div>
               {props.name === 'dashboard' && props.status !== 'Success' && (
-                <UTag type="filled" bgColor="#3F2D99">
+                <UTag type="filled" class="bg-primary1">
                   {props.status === 'Failure' ? 'fail to blockchain' : 'padding'}
                 </UTag>
               )}
@@ -74,11 +75,11 @@ const BountiesCard = defineComponent({
                 <UTag
                   class="px-2"
                   style={{
-                    'border-color': color.length ? color[0].value : BOUNTY_TYPES_COLOR_MAP[0].value,
-                    color: color.length ? color[0].value : BOUNTY_TYPES_COLOR_MAP[0].value
+                    'border-color': color ? color.value : BOUNTY_TYPES_COLOR_MAP[0].value,
+                    color: color ? color.value : BOUNTY_TYPES_COLOR_MAP[0].value
                   }}
                 >
-                  {color.length ? color[0].label : BOUNTY_TYPES_COLOR_MAP[0].label}
+                  {color ? color.label : BOUNTY_TYPES_COLOR_MAP[0].label}
                 </UTag>
               </div>
               <div class="mr-2">
@@ -100,7 +101,7 @@ const BountiesCard = defineComponent({
                     color: 'var(--u-primary-1-color)'
                   }}
                 >
-                  {date.value}
+                  created {date.value}
                 </UTag>
               </div>
               <div class="u-body2 truncate text-grey3">
@@ -120,6 +121,7 @@ const BountiesCard = defineComponent({
                   props.startup.rewards.map((item: { tokenSymbol: string; amount: string }, i) => {
                     return (
                       <div
+                        key={i}
                         class={[
                           i === 0
                             ? 'mr-5 border-warning text-warning'
@@ -147,17 +149,6 @@ const BountiesCard = defineComponent({
                       </div>
                     )
                   })}
-                {/* <div
-                  class={[
-                    'w-25 h-10 text-primary flex items-center justify-center rounded-md border-1'
-                  ]}
-                  style={{
-                    background: 'rgba(var( --u-warning2-value), 0.1)'
-                  }}
-                >
-                  <span class={[' u-title2 w-9.2 truncate']}>1000</span>
-                  <span class={['pl-1  u-title2']}>USDC</span>
-                </div> */}
               </div>
             </div>
           </div>
