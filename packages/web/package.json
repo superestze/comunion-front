@@ -38,8 +38,10 @@
     "ethers": "^5.5.4",
     "events": "^3.3.0",
     "pinia": "^2.0.13",
+    "timeago.js": "^4.0.2",
     "util": "^0.12.4",
     "vue": "^3.2.31",
+    "vue-request": "^2.0.0-rc.2",
     "vue-router": "^4.0.14"
   },
   "devDependencies": {

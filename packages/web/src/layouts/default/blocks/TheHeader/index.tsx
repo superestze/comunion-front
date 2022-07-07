@@ -17,7 +17,7 @@ const TheHeader = defineComponent({
       {
         name: 'bounty',
         url: '/bounty/list',
-        disabled: true
+        disabled: false
       },
       {
         name: 'launch',
