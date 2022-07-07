@@ -17,6 +17,7 @@ const Bounties = defineComponent({
       page: 1,
       loading: false
     })
+    const PageName = ref('dashboard')
     const myCreatedStartups = ref<BountyType>([])
     const getCreatedStartups = async () => {
       const { error, data } = await services['bounty@my-posted-bounty-list']({
@@ -38,18 +39,18 @@ const Bounties = defineComponent({
     }
 
     const onLoadMore = async (p: number, val: number) => {
-      pagination.loading = true
-      pagination.page = p
-      if (val) {
-        await getCreatedStartups()
-      } else {
-        await getParticipatedStartups()
-      }
-      pagination.loading = false
+      // pagination.loading = true
+      // pagination.page = p
+      // if (val) {
+      //   await getCreatedStartups()
+      // } else {
+      //   await getParticipatedStartups()
+      // }
+      // pagination.loading = false
     }
 
     onMounted(() => {
-      getCreatedStartups()
+      getParticipatedStartups()
     })
 
     const tabsDateChange = async (value: number) => {
@@ -133,7 +134,7 @@ const Bounties = defineComponent({
             tabsDateChange(value)
           }}
         >
-          <UTabPane name={1} tab="APPROVED">
+          <UTabPane name={0} tab="APPROVED" class="h-260">
             <UScrollList
               triggered={pagination.loading}
               page={pagination.page}
@@ -145,7 +146,12 @@ const Bounties = defineComponent({
             >
               {myCreatedStartups.value.length ? (
                 myCreatedStartups.value.map((startup, i) => (
-                  <BountiesCard startup={startup} key={i} />
+                  <BountiesCard
+                    startup={startup}
+                    key={i}
+                    name={PageName.value as string}
+                    status={startup.onChainStatus as string}
+                  />
                 ))
               ) : (
                 <UNoContent textTip="TO BE EMPTY">
@@ -154,7 +160,7 @@ const Bounties = defineComponent({
               )}
             </UScrollList>
           </UTabPane>
-          <UTabPane name={0} tab="POSTED BY ME">
+          <UTabPane name={1} tab="POSTED BY ME" class="h-260">
             <UScrollList
               triggered={pagination.loading}
               page={pagination.page}
@@ -166,7 +172,12 @@ const Bounties = defineComponent({
             >
               {myCreatedStartups.value.length ? (
                 myCreatedStartups.value.map((startup, i) => (
-                  <BountiesCard startup={startup} key={i} />
+                  <BountiesCard
+                    startup={startup}
+                    key={i}
+                    name={PageName.value as string}
+                    status={startup.onChainStatus as string}
+                  />
                 ))
               ) : (
                 <UDeveloping>

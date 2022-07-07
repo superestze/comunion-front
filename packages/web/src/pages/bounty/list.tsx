@@ -1,4 +1,5 @@
-import { UDropdownFilter, UPagination } from '@comunion/components'
+import { UDropdownFilter, UPagination, UNoContent } from '@comunion/components'
+import { EmptyFilled } from '@comunion/icons'
 import { defineComponent, ref, reactive, onMounted } from 'vue'
 import BountyCard from './components/BountyCard'
 import { BOUNTY_TYPES } from '@/constants'
@@ -8,7 +9,6 @@ const StartupsPage = defineComponent({
   name: 'StartupsPage',
   setup() {
     const startupType = ref('Created:Recent')
-    const total = ref(0)
     const myCreatedStartups = ref<ServiceReturn<'bounty@bounty-list(tab)'>>()
     const pagination = reactive<{
       pageSize: number
@@ -41,10 +41,13 @@ const StartupsPage = defineComponent({
     return () => (
       <div class="mt-10 mb-16">
         <div class="flex mb-8">
-          <h3 class="text-grey1 u-h3">{total.value.toLocaleString()} Bounties available</h3>
+          <h3 class="text-grey1 u-h3">{pagination.total?.toLocaleString()} Bounties available</h3>
           <div class="flex ml-auto self-end items-center u-title2 ">
             Sort by:
             <UDropdownFilter
+              onUpdateValue={() => {
+                dataService(1)
+              }}
               options={BOUNTY_TYPES.map(item => ({ label: item, value: item }))}
               placeholder="Startup Type"
               class="rounded border-1 h-10 ml-6 w-50"
@@ -53,22 +56,28 @@ const StartupsPage = defineComponent({
             />
           </div>
         </div>
-        {myCreatedStartups.value?.rows.length && (
-          <div class="p-10 bg-white rounded ">
-            {myCreatedStartups.value?.rows.map((startup, i) => (
-              <BountyCard key={i} startup={startup} />
-            ))}
-          </div>
+        {myCreatedStartups.value?.rows ? (
+          <>
+            <div class="p-10 bg-white rounded ">
+              {myCreatedStartups.value?.rows.map((startup, i) => (
+                <BountyCard key={i} startup={startup} />
+              ))}
+            </div>
+            <div class="flex justify-end mt-10">
+              <UPagination
+                class="item-center"
+                v-model:page={pagination.page}
+                itemCount={pagination.total}
+                v-model:pageSize={pagination.pageSize}
+                on-update:page={updatePages}
+              />
+            </div>
+          </>
+        ) : (
+          <UNoContent textTip="BO BOUNTY YET" class="mb-80">
+            <EmptyFilled class="mt-34" />
+          </UNoContent>
         )}
-        <div class="flex justify-end mt-10">
-          <UPagination
-            class="item-center"
-            v-model:page={pagination.page}
-            itemCount={pagination.total}
-            v-model:pageSize={pagination.pageSize}
-            on-update:page={updatePages}
-          />
-        </div>
       </div>
     )
   }
