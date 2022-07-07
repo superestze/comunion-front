@@ -74,7 +74,7 @@ const StartupsPage = defineComponent({
             </div>
           </>
         ) : (
-          <UNoContent textTip="BO BOUNTY YET" class="mb-80">
+          <UNoContent textTip="NO BOUNTY YET" class="mb-80">
             <EmptyFilled class="mt-34" />
           </UNoContent>
         )}

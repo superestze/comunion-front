@@ -1,6 +1,6 @@
 import './style.css'
 
-import { ArrowDownOutlined, ArrowUpOutlined } from '@comunion/icons'
+import { NumberUpOutlined, NumberDownOutlined } from '@comunion/icons'
 import { NInputGroup } from 'naive-ui'
 import { AllowedComponentProps, defineComponent, PropType, watch, ref } from 'vue'
 import UInputNumber, { UInputNumberPropsType } from '../UInputNumber/InputNumber'
@@ -54,9 +54,9 @@ const UInputNumberGroup = defineComponent({
     }
 
     const controlSlot = (
-      <div class="bg-purple h-6 flex flex-col items-center">
-        <ArrowUpOutlined class="w-6 h-6 cursor-pointer" onClick={addCurrentValue} />
-        <ArrowDownOutlined class="w-6 h-6 cursor-pointer" onClick={minusCurrentValue} />
+      <div class="bg-purple w-4.5 h-6 flex flex-col items-center">
+        <NumberUpOutlined class="cursor-pointer text-grey1" onClick={addCurrentValue} />
+        <NumberDownOutlined class="cursor-pointer text-grey1" onClick={minusCurrentValue} />
       </div>
     )
 
