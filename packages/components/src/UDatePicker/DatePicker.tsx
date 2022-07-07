@@ -10,7 +10,10 @@ const UDatePicker = defineComponent({
   extends: NDatePicker,
   setup(props, ctx) {
     return () => (
-      <NDatePicker {...props} v-slots={{ 'date-icon': <CalenderOutlined />, ...ctx.slots }} />
+      <NDatePicker
+        {...props}
+        v-slots={{ 'date-icon': <CalenderOutlined class="text-grey3" />, ...ctx.slots }}
+      />
     )
   }
 })

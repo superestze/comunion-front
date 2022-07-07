@@ -55,8 +55,8 @@ const UInputNumberGroup = defineComponent({
 
     const controlSlot = (
       <div class="bg-purple w-4.5 h-6 flex flex-col items-center">
-        <NumberUpOutlined class="cursor-pointer" onClick={addCurrentValue} />
-        <NumberDownOutlined class="cursor-pointer" onClick={minusCurrentValue} />
+        <NumberUpOutlined class="cursor-pointer text-grey1" onClick={addCurrentValue} />
+        <NumberDownOutlined class="cursor-pointer text-grey1" onClick={minusCurrentValue} />
       </div>
     )
 
