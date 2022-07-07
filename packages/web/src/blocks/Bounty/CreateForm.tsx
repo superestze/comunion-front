@@ -1,20 +1,23 @@
 import './style.css'
-import { UButton, UCard, UModal, UTabPane, UTabs, message } from '@comunion/components'
+import { UButton, UCard, UModal, UTabPane, UTabs } from '@comunion/components'
 import { PeriodOutlined, StageOutlined, WarningFilled } from '@comunion/icons'
 import dayjs from 'dayjs'
-import { utils } from 'ethers'
 
+import { BigNumber, Contract } from 'ethers'
 import { defineComponent, ref, reactive, watch } from 'vue'
 import { useRouter } from 'vue-router'
-import BountyBasicInfo, { BountyBasicInfoRef } from './components/BasicInfo'
+import BountyBasicInfo, { BountyBasicInfoRef, MAX_AMOUNT } from './components/BasicInfo'
 import Deposit from './components/Deposit'
 import PayDetailPeriod, { PayDetailPeriodRef } from './components/PayDetailPeriod'
 import PayDetailStage, { PayDetailStageRef } from './components/PayDetailStage'
 import { BountyInfo } from './typing'
 import Steps from '@/components/Step'
-import { useBountyContract } from '@/contracts'
+import { useBountyContract, useErc20Contract } from '@/contracts'
+import { addresses as bountyAddresses } from '@/contracts/bounty'
+import { AVAX_USDC_ADDR } from '@/contracts/utils'
 import { services } from '@/services'
 import { useUserStore, useWalletStore } from '@/stores'
+import { useContractStore } from '@/stores/contract'
 
 const CreateBountyForm = defineComponent({
   name: 'CreateBountyForm',
@@ -22,6 +25,8 @@ const CreateBountyForm = defineComponent({
   setup(props, ctx) {
     const walletStore = useWalletStore()
     const userStore = useUserStore()
+    const usdcTokenContract = useErc20Contract()
+    const contractStore = useContractStore()
     const stepOptions = ref([{ name: 'Bounty' }, { name: 'Payment' }, { name: 'Deposit' }])
 
     const bountyContract = useBountyContract()
@@ -89,25 +94,48 @@ const CreateBountyForm = defineComponent({
       modalVisibleState.value = true
     }
 
-    const postSubmit = async () => {
-      const value = utils.parseEther(bountyInfo.deposit.toString())
-      try {
-        const contractRes: { hash: string } = await bountyContract.createBounty(
-          { value },
-          'Waiting to submit all contents to blockchain for creating bounty',
-          `Bounty "${bountyInfo.title}" is Creating`
-        )
+    const contractSubmit = async () => {
+      const approvePendingText = 'Waiting to submit all contents to blockchain for approval deposit'
+      const value = bountyInfo.deposit
 
-        message.success('Success send transaction to the chain, please wait for the confirmation')
+      try {
+        /* first approve amount to bountyFactory */
+        const usdcTokenAddress = AVAX_USDC_ADDR[walletStore.chainId!] // get usdc contract address
+        const usdcRes = await usdcTokenContract(usdcTokenAddress) // construct erc20 contract
+        const decimal = await usdcRes.decimals()
+        const bountyAmount = BigNumber.from(value).mul(BigNumber.from(10).pow(decimal)) // convert usdc unit to wei
+        contractStore.startContract(approvePendingText)
+        const bountyFactoryAddress = bountyAddresses[walletStore.chainId!]
+        // approve amount to bounty factory contract
+        const approveRes: Contract = await usdcRes.approve(bountyFactoryAddress, bountyAmount)
+        await approveRes.wait()
+        // second send tx to bountyFactory create bounty
+        const contractRes: any = await bountyContract.createBounty(
+          bountyAmount,
+          'Waiting to submit all contents to blockchain for creating bounty',
+          `<div class="flex items-center">Bounty "<span class="truncate max-w-20">${bountyInfo.title}</span>" is Creating</div>`
+        )
+        return contractRes
+      } catch (e: any) {
+        console.error(e)
+        contractStore.endContract('failed', { success: false })
+      }
+      return null
+    }
+
+    const postSubmit = async () => {
+      try {
+        const contractRes = await contractSubmit()
+        if (!contractRes) return
         const payDetail =
           bountyInfo.payDetailType === 'stage'
             ? {
                 stages: bountyInfo.stages.map((stage, stageIndex) => ({
                   seqNum: stageIndex + 1,
-                  token1Amount: stage.token1Amount,
-                  token1Symbol: bountyInfo.token1Symbol,
-                  token2Amount: stage.token2Amount,
-                  token2Symbol: bountyInfo.token2Symbol,
+                  token1Amount: stage.token1Amount, // usdc amount
+                  token1Symbol: bountyInfo.token1Symbol, // usdc symbol
+                  token2Amount: bountyInfo.token2Symbol ? stage.token2Amount : 0, // finance setting token amount
+                  token2Symbol: bountyInfo.token2Symbol, // finance setting token symbol
                   terms: stage.terms
                 }))
               }
@@ -116,10 +144,10 @@ const CreateBountyForm = defineComponent({
                   periodAmount: bountyInfo.period.periodAmount,
                   periodType: bountyInfo.period.periodType,
                   hoursPerDay: bountyInfo.period.hoursPerDay,
-                  token1Amount: bountyInfo.period.token1Amount,
-                  token1Symbol: bountyInfo.token1Symbol,
-                  token2Amount: bountyInfo.period.token2Amount,
-                  token2Symbol: bountyInfo.token2Symbol,
+                  token1Amount: bountyInfo.period.token1Amount, // usdc amount
+                  token1Symbol: bountyInfo.token1Symbol, // usdc symbol
+                  token2Amount: bountyInfo.period.token2Amount, // finance setting token amount
+                  token2Symbol: bountyInfo.token2Symbol, // finance setting token symbol
                   target: bountyInfo.period.target
                 }
               }
@@ -151,6 +179,11 @@ const CreateBountyForm = defineComponent({
       } catch (error) {
         console.error('error===>', error)
       }
+    }
+
+    const closeDrawer = () => {
+      modalVisibleState.value = false
+      ctx.emit('cancel')
     }
 
     const onSubmit = async () => {
@@ -188,6 +221,13 @@ const CreateBountyForm = defineComponent({
           }
         })
       } else if (bountyInfo.current === 2 && bountyInfo.payDetailType === 'stage') {
+        // if anyone total rewards bigger than MAX_AMOUNT, go to next is not allowed
+        if (
+          (payStageRef.value?.payStagesTotal.usdcTotal as number) > MAX_AMOUNT ||
+          (payStageRef.value?.payStagesTotal?.tokenTotal as number) > MAX_AMOUNT
+        ) {
+          return
+        }
         payStageRef.value?.payStageForm?.validate(error => {
           if (!error) {
             bountyInfo.current += 1
@@ -227,7 +267,8 @@ const CreateBountyForm = defineComponent({
       renderUnit,
       delStage,
       addStage,
-      showLeaveTipModal
+      showLeaveTipModal,
+      closeDrawer
     }
   },
 
@@ -309,7 +350,7 @@ const CreateBountyForm = defineComponent({
               >
                 Cancel
               </UButton>
-              <UButton size="large" type="primary" class="w-41" onClick={this.toFinanceSetting}>
+              <UButton size="large" type="primary" class="w-41" onClick={this.closeDrawer}>
                 Yes
               </UButton>
             </div>
