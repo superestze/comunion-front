@@ -67,7 +67,7 @@ const BountiesCard = defineComponent({
               </div>
               {props.name === 'dashboard' && props.status !== 'Success' && (
                 <UTag type="filled" class="bg-primary1">
-                  {props.status === 'Failure' ? 'fail to blockchain' : 'padding'}
+                  {props.status === 'Failure' ? 'fail to blockchain' : 'pending'}
                 </UTag>
               )}
             </div>

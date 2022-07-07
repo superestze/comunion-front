@@ -1,6 +1,6 @@
 import { UDropdownFilter, UPagination, UNoContent } from '@comunion/components'
 import { EmptyFilled } from '@comunion/icons'
-import { defineComponent, ref, reactive, onMounted } from 'vue'
+import { defineComponent, ref, reactive, onMounted, watch } from 'vue'
 import BountyCard from './components/BountyCard'
 import { BOUNTY_TYPES } from '@/constants'
 import { services, ServiceReturn } from '@/services'
@@ -31,6 +31,12 @@ const StartupsPage = defineComponent({
         myCreatedStartups.value = data
       }
     }
+    watch(
+      () => startupType.value,
+      () => {
+        dataService(1)
+      }
+    )
     const updatePages = (page: number) => {
       pagination.page = page
       if (dataService instanceof Function) dataService(page)
@@ -45,9 +51,6 @@ const StartupsPage = defineComponent({
           <div class="flex ml-auto self-end items-center u-title2 ">
             Sort by:
             <UDropdownFilter
-              onUpdateValue={() => {
-                dataService(1)
-              }}
               options={BOUNTY_TYPES.map(item => ({ label: item, value: item }))}
               placeholder="Startup Type"
               class="rounded border-1 h-10 ml-6 w-50"
