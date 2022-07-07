@@ -3,6 +3,7 @@ import { EmptyFilled, PlusOutlined } from '@comunion/icons'
 import { defineComponent, ref, watch, onMounted, reactive } from 'vue'
 import BountiesCard from '../../startup/detail/components/Bounties'
 import CreateBountyBlock, { CreateBountyRef } from '@/blocks/Bounty/Create'
+import CreateStartupBlock, { CreateStartupRef } from '@/blocks/Startup/Create'
 import NoStartupTip from '@/layouts/default/blocks/Create/components/NoStartupTip'
 import { services, ServiceReturn } from '@/services'
 import { useUserStore } from '@/stores'
@@ -76,6 +77,7 @@ const Bounties = defineComponent({
       val.page = 1
     }
     const userHasStartup = ref(false)
+    const createStartupRef = ref<CreateStartupRef>()
     const createRef = ref<CreateBountyRef>()
     const noStartupRef = ref()
     const userStore = useUserStore()
@@ -91,6 +93,10 @@ const Bounties = defineComponent({
       } catch (error) {
         console.error('error', error)
       }
+    }
+
+    const onCreateStartup = () => {
+      createStartupRef.value?.show()
     }
 
     watch(
@@ -127,8 +133,9 @@ const Bounties = defineComponent({
           )
         }}
       >
+        <CreateStartupBlock ref={createStartupRef} />
         <CreateBountyBlock ref={createRef} />
-        <NoStartupTip ref={noStartupRef} />
+        <NoStartupTip ref={noStartupRef} onToCreate={onCreateStartup} />
         <UTabs
           onUpdateValue={(value: number) => {
             tabsDateChange(value)
