@@ -169,16 +169,14 @@ const PayDetailStage = defineComponent({
           The current total rewards as{' '}
           <span class="text-primary">
             <span class={[{ 'text-error': this.payStagesTotal.usdcTotal > MAX_AMOUNT }]}>
-              {this.payStagesTotal.usdcTotal}
-              {this.bountyInfo.token1Symbol}
+              {this.payStagesTotal.usdcTotal} {this.bountyInfo.token1Symbol}
             </span>
             {this.bountyInfo.token2Symbol && (
               <span>
                 {' '}
                 +{' '}
                 <span class={[{ 'text-error': this.payStagesTotal.tokenTotal > MAX_AMOUNT }]}>
-                  {this.payStagesTotal.tokenTotal}
-                  {this.bountyInfo.token2Symbol}
+                  {this.payStagesTotal.tokenTotal} {this.bountyInfo.token2Symbol}
                 </span>
               </span>
             )}

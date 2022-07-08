@@ -81,7 +81,7 @@ const StartupCard = defineComponent({
                     color: 'var(--u-primary-1-color)'
                   }}
                 >
-                  created {date.value}
+                  Created {date.value}
                 </UTag>
               </div>
               <div class="divide-x mb-4">
@@ -113,7 +113,7 @@ const StartupCard = defineComponent({
                         i === 0
                           ? 'mr-5 border-warning text-warning'
                           : '0px border-primary text-primary',
-                        'w-32.5 h-12 flex items-center justify-center rounded-md border-1'
+                        'px-4 h-9 flex items-center justify-center rounded-md border-1'
                       ]}
                       style={{
                         background:
@@ -123,13 +123,10 @@ const StartupCard = defineComponent({
                       }}
                     >
                       <span
-                        class={[
-                          i === 0 ? 'text-warning' : 'text-primary',
-                          'pr-1 u-title1 w-11.5 truncate'
-                        ]}
+                        class={[i === 0 ? 'text-warning' : 'text-primary', 'u-title1 truncate']}
                       >
                         {item.amount}
-                      </span>
+                      </span>{' '}
                       <span class={[i === 0 ? 'text-warning' : 'text-primary', 'pl-1 u-title2']}>
                         {item.tokenSymbol}
                       </span>

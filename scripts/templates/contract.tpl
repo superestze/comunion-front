@@ -3,7 +3,7 @@ import { computed } from 'vue'
 import { getContract, GetContractArgs, wrapTransaction } from './share'
 import { useWalletStore } from '@/stores'
 
-export const addresses: Record<number, string> = {<% addresses.forEach(function(network) { %>
+export const <%= title %>Addresses: Record<number, string> = {<% addresses.forEach(function(network) { %>
   <%= network.chainId %>: '<%= network.address %>',<% }) %>}
 
 const abi = '<%= abi %>'
@@ -16,7 +16,7 @@ export function use<%= title %>Contract(): {
   const getContractArgs = computed<GetContractArgs>(() => {
     return {
       abi,
-      addresses,
+      addresses: <%= title %>Addresses,
       wallet: walletStore.wallet,
       chainId: walletStore.chainId
     }
