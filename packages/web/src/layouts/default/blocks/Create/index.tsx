@@ -4,23 +4,67 @@ import {
   CreateBountyFilled,
   CreateOfferingFilled
 } from '@comunion/icons'
-import { defineComponent, ref } from 'vue'
+import { defineComponent, ref, watch } from 'vue'
 import HeaderDropdown from '../../components/HeaderDropdown'
+import NoStartupTip from './components/NoStartupTip'
 import styles from './index.module.css'
+import CreateBountyBlock, { CreateBountyRef } from '@/blocks/Bounty/Create'
 import CreateStartupBlock, { CreateStartupRef } from '@/blocks/Startup/Create'
+import { services } from '@/services'
+import { useUserStore } from '@/stores'
 
 const CreateBlock = defineComponent({
   name: 'CreateBlock',
   setup(props, ctx) {
+    const userStore = useUserStore()
     const createStartupRef = ref<CreateStartupRef>()
+    const createBountyRef = ref<CreateBountyRef>()
+    const hasStartup = ref(false)
+    const NoStartupTipRef = ref()
+
+    const getStartupByComerId = async (comerID: number | undefined) => {
+      // const comerID = userStore.profile?.comerID
+      try {
+        const { error, data } = await services['bounty@bounty-startups']({
+          comerID
+        })
+        if (!error) {
+          hasStartup.value = !!(data.list || []).length
+        }
+      } catch (error) {
+        console.error('error', error)
+      }
+    }
 
     const onCreateStartup = () => {
       createStartupRef.value?.show()
     }
 
+    const onCreateBounty = () => {
+      if (hasStartup.value) {
+        createBountyRef.value?.show()
+      } else {
+        NoStartupTipRef.value?.show()
+      }
+    }
+
+    watch(
+      () => userStore.profile?.comerID,
+      () => {
+        if (userStore.profile?.comerID) {
+          getStartupByComerId(userStore.profile?.comerID)
+        }
+      },
+      {
+        immediate: true
+      }
+    )
+
     return () => (
       <>
         <CreateStartupBlock ref={createStartupRef} />
+        <CreateBountyBlock ref={createBountyRef} />
+        <NoStartupTip ref={NoStartupTipRef} onToCreate={onCreateStartup} />
         <HeaderDropdown
           width={356}
           title="Create"
@@ -44,9 +88,8 @@ const CreateBlock = defineComponent({
             },
             {
               key: 'bounty',
-              disabled: true,
               label: () => (
-                <div class="flex items-center">
+                <div class="flex items-center" onClick={onCreateBounty}>
                   <div class="rounded flex bg-[#f8f8f8] h-8 mr-4 w-8 items-center justify-center">
                     <CreateBountyFilled class="text-primary" />
                   </div>
