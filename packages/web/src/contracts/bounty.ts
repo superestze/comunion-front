@@ -3,7 +3,7 @@ import { computed } from 'vue'
 import { getContract, GetContractArgs, wrapTransaction } from './share'
 import { useWalletStore } from '@/stores'
 
-export const addresses: Record<number, string> = {
+export const BountyAddresses: Record<number, string> = {
   43113: '0xdBAd77b0994F262Ebf91f87F1A1975B30786Ac0c',
   43114: '0x515651e1c1A55cA468742cB5ea08Ca7c030d928a'
 }
@@ -33,7 +33,7 @@ export function useBountyContract(): {
   const getContractArgs = computed<GetContractArgs>(() => {
     return {
       abi,
-      addresses,
+      addresses: BountyAddresses,
       wallet: walletStore.wallet,
       chainId: walletStore.chainId
     }

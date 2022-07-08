@@ -3,7 +3,7 @@ import { computed } from 'vue'
 import { getContract, GetContractArgs, wrapTransaction } from './share'
 import { useWalletStore } from '@/stores'
 
-export const addresses: Record<number, string> = {
+export const StartupAddresses: Record<number, string> = {
   5: '0xEdf4565af54D9508e247c044F09EddcaD91DAdED',
   43113: '0x7E94572BCc67B6eDa93DBa0493b681dC0ae9E964',
   43114: '0x45BE0Eaa7076854d790A9583c6E3AE020d1A1556'
@@ -47,7 +47,7 @@ export function useStartupContract(): {
   const getContractArgs = computed<GetContractArgs>(() => {
     return {
       abi,
-      addresses,
+      addresses: StartupAddresses,
       wallet: walletStore.wallet,
       chainId: walletStore.chainId
     }
