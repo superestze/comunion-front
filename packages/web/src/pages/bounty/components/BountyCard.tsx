@@ -113,7 +113,7 @@ const StartupCard = defineComponent({
                         i === 0
                           ? 'mr-5 border-warning text-warning'
                           : '0px border-primary text-primary',
-                        'w-32.5 h-12 flex items-center justify-center rounded-md border-1'
+                        'w-32.5 h-9 flex items-center justify-center rounded-md border-1'
                       ]}
                       style={{
                         background:
