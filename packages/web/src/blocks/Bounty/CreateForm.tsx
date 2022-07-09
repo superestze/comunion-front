@@ -31,6 +31,7 @@ const CreateBountyForm = defineComponent({
 
     const bountyContract = useBountyContract()
     const modalVisibleState = ref(false)
+    const modalClickYesToWhere = ref('')
     const router = useRouter()
     const bountyBasicInfoRef = ref<BountyBasicInfoRef>()
     const payPeriodRef = ref<PayDetailPeriodRef>()
@@ -84,13 +85,13 @@ const CreateBountyForm = defineComponent({
     }
 
     const toFinanceSetting = () => {
-      ctx.emit('cancel')
-      modalVisibleState.value = false
+      closeDrawer()
       const url = `/financesetting?startupId=${bountyInfo.startupID}`
       router.push(url)
     }
 
-    const showLeaveTipModal = () => {
+    const showLeaveTipModal = (toNext = '') => {
+      modalClickYesToWhere.value = toNext
       modalVisibleState.value = true
     }
 
@@ -212,8 +213,6 @@ const CreateBountyForm = defineComponent({
     )
 
     const toNext = () => {
-      console.log('bountyInfo===>', payStageRef.value?.payStageForm)
-
       if (bountyInfo.current === 1) {
         bountyBasicInfoRef.value?.bountyDetailForm?.validate(error => {
           if (!error) {
@@ -234,6 +233,12 @@ const CreateBountyForm = defineComponent({
           }
         })
       } else if (bountyInfo.current === 2 && bountyInfo.payDetailType === 'period') {
+        if (
+          (payPeriodRef.value?.payPeriodTotal.usdcTotal as number) > MAX_AMOUNT ||
+          (payPeriodRef.value?.payPeriodTotal?.tokenTotal as number) > MAX_AMOUNT
+        ) {
+          return
+        }
         payPeriodRef.value?.payPeriodForm?.validate(error => {
           if (!error) {
             bountyInfo.current += 1
@@ -268,7 +273,8 @@ const CreateBountyForm = defineComponent({
       delStage,
       addStage,
       showLeaveTipModal,
-      closeDrawer
+      closeDrawer,
+      modalClickYesToWhere
     }
   },
 
@@ -320,6 +326,7 @@ const CreateBountyForm = defineComponent({
               <PayDetailPeriod
                 bountyInfo={this.bountyInfo}
                 ref={(ref: any) => (this.payPeriodRef = ref)}
+                onShowLeaveTipModal={this.showLeaveTipModal}
               />
             </UTabPane>
           </UTabs>
@@ -350,7 +357,16 @@ const CreateBountyForm = defineComponent({
               >
                 Cancel
               </UButton>
-              <UButton size="large" type="primary" class="w-41" onClick={this.closeDrawer}>
+              <UButton
+                size="large"
+                type="primary"
+                class="w-41"
+                onClick={
+                  this.modalClickYesToWhere === 'toFinanceSetting'
+                    ? this.toFinanceSetting
+                    : this.closeDrawer
+                }
+              >
                 Yes
               </UButton>
             </div>
