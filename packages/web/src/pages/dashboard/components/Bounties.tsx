@@ -141,7 +141,7 @@ const Bounties = defineComponent({
             tabsDateChange(value)
           }}
         >
-          <UTabPane name={0} tab="APPROVED" class="h-260">
+          <UTabPane name={0} tab="PARTICIPATED" class="h-260">
             <UScrollList
               triggered={pagination.loading}
               page={pagination.page}
