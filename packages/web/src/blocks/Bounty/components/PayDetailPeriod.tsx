@@ -14,6 +14,10 @@ import RichEditor from '@/components/Editor'
 
 export interface PayDetailPeriodRef {
   payPeriodForm: FormInst | null
+  payPeriodTotal: {
+    usdcTotal: number
+    tokenTotal: number
+  }
 }
 
 const PayDetailPeriod = defineComponent({
@@ -24,6 +28,7 @@ const PayDetailPeriod = defineComponent({
       required: true
     }
   },
+  emits: ['showLeaveTipModal'],
   setup(props, ctx) {
     const payPeriodForm = ref<FormInst | null>(null)
     const periodOptions = [
@@ -38,6 +43,12 @@ const PayDetailPeriod = defineComponent({
         v-model:value={props.bountyInfo.period.periodType}
       />
     ))
+    const payPeriodTotal = computed(() => {
+      return {
+        usdcTotal: props.bountyInfo.period.periodAmount * props.bountyInfo.period.token1Amount,
+        tokenTotal: props.bountyInfo.period.periodAmount * props.bountyInfo.period.token2Amount
+      }
+    })
     const payDetailPeriodFields: FormFactoryField[] = [
       {
         t: 'custom',
@@ -80,7 +91,7 @@ const PayDetailPeriod = defineComponent({
         name: 'rewards',
         render(value) {
           return (
-            <div class="flex items-center w-full">
+            <div class="flex items-start w-full">
               <UInputNumberGroup
                 class="flex-1"
                 type="withUnit"
@@ -98,22 +109,37 @@ const PayDetailPeriod = defineComponent({
                 renderUnit={() => renderUnit(props.bountyInfo.token1Symbol)}
               ></UInputNumberGroup>
               <div class="text-grey2 text-3xl px-5">+</div>
-              <UInputNumberGroup
-                class="flex-1"
-                type="withUnit"
-                v-model:value={props.bountyInfo.period.token2Amount}
-                inputProps={{
-                  precision: 0,
-                  min: 0,
-                  max: MAX_AMOUNT,
-                  class: 'flex-1',
-                  parse: (value: string) => {
-                    if (value === null) return 0
-                    return Number(value)
-                  }
-                }}
-                renderUnit={() => renderUnit(props.bountyInfo.token2Symbol)}
-              ></UInputNumberGroup>
+              <div class="flex-1">
+                <UInputNumberGroup
+                  class="flex-1"
+                  type="withUnit"
+                  v-model:value={props.bountyInfo.period.token2Amount}
+                  inputProps={{
+                    precision: 0,
+                    min: 0,
+                    max: MAX_AMOUNT,
+                    class: 'flex-1',
+                    parse: (value: string) => {
+                      if (value === null) return 0
+                      return Number(value)
+                    }
+                  }}
+                  renderUnit={() => renderUnit(props.bountyInfo.token2Symbol)}
+                ></UInputNumberGroup>
+                <div>
+                  {!props.bountyInfo.token2Symbol && (
+                    <div class="text-grey4 text-xs col-start-3 mt-2">
+                      Not setup token yet, go to{' '}
+                      <span
+                        class="text-primary cursor-pointer"
+                        onClick={() => ctx.emit('showLeaveTipModal', 'toFinanceSetting')}
+                      >
+                        Finance Setting
+                      </span>
+                    </div>
+                  )}
+                </div>
+              </div>
             </div>
           )
         }
@@ -131,10 +157,18 @@ const PayDetailPeriod = defineComponent({
             <div class="bg-purple py-5.5 px-6 w-full mt-4">
               The current total rewards as{' '}
               <span class="text-primary">
-                {props.bountyInfo.period.token1Amount}
-                {props.bountyInfo.token1Symbol}{' '}
-                {props.bountyInfo.token2Symbol &&
-                  `+ ${props.bountyInfo.period.token2Amount}${props.bountyInfo.token2Symbol}`}
+                <span class={[{ 'text-error': payPeriodTotal.value.usdcTotal > MAX_AMOUNT }]}>
+                  {payPeriodTotal.value.usdcTotal} {props.bountyInfo.token1Symbol}{' '}
+                </span>
+                {props.bountyInfo.token2Symbol && (
+                  <span>
+                    {' '}
+                    +{' '}
+                    <span class={[{ 'text-error': payPeriodTotal.value.tokenTotal > MAX_AMOUNT }]}>
+                      {payPeriodTotal.value.tokenTotal} {props.bountyInfo.token2Symbol}
+                    </span>
+                  </span>
+                )}
               </span>
             </div>
           )
@@ -161,7 +195,8 @@ const PayDetailPeriod = defineComponent({
     ]
     const payPeriodRules = getFieldsRules(payDetailPeriodFields)
     ctx.expose({
-      payPeriodForm
+      payPeriodForm,
+      payPeriodTotal
     })
     return {
       payDetailPeriodFields,
