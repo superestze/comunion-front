@@ -104,7 +104,8 @@ const PayDetailPeriod = defineComponent({
                   parse: (value: string) => {
                     if (value === null) return 0
                     return Number(value)
-                  }
+                  },
+                  status: payPeriodTotal.value.usdcTotal > MAX_AMOUNT ? 'error' : undefined
                 }}
                 renderUnit={() => renderUnit(props.bountyInfo.token1Symbol)}
               ></UInputNumberGroup>
@@ -122,7 +123,8 @@ const PayDetailPeriod = defineComponent({
                     parse: (value: string) => {
                       if (value === null) return 0
                       return Number(value)
-                    }
+                    },
+                    status: payPeriodTotal.value.tokenTotal > MAX_AMOUNT ? 'error' : undefined
                   }}
                   renderUnit={() => renderUnit(props.bountyInfo.token2Symbol)}
                 ></UInputNumberGroup>
@@ -170,6 +172,10 @@ const PayDetailPeriod = defineComponent({
                   </span>
                 )}
               </span>
+              {(payPeriodTotal.value.usdcTotal > MAX_AMOUNT ||
+                payPeriodTotal.value.tokenTotal > MAX_AMOUNT) && (
+                <span> , Please reduce your reward to under 10000</span>
+              )}
             </div>
           )
         }
