@@ -62,7 +62,7 @@ const UInputNumberGroup = defineComponent({
         } else {
           minusCurrentValue()
         }
-      }, 200)
+      }, 100)
     }
     const longEnterEnd = () => {
       clearInterval(longEnterEventRef.value)
