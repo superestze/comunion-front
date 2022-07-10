@@ -110,10 +110,8 @@ const StartupCard = defineComponent({
                     <div
                       key={i}
                       class={[
-                        i === 0
-                          ? 'mr-5 border-warning text-warning'
-                          : '0px border-primary text-primary',
-                        'px-4 h-9 flex items-center justify-center rounded-md border-1'
+                        i === 0 ? 'border-warning text-warning' : '0px border-primary text-primary',
+                        'ml-5 px-4 h-9 flex items-center justify-center rounded-md border-1'
                       ]}
                       style={{
                         background:

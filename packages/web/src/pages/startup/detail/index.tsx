@@ -162,7 +162,7 @@ const StartupDetailPage = defineComponent({
                       />
                     ))
                   ) : (
-                    <UNoContent textTip="TO BE EMPTY" class="my-10">
+                    <UNoContent textTip="NO BOUNTY YET" class="my-10">
                       <EmptyFilled />
                     </UNoContent>
                   )}

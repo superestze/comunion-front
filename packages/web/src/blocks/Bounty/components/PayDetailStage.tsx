@@ -44,7 +44,7 @@ const PayDetailStage = defineComponent({
       ctx.emit('addStage')
     }
     const showLeaveTipModal = () => {
-      ctx.emit('showLeaveTipModal')
+      ctx.emit('showLeaveTipModal', 'toFinanceSetting')
     }
     ctx.expose({
       payStageForm,

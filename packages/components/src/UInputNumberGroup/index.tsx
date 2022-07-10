@@ -37,6 +37,7 @@ const UInputNumberGroup = defineComponent({
   emits: ['update:value'],
   setup(props, ctx) {
     const inputValue = ref(props.value)
+    const longEnterEventRef = ref()
     watch(
       () => inputValue.value,
       n => {
@@ -53,10 +54,38 @@ const UInputNumberGroup = defineComponent({
       ctx.emit('update:value', inputValue.value)
     }
 
+    const longEnterStart = (type: 'up' | 'down') => {
+      longEnterEnd()
+      longEnterEventRef.value = setInterval(() => {
+        if (type === 'up') {
+          addCurrentValue()
+        } else {
+          minusCurrentValue()
+        }
+      }, 100)
+    }
+    const longEnterEnd = () => {
+      clearInterval(longEnterEventRef.value)
+    }
+
     const controlSlot = (
-      <div class="bg-purple w-4.5 h-6 flex flex-col items-center">
-        <NumberUpOutlined class="cursor-pointer text-grey1" onClick={addCurrentValue} />
-        <NumberDownOutlined class="cursor-pointer text-grey1" onClick={minusCurrentValue} />
+      <div class="bg-purple w-4.5 h-6 flex flex-col items-center justify-center">
+        <div
+          style={{ height: '12px' }}
+          onMousedown={() => longEnterStart('up')}
+          onMouseup={longEnterEnd}
+          onMouseleave={longEnterEnd}
+        >
+          <NumberUpOutlined class="cursor-pointer text-grey1 block" onClick={addCurrentValue} />
+        </div>
+        <div
+          style={{ height: '12px' }}
+          onMousedown={() => longEnterStart('down')}
+          onMouseup={longEnterEnd}
+          onMouseleave={longEnterEnd}
+        >
+          <NumberDownOutlined class="cursor-pointer text-grey1 block" onClick={minusCurrentValue} />
+        </div>
       </div>
     )
 
