@@ -17,6 +17,7 @@ import { services } from './services'
 import { upload as onUpload } from './services/a2s.adapter'
 import { useUserStore, useWalletStore } from './stores'
 import { useContractStore } from './stores/contract'
+import { comunionTimeAgo } from './utils/timeago'
 
 export default defineComponent({
   name: 'App',
@@ -24,6 +25,8 @@ export default defineComponent({
     const userStore = useUserStore()
     const walletStore = useWalletStore()
     const contractStore = useContractStore()
+
+    comunionTimeAgo()
 
     // init user state
     userStore.init()

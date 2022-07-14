@@ -32,7 +32,7 @@ const StartupCard = defineComponent({
 
     onMounted(() => {
       getStartup(props.startup?.startupId)
-      date.value = format(props.startup.createdTime, 'en_US')
+      date.value = format(props.startup.createdTime, 'comunionTimeAgo')
     })
     const color = BOUNTY_TYPES_COLOR_MAP.find(
       (item: { label: string }) => item.label === props.startup.status
