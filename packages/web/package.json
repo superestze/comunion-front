@@ -27,6 +27,10 @@
     "@comunion/components": "^0.0.1",
     "@comunion/icons": "^0.0.1",
     "@comunion/utils": "^0.0.1",
+    "@tiptap/extension-placeholder": "^2.0.0-beta.52",
+    "@tiptap/extension-underline": "^2.0.0-beta.25",
+    "@tiptap/starter-kit": "^2.0.0-beta.189",
+    "@tiptap/vue-3": "^2.0.0-beta.95",
     "@walletconnect/web3-provider": "^1.7.5",
     "axios": "^0.26.1",
     "buffer": "^6.0.3",
@@ -34,8 +38,10 @@
     "ethers": "^5.5.4",
     "events": "^3.3.0",
     "pinia": "^2.0.13",
+    "timeago.js": "^4.0.2",
     "util": "^0.12.4",
     "vue": "^3.2.31",
+    "vue-request": "^2.0.0-rc.2",
     "vue-router": "^4.0.14"
   },
   "devDependencies": {

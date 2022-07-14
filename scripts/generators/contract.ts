@@ -1,7 +1,8 @@
-import { join, resolve } from 'path'
+import { resolve } from 'path'
+import axios from 'axios'
 import { convertCamelCase } from '../../packages/utils/src'
 // import { Ora } from 'ora'
-import { fetch, renderToFile } from '../utils'
+import { renderToFile } from '../utils'
 
 const GITHUB_RAW_PROXY_URL = process.env.GITHUB_RAW_PROXY_URL || 'raw.githubusercontent.com'
 
@@ -42,19 +43,19 @@ interface ContractItem {
 }
 
 async function fetchContracts(): Promise<ContractItem[]> {
-  const res = await fetch(
-    `https://${GITHUB_RAW_PROXY_URL}/comunion-io/comunion-contract/main/contractAddress.json`
-  )
-  const configurations = JSON.parse(res) as ContractAddressConfiguration
+  const res = await axios({
+    url: `https://${GITHUB_RAW_PROXY_URL}/comunion-io/comunion-contract/main/contractAddress.json`
+  })
+
+  const configurations = res.data as ContractAddressConfiguration
+
   const contracts: ContractItem[] = []
   for (const element of configurations) {
-    const response = await fetch(
-      join(`https://${GITHUB_RAW_PROXY_URL}/comunion-io/comunion-contract/main/${element.abiUrl}`)
-    )
+    const response = await axios({
+      url: `https://${GITHUB_RAW_PROXY_URL}/comunion-io/comunion-contract/main${element.abiUrl}`
+    })
 
-    const abis = (JSON.parse(response) as { abi: ABIItem[] }).abi.filter(
-      abi => abi.type === 'function'
-    )
+    const abis = (response.data as { abi: ABIItem[] }).abi.filter(abi => abi.type === 'function')
     contracts.push({
       title: element.name,
       abi: JSON.stringify(abis),
@@ -69,7 +70,7 @@ const contractTypeMap = {
   string: 'string',
   address: 'string',
   bytes: 'string',
-  uint256: 'number',
+  uint256: 'number | BigNumber',
   uint8: 'number',
   'string[]': 'string[]',
   'tuple[]': '[][]',
