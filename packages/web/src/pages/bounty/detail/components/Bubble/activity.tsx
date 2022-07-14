@@ -2,24 +2,24 @@ import { VectorFilled } from '@comunion/icons'
 import { defineComponent } from 'vue'
 import Bubble from './core'
 
-function normalMessage(obj: any) {
-  return (
-    <div class="flex flex-col flex-grow ml-5">
-      <div class="flex justify-between">
-        <p class="mb-2 u-title1">{obj.name}</p>
-        <div class="flex items-center">
-          <p class="text-14px text-grey3 mr-16px">{obj.time}</p>
-        </div>
-      </div>
-      <p class="bg-purple rounded-8px text-black mt-12px py-16px px-24px overflow-hidden">
-        Would like to help, I have a experience with frontend development.Would like to help, I have
-        a experience with frontend development.Would like to help, I have a experience . I have a
-        experience with frontend development.Would like to help, I have a experience I have a
-        experience with frontend development...
-      </p>
-    </div>
-  )
-}
+// function normalMessage(obj: any) {
+//   return (
+//     <div class="flex flex-col flex-grow ml-5">
+//       <div class="flex justify-between">
+//         <p class="mb-2 u-title1">{obj.name}</p>
+//         <div class="flex items-center">
+//           <p class="text-14px text-grey3 mr-16px">{obj.time}</p>
+//         </div>
+//       </div>
+//       <p class="bg-purple rounded-8px text-black mt-12px py-16px px-24px overflow-hidden">
+//         Would like to help, I have a experience with frontend development.Would like to help, I have
+//         a experience with frontend development.Would like to help, I have a experience . I have a
+//         experience with frontend development.Would like to help, I have a experience I have a
+//         experience with frontend development...
+//       </p>
+//     </div>
+//   )
+// }
 
 function transactionMessage(obj: any) {
   return (

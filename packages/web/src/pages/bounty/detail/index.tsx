@@ -1,7 +1,7 @@
 import { UBreadcrumb, UBreadcrumbItem, UButton, UCard, USpin } from '@comunion/components'
 import { ArrowLeftOutlined } from '@comunion/icons'
 import { defineComponent } from 'vue'
-import { useRoute, useRouter } from 'vue-router'
+import { useRouter } from 'vue-router'
 import BountyCard from './components/BountyCard'
 import { ActivityBubble, ApplicantBubble, DepositBubble } from './components/Bubble'
 import { Payment } from './components/Payment'
@@ -175,7 +175,7 @@ export default defineComponent({
   name: 'BountyDetail',
   setup() {
     const router = useRouter()
-    const route = useRoute()
+    // const route = useRoute()
 
     return () => (
       <USpin show={false}>
