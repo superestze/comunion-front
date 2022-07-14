@@ -41,7 +41,7 @@ const BountiesCard = defineComponent({
     )
     onMounted(() => {
       getStartup(props.startup?.startupId)
-      date.value = format(props.startup.createdTime, 'en_US')
+      date.value = format(props.startup.createdTime, 'comunionTimeAgo')
     })
 
     return () => (

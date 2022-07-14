@@ -283,6 +283,7 @@ const BountyBasicInfo = defineComponent({
     }
   },
   render() {
+    console.log(this.bountyInfo)
     return (
       <UForm
         ref={(ref: any) => (this.bountyDetailForm = ref)}
