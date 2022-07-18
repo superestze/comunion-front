@@ -1,0 +1,7 @@
+.review-info {
+  @apply mx-12.5;
+
+  .title {
+    @apply u-body1 text-grey3 mb-6;
+  }
+}

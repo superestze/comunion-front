@@ -35,7 +35,7 @@ export const USingleImageFileUpload = defineComponent({
     const { onUpload } = useUpload()
     const status = ref<FileInfo['status']>()
     const process = ref(100)
-    const EmptyStatus = computed(() => (
+    const EmptyStatus = computed(() => () => (
       <div class="rounded-lg border border-grey5 h-12 px-4 flex items-center cursor-pointer">
         <UploadFilled class="mr-3.5" />
         <span class="text-grey1">{props.placeholder}</span>
@@ -44,7 +44,7 @@ export const USingleImageFileUpload = defineComponent({
     {
       /* Process status */
     }
-    const ProcessStatus = computed(() => (
+    const ProcessStatus = computed(() => () => (
       <div class="flex flex-col justify-center rounded-lg border border-grey5 h-12 px-4 relative">
         <div class="flex justify-between items-center">
           <div class="flex items-center">
@@ -69,7 +69,7 @@ export const USingleImageFileUpload = defineComponent({
     {
       /* Failed status */
     }
-    const FailedStatus = computed(() => (
+    const FailedStatus = computed(() => () => (
       <div class="rounded-lg border border-grey5 h-12 px-4 flex justify-between items-center text-error">
         <div class="flex items-center">
           <PosterFilled class="mr-3.5" />
@@ -84,7 +84,7 @@ export const USingleImageFileUpload = defineComponent({
     {
       /* Success status */
     }
-    const SuccessStatus = computed(() => (
+    const SuccessStatus = computed(() => () => (
       <div class="rounded-lg border border-grey5 h-12 px-4 flex items-center justify-between">
         <div class="flex items-center">
           {/* <ULazyImage src={props.value!.url!} /> */}

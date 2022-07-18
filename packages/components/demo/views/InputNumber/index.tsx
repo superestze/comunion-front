@@ -13,6 +13,7 @@ const InputNumberDemoPage = defineComponent({
             suffix: () => <span>%</span>
           }}
         </UInputNumber>
+        <UInputNumber v-model:value={v.value}></UInputNumber>
         {v.value}
       </>
     )
