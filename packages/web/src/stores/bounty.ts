@@ -26,7 +26,7 @@ export const useBountyStore = defineStore('bounty', {
     bountyStatus: null
   }),
   getters: {
-    bountySection(state) {
+    bountySection(state): BountyState {
       return {
         detail: state.detail,
         startup: state.startup,
