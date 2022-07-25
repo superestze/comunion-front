@@ -15,7 +15,7 @@ export default defineComponent({
     }
     return (
       <div
-        class="u-lazy-image-img rounded-1/2 h-20 w-20 rounded-1/2 h-20 w-20 cursor-pointer"
+        class="u-lazy-image-img rounded-1/2 h-60px w-60px rounded-1/2 h-20 w-20 cursor-pointer"
         onClick={clickAvatar}
       >
         <ULazyImage src={this.avatar || ''} />

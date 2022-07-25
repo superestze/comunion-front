@@ -37,7 +37,7 @@ export default defineComponent({
       default: () => false
     }
   },
-  setup(props) {
+  setup(props, ctx) {
     const contentClass = computed(() => {
       return `flex-grow-1 text-16px flex items-center ${props.contentClass}`
     })
@@ -45,28 +45,33 @@ export default defineComponent({
     const foldClass = computed(() => {
       const str = 'whitespace-pre-wrap break-all overflow-hidden'
       if (props.fold) {
-        return `${str} overflow-ellipsis line-clamp-3 ${contentClass}`
+        return `${str} overflow-ellipsis line-clamp-3 ${contentClass.value} min-h-20px`
       }
-      return `${str} ${contentClass}`
+      return `${str} ${contentClass.value}`
     })
 
     const showTooltipRef = ref<boolean>(false)
+    const ele = ref<any>()
+    ctx.expose({
+      ele
+    })
     return {
       contentClass,
       foldClass,
-      showTooltipRef
+      showTooltipRef,
+      ele
     }
   },
   render() {
     return (
       <div class="flex">
-        <div class="w-169px flex-shrink-0 text-grey3 text-14px">{this.label}</div>
+        <div class="w-169px flex-shrink-0 text-grey3 text-14px flex items-start">{this.label}</div>
         {this.foldAble ? (
           <UScrollbar style={{ maxHeight: `${this.maxHeight}px` }}>
-            <p class={this.foldClass}>{this.content}</p>
+            <p class={this.foldClass} ref={(ref: any) => (this.ele = ref)} v-html={this.content} />
           </UScrollbar>
         ) : (
-          <p class={this.contentClass}>
+          <p class={`${this.contentClass} h-20px`}>
             {this.content}
             {this.pasteboard ? (
               <span
