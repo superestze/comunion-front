@@ -1,33 +1,53 @@
 import { VectorFilled } from '@comunion/icons'
-import { defineComponent } from 'vue'
+import { format } from 'timeago.js'
+import { defineComponent, PropType, computed } from 'vue'
+import styles from './activity.module.css'
 import Bubble from './core'
+import { ItemType } from './getItemType'
+import { ServiceReturn } from '@/services'
 
-// function normalMessage(obj: any) {
-//   return (
-//     <div class="flex flex-col flex-grow ml-5">
-//       <div class="flex justify-between">
-//         <p class="mb-2 u-title1">{obj.name}</p>
-//         <div class="flex items-center">
-//           <p class="text-14px text-grey3 mr-16px">{obj.time}</p>
-//         </div>
-//       </div>
-//       <p class="bg-purple rounded-8px text-black mt-12px py-16px px-24px overflow-hidden">
-//         Would like to help, I have a experience with frontend development.Would like to help, I have
-//         a experience with frontend development.Would like to help, I have a experience . I have a
-//         experience with frontend development.Would like to help, I have a experience I have a
-//         experience with frontend development...
-//       </p>
-//     </div>
-//   )
-// }
+type NormalMessage = {
+  name: string
+  date: string
+  content: string
+}
 
-function transactionMessage(obj: any) {
+type TransactionMessage = {
+  name: string
+  date: string
+  content: TransactionContent
+}
+
+type TransactionContent = {
+  token1Symbol: string
+  token2Symbol: string
+  token1Amount: 0
+  token2Amount: 0
+  transactionHash: string
+}
+
+function normalMessage(obj: NormalMessage) {
+  const className = `${styles.normal_message} normal-message bg-purple rounded-8px text-black mt-12px py-16px px-24px overflow-hidden`
   return (
     <div class="flex flex-col flex-grow ml-5">
       <div class="flex justify-between">
         <p class="mb-2 u-title1">{obj.name}</p>
         <div class="flex items-center">
-          <p class="text-14px text-grey3 mr-16px">{obj.time}</p>
+          <p class="text-14px text-grey3 mr-16px">{obj.date}</p>
+        </div>
+      </div>
+      <div class={className} innerHTML={obj.content} />
+    </div>
+  )
+}
+
+function transactionMessage(obj: TransactionMessage) {
+  return (
+    <div class="flex flex-col flex-grow ml-5">
+      <div class="flex justify-between">
+        <p class="mb-2 u-title1">{obj.name}</p>
+        <div class="flex items-center">
+          <p class="text-14px text-grey3 mr-16px">{obj.date}</p>
         </div>
       </div>
       <p class="flex bg-purple rounded-8px text-black mt-12px py-16px px-24px overflow-hidden h-112px items-center">
@@ -37,15 +57,22 @@ function transactionMessage(obj: any) {
           </div>
           <div class="flex flex-col ml-12px pr-20px border-r-1px border-solid border-grey5 h-64px justify-center">
             <p class="text-16px text-grey1">Send</p>
-            <p class="text-14px text-grey3 mt-10px">May 26</p>
+            <p class="text-14px text-grey3 mt-10px">{obj.date}</p>
           </div>
         </div>
         <div class="flex flex-col ml-24px">
-          <p class="text-16px text-grey1">100 USDC</p>
+          {obj.content.token1Symbol && (
+            <p class="text-16px text-grey1">
+              {obj.content.token1Amount || 0} {obj.content.token1Symbol}
+            </p>
+          )}
+          {obj.content.token2Symbol && (
+            <p class="text-16px text-grey1">
+              {obj.content.token2Amount || 0} {obj.content.token2Symbol}
+            </p>
+          )}
           <p class="text-14px text-grey1 mt-4px">Txn Hash：</p>
-          <p class="text-14px text-primary mt-4px">
-            0x5e6d2a17fcea9911395da84279d9a7e1fc859fb003cbd6843f18092acdc79252
-          </p>
+          <p class="text-14px text-primary mt-4px">{obj.content.transactionHash}</p>
         </div>
       </p>
     </div>
@@ -53,16 +80,41 @@ function transactionMessage(obj: any) {
 }
 
 export default defineComponent({
+  props: {
+    activity: {
+      type: Array as PropType<ItemType<ServiceReturn<'bounty@bounty-activities-list'>>>,
+      required: true
+    }
+  },
+  setup(props) {
+    const fn = computed(() => {
+      if (props.activity?.sourceType === 1) {
+        const obj: NormalMessage = {
+          name: props.activity?.name || '',
+          date: format(props.activity?.timestamp || '', 'comunionTimeAgo'),
+          content: props.activity?.content || ''
+        }
+        return () => <>{normalMessage(obj)}</>
+      } else if (props.activity?.sourceType === 2) {
+        const obj: TransactionMessage = {
+          name: props.activity?.name || '',
+          date: format(props.activity?.timestamp || '', 'comunionTimeAgo'),
+          content: JSON.parse(props.activity?.content as string) as TransactionContent
+        }
+        return () => <>{transactionMessage(obj)}</>
+      }
+      return () => <span>error sourceType ${props.activity?.sourceType}</span>
+    })
+    return { fn }
+  },
   render() {
     return (
       <Bubble
+        class="mt-40px"
+        avatar={this.activity?.avatar || ''}
+        comerId={this.activity?.comerID as unknown as string}
         v-slots={{
-          default: (obj: any) => (
-            <>
-              {/* {normalMessage(obj)} */}
-              {transactionMessage(obj)}
-            </>
-          )
+          default: this.fn
         }}
       />
     )

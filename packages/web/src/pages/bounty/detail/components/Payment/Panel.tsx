@@ -1,134 +1,173 @@
-import { UButton } from '@comunion/components'
-import { defineComponent } from 'vue'
-import { PayDailog } from '../Dialog'
-import ProjectCard from '../ProjectCard'
+import { UScrollbar } from '@comunion/components'
+import { LockKeyOutlined, UnlockKeyOutlined } from '@comunion/icons'
+import { defineComponent, PropType, computed } from 'vue'
+import { ProjectCardWithDialog } from '../ProjectCard'
 import ProjectCarousel from '../ProjectCarousel'
 import Text from '../Text'
 import PaymentCard from './Card'
+import ReleaseApplicant from './ReleaseApplicant'
+import AddDeposit from './addDeposit'
+import ApplyBounty from './applyBounty'
+import CloseBounty from './closeBounty'
+import Lock from './lock'
+import ReleaseDeposit from './releaseDeposit'
+import { ServiceReturn } from '@/services'
 
 export default defineComponent({
-  setup() {
-    return () => (
+  props: {
+    paymentInfo: {
+      type: Object as PropType<ServiceReturn<'bounty@bounty-payment'>>,
+      required: true
+    },
+    stageNum: {
+      type: Number,
+      require: true,
+      default: () => 0
+    },
+    bountyStatus: {
+      type: Object as PropType<ServiceReturn<'bounty@bounty-detail-status'>>,
+      require: true
+    }
+  },
+  setup(props) {
+    const payMode = computed<'stage' | 'period'>(() => {
+      return props.paymentInfo?.bountyPaymentInfo?.paymentMode === 1 ? 'stage' : 'period'
+    })
+
+    const stageTerms = computed(() => {
+      if (props.paymentInfo?.stageTerms && Array.isArray(props.paymentInfo.stageTerms)) {
+        return props.paymentInfo.stageTerms
+      }
+      return []
+    })
+
+    const periodTerms = computed(() => {
+      if (
+        props.paymentInfo?.periodTerms?.periodModes &&
+        Array.isArray(props.paymentInfo?.periodTerms?.periodModes)
+      ) {
+        return props.paymentInfo.periodTerms.periodModes
+      }
+      return []
+    })
+
+    const bountyDepositLock = computed<boolean>(() => {
+      return props.paymentInfo?.bountyDepositStatus === 3
+    })
+
+    const roleName = computed<string>(() => {
+      if (props.bountyStatus?.role === 1) {
+        return 'founder'
+      }
+      return 'applicant'
+    })
+
+    const applicantApplyStatus = computed<number>(() => {
+      if (typeof props.paymentInfo?.applicantApplyStatus === 'number') {
+        return props.paymentInfo?.applicantApplyStatus
+      }
+      return -1
+    })
+
+    return {
+      payMode,
+      stageTerms,
+      periodTerms,
+      bountyDepositLock,
+      roleName,
+      applicantApplyStatus
+    }
+  },
+  render() {
+    return (
       <>
-        {/* <ApplyDialog
-          visible={true}
-          applyInfo={{
-            applicantsDeposit: 0,
-            test1: '',
-            bio: ''
-          }}
-        /> */}
-        {/* <BasicDialog
-          visible={true}
-          title="Unapprove the applicant ？"
-          content="You will stop to cooperate with the applicant, meanwhile the bounty will be closed"
-          v-slots={{
-            btns: () => (
-              <div class="flex justify-end mt-80px">
-                <UButton type="default" class="w-164px mr-16px" size="small">
-                  Cancel
-                </UButton>
-                <UButton type="primary" class="w-164px" size="small">
-                  Yes
-                </UButton>
-              </div>
-            )
-          }}
-        /> */}
-        {/* <BasicDialog
-          visible={true}
-          title="Unapprove failed"
-          content=" You have to release all deposits before you do unapprove"
-          v-slots={{
-            btns: () => (
-              <div class="flex justify-end mt-80px">
-                <UButton type="primary" class="w-164px" size="small">
-                  OK
-                </UButton>
-              </div>
-            )
-          }}
-        /> */}
-        {/* <BasicDialog
-          visible={true}
-          title="Unlock the  deposits  ？"
-          content="It is recommended that you unlock the deposit after completing the bounty."
-          v-slots={{
-            btns: () => (
-              <div class="flex justify-end mt-80px">
-                <UButton type="default" class="w-164px mr-16px" size="small">
-                  Cancel
-                </UButton>
-                <UButton type="primary" class="w-164px" size="small">
-                  Yes
-                </UButton>
-              </div>
-            )
-          }}
-        /> */}
-        {/* <BasicDialog
-          visible={true}
-          title="Release deposit？"
-          content=" All deposits will be released."
-          v-slots={{
-            btns: () => (
-              <div class="flex justify-end mt-80px">
-                <UButton type="default" class="w-164px mr-16px" size="small">
-                  Cancel
-                </UButton>
-                <UButton type="primary" class="w-164px" size="small">
-                  Yes
-                </UButton>
-              </div>
-            )
-          }}
-        /> */}
-        <PayDailog
-          visible={false}
-          paymentInfo={{
-            applicantsDeposit: 0,
-            discussionLink: ''
-          }}
-        />
-        <div class="flex justify-between">
+        <div class="flex justify-between mt-26px">
           <PaymentCard
             title="Rewards"
             class="w-401px"
             v-slots={{
-              btn: () => <UButton class="w-321px mt-60px mb-48px mx-auto">Close bounty</UButton>,
+              btn: () => (
+                <>
+                  {this.roleName === 'applicant' && (
+                    <ApplyBounty
+                      disabled={this.stageNum >= 2 || this.applicantApplyStatus >= 0}
+                      applicantApplyStatus={this.applicantApplyStatus}
+                      applicantDeposit={this.paymentInfo?.bountyPaymentInfo?.applicantDeposit}
+                    />
+                  )}
+                  {this.roleName === 'founder' && <CloseBounty disibled={this.stageNum >= 3} />}
+                </>
+              ),
               text: () => (
                 <>
-                  <Text class="mt-60px" unit="USDC" />
-                  <Text class="mt-40px" unit="UVU" />
+                  {this.paymentInfo?.rewards?.token1Symbol && (
+                    <Text
+                      value={`${this.paymentInfo.rewards.token1Amount || 0}`}
+                      class="mt-60px"
+                      unit={this.paymentInfo.rewards.token1Symbol}
+                      enhance={true}
+                    />
+                  )}
+                  {this.paymentInfo?.rewards?.token2Symbol && (
+                    <Text
+                      value={`${this.paymentInfo.rewards.token2Amount || 0}`}
+                      class="mt-40px"
+                      unit={this.paymentInfo.rewards.token2Symbol}
+                      plus={true}
+                      enhance={true}
+                    />
+                  )}
                 </>
               )
             }}
           />
           <PaymentCard
-            title="Rewards"
             class="w-401px"
+            lock={this.bountyDepositLock}
             v-slots={{
               title: () => (
-                <p class="flex justify-between items-center bg-purple h-72px">
-                  <span class="text-20px ml-24px">Deposit</span>
-                  <div class="mr-24px">Block</div>
+                <p
+                  class="flex justify-between items-center h-72px"
+                  style={{
+                    backgroundColor: this.bountyDepositLock ? 'rgba(223, 79, 81, 0.12)' : '#F5F6FA'
+                  }}
+                >
+                  <span class="text-20px ml-24px opacity-100">Deposit</span>
+                  {this.bountyDepositLock ? (
+                    <LockKeyOutlined class="mr-24px" />
+                  ) : (
+                    <UnlockKeyOutlined class="mr-24px" />
+                  )}
                 </p>
               ),
               btn: () => (
-                <div class="flex w-322px mt-60px mb-48px mx-auto">
-                  <UButton class="w-148px mr-25px">+ Deposit</UButton>
-                  <UButton class="w-148px" type="primary">
-                    Release
-                  </UButton>
-                </div>
+                <>
+                  {this.stageNum >= 2 && this.roleName === 'applicant' && (
+                    <Lock lock={this.bountyDepositLock} />
+                  )}
+                  {this.stageNum < 3 && this.roleName === 'founder' && (
+                    <div class="flex w-322px mt-60px mb-48px mx-auto">
+                      <AddDeposit disibled={this.bountyStatus?.release} />
+                      <ReleaseDeposit lock={this.bountyDepositLock} />
+                    </div>
+                  )}
+                  {this.roleName === 'applicant' && this.stageNum === 1 && (
+                    <ReleaseApplicant
+                      disabled={(this.paymentInfo?.bountyPaymentInfo?.applicantDeposit || 0) === 0}
+                    />
+                  )}
+                </>
               ),
               text: () => (
                 <>
                   <Text
                     class="mt-60px"
+                    text-color="text-warning"
+                    value={`${this.paymentInfo?.bountyPaymentInfo?.founderDeposit || 0}`}
+                    enhance={true}
                     v-slots={{
                       unit: () => (
-                        <span class="flex flex-col justify-center">
+                        <span class="flex flex-col justify-end pb-6px text-grey5">
                           <span class="text-16px">USDC</span>
                           <span class="text-16px">Founder</span>
                         </span>
@@ -137,9 +176,12 @@ export default defineComponent({
                   />
                   <Text
                     class="mt-40px"
+                    text-color="text-warning"
+                    value={`${this.paymentInfo?.applicantsTotalDeposit || 0}`}
+                    enhance={true}
                     v-slots={{
                       unit: () => (
-                        <span class="flex flex-col">
+                        <span class="flex flex-col justify-end pb-6px text-grey5">
                           <span>USDC</span>
                           <span>Applicant</span>
                         </span>
@@ -156,16 +198,50 @@ export default defineComponent({
             TERMS
           </div>
           <div class="subtitle">
-            <span class="text-grey3 text-16px">Total Stage:</span>
-            <span class="text-primary">10</span>
+            {this.payMode === 'stage' ? (
+              <>
+                <span class="text-grey3 text-16px">Total Stage:</span>
+                <span class="text-primary text-16px">{this.stageTerms.length}</span>
+              </>
+            ) : (
+              <>
+                <span class="text-grey3 text-16px">Total Period:</span>
+                <span class="text-primary text-16px">
+                  {' '}
+                  {this.periodTerms.length} {this.periodTerms.length === 1 ? 'week' : 'weeks'}
+                </span>
+                <span class="text-grey3 text-16px ml-61px">Daily working:</span>
+                <span class="text-primary text-16px">{this.paymentInfo?.stageTerms?.length}</span>
+              </>
+            )}
           </div>
         </div>
-        <ProjectCarousel width={820}>
-          <ProjectCard />
-          <ProjectCard />
-          <ProjectCard />
-          <ProjectCard />
+        <ProjectCarousel
+          width={820}
+          total={this.payMode === 'stage' ? this.stageTerms.length : this.periodTerms.length}
+        >
+          {this.payMode === 'stage' ? (
+            <>
+              {this.stageTerms.map(term => (
+                <ProjectCardWithDialog info={term} payMode={this.payMode} />
+              ))}
+            </>
+          ) : (
+            <>
+              {this.periodTerms.map(term => (
+                <ProjectCardWithDialog info={term} payMode={this.payMode} />
+              ))}
+            </>
+          )}
         </ProjectCarousel>
+        {this.payMode === 'period' && (
+          <div class="max-h-258px overflow-hidden mt-24px border-grey5 border-width-1px border-solid rounded-8px p-24px">
+            <p class="text-grey1 text-20px mb-24px">Target</p>
+            <UScrollbar style={{ maxHeight: `${162}px` }}>
+              <p class="text-grey2 mx-24px" innerHTML={this.paymentInfo?.periodTerms?.terms} />
+            </UScrollbar>
+          </div>
+        )}
       </>
     )
   }

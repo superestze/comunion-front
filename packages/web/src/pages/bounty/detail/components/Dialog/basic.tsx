@@ -16,27 +16,22 @@ export default defineComponent({
       require: true
     }
   },
-  setup() {
-    const handleClose = () => {
-      // todo
-    }
-    return {
-      handleClose
-    }
-  },
+  emits: ['triggerDialog'],
   render() {
-    console.log(this.$slots)
+    const triggerDialog = () => {
+      this.$emit('triggerDialog')
+    }
+
     return (
       <UModal show={this.visible}>
         <UCard
           style="width: 600px"
-          // title="Modal"
           bordered={false}
           size="huge"
           role="dialog"
           aria-modal="true"
           closable
-          onClose={this.handleClose}
+          onClose={triggerDialog}
           v-slots={{
             header: () => (
               <div>
@@ -45,7 +40,7 @@ export default defineComponent({
             )
           }}
         >
-          <p class="text-grey3">{this.content}</p>
+          <p class="text-grey3 mt-24px mb-64px">{this.content}</p>
           {this.$slots.btns && this.$slots.btns()}
         </UCard>
       </UModal>

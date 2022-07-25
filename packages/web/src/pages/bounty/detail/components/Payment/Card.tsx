@@ -1,23 +1,40 @@
-import { defineComponent } from 'vue'
+import { defineComponent, computed } from 'vue'
 
 export default defineComponent({
   props: {
     title: {
       type: String
+    },
+    lock: {
+      type: Boolean,
+      require: true,
+      default: () => false
     }
   },
-  setup(props, ctx) {
-    return () => (
-      <div class="flex flex-col border-purple-light border-1 border-solid rounded-8px bg-white overflow-hidden">
-        {ctx.slots.title ? (
-          ctx.slots.title()
+  setup(props) {
+    const outlined = computed(() => {
+      const str = 'flex flex-col border-1 border-solid rounded-8px bg-white overflow-hidden'
+      if (props.lock) {
+        return `${str} border-error`
+      }
+      return `${str} border-purple-light`
+    })
+    return {
+      outlined
+    }
+  },
+  render() {
+    return (
+      <div class={this.outlined}>
+        {this.$slots.title ? (
+          this.$slots.title()
         ) : (
           <p class="flex justify-between items-center bg-purple h-72px">
-            <span class="text-20px ml-24px">{props.title}</span>
+            <span class="text-20px ml-24px">{this.title}</span>
           </p>
         )}
-        {ctx.slots.text?.()}
-        {ctx.slots.btn?.()}
+        {this.$slots.text?.()}
+        {this.$slots.btn?.()}
       </div>
     )
   }

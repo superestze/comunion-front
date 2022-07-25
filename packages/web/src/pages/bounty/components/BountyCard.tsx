@@ -2,6 +2,7 @@ import { UStartupLogo, UTag } from '@comunion/components'
 // import dayjs from 'dayjs'
 import { format } from 'timeago.js'
 import { defineComponent, PropType, reactive, onMounted, ref } from 'vue'
+import { useRouter } from 'vue-router'
 import { BOUNTY_TYPES_COLOR_MAP } from '@/constants'
 import { ServiceReturn, services } from '@/services'
 
@@ -15,6 +16,7 @@ const StartupCard = defineComponent({
     }
   },
   setup(props, ctx) {
+    const router = useRouter()
     const bountyInfo = reactive({
       token2Symbol: ''
     })
@@ -37,8 +39,16 @@ const StartupCard = defineComponent({
     const color = BOUNTY_TYPES_COLOR_MAP.find(
       (item: { label: string }) => item.label === props.startup.status
     )
+
+    const handleCard = (bountyId: number) => () => {
+      router.push(`/bounty/detail?bountyId=${bountyId}`)
+    }
+
     return () => (
-      <div class="flex h-40 w-full items-center cursor-pointer border-b-1">
+      <div
+        class="flex h-40 w-full items-center cursor-pointer border-b-1"
+        onClick={handleCard(props.startup.bountyId)}
+      >
         <div class="flex h-full w-20 items-center">
           <UStartupLogo
             src={props.startup.logo}

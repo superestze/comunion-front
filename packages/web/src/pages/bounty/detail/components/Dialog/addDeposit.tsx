@@ -6,10 +6,11 @@ import {
   UCard,
   UForm,
   UFormItemsFactory,
+  UInputNumberGroup,
   UModal
 } from '@comunion/components'
-import { defineComponent, Ref, computed, reactive, ref } from 'vue'
-import RichEditor from '@/components/Editor'
+import { defineComponent, Ref, computed, ref, reactive } from 'vue'
+import { MAX_AMOUNT, renderUnit } from '@/blocks/Bounty/components/BasicInfo'
 import { services } from '@/services'
 import { useBountyStore } from '@/stores'
 
@@ -22,16 +23,17 @@ export default defineComponent({
   },
   emits: ['triggerDialog'],
   setup() {
-    const info = reactive({
-      update: ''
+    const formData = reactive({
+      increaseDeposit: null
     })
+
     const fields: Ref<FormFactoryField[]> = computed(() => [
       {
         t: 'custom',
-        title: 'This update will be shown on activity',
-        name: 'update',
+        name: 'increaseDeposit',
+        title: 'Increase amount of deposit to enhance credit',
         formItemProps: {
-          feedback: 'Please enter an update',
+          feedback: 'At least greater than 0 for new desposit',
           themeOverrides: {
             feedbackTextColor: 'var(--u-grey-4-color)',
             feedbackFontSizeMedium: '12px'
@@ -40,34 +42,45 @@ export default defineComponent({
         rules: [
           {
             required: true,
-            validator: (rule, value: string) => {
-              return value.trim() !== ''
+            validator: (rule, value: number) => {
+              console.log(formData.increaseDeposit)
+              return value > 0
             },
-            trigger: 'blur'
+            trigger: 'change'
           }
         ],
         render() {
           return (
-            <RichEditor
-              placeholder="Describe the details of the bounty"
+            <UInputNumberGroup
+              v-model:value={formData.increaseDeposit}
+              type="withUnit"
               class="w-full"
-              v-model:value={info.update}
+              inputProps={{
+                precision: 0,
+                min: 0,
+                max: MAX_AMOUNT,
+                class: 'flex-1',
+                parse: (value: string) => {
+                  if (value === null || value === '') return 0
+                  return Number(value)
+                }
+              }}
+              renderUnit={() => renderUnit('USDC')}
             />
           )
         }
       }
     ])
-
-    const postUpdateFields = getFieldsRules(fields.value)
+    const addDepositFields = getFieldsRules(fields.value)
     const form = ref<FormInst>()
     const bountyStore = useBountyStore()
-    const { getActivities } = bountyStore
+    const { getBountyPayment } = bountyStore
     return {
-      postUpdateFields,
+      addDepositFields,
       fields,
-      info,
       form,
-      getActivities
+      formData,
+      getBountyPayment
     }
   },
   render() {
@@ -75,20 +88,22 @@ export default defineComponent({
       this.$emit('triggerDialog')
     }
 
-    const userBehavier = (type: 'submit' | 'cancel') => async () => {
+    const userBehavier = (type: 'submit' | 'cancel') => () => {
       if (type === 'cancel') {
         triggerDialog()
         return
       }
       this.form?.validate(async err => {
         if (typeof err === 'undefined') {
-          const { error } = await services['bounty@bounty-activities']({
-            sourceType: 1,
-            content: this.info.update,
-            bountyID: parseInt(this.$route.query.bountyId as string)
+          const { error } = await services['bounty@bounty-add-deposit']({
+            bountyID: parseInt(this.$route.query.bountyId as string),
+            chainID: 11111,
+            txHash: '11111',
+            tokenSymbol: 'USDC',
+            tokenAmount: this.formData.increaseDeposit as unknown as number
           })
           if (!error) {
-            this.getActivities(this.$route.query.bountyId as string)
+            this.getBountyPayment(this.$route.query.bountyId as string)
             triggerDialog()
           }
         }
@@ -98,7 +113,7 @@ export default defineComponent({
       <UModal show={this.visible}>
         <UCard
           style="width: 600px"
-          title="Post update"
+          title="Increase deposit"
           bordered={false}
           size="huge"
           role="dialog"
@@ -108,12 +123,12 @@ export default defineComponent({
         >
           <>
             <UForm
-              rules={this.postUpdateFields}
-              model={this.info}
+              class="mt-24px mb-40px"
+              rules={this.addDepositFields}
+              model={this.formData}
               ref={(ref: any) => (this.form = ref)}
-              class="mb-25px mt-8px"
             >
-              <UFormItemsFactory fields={this.fields} values={this.info} />
+              <UFormItemsFactory fields={this.fields} values={this.formData} />
             </UForm>
             <div class="flex justify-end">
               <UButton class="mr-16px w-164px" type="default" onClick={userBehavier('cancel')}>

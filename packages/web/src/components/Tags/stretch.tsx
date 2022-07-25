@@ -1,5 +1,5 @@
 import { UTag } from '@comunion/components'
-import { defineComponent, computed, PropType } from 'vue'
+import { defineComponent, PropType } from 'vue'
 
 export default defineComponent({
   props: {
@@ -12,26 +12,14 @@ export default defineComponent({
       default: () => []
     }
   },
-  setup(props) {
-    const hashtagsArray = computed(() =>
-      props.tags.map(key => {
-        return key.name
-      })
-    )
-    return {
-      hashtagsArray
-    }
-  },
   render() {
     return (
       <>
-        {this.hashtagsArray.slice(0, this.count + 1).map((key, value) => {
-          return value + 1 < this.count + 1 && <UTag key={value}>{key}</UTag>
+        {this.tags.slice(0, this.count + 1).map((value, $index) => {
+          return $index + 1 < this.count + 1 && <UTag key={value}>{value}</UTag>
         })}
 
-        {this.hashtagsArray.length - this.count > 1 ? (
-          <UTag>+ {this.hashtagsArray.length - this.count}</UTag>
-        ) : null}
+        {this.tags.length - this.count > 1 ? <UTag>+ {this.tags.length - this.count}</UTag> : null}
       </>
     )
   }
