@@ -1,26 +1,28 @@
 export interface CrowdfundingInfo {
   current: number
-  startupId: number | undefined
-  sellTokenContract: string
+  startupId?: number
+  startupName?: string
+  sellTokenContract?: string
   sellTokenName: string
   sellTokenSymbol: string
   sellTokenDecimals: string
   sellTokenSupply: string
   teamWallet: string
-  raiseGoal: number | undefined
+  raiseGoal: number | null
   buyTokenContract: string
-  swapPercent: number | undefined
-  buyPrice: string
-  maxBuyAmount: string
-  sellTax: string
-  maxSell: string
-  startTime: string
-  endTime: string
-  sellTokenDeposit: string
-  poster: string
+  buyTokenName?: string
+  swapPercent?: number
+  buyPrice?: number
+  maxBuyAmount?: number
+  sellTax?: number
+  maxSell?: number
+  startTime?: string
+  endTime?: string
+  sellTokenDeposit: number
+  poster?: FileInfo
   youtube: string
   detail: string
-  description: string
+  description?: string
 }
 
 export interface CrowdfundingFormRef {

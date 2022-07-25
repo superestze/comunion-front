@@ -524,6 +524,116 @@ export const services = {
     })
   },
 
+  'bounty@bounty-activities'(args: {
+    bountyID?: string
+    content?: string
+    /**
+     * @description 1.normal 2.send-paid-info
+     */
+    sourceType: number
+  }) {
+    return requestAdapter<{
+      data?: string
+    }>({
+      url: replacePath('/bounty/activities', args),
+      method: 'POST',
+      ...extract('POST', args, [], [])
+    })
+  },
+  'bounty@bounty-activities-list'(args: { bountyID: any }) {
+    return requestAdapter<
+      {
+        comerID?: string
+        name?: string
+        avatar?: string
+        sourceType?: number
+        content?: string
+        timestamp?: string
+      }[]
+    >({
+      url: replacePath('/bounty/list/{bountyID}/activities', args),
+      method: 'GET',
+      ...extract('GET', args, [], ['bountyID'])
+    })
+  },
+  'bounty@bounty-add-deposit'(args: {
+    bountyID?: string
+    chainID?: number
+    txHash?: string
+    tokenSymbol: string
+    tokenAmount: number
+  }) {
+    return requestAdapter<{
+      data?: string
+    }>({
+      url: replacePath('/bounty/add/deposit', args),
+      method: 'POST',
+      ...extract('POST', args, [], [])
+    })
+  },
+  'bounty@bounty-applicant-lock'(args: { bountyID: any }) {
+    return requestAdapter<{
+      data?: string
+    }>({
+      url: replacePath('/bounty/{bountyID}/applicant/lock', args),
+      method: 'PUT',
+      ...extract('PUT', args, [], ['bountyID'])
+    })
+  },
+  'bounty@bounty-applicants-apply'(args: {
+    applicants?: {
+      bountyID?: string
+      description?: string
+    }
+    applicantsDeposit?: {
+      tokenSymbol?: string
+      tokenAmount?: number
+      chainID: number
+      txHash: string
+    }
+  }) {
+    return requestAdapter<{
+      data?: string
+    }>({
+      url: replacePath('/bounty/applicant/apply', args),
+      method: 'POST',
+      ...extract('POST', args, [], [])
+    })
+  },
+  'bounty@bounty-applicants-unlock'(args: { bountyID: any }) {
+    return requestAdapter<{
+      data?: string
+    }>({
+      url: replacePath('/bounty/{bountyID}/applicant/unlock', args),
+      method: 'PUT',
+      ...extract('PUT', args, [], ['bountyID'])
+    })
+  },
+  'bounty@bounty-approved'(args: { bountyID: any }) {
+    return requestAdapter<{
+      image?: string
+      name?: string
+      applicantsSkills?: string[]
+      comerID: number
+    }>({
+      url: replacePath('/bounty/{bountyID}/approved', args),
+      method: 'GET',
+      ...extract('GET', args, [], ['bountyID'])
+    })
+  },
+  'bounty@bounty-close'(
+    args: {
+      bountyID: any
+    } & {}
+  ) {
+    return requestAdapter<{
+      data?: string
+    }>({
+      url: replacePath('/bounty/{bountyID}/close', args),
+      method: 'PUT',
+      ...extract('PUT', args, [], ['bountyID'])
+    })
+  },
   'bounty@bounty-create'(args: {
     bountyDetail?: {
       startupID?: number
@@ -581,6 +691,120 @@ export const services = {
       url: replacePath('/bounty/detail', args),
       method: 'POST',
       ...extract('POST', args, [], [])
+    })
+  },
+  'bounty@bounty-deposit-records'(args: { bountyID: any }) {
+    return requestAdapter<
+      {
+        name?: string
+        comerID: string
+        time?: string
+        tokenAmount?: number
+        /**
+         * @description 1:In 2:Out&#39;
+         */
+        access?: number
+        avatar: string
+      }[]
+    >({
+      url: replacePath('/bounty/{bountyID}/deposit-records', args),
+      method: 'GET',
+      ...extract('GET', args, [], ['bountyID'])
+    })
+  },
+  'bounty@bounty-detail-status'(args: { bountyID: any }) {
+    return requestAdapter<{
+      /**
+       * @description 1创建者 2 申请者 3其他人
+       */
+      role?: number
+      lock?: boolean
+      release?: boolean
+    }>({
+      url: replacePath('/bounty/{bountyID}/detail/status', args),
+      method: 'GET',
+      ...extract('GET', args, [], ['bountyID'])
+    })
+  },
+  'bounty@bounty-founder'(args: { bountyID: any }) {
+    return requestAdapter<{
+      image?: string
+      location: string
+      email: string
+      comerID: number
+      name?: string
+      applicantsSkills?: string[]
+      timeZone?: string
+    }>({
+      url: replacePath('/bounty/{bountyID}/founder', args),
+      method: 'GET',
+      ...extract('GET', args, [], ['bountyID'])
+    })
+  },
+  'bounty@bounty-founder-approve'(
+    args: {
+      bountyID: any
+      applicantComerID: any
+    } & {
+      comerID?: string
+      chainID?: number
+      txHash?: string
+      tokenSymbol?: string
+      tokenAmount?: number
+    }[]
+  ) {
+    return requestAdapter<{
+      data?: string
+    }>({
+      url: replacePath('/bounty/founder/{bountyID}/approve/{applicantComerID}', args),
+      method: 'PUT',
+      ...extract('PUT', args, [], ['bountyID', 'applicantComerID'])
+    })
+  },
+  'bounty@bounty-founder-unapprove'(
+    args: {
+      bountyID: any
+      applicantComerID: any
+    } & {
+      comerID?: string
+      chainID?: number
+      txHash?: string
+      tokenSymbol?: string
+      tokenAmount?: number
+    }[]
+  ) {
+    return requestAdapter<{
+      data?: string
+    }>({
+      url: replacePath('/bounty/founder/{bountyID}/unapproved/{applicantComerID}', args),
+      method: 'PUT',
+      ...extract('PUT', args, [], ['bountyID', 'applicantComerID'])
+    })
+  },
+  'bounty@bounty-get-detail'(args: { bountyID: any }) {
+    return requestAdapter<{
+      title?: string
+      /**
+       * @description 1:Ready to work 2:Work started 3:Completed 4:Expired
+       */
+      status?: number
+      applicantsSkills?: string[]
+      discussionLink?: string
+      expiresIn?: string
+      applicantsDeposit?: number
+      description?: string
+      /**
+       * @description 1:Email 2:Discord 3:Telegram
+       */
+      contact?: {
+        contactType?: number
+        contactAddress?: string
+      }[]
+      createdAt?: string
+    }>({
+      url: replacePath('/bounty/detail/{bountyID}', args),
+      method: 'GET',
+      ...extract('GET', args, [], ['bountyID'])
     })
   },
   'bounty@bounty-list(tab)'(
@@ -682,6 +906,134 @@ export const services = {
       url: replacePath('/cores/bounties', args),
       method: 'GET',
       ...extract('GET', args, ['page', 'sort'], [])
+    })
+  },
+  'bounty@bounty-list-applicants'(args: { bountyID: any }) {
+    return requestAdapter<
+      {
+        comerID?: string
+        name?: string
+        image?: string
+        desrciption?: string
+        applyAt?: string
+      }[]
+    >({
+      url: replacePath('/bounty/list/{bountyID}/applicants', args),
+      method: 'GET',
+      ...extract('GET', args, [], ['bountyID'])
+    })
+  },
+  'bounty@bounty-paid-status'(
+    args: {
+      bountyID: any
+    } & {
+      seqNum?: number
+    }
+  ) {
+    return requestAdapter<{
+      data?: string
+    }>({
+      url: replacePath('/bounty/:bountyID/paid/status', args),
+      method: 'PUT',
+      ...extract('PUT', args, [], ['bountyID'])
+    })
+  },
+  'bounty@bounty-payment'(args: { bountyID: any }) {
+    return requestAdapter<{
+      periodTerms?: {
+        terms?: string
+        hoursPerDay: number
+        /**
+         * @description 1:Days 2:Weeks 3:Months
+         */
+        periodType: number
+        periodModes?: {
+          seqNum?: number
+          status?: number
+          token1Symbol?: string
+          token2Symbol?: string
+          token1Amount?: number
+          token2Amount?: number
+        }[]
+      }
+      rewards?: {
+        token1Symbol?: string
+        token2Amount?: number
+        token1Amount?: number
+        token2Symbol?: string
+      }
+      applicantsTotalDeposit?: number
+      /**
+       * @description 3 为上锁状态
+       */
+      bountyDepositStatus: number
+      /**
+       * @description  0 任何人1 :Pending 2:Applied 3:Approved 4:Submitted 5:Revoked 6：Rejected 7:Quited
+       */
+      applicantApplyStatus: number
+      bountyPaymentInfo?: {
+        founderDeposit?: number
+        /**
+         * @description 1 stage 2 period
+         */
+        paymentMode?: number
+        /**
+         * @description 申请最少缴纳的押金额
+         */
+        applicantMinDeposit: number
+      }
+      stageTerms?: {
+        seqNum?: number
+        status?: number
+        token1Symbol?: string
+        token2Symbol?: string
+        token1Amount?: number
+        token2Amount?: number
+        terms?: string
+      }[]
+    }>({
+      url: replacePath('/bounty/{bountyID}/payment', args),
+      method: 'GET',
+      ...extract('GET', args, [], ['bountyID'])
+    })
+  },
+  'bounty@bounty-release'(
+    args: {
+      bountyID: any
+    } & {
+      tokenSymbol?: string
+      tokenAmount?: number
+      chainID?: number
+      TxHash?: string
+    }
+  ) {
+    return requestAdapter<{
+      data?: string
+    }>({
+      url: replacePath('/bounty/{bountyID}/release', args),
+      method: 'PUT',
+      ...extract('PUT', args, [], ['bountyID'])
+    })
+  },
+  'bounty@bounty-startup-list'(args: { bountyID: any }) {
+    return requestAdapter<{
+      logo?: string
+      mission: string
+      title?: string
+      chainID?: number
+      blockChainAddress?: string
+      website?: string
+      discord?: string
+      twitter?: string
+      telegram?: string
+      mode?: number
+      contractAudit?: string
+      docs: string
+      tag: string[]
+    }>({
+      url: replacePath('/bounty/{bountyID}/startup', args),
+      method: 'GET',
+      ...extract('GET', args, [], ['bountyID'])
     })
   },
   'bounty@bounty-startups'(args: { comerID: any }) {
@@ -960,6 +1312,74 @@ export const services = {
       url: replacePath('/cores/bounties/startup/:startupId', args),
       method: 'GET',
       ...extract('GET', args, ['page'], ['startupId'])
+    })
+  },
+
+  'crowdfunding@create-crowdfunding'(args: {
+    startupId: number
+    chainId: number
+    txHash: string
+    teamWallet: string
+    raiseGoal: number
+    swapPercent: number
+    /**
+     * @description IBO rate
+     */
+    buyPrice: number
+    sellTax: number
+    maxBuyAmount: number
+    /**
+     * @description 格式： 2021-02-18T21:54:42.123Z
+     */
+    startTime: string
+    /**
+     * @description 格式：2021-02-18T21:54:42.123Z
+     */
+    endTime: string
+    poster: string
+    youtube?: string
+    detail?: string
+    description: string
+    /**
+     * @description 用于募资的tokne的地址
+     */
+    sellTokenContract: string
+    sellTokenName?: string
+    sellTokenSymbol?: string
+    sellTokenDecimals?: number
+    sellTokenSupply?: number
+    sellTokenDeposit: number
+    /**
+     * @description maximum sell
+     */
+    maxSellPercent: number
+    buyTokenContract: string
+    buyTokenName?: string
+    buyTokenSymbol?: string
+    buyTokenDecimals?: number
+    buyTokenSupply?: number
+  }) {
+    return requestAdapter<{}>({
+      url: replacePath('/cores/crowdfunding', args),
+      method: 'POST',
+      ...extract('POST', args, [], [])
+    })
+  },
+  'crowdfunding@crowdfundable-startups'(args?: any) {
+    return requestAdapter<
+      {
+        startupId: number
+        startupName: string
+        /**
+         * @description 能否募资：true,可，false,不能
+         */
+        canRaise: boolean
+        tokenContract?: string
+      }[]
+    >({
+      url: replacePath('/cores/startups/crowdfundable', args),
+      method: 'GET',
+      ...extract('GET', args, [], [])
     })
   },
 

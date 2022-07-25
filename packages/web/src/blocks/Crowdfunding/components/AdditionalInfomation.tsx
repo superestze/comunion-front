@@ -6,9 +6,13 @@ import {
   UFormItemsFactory,
   USingleImageFileUpload
 } from '@comunion/components'
-import { defineComponent, PropType, computed, Ref, ref } from 'vue'
+import { defineComponent, PropType, computed, Ref, ref, watch } from 'vue'
 import { CrowdfundingInfo } from '../typing'
 import RichEditor from '@/components/Editor'
+
+export interface AdditionalInformationRef {
+  additionalInfoForm: FormInst | null
+}
 
 export const AdditionalInformation = defineComponent({
   name: 'AdditionalInformation',
@@ -18,42 +22,96 @@ export const AdditionalInformation = defineComponent({
       required: true
     }
   },
-  setup(props) {
+  setup(props, ctx) {
+    const descriptionField = ref()
+    watch(
+      () => props.crowdfundingInfo.poster,
+      () => {
+        console.log('props.crowdfundingInfo.poster', props.crowdfundingInfo.poster?.url)
+      }
+    )
+    watch(
+      () => props.crowdfundingInfo.description,
+      () => {
+        descriptionField.value?.validate()
+      }
+    )
     const additionalInfoForm = ref<FormInst | null>(null)
     const formFields: Ref<FormFactoryField[]> = computed(() => [
       {
         t: 'custom',
         title: 'Poster',
         name: 'poster',
+        rules: [
+          {
+            validator: (_rule, value) => {
+              return !!value
+            },
+            message: 'Poster cannot be blank',
+            trigger: 'change'
+          }
+        ],
+
         render() {
-          return <USingleImageFileUpload placeholder="Update 3:2" />
+          return (
+            <USingleImageFileUpload
+              placeholder="Update 3:2"
+              v-model:value={props.crowdfundingInfo.poster}
+            />
+          )
         }
       },
       {
-        t: 'website',
         title: 'Youtube',
         name: 'youtube',
         maxlength: 200,
-        placeholder: 'Youtube'
+        placeholder: 'EX：https://www.youtube.com/watch?v=xxxxx',
+        rules: [
+          {
+            validator: (rule, value) =>
+              !value || (value && value.startsWith('https://www.youtube.com/watch?v=')),
+            message: 'Invalid youtube video',
+            trigger: 'blur'
+          }
+        ]
       },
       {
-        t: 'website',
-        title: 'Youtube',
-        name: 'youtube',
-        class: '',
+        title: 'Crowdfunding Detail',
+        name: 'detail',
         maxlength: 200,
-        placeholder: 'Youtube'
+        placeholder: 'EX：https://...',
+        rules: [
+          {
+            validator: (rule, value) => !value || (value && value.startsWith('https://')),
+            message: 'Invalid URL',
+            trigger: 'blur'
+          }
+        ]
       },
 
       {
         t: 'custom',
         title: 'Description',
         name: 'description',
-        rules: [{ required: true, message: 'Describe the details of the bounty' }],
+        formItemProps: {
+          ref: (value: any) => (descriptionField.value = value),
+          first: true
+        },
+        rules: [
+          { required: true, message: 'Description must be 64 characters or more', trigger: 'blur' },
+          {
+            validator: (rule, value) => {
+              return value && value.replace(/<.>|<\/.>/g, '').length > 64
+            },
+            message: 'Description must be 64 characters or more',
+            trigger: 'blur'
+          }
+        ],
         render() {
           return (
             <RichEditor
-              placeholder="Describe the details of the bounty"
+              limit={512}
+              placeholder="EX:Comunion is a new era of digital economy"
               class="w-full"
               v-model:value={props.crowdfundingInfo.description}
             />
@@ -62,6 +120,10 @@ export const AdditionalInformation = defineComponent({
       }
     ])
     const additionalInfoRules = getFieldsRules(formFields.value)
+    console.log('additionalInfoRules===>', additionalInfoRules)
+    ctx.expose({
+      additionalInfoForm
+    })
     return {
       formFields,
       additionalInfoForm,

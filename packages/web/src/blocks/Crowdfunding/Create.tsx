@@ -43,11 +43,6 @@ const CreateCrowdfundingBlock = defineComponent({
     ]
 
     const footer = () => {
-      console.log(
-        'createCrowdfundingFormRef.value==>',
-        createCrowdfundingFormRef.value?.crowdfundingInfo
-      )
-
       return (
         <div class="text-right pr-16 pb-4 bg-purple">
           {createCrowdfundingFormRef.value?.crowdfundingInfo?.current === 1 && (

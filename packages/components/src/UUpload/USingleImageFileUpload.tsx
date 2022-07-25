@@ -8,6 +8,7 @@ import {
 import { sizeFormat } from '@comunion/utils'
 import { NUpload, NProgress } from 'naive-ui'
 import { CustomRequest, OnBeforeUpload, FileInfo } from 'naive-ui/lib/upload/src/interface'
+export type { FileInfo } from 'naive-ui/lib/upload/src/interface'
 import { defineComponent, computed, ref, PropType } from 'vue'
 import { useUpload } from './UUploadProvider'
 
@@ -28,13 +29,34 @@ export const USingleImageFileUpload = defineComponent({
       type: Number,
       required: false,
       default: 1024 * 1024 * 10
+    },
+    aspectRatio: {
+      type: Number
     }
   },
   emits: ['update:value'],
   setup(props, ctx) {
+    const uploadRef = ref()
     const { onUpload } = useUpload()
     const status = ref<FileInfo['status']>()
     const process = ref(100)
+    const checkImageWH = (file: File) => {
+      // 参数分别是上传的file，想要限制的宽，想要限制的高
+      return new Promise(function (resolve, reject) {
+        const fileReader = new FileReader()
+        fileReader.onload = (e: any) => {
+          const src = e.target.result
+          const image = new Image()
+          image.onload = function () {
+            const isValid = (this as any).width / (this as any).height === props.aspectRatio
+            isValid ? resolve(true) : reject(new Error('Image ratio is invalid'))
+          }
+          image.onerror = reject
+          image.src = src
+        }
+        fileReader.readAsDataURL(file)
+      })
+    }
     const EmptyStatus = computed(() => () => (
       <div class="rounded-lg border border-grey5 h-12 px-4 flex items-center cursor-pointer">
         <UploadFilled class="mr-3.5" />
@@ -51,11 +73,9 @@ export const USingleImageFileUpload = defineComponent({
             <PosterFilled class="mr-3.5 text-primary" />
             <span>{props.value?.name}</span>
           </div>
-          <div>
-            <CloseOutlined class="text-grey4" />
-          </div>
+          <CloseOutlined class="text-grey4 cursor-pointer" onClick={delImage} />
         </div>
-        <div class="absolute inset-x-12 bottom-0.5">
+        <div class="absolute" style={{ bottom: '2px', left: '48px', right: '48px' }}>
           <NProgress
             status="success"
             type="line"
@@ -75,9 +95,9 @@ export const USingleImageFileUpload = defineComponent({
           <PosterFilled class="mr-3.5" />
           <span>{props.value?.name}</span>
         </div>
-        <div>
-          <CloseOutlined />
-          <RefreshOutlined />
+        <div class="flex items-center">
+          <CloseOutlined class="cursor-pointer" onClick={delImage} />
+          <RefreshOutlined class="ml-4 cursor-pointer" onClick={() => uploadRef.value?.submit()} />
         </div>
       </div>
     ))
@@ -91,14 +111,14 @@ export const USingleImageFileUpload = defineComponent({
           <PosterFilled class="mr-3.5 text-primary" />
           <span>{props.value?.name}</span>
         </div>
-        <div>
-          <DeleteFilled class="text-grey4 cursor-pointer" onClick={delImage} />
-        </div>
+        <DeleteFilled class="text-grey4 cursor-pointer" onClick={delImage} />
       </div>
     ))
 
-    const delImage = () => {
+    const delImage = (e: Event) => {
+      e.stopPropagation()
       status.value = undefined
+      ctx.emit('update:value', undefined)
     }
 
     const onBeforeUpload: OnBeforeUpload = ({ file }) => {
@@ -108,6 +128,9 @@ export const USingleImageFileUpload = defineComponent({
             new Error(`File should not large than ${sizeFormat(props.sizeLimit)}`)
           )
         }
+      }
+      if (file.file && props.aspectRatio) {
+        return checkImageWH(file.file)
       }
       return Promise.resolve()
     }
@@ -119,16 +142,22 @@ export const USingleImageFileUpload = defineComponent({
         ctx.emit('update:value', file)
         onUpload(file.file, percent => {
           status.value = 'uploading'
-          process.value = percent
+          process.value = percent * 100
           onProgress({ percent })
         })
           .then(url => {
+            console.log('url==>', url)
+            if (!url) {
+              throw new Error()
+            }
             status.value = 'finished'
             process.value = 100
-            ctx.emit('update:value', file)
+            ctx.emit('update:value', { ...file, url })
             onFinish()
           })
           .catch(err => {
+            console.log('err==>', err)
+
             status.value = 'error'
             process.value = 100
             ctx.emit('update:value', file)
@@ -157,8 +186,8 @@ export const USingleImageFileUpload = defineComponent({
 
     return () => (
       <NUpload
+        ref={uploadRef}
         showFileList={false}
-        max={1}
         accept={props.accept}
         onBeforeUpload={onBeforeUpload}
         customRequest={customRequest}
