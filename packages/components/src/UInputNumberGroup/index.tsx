@@ -33,7 +33,6 @@ const UInputNumberGroup = defineComponent({
   emits: ['update:value'],
   setup(props, ctx) {
     const inputValue = ref(props.value)
-    const longEnterEventRef = ref()
     watch(
       () => inputValue.value,
       n => {
