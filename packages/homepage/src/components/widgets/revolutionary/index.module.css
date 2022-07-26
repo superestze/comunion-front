@@ -1,0 +1,19 @@
+.hoverBox {
+  border: 1px solid #666;
+}
+
+.hoverBox:nth-child(odd) {
+  border: 1px solid #666;
+}
+
+.hoverBox:nth-child(even) {
+  border-left-color: transparent;
+}
+
+.hoverBox:hover {
+  border: 1px solid #5e18fe;
+}
+
+/* .hoverBox:nth-child(even):hover {
+  border: 1px solid #5e18fe;
+} */

@@ -1,0 +1,16 @@
+.hoverBox {
+  border: 1px solid #666;
+  border-right-color: transparent;
+}
+
+.hoverBox:last-child {
+  border: 1px solid #666;
+}
+
+.hoverBox:hover + .hoverBox {
+  border-left-color: transparent;
+}
+
+.hoverBox:hover {
+  border: 1px solid #5e18fe;
+}
