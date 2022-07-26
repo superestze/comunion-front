@@ -2,15 +2,15 @@ import { NumberDownOutlined, NumberUpOutlined } from '@comunion/icons'
 import Big from 'big.js'
 import type { InputProps } from 'naive-ui'
 import { NInput } from 'naive-ui'
-import { defineComponent, ref, watch } from 'vue'
+import { defineComponent, ref, watch, PropType } from 'vue'
 
 import './index.css'
 
 export type UInputBigNumberPropsType = InputProps & {
   step?: number
   precision?: number
-  max?: string
-  min?: string
+  max?: string | number
+  min?: string | number
 }
 
 const UInputBigNumber = defineComponent({
@@ -26,10 +26,10 @@ const UInputBigNumber = defineComponent({
       type: Number
     },
     max: {
-      type: String
+      type: Object as PropType<string | number>
     },
     min: {
-      type: String
+      type: Object as PropType<string | number>
     }
   },
   setup(props, ctx) {
@@ -61,10 +61,10 @@ const UInputBigNumber = defineComponent({
         }
       }
       if (props.max && newValue.gt(new Big(props.max))) {
-        inputValue.value = props.max
+        inputValue.value = String(props.max)
       }
       if (props.min && newValue.lt(new Big(props.min))) {
-        inputValue.value = props.min
+        inputValue.value = String(props.min)
       }
 
       ctx.emit('update:value', inputValue.value)
