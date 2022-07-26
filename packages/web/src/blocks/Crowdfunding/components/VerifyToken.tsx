@@ -34,13 +34,14 @@ export const VerifyToken = defineComponent({
     const tokenContractField = ref()
     const changeStartup = (value: number) => {
       const findRes = startupOptions.value.find(startup => startup.value === value)
-
-      if (findRes && findRes.tokenAddress) {
-        props.crowdfundingInfo.sellTokenContract = findRes.tokenAddress
+      if (findRes) {
         props.crowdfundingInfo.startupName = findRes.label
-        nextTick(() => {
-          tokenContractField.value.validate()
-        })
+        if (findRes.tokenAddress) {
+          props.crowdfundingInfo.sellTokenContract = findRes.tokenAddress
+          nextTick(() => {
+            tokenContractField.value.validate()
+          })
+        }
       }
     }
     const getContractInfo = async (value: string) => {
@@ -131,7 +132,7 @@ export const VerifyToken = defineComponent({
               <div>
                 Team Wallet Address
                 <span class="n-form-item-label__asterisk">&nbsp;*</span>
-                <span class="text-xs text-grey4 ml-4">
+                <span class="text-xs text-grey4 font-normal ml-4">
                   Team wallet address used to receive funds raised
                 </span>
               </div>

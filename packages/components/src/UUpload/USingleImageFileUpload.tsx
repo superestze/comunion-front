@@ -38,7 +38,7 @@ export const USingleImageFileUpload = defineComponent({
   setup(props, ctx) {
     const uploadRef = ref()
     const { onUpload } = useUpload()
-    const status = ref<FileInfo['status']>()
+    const status = ref<FileInfo['status'] | undefined>(props.value?.status)
     const process = ref(100)
     const checkImageWH = (file: File) => {
       // check image width / height
@@ -58,7 +58,7 @@ export const USingleImageFileUpload = defineComponent({
       })
     }
     const EmptyStatus = computed(() => () => (
-      <div class="rounded-lg border border-grey5 h-12 px-4 flex items-center cursor-pointer">
+      <div class="rounded-lg border border-grey5 h-10 px-4 flex items-center cursor-pointer">
         <UploadFilled class="mr-3.5" />
         <span class="text-grey1">{props.placeholder}</span>
       </div>
@@ -67,7 +67,7 @@ export const USingleImageFileUpload = defineComponent({
       /* Process status */
     }
     const ProcessStatus = computed(() => () => (
-      <div class="flex flex-col justify-center rounded-lg border border-grey5 h-12 px-4 relative">
+      <div class="flex flex-col justify-center rounded-lg border border-grey5 h-10 px-4 relative">
         <div class="flex justify-between items-center">
           <div class="flex items-center">
             <PosterFilled class="mr-3.5 text-primary" />
@@ -90,14 +90,14 @@ export const USingleImageFileUpload = defineComponent({
       /* Failed status */
     }
     const FailedStatus = computed(() => () => (
-      <div class="rounded-lg border border-grey5 h-12 px-4 flex justify-between items-center text-error">
+      <div class="rounded-lg border border-grey5 h-10 px-4 flex justify-between items-center text-error">
         <div class="flex items-center">
           <PosterFilled class="mr-3.5" />
           <span>{props.value?.name}</span>
         </div>
         <div class="flex items-center">
           <CloseOutlined class="cursor-pointer" onClick={delImage} />
-          <RefreshOutlined class="ml-4 cursor-pointer" onClick={() => uploadRef.value?.submit()} />
+          <RefreshOutlined class="ml-2 cursor-pointer" onClick={() => uploadRef.value?.submit()} />
         </div>
       </div>
     ))
@@ -105,7 +105,7 @@ export const USingleImageFileUpload = defineComponent({
       /* Success status */
     }
     const SuccessStatus = computed(() => () => (
-      <div class="rounded-lg border border-grey5 h-12 px-4 flex items-center justify-between">
+      <div class="rounded-lg border border-grey5 h-10 px-4 flex items-center justify-between">
         <div class="flex items-center">
           {/* <ULazyImage src={props.value!.url!} /> */}
           <PosterFilled class="mr-3.5 text-primary" />
@@ -152,15 +152,13 @@ export const USingleImageFileUpload = defineComponent({
             }
             status.value = 'finished'
             process.value = 100
-            ctx.emit('update:value', { ...file, url })
+            ctx.emit('update:value', { ...file, status: 'finished', url })
             onFinish()
           })
           .catch(err => {
-            console.log('err==>', err)
-
             status.value = 'error'
             process.value = 100
-            ctx.emit('update:value', file)
+            ctx.emit('update:value', { ...file, status: 'error' })
             console.error(err)
             onError()
           })
