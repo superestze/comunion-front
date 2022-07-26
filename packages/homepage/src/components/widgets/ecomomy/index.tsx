@@ -1,0 +1,59 @@
+import { defineComponent } from 'vue'
+
+import Blocks from '../blocks'
+import Title from '../title'
+
+import contributor from '@/assets/20220725/contributor.png'
+import contributor2 from '@/assets/20220725/contributor@2x.png'
+import contributor3 from '@/assets/20220725/contributor@3x.png'
+
+import crowdfunding from '@/assets/20220725/crowdfunding.png'
+import crowdfunding2 from '@/assets/20220725/crowdfunding@2x.png'
+import EcomomyBg from '@/assets/20220725/new_ecomomy.png'
+import startup from '@/assets/20220725/startup.png'
+import startup2 from '@/assets/20220725/startup@2x.png'
+
+export default defineComponent({
+  setup() {
+    const list = [
+      {
+        icons: [contributor, contributor2, contributor3],
+        title: 'Contributor',
+        subtitle: 'Contribute to earn',
+        content:
+          'Anyone with skills can build or contribute to a startup in the 0-1 stage for earning early rewards.'
+      },
+      {
+        icons: [startup, startup2],
+        title: 'Startup',
+        subtitle: 'Startup as an economy',
+        content:
+          'Startup, as the core production unit of economy, can be refactored to drive a new economy growth.'
+      },
+      {
+        icons: [crowdfunding, crowdfunding2],
+        title: 'Crowdfunding',
+        subtitle: 'Invest to build',
+        content:
+          'Anyone holding capital can be an angel investor in building the next big thing without minimum investment threshold.'
+      }
+    ]
+    return {
+      list
+    }
+  },
+  render() {
+    return (
+      <>
+        <Title
+          title="A New Era of Ecomomy"
+          subTitle="Connect ideas, talents and funding for Startups"
+        />
+        <div class="flex justify-center mt-74px">
+          <img src={EcomomyBg} alt="new ecomomy" />
+        </div>
+        <Blocks list={this.list} class="mt-155px" />
+      </>
+    )
+  }
+})
