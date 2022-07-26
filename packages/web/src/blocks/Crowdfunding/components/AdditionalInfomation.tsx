@@ -49,9 +49,18 @@ export const AdditionalInformation = defineComponent({
             },
             message: 'Poster cannot be blank',
             trigger: 'change'
+          },
+          {
+            validator: (_rule, value) => {
+              return value?.status === 'finished'
+            },
+            message: '',
+            trigger: 'change'
           }
         ],
-
+        formItemProps: {
+          first: true
+        },
         render() {
           return (
             <USingleImageFileUpload
