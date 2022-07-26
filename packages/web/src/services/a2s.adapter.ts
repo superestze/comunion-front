@@ -97,7 +97,7 @@ export async function upload(
     })
     return data.Url as string
   } catch (error: any) {
-    console.log('error==>', error.response);
+    console.log('error==>', error.response)
 
     onErrorHandler(error)
     return undefined
