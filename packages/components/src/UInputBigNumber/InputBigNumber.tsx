@@ -11,7 +11,7 @@ export type UInputBigNumberPropsType = InputProps & {
   precision?: number
   max?: string | number
   min?: string | number
-  parse?: (value: any) => string
+  parse?: (value: any) => any
 }
 
 const UInputBigNumber = defineComponent({
@@ -33,7 +33,7 @@ const UInputBigNumber = defineComponent({
       type: Object as PropType<string | number>
     },
     parse: {
-      type: Object as PropType<(value: any) => string>
+      type: Object as PropType<(value: any) => any>
     }
   },
   setup(props, ctx) {
