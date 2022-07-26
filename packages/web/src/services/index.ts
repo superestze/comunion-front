@@ -759,13 +759,7 @@ export const services = {
     args: {
       bountyID: any
       applicantComerID: any
-    } & {
-      comerID?: string
-      chainID?: number
-      txHash?: string
-      tokenSymbol?: string
-      tokenAmount?: number
-    }[]
+    } & {}
   ) {
     return requestAdapter<{
       data?: string
