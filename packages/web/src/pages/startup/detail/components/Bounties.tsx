@@ -1,6 +1,7 @@
 import { UStartupLogo, UTag } from '@comunion/components'
 import { format } from 'timeago.js'
 import { defineComponent, onMounted, reactive, PropType, ref } from 'vue'
+import { useRouter } from 'vue-router'
 import { BOUNTY_TYPES_COLOR_MAP } from '@/constants'
 import { ServiceReturn, services } from '@/services'
 
@@ -22,6 +23,7 @@ const BountiesCard = defineComponent({
     }
   },
   setup(props, context) {
+    const router = useRouter()
     const date = ref<string>()
     const bountyInfo = reactive({
       token2Symbol: ''
@@ -41,11 +43,18 @@ const BountiesCard = defineComponent({
     )
     onMounted(() => {
       getStartup(props.startup?.startupId)
-      date.value = format(props.startup.createdTime, 'en_US')
+      date.value = format(props.startup.createdTime, 'comunionTimeAgo')
     })
 
+    const handleCard = (bountyId: number) => () => {
+      router.push(`/bounty/detail?bountyId=${bountyId}`)
+    }
+
     return () => (
-      <div class="flex h-38 w-full items-center cursor-pointer border-b-1 mt-8">
+      <div
+        class="flex h-38 w-full items-center cursor-pointer border-b-1 mt-8"
+        onClick={handleCard(props.startup.bountyId)}
+      >
         <div class="flex h-full w-22 items-center">
           <UStartupLogo
             src={props.startup.logo}
