@@ -168,7 +168,7 @@ export default defineComponent({
             seqNum: this.paymentInfo?.seqNum
           })
           const { error } = await services['bounty@bounty-activities']({
-            bountyID: parseInt(this.$route.query.bountyId as string),
+            bountyID: this.$route.query.bountyId as string,
             content: JSON.stringify(this.formData),
             sourceType: 2
           })
