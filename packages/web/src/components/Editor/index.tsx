@@ -1,4 +1,5 @@
 import { BoldFilled, ItalicFilled, UnderlineFilled } from '@comunion/icons'
+import CharacterCount from '@tiptap/extension-character-count'
 import Placeholder from '@tiptap/extension-placeholder'
 import Underline from '@tiptap/extension-underline'
 import StarterKit from '@tiptap/starter-kit'
@@ -8,12 +9,19 @@ import './style.css'
 
 const RichEditor = defineComponent({
   name: 'RichEditor',
+  extends: EditorContent,
   props: {
     placeholder: {
       type: String
     },
     value: {
       type: String
+    },
+    limit: {
+      type: Number
+    },
+    onChange: {
+      type: Function
     }
   },
   emits: ['update:value'],
@@ -27,14 +35,20 @@ const RichEditor = defineComponent({
       content: props.value,
       onUpdate: ({ editor }) => {
         const value = editor.getHTML()
-
-        ctx.emit('update:value', value)
+        if (value === '<p></p>') {
+          ctx.emit('update:value', '')
+        } else {
+          ctx.emit('update:value', value)
+        }
       },
       extensions: [
         StarterKit,
         Underline,
         Placeholder.configure({
           placeholder: props.placeholder
+        }),
+        CharacterCount.configure({
+          limit: props.limit
         })
       ]
     })

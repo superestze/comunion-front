@@ -30,8 +30,12 @@ function onErrorHandler(
   code?: number
 } {
   const userStore = useUserStore()
+  let msg = error.message ?? 'Error occured'
   try {
     const rep: BaseResponse = error.response.data
+    if (rep.message) {
+      msg = rep.message
+    }
     if (rep.code === 401 && location.pathname !== '/auth/login') {
       userStore.logout('The token expired, please re-login')
       return { error: true, data: null }
@@ -39,7 +43,6 @@ function onErrorHandler(
   } catch (error) {
     //
   }
-  const msg = error.message ?? 'Error occured'
   if (!skipMessage) {
     message.error(msg)
   }
@@ -107,7 +110,9 @@ export async function upload(
       }
     })
     return data.Url as string
-  } catch (error) {
+  } catch (error: any) {
+    console.log('error==>', error.response)
+
     onErrorHandler(error)
     return undefined
   }

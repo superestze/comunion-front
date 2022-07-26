@@ -11,7 +11,7 @@
     @apply flex flex-col items-center relative;
 
     .u-step-title {
-      @apply absolute top-8 whitespace-nowrap;
+      @apply absolute top-8;
     }
   }
 }
