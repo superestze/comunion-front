@@ -41,7 +41,7 @@ export const USingleImageFileUpload = defineComponent({
     const status = ref<FileInfo['status']>()
     const process = ref(100)
     const checkImageWH = (file: File) => {
-      // 参数分别是上传的file，想要限制的宽，想要限制的高
+      // check image width / height
       return new Promise(function (resolve, reject) {
         const fileReader = new FileReader()
         fileReader.onload = (e: any) => {
