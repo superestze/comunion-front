@@ -12,7 +12,6 @@ import {
 } from '@comunion/components'
 import { defineComponent, Ref, computed, h, ref, reactive, watchEffect } from 'vue'
 import { MAX_AMOUNT, renderUnit } from '@/blocks/Bounty/components/BasicInfo'
-import { services } from '@/services'
 import { useBountyStore } from '@/stores'
 
 type checkboxItem = {
@@ -167,18 +166,18 @@ const ApplyDialog = defineComponent({
       }
       this.form?.validate(err => {
         if (typeof err === 'undefined' && this.terms.value && this.accept.value) {
-          services['bounty@bounty-applicants-deposit']({
-            applicants: {
-              bountyID: parseInt(this.$route.query.bountyId as string),
-              description: this.formData.description
-            },
-            applicantsDeposit: {
-              // chainID: 0,
-              // txHash: '',
-              tokenSymbol: '',
-              tokenAmount: this.formData.deposit
-            }
-          })
+          // services['bounty@bounty-applicants-deposit']({
+          //   applicants: {
+          //     bountyID: parseInt(this.$route.query.bountyId as string),
+          //     description: this.formData.description
+          //   },
+          //   applicantsDeposit: {
+          //     // chainID: 0,
+          //     // txHash: '',
+          //     tokenSymbol: '',
+          //     tokenAmount: this.formData.deposit
+          //   }
+          // })
           this.getApplicants(this.$route.query.bountyId as string)
           triggerDialog(true)
         }

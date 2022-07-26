@@ -85,7 +85,7 @@ export default defineComponent({
           const { error } = await services['bounty@bounty-activities']({
             sourceType: 1,
             content: this.info.update,
-            bountyID: parseInt(this.$route.query.bountyId as string)
+            bountyID: this.$route.query.bountyId as string
           })
           if (!error) {
             this.getActivities(this.$route.query.bountyId as string)

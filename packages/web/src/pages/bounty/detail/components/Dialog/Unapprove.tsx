@@ -1,7 +1,6 @@
 import { UButton } from '@comunion/components'
 import { defineComponent, PropType, computed } from 'vue'
 import Basic from './basic'
-import { services } from '@/services'
 import { useUserStore } from '@/stores'
 
 export type VisibleMap = {
@@ -35,13 +34,13 @@ export const UnapprovePromptSet = defineComponent({
         return
       }
 
-      const { error } = await services['bounty@bounty-founder-unapprove']({
-        applicantComerID: this.profile?.comerID
-      })
-      if (!error) {
-        closeUnapproveConfirm()
-        return
-      }
+      // const { error } = await services['bounty@bounty-founder-unapprove']({
+      //   applicantComerID: this.profile?.comerID
+      // })
+      // if (!error) {
+      //   closeUnapproveConfirm()
+      //   return
+      // }
       this.visibleMap!.visibleUnapproveFail = true
     }
 

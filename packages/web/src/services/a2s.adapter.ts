@@ -1,7 +1,7 @@
 /* eslint-disable */
 import axios, { AxiosRequestHeaders } from 'axios'
 import { message } from '@comunion/components'
-import { RequestFunctionArgs, ResponseObject } from './a2s.types'
+import { RequestFunctionArgs } from './a2s.types'
 
 import { useUserStore } from '@/stores'
 
@@ -78,6 +78,20 @@ export async function requestAdapter<T = any>(
     return onErrorHandler(error, query?.skipMessage as boolean)
   }
 }
+
+type ResponseObject<T> =
+  | {
+      code?: number
+      error: true
+      data: null
+      message?: string
+      stack?: string | Error
+    }
+  | {
+      error: false
+      data: T
+      message?: string
+    }
 
 export async function upload(
   file: File,

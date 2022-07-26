@@ -96,7 +96,7 @@ export default defineComponent({
       this.form?.validate(async err => {
         if (typeof err === 'undefined') {
           const { error } = await services['bounty@bounty-add-deposit']({
-            bountyID: parseInt(this.$route.query.bountyId as string),
+            bountyID: this.$route.query.bountyId as string,
             chainID: 11111,
             txHash: '11111',
             tokenSymbol: 'USDC',
