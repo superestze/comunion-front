@@ -2,7 +2,7 @@ import './style.css'
 
 import { NInputGroup } from 'naive-ui'
 import { AllowedComponentProps, defineComponent, PropType, watch, ref } from 'vue'
-import UInputNumber, { UInputBigNumberPropsType } from '../UInputBigNumber/InputBigNumber'
+import UInputBigNumber, { UInputBigNumberPropsType } from '../UInputBigNumber/InputBigNumber'
 
 type GroupType = 'withSelect' | 'withUnit'
 
@@ -52,7 +52,7 @@ const UInputNumberGroup = defineComponent({
     return () => (
       <div class={['u-input-number-group', props.class]}>
         <NInputGroup>
-          <UInputNumber v-model:value={inputValue.value as string} {...props.inputProps} />
+          <UInputBigNumber v-model:value={inputValue.value} {...props.inputProps} />
           {rightPart()}
         </NInputGroup>
       </div>

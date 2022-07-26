@@ -124,12 +124,10 @@ export const CrowdfundingInformation = defineComponent({
           first: true,
           feedback:
             props.crowdfundingInfo.swapPercent === undefined ||
-            Number(props.crowdfundingInfo.swapPercent) > 0 ? (
-              <span class="text-xs">{`${
-                props.crowdfundingInfo.swapPercent || '?'
-              } % of the raised funds will go into the
-              swap pool`}</span>
-            ) : undefined
+            Number(props.crowdfundingInfo.swapPercent) > 0
+              ? `${props.crowdfundingInfo.swapPercent || '?'} % of the raised funds will go into the
+              swap pool`
+              : undefined
         },
         slots: {
           label: () => [
@@ -191,11 +189,9 @@ export const CrowdfundingInformation = defineComponent({
           feedback:
             props.crowdfundingInfo.buyPrice === undefined ||
             (!!props.crowdfundingInfo.buyPrice &&
-              new Big(props.crowdfundingInfo.buyPrice).gt(new Big(0))) ? (
-              <span class="text-xs">
-                The price is at when investors buy token during Crowdfunding
-              </span>
-            ) : undefined
+              new Big(props.crowdfundingInfo.buyPrice).gt(new Big(0)))
+              ? 'The price is at when investors buy token during Crowdfunding'
+              : undefined
         },
         slots: {
           label: () => [
@@ -298,9 +294,9 @@ export const CrowdfundingInformation = defineComponent({
           feedback:
             props.crowdfundingInfo.sellTax === undefined ||
             (!!props.crowdfundingInfo.sellTax &&
-              new Big(props.crowdfundingInfo.sellTax).gt(new Big(0))) ? (
-              <span class="text-xs">Fees to be deducted when investors sell tokens</span>
-            ) : undefined
+              new Big(props.crowdfundingInfo.sellTax).gt(new Big(0)))
+              ? 'Fees to be deducted when investors sell tokens'
+              : undefined
         },
         rules: [
           {
@@ -350,9 +346,9 @@ export const CrowdfundingInformation = defineComponent({
           feedback:
             props.crowdfundingInfo.maxSell === undefined ||
             (!!props.crowdfundingInfo.maxSell &&
-              new Big(props.crowdfundingInfo.maxSell).gt(new Big(0))) ? (
-              <span class="text-xs">Fees to be deducted when investors sell tokens</span>
-            ) : undefined
+              new Big(props.crowdfundingInfo.maxSell).gt(new Big(0)))
+              ? 'Fees to be deducted when investors sell tokens'
+              : undefined
         },
         render(value) {
           return (
