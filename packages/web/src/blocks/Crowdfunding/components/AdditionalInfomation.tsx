@@ -55,7 +55,7 @@ export const AdditionalInformation = defineComponent({
         render() {
           return (
             <USingleImageFileUpload
-              placeholder="Recommended image size: 3:2"
+              placeholder="Recommended image size: 3:2, Max size: 1MB"
               v-model:value={props.crowdfundingInfo.poster}
             />
           )
