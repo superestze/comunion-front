@@ -525,7 +525,7 @@ export const services = {
   },
 
   'bounty@bounty-activities'(args: {
-    bountyID?: number
+    bountyID?: string
     content?: string
     /**
      * @description 1.normal 2.send-paid-info
@@ -543,7 +543,7 @@ export const services = {
   'bounty@bounty-activities-list'(args: { bountyID: any }) {
     return requestAdapter<
       {
-        comerID?: number
+        comerID?: string
         name?: string
         avatar?: string
         sourceType?: number
@@ -557,7 +557,7 @@ export const services = {
     })
   },
   'bounty@bounty-add-deposit'(args: {
-    bountyID?: number
+    bountyID?: string
     chainID?: number
     txHash?: string
     tokenSymbol: string
@@ -580,29 +580,22 @@ export const services = {
       ...extract('PUT', args, [], ['bountyID'])
     })
   },
-  'bounty@bounty-applicant-revoke'(args: { bountyID: any }) {
-    return requestAdapter<{
-      data?: string
-    }>({
-      url: replacePath('/bounty/{bountyID}/applicant/revoke', args),
-      method: 'PUT',
-      ...extract('PUT', args, [], ['bountyID'])
-    })
-  },
-  'bounty@bounty-applicants-deposit'(args: {
+  'bounty@bounty-applicants-apply'(args: {
     applicants?: {
-      bountyID?: number
+      bountyID?: string
       description?: string
     }
     applicantsDeposit?: {
       tokenSymbol?: string
       tokenAmount?: number
+      chainID: number
+      txHash: string
     }
   }) {
     return requestAdapter<{
       data?: string
     }>({
-      url: replacePath('/bounty/applicants', args),
+      url: replacePath('/bounty/applicant/apply', args),
       method: 'POST',
       ...extract('POST', args, [], [])
     })
@@ -704,14 +697,14 @@ export const services = {
     return requestAdapter<
       {
         name?: string
-        comerID: number
+        comerID: string
         time?: string
         tokenAmount?: number
         /**
          * @description 1:In 2:Out&#39;
          */
         access?: number
-        image: string
+        avatar: string
       }[]
     >({
       url: replacePath('/bounty/{bountyID}/deposit-records', args),
@@ -752,7 +745,13 @@ export const services = {
     args: {
       bountyID: any
       applicantComerID: any
-    } & {}
+    } & {
+      comerID?: string
+      chainID?: number
+      txHash?: string
+      tokenSymbol?: string
+      tokenAmount?: number
+    }[]
   ) {
     return requestAdapter<{
       data?: string
@@ -762,26 +761,24 @@ export const services = {
       ...extract('PUT', args, [], ['bountyID', 'applicantComerID'])
     })
   },
-  'bounty@bounty-founder-release'(args: { bountyID: any }) {
-    return requestAdapter<{
-      data?: string
-    }>({
-      url: replacePath('/bounty/{bountyID}/founder/release', args),
-      method: 'PUT',
-      ...extract('PUT', args, [], ['bountyID'])
-    })
-  },
   'bounty@bounty-founder-unapprove'(
     args: {
+      bountyID: any
       applicantComerID: any
-    } & {}
+    } & {
+      comerID?: string
+      chainID?: number
+      txHash?: string
+      tokenSymbol?: string
+      tokenAmount?: number
+    }[]
   ) {
     return requestAdapter<{
       data?: string
     }>({
-      url: replacePath('/bounty/founder/unapproved/{applicantComerID}', args),
+      url: replacePath('/bounty/founder/{bountyID}/unapproved/{applicantComerID}', args),
       method: 'PUT',
-      ...extract('PUT', args, [], ['applicantComerID'])
+      ...extract('PUT', args, [], ['bountyID', 'applicantComerID'])
     })
   },
   'bounty@bounty-get-detail'(args: { bountyID: any }) {
@@ -914,11 +911,11 @@ export const services = {
   'bounty@bounty-list-applicants'(args: { bountyID: any }) {
     return requestAdapter<
       {
-        comerID?: number
+        comerID?: string
         name?: string
         image?: string
-        desription?: string
-        submitAt?: string
+        desrciption?: string
+        applyAt?: string
       }[]
     >({
       url: replacePath('/bounty/list/{bountyID}/applicants', args),
@@ -971,7 +968,7 @@ export const services = {
        */
       bountyDepositStatus: number
       /**
-       * @description  0:Pending 1:Applied 2:Approved 3:Submitted 4:Revoked 5:Rejected 6:Quited
+       * @description  0 任何人1 :Pending 2:Applied 3:Approved 4:Submitted 5:Revoked 6：Rejected 7:Quited
        */
       applicantApplyStatus: number
       bountyPaymentInfo?: {
@@ -983,7 +980,7 @@ export const services = {
         /**
          * @description 申请最少缴纳的押金额
          */
-        applicantDeposit: number
+        applicantMinDeposit: number
       }
       stageTerms?: {
         seqNum?: number
@@ -998,6 +995,24 @@ export const services = {
       url: replacePath('/bounty/{bountyID}/payment', args),
       method: 'GET',
       ...extract('GET', args, [], ['bountyID'])
+    })
+  },
+  'bounty@bounty-release'(
+    args: {
+      bountyID: any
+    } & {
+      tokenSymbol?: string
+      tokenAmount?: number
+      chainID?: number
+      TxHash?: string
+    }
+  ) {
+    return requestAdapter<{
+      data?: string
+    }>({
+      url: replacePath('/bounty/{bountyID}/release', args),
+      method: 'PUT',
+      ...extract('PUT', args, [], ['bountyID'])
     })
   },
   'bounty@bounty-startup-list'(args: { bountyID: any }) {
@@ -1345,7 +1360,7 @@ export const services = {
     buyTokenSupply?: number
   }) {
     return requestAdapter<{}>({
-      url: replacePath('/crowdfunding', args),
+      url: replacePath('/cores/crowdfunding', args),
       method: 'POST',
       ...extract('POST', args, [], [])
     })
