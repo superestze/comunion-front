@@ -71,7 +71,7 @@ export default defineComponent({
                 <h1 class="flex items-center text-24px text-[#111] font-bold row-start-1 row-end-2 col-start-1 col-end-2 ml-32px">
                   {item.title}
                 </h1>
-                <p class="text-16px text-[#555] font-bold row-start-2 row-end-3 col-start-1 col-end-2 ml-32px">
+                <p class="text-16px text-[#555] font-bold row-start-2 row-end-3 col-start-1 col-end-2 ml-32px leading-normal">
                   {item.content}
                 </p>
                 <div class="row-start-2 row-end-3 col-start-2 col-end-3 w-64px h-64px justify-start items-start mr-40px">

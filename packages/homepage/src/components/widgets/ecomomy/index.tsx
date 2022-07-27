@@ -10,11 +10,14 @@ import contributor3 from '@/assets/20220725/contributor@3x.png'
 import crowdfunding from '@/assets/20220725/crowdfunding.png'
 import crowdfunding2 from '@/assets/20220725/crowdfunding@2x.png'
 import EcomomyBg from '@/assets/20220725/new_ecomomy.png'
+import EcomomyBg2 from '@/assets/20220725/new_ecomomy@2x.png'
+import EcomomyBg3 from '@/assets/20220725/new_ecomomy@3x.png'
 import startup from '@/assets/20220725/startup.png'
 import startup2 from '@/assets/20220725/startup@2x.png'
+import { handleSrcset } from '@/utils/srcset'
 
 export default defineComponent({
-  setup() {
+  render() {
     const list = [
       {
         icons: [contributor, contributor2, contributor3],
@@ -38,11 +41,7 @@ export default defineComponent({
           'Anyone holding capital can be an angel investor in building the next big thing without minimum investment threshold.'
       }
     ]
-    return {
-      list
-    }
-  },
-  render() {
+    const srcset = handleSrcset([EcomomyBg, EcomomyBg2, EcomomyBg3])
     return (
       <>
         <Title
@@ -50,9 +49,9 @@ export default defineComponent({
           subTitle="Connect ideas, talents and funding for Startups"
         />
         <div class="flex justify-center mt-74px">
-          <img src={EcomomyBg} alt="new ecomomy" />
+          <img src={EcomomyBg} alt="new ecomomy" srcset={srcset} />
         </div>
-        <Blocks list={this.list} class="mt-155px" />
+        <Blocks list={list} class="mt-155px" />
       </>
     )
   }

@@ -20,15 +20,12 @@ export default defineComponent({
     }
   },
   render() {
-    const random = Math.trunc(Math.random() * 4)
-    console.log(random)
     const randomClass: string[] = [
       'undefined-bounce-to-right',
       'undefined-bounce-to-left',
       'undefined-bounce-to-top',
       'undefined-bounce-to-bottom'
     ]
-    console.log(animate)
     return (
       <div class="flex justify-center">
         {this.list.map(item => {
@@ -43,24 +40,15 @@ export default defineComponent({
               <div class="w-64px h-64px mt-58px">
                 <img src={item.icons[0]} srcset={srcset} alt={item.title} />
               </div>
-              <h1
-                class="text-24px font-bold text-center mt-40px text-center mb-25px"
-                style={{ color: '#111111' }}
-              >
+              <h1 class="text-24px font-bold text-center mt-40px text-center mb-25px text-[#111]">
                 {item.title}
               </h1>
               {item.subtitle && (
-                <h3
-                  class="text-20px font-bold text-center text-center mb-3px"
-                  style={{ color: '#555555' }}
-                >
+                <h3 class="text-20px font-bold text-center text-center mb-3px text-[#555]">
                   {item.subtitle}
                 </h3>
               )}
-              <p
-                class="text-16px font-bold text-center mb-72px mt-3px mx-33px"
-                style={{ color: '#555555' }}
-              >
+              <p class="text-16px font-bold text-center mb-72px mt-3px mx-33px text-[#555] leading-normal">
                 {item.content}
               </p>
             </div>

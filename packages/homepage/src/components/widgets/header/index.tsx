@@ -3,6 +3,7 @@ import { defineComponent } from 'vue'
 
 import animate from './animate.module.css'
 import logo from '@/assets/logo.png'
+import { joinComunion } from '@/utils'
 
 export default defineComponent({
   render() {
@@ -19,7 +20,7 @@ export default defineComponent({
           <span class={animate['undefined-underline-reveal']}>API</span>
         </div>
         <div class="flex items-center">
-          <UButton strong round type="primary" size="small" class="mr-40px">
+          <UButton strong round type="primary" size="small" class="mr-40px" onClick={joinComunion}>
             Connect Account
           </UButton>
         </div>

@@ -110,7 +110,7 @@ export default defineComponent({
         style={{
           background: 'linear-gradient(135deg, #5E18FE 0%, #45249F 100%)'
         }}
-        class="w-full h-1142px mt-240px pt-160px"
+        class="w-full h-1142px mt-240px pt-160px relative"
       >
         <H1 color="#fff" text="Benefits" class="mb-70px" />
         <div class="grid gap-x-30px gap-y-24px grid-cols-[350px,350px,350px] justify-center">

@@ -22,11 +22,16 @@ export default defineComponent({
   render() {
     return (
       <div class="flex w-full mt-80px flex-col justify-center">
-        <h1 class="mb-41px text-20px text-center">You Can</h1>
-        <div class="grid grid-rows-4 grid-cols-6 mx-auto bg-transparent grid-cols-[279px,136px,143px,138px,141px,276px] grid-rows-[180px,180px,180px,180px]">
-          <div class="row-start-1 row-end-3 col-start-1 col-end-3 border border-solid pt-54px pl-48px">
+        <h1 class="mb-41px text-20px text-center" style={{ color: 'rgba(17,17,17,0.6)' }}>
+          You Can
+        </h1>
+        <div
+          class="grid grid-rows-4 grid-cols-6 mx-auto bg-transparent grid-cols-[279px,136px,143px,138px,141px,276px] grid-rows-[180px,180px,180px,180px]"
+          style={{ backgroundColor: '#fff' }}
+        >
+          <div class="row-start-1 row-end-3 col-start-1 col-end-3 border border-solid pt-54px pl-48px bg-[#5E18FE] text-white relative">
             <h1 class={styles.title36}>Lauch</h1>
-            <h1 class={styles.title36}>a startup</h1>
+            <h1 class={`${styles.title36} -mt-10px`}>a startup</h1>
             <p class={`${styles.title14} mt-16px`}>Web3, Crypto, Blockchain, Metaverse etc</p>
             <div class="mt-85px w-54px h-54px">
               <img
@@ -39,7 +44,7 @@ export default defineComponent({
           </div>
           <div class="row-start-1 row-end-3 col-start-3 col-end-6 border pt-54px pl-48px">
             <h1 class={styles.title36}>Start, Run + Grow</h1>
-            <h1 class={styles.title36}>Your business</h1>
+            <h1 class={`${styles.title36} -mt-10px`}>Your business</h1>
             <div class="mt-125px w-54px h-54px">
               <img class="w-full" srcset={`${up}, ${up2} 2x, ${up3} 3x`} src={up} alt="up" />
             </div>
@@ -57,11 +62,11 @@ export default defineComponent({
           </div>
           <div class="row-start-2 row-end-3 col-start-6 col-end-7 border pt-32px pl-36px">
             <h1 class={styles.title24}>Earn through</h1>
-            <h1 class={styles.title24}>bounties</h1>
+            <h1 class={`${styles.title24} -mt-10px`}>bounties</h1>
           </div>
           <div class="row-start-3 row-end-5 col-start-1 col-end-2 border pt-52px pl-32px">
             <h1 class={styles.title24}>Build an</h1>
-            <h1 class={styles.title24}>organization</h1>
+            <h1 class={`${styles.title24} -mt-10px`}>organization</h1>
             <p class={`${styles.title14} mt-12px`}>DAO, NGO,Commercial and Community etc</p>
             <div class="mt-104px w-54px h-54px">
               <img
@@ -74,7 +79,7 @@ export default defineComponent({
           </div>
           <div class="row-start-3 row-end-4 col-start-2 col-end-4 border pt-52px pl-32px">
             <h1 class={styles.title24}>Invest</h1>
-            <h1 class={styles.title24}>early startups</h1>
+            <h1 class={`${styles.title24} -mt-10px`}>early startups</h1>
           </div>
           <div class="row-start-4 row-end-5 col-start-2 col-end-5 border pt-36px pl-32px">
             <h1 class={styles.title24}>Buy and Sell</h1>
@@ -82,11 +87,11 @@ export default defineComponent({
           </div>
           <div class="row-start-3 row-end-4 col-start-4 col-end-6 border pt-52px pl-32px">
             <h1 class={styles.title24}>Connect</h1>
-            <h1 class={styles.title24}>global talents</h1>
+            <h1 class={`${styles.title24} -mt-10px`}>global talents</h1>
           </div>
           <div class="row-start-3 row-end-4 col-start-6 col-end-7 border pt-52px pl-32px">
             <h1 class={styles.title24}>Freelance work </h1>
-            <h1 class={styles.title24}>marketplace</h1>
+            <h1 class={`${styles.title24} -mt-10px`}>marketplace</h1>
           </div>
           <div class="row-start-4 row-end-5 col-start-5 col-end-7 border pt-36px pl-32px">
             <h1 class={styles.title24}>Dapp store as a service</h1>

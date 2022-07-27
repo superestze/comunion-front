@@ -11,10 +11,13 @@ import people2_2 from '@/assets/20220725/peoplecircle2@2x.png'
 import people2_3 from '@/assets/20220725/peoplecircle2@3x.png'
 import people_2 from '@/assets/20220725/peoplecircle@2x.png'
 import people_3 from '@/assets/20220725/peoplecircle@3x.png'
-import RelationSrc from '@/assets/20220725/relation.png'
+import relation from '@/assets/20220725/relation.png'
+import relation2 from '@/assets/20220725/relation@2x.png'
+import relation3 from '@/assets/20220725/relation@3x.png'
+import { handleSrcset } from '@/utils/srcset'
 
 export default defineComponent({
-  setup() {
+  render() {
     const list = [
       {
         icons: [people, people_2, people_3],
@@ -38,18 +41,14 @@ export default defineComponent({
           'Anyone can become an investor and make capital gains by investing in a prospective startup they approve of.'
       }
     ]
-    return {
-      list
-    }
-  },
-  render() {
+    const srcset = handleSrcset([relation, relation2, relation3])
     return (
       <>
         <Title title="A New Relation of Production " subTitle="shift your role liberally" />
         <div class="flex justify-center mt-136px">
-          <img src={RelationSrc} alt="relation" />
+          <img src={relation} alt="relation" srcset={srcset} />
         </div>
-        <Blocks list={this.list} class="mt-155px" />
+        <Blocks list={list} class="mt-155px" />
       </>
     )
   }
