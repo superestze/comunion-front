@@ -122,6 +122,9 @@ export const CrowdfundingInformation = defineComponent({
         class: '!grid-rows-[28px,1fr,1fr]',
         formItemProps: {
           first: true,
+          themeOverrides: {
+            feedbackFontSizeMedium: '12px'
+          },
           feedback:
             props.crowdfundingInfo.swapPercent === undefined ||
             Number(props.crowdfundingInfo.swapPercent) > 0
@@ -186,6 +189,9 @@ export const CrowdfundingInformation = defineComponent({
         class: '!grid-rows-[28px,1fr,1fr]',
         formItemProps: {
           first: true,
+          themeOverrides: {
+            feedbackFontSizeMedium: '12px'
+          },
           feedback:
             props.crowdfundingInfo.buyPrice === undefined ||
             (!!props.crowdfundingInfo.buyPrice &&
@@ -236,6 +242,9 @@ export const CrowdfundingInformation = defineComponent({
         title: 'Maximum Buy',
         name: 'maxBuyAmount',
         class: '!grid-rows-[28px,1fr,1fr]',
+        formItemProps: {
+          first: true
+        },
         slots: {
           label: () => [
             h(
@@ -291,6 +300,9 @@ export const CrowdfundingInformation = defineComponent({
         name: 'sellTax',
         formItemProps: {
           first: true,
+          themeOverrides: {
+            feedbackFontSizeMedium: '12px'
+          },
           feedback:
             props.crowdfundingInfo.sellTax === undefined ||
             (!!props.crowdfundingInfo.sellTax &&
@@ -326,12 +338,22 @@ export const CrowdfundingInformation = defineComponent({
       },
       {
         t: 'custom',
-        title: 'Maximum Sell(%)',
+        title: 'Maximum Sell (%)',
         name: 'maxSell',
         class: '!grid-rows-[28px,1fr,1fr]',
+        slots: {
+          label: () => [
+            h(
+              <div class="flex items-end">
+                Maximum Sell (%)
+                <span class="n-form-item-label__asterisk">&nbsp;*</span>{' '}
+              </div>
+            )
+          ]
+        },
         rules: [
           {
-            validator: (rule, value) => !!value,
+            validator: (_rule, value) => !!value,
             message: 'Maximum Sell cannot be blank',
             trigger: ['input']
           },
@@ -343,11 +365,14 @@ export const CrowdfundingInformation = defineComponent({
         ],
         formItemProps: {
           first: true,
+          themeOverrides: {
+            feedbackFontSizeMedium: '12px'
+          },
           feedback:
             props.crowdfundingInfo.maxSell === undefined ||
             (!!props.crowdfundingInfo.maxSell &&
               new Big(props.crowdfundingInfo.maxSell).gt(new Big(0)))
-              ? 'Fees to be deducted when investors sell tokens'
+              ? 'Maximum sellable is the  percentage of token each investor can sell'
               : undefined
         },
         render(value) {
@@ -363,10 +388,10 @@ export const CrowdfundingInformation = defineComponent({
       },
       {
         t: 'date',
-        title: 'Start Date(UTC)',
+        title: 'Start Date (UTC)',
         name: 'startTime',
         type: 'datetime',
-        class: 'w-full',
+        class: 'w-full !grid-rows-[28px,1fr,1fr]',
         actions: ['clear', 'confirm'],
         format: 'yyyy-MM-dd HH:mm',
         rules: [
@@ -387,18 +412,16 @@ export const CrowdfundingInformation = defineComponent({
       },
       {
         t: 'date',
-        title: 'End Date(UTC)',
+        title: 'End Date (UTC)',
         name: 'endTime',
         type: 'datetime',
-        class: 'w-full',
+        class: 'w-full !grid-rows-[28px,1fr,1fr]',
         actions: ['clear', 'confirm'],
         format: 'yyyy-MM-dd HH:mm',
         rules: [
           { required: true, message: 'Please set the end time' },
           {
             validator: (rule, value) => {
-              console.log('执行==》', value)
-
               if (!value || !props.crowdfundingInfo.startTime) return true
               return dayjs(value).isAfter(dayjs(props.crowdfundingInfo.startTime))
             },

@@ -53,9 +53,17 @@ export const ReviewInfo = defineComponent({
         <div class="title">Crowdfunding End Time :</div>
         <div>{dayjs(this.crowdfundingInfo.endTime).format('YYYY-MM-DD HH:mm:ss')}</div>
         {!!this.crowdfundingInfo.youtube && <div class="title">Youtube :</div>}
-        {!!this.crowdfundingInfo.youtube && <a>{this.crowdfundingInfo.youtube}</a>}
+        {!!this.crowdfundingInfo.youtube && (
+          <a href={this.crowdfundingInfo.youtube} target="__blank" class="text-primary">
+            {this.crowdfundingInfo.youtube}
+          </a>
+        )}
         {!!this.crowdfundingInfo.detail && <div class="title">Crowdfunding detail :</div>}
-        {!!this.crowdfundingInfo.detail && <a>{this.crowdfundingInfo.detail}</a>}
+        {!!this.crowdfundingInfo.detail && (
+          <a href={this.crowdfundingInfo.detail} target="__blank" class="text-primary">
+            {this.crowdfundingInfo.detail}
+          </a>
+        )}
       </div>
     )
   }
