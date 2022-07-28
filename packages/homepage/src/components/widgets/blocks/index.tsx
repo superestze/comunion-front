@@ -48,7 +48,7 @@ export default defineComponent({
                   {item.subtitle}
                 </h3>
               )}
-              <p class="text-16px font-bold text-center mb-72px mt-3px mx-33px text-[#555] leading-normal">
+              <p class="text-16px text-center mb-72px mt-3px mx-33px text-[#555] leading-normal">
                 {item.content}
               </p>
             </div>

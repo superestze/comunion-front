@@ -21,15 +21,15 @@ import wallet3 from '@/assets/20220725/wallet@3x.png'
 export default defineComponent({
   render() {
     return (
-      <div class="flex w-full mt-80px flex-col justify-center">
+      <div class="flex w-full mt-80px flex-col justify-center relative">
         <h1 class="mb-41px text-20px text-center" style={{ color: 'rgba(17,17,17,0.6)' }}>
           You Can
         </h1>
         <div
           class="grid grid-rows-4 grid-cols-6 mx-auto bg-transparent grid-cols-[279px,136px,143px,138px,141px,276px] grid-rows-[180px,180px,180px,180px]"
-          style={{ backgroundColor: '#fff' }}
+          style={{ backgroundColor: 'rgba(255,255,255,0.6)' }}
         >
-          <div class="row-start-1 row-end-3 col-start-1 col-end-3 border border-solid pt-54px pl-48px bg-[#5E18FE] text-white relative">
+          <div class="row-start-1 row-end-3 col-start-1 col-end-3 border border-solid pt-54px pl-48px bg-[#5E18FE] text-white">
             <h1 class={styles.title36}>Lauch</h1>
             <h1 class={`${styles.title36} -mt-10px`}>a startup</h1>
             <p class={`${styles.title14} mt-16px`}>Web3, Crypto, Blockchain, Metaverse etc</p>
@@ -67,7 +67,9 @@ export default defineComponent({
           <div class="row-start-3 row-end-5 col-start-1 col-end-2 border pt-52px pl-32px">
             <h1 class={styles.title24}>Build an</h1>
             <h1 class={`${styles.title24} -mt-10px`}>organization</h1>
-            <p class={`${styles.title14} mt-12px`}>DAO, NGO,Commercial and Community etc</p>
+            <p class={`${styles.title14} mt-12px`} style={{ color: 'rgba(17, 17, 17, 0.5)' }}>
+              DAO, NGO,Commercial and Community etc
+            </p>
             <div class="mt-104px w-54px h-54px">
               <img
                 class="w-full"
@@ -83,7 +85,9 @@ export default defineComponent({
           </div>
           <div class="row-start-4 row-end-5 col-start-2 col-end-5 border pt-36px pl-32px">
             <h1 class={styles.title24}>Buy and Sell</h1>
-            <p class={`${styles.title14} mt-14px`}>Crypto, NFTs, Goods or Services etc</p>
+            <p class={`${styles.title14} mt-14px`} style={{ color: 'rgba(17, 17, 17, 0.5)' }}>
+              Crypto, NFTs, Goods or Services etc
+            </p>
           </div>
           <div class="row-start-3 row-end-4 col-start-4 col-end-6 border pt-52px pl-32px">
             <h1 class={styles.title24}>Connect</h1>

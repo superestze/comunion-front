@@ -1,10 +1,10 @@
 .hoverBox {
-  border: 1px solid #666;
+  border: 1px solid rgb(02 102 102 / 40%);
   border-right-color: transparent;
 }
 
 .hoverBox:last-child {
-  border: 1px solid #666;
+  border: 1px solid rgb(02 102 102 / 40%);
 }
 
 .hoverBox:hover + .hoverBox {
@@ -12,5 +12,5 @@
 }
 
 .hoverBox:hover {
-  border: 1px solid #5e18fe;
+  border: 1px solid rgb(94 24 254 / 40%);
 }
