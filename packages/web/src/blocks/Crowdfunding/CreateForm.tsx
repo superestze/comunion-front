@@ -1,6 +1,7 @@
 import { UButton, UCard, UModal } from '@comunion/components'
 import { WarningFilled } from '@comunion/icons'
 import dayjs from 'dayjs'
+import { ethers } from 'ethers'
 import { defineComponent, PropType, reactive, ref } from 'vue'
 import { AdditionalInformation, AdditionalInformationRef } from './components/AdditionalInfomation'
 import {
@@ -12,7 +13,11 @@ import { ReviewInfo } from './components/ReviewInfo'
 import { VerifyTokenRef, VerifyToken } from './components/VerifyToken'
 import { CrowdfundingInfo } from './typing'
 import Steps, { StepProps } from '@/components/Step'
-import { useCrowdfundingFactoryContract } from '@/contracts'
+import {
+  CrowdfundingFactoryAddresses,
+  useCrowdfundingFactoryContract,
+  useErc20Contract
+} from '@/contracts'
 import { services } from '@/services'
 import { useWalletStore } from '@/stores'
 import { useContractStore } from '@/stores/contract'
@@ -29,7 +34,8 @@ const CreateCrowdfundingForm = defineComponent({
   setup(props, ctx) {
     const walletStore = useWalletStore()
     const contractStore = useContractStore()
-    const crowdfuningContract = useCrowdfundingFactoryContract()
+    const erc20TokenContract = useErc20Contract()
+    const crowdfundingContract = useCrowdfundingFactoryContract()
     const verifyTokenRef = ref<VerifyTokenRef>()
     const fundingInfoRef = ref<CrowdfundingInformationRef>()
     const additionalInfoRef = ref<AdditionalInformationRef>()
@@ -70,7 +76,7 @@ const CreateCrowdfundingForm = defineComponent({
       crowdfundingInfo.current -= 1
     }
     const toNext = () => {
-      if (toNextProcessing.value === true) {
+      if (toNextProcessing.value) {
         return
       }
       toNextProcessing.value = true
@@ -104,26 +110,34 @@ const CreateCrowdfundingForm = defineComponent({
       ctx.emit('cancel')
     }
     const contractSubmit = async () => {
+      const approvePendingText = 'Waiting to submit all contents to blockchain for approval deposit'
       try {
-        const contractRes: any = await crowdfuningContract.createCrowdfundingContract(
+        // convert data to wei unit
+        const raiseGoalTotal = ethers.utils.parseUnits(
+          crowdfundingInfo.sellTokenDeposit!.toString(),
+          crowdfundingInfo.sellTokenDecimals
+        )
+        // get crowdfunding factory address
+        const factoryAddress = CrowdfundingFactoryAddresses[walletStore.chainId!]
+        contractStore.startContract(approvePendingText)
+        // approve sellToken to crowdfund factory contract
+        const erc20Res = await erc20TokenContract(crowdfundingInfo.sellTokenContract!)
+        const approveRes = await erc20Res.approve(factoryAddress, raiseGoalTotal)
+        await approveRes.wait()
+        const contractRes: any = await crowdfundingContract.createCrowdfundingContract(
           crowdfundingInfo.sellTokenContract!,
           crowdfundingInfo.buyTokenContract === MAIN_COIN_ADDR
             ? crowdfundingInfo.sellTokenContract!
             : crowdfundingInfo.buyTokenContract,
-          // BigNumber.from(crowdfundingInfo.sellTokenDeposit).mul(
-          //   BigNumber.from(10).pow(crowdfundingInfo.sellTokenDecimals)
-          // ),
-          // BigNumber.from(crowdfundingInfo.buyPrice!).mul(100),
-          // BigNumber.from(crowdfundingInfo.swapPercent).mul(100),
-          // BigNumber.from(crowdfundingInfo.sellTax).mul(100),
-          // BigNumber.from(crowdfundingInfo.maxBuyAmount!).mul(BigNumber.from(10).pow(18)),
-          // BigNumber.from(crowdfundingInfo.maxSell).mul(100),
-          crowdfundingInfo.sellTokenDeposit,
-          crowdfundingInfo.buyPrice!,
-          crowdfundingInfo.swapPercent,
-          crowdfundingInfo.sellTax,
-          crowdfundingInfo.maxBuyAmount!,
-          crowdfundingInfo.maxSell,
+          ethers.utils.parseUnits(
+            crowdfundingInfo.raiseGoal!.toString(),
+            crowdfundingInfo.sellTokenDecimals
+          ),
+          ethers.utils.parseUnits(crowdfundingInfo.buyPrice!.toString(), 2),
+          ethers.utils.parseUnits(crowdfundingInfo.swapPercent!.toString(), 2),
+          ethers.utils.parseUnits(crowdfundingInfo.sellTax!.toString(), 2),
+          ethers.utils.parseUnits(crowdfundingInfo.maxBuyAmount!.toString(), 18),
+          ethers.utils.parseUnits(crowdfundingInfo.maxSell!.toString(), 2),
           crowdfundingInfo.teamWallet,
           'Waiting to submit all contents to blockchain for creating crowdfunding',
           `Crowdfunding is Creating`
@@ -168,7 +182,7 @@ const CreateCrowdfundingForm = defineComponent({
             crowdfundingInfo.buyTokenContract === MAIN_COIN_ADDR
               ? crowdfundingInfo.sellTokenContract!
               : crowdfundingInfo.buyTokenContract,
-          sellTokenDeposit: crowdfundingInfo.sellTokenDeposit,
+          sellTokenDeposit: Number(crowdfundingInfo.sellTokenDeposit),
           ...dynamic
         })
         ctx.emit('cancel')
