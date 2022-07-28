@@ -1,5 +1,6 @@
 import { NumberDownOutlined, NumberUpOutlined } from '@comunion/icons'
 import Big from 'big.js'
+import { delay } from 'lodash'
 import type { InputProps } from 'naive-ui'
 import { NInput } from 'naive-ui'
 import { defineComponent, ref, watch, PropType } from 'vue'
@@ -39,6 +40,7 @@ const UInputBigNumber = defineComponent({
   setup(props, ctx) {
     const inputValue = ref(props.value)
     const longEnterEventRef = ref()
+    const delayEventRef = ref()
     watch(
       () => inputValue.value,
       n => {
@@ -86,20 +88,20 @@ const UInputBigNumber = defineComponent({
       formatValue(newValue)
     }
 
-    const longEnterStart = (type: 'up' | 'down') => {
+    const longEnterStart = async (type: 'up' | 'down') => {
       longEnterEnd()
-      longEnterEventRef.value = setInterval(
-        () => {
+      delayEventRef.value = await delay(() => {
+        longEnterEventRef.value = setInterval(() => {
           if (type === 'up') {
             addCurrentValue()
           } else {
             minusCurrentValue()
           }
-        },
-        longEnterEventRef.value ? 100 : 300
-      )
+        }, 100)
+      }, 200)
     }
     const longEnterEnd = () => {
+      clearTimeout(delayEventRef.value)
       clearInterval(longEnterEventRef.value)
       longEnterEventRef.value = null
     }

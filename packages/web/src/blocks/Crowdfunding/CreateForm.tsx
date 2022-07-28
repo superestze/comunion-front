@@ -1,17 +1,23 @@
 import { UButton, UCard, UModal } from '@comunion/components'
 import { WarningFilled } from '@comunion/icons'
 import dayjs from 'dayjs'
+import { ethers } from 'ethers'
 import { defineComponent, PropType, reactive, ref } from 'vue'
 import { AdditionalInformation, AdditionalInformationRef } from './components/AdditionalInfomation'
 import {
   CrowdfundingInformation,
-  CrowdfundingInformationRef
+  CrowdfundingInformationRef,
+  MAIN_COIN_ADDR
 } from './components/CrowdfundingInformation'
 import { ReviewInfo } from './components/ReviewInfo'
 import { VerifyTokenRef, VerifyToken } from './components/VerifyToken'
 import { CrowdfundingInfo } from './typing'
 import Steps, { StepProps } from '@/components/Step'
-import { useCrowdfundingFactoryContract } from '@/contracts'
+import {
+  CrowdfundingFactoryAddresses,
+  useCrowdfundingFactoryContract,
+  useErc20Contract
+} from '@/contracts'
 import { services } from '@/services'
 import { useWalletStore } from '@/stores'
 import { useContractStore } from '@/stores/contract'
@@ -28,11 +34,13 @@ const CreateCrowdfundingForm = defineComponent({
   setup(props, ctx) {
     const walletStore = useWalletStore()
     const contractStore = useContractStore()
-    const crowdfuningContract = useCrowdfundingFactoryContract()
+    const erc20TokenContract = useErc20Contract()
+    const crowdfundingContract = useCrowdfundingFactoryContract()
     const verifyTokenRef = ref<VerifyTokenRef>()
     const fundingInfoRef = ref<CrowdfundingInformationRef>()
     const additionalInfoRef = ref<AdditionalInformationRef>()
     const modalVisibleState = ref(false)
+    const toNextProcessing = ref(false)
     const crowdfundingInfo = reactive<CrowdfundingInfo>({
       current: 1,
       // first step
@@ -68,20 +76,27 @@ const CreateCrowdfundingForm = defineComponent({
       crowdfundingInfo.current -= 1
     }
     const toNext = () => {
+      if (toNextProcessing.value) {
+        return
+      }
+      toNextProcessing.value = true
       if (crowdfundingInfo.current === 1) {
         verifyTokenRef.value?.verifyTokenForm?.validate(error => {
+          toNextProcessing.value = false
           if (!error) {
             crowdfundingInfo.current += 1
           }
         })
       } else if (crowdfundingInfo.current === 2) {
         fundingInfoRef.value?.crowdfundingInfoForm?.validate(error => {
+          toNextProcessing.value = false
           if (!error) {
             crowdfundingInfo.current += 1
           }
         })
       } else if (crowdfundingInfo.current === 3) {
         additionalInfoRef.value?.additionalInfoForm?.validate(error => {
+          toNextProcessing.value = false
           if (!error) {
             crowdfundingInfo.current += 1
           }
@@ -95,16 +110,34 @@ const CreateCrowdfundingForm = defineComponent({
       ctx.emit('cancel')
     }
     const contractSubmit = async () => {
+      const approvePendingText = 'Waiting to submit all contents to blockchain for approval deposit'
       try {
-        const contractRes: any = await crowdfuningContract.createCrowdfundingContract(
+        // convert data to wei unit
+        const raiseGoalTotal = ethers.utils.parseUnits(
+          crowdfundingInfo.sellTokenDeposit!.toString(),
+          crowdfundingInfo.sellTokenDecimals
+        )
+        // get crowdfunding factory address
+        const factoryAddress = CrowdfundingFactoryAddresses[walletStore.chainId!]
+        contractStore.startContract(approvePendingText)
+        // approve sellToken to crowdfund factory contract
+        const erc20Res = await erc20TokenContract(crowdfundingInfo.sellTokenContract!)
+        const approveRes = await erc20Res.approve(factoryAddress, raiseGoalTotal)
+        await approveRes.wait()
+        const contractRes: any = await crowdfundingContract.createCrowdfundingContract(
           crowdfundingInfo.sellTokenContract!,
-          crowdfundingInfo.buyTokenContract,
-          crowdfundingInfo.sellTokenDeposit,
-          crowdfundingInfo.buyPrice!,
-          crowdfundingInfo.swapPercent,
-          crowdfundingInfo.sellTax,
-          crowdfundingInfo.maxBuyAmount!,
-          crowdfundingInfo.maxSell,
+          crowdfundingInfo.buyTokenContract === MAIN_COIN_ADDR
+            ? crowdfundingInfo.sellTokenContract!
+            : crowdfundingInfo.buyTokenContract,
+          ethers.utils.parseUnits(
+            crowdfundingInfo.raiseGoal!.toString(),
+            crowdfundingInfo.sellTokenDecimals
+          ),
+          ethers.utils.parseUnits(crowdfundingInfo.buyPrice!.toString(), 2),
+          ethers.utils.parseUnits(crowdfundingInfo.swapPercent!.toString(), 2),
+          ethers.utils.parseUnits(crowdfundingInfo.sellTax!.toString(), 2),
+          ethers.utils.parseUnits(crowdfundingInfo.maxBuyAmount!.toString(), 18),
+          ethers.utils.parseUnits(crowdfundingInfo.maxSell!.toString(), 2),
           crowdfundingInfo.teamWallet,
           'Waiting to submit all contents to blockchain for creating crowdfunding',
           `Crowdfunding is Creating`
@@ -145,8 +178,11 @@ const CreateCrowdfundingForm = defineComponent({
           description: crowdfundingInfo.description!,
           sellTokenContract: crowdfundingInfo.sellTokenContract!,
           maxSellPercent: crowdfundingInfo.maxSell!,
-          buyTokenContract: crowdfundingInfo.buyTokenContract,
-          sellTokenDeposit: crowdfundingInfo.sellTokenDeposit,
+          buyTokenContract:
+            crowdfundingInfo.buyTokenContract === MAIN_COIN_ADDR
+              ? crowdfundingInfo.sellTokenContract!
+              : crowdfundingInfo.buyTokenContract,
+          sellTokenDeposit: Number(crowdfundingInfo.sellTokenDeposit),
           ...dynamic
         })
         ctx.emit('cancel')

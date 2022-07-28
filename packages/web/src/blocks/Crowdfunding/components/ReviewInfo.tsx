@@ -41,11 +41,8 @@ export const ReviewInfo = defineComponent({
         <div>
           {this.crowdfundingInfo.maxBuyAmount} {this.crowdfundingInfo.buyTokenName}
         </div>
-        <div class="title">Sell Rate :</div>
-        <div>
-          1 {this.crowdfundingInfo.buyTokenName} = {this.crowdfundingInfo.sellTax}{' '}
-          {this.crowdfundingInfo.sellTokenName}
-        </div>
+        <div class="title">Sell Tax :</div>
+        <div>{this.crowdfundingInfo.sellTax} %</div>
         <div class="title">Maximum Sell :</div>
         <div>{this.crowdfundingInfo.maxSell} % of the bought token amount</div>
         <div class="title">Crowdfunding Start Time :</div>
