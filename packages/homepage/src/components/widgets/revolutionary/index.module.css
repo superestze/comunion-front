@@ -1,6 +1,6 @@
 .hoverBox {
   color: #111;
-  border: 1px solid #666;
+  border: 1px solid rgb(02 102 102 / 40%);
 }
 
 .hoverBox:nth-child(1) {

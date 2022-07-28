@@ -15,9 +15,9 @@ function liRender(item: LiItem) {
     return <li class="text-20px font-bold mb-32px">{item.title}</li>
   }
   return (
-    <li class="text-16px font-400 mb-16px">
+    <li class="text-16px font-400 mb-16px hover:text-white">
       {item.url ? (
-        <a class="hover:text-primary" key={item.title} href={item.url} target="_blank">
+        <a key={item.title} href={item.url} target="_blank">
           {item.title}
         </a>
       ) : (
@@ -78,7 +78,7 @@ export default defineComponent({
     }
     return (
       <div class="flex bg-[#131415] justify-center">
-        <div class="flex w-1110px h-368px text-white justify-between pt-87px">
+        <div class="flex w-1110px h-368px justify-between pt-87px text-white/60">
           <div class="flex items-start cursor-pointer" onClick={goHome}>
             <div class="w-25px h-25px mt-3px mr-10px">
               <img srcset={`${logo}, ${logo2} 2x, ${logo3} 3x`} src={logo} class="w-full" />

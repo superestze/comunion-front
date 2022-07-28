@@ -16,7 +16,9 @@ export default defineComponent({
     return (
       <div>
         <H1 class="mt-240px" text={this.title || ''} />
-        {this.subTitle && <Subtitle class="mt-22px" text={this.subTitle || ''} />}
+        {this.subTitle && (
+          <Subtitle class="mt-22px w-886px text-center mx-auto" text={this.subTitle || ''} />
+        )}
       </div>
     )
   }

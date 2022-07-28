@@ -1,6 +1,6 @@
 import 'virtual:windi.css'
 import { createApp } from 'vue'
 // import App from './App'
-import App1 from './App1'
+import App from './App'
 
-createApp(App1).mount('#app')
+createApp(App).mount('#app')

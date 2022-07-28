@@ -1,7 +1,6 @@
 import { defineComponent } from 'vue'
 import Title from '../title'
 
-import animate from './animate.module.css'
 import innovative1 from '@/assets/20220725/innovative1.png'
 import innovative1_2 from '@/assets/20220725/innovative1@2x.png'
 import innovative1_3 from '@/assets/20220725/innovative1@3x.png'
@@ -65,13 +64,13 @@ export default defineComponent({
             const srcset = handleSrcset(item.icons)
             return (
               <div
-                class={`grid gap-x-30px gap-y-33px w-540px h-300px bg-white rounded-2px ${str0} ${str1} ${animate['undefined-float-shadow']}`}
+                class={`grid gap-x-30px gap-y-33px w-540px h-224px bg-white rounded-2px ${str0} ${str1}`}
                 key={item.title}
               >
-                <h1 class="flex items-center text-24px text-[#111] font-bold row-start-1 row-end-2 col-start-1 col-end-2 ml-32px">
+                <h1 class="flex items-end text-24px text-[#111] font-bold row-start-1 row-end-2 col-start-1 col-end-2 ml-32px">
                   {item.title}
                 </h1>
-                <p class="text-16px text-[#555] font-bold row-start-2 row-end-3 col-start-1 col-end-2 ml-32px leading-normal">
+                <p class="text-16px text-[#555] font-bold row-start-2 row-end-3 col-start-1 col-end-2 ml-32px leading-normal content-start">
                   {item.content}
                 </p>
                 <div class="row-start-2 row-end-3 col-start-2 col-end-3 w-64px h-64px justify-start items-start mr-40px">
