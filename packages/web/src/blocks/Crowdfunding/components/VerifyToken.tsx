@@ -120,7 +120,10 @@ export const VerifyToken = defineComponent({
         t: 'custom',
         name: '',
         title: '',
-        class: props.crowdfundingInfo.sellTokenName ? '!grid-rows-[0,1fr]' : 'hidden',
+        class:
+          props.crowdfundingInfo.sellTokenContract && props.crowdfundingInfo.sellTokenName
+            ? '!grid-rows-[0,1fr]'
+            : 'hidden',
         render(value) {
           return (
             <div class="grid grid-cols-[100px,2fr]">
