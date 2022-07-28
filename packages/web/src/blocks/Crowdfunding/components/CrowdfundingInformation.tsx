@@ -18,6 +18,8 @@ import { CrowdfundingInfo } from '../typing'
 import { getBuyCoinAddress } from '../utils'
 import { useWalletStore } from '@/stores'
 
+export const MAIN_COIN_ADDR = '0x0'
+
 export interface CrowdfundingInformationRef {
   crowdfundingInfoForm: FormInst | null
 }
@@ -34,7 +36,7 @@ export const CrowdfundingInformation = defineComponent({
     const walletStore = useWalletStore()
     const crowdfundingInfoForm = ref<FormInst | null>(null)
     const raiseGoalOptions = ref<SelectOption[]>(
-      getBuyCoinAddress(props.crowdfundingInfo.sellTokenContract!)[walletStore.chainId as number]
+      getBuyCoinAddress(MAIN_COIN_ADDR)[walletStore.chainId as number]
     )
     // const getMainCoin = async () => {}
     onMounted(() => {
@@ -71,7 +73,7 @@ export const CrowdfundingInformation = defineComponent({
         formItemProps: {
           first: true
         },
-        class: '!grid-rows-[28px,1fr,1fr]',
+        class: '!grid-rows-[28px,40px,1fr] items-start',
         slots: {
           label: () => [
             h(
@@ -119,18 +121,9 @@ export const CrowdfundingInformation = defineComponent({
         title: 'Swap',
         name: 'swapPercent',
         first: true,
-        class: '!grid-rows-[28px,1fr,1fr]',
+        class: '!grid-rows-[28px,60px,1fr] items-start',
         formItemProps: {
-          first: true,
-          themeOverrides: {
-            feedbackFontSizeMedium: '12px'
-          },
-          feedback:
-            props.crowdfundingInfo.swapPercent === undefined ||
-            Number(props.crowdfundingInfo.swapPercent) > 0
-              ? `${props.crowdfundingInfo.swapPercent || '?'} % of the raised funds will go into the
-              swap pool`
-              : undefined
+          first: true
         },
         slots: {
           label: () => [
@@ -157,14 +150,11 @@ export const CrowdfundingInformation = defineComponent({
           {
             validator: (rule, value) => !!value,
             message: 'Swap cannot be blank',
-            trigger: ['input']
+            trigger: ['blur']
           },
           {
             validator: (rule, value) => value > 0,
             message: 'Swap must be positive number',
-            renderMessage() {
-              return <span>Swap must be positive number</span>
-            },
             trigger: 'blur'
           }
         ],
@@ -174,10 +164,14 @@ export const CrowdfundingInformation = defineComponent({
               <UInputBigNumber
                 placeholder="EX：70"
                 max="100"
-                precision={18}
+                precision={2}
                 v-model:value={props.crowdfundingInfo.swapPercent}
                 class="flex-1"
               ></UInputBigNumber>
+              <div class="my-1 text-sx text-grey4">
+                {props.crowdfundingInfo.swapPercent || '?'} % of the raised funds will go into the
+                swap pool
+              </div>
             </div>
           )
         }
@@ -186,18 +180,9 @@ export const CrowdfundingInformation = defineComponent({
         t: 'custom',
         title: 'IBO Rate',
         name: 'buyPrice',
-        class: '!grid-rows-[28px,1fr,1fr]',
+        class: '!grid-rows-[28px,60px,1fr] items-start',
         formItemProps: {
-          first: true,
-          themeOverrides: {
-            feedbackFontSizeMedium: '12px'
-          },
-          feedback:
-            props.crowdfundingInfo.buyPrice === undefined ||
-            (!!props.crowdfundingInfo.buyPrice &&
-              new Big(props.crowdfundingInfo.buyPrice).gt(new Big(0)))
-              ? 'The price is at when investors buy token during Crowdfunding'
-              : undefined
+          first: true
         },
         slots: {
           label: () => [
@@ -216,24 +201,29 @@ export const CrowdfundingInformation = defineComponent({
         rules: [
           {
             validator: (rule, value) => !!value,
-            message: 'Swap cannot be blank',
-            trigger: ['input']
+            message: 'IBO Rate cannot be blank',
+            trigger: ['blur']
           },
           {
             validator: (rule, value) => value > 0,
-            message: 'Swap must be positive number',
+            message: ' IBO Rate must be positive number',
             trigger: 'blur'
           }
         ],
         render(value) {
           return (
-            <UInputBigNumber
-              placeholder="EX:10"
-              maxlength="20"
-              precision={18}
-              v-model:value={props.crowdfundingInfo.buyPrice}
-              class="flex-1"
-            ></UInputBigNumber>
+            <div class="w-full">
+              <UInputBigNumber
+                placeholder="EX:10"
+                maxlength="20"
+                precision={18}
+                v-model:value={props.crowdfundingInfo.buyPrice}
+                class="flex-1"
+              ></UInputBigNumber>
+              <div class="my-1 text-xs text-grey4">
+                The price is at when investors buy token during Crowdfunding
+              </div>
+            </div>
           )
         }
       },
@@ -241,7 +231,7 @@ export const CrowdfundingInformation = defineComponent({
         t: 'custom',
         title: 'Maximum Buy',
         name: 'maxBuyAmount',
-        class: '!grid-rows-[28px,1fr,1fr]',
+        class: '!grid-rows-[28px,40px,1fr] items-start',
         formItemProps: {
           first: true
         },
@@ -259,7 +249,7 @@ export const CrowdfundingInformation = defineComponent({
           {
             validator: (rule, value) => !!value,
             message: 'Maximum Buy cannot be blank',
-            trigger: ['input']
+            trigger: ['blur']
           },
           {
             validator: (rule, value) => value > 0,
@@ -282,43 +272,30 @@ export const CrowdfundingInformation = defineComponent({
       {
         t: 'custom',
         title: 'Sell Tax',
-        class: '!grid-rows-[28px,1fr,1fr]',
+        class: '!grid-rows-[28px,60px,1fr] items-start',
         slots: {
           label: () => [
             h(
               <div class="flex items-end">
                 Sell Tax(%)
                 <span class="n-form-item-label__asterisk">&nbsp;*</span>{' '}
-                {/* <span>
-                  1 {props.crowdfundingInfo.buyTokenName} = {props.crowdfundingInfo.buyPrice || '?'}{' '}
-                  {props.crowdfundingInfo.sellTokenName}
-                </span> */}
               </div>
             )
           ]
         },
         name: 'sellTax',
         formItemProps: {
-          first: true,
-          themeOverrides: {
-            feedbackFontSizeMedium: '12px'
-          },
-          feedback:
-            props.crowdfundingInfo.sellTax === undefined ||
-            (!!props.crowdfundingInfo.sellTax &&
-              new Big(props.crowdfundingInfo.sellTax).gt(new Big(0)))
-              ? 'Fees to be deducted when investors sell tokens'
-              : undefined
+          first: true
         },
         rules: [
           {
             validator: (rule, value) => !!value,
-            message: 'Maximum Sell cannot be blank',
-            trigger: ['input']
+            message: 'Sell Tax cannot be blank',
+            trigger: ['blur']
           },
           {
             validator: (rule, value) => value > 0,
-            message: 'Maximum Buy  must be positive  number',
+            message: 'Sell Tax must be positive number',
             trigger: 'blur'
           }
         ],
@@ -327,11 +304,14 @@ export const CrowdfundingInformation = defineComponent({
             <div class="w-full">
               <UInputBigNumber
                 max="100"
-                precision={18}
+                precision={2}
                 placeholder="EX:10"
                 v-model:value={props.crowdfundingInfo.sellTax}
                 class="flex-1"
               ></UInputBigNumber>
+              <div class="my-1 text-xs text-grey4">
+                Fees to be deducted when investors sell tokens
+              </div>
             </div>
           )
         }
@@ -340,7 +320,7 @@ export const CrowdfundingInformation = defineComponent({
         t: 'custom',
         title: 'Maximum Sell (%)',
         name: 'maxSell',
-        class: '!grid-rows-[28px,1fr,1fr]',
+        class: '!grid-rows-[28px,60px,1fr] items-start',
         slots: {
           label: () => [
             h(
@@ -355,34 +335,30 @@ export const CrowdfundingInformation = defineComponent({
           {
             validator: (_rule, value) => !!value,
             message: 'Maximum Sell cannot be blank',
-            trigger: ['input']
+            trigger: ['blur']
           },
           {
             validator: (rule, value) => value > 0,
-            message: 'Maximum Buy  must be positive  number',
+            message: 'Maximum Sell must be positive number',
             trigger: 'blur'
           }
         ],
         formItemProps: {
-          first: true,
-          themeOverrides: {
-            feedbackFontSizeMedium: '12px'
-          },
-          feedback:
-            props.crowdfundingInfo.maxSell === undefined ||
-            (!!props.crowdfundingInfo.maxSell &&
-              new Big(props.crowdfundingInfo.maxSell).gt(new Big(0)))
-              ? 'Maximum sellable is the  percentage of token each investor can sell'
-              : undefined
+          first: true
         },
         render(value) {
           return (
-            <UInputBigNumber
-              max="100"
-              precision={18}
-              v-model:value={props.crowdfundingInfo.maxSell}
-              class="flex-1"
-            ></UInputBigNumber>
+            <div class="w-full">
+              <UInputBigNumber
+                max="100"
+                precision={2}
+                v-model:value={props.crowdfundingInfo.maxSell}
+                class="flex-1"
+              ></UInputBigNumber>
+              <div class="my-1 text-grey4 text-xs">
+                Maximum sellable is the percentage of token each investor can sell
+              </div>
+            </div>
           )
         }
       },
@@ -391,7 +367,7 @@ export const CrowdfundingInformation = defineComponent({
         title: 'Start Date (UTC)',
         name: 'startTime',
         type: 'datetime',
-        class: 'w-full !grid-rows-[28px,1fr,1fr]',
+        class: 'w-full !grid-rows-[28px,40px,1fr] items-start',
         actions: ['clear', 'confirm'],
         format: 'yyyy-MM-dd HH:mm',
         rules: [
@@ -402,7 +378,7 @@ export const CrowdfundingInformation = defineComponent({
               return dayjs(value).isBefore(dayjs(props.crowdfundingInfo.endTime))
             },
             message: 'Start time needs to be before End time',
-            trigger: ['input']
+            trigger: ['blur']
           }
         ],
         isDateDisabled: (current: number) => {
@@ -415,7 +391,7 @@ export const CrowdfundingInformation = defineComponent({
         title: 'End Date (UTC)',
         name: 'endTime',
         type: 'datetime',
-        class: 'w-full !grid-rows-[28px,1fr,1fr]',
+        class: 'w-full !grid-rows-[28px,40px,1fr] items-start',
         actions: ['clear', 'confirm'],
         format: 'yyyy-MM-dd HH:mm',
         rules: [
@@ -426,7 +402,7 @@ export const CrowdfundingInformation = defineComponent({
               return dayjs(value).isAfter(dayjs(props.crowdfundingInfo.startTime))
             },
             message: 'End time needs to be after Start time',
-            trigger: ['input']
+            trigger: ['blur']
           }
         ],
         isDateDisabled: (current: number) => {

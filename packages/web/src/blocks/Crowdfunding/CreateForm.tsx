@@ -5,7 +5,8 @@ import { defineComponent, PropType, reactive, ref } from 'vue'
 import { AdditionalInformation, AdditionalInformationRef } from './components/AdditionalInfomation'
 import {
   CrowdfundingInformation,
-  CrowdfundingInformationRef
+  CrowdfundingInformationRef,
+  MAIN_COIN_ADDR
 } from './components/CrowdfundingInformation'
 import { ReviewInfo } from './components/ReviewInfo'
 import { VerifyTokenRef, VerifyToken } from './components/VerifyToken'
@@ -33,6 +34,7 @@ const CreateCrowdfundingForm = defineComponent({
     const fundingInfoRef = ref<CrowdfundingInformationRef>()
     const additionalInfoRef = ref<AdditionalInformationRef>()
     const modalVisibleState = ref(false)
+    const toNextProcessing = ref(false)
     const crowdfundingInfo = reactive<CrowdfundingInfo>({
       current: 1,
       // first step
@@ -68,20 +70,27 @@ const CreateCrowdfundingForm = defineComponent({
       crowdfundingInfo.current -= 1
     }
     const toNext = () => {
+      if (toNextProcessing.value === true) {
+        return
+      }
+      toNextProcessing.value = true
       if (crowdfundingInfo.current === 1) {
         verifyTokenRef.value?.verifyTokenForm?.validate(error => {
+          toNextProcessing.value = false
           if (!error) {
             crowdfundingInfo.current += 1
           }
         })
       } else if (crowdfundingInfo.current === 2) {
         fundingInfoRef.value?.crowdfundingInfoForm?.validate(error => {
+          toNextProcessing.value = false
           if (!error) {
             crowdfundingInfo.current += 1
           }
         })
       } else if (crowdfundingInfo.current === 3) {
         additionalInfoRef.value?.additionalInfoForm?.validate(error => {
+          toNextProcessing.value = false
           if (!error) {
             crowdfundingInfo.current += 1
           }
@@ -98,7 +107,17 @@ const CreateCrowdfundingForm = defineComponent({
       try {
         const contractRes: any = await crowdfuningContract.createCrowdfundingContract(
           crowdfundingInfo.sellTokenContract!,
-          crowdfundingInfo.buyTokenContract,
+          crowdfundingInfo.buyTokenContract === MAIN_COIN_ADDR
+            ? crowdfundingInfo.sellTokenContract!
+            : crowdfundingInfo.buyTokenContract,
+          // BigNumber.from(crowdfundingInfo.sellTokenDeposit).mul(
+          //   BigNumber.from(10).pow(crowdfundingInfo.sellTokenDecimals)
+          // ),
+          // BigNumber.from(crowdfundingInfo.buyPrice!).mul(100),
+          // BigNumber.from(crowdfundingInfo.swapPercent).mul(100),
+          // BigNumber.from(crowdfundingInfo.sellTax).mul(100),
+          // BigNumber.from(crowdfundingInfo.maxBuyAmount!).mul(BigNumber.from(10).pow(18)),
+          // BigNumber.from(crowdfundingInfo.maxSell).mul(100),
           crowdfundingInfo.sellTokenDeposit,
           crowdfundingInfo.buyPrice!,
           crowdfundingInfo.swapPercent,
@@ -145,7 +164,10 @@ const CreateCrowdfundingForm = defineComponent({
           description: crowdfundingInfo.description!,
           sellTokenContract: crowdfundingInfo.sellTokenContract!,
           maxSellPercent: crowdfundingInfo.maxSell!,
-          buyTokenContract: crowdfundingInfo.buyTokenContract,
+          buyTokenContract:
+            crowdfundingInfo.buyTokenContract === MAIN_COIN_ADDR
+              ? crowdfundingInfo.sellTokenContract!
+              : crowdfundingInfo.buyTokenContract,
           sellTokenDeposit: crowdfundingInfo.sellTokenDeposit,
           ...dynamic
         })
