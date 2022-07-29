@@ -20,7 +20,7 @@ const TheHeader = defineComponent({
         disabled: false
       },
       {
-        name: 'launch',
+        name: 'finance',
         url: '/launch/list',
         disabled: true
       },

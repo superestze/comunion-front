@@ -9,6 +9,7 @@ import HeaderDropdown from '../../components/HeaderDropdown'
 import NoStartupTip from './components/NoStartupTip'
 import styles from './index.module.css'
 import CreateBountyBlock, { CreateBountyRef } from '@/blocks/Bounty/Create'
+import CreateCrowdfundingBlock, { CreateCrowdfundingRef } from '@/blocks/Crowdfunding/Create'
 import CreateStartupBlock, { CreateStartupRef } from '@/blocks/Startup/Create'
 import { services } from '@/services'
 import { useUserStore } from '@/stores'
@@ -19,6 +20,7 @@ const CreateBlock = defineComponent({
     const userStore = useUserStore()
     const createStartupRef = ref<CreateStartupRef>()
     const createBountyRef = ref<CreateBountyRef>()
+    const createCrowdfundingRef = ref<CreateCrowdfundingRef>()
     const hasStartup = ref(false)
     const NoStartupTipRef = ref()
 
@@ -48,6 +50,14 @@ const CreateBlock = defineComponent({
       }
     }
 
+    const onCreateCrowdfunding = () => {
+      if (hasStartup.value) {
+        createCrowdfundingRef.value?.show()
+      } else {
+        NoStartupTipRef.value?.show()
+      }
+    }
+
     watch(
       () => userStore.profile?.comerID,
       () => {
@@ -64,9 +74,10 @@ const CreateBlock = defineComponent({
       <>
         <CreateStartupBlock ref={createStartupRef} />
         <CreateBountyBlock ref={createBountyRef} />
+        <CreateCrowdfundingBlock ref={createCrowdfundingRef} />
         <NoStartupTip ref={NoStartupTipRef} onToCreate={onCreateStartup} />
         <HeaderDropdown
-          width={356}
+          // width={356}
           title="Create"
           class={styles.dropdown}
           options={[
@@ -79,7 +90,7 @@ const CreateBlock = defineComponent({
                   </div>
                   <div>
                     <div class="text-primary1 u-title2">Startup</div>
-                    <div class="mt-1 text-grey2 u-body2">
+                    <div class="mt-1 text-grey2 text-xs font-semibold">
                       Create your Startup, initial your dream
                     </div>
                   </div>
@@ -95,7 +106,7 @@ const CreateBlock = defineComponent({
                   </div>
                   <div>
                     <div class="text-primary1 u-title2">Bounty</div>
-                    <div class="mt-1 text-grey2 u-body2">
+                    <div class="mt-1 text-grey2 text-xs font-semibold">
                       Post your bounty to expand your startup
                     </div>
                   </div>
@@ -103,16 +114,17 @@ const CreateBlock = defineComponent({
               )
             },
             {
-              key: 'Offering',
-              disabled: true,
+              key: 'Crowdfunding',
               label: () => (
-                <div class="flex items-center">
+                <div class="flex items-center" onClick={onCreateCrowdfunding}>
                   <div class="rounded flex bg-[#f8f8f8] h-8 mr-4 w-8 items-center justify-center">
                     <CreateOfferingFilled class="text-primary" />
                   </div>
                   <div>
-                    <div class="text-primary1 u-title2">Offering</div>
-                    <div class="mt-1 text-grey2 u-body2">Show your skills to earn much more</div>
+                    <div class="text-primary1 u-title2">Crowdfunding</div>
+                    <div class="mt-1 text-grey2 text-xs font-semibold">
+                      Post your crowdfunding for start-up capital
+                    </div>
                   </div>
                 </div>
               )

@@ -5,9 +5,7 @@ import { ProjectCardWithDialog } from '../ProjectCard'
 import ProjectCarousel from '../ProjectCarousel'
 import Text from '../Text'
 import PaymentCard from './Card'
-import ReleaseApplicant from './ReleaseApplicant'
 import AddDeposit from './addDeposit'
-import ApplyBounty from './applyBounty'
 import CloseBounty from './closeBounty'
 import Lock from './lock'
 import ReleaseDeposit from './releaseDeposit'
@@ -88,13 +86,13 @@ export default defineComponent({
             v-slots={{
               btn: () => (
                 <>
-                  {this.roleName === 'applicant' && (
+                  {/* {this.roleName === 'applicant' && (
                     <ApplyBounty
                       disabled={this.stageNum >= 2 || this.applicantApplyStatus >= 0}
                       applicantApplyStatus={this.applicantApplyStatus}
                       applicantDeposit={this.paymentInfo?.bountyPaymentInfo?.applicantDeposit}
                     />
-                  )}
+                  )} */}
                   {this.roleName === 'founder' && <CloseBounty disibled={this.stageNum >= 3} />}
                 </>
               ),
@@ -151,11 +149,11 @@ export default defineComponent({
                       <ReleaseDeposit lock={this.bountyDepositLock} />
                     </div>
                   )}
-                  {this.roleName === 'applicant' && this.stageNum === 1 && (
+                  {/* {this.roleName === 'applicant' && this.stageNum === 1 && (
                     <ReleaseApplicant
                       disabled={(this.paymentInfo?.bountyPaymentInfo?.applicantDeposit || 0) === 0}
                     />
-                  )}
+                  )} */}
                 </>
               ),
               text: () => (

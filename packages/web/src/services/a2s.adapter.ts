@@ -1,7 +1,7 @@
 /* eslint-disable */
 import axios, { AxiosRequestHeaders } from 'axios'
 import { message } from '@comunion/components'
-import { RequestFunctionArgs, ResponseObject } from './a2s.types'
+import { RequestFunctionArgs } from './a2s.types'
 
 import { useUserStore } from '@/stores'
 
@@ -30,8 +30,12 @@ function onErrorHandler(
   code?: number
 } {
   const userStore = useUserStore()
+  let msg = error.message ?? 'Error occured'
   try {
     const rep: BaseResponse = error.response.data
+    if (rep.message) {
+      msg = rep.message
+    }
     if (rep.code === 401 && location.pathname !== '/auth/login') {
       userStore.logout('The token expired, please re-login')
       return { error: true, data: null }
@@ -39,7 +43,6 @@ function onErrorHandler(
   } catch (error) {
     //
   }
-  const msg = error.message ?? 'Error occured'
   if (!skipMessage) {
     message.error(msg)
   }
@@ -76,6 +79,20 @@ export async function requestAdapter<T = any>(
   }
 }
 
+type ResponseObject<T> =
+  | {
+      code?: number
+      error: true
+      data: null
+      message?: string
+      stack?: string | Error
+    }
+  | {
+      error: false
+      data: T
+      message?: string
+    }
+
 export async function upload(
   file: File,
   onProgress: (percent: number) => void
@@ -93,7 +110,9 @@ export async function upload(
       }
     })
     return data.Url as string
-  } catch (error) {
+  } catch (error: any) {
+    console.log('error==>', error.response)
+
     onErrorHandler(error)
     return undefined
   }

@@ -4,7 +4,7 @@ import { defineComponent, PropType, ref, computed } from 'vue'
 import Basic from '../Dialog/basic'
 import Bubble from './core'
 import { ItemType } from './getItemType'
-import { ServiceReturn, services } from '@/services'
+import { ServiceReturn } from '@/services'
 import { useBountyStore, useUserStore } from '@/stores'
 
 export default defineComponent({
@@ -26,7 +26,7 @@ export default defineComponent({
     const { getApprovedPeople, getBountyPayment, get } = bountyStore
 
     const formatDate = computed(() => {
-      return format(props.applicant?.submitAt || '', 'comunionTimeAgo')
+      return format(props.applicant?.applyAt || '', 'comunionTimeAgo')
     })
 
     const approveDisabled = computed(() => {
@@ -53,17 +53,17 @@ export default defineComponent({
         return
       }
 
-      const { error } = await services['bounty@bounty-founder-approve']({
-        bountyID: parseInt(this.$route.query.bountyId as string),
-        applicantComerID: this.profile?.comerID
-      })
-      if (!error) {
-        this.get(this.$route.query.bountyId as string)
-        this.getApprovedPeople(this.$route.query.bountyId as string)
-        this.getBountyPayment(this.$route.query.bountyId as string)
-        triggerDialog()
-        return
-      }
+      // const { error } = await services['bounty@bounty-founder-approve']({
+      //   bountyID: parseInt(this.$route.query.bountyId as string),
+      //   applicantComerID: this.profile?.comerID
+      // })
+      // if (!error) {
+      //   this.get(this.$route.query.bountyId as string)
+      //   this.getApprovedPeople(this.$route.query.bountyId as string)
+      //   this.getBountyPayment(this.$route.query.bountyId as string)
+      //   triggerDialog()
+      //   return
+      // }
     }
     return (
       <>
@@ -111,7 +111,7 @@ export default defineComponent({
                   style={{ maxHeight: '120px' }}
                   class="bg-purple rounded-8px text-black mt-12px py-16px px-24px overflow-hidden"
                 >
-                  <p>{this.applicant?.desription}</p>
+                  {/* <p>{this.applicant?.desription}</p> */}
                 </UScrollbar>
               </div>
             )

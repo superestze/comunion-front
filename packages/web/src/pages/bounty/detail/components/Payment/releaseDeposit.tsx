@@ -1,7 +1,6 @@
 import { UButton } from '@comunion/components'
 import { defineComponent, ref } from 'vue'
 import { BasicDialog } from '../Dialog'
-import { services } from '@/services'
 
 export default defineComponent({
   props: {
@@ -21,12 +20,12 @@ export default defineComponent({
       this.visible = !this.visible
     }
     const handleReleaseDeposit = async () => {
-      const { error } = await services['bounty@bounty-founder-release']({
-        bountyID: parseInt(this.$route.query.bountyId as string)
-      })
-      if (!error) {
-        triggerDialog()
-      }
+      // const { error } = await services['bounty@bounty-founder-release']({
+      //   bountyID: parseInt(this.$route.query.bountyId as string)
+      // })
+      // if (!error) {
+      //   triggerDialog()
+      // }
     }
     return (
       <>
