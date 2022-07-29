@@ -1,150 +1,20 @@
-/* Bounce To Right */
-.undefined-bounce-to-right {
-  position: relative;
+.undefined-back-pulse {
+  display: inline-block;
+  overflow: hidden;
+  vertical-align: middle;
   box-shadow: 0 0 1px rgb(0 0 0 / 0%);
   transform: perspective(1px) translateZ(0);
   transition-duration: 0.5s;
-  transition-property: color;
+  transition-property: color, background-color;
 }
 
-.undefined-bounce-to-right::before {
-  position: absolute;
-  top: 0;
-  right: 0;
-  bottom: 0;
-  left: 0;
-  z-index: -1;
-  background: #fff;
-  transform: scaleX(0);
-  transform-origin: 0 50%;
-  transition-timing-function: ease-out;
-  transition-duration: 0.5s;
-  transition-property: transform;
-  content: '';
-}
-
-.undefined-bounce-to-right:hover,
-.undefined-bounce-to-right:focus,
-.undefined-bounce-to-right:active {
-  color: white;
-}
-
-.undefined-bounce-to-right:hover::before,
-.undefined-bounce-to-right:focus::before,
-.undefined-bounce-to-right:active::before {
-  transform: scaleX(1);
-  transition-timing-function: cubic-bezier(0.52, 1.64, 0.37, 0.66);
-}
-
-/* Bounce To Left */
-.undefined-bounce-to-left {
-  position: relative;
-  transform: perspective(1px) translateZ(0);
-  transition-duration: 0.5s;
-  transition-property: color;
-}
-
-.undefined-bounce-to-left::before {
-  position: absolute;
-  top: 0;
-  right: 0;
-  bottom: 0;
-  left: 0;
-  z-index: -1;
-  background: #fff;
-  transform: scaleX(0);
-  transform-origin: 100% 50%;
-  transition-timing-function: ease-out;
-  transition-duration: 0.5s;
-  transition-property: transform;
-  content: '';
-}
-
-.undefined-bounce-to-left:hover,
-.undefined-bounce-to-left:focus,
-.undefined-bounce-to-left:active {
-  color: white;
-}
-
-.undefined-bounce-to-left:hover::before,
-.undefined-bounce-to-left:focus::before,
-.undefined-bounce-to-left:active::before {
-  transform: scaleX(1);
-  transition-timing-function: cubic-bezier(0.52, 1.64, 0.37, 0.66);
-}
-
-/* Bounce To Bottom */
-.undefined-bounce-to-bottom {
-  position: relative;
-  box-shadow: 0 0 1px rgb(0 0 0 / 0%);
-  transform: perspective(1px) translateZ(0);
-  transition-duration: 0.5s;
-  transition-property: color;
-}
-
-.undefined-bounce-to-bottom::before {
-  position: absolute;
-  top: 0;
-  right: 0;
-  bottom: 0;
-  left: 0;
-  z-index: -1;
-  background: #fff;
-  transform: scaleY(0);
-  transform-origin: 50% 0;
-  transition-timing-function: ease-out;
-  transition-duration: 0.5s;
-  transition-property: transform;
-  content: '';
-}
-
-.undefined-bounce-to-bottom:hover,
-.undefined-bounce-to-bottom:focus,
-.undefined-bounce-to-bottom:active {
-  color: white;
-}
-
-.undefined-bounce-to-bottom:hover::before,
-.undefined-bounce-to-bottom:focus::before,
-.undefined-bounce-to-bottom:active::before {
-  transform: scaleY(1);
-  transition-timing-function: cubic-bezier(0.52, 1.64, 0.37, 0.66);
-}
-
-/* Bounce To Top */
-.undefined-bounce-to-top {
-  position: relative;
-  box-shadow: 0 0 1px rgb(0 0 0 / 0%);
-  transform: perspective(1px) translateZ(0);
-  transition-duration: 0.5s;
-  transition-property: color;
-}
-
-.undefined-bounce-to-top::before {
-  position: absolute;
-  top: 0;
-  right: 0;
-  bottom: 0;
-  left: 0;
-  z-index: -1;
-  background: #fff;
-  transform: scaleY(0);
-  transform-origin: 50% 100%;
-  transition-timing-function: ease-out;
-  transition-duration: 0.5s;
-  transition-property: transform;
-  content: '';
-}
-
-.undefined-bounce-to-top:hover,
-.undefined-bounce-to-top:focus,
-.undefined-bounce-to-top:active {
-  color: white;
-}
-
-.undefined-bounce-to-top:hover::before,
-.undefined-bounce-to-top:focus::before,
-.undefined-bounce-to-top:active::before {
-  transform: scaleY(1);
-  transition-timing-function: cubic-bezier(0.52, 1.64, 0.37, 0.66);
+.undefined-back-pulse:hover,
+.undefined-back-pulse:focus,
+.undefined-back-pulse:active {
+  background-color: white;
+  animation-name: undefined-back-pulse;
+  animation-duration: 1s;
+  animation-timing-function: linear;
+  animation-delay: 0.5s;
+  animation-iteration-count: infinite;
 }

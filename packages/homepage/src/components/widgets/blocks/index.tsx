@@ -20,24 +20,16 @@ export default defineComponent({
     }
   },
   render() {
-    const randomClass: string[] = [
-      'undefined-bounce-to-right',
-      'undefined-bounce-to-left',
-      'undefined-bounce-to-top',
-      'undefined-bounce-to-bottom'
-    ]
     return (
       <div class="flex justify-center">
         {this.list.map(item => {
           const srcset = handleSrcset(item.icons)
           return (
             <div
-              class={`flex w-370px h395px flex-col items-center ${styles.hoverBox} ${
-                animate[randomClass[Math.trunc(Math.random() * 4)]]
-              }`}
+              class={`flex w-370px h395px flex-col items-center ${styles.hoverBox} ${animate['undefined-back-pulse']}`}
               key={item.title}
             >
-              <div class="w-64px h-64px mt-58px">
+              <div class="w-64px h-64px mt-58px mx-auto">
                 <img src={item.icons[0]} srcset={srcset} alt={item.title} />
               </div>
               <h1 class="text-24px font-bold text-center mt-40px text-center mb-25px text-[#111]">
