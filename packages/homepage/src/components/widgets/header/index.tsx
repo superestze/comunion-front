@@ -1,13 +1,35 @@
 import { UButton } from '@comunion/components'
-import { defineComponent } from 'vue'
+import { defineComponent, onMounted, onUnmounted, ref } from 'vue'
 
 import logo from '@/assets/logo.png'
 import { joinComunion } from '@/utils'
 
 export default defineComponent({
+  setup() {
+    // 960 1064
+    //
+    const headerClass = ref<string>('flex justify-between')
+    const scrollFn = () => {
+      if (document.scrollingElement && document.scrollingElement.scrollTop > 1200) {
+        headerClass.value = 'flex justify-between transform translate-y-1200px w-full bg-[#ededf2]'
+      } else {
+        headerClass.value = 'flex justify-between sticky top-0px bg-[#ededf2] z-1'
+      }
+    }
+    onMounted(() => {
+      document.addEventListener('scroll', scrollFn)
+    })
+
+    onUnmounted(() => {
+      document.addEventListener('scroll', scrollFn)
+    })
+    return {
+      headerClass
+    }
+  },
   render() {
     return (
-      <div class="flex justify-between">
+      <div class={this.headerClass}>
         <div class="w-136px <sm:w-119px flex items-center ml-40px">
           <img src={logo} class="w-full" />
         </div>

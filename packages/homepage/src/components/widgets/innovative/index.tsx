@@ -64,7 +64,7 @@ export default defineComponent({
             const srcset = handleSrcset(item.icons)
             return (
               <div
-                class={`grid gap-x-30px gap-y-33px w-540px h-224px bg-white rounded-2px ${str0} ${str1}`}
+                class={`grid gap-x-30px gap-y-33px w-540px h-224px bg-[rgba(255,255,255,0.4)] rounded-2px ${str0} ${str1} hover:bg-white`}
                 key={item.title}
               >
                 <h1 class="flex items-end text-24px text-[#111] font-bold row-start-1 row-end-2 col-start-1 col-end-2 ml-32px">
