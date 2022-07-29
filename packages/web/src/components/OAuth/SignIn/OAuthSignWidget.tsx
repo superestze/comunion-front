@@ -26,12 +26,14 @@ export default defineComponent({
     return () => (
       <>
         <UModal show={associateWalletVisible.value}></UModal>
-        <div class="flex items-center">
+        <div class="flex flex-col">
           <OAuthSignBtn onTriggerBtn={googleLogin}>
-            <GoogleFilled />
+            <GoogleFilled class="h-20px w-20px ml-16px mr-41px" />
+            <span class="text-[#231944] font-bold text-14px">Sign in with Google</span>
           </OAuthSignBtn>
-          <OAuthSignBtn onTriggerBtn={githubLogin}>
-            <GithubFilled />
+          <OAuthSignBtn onTriggerBtn={githubLogin} class="mt-20px">
+            <GithubFilled class="h-20px w-20px ml-16px mr-41px" />
+            <span class="text-[#231944] font-bold text-14px">Sign in with Github</span>
           </OAuthSignBtn>
         </div>
       </>

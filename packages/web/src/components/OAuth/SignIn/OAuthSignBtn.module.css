@@ -1,16 +1,4 @@
-.oauthBtn {
-  /* TODO after finished social login, please remove cursor-not-allowed and change border-grey-5 to border-primary */
-  @apply rounded cursor-pointer flex border-primary border-[2px] h-16 transition-all w-16 duration-500 items-center justify-center;
-
-  &:hover {
-    @apply rounded-4xl;
-  }
-
-  & + & {
-    @apply ml-8;
-  }
-
-  & > svg {
-    @apply h-7 w-7;
-  }
+.oauthBtn:hover {
+  background-color: rgb(94 24 254 / 20%);
+  border-color: rgb(94 24 254 / 20%);
 }
