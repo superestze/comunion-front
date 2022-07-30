@@ -3,6 +3,7 @@ import { WalletOutlined } from '@comunion/icons'
 import { defineComponent, watchEffect, ref } from 'vue'
 
 import { useRoute } from 'vue-router'
+import MoreNavigationPage from './components/More'
 import logo from '@/assets/colorful.png'
 import logo2 from '@/assets/colorful@2x.png'
 import logo3 from '@/assets/colorful@3x.png'
@@ -50,6 +51,7 @@ export default defineComponent({
     }
     return (
       <div class="flex w-100vw h-100vh justify-center items-center bg-[#EDEDF2]">
+        <MoreNavigationPage />
         <div class="flex w-1245px h-542px bg-white relative justify-end rounded-8px">
           <div class="flex flex-col absolute h-606px w-635px text-white bg-primary left-100px -top-32px pl-64px pt-162px rounded-2px">
             <p style={{ color: 'rgba(255,255,255,0.8)' }}>Welcome to Comunion</p>
