@@ -44,15 +44,26 @@ export const VerifyToken = defineComponent({
         }
       }
     }
+    const resetSellToken = () => {
+      props.crowdfundingInfo.sellTokenName = ''
+      props.crowdfundingInfo.sellTokenSymbol = ''
+      props.crowdfundingInfo.sellTokenDecimals = ''
+    }
     const getContractInfo = async (value: string) => {
       const tokenContract = await erc20TokenContract(value) // construct erc20 contract
       try {
-        props.crowdfundingInfo.sellTokenName = await tokenContract.name()
-        props.crowdfundingInfo.sellTokenSymbol = await tokenContract.symbol()
-        props.crowdfundingInfo.sellTokenDecimals = await tokenContract.decimals()
-        props.crowdfundingInfo.sellTokenSupply = await tokenContract.totalSupply()
+        const [name, symbol, decimals] = await Promise.all([
+          tokenContract.name(),
+          tokenContract.symbol(),
+          tokenContract.decimals()
+        ])
+        props.crowdfundingInfo.sellTokenName = name
+        props.crowdfundingInfo.sellTokenSymbol = symbol
+        props.crowdfundingInfo.sellTokenDecimals = decimals
+        // props.crowdfundingInfo.sellTokenSupply = await tokenContract.totalSupply()
         return true
       } catch (error) {
+        resetSellToken()
         return false
       }
     }
@@ -80,7 +91,12 @@ export const VerifyToken = defineComponent({
           { required: true, message: 'Token contract cannot be blank', trigger: 'blur' },
           {
             validator: (rule, value: string) => {
-              return /^0x[a-zA-Z\d]{40}/.test(value) && value.length === 42
+              if (/^0x[a-zA-Z\d]{40}/.test(value) && value.length === 42) {
+                return true
+              } else {
+                resetSellToken()
+                return false
+              }
             },
             message: 'Invalid token contract',
             trigger: 'blur'

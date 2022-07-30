@@ -6,7 +6,7 @@ import {
   UFormItemsFactory,
   USingleImageFileUpload
 } from '@comunion/components'
-import { defineComponent, PropType, computed, Ref, ref, watch } from 'vue'
+import { defineComponent, PropType, computed, Ref, ref, watch, h } from 'vue'
 import { CrowdfundingInfo } from '../typing'
 import RichEditor from '@/components/Editor'
 
@@ -58,6 +58,16 @@ export const AdditionalInformation = defineComponent({
             trigger: 'change'
           }
         ],
+        slots: {
+          label: () => [
+            h(
+              <div class="flex items-end">
+                Poster
+                <span class="n-form-item-label__asterisk">&nbsp;*</span>{' '}
+              </div>
+            )
+          ]
+        },
         formItemProps: {
           first: true
         },
