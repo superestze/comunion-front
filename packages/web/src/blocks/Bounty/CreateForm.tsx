@@ -282,7 +282,11 @@ const CreateBountyForm = defineComponent({
     return (
       <div>
         <div class="mb-15 mx-35">
-          <Steps steps={this.stepOptions} current={this.bountyInfo.current} />
+          <Steps
+            steps={this.stepOptions}
+            current={this.bountyInfo.current}
+            classes={{ stepTitle: 'whitespace-nowrap' }}
+          />
         </div>
         {this.bountyInfo.current === 1 && (
           <BountyBasicInfo

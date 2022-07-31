@@ -10,7 +10,7 @@ const abi = '<%= abi %>'
 
 export function use<%= title %>Contract(): {
   getContract: () => Contract<% abiArr.forEach(function(func, index) { %>
-  <%= func.name %>: (<%=generateArgs(func.inputs) %>, pendingText: string, waitingText: string) => Promise<[<%= generateArgs(func.outputs, true) %>]><% }) %>
+  <%= func.name %>: (<%=generateArgs(func.inputs) ? generateArgs(func.inputs) + ',' : '' %> pendingText: string, waitingText: string) => Promise<[<%= generateArgs(func.outputs, true) %>]><% }) %>
 } {
   const walletStore = useWalletStore()
   const getContractArgs = computed<GetContractArgs>(() => {

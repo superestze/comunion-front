@@ -1,5 +1,4 @@
 import { resolve } from 'path'
-import axios from 'axios'
 import { convertCamelCase } from '../../packages/utils/src'
 // import { Ora } from 'ora'
 import { renderToFile } from '../utils'
@@ -43,19 +42,65 @@ interface ContractItem {
 }
 
 async function fetchContracts(): Promise<ContractItem[]> {
-  const res = await axios({
-    url: `https://${GITHUB_RAW_PROXY_URL}/comunion-io/comunion-contract/main/contractAddress.json`
-  })
+  // const res = await axios({
+  //   url: `https://${GITHUB_RAW_PROXY_URL}/comunion-io/comunion-contract/main/contractAddress.json`
+  // })
 
-  const configurations = res.data as ContractAddressConfiguration
+  // const configurations = res.data as ContractAddressConfiguration
+
+  const configurations = [
+    {
+      name: 'Startup',
+      abiUrl: '/contracts/artifacts/Startup.json',
+      addresses: [
+        {
+          chainId: 1,
+          chainName: 'Ethereum',
+          address: ''
+        },
+        {
+          chainId: 5,
+          chainName: 'Goerli',
+          address: '0xEdf4565af54D9508e247c044F09EddcaD91DAdED'
+        },
+        {
+          chainId: 43113,
+          chainName: 'avaxTest',
+          address: '0x7E94572BCc67B6eDa93DBa0493b681dC0ae9E964'
+        },
+        {
+          chainId: 43114,
+          chainName: 'avaxMain',
+          address: '0x45BE0Eaa7076854d790A9583c6E3AE020d1A1556'
+        }
+      ]
+    },
+    {
+      name: 'Bounty',
+      abiUrl: '/contracts/artifacts/Bounty.json',
+      addresses: [
+        {
+          chainId: 43113,
+          chainName: 'avaxTest',
+          address: '0xdBAd77b0994F262Ebf91f87F1A1975B30786Ac0c'
+        },
+        {
+          chainId: 43114,
+          chainName: 'avaxMain',
+          address: '0x515651e1c1A55cA468742cB5ea08Ca7c030d928a'
+        }
+      ]
+    }
+  ]
 
   const contracts: ContractItem[] = []
   for (const element of configurations) {
-    const response = await axios({
-      url: `https://${GITHUB_RAW_PROXY_URL}/comunion-io/comunion-contract/main${element.abiUrl}`
-    })
-
-    const abis = (response.data as { abi: ABIItem[] }).abi.filter(abi => abi.type === 'function')
+    // const response = await axios({
+    //   url: `https://${GITHUB_RAW_PROXY_URL}/comunion-io/comunion-contract/main${element.abiUrl}`
+    // })
+    const response = await import(`./${element.name}.json`)
+    console.log(response)
+    const abis = (response as { abi: ABIItem[] }).abi.filter(abi => abi.type === 'function')
     contracts.push({
       title: element.name,
       abi: JSON.stringify(abis),

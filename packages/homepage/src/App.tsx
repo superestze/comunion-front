@@ -1,49 +1,41 @@
 // Comunion Economics
+import { UMessage, UMessageProvider, UModalProvider } from '@comunion/components'
 import { UStyleProvider } from '@comunion/components/src/UStyleProvider'
 import { defineComponent } from 'vue'
-import ComunionEconomics from './components/ComunionEconomics'
-// Fotter
-import Footer from './components/Footer'
-// Head
-import Head from './components/Head'
-// introduce_and_join
-import IntroduceAndJoin from './components/IntroduceAndJoin'
-// Mission
-import Mission from './components/Mission'
-// Response
-import OurResponse from './components/OurResponse'
-// PainsOfWorld
-import PainsOfWorld from './components/PainsOfWorld'
-// UseCases
-import UseCases from './components/UseCases'
-import styles from './index.module.css'
+import app from './app.module.css'
+import Background from './components/widgets/background'
+import Benefits from './components/widgets/benefits'
+import { First } from './components/widgets/describe'
+import Ecomomy from './components/widgets/ecomomy'
+import Footer from './components/widgets/footer'
+import Header from './components/widgets/header'
+import Innovative from './components/widgets/innovative'
+import Overview from './components/widgets/overview'
+import Relation from './components/widgets/relation'
+import Revolutionary from './components/widgets/revolutionary'
 
 export default defineComponent({
   name: 'HomePage',
   setup() {
     return () => (
       <UStyleProvider>
-        <div class="bg-[#151515]">
-          {/* Head */}
-          <Head />
-          {/* content */}
-          <div class={`${styles.contentBox}`}>
-            {/* introduce_and_join */}
-            <IntroduceAndJoin />
-            {/* Comunion Economics */}
-            <ComunionEconomics />
-            {/* Mission */}
-            <Mission />
-            {/* PainsOfWorld */}
-            <PainsOfWorld />
-            {/* Response */}
-            <OurResponse />
-            {/* UseCases */}
-            <UseCases />
+        <UMessageProvider>
+          <UMessage />
+        </UMessageProvider>
+        <UModalProvider>
+          <div class={app.content}>
+            <Background />
+            <Header />
+            <First />
+            <Overview />
+            <Ecomomy />
+            <Revolutionary />
+            <Relation />
+            <Benefits />
+            <Innovative />
+            <Footer />
           </div>
-          {/* Footer */}
-          <Footer />
-        </div>
+        </UModalProvider>
       </UStyleProvider>
     )
   }

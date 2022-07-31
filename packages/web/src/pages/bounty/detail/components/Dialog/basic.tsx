@@ -1,0 +1,49 @@
+import { UCard, UModal } from '@comunion/components'
+import { defineComponent } from 'vue'
+
+export default defineComponent({
+  props: {
+    visible: {
+      type: Boolean,
+      require: true
+    },
+    title: {
+      type: String,
+      require: true
+    },
+    content: {
+      type: String,
+      require: true
+    }
+  },
+  emits: ['triggerDialog'],
+  render() {
+    const triggerDialog = () => {
+      this.$emit('triggerDialog')
+    }
+
+    return (
+      <UModal show={this.visible}>
+        <UCard
+          style="width: 600px"
+          bordered={false}
+          size="huge"
+          role="dialog"
+          aria-modal="true"
+          closable
+          onClose={triggerDialog}
+          v-slots={{
+            header: () => (
+              <div>
+                <div>{this.title}</div>
+              </div>
+            )
+          }}
+        >
+          <p class="text-grey3 mt-24px mb-64px">{this.content}</p>
+          {this.$slots.btns && this.$slots.btns()}
+        </UCard>
+      </UModal>
+    )
+  }
+})

@@ -42,11 +42,13 @@
     "@comunion/hooks": "workspace:^0.0.1",
     "@comunion/icons": "0.0.1",
     "@comunion/utils": "0.0.1",
+    "big.js": "^6.2.1",
     "copy-to-clipboard": "^3.3.1",
     "naive-ui": "^2.30.8",
     "vue": "^3.2.31"
   },
   "devDependencies": {
+    "@types/big.js": "^6.1.5",
     "@vitejs/plugin-vue": "^2.2.4",
     "@vitejs/plugin-vue-jsx": "^1.3.8",
     "esbuild": "^0.14.25",

@@ -1,16 +1,19 @@
 import { defineComponent } from 'vue'
-import styles from './OAuthSignBtn.module.css'
+import oauthClass from './OAuthSignBtn.module.css'
 
 export default defineComponent({
   name: 'OAuthSignBtn',
   emits: ['triggerBtn'],
-  setup(props, ctx) {
+  render() {
     const handleClick = () => {
-      ctx.emit('triggerBtn')
+      this.$emit('triggerBtn')
     }
-    return () => (
-      <div class={styles.oauthBtn} onClick={handleClick}>
-        {ctx.slots.default?.()}
+    return (
+      <div
+        class={`${oauthClass.oauthBtn} w-full h-40px flex items-center border border-[#666] rounded-2px cursor-pointer`}
+        onClick={handleClick}
+      >
+        {this.$slots.default?.()}
       </div>
     )
   }

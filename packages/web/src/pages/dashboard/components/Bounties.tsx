@@ -1,17 +1,22 @@
 import { UCard, UDeveloping, UTabPane, UTabs, UScrollList, UNoContent } from '@comunion/components'
 import { EmptyFilled, PlusOutlined } from '@comunion/icons'
-import { defineComponent, ref, watch, onMounted, reactive } from 'vue'
+import { defineComponent, ref, onMounted, reactive } from 'vue'
 import BountiesCard from '../../startup/detail/components/Bounties'
 import CreateBountyBlock, { CreateBountyRef } from '@/blocks/Bounty/Create'
 import CreateStartupBlock, { CreateStartupRef } from '@/blocks/Startup/Create'
 import NoStartupTip from '@/layouts/default/blocks/Create/components/NoStartupTip'
 import { services, ServiceReturn } from '@/services'
-import { useUserStore } from '@/stores'
 type BountyType = NonNullable<ServiceReturn<'bounty@my-posted-bounty-list'>>['rows']
 
 const Bounties = defineComponent({
   name: 'Bounties',
-  setup(prop, ctx) {
+  props: {
+    userHasStartup: {
+      type: Boolean,
+      default: false
+    }
+  },
+  setup(props, ctx) {
     const pagination = reactive({
       pageSize: 4,
       total: 0,
@@ -76,43 +81,30 @@ const Bounties = defineComponent({
       val.pageSize = 4
       val.page = 1
     }
-    const userHasStartup = ref(false)
+    // const userHasStartup = ref(false)
     const createStartupRef = ref<CreateStartupRef>()
     const createRef = ref<CreateBountyRef>()
     const noStartupRef = ref()
-    const userStore = useUserStore()
-
-    const getStartupByComerId = async (comerID: number | undefined) => {
-      try {
-        const { error, data } = await services['bounty@bounty-startups']({
-          comerID
-        })
-        if (!error) {
-          userHasStartup.value = !!(data.list || []).length
-        }
-      } catch (error) {
-        console.error('error', error)
-      }
-    }
+    // const userStore = useUserStore()
 
     const onCreateStartup = () => {
       createStartupRef.value?.show()
     }
 
-    watch(
-      () => userStore.profile?.comerID,
-      () => {
-        if (userStore.profile?.comerID) {
-          getStartupByComerId(userStore.profile?.comerID)
-        }
-      },
-      {
-        immediate: true
-      }
-    )
+    // watch(
+    //   () => userStore.profile?.comerID,
+    //   () => {
+    //     if (userStore.profile?.comerID) {
+    //       getStartupByComerId(userStore.profile?.comerID)
+    //     }
+    //   },
+    //   {
+    //     immediate: true
+    //   }
+    // )
 
     const createNewBounty = () => {
-      if (userHasStartup.value) {
+      if (props.userHasStartup) {
         createRef.value?.show()
       } else {
         noStartupRef.value?.show()
