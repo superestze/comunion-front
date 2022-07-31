@@ -33,13 +33,13 @@ const UInputNumberGroup = defineComponent({
   emits: ['update:value'],
   setup(props, ctx) {
     const inputValue = ref(props.value)
+    const longEnterEventRef = ref()
     watch(
       () => inputValue.value,
       n => {
         ctx.emit('update:value', n)
       }
     )
-
     const rightPart = () => {
       if (props.type === 'withUnit') {
         return props.renderUnit?.()
