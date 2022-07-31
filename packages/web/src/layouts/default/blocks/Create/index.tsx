@@ -127,7 +127,8 @@ const CreateBlock = defineComponent({
                     </div>
                   </div>
                 </div>
-              )
+              ),
+              disabled: true
             }
           ]}
         >
