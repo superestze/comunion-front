@@ -1,0 +1,16 @@
+.hoverBox {
+  border: 1px solid rgb(02 102 102 / 40%);
+  border-right-color: transparent;
+}
+
+.hoverBox:last-child {
+  border: 1px solid rgb(02 102 102 / 40%);
+}
+
+.hoverBox:hover + .hoverBox {
+  border-left-color: transparent;
+}
+
+.hoverBox:hover {
+  border: 1px solid rgb(94 24 254 / 40%);
+}

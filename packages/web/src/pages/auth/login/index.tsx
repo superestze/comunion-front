@@ -1,16 +1,18 @@
 import { UButton, ULogo } from '@comunion/components'
 import { WalletOutlined } from '@comunion/icons'
-import { defineComponent, ref, watchEffect } from 'vue'
+import { defineComponent, watchEffect, ref } from 'vue'
+
 import { useRoute } from 'vue-router'
-import leftBgImg from './assets/bg.png'
+import MoreNavigationPage from './components/More'
+import logo from '@/assets/colorful.png'
+import logo2 from '@/assets/colorful@2x.png'
+import logo3 from '@/assets/colorful@3x.png'
 import { OAuthSignWidget } from '@/components/OAuth'
 import { useOnLoggedIn } from '@/hooks'
-import MoreNavigationPage from '@/pages/auth/login/components/More'
 import { useUserStore, useWalletStore } from '@/stores'
 import { UserResponse } from '@/types'
 
-const LoginPage = defineComponent({
-  name: 'LoginPage',
+export default defineComponent({
   setup() {
     const { query, path } = useRoute()
     const walletStore = useWalletStore()
@@ -18,15 +20,7 @@ const LoginPage = defineComponent({
     const onLogin = useOnLoggedIn()
     const loading = ref(false)
 
-    const walletLogin = async () => {
-      loading.value = true
-      try {
-        await walletStore.ensureWalletConnected(true)
-      } catch (error) {
-        // do nothing
-      }
-      loading.value = false
-    }
+    const { ensureWalletConnected } = walletStore
 
     watchEffect(() => {
       if (userStore.profile) {
@@ -40,44 +34,70 @@ const LoginPage = defineComponent({
       }
     })
 
-    return () => (
-      <div class="flex min-h-screen">
-        <div class="bg-primary flex-shrink-0 text-white px-13 pt-14 w-108 relative overflow-hidden lg:px-14 lg:w-114 2xl:px-15 2xl:pt-17 2xl:w-118">
-          <div class="z-1 relative">
-            <ULogo height={32} withText theme="white" />
-            <h1 class="mt-16.5 u-h3 !text-white 2xl:mt-18 2xl:u-h2">Incubate ZERO To ONE</h1>
-            <h2 class="mt-6.5 text-white u-title2 2xl:u-title1">Comunion is a startup protocol</h2>
-            <p class="mt-2.5 text-white u-body2 2xl:u-body1">
-              A revolutionary decentralized multi-chain protocol dedicated to building a thriving
-              and collaborative work ecosystem, community and economy.
-            </p>
+    return {
+      loading,
+      ensureWalletConnected
+    }
+  },
+  render() {
+    const walletLogin = async () => {
+      this.loading = true
+      try {
+        await this.ensureWalletConnected(true)
+      } catch (error) {
+        // do nothing
+      }
+      this.loading = false
+    }
+    return (
+      <div class="flex w-100vw h-100vh justify-center items-center bg-[#EDEDF2]">
+        <MoreNavigationPage />
+        <div class="flex w-1245px h-542px bg-white relative justify-end rounded-8px">
+          <div class="flex flex-col absolute h-606px w-635px text-white bg-primary left-100px -top-32px pl-64px pt-162px rounded-2px">
+            <p style={{ color: 'rgba(255,255,255,0.8)' }}>Welcome to Comunion</p>
+            <p class="mt-30px text-30px font-bold">The First</p>
+            <p class="mt-16px text-30px font-bold">Permissionless Economic Network </p>
+            <div class="mt-214px">
+              <ULogo height={20} withText theme="white" />
+            </div>
           </div>
-          <img
-            src={leftBgImg}
-            class="object-cover mb-[8vh] transform transition bottom-2 left-1/2 w-100 -translate-x-50 translate-y-12 absolute lg:w-104 lg:-translate-x-52 2xl:w-108 2xl:-translate-x-54"
-          />
-        </div>
-        <div class="flex flex-col flex-1 px-1/8 relative justify-center lg:pl-1/5">
-          <div class="mx-auto w-105">
-            <MoreNavigationPage />
-            <h2 class="text-[36px] leading-9">Sign to Comunion</h2>
+          <div class="flex flex-col mr-101px w-308px">
+            <div class="mx-auto w-48px h-48px mt-60px mb-20px">
+              <img
+                src={logo}
+                srcset={`${logo}, ${logo2} 2x, ${logo3} 3x`}
+                alt="logo"
+                class="w-full"
+              />
+            </div>
+            <p class="text-[#111111] text-28px font-bold text-center">Comunion</p>
+            <p
+              class="mt-54px mb-20px text-center"
+              style={{
+                color: 'rgba(17, 17, 17, 0.6)'
+              }}
+            >
+              WALLET
+            </p>
             <UButton
-              class="h-16 mt-[30px] text-white mb-3 text-[21px] w-105 relative"
-              size="large"
+              class="h-40px text-white text-16px w-full text-center relative mx-auto"
+              size="small"
               type="primary"
-              loading={loading.value}
+              loading={this.loading}
               onClick={walletLogin}
             >
-              <WalletOutlined class="h-8 top-4 left-4 w-8 absolute" />
-              Sign in with Wallet
+              <WalletOutlined class="h-20px w-20px absolute left-17px top-10px" />
+              Connect to a wallet
             </UButton>
-            {/* <a class="text-primary">What is wallet？</a> */}
-            <div class="flex my-10 items-center">
-              <div class="bg-[#d8d8d8] h-[1px] w-[90px]" />
-              <div class="mx-3 text-[#999] text-[18px] leading-5 w-[230px]">
-                Sign in with social account
+            <div class="flex mb-24px mt-40px items-center">
+              <div class="bg-[#666] h-[1px] w-[140px]" />
+              <div
+                class="text-[14px] leading-5 w-[40px] text-center"
+                style={{ color: 'rgba(17,17,17,0.6)' }}
+              >
+                OR
               </div>
-              <div class="bg-[#d8d8d8] h-[1px] w-[90px]" />
+              <div class="bg-[#666] h-[1px] w-[140px]" />
             </div>
             <OAuthSignWidget />
           </div>
@@ -86,5 +106,3 @@ const LoginPage = defineComponent({
     )
   }
 })
-
-export default LoginPage

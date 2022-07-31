@@ -12,6 +12,10 @@ export const BOUNTY_TYPES = [
 
 export const BOUNTY_TYPES_COLOR_MAP = [
   {
+    label: 'Pending',
+    value: '#5331F4'
+  },
+  {
     label: 'Ready to work',
     value: '#00BFA5'
   },

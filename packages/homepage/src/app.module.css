@@ -1,0 +1,10 @@
+.content {
+  position: relative;
+  font-family: Arial;
+  background-color: #ededf2;
+}
+
+html,
+body {
+  font-family: Arial;
+}

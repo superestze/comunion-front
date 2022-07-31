@@ -2,8 +2,12 @@ import { ConfirmOutlined, StepProcessFilled, StepWaitFilled } from '@comunion/ic
 import { defineComponent, PropType } from 'vue'
 import './style.css'
 
-interface StepProps {
+export interface StepProps {
   name: string
+}
+
+export interface ClassesStyle {
+  stepTitle: string
 }
 
 const USteps = defineComponent({
@@ -16,6 +20,9 @@ const USteps = defineComponent({
     current: {
       type: Number,
       default: 1
+    },
+    classes: {
+      type: Object as PropType<ClassesStyle>
     }
   },
   setup(props) {
@@ -45,6 +52,7 @@ const USteps = defineComponent({
                 <div
                   class={[
                     'u-step-title',
+                    props.classes?.stepTitle,
                     {
                       'text-primary': finishStatus || processStatus,
                       'text-grey3': waitStatus

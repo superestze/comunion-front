@@ -20,6 +20,7 @@ import { useProfileStore } from '@/stores/profile'
 const DashboardPage = defineComponent({
   name: 'Dashboard',
   setup() {
+    const userHasStartup = ref(false)
     const profileStore = useProfileStore()
     const followedStartups = ref<object[]>([])
     const comerList = ref<object[]>([])
@@ -47,10 +48,23 @@ const DashboardPage = defineComponent({
         comerAccounts.value = data.followsCount ?? 0
       }
     }
+    const getStartupByComerId = async (comerID: number | undefined) => {
+      try {
+        const { error, data } = await services['bounty@bounty-startups']({
+          comerID
+        })
+        if (!error) {
+          userHasStartup.value = !!(data.list || []).length
+        }
+      } catch (error) {
+        console.error('error', error)
+      }
+    }
     onMounted(async () => {
       await getDataList()
       await getFollowList()
       await getComerList(myProfile.value?.comerID)
+      await getStartupByComerId(myProfile.value?.comerID)
     })
 
     const myInfo = computed(() => {
@@ -222,12 +236,18 @@ const DashboardPage = defineComponent({
                 )}
               </div>
             </UCard>
-            <Bounties class="bg-white border-lg border-1 border-grey5 h-301 h-auto box-border mt-6" />
+            <Bounties
+              class="bg-white border-lg border-1 border-grey5 h-301 h-auto box-border mt-6"
+              userHasStartup={userHasStartup.value}
+            />
           </div>
           <div class="flex-1">
             <Startups class="bg-white border-lg border-1 border-grey5 h-155 box-border " />
+            <Bookmarks
+              class="bg-white border-lg border-1 border-grey5 h-155 box-border mt-6"
+              userHasStartup={userHasStartup.value}
+            />
             <Proposals class="bg-white border-lg border-1 border-grey5 h-155 box-border mb-4 mt-6" />
-            <Bookmarks class="bg-white border-lg border-1 border-grey5 h-155 box-border mt-6" />
           </div>
         </div>
         {/* <div class="mt-6 mb-20">
