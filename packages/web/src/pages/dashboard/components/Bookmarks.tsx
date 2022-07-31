@@ -18,13 +18,13 @@ const Bookmarks = defineComponent({
     const createStartupRef = ref<CreateStartupRef>()
     const createRef = ref<CreateCrowdfundingRef>()
     const noStartupRef = ref()
-    const createNewCrowdfunding = () => {
-      if (props.userHasStartup) {
-        createRef.value?.show()
-      } else {
-        noStartupRef.value?.show()
-      }
-    }
+    // const createNewCrowdfunding = () => {
+    //   if (props.userHasStartup) {
+    //     createRef.value?.show()
+    //   } else {
+    //     noStartupRef.value?.show()
+    //   }
+    // }
 
     const onCreateStartup = () => {
       createStartupRef.value?.show()
