@@ -1,5 +1,5 @@
 import { UCard, UTabPane, UTabs, UDeveloping } from '@comunion/components'
-import { EmptyFilled, PlusOutlined } from '@comunion/icons'
+import { EmptyFilled } from '@comunion/icons'
 import { defineComponent, ref } from 'vue'
 import CreateBountyBlock from '@/blocks/Bounty/Create'
 import { CreateCrowdfundingRef } from '@/blocks/Crowdfunding/Create'
@@ -32,17 +32,17 @@ const Bookmarks = defineComponent({
     return () => (
       <UCard
         title="Crowdfunding"
-        v-slots={{
-          'header-extra': () => (
-            <span
-              class="cursor-pointer flex flex-row text-primary items-center u-label2"
-              onClick={createNewCrowdfunding}
-            >
-              <PlusOutlined class="h-4 mr-3 w-4" />
-              CREATE NEW
-            </span>
-          )
-        }}
+        // v-slots={{
+        //   'header-extra': () => (
+        //     <span
+        //       class="cursor-pointer flex flex-row text-primary items-center u-label2"
+        //       onClick={createNewCrowdfunding}
+        //     >
+        //       <PlusOutlined class="h-4 mr-3 w-4" />
+        //       CREATE NEW
+        //     </span>
+        //   )
+        // }}
       >
         <CreateStartupBlock ref={createStartupRef} />
         <CreateBountyBlock ref={createRef} />
