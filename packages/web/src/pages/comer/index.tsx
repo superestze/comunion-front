@@ -1,7 +1,9 @@
-import { defineComponent, computed } from 'vue'
+import { defineComponent, computed, ref } from 'vue'
 import Bio from './components/bio'
 import Comer from './components/comer'
+import Connection from './components/connection'
 import Education from './components/education'
+import Filter from './components/filter'
 import Language from './components/language'
 import Skill from './components/skill'
 import Social from './components/social'
@@ -12,8 +14,11 @@ export default defineComponent({
     const profileStore = useProfileStore()
     profileStore.get()
     const profile = computed(() => profileStore.value)
+
+    const systemTasks = ref<string[]>(['Startup', 'Bounty', 'Crowdfunding', 'Proposal'])
     return {
-      profile
+      profile,
+      systemTasks
     }
   },
   render() {
@@ -33,8 +38,24 @@ export default defineComponent({
             <Skill />
             <Language />
             <Education />
+            <Connection />
           </div>
-          <div class="basis-2/3"></div>
+          <div class="basis-2/3">
+            <Filter tasks={this.systemTasks} />
+            {this.systemTasks.map(task => {
+              if (task === 'Startup') {
+                return <h1>Startup</h1>
+              } else if (task === 'Bounty') {
+                return <h1>Bounty</h1>
+              } else if (task === 'Crowdfunding') {
+                return <h1>Crowdfunding</h1>
+              } else if (task === 'Proposal') {
+                return <h1>Proposal</h1>
+              } else {
+                return <h1>error</h1>
+              }
+            })}
+          </div>
         </div>
         <div class="flex mb-20">
           <div class="flex-1 mr-6">
