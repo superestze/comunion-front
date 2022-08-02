@@ -7,6 +7,7 @@ import Filter from './components/filter'
 import Language from './components/language'
 import Skill from './components/skill'
 import Social from './components/social'
+import Startup from './components/startup'
 import { useProfileStore } from '@/stores/profile'
 
 export default defineComponent({
@@ -15,7 +16,7 @@ export default defineComponent({
     profileStore.get()
     const profile = computed(() => profileStore.value)
 
-    const systemTasks = ref<string[]>(['Startup', 'Bounty', 'Crowdfunding', 'Proposal'])
+    const systemTasks = ref<string[]>(['All', 'Startup', 'Bounty', 'Crowdfunding', 'Proposal'])
     return {
       profile,
       systemTasks
@@ -43,8 +44,10 @@ export default defineComponent({
           <div class="basis-2/3">
             <Filter tasks={this.systemTasks} />
             {this.systemTasks.map(task => {
-              if (task === 'Startup') {
-                return <h1>Startup</h1>
+              if (task === 'All') {
+                return
+              } else if (task === 'Startup') {
+                return <Startup />
               } else if (task === 'Bounty') {
                 return <h1>Bounty</h1>
               } else if (task === 'Crowdfunding') {
