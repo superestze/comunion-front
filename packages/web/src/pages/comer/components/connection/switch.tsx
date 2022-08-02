@@ -67,7 +67,6 @@ export default defineComponent({
       this.$emit('switchPanel', id)
       this.currentTabId = id
     }
-    console.log(this.tabList)
     return (
       <div class="flex">
         {this.tabList.map(tab => {

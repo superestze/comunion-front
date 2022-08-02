@@ -10,7 +10,6 @@ export default defineComponent({
     const handleEditMode = () => {
       // todo
     }
-    console.log(listHover)
     return (
       <UCard
         title="EDUCATION"

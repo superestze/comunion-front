@@ -1,4 +1,4 @@
-import { UCard, UScrollbar } from '@comunion/components'
+import { UCard } from '@comunion/components'
 import { defineComponent, computed, ref, onMounted } from 'vue'
 import flip from '../animate/flip.module.css'
 import Edit from '../edit'
@@ -26,11 +26,11 @@ export default defineComponent({
     const showMoreBtn = ref<boolean>()
 
     onMounted(() => {
-      console.dir(pRef.value)
-      console.log(pRef.value.scrollHeight, pRef.value.offsetHeight)
-      if (pRef.value.scrollHeight > pRef.value.offsetHeight) {
-        showMoreBtn.value = true
-      }
+      setTimeout(() => {
+        if (pRef.value.scrollHeight > 164) {
+          showMoreBtn.value = true
+        }
+      }, 1000)
     })
 
     const fold = ref<boolean>(true)
@@ -57,9 +57,9 @@ export default defineComponent({
           'header-extra': () => <Edit onHandleClick={handleEditMode} />
         }}
       >
-        <UScrollbar class="max-h-163px">
-          <p ref={(ref: any) => (this.pRef = ref)}>{this.content}</p>
-        </UScrollbar>
+        <div class="h-164px overflow-hidden">
+          <p ref={(ref: any) => (this.pRef = ref)} v-html={this.content} />
+        </div>
         {this.showMoreBtn && (
           <div class="flex justify-end mt-20px">
             <More onMore={handleMore} fold={this.fold} />

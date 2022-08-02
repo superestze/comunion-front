@@ -1,10 +1,14 @@
 import { defineComponent, computed, ref } from 'vue'
 import Bio from './components/bio'
+import Bounty from './components/bounty'
 import Comer from './components/comer'
 import Connection from './components/connection'
+import Crowdfunding from './components/crowdfunding'
 import Education from './components/education'
+import Empty from './components/empty'
 import Filter from './components/filter'
 import Language from './components/language'
+import Proposal from './components/proposal'
 import Skill from './components/skill'
 import Social from './components/social'
 import Startup from './components/startup'
@@ -16,13 +20,32 @@ export default defineComponent({
     profileStore.get()
     const profile = computed(() => profileStore.value)
 
+    const createdByMe = ref<boolean>(false)
     const systemTasks = ref<string[]>(['All', 'Startup', 'Bounty', 'Crowdfunding', 'Proposal'])
+    const selectedTasks = ref<string[]>(['All'])
     return {
       profile,
-      systemTasks
+      systemTasks,
+      createdByMe,
+      selectedTasks
     }
   },
   render() {
+    const handleTabChange = (createdByMe: boolean) => {
+      this.createdByMe = createdByMe
+    }
+
+    const handleSelectedTagChange = (arr: string[]) => {
+      this.selectedTasks = arr
+    }
+
+    const rowDisplay = (key: string) => {
+      if (this.selectedTasks.findIndex((task: string) => task === 'All') > -1) {
+        return true
+      }
+      return this.selectedTasks.findIndex((task: string) => task === key) > -1
+    }
+
     return (
       <div>
         <div class="mt-50px text-primary mb-10 u-h2">My Dashboard</div>
@@ -42,38 +65,25 @@ export default defineComponent({
             <Connection />
           </div>
           <div class="basis-2/3">
-            <Filter tasks={this.systemTasks} />
+            <Filter
+              tasks={this.systemTasks}
+              onTabChange={handleTabChange}
+              onSelectedTagChange={handleSelectedTagChange}
+            />
             {this.systemTasks.map(task => {
-              if (task === 'All') {
-                return
-              } else if (task === 'Startup') {
-                return <Startup />
-              } else if (task === 'Bounty') {
-                return <h1>Bounty</h1>
-              } else if (task === 'Crowdfunding') {
-                return <h1>Crowdfunding</h1>
-              } else if (task === 'Proposal') {
-                return <h1>Proposal</h1>
+              if (task === 'Startup' && rowDisplay('Startup')) {
+                return <Startup createdByMe={this.createdByMe} />
+              } else if (task === 'Bounty' && rowDisplay('Bounty')) {
+                return <Bounty createdByMe={this.createdByMe} />
+              } else if (task === 'Crowdfunding' && rowDisplay('Crowdfunding')) {
+                return <Crowdfunding createdByMe={this.createdByMe} />
+              } else if (task === 'Proposal' && rowDisplay('Proposal')) {
+                return <Proposal createdByMe={this.createdByMe} />
               } else {
-                return <h1>error</h1>
+                return
               }
             })}
-          </div>
-        </div>
-        <div class="flex mb-20">
-          <div class="flex-1 mr-6">
-            {/* <Bounties
-              class="bg-white border-lg border-1 border-grey5 h-301 h-auto box-border mt-6"
-              userHasStartup={userHasStartup.value}
-            /> */}
-          </div>
-          <div class="flex-1">
-            {/* <Startups class="bg-white border-lg border-1 border-grey5 h-155 box-border " /> */}
-            {/* <Bookmarks
-              class="bg-white border-lg border-1 border-grey5 h-155 box-border mt-6"
-              userHasStartup={userHasStartup.value}
-            />
-            <Proposals class="bg-white border-lg border-1 border-grey5 h-155 box-border mb-4 mt-6" /> */}
+            <Empty />
           </div>
         </div>
       </div>

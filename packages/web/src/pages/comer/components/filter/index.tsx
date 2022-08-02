@@ -9,6 +9,7 @@ export default defineComponent({
       required: true
     }
   },
+  emits: ['tabChange', 'selectedTagChange'],
   setup(props) {
     const selectedList = ref<string[]>(['All'])
     const taskList = computed(() => {
@@ -36,14 +37,16 @@ export default defineComponent({
     }
   },
   render() {
-    const tabsChange = () => {
+    const tabsChange = (value: string) => {
       this.selectedList = ['All']
-      // todo
+      this.$emit('selectedTagChange', this.selectedList)
+      this.$emit('tabChange', value === 'CREATED BY ME')
     }
 
     const handleTag = (key: string) => () => {
       if (key === 'All') {
         this.selectedList = ['All']
+        this.$emit('selectedTagChange', this.selectedList)
         return
       }
       const index = this.selectedList.findIndex(value => {
@@ -51,6 +54,10 @@ export default defineComponent({
       })
       if (index > -1) {
         this.selectedList.splice(index, 1)
+        if (this.selectedList.length === 0) {
+          this.selectedList = ['All']
+        }
+        this.$emit('selectedTagChange', this.selectedList)
         return
       }
       const allIndex = this.selectedList.findIndex(value => value === 'All')
@@ -58,12 +65,13 @@ export default defineComponent({
         this.selectedList.splice(allIndex, 1)
       }
       this.selectedList.push(key)
+      this.$emit('selectedTagChange', this.selectedList)
     }
     return (
       <div class="bg-white rounded-lg border mb-6 relative overflow-hidden p-10">
         <UTabs onUpdateValue={tabsChange}>
-          <UTabPane name="PARTICIPATED" tab="PARTICIPATED" class="h-112">
-            <div class="flex w-full">
+          <UTabPane name="PARTICIPATED" tab="PARTICIPATED" class="h-10">
+            <div class="flex w-full mt-4">
               {this.taskList.map(task => {
                 return (
                   <div
@@ -77,8 +85,8 @@ export default defineComponent({
               })}
             </div>
           </UTabPane>
-          <UTabPane name="CREATED BY ME" tab="CREATED BY ME" class="h-112">
-            <div class="flex w-full">
+          <UTabPane name="CREATED BY ME" tab="CREATED BY ME" class="h-10">
+            <div class="flex w-full mt-4">
               {this.taskList.map(task => {
                 return (
                   <div
