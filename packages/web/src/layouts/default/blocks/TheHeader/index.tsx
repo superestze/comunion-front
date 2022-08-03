@@ -21,8 +21,7 @@ const TheHeader = defineComponent({
       },
       {
         name: 'finance',
-        url: '/launch/list',
-        disabled: true
+        url: '/crowdfunding/list'
       },
       {
         name: 'governance',
