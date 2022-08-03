@@ -1,5 +1,6 @@
 import { UCard } from '@comunion/components'
 import { defineComponent, PropType } from 'vue'
+import StartupCard from '../bounty/components/BountyCard'
 
 const CrowdfundingDetail = defineComponent({
   name: 'CrowdfundingDetail',
@@ -7,6 +8,7 @@ const CrowdfundingDetail = defineComponent({
     info: {
       type: Object as PropType<{
         detail: string
+        startup: any
       }>
     }
   },
@@ -14,7 +16,33 @@ const CrowdfundingDetail = defineComponent({
     return () => (
       <div class="flex mb-20 gap-6">
         <div class="w-228">
-          <div class="p-10 bg-white border-1 border-grey5 mb-6 rounded-lg">1</div>
+          <div class="flex items-stretch gap-6 p-10 bg-white border-1 border-grey5 mb-6 rounded-lg">
+            <div class="flex-1">
+              <div class="u-title2">Crowdfunding Starts in</div>
+              <div class="u-title2 mb-4">Crowdfunding Detail</div>
+              <div class="grid grid-cols-2 gap-4 mb-15">
+                <div class="h-22 flex flex-col justify-center pl-4 bg-[rgba(83,49,244,0.06)]">
+                  <div class="leading-loose">12</div>
+                  <div class="text-xs text-grey3">Raised</div>
+                </div>
+                <div class="h-22 flex flex-col justify-center pl-4 bg-[rgba(83,49,244,0.06)]">
+                  <div class="leading-loose">12</div>
+                  <div class="text-xs text-grey3">Progress</div>
+                </div>
+                <div class="h-22 flex flex-col justify-center pl-4 bg-[rgba(28,96,243,0.06)] bg-opacity-6">
+                  <div class="leading-loose">122</div>
+                  <div class="text-xs text-grey3">Raised Goal</div>
+                </div>
+                <div class="h-22 flex flex-col justify-center pl-4 bg-[rgba(28,96,243,0.06)] bg-opacity-6">
+                  <div class="leading-loose">12</div>
+                  <div class="text-xs text-grey3">Available Swap</div>
+                </div>
+              </div>
+              <div class="u-title2 mb-6">Token Information</div>
+            </div>
+            <div class="w-px bg-grey5"></div>
+            <div class="flex-1"></div>
+          </div>
           <UCard title="info">
             <div class="mb-6">
               <iframe
@@ -64,7 +92,9 @@ const CrowdfundingDetail = defineComponent({
           </UCard>
         </div>
         <div class="flex-1">
-          <div class="p-10"></div>
+          <UCard class="mb-6">
+            {props.info?.startup && <StartupCard startup={props.info?.startup} />}
+          </UCard>
           <UCard title="IBO  Rate History"></UCard>
           <UCard title="Investment Record"></UCard>
         </div>
