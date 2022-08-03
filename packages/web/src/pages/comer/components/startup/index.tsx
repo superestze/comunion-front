@@ -1,6 +1,6 @@
 import { UCard, UDeveloping, UNoContent, UScrollList } from '@comunion/components'
 import { EmptyFilled } from '@comunion/icons'
-import { defineComponent, reactive, ref, onMounted } from 'vue'
+import { defineComponent, reactive, ref, watch } from 'vue'
 import ParticipatedCard from '@/pages/dashboard/components/ParticipatedCard'
 import StartupCard from '@/pages/dashboard/components/StartupCard'
 import { services } from '@/services'
@@ -25,71 +25,48 @@ export default defineComponent({
       page: 1,
       loading: false
     })
-    const ParticipatedPagination = reactive<{
-      pageSize: number
-      total: number
-      page: number
-      loading: boolean
-    }>({
-      pageSize: 4,
-      total: 0,
-      page: 1,
-      loading: false
-    })
-    const myCreatedStartups = ref<StartupItem[]>([])
-    const myParticipatedStartups = ref<StartupItem[]>([])
 
-    onMounted(() => {
-      if (props.createdByMe) {
-        getCreatedStartups()
-      } else {
-        getParticipatedStartups()
-      }
-    })
-    const getCreatedStartups = async () => {
-      const { error, data } = await services['startup@startup-list-me']({
+    const startups = ref<StartupItem[]>([])
+
+    const getStartups = async () => {
+      const { error, data } = await services[
+        props.createdByMe ? 'startup@startup-list-me' : 'startup@startup-list-participated'
+      ]({
         limit: pagination.pageSize,
-        offset: pagination.pageSize * (pagination.page - 1)
+        offset: pagination.pageSize * (pagination.page - 1),
+        keyword: undefined,
+        mode: undefined
       })
       if (!error) {
-        myCreatedStartups.value.push(...(data!.list as unknown as StartupItem[]))
+        startups.value.push(...(data!.list as unknown as StartupItem[]))
         pagination.total = data!.total
       }
     }
 
-    const getParticipatedStartups = async () => {
-      const { error, data } = await services['startup@startup-list-participated']({
-        limit: ParticipatedPagination.pageSize,
-        offset: ParticipatedPagination.pageSize * (ParticipatedPagination.page - 1),
-        keyword: null,
-        mode: null
-      })
-      if (!error) {
-        myParticipatedStartups.value.push(...(data!.list as unknown as StartupItem[]))
-        ParticipatedPagination.total = data!.total
+    watch(
+      () => props.createdByMe,
+      () => {
+        pagination.loading = true
+        pagination.page = 1
+        pagination.pageSize = 4
+        pagination.total = 0
+        startups.value = []
+        getStartups()
       }
-    }
+    )
+
     return {
       pagination,
-      ParticipatedPagination,
-      myCreatedStartups,
-      myParticipatedStartups,
-      getCreatedStartups,
-      getParticipatedStartups
+      startups,
+      getStartups
     }
   },
   render() {
     const onLoadMore = async (p: number) => {
       this.pagination.loading = true
       this.pagination.page = p
-      await this.getCreatedStartups()
+      await this.getStartups()
       this.pagination.loading = false
-    }
-    const ParticipatedLoadMore = async (p: number) => {
-      this.ParticipatedPagination.loading = true
-      this.ParticipatedPagination.page = p
-      await this.getParticipatedStartups()
-      this.ParticipatedPagination.loading = false
     }
     return (
       <UCard title="STARTUPS" class="mb-6">
@@ -101,8 +78,8 @@ export default defineComponent({
             total={this.pagination.total}
             onLoadMore={onLoadMore}
           >
-            {this.myCreatedStartups.length ? (
-              this.myCreatedStartups.map((startup, i) => <StartupCard startup={startup} key={i} />)
+            {this.startups.length ? (
+              this.startups.map((startup, i) => <StartupCard startup={startup} key={i} />)
             ) : (
               <UNoContent textTip="TO BE EMPTY">
                 <EmptyFilled />
@@ -111,16 +88,14 @@ export default defineComponent({
           </UScrollList>
         ) : (
           <UScrollList
-            triggered={this.ParticipatedPagination.loading}
-            page={this.ParticipatedPagination.page}
-            pageSize={this.ParticipatedPagination.pageSize}
-            total={this.ParticipatedPagination.total}
-            onLoadMore={ParticipatedLoadMore}
+            triggered={this.pagination.loading}
+            page={this.pagination.page}
+            pageSize={this.pagination.pageSize}
+            total={this.pagination.total}
+            onLoadMore={onLoadMore}
           >
-            {this.myParticipatedStartups.length ? (
-              this.myParticipatedStartups.map((startup, i) => (
-                <ParticipatedCard startup={startup} key={i} />
-              ))
+            {this.startups.length ? (
+              this.startups.map((startup, i) => <ParticipatedCard startup={startup} key={i} />)
             ) : (
               <UDeveloping>
                 <EmptyFilled />
@@ -128,7 +103,6 @@ export default defineComponent({
             )}
           </UScrollList>
         )}
-        {/* <CreateStartupBlock ref={createRef} /> */}
       </UCard>
     )
   }

@@ -1,7 +1,14 @@
-import { FormFactoryField, UFormFactory, ULazyImage } from '@comunion/components'
+import {
+  FormFactoryField,
+  FormInst,
+  getFieldsRules,
+  UForm,
+  UFormItemsFactory,
+  ULazyImage
+} from '@comunion/components'
 import { PenOutlined, UploadFilled } from '@comunion/icons'
 import { defineComponent, computed, ref, reactive, watchEffect } from 'vue'
-import flip from '../animate/flip.module.css'
+import { btnGroup } from '../btnGroup'
 import Edit from '../edit'
 
 import testImg from './onlytestcomerbg.png'
@@ -35,8 +42,10 @@ export default defineComponent({
     const subTitle = computed(() => {
       return `${props.location}, ${props.timeZone}`
     })
-    const edit = ref<boolean>(true)
+    const editMode = ref<boolean>(false)
     const showAvatarModal = ref<boolean>(false)
+
+    const form = ref<FormInst>()
 
     const fields: FormFactoryField[] = [
       {
@@ -73,35 +82,36 @@ export default defineComponent({
       info.location = props.location
       info.timeZone = props.timeZone
     })
-    const wrapperClass = computed(() => {
-      const str = 'bg-white rounded-lg border mb-6 relative overflow-hidden'
-      if (edit.value) {
-        return `${str} ${flip['flip-vertical-right']}`
-      }
-      return `${str} ${flip['flip-vertical-left']}`
-    })
+
     return {
       subTitle,
-      edit,
+      editMode,
       showAvatarModal,
       fields,
       info,
-      wrapperClass
+      form
     }
   },
   render() {
     const handleEditMode = () => {
-      this.edit = !this.edit
+      this.editMode = !this.editMode
     }
     const showAvatarSelect = () => {
       this.showAvatarModal = true
     }
-    const onSubmit = () => {
-      console.log('todo')
+    const handleSubmit = () => {
+      this.form?.validate(err => {
+        if (typeof err === 'undefined') {
+          console.log(this.info)
+        }
+      })
     }
+
+    const rules = getFieldsRules(this.fields)
+
     return (
-      <div class={this.wrapperClass}>
-        {this.edit ? (
+      <div class="bg-white rounded-lg border mb-6 relative overflow-hidden">
+        {this.editMode ? (
           <>
             <AvatarSelect v-model:show={this.showAvatarModal} v-model:avatar={this.info.avatar} />
             <div class="flex w-full h-180px relative">
@@ -118,15 +128,10 @@ export default defineComponent({
               <ULazyImage class="rounded-1/2 h-80px w-80px" src={this.info.avatar} />
             </div>
             <div class="mt-79px p-6">
-              <UFormFactory
-                initialValues={this.info}
-                fields={this.fields}
-                showCancel={true}
-                submitText="Update"
-                cancelText="Cancel"
-                onSubmit={onSubmit}
-                onCancel={handleEditMode}
-              />
+              <UForm rules={rules} model={this.info} ref={(ref: any) => (this.form = ref)}>
+                <UFormItemsFactory fields={this.fields} values={this.info} />
+              </UForm>
+              {btnGroup(handleEditMode, handleSubmit)}
             </div>
           </>
         ) : (

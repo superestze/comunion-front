@@ -39,9 +39,9 @@ export default defineComponent({
   setup(props) {
     const currentTabId = ref<string>(props.currentId)
     const tabList = computed(() => {
-      let str =
-        'w-1/3 flex w-30 flex-col justify-center text-14px font-bold text-center cursor-pointer'
       return props.tabs.map(tab => {
+        let str =
+          'w-1/3 flex w-30 flex-col justify-center text-14px font-bold text-center cursor-pointer flex-grow'
         if (tab.id === currentTabId.value) {
           str += ' text-primary pb-4 border-primary'
           return {
@@ -49,7 +49,7 @@ export default defineComponent({
             class: str
           }
         }
-        str += ' text-primary1  pb-4 border-grey5'
+        str += ' text-primary1 pb-4 border-grey5'
         return {
           ...tab,
           class: str
