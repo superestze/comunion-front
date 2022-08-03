@@ -1,13 +1,16 @@
-import { UButton, UCard, UStartupLogo } from '@comunion/components'
-import { ArrowDownOutlined } from '@comunion/icons'
+import { UCard, UStartupLogo } from '@comunion/components'
 import { defineComponent } from 'vue'
 import ListItem from './listItem'
 
 import Switch from './switch'
+import LoadingBtn from '@/components/More/loading'
 
 export default defineComponent({
   render() {
     const tabsChange = () => {
+      // todo
+    }
+    const handleMore = () => {
       // todo
     }
     return (
@@ -19,15 +22,23 @@ export default defineComponent({
               v-slots={{
                 avatar: () => (
                   <div class="flex items-center">
-                    <UStartupLogo src={''} width="10" height="10" class="h-10 w-10" />
+                    <UStartupLogo src={''} width="9" height="9" />
                   </div>
                 )
               }}
             />
-            <UButton quaternary type="primary">
-              More
-              <ArrowDownOutlined />
-            </UButton>
+            <ListItem
+              v-slots={{
+                avatar: () => (
+                  <div class="flex items-center">
+                    <UStartupLogo src={''} width="9" height="9" />
+                  </div>
+                )
+              }}
+            />
+            <div class="flex justify-center mt-5">
+              <LoadingBtn onMore={handleMore} end={false} />
+            </div>
           </div>
         </div>
       </UCard>

@@ -2,7 +2,7 @@ import { UCard } from '@comunion/components'
 import { defineComponent, computed, ref, onMounted } from 'vue'
 import flip from '../animate/flip.module.css'
 import Edit from '../edit'
-import More from '@/components/More'
+import More from '@/components/More/shadow'
 
 export default defineComponent({
   props: {
@@ -43,10 +43,12 @@ export default defineComponent({
     }
   },
   render() {
+    console.log(this.fold)
     const handleEditMode = () => {
       this.edit = !this.edit
     }
     const handleMore = () => {
+      console.log(this.fold)
       this.fold = !this.fold
     }
     return (
@@ -57,11 +59,14 @@ export default defineComponent({
           'header-extra': () => <Edit onHandleClick={handleEditMode} />
         }}
       >
-        <div class="h-164px overflow-hidden">
+        <div
+          class="overflow-hidden transition-all duration-1000 ease-linear"
+          style={{ height: this.fold ? '164px' : 'auto' }}
+        >
           <p ref={(ref: any) => (this.pRef = ref)} v-html={this.content} />
         </div>
         {this.showMoreBtn && (
-          <div class="flex justify-end mt-20px">
+          <div class="flex justify-center mt-5">
             <More onMore={handleMore} fold={this.fold} />
           </div>
         )}
