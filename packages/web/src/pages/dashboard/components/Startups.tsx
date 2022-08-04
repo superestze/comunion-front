@@ -129,9 +129,6 @@ const Startups = defineComponent({
                   <StartupCard startup={startup} key={i} />
                 ))
               ) : (
-                // <UDeveloping>
-                //   <EmptyFilled class="mt-34" />
-                // </UDeveloping>
                 <UNoContent textTip="TO BE EMPTY">
                   <EmptyFilled class="mt-34" />
                 </UNoContent>

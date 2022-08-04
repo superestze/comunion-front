@@ -1,5 +1,7 @@
 .u-card {
-  @apply p-10;
+  @apply py-10;
+  @apply pl-10;
+  @apply pr-6;
 
   .n-card-header {
     @apply p-0 pb-[10px] !important;
