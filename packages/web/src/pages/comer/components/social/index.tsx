@@ -78,24 +78,22 @@ export default defineComponent({
       value: ''
     })
     const form = ref<FormInst>()
-    const fields: FormFactoryField[] = computed(() => {
-      return [
-        {
-          t: 'select',
-          title: 'Social tool',
-          name: 'type',
-          required: true,
-          placeholder: 'Select a social tool',
-          options: SocialTypeList
-        },
-        {
-          t: 'website',
-          title: 'URL',
-          name: 'value',
-          placeholder: 'Input the URL'
-        }
-      ]
-    })
+    const fields = computed<FormFactoryField[]>(() => [
+      {
+        t: 'select',
+        title: 'Social tool',
+        name: 'type',
+        required: true,
+        placeholder: 'Select a social tool',
+        options: SocialTypeList
+      },
+      {
+        t: 'website',
+        title: 'URL',
+        name: 'value',
+        placeholder: 'Input the URL'
+      }
+    ])
 
     return {
       editMode,

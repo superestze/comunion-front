@@ -7,7 +7,7 @@ import {
   UFormItemsFactory
 } from '@comunion/components'
 import { PlusOutlined, DeleteFilled, PenOutlined } from '@comunion/icons'
-import { defineComponent, Ref, ref, reactive } from 'vue'
+import { defineComponent, ref, reactive } from 'vue'
 import { btnGroup } from '../btnGroup'
 import Edit from '../edit'
 
@@ -22,7 +22,7 @@ export default defineComponent({
       graduation: ref(1183135260000)
     })
     const form = ref<FormInst>()
-    const fields: Ref<FormFactoryField[]> = [
+    const fields: FormFactoryField[] = [
       {
         t: 'string',
         title: 'College/University Name',

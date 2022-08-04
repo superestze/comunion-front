@@ -6,7 +6,7 @@ import {
   UForm,
   UFormItemsFactory
 } from '@comunion/components'
-import { defineComponent, ref, onMounted, Ref, reactive, watchEffect } from 'vue'
+import { defineComponent, ref, onMounted, reactive, watchEffect } from 'vue'
 import { btnGroup } from '../btnGroup'
 import Edit from '../edit'
 import More from '@/components/More/shadow'
@@ -44,7 +44,7 @@ export default defineComponent({
 
     const form = ref<FormInst>()
 
-    const fields: Ref<FormFactoryField[]> = [
+    const fields: FormFactoryField[] = [
       {
         title: 'Bio',
         name: 'bio',

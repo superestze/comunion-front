@@ -59,7 +59,7 @@ export default defineComponent({
             />
             <Bio content={this.profile?.bio} />
             <Social />
-            <Skill skills={this.profile?.skills?.map(item => item.name)} />
+            <Skill skills={(this.profile?.skills || []).map(item => item.name) as string[]} />
             <Language />
             <Education />
             <Connection />

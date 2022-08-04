@@ -7,7 +7,7 @@ import {
   UFormItemsFactory
 } from '@comunion/components'
 import { DeleteFilled, PenOutlined, PlusOutlined } from '@comunion/icons'
-import { defineComponent, ref, reactive, PropType, Ref } from 'vue'
+import { defineComponent, ref, reactive, PropType } from 'vue'
 import { btnGroup } from '../btnGroup'
 import Edit from '../edit'
 
@@ -34,7 +34,7 @@ export default defineComponent({
     })
     const form = ref<FormInst>()
 
-    const fields: Ref<FormFactoryField[]> = [
+    const fields: FormFactoryField[] = [
       {
         t: 'select',
         title: 'Language',
