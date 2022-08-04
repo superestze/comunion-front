@@ -1,6 +1,8 @@
 import { UCard } from '@comunion/components'
 import { defineComponent, PropType } from 'vue'
 import StartupCard from '../bounty/components/BountyCard'
+import { IBORateHistory } from './components/IBORateHistory'
+import { InvestmentRecords } from './components/InvestmentRecords'
 
 const CrowdfundingDetail = defineComponent({
   name: 'CrowdfundingDetail',
@@ -63,19 +65,19 @@ const CrowdfundingDetail = defineComponent({
               <div class="u-body2 text-grey3">Crowdfunding Address :</div>
               <div>1</div>
               <div class="u-body2 text-grey3">Team Wallet Address :</div>
-              <div></div>
+              <div>12</div>
               <div class="u-body2 text-grey3">Token Contract :</div>
-              <div></div>
+              <div>12</div>
               <div class="u-body2 text-grey3">Token Name :</div>
-              <div></div>
+              <div>23</div>
               <div class="u-body2 text-grey3">Token Symbol :</div>
-              <div></div>
+              <div>13</div>
               <div class="u-body2 text-grey3">Token Decimals :</div>
-              <div></div>
+              <div>45</div>
               <div class="u-body2 text-grey3">Total Supply :</div>
-              <div></div>
+              <div>2</div>
               <div class="u-body2 text-grey3">Token For Crowdfunding :</div>
-              <div></div>
+              <div>3</div>
               <div class="u-body2 text-grey3">IBO Rate :</div>
               <div></div>
               <div class="u-body2 text-grey3">Swap :</div>
@@ -95,8 +97,38 @@ const CrowdfundingDetail = defineComponent({
           <UCard class="mb-6">
             {props.info?.startup && <StartupCard startup={props.info?.startup} />}
           </UCard>
-          <UCard title="IBO  Rate History"></UCard>
-          <UCard title="Investment Record"></UCard>
+          <IBORateHistory
+            class="mb-6"
+            historyRecords={[
+              {
+                buyPrice: '60',
+                buyTokenName: 'USDC',
+                sellTokenName: 'UVU',
+                swapPercent: '80',
+                createdTime: +new Date()
+              },
+              {
+                buyPrice: '60',
+                buyTokenName: 'USDC',
+                sellTokenName: 'UVU',
+                swapPercent: '80',
+                createdTime: +new Date()
+              }
+            ]}
+          />
+          <InvestmentRecords
+            records={[
+              {
+                avatar: '',
+                comerName: '12',
+                amount: '22',
+                buyTokenName: 'USDC',
+                sellTokenName: 'NSEL',
+                recordType: '',
+                createdTime: +new Date()
+              }
+            ]}
+          />
         </div>
       </div>
     )
