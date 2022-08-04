@@ -16,23 +16,7 @@ export default defineComponent({
     },
     tabs: {
       type: Array as PropType<Tab[]>,
-      default: () => [
-        {
-          id: '0',
-          title: 'STARTUP',
-          subTitle: '(98)'
-        },
-        {
-          id: '1',
-          title: 'COMER',
-          subTitle: '(300)'
-        },
-        {
-          id: '2',
-          title: 'CONNECTOR',
-          subTitle: '(1.4w)'
-        }
-      ]
+      required: true
     }
   },
   emits: ['switchPanel'],

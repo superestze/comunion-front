@@ -44,12 +44,18 @@ export function useFollowedStartups() {
     }
   }
 
+  const reset = () => {
+    list.value = []
+    total.value = 0
+  }
+
   return {
     list: list.value,
     total: total.value,
     offset,
     getFollowList,
     connect,
-    unconnect
+    unconnect,
+    reset
   }
 }
