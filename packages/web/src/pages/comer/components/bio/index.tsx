@@ -17,6 +17,10 @@ export default defineComponent({
       type: String,
       default: () => '',
       required: true
+    },
+    view: {
+      type: Boolean,
+      default: () => false
     }
   },
   setup(props) {
@@ -48,9 +52,8 @@ export default defineComponent({
       {
         title: 'Bio',
         name: 'bio',
-        required: true,
         type: 'textarea',
-        placeholder: 'Tell us about yourself, at least 100 characters',
+        placeholder: 'Tell the world your story',
         minlength: 100,
         rules: [{ min: 100, message: 'Tell us about yourself, at least 100 characters' }],
         // @ts-ignore
@@ -79,48 +82,59 @@ export default defineComponent({
       this.fold = !this.fold
     }
     const handleSubmit = () => {
-      this.form?.validate(err => {
-        if (typeof err === 'undefined') {
-          console.log(this.info.bio)
-        }
-      })
+      if (this.info.bio.trim() === '') {
+        handleEditMode()
+        return
+      }
     }
     return (
-      <UCard
-        title="BIO"
-        class="mb-6"
-        v-slots={{
-          'header-extra': () => {
-            if (this.editMode) {
-              return <span></span>
-            }
-            return <Edit onHandleClick={handleEditMode} />
-          }
-        }}
-      >
-        {this.editMode ? (
-          <div class="flex flex-col mt-6">
-            <UForm rules={rules} model={this.info} ref={(ref: any) => (this.form = ref)}>
-              <UFormItemsFactory fields={this.fields} values={this.info} />
-            </UForm>
-            {btnGroup(handleEditMode, handleSubmit)}
-          </div>
-        ) : (
-          <>
-            <div
-              class="overflow-hidden transition-all duration-1000 ease-linear"
-              style={{ height: this.fold ? '164px' : 'auto' }}
-            >
-              <p ref={(ref: any) => (this.pRef = ref)} v-html={this.content} />
-            </div>
-            {this.showMoreBtn && (
-              <div class="flex justify-center mt-5">
-                <More onMore={handleMore} fold={this.fold} />
+      <>
+        {this.view && this.content.trim() === '' ? null : (
+          <UCard
+            title="BIO"
+            class="mb-6"
+            v-slots={{
+              'header-extra': () => {
+                if (this.editMode) {
+                  return
+                } else if (this.view) {
+                  return
+                }
+                return <Edit onHandleClick={handleEditMode} />
+              }
+            }}
+          >
+            {this.editMode ? (
+              <div class="flex flex-col mt-6">
+                <UForm rules={rules} model={this.info} ref={(ref: any) => (this.form = ref)}>
+                  <UFormItemsFactory fields={this.fields} values={this.info} />
+                </UForm>
+                {btnGroup(handleEditMode, handleSubmit)}
               </div>
+            ) : (
+              <>
+                {this.content.trim() === '' ? (
+                  <p class="text-14px font-[400] text-grey4 mt-6">Edit your Bio</p>
+                ) : (
+                  <>
+                    <div
+                      class="overflow-hidden transition-all duration-1000 ease-linear"
+                      style={{ height: this.fold ? '164px' : 'auto' }}
+                    >
+                      <p ref={(ref: any) => (this.pRef = ref)} v-html={this.content} />
+                    </div>
+                    {this.showMoreBtn && (
+                      <div class="flex justify-center mt-5">
+                        <More onMore={handleMore} fold={this.fold} />
+                      </div>
+                    )}
+                  </>
+                )}
+              </>
             )}
-          </>
+          </UCard>
         )}
-      </UCard>
+      </>
     )
   }
 })

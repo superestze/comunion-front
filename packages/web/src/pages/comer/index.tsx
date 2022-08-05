@@ -1,4 +1,5 @@
 import { defineComponent, computed, ref } from 'vue'
+import { useRoute } from 'vue-router'
 import Bio from './components/bio'
 import Bounty from './components/bounty'
 import Comer from './components/comer'
@@ -20,6 +21,12 @@ export default defineComponent({
     profileStore.get()
     const profile = computed(() => profileStore.value)
 
+    const route = useRoute()
+
+    const { view } = route.query
+
+    console.log(view)
+
     const createdByMe = ref<boolean>(false)
     const systemTasks = ref<string[]>(['All', 'Startup', 'Bounty', 'Crowdfunding', 'Proposal'])
     const selectedTasks = ref<string[]>(['All'])
@@ -27,7 +34,8 @@ export default defineComponent({
       profile,
       systemTasks,
       createdByMe,
-      selectedTasks
+      selectedTasks,
+      view
     }
   },
   render() {
@@ -56,13 +64,17 @@ export default defineComponent({
               name={this.profile?.name}
               location={this.profile?.location}
               timeZone={this.profile?.timeZone}
+              view={!!this.view}
             />
-            <Bio content={this.profile?.bio} />
-            <Social />
-            <Skill skills={(this.profile?.skills || []).map(item => item.name) as string[]} />
-            <Language />
-            <Education />
-            <Connection />
+            <Bio content={this.profile?.bio} view={!!this.view} />
+            <Social view={!!this.view} />
+            <Skill
+              skills={(this.profile?.skills || []).map(item => item.name) as string[]}
+              view={!!this.view}
+            />
+            <Language view={!!this.view} />
+            <Education view={!!this.view} />
+            <Connection view={!!this.view} />
           </div>
           <div class="basis-2/3">
             <Filter

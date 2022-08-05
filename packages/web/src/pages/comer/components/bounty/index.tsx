@@ -15,6 +15,10 @@ export default defineComponent({
     userHasStartup: {
       type: Boolean,
       default: false
+    },
+    view: {
+      type: Boolean,
+      default: () => false
     }
   },
   setup(props) {
