@@ -99,8 +99,8 @@ export const SocialTypeList = [
     value: 'Facebook'
   },
   {
-    label: 'Union',
-    value: 'Union'
+    label: 'Linktree',
+    value: 'Linktree'
   },
   {
     label: 'Telegram',
@@ -111,8 +111,8 @@ export const SocialTypeList = [
     value: 'Twitter'
   },
   {
-    label: 'Mail',
-    value: 'Mail'
+    label: 'Email',
+    value: 'Email'
   },
   {
     label: 'Medium',

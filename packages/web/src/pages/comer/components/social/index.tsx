@@ -32,13 +32,13 @@ function asyncComponent(type: string) {
     return <DiscordFilled class="w-5 h-5 text-primary" />
   } else if (type === 'Facebook') {
     return <FacebookFilled class="w-5 h-5 text-primary" />
-  } else if (type === 'Union') {
+  } else if (type === 'Linktree') {
     return <UnionFilled class="w-5 h-5 text-primary" />
   } else if (type === 'Telegram') {
     return <TelegramFilled class="w-5 h-5 text-primary" />
   } else if (type === 'Twitter') {
     return <TwitterFilled class="w-5 h-5 text-primary" />
-  } else if (type === 'Mail') {
+  } else if (type === 'Email') {
     return <MailFilled class="w-5 h-5 text-primary" />
   } else if (type === 'Medium') {
     return <MediumFilled class="w-5 h-5 text-primary" />
@@ -55,7 +55,7 @@ function socialIconComponent(edit: FnParam, del: FnParam) {
       placement="top"
       v-slots={{
         trigger: () => (
-          <div class="flex bg-purple w-8 h-8 justify-center items-center rounded-4px">
+          <div class="flex bg-purple w-12 h-12 justify-center items-center rounded-4px">
             {asyncComponent(item.value)}
           </div>
         ),
@@ -71,6 +71,16 @@ function socialIconComponent(edit: FnParam, del: FnParam) {
 }
 
 export default defineComponent({
+  props: {
+    view: {
+      type: Boolean,
+      default: () => false
+    },
+    socials: {
+      type: Array,
+      default: () => []
+    }
+  },
   setup() {
     const editMode = ref<boolean>(false)
     const info = reactive({
@@ -91,6 +101,7 @@ export default defineComponent({
         t: 'website',
         title: 'URL',
         name: 'value',
+        required: true,
         placeholder: 'Input the URL'
       }
     ])
@@ -129,34 +140,46 @@ export default defineComponent({
     const rules = getFieldsRules(this.fields)
 
     return (
-      <UCard
-        title="SOCIAL"
-        class="mb-6"
-        v-slots={{
-          'header-extra': () => {
-            if (this.editMode) {
-              return <span></span>
-            }
-            return (
-              <Edit onHandleClick={handleEditMode}>
-                <PlusOutlined class="h-4 mr-3 w-4" />
-                ADD NEW
-              </Edit>
-            )
-          }
-        }}
-      >
-        {this.editMode ? (
-          <div class="flex flex-col mt-6">
-            <UForm rules={rules} model={this.info} ref={(ref: any) => (this.form = ref)}>
-              <UFormItemsFactory fields={this.fields} values={this.info} />
-            </UForm>
-            {btnGroup(handleEditMode, handleSubmit)}
-          </div>
-        ) : (
-          <div class="my-6 flex gap-4 cursor-pointer">{socialIconComponent(editIcon, delIcon)}</div>
+      <>
+        {this.view && this.socials.length === 0 ? null : (
+          <UCard
+            title="SOCIAL"
+            class="mb-6"
+            v-slots={{
+              'header-extra': () => {
+                if (this.editMode) {
+                  return
+                } else if (this.view) {
+                  return
+                }
+                return (
+                  <Edit onHandleClick={handleEditMode}>
+                    <PlusOutlined class="h-4 mr-3 w-4" />
+                    ADD NEW
+                  </Edit>
+                )
+              }
+            }}
+          >
+            {this.editMode ? (
+              <div class="flex flex-col mt-6 flex-wrap">
+                <UForm rules={rules} model={this.info} ref={(ref: any) => (this.form = ref)}>
+                  <UFormItemsFactory fields={this.fields} values={this.info} />
+                </UForm>
+                {btnGroup(handleEditMode, handleSubmit)}
+              </div>
+            ) : (
+              <div class="my-6 flex gap-4 cursor-pointer flex-wrap">
+                {this.socials.length === 0 ? (
+                  <p class="text-14px font-[400] text-grey4 mt-6">Add your social</p>
+                ) : (
+                  <>{socialIconComponent(editIcon, delIcon)}</>
+                )}
+              </div>
+            )}
+          </UCard>
         )}
-      </UCard>
+      </>
     )
   }
 })

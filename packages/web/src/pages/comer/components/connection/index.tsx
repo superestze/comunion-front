@@ -1,4 +1,5 @@
-import { UCard, UStartupLogo } from '@comunion/components'
+import { UCard, UNoContent, UStartupLogo } from '@comunion/components'
+import { EmptyFilled } from '@comunion/icons'
 import { defineComponent, ref, watch, onMounted } from 'vue'
 import ListItem from './listItem'
 
@@ -8,6 +9,12 @@ import { useTabs } from './useTabs'
 import LoadingBtn from '@/components/More/loading'
 
 export default defineComponent({
+  props: {
+    view: {
+      type: Boolean,
+      default: () => false
+    }
+  },
   setup() {
     const followedStartups = useFollowedStartups()
     const tabsInstance = useTabs()
@@ -74,23 +81,30 @@ export default defineComponent({
             {this.currentTabId === '0' && (
               <>
                 {Array.isArray(this.followedStartups.list) &&
-                  this.followedStartups.list.map(item => {
-                    console.log(item)
-                    return (
-                      <ListItem
-                        item={item}
-                        onConnect={handleConnect}
-                        onUnconnect={handleUnConnect}
-                        v-slots={{
-                          avatar: () => (
-                            <div class="flex items-center">
-                              <UStartupLogo src={item.logo} width="9" height="9" />
-                            </div>
-                          )
-                        }}
-                      />
-                    )
-                  })}
+                (this.followedStartups.list?.length || 0) > 0 ? (
+                  <>
+                    {this.followedStartups.list.map(item => {
+                      return (
+                        <ListItem
+                          item={item}
+                          onConnect={handleConnect}
+                          onUnconnect={handleUnConnect}
+                          v-slots={{
+                            avatar: () => (
+                              <div class="flex items-center w-9 h-9 overflow-hidden">
+                                <UStartupLogo src={item.logo} width="9" height="9" />
+                              </div>
+                            )
+                          }}
+                        />
+                      )
+                    })}
+                  </>
+                ) : (
+                  <UNoContent textTip="NO ACTIVITIES YET" class="my-10">
+                    <EmptyFilled />
+                  </UNoContent>
+                )}
                 <div class="flex justify-center mt-5">
                   <LoadingBtn
                     onMore={handleMore}

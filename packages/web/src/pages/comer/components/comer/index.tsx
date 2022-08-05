@@ -2,6 +2,7 @@ import {
   FormFactoryField,
   FormInst,
   getFieldsRules,
+  UButton,
   UForm,
   UFormItemsFactory,
   ULazyImage
@@ -36,6 +37,10 @@ export default defineComponent({
       type: String,
       default: () => '',
       required: true
+    },
+    view: {
+      type: Boolean,
+      default: () => false
     }
   },
   setup(props) {
@@ -144,11 +149,17 @@ export default defineComponent({
               src={this.avatar}
             />
             <div class="w-full flex justify-end mt-20px">
-              <Edit class="mr-24px" onHandleClick={handleEditMode} />
+              {this.view ? (
+                <UButton type="primary" class="w-40 mr-6" size="small">
+                  Connect
+                </UButton>
+              ) : (
+                <Edit class="mr-24px" onHandleClick={handleEditMode} />
+              )}
             </div>
             <div class="w-full flex mt-30px flex-col ml-50px mb-24px">
               <p class="text-16px font-[600] text-primary2">{this.name}</p>
-              <p class="text-14px text-grey3">{this.subTitle}</p>
+              <p class="text-14px text-grey3 mt-2">{this.subTitle}</p>
             </div>
           </>
         )}
