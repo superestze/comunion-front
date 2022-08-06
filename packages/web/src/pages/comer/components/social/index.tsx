@@ -78,7 +78,7 @@ export default defineComponent({
     },
     socials: {
       type: Array,
-      default: () => []
+      default: () => [1]
     }
   },
   setup() {
