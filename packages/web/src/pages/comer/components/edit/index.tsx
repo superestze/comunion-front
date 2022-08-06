@@ -10,7 +10,7 @@ export default defineComponent({
     return (
       <span
         onClick={handleClick}
-        class="cursor-pointer flex flex-row text-primary items-center u-label2"
+        class="cursor-pointer flex flex-row text-primary items-center u-body2"
       >
         {typeof this.$slots.default === 'function' ? (
           this.$slots.default()
