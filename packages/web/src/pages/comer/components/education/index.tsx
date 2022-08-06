@@ -21,7 +21,7 @@ export default defineComponent({
     },
     obj: {
       type: Array,
-      default: () => []
+      default: () => [1]
     }
   },
   setup() {
@@ -132,7 +132,7 @@ export default defineComponent({
                         <p class="text-grey3 text-12px font-400">
                           computer science engineering Graduated
                         </p>
-                        <p class="bg-grey5 w-1px h-3 mx-1"></p>
+                        <p class="bg-grey5 w-1px h-3 mx-2"></p>
                         <p class="text-grey3 text-12px font-400">2014</p>
                       </div>
                     </div>

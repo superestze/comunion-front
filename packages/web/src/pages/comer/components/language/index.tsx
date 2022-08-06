@@ -23,7 +23,7 @@ export default defineComponent({
   props: {
     obj: {
       type: Array as PropType<Language[]>,
-      default: () => []
+      default: () => [1]
     },
     view: {
       type: Boolean,
@@ -127,7 +127,7 @@ export default defineComponent({
                     >
                       <div class="flex items-center ml-4">
                         <p class="text-grey1 text-14px font-600">English</p>
-                        <p class="bg-grey5 w-1px h-3 mx-1"></p>
+                        <p class="bg-grey5 w-1px h-3 mx-2"></p>
                         <p class="text-grey3 text-12px font-400">Fluent</p>
                       </div>
                       <div class={`hidden mr-4 ${listHover['hidden']} cursor-pointer`}>
@@ -146,7 +146,7 @@ export default defineComponent({
                     >
                       <div class="flex items-center ml-4">
                         <p class="text-grey1 text-14px font-600">English</p>
-                        <p class="bg-grey5 w-1px h-3 mx-1"></p>
+                        <p class="bg-grey5 w-1px h-3 mx-2"></p>
                         <p class="text-grey3 text-12px font-400">Fluent</p>
                       </div>
                       <div class={`hidden mr-4 ${listHover['hidden']} cursor-pointer`}>
