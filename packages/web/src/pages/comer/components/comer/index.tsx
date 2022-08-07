@@ -158,7 +158,7 @@ export default defineComponent({
               )}
             </div>
             <div class="w-full flex mt-30px flex-col ml-50px mb-24px">
-              <p class="text-16px font-[600] text-primary2">{this.name}</p>
+              <p class="text-16px font-600 text-primary2">{this.name}</p>
               <p class="text-14px text-grey3 mt-2">{this.subTitle}</p>
             </div>
           </>
