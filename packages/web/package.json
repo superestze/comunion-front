@@ -44,7 +44,8 @@
     "util": "^0.12.4",
     "vue": "^3.2.31",
     "vue-request": "^2.0.0-rc.2",
-    "vue-router": "^4.0.14"
+    "vue-router": "^4.0.14",
+    "vuedraggable": "^4.1.0"
   },
   "devDependencies": {
     "@types/big.js": "^6.1.5",

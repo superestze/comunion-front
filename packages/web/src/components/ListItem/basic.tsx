@@ -39,7 +39,11 @@ export default defineComponent({
           {typeof this.$slots.avatar === 'function' && this.$slots.avatar()}
         </div>
         <div class="flex flex-grow border-grey5 border-b h-17 items-center ml-4 justify-between">
-          <div class="w-full text-16px font-600 text-grey1 items-center">{this.item.name}</div>
+          {typeof this.$slots.content === 'function' ? (
+            this.$slots.content()
+          ) : (
+            <div class="w-full text-16px font-600 text-grey1 items-center">{this.item.name}</div>
+          )}
           {this.connect ? (
             <UButton
               class="w-111px flex-shrink-0 h-7 flex"
