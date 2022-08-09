@@ -2,12 +2,12 @@ import {
   FormFactoryField,
   FormInst,
   getFieldsRules,
-  UAddress,
   UButton,
   UForm,
   UFormItemsFactory
 } from '@comunion/components'
-import { defineComponent, h, ref, reactive, PropType, watch } from 'vue'
+import { defineComponent, ref, reactive, PropType, watch } from 'vue'
+import { RectDraggerUpload } from '@/components/Upload/inde'
 import { getStartupTypeFromNumber, STARTUP_TYPES } from '@/constants'
 import { useWalletStore } from '@/stores'
 
@@ -54,29 +54,22 @@ export default defineComponent({
 
     const walletStore = useWalletStore()
     const fields: FormFactoryField[] = [
-      {
-        t: 'singleImageUpload',
-        title: '',
-        name: 'logo',
-        text: 'Update',
-        disabled: true
-      },
-      {
-        t: 'custom',
-        title: 'BlockChainAddress',
-        name: 'blockChainAddress',
-        required: true,
-        render: () => {
-          return h(
-            <UAddress
-              autoSlice={true}
-              blockchainExplorerUrl={walletStore.blockchainExplorerUrl}
-              address={props.data.blockChainAddress}
-            />,
-            {}
-          )
-        }
-      },
+      // {
+      //   t: 'custom',
+      //   title: 'BlockChainAddress',
+      //   name: 'blockChainAddress',
+      //   required: true,
+      //   render: () => {
+      //     return h(
+      //       <UAddress
+      //         autoSlice={true}
+      //         blockchainExplorerUrl={walletStore.blockchainExplorerUrl}
+      //         address={props.data.blockChainAddress}
+      //       />,
+      //       {}
+      //     )
+      //   }
+      // },
       {
         t: 'string',
         title: 'Name',
@@ -137,8 +130,12 @@ export default defineComponent({
 
     const rules = getFieldsRules(this.fields)
     return (
-      <div class="bg-white rounded-lg border mb-6 relative overflow-hidden">
+      <div class="bg-white rounded-lg border mb-6 relative overflow-hidden min-h-205.5">
         <div class="mx-10 my-9.5">
+          <div class="flex mb-14">
+            <RectDraggerUpload tip={{ text: 'Startup logo', tip: '123' }} />
+            <RectDraggerUpload class="ml-16" tip={{ text: 'Startup Banner', tip: '123' }} />
+          </div>
           <UForm rules={rules} model={this.info} ref={(ref: any) => (this.form = ref)}>
             <UFormItemsFactory fields={this.fields} values={this.info} />
           </UForm>

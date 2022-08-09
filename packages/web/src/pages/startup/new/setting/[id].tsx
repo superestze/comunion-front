@@ -1,18 +1,24 @@
 import { MenuOption, UBreadcrumb, UBreadcrumbItem, USpin } from '@comunion/components'
 import { ArrowLeftOutlined } from '@comunion/icons'
 import { defineComponent, ref } from 'vue'
+import { useRoute } from 'vue-router'
 import { useStartup } from '../hooks/useStartup'
+import Dapp from './components/dapp'
 import Finance from './components/finance'
+import Governance from './components/governance'
 import Info from './components/info'
 import Menu from './components/menu'
 import Security from './components/security'
 import Sequence from './components/sequence'
+import { Team } from './components/team'
 
 export default defineComponent({
   setup() {
     const loading = ref<boolean>(false)
     const currentEditComponent = ref<string>('INFO')
     const startup = useStartup()
+    const route = useRoute()
+    startup.get(route.params.id as string)
     return {
       loading,
       currentEditComponent,
@@ -78,7 +84,9 @@ export default defineComponent({
                 }}
               />
             )}
-            {this.currentEditComponent === 'TEAM' && <h1>Ready</h1>}
+            {this.currentEditComponent === 'TEAM' && (
+              <Team startupId={this.startup?.id as unknown as string} />
+            )}
             {this.currentEditComponent === 'SOCIAL' && (
               <h1>Ready</h1>
               // <Social
@@ -90,7 +98,9 @@ export default defineComponent({
               //   }
               // />
             )}
+            {this.currentEditComponent === 'GOVERNANCE' && <Governance />}
             {this.currentEditComponent === 'SEQUENCE' && <Sequence />}
+            {this.currentEditComponent === 'DAPP' && <Dapp />}
           </div>
         </div>
       </USpin>

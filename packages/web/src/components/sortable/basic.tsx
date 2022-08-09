@@ -1,16 +1,55 @@
-import { DragFilled, SortIcon1Outlined } from '@comunion/icons'
+import {
+  DragFilled,
+  SortIcon1Outlined,
+  SortIcon2Outlined,
+  SortIcon3Outlined,
+  SortIcon4Outlined
+} from '@comunion/icons'
 import { defineComponent, ref } from 'vue'
 import draggable from 'vuedraggable'
+
+type SortItemType = {
+  index: number
+  element: ListItemType
+}
+
+type ListItemType = {
+  name: string
+  text: string
+  id: number
+  icon: () => any
+}
 
 export default defineComponent({
   components: {
     draggable
   },
   setup() {
-    const list = ref<any>([
-      { name: 'John', text: '', id: 0 },
-      { name: 'Joao', text: '', id: 1 },
-      { name: 'Jean', text: '', id: 2 }
+    const list = ref<ListItemType[]>([
+      {
+        name: 'Bounty',
+        text: '',
+        id: 0,
+        icon: () => <SortIcon1Outlined class="w-full text-primary" />
+      },
+      {
+        name: 'Crowdfunding',
+        text: '',
+        id: 1,
+        icon: () => <SortIcon2Outlined class="w-full text-primary" />
+      },
+      {
+        name: 'Governance',
+        text: '',
+        id: 2,
+        icon: () => <SortIcon3Outlined class="w-full text-primary" />
+      },
+      {
+        name: 'Other dapp',
+        text: '',
+        id: 3,
+        icon: () => <SortIcon4Outlined class="w-full text-primary" />
+      }
     ])
     return {
       list
@@ -26,7 +65,8 @@ export default defineComponent({
           handle=".handle"
           itemKey="name"
           v-slots={{
-            item: ({ element, index }) => {
+            item: (data: SortItemType) => {
+              const { element, index } = data
               console.log(element, index)
               return (
                 <li
@@ -40,7 +80,7 @@ export default defineComponent({
                       class="w-12 h-12 flex items-center justify-center rounded-full mr-6 ml-4"
                       style={{ backgroundColor: 'rgba(83, 49, 244, 0.1)' }}
                     >
-                      <SortIcon1Outlined class="w-full text-primary" />
+                      {element.icon()}
                     </div>
                     <p class="u-title2">{element.name}</p>
                   </div>

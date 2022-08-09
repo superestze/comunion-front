@@ -61,7 +61,7 @@ export default defineComponent({
       this.$emit('selectedChange', this.selectedList)
     }
     return (
-      <div class="flex w-full">
+      <div class="flex w-auto">
         {this.taskList.map(task => {
           return (
             <div

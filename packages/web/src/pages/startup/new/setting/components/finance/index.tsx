@@ -126,7 +126,7 @@ export default defineComponent({
     }
 
     return (
-      <div class="bg-white rounded-lg border mb-6 relative overflow-hidden">
+      <div class="bg-white rounded-lg border mb-6 relative overflow-hidden min-h-205.5">
         <div class="mx-10 my-9.5">
           <UForm ref={(ref: any) => (this.form = ref)} rules={rules} model={this.info}>
             <UFormItem label="Launch Network" required={true} label-style={divStyle}>

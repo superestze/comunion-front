@@ -74,7 +74,7 @@ export default defineComponent({
 
     const rules = getFieldsRules(this.fields)
     return (
-      <div class="bg-white rounded-lg border mb-6 relative overflow-hidden">
+      <div class="bg-white rounded-lg border mb-6 relative overflow-hidden min-h-205.5">
         <div class="mx-10 my-9.5">
           <UForm rules={rules} model={this.info} ref={(ref: any) => (this.form = ref)}>
             <UFormItemsFactory fields={this.fields} values={this.info} />

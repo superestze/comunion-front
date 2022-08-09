@@ -68,7 +68,7 @@ export default defineComponent({
     return (
       <div class="bg-white rounded-lg border mb-6 relative overflow-hidden h-205.5">
         <p class="u-body2 m-6 text-grey3">Settings</p>
-        <UMenu options={this.menuOptions} onUpdateValue={handleUpdateValue} />
+        <UMenu options={this.menuOptions} onUpdateValue={handleUpdateValue} defaultValue="INFO" />
       </div>
     )
   }
