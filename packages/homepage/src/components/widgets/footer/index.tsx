@@ -57,7 +57,7 @@ export default defineComponent({
           title: 'Foundation'
         },
         {
-          title: 'GCP-NFTs'
+          title: 'GCP'
         },
         {
           title: 'Dappstore'
