@@ -9,7 +9,6 @@ import {
 import { defineComponent, ref, reactive, PropType, watch } from 'vue'
 import { RectDraggerUpload } from '@/components/Upload/inde'
 import { getStartupTypeFromNumber, STARTUP_TYPES } from '@/constants'
-import { useWalletStore } from '@/stores'
 
 type InfoPropType = {
   logo: string
@@ -52,7 +51,7 @@ export default defineComponent({
       }
     )
 
-    const walletStore = useWalletStore()
+    // const walletStore = useWalletStore()
     const fields: FormFactoryField[] = [
       // {
       //   t: 'custom',
