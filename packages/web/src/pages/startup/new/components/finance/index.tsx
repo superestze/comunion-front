@@ -5,7 +5,7 @@ import Copy from '@/components/Copy'
 export default defineComponent({
   render() {
     return (
-      <UCard title="BOUNTIES" class="mb-6">
+      <UCard title="FINANCE" class="mb-6">
         <div class="flex flex-col mr-10">
           <div class="flex mt-4">
             <p class="u-body2 text-grey3 w-38">Launch Network：</p>

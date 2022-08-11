@@ -79,9 +79,11 @@ export default defineComponent({
           <UForm rules={rules} model={this.info} ref={(ref: any) => (this.form = ref)}>
             <UFormItemsFactory fields={this.fields} values={this.info} />
           </UForm>
-          <UButton class="w-30" type="primary" size="small" onClick={handleSubmit}>
-            Save
-          </UButton>
+          <div class="flex mt-10 items-center justify-end">
+            <UButton class="w-30" type="primary" size="small" onClick={handleSubmit}>
+              Save
+            </UButton>
+          </div>
         </div>
       </div>
     )

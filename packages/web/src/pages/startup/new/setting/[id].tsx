@@ -10,6 +10,7 @@ import Info from './components/info'
 import Menu from './components/menu'
 import Security from './components/security'
 import Sequence from './components/sequence'
+import Social from './components/social'
 import { Team } from './components/team'
 
 export default defineComponent({
@@ -88,15 +89,12 @@ export default defineComponent({
               <Team startupId={this.startup?.id as unknown as string} />
             )}
             {this.currentEditComponent === 'SOCIAL' && (
-              <h1>Ready</h1>
-              // <Social
-              //   data={
-              //     {
-              //       tags: this.startup?.hashTags
-              //       contacts: this.startup.con
-              //     }
-              //   }
-              // />
+              <Social
+                data={{
+                  tags: ['123'],
+                  contacts: [{ type: 1, value: '123' }]
+                }}
+              />
             )}
             {this.currentEditComponent === 'GOVERNANCE' && <Governance />}
             {this.currentEditComponent === 'SEQUENCE' && <Sequence />}
