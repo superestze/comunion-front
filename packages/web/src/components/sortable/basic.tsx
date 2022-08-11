@@ -91,7 +91,7 @@ export default defineComponent({
               )
             }
           }}
-        ></draggable>
+        />
       </div>
     )
   }

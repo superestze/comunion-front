@@ -101,7 +101,8 @@ export default defineConfig({
             events: 'tools',
             'lodash-es': 'tools',
             'date-fns': 'tools',
-            util: 'tools'
+            util: 'tools',
+            vuedraggable: 'vuedraggable'
           }
           const splited = id.split('node_modules')
           if (splited.length > 1) {
