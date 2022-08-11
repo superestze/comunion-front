@@ -1,5 +1,6 @@
 import { UTabPane, UTabs } from '@comunion/components'
-import { defineComponent, PropType, ref, computed } from 'vue'
+import { defineComponent, PropType, ref } from 'vue'
+import { ModuleTags } from '@/components/Tags'
 
 export default defineComponent({
   props: {
@@ -10,95 +11,44 @@ export default defineComponent({
     }
   },
   emits: ['tabChange', 'selectedTagChange'],
-  setup(props) {
-    const selectedList = ref<string[]>(['All'])
-    const taskList = computed(() => {
-      const str =
-        'flex h-8 rounded-8px justify-center items-center mr-2 min-w-12 px-4 py-1.5 cursor-pointer'
-      return props.tasks.map(task => {
-        const index = selectedList.value.findIndex(item => item === task)
-        if (index > -1) {
-          return {
-            value: task,
-            class: `${str} text-primary`,
-            active: true
-          }
-        }
-        return {
-          value: task,
-          class: `${str} bg-purple text-grey2`,
-          active: false
-        }
-      })
-    })
+  setup() {
+    const tag1 = ref<any>()
+    const tag2 = ref<any>()
     return {
-      selectedList,
-      taskList
+      tag1,
+      tag2
     }
   },
   render() {
     const tabsChange = (value: string) => {
-      this.selectedList = ['All']
-      this.$emit('selectedTagChange', this.selectedList)
+      if (this.tag1) this.tag1.selectedList = ['All']
+      if (this.tag2) this.tag2.selectedList = ['All']
+      this.$emit('selectedTagChange', ['All'])
       this.$emit('tabChange', value === 'CREATED BY ME')
     }
 
-    const handleTag = (key: string) => () => {
-      if (key === 'All') {
-        this.selectedList = ['All']
-        this.$emit('selectedTagChange', this.selectedList)
-        return
-      }
-      const index = this.selectedList.findIndex(value => {
-        return value === key
-      })
-      if (index > -1) {
-        this.selectedList.splice(index, 1)
-        if (this.selectedList.length === 0) {
-          this.selectedList = ['All']
-        }
-        this.$emit('selectedTagChange', this.selectedList)
-        return
-      }
-      const allIndex = this.selectedList.findIndex(value => value === 'All')
-      if (allIndex > -1) {
-        this.selectedList.splice(allIndex, 1)
-      }
-      this.selectedList.push(key)
-      this.$emit('selectedTagChange', this.selectedList)
+    const handleSelectedChange = (selectedList: string[]) => {
+      this.$emit('selectedTagChange', selectedList)
     }
+
     return (
       <div class="bg-white rounded-lg border mb-6 relative overflow-hidden p-10">
         <UTabs onUpdateValue={tabsChange}>
           <UTabPane name="PARTICIPATED" tab="PARTICIPATED" class="h-10">
-            <div class="flex w-full mt-4">
-              {this.taskList.map(task => {
-                return (
-                  <div
-                    class={task.class}
-                    onClick={handleTag(task.value)}
-                    style={task.active ? { backgroundColor: 'rgba(83, 49, 244, 0.1)' } : {}}
-                  >
-                    {task.value}
-                  </div>
-                )
-              })}
-            </div>
+            <ModuleTags
+              class="mt-4"
+              tasks={this.tasks}
+              onSelectedChange={handleSelectedChange}
+              ref={(ref: any) => (this.tag1 = ref)}
+            />
           </UTabPane>
           <UTabPane name="CREATED BY ME" tab="CREATED BY ME" class="h-10">
-            <div class="flex w-full mt-4">
-              {this.taskList.map(task => {
-                return (
-                  <div
-                    class={task.class}
-                    onClick={handleTag(task.value)}
-                    style={task.active ? { backgroundColor: 'rgba(83, 49, 244, 0.1)' } : {}}
-                  >
-                    {task.value}
-                  </div>
-                )
-              })}
-            </div>
+            <ModuleTags
+              class="mt-4"
+              tasks={this.tasks}
+              onSelectedChange={handleSelectedChange}
+              ref={(ref: any) => (this.tag2 = ref)}
+            />
           </UTabPane>
         </UTabs>
       </div>

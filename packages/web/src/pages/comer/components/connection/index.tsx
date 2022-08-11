@@ -1,11 +1,11 @@
 import { UCard, UNoContent, UStartupLogo } from '@comunion/components'
 import { EmptyFilled } from '@comunion/icons'
 import { defineComponent, ref, watch, onMounted } from 'vue'
-import ListItem from './listItem'
 
 import Switch from './switch'
 import { useFollowedStartups } from './useFollowedStartups'
 import { useTabs } from './useTabs'
+import { BasicItem } from '@/components/ListItem'
 import LoadingBtn from '@/components/More/loading'
 
 export default defineComponent({
@@ -85,7 +85,7 @@ export default defineComponent({
                   <>
                     {this.followedStartups.list.map(item => {
                       return (
-                        <ListItem
+                        <BasicItem
                           item={item}
                           onConnect={handleConnect}
                           onUnconnect={handleUnConnect}

@@ -7,44 +7,12 @@ import {
   UFormItemsFactory,
   UPopover
 } from '@comunion/components'
-import {
-  DiscordFilled,
-  WebsiteFilled,
-  FacebookFilled,
-  UnionFilled,
-  TelegramFilled,
-  TwitterFilled,
-  MailFilled,
-  MediumFilled,
-  PenOutlined,
-  DeleteFilled,
-  PlusOutlined
-} from '@comunion/icons'
+import { PenOutlined, DeleteFilled, PlusOutlined } from '@comunion/icons'
 import { defineComponent, ref, reactive, computed } from 'vue'
 import { btnGroup } from '../btnGroup'
 import Edit from '../edit'
+import SocialIcon from '@/components/SocialIcon'
 import { SocialTypeList } from '@/constants'
-
-function asyncComponent(type: string) {
-  if (type === 'Website') {
-    return <WebsiteFilled class="w-5 h-5 text-primary" />
-  } else if (type === 'Discord') {
-    return <DiscordFilled class="w-5 h-5 text-primary" />
-  } else if (type === 'Facebook') {
-    return <FacebookFilled class="w-5 h-5 text-primary" />
-  } else if (type === 'Linktree') {
-    return <UnionFilled class="w-5 h-5 text-primary" />
-  } else if (type === 'Telegram') {
-    return <TelegramFilled class="w-5 h-5 text-primary" />
-  } else if (type === 'Twitter') {
-    return <TwitterFilled class="w-5 h-5 text-primary" />
-  } else if (type === 'Email') {
-    return <MailFilled class="w-5 h-5 text-primary" />
-  } else if (type === 'Medium') {
-    return <MediumFilled class="w-5 h-5 text-primary" />
-  }
-  return
-}
 
 type FnParam = (type: string) => void
 
@@ -54,11 +22,7 @@ function socialIconComponent(edit: FnParam, del: FnParam) {
       trigger="click"
       placement="top"
       v-slots={{
-        trigger: () => (
-          <div class="flex bg-purple w-12 h-12 justify-center items-center rounded-4px">
-            {asyncComponent(item.value)}
-          </div>
-        ),
+        trigger: () => <SocialIcon icon={item.value} />,
         default: () => (
           <div class="flex m-3 cursor-pointer">
             <PenOutlined class="text-primary w-3.5 h-3.5 mr-4.5" onClick={() => edit(item.value)} />
