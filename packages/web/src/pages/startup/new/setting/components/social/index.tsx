@@ -27,11 +27,25 @@ export default defineComponent({
     }
   },
   setup(props) {
-    const info = reactive({})
+    const info = reactive<SocialType>({
+      tags: [],
+      contacts: [
+        {
+          value: '123123',
+          type: 1
+        }
+      ]
+    })
     const contactOptions = ref([
       { label: 'Email', value: 1 },
       { label: 'Discord', value: 2 },
-      { label: 'Telegram', value: 3 }
+      { label: 'Telegram', value: 3 },
+      { label: 'Website', value: 4 },
+      { label: 'Twitter', value: 5 },
+      { label: 'Docs', value: 6 },
+      { label: 'Facebook', value: 7 },
+      { label: 'Medium', value: 8 },
+      { label: 'Linktree', value: 9 }
     ])
     const fields: FormFactoryField[] = [
       {
@@ -42,8 +56,8 @@ export default defineComponent({
       },
       {
         t: 'custom',
-        title: 'Contact',
-        name: 'contact',
+        title: 'Social',
+        name: 'social',
         rules: [
           {
             required: true,
@@ -72,8 +86,8 @@ export default defineComponent({
         render(value) {
           return (
             <div class="w-full">
-              {props.data.contacts.map((item: ContactType, itemIndex: number) => (
-                <div class={{ 'mb-4': itemIndex < props.data.contacts.length - 1 }}>
+              {info.contacts.map((item: ContactType, itemIndex: number) => (
+                <div class="mb-4">
                   <div class="flex items-center">
                     <UInputGroup>
                       <USelect
@@ -92,26 +106,26 @@ export default defineComponent({
                         }
                       ></UInput>
                     </UInputGroup>
-                    {props.data.contacts.length > 1 && (
+                    {info.contacts.length > 1 && (
                       <div
                         class="flex items-center cursor-pointer"
                         onClick={() => {
+                          info.contacts.splice(itemIndex, 1)
                           // todo
                         }}
                       >
                         <MinusCircleOutlined class="w-5 h-5 ml-4.5" />
                       </div>
                     )}
-                    {itemIndex + 1 === props.data.contacts.length && itemIndex < 5 && (
-                      <div
-                        class="flex items-center cursor-pointer"
-                        onClick={() => {
-                          // todo
-                        }}
-                      >
-                        <AddCircleOutlined class="w-5 h-5 ml-4.5" />
-                      </div>
-                    )}
+                    <div
+                      class="flex items-center cursor-pointer"
+                      onClick={() => {
+                        info.contacts.push({ type: 2, value: '123' })
+                        // todo
+                      }}
+                    >
+                      <AddCircleOutlined class="w-5 h-5 ml-4.5" />
+                    </div>
                   </div>
                   {item.type === 1 && item.value && !validateEmail(item.value) && (
                     <div class="ml-50 text-error">Please enter the correct email address</div>

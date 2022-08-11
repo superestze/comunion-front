@@ -38,6 +38,16 @@ export default defineComponent({
         title: 'KYC',
         name: 'kyc',
         placeholder: 'Input startup KYC',
+        rules: [
+          {
+            validator: (rule, value) =>
+              !value ||
+              (value && value.startsWith('https://')) ||
+              (value && value.startsWith('http://')),
+            message: 'Invalid URL',
+            trigger: 'blur'
+          }
+        ],
         onBlur: (e: Event) => {
           const oIpt = e.target as HTMLTextAreaElement
           if (!oIpt!.className.includes('truncate')) {
@@ -50,6 +60,16 @@ export default defineComponent({
         title: 'Contract Audit',
         name: 'contractAudit',
         placeholder: 'Input startup contract audit',
+        rules: [
+          {
+            validator: (rule, value) =>
+              !value ||
+              (value && value.startsWith('https://')) ||
+              (value && value.startsWith('http://')),
+            message: 'Invalid URL',
+            trigger: 'blur'
+          }
+        ],
         onBlur: (e: Event) => {
           const oIpt = e.target as HTMLTextAreaElement
           if (!oIpt!.className.includes('truncate')) {

@@ -1,5 +1,5 @@
 import { UButton, UCard, UInput, UModal } from '@comunion/components'
-import { DeleteFilled } from '@comunion/icons'
+import { DeleteFilled, PlusOutlined } from '@comunion/icons'
 import { defineComponent, ref } from 'vue'
 
 export default defineComponent({
@@ -49,6 +49,7 @@ export default defineComponent({
           onClose={userBehavier('cancel')}
         >
           <>
+            <div class="h-9.5 w-full"></div>
             {this.groups.map((group, index) => (
               <div class="flex items-center mb-4">
                 <UInput
@@ -67,8 +68,11 @@ export default defineComponent({
                 />
               </div>
             ))}
-            <UButton dashed class="w-full" onClick={addGroup}>
-              Add
+            <UButton dashed class="w-full u-body2" onClick={addGroup}>
+              <span class="u-body2 flex items-center text-grey3">
+                <PlusOutlined class="h-4 mr-3 w-4" />
+                Add
+              </span>
             </UButton>
             <div class="flex justify-end mt-40px">
               <UButton class="w-40" type="primary" onClick={userBehavier('submit')} size="small">
