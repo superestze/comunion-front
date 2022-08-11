@@ -6,16 +6,10 @@ import {
   USearch
 } from '@comunion/components'
 import { defineComponent, ref, computed } from 'vue'
+import { useRouter } from 'vue-router'
 import { CrowdfundingCard } from './components/CrowdfundingCard'
 import { CrowdfundingType, CROWDFUNDING_TYPES } from '@/constants'
-import { services } from '@/services'
-import { StartupItem } from '@/types'
-
-const defaultInfo = {
-  poster: 'https://ask.qcloudimg.com/http-save/2323866/sfs7pdu27n.jpeg?imageView2/2/w/1620',
-  startupName: 'startup title',
-  chainId: 43114
-}
+import { ServiceReturn, services } from '@/services'
 
 const CrowdfundingList = defineComponent({
   name: 'CrowdfundingList',
@@ -23,22 +17,27 @@ const CrowdfundingList = defineComponent({
     const startupType = ref<string | undefined>(undefined)
     const inputMember = ref<string>('')
     const total = ref(0)
+    const router = useRouter()
     const dataService = computed<UPaginatedListPropsType['service']>(
       () => async (page, pageSize) => {
-        const { error, data } = await services['startup@startup-list']({
+        const { error, data } = await services['crowdfunding@public-crowdfunding-list']({
           limit: pageSize,
-          offset: pageSize * (page - 1),
+          page,
           mode:
             startupType.value !== undefined
               ? CROWDFUNDING_TYPES.indexOf(startupType.value as CrowdfundingType) + 1
               : undefined,
           keyword: inputMember.value
         })
-        const _total = error ? 0 : data!.total
+        const _total = error ? 0 : data!.totalRows
         total.value = _total
-        return { items: error ? [] : data!.list!, total: _total }
+        return { items: error ? [] : data!.rows!, total: _total }
       }
     )
+
+    const toDetail = (crowdfundingId: number) => {
+      router.push('/crowdfunding/' + crowdfundingId)
+    }
 
     return () => (
       <div class="mt-10 mb-16">
@@ -48,7 +47,7 @@ const CrowdfundingList = defineComponent({
             Filter by:
             <UDropdownFilter
               options={CROWDFUNDING_TYPES.map(item => ({ label: item, value: item }))}
-              placeholder="Startup Type"
+              placeholder="ALL status"
               class="uppercase rounded border-1 h-10 ml-6 w-37"
               clearable
               v-model:value={startupType.value}
@@ -64,11 +63,17 @@ const CrowdfundingList = defineComponent({
         </div>
         <UPaginatedList
           service={dataService.value}
-          children={({ dataSource: startups }: { dataSource: NonNullable<StartupItem>[] }) => {
+          children={({
+            dataSource: crowdfundingList
+          }: {
+            dataSource: NonNullable<ServiceReturn<'crowdfunding@public-crowdfunding-list'>>['rows']
+          }) => {
             return (
               <div class="grid pb-6 gap-8 grid-cols-1 md:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4">
-                {startups.map(startup => (
-                  <CrowdfundingCard key={startup.id} info={defaultInfo} />
+                {crowdfundingList.map(crowdfunding => (
+                  <div onClick={() => toDetail(crowdfunding.crowdfundingId)}>
+                    <CrowdfundingCard key={crowdfunding.crowdfundingId} info={crowdfunding} />
+                  </div>
                 ))}
               </div>
             )

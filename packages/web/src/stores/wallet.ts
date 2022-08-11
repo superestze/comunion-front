@@ -1,6 +1,6 @@
 import { message } from '@comunion/components'
 import { storage } from '@comunion/utils'
-import type { providers } from 'ethers'
+import { ethers, providers } from 'ethers'
 import { defineStore } from 'pinia'
 import { markRaw } from 'vue'
 import { useUserStore } from './user'
@@ -221,6 +221,20 @@ export const useWalletStore = defineStore('wallet', {
     // set network switcher function
     setOpenNetworkSwitcher(fn: () => void) {
       _openNetworkSwitcher = fn
+    },
+    async getBalance(address: string): Promise<string> {
+      const provider = this.wallet?.getProvider()
+      if (provider) {
+        try {
+          const balance = await provider.getBalance(address)
+          const etherString = ethers.utils.formatEther(balance)
+          return etherString
+        } catch (error) {
+          console.log('error', error)
+          return '0'
+        }
+      }
+      return '0'
     }
   }
 })

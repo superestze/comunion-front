@@ -8,9 +8,9 @@ export const <%= title %>Addresses: Record<number, string> = {<% addresses.forEa
 
 const abi = '<%= abi %>'
 
-export function use<%= title %>Contract(): {
+export function use<%= title %>Contract(params: Omit<GetContractArgs, 'abi'> = { addresses: <%= title %>Addresses }): {
   getContract: () => Contract<% abiArr.forEach(function(func, index) { %>
-  <%= func.name %>: (<%=generateArgs(func.inputs) ? generateArgs(func.inputs) + ',' : '' %> pendingText: string, waitingText: string) => Promise<[<%= generateArgs(func.outputs, true) %>]><% }) %>
+  <%= func.name %>: (<%=generateArgs(func.inputs) ? generateArgs(func.inputs) + ',' : '' %> pendingText: string, waitingText: string, overrides?: any) => Promise<[<%= generateArgs(func.outputs, true) %>]><% }) %>
 } {
   const walletStore = useWalletStore()
   const getContractArgs = computed<GetContractArgs>(() => {
@@ -22,8 +22,8 @@ export function use<%= title %>Contract(): {
     }
   })
   return {
-    getContract: () => getContract(getContractArgs.value),
-    <% abiArr.forEach(function(func, index) { %><%= func.name %>: wrapTransaction(getContractArgs.value, '<%= func.name %>'),
+    getContract: () => getContract({...getContractArgs.value, ...params}),
+    <% abiArr.forEach(function(func, index) { %><%= func.name %>: wrapTransaction({...getContractArgs.value, ...params}, '<%= func.name %>'),
     <% }) %>
   }
 }

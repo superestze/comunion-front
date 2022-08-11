@@ -1,7 +1,7 @@
 import './style.css'
 
 import { NInputGroup } from 'naive-ui'
-import { AllowedComponentProps, defineComponent, PropType, watch, ref } from 'vue'
+import { AllowedComponentProps, defineComponent, PropType, ref, watch } from 'vue'
 import UInputBigNumber, { UInputBigNumberPropsType } from '../UInputBigNumber/InputBigNumber'
 
 type GroupType = 'withSelect' | 'withUnit'
@@ -39,6 +39,12 @@ const UInputNumberGroup = defineComponent({
         ctx.emit('update:value', n)
       }
     )
+    watch(
+      () => props.value,
+      n => {
+        console.log('n===>', n)
+      }
+    )
     const rightPart = () => {
       if (props.type === 'withUnit') {
         return props.renderUnit?.()
@@ -51,7 +57,11 @@ const UInputNumberGroup = defineComponent({
     return () => (
       <div class={['u-input-number-group', props.class]}>
         <NInputGroup>
-          <UInputBigNumber v-model:value={inputValue.value} {...props.inputProps} />
+          <UInputBigNumber
+            v-model:value={inputValue.value}
+            {...props.inputProps}
+            v-slots={ctx.slots}
+          />
           {rightPart()}
         </NInputGroup>
       </div>
