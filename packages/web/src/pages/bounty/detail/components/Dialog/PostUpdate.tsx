@@ -9,7 +9,6 @@ import {
   UModal
 } from '@comunion/components'
 import { defineComponent, Ref, computed, reactive, ref } from 'vue'
-import RichEditor from '@/components/Editor'
 import { services } from '@/services'
 import { useBountyStore } from '@/stores'
 
@@ -48,11 +47,12 @@ export default defineComponent({
         ],
         render() {
           return (
-            <RichEditor
-              placeholder="Describe the details of the bounty"
-              class="w-full"
-              v-model:value={info.update}
-            />
+            <h1>check</h1>
+            // <RichEditor
+            //   placeholder="Describe the details of the bounty"
+            //   class="w-full"
+            //   v-model:value={info.update}
+            // />
           )
         }
       }

@@ -10,7 +10,6 @@ import {
 import { defineComponent, PropType, ref, computed } from 'vue'
 import { BountyInfo } from '../typing'
 import { MAX_AMOUNT, renderUnit } from './BasicInfo'
-import RichEditor from '@/components/Editor'
 
 export interface PayDetailPeriodRef {
   payPeriodForm: FormInst | null
@@ -190,11 +189,12 @@ const PayDetailPeriod = defineComponent({
         ],
         render() {
           return (
-            <RichEditor
-              placeholder="Set up description and target of bounty for applicant"
-              class="w-full"
-              v-model:value={props.bountyInfo.period.target}
-            />
+            <h1>check</h1>
+            // <RichEditor
+            //   placeholder="Set up description and target of bounty for applicant"
+            //   class="w-full"
+            //   v-model:value={props.bountyInfo.period.target}
+            // />
           )
         }
       }
