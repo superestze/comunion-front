@@ -66,7 +66,12 @@ export default defineComponent({
       <>
         <div class="search mt-10 mb-6 h-10">
           <UInputGroup>
-            <UInput class="h-12 leading-12" v-model:value={this.walletAddress} size="small" />
+            <UInput
+              class="h-12 leading-12"
+              v-model:value={this.walletAddress}
+              size="small"
+              placeholder="Search comer by wallet address"
+            />
             <UButton
               onClick={searchMember}
               size="small"

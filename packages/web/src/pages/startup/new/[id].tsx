@@ -16,7 +16,7 @@ import Empty from '@/pages/comer/components/empty'
 export default defineComponent({
   setup() {
     const loading = ref<boolean>(false)
-    const systemTasks = ref<string[]>(['All', 'Startup', 'Bounty', 'Crowdfunding', 'Proposal'])
+    const systemTasks = ref<string[]>(['All', 'Bounty', 'Crowdfunding', 'Governance', 'Other dapp'])
     const startup = useStartup()
     const route = useRoute()
     startup.get(route.params.id as string)

@@ -107,9 +107,11 @@ export default defineComponent({
         <div class="flex justify-between mt-9 ml-10 mr-10 mb-10">
           <div class="flex flex-col">
             <div class="flex gap-2">
-              <div class="text-primary2 p-1 border text-3">123123</div>
+              <div class="flex rounded-2px overflow-hidden h-6 px-2 py-1 text-primary1 border border-primary1">
+                123123
+              </div>
             </div>
-            <p class="u-body2 mt-5 w-180">{this.mission}</p>
+            <p class="u-body2 mt-5 w-180 ">{this.mission}</p>
           </div>
           <div class="flex flex-wrap gap-4 items-end">
             {SocialTypeList.map(item => (
