@@ -89,7 +89,7 @@ export default defineComponent({
               onClick={() => handleFollowStartup('unfollow')}
             >
               <HookFilled class="w-4.5 mr-1" />
-              Unfollow
+              Unconnect
             </UButton>
           ) : (
             <UButton
@@ -118,7 +118,7 @@ export default defineComponent({
               <UPopover
                 placement="top"
                 v-slots={{
-                  trigger: () => <SocialIcon icon={item.value} />,
+                  trigger: () => <SocialIcon icon={item.value} outWrapper="w-10 h-10" />,
                   default: () => <div class="flex m-3 cursor-pointer">{item.value}</div>
                 }}
               />

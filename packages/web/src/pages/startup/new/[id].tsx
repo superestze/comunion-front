@@ -31,6 +31,7 @@ export default defineComponent({
     return (
       <USpin show={this.loading}>
         <UBreadcrumb class="mt-10 mb-10">
+          <UBreadcrumbItem v-slots={{ separator: () => <ArrowLeftOutlined /> }}></UBreadcrumbItem>
           <UBreadcrumbItem v-slots={{ separator: () => <ArrowLeftOutlined /> }}>
             <span
               class="cursor-pointer text-primary uppercase u-label2"
