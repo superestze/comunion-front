@@ -64,7 +64,7 @@ export default defineComponent({
     }
     return (
       <>
-        <div class="search mt-10 mb-6 h-10">
+        <div class="search mb-6 h-10">
           <UInputGroup>
             <UInput
               class="h-12 leading-12"
