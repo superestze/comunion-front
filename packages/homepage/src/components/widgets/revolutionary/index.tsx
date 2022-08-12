@@ -63,7 +63,7 @@ export default defineComponent({
           title="Revolutionary"
           subTitle="Generates an all-in-one meeting place for being dedicated to building a thriving and collaborative ecosystem, community, and economy"
         />
-        <div class="flex flex-row flex-wrap w-1120px mx-auto mt-80px">
+        <div class="flex flex-row flex-wrap w-1120px mx-auto mt-80px <md:hidden">
           {this.list.map((item, $index) => {
             const srcset = handleSrcset(item.icons)
             return (

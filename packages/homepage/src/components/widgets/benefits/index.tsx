@@ -113,7 +113,7 @@ export default defineComponent({
         class="w-full h-1142px mt-240px pt-160px relative"
       >
         <H1 color="#fff" text="Benefits" class="mb-70px" />
-        <div class="grid gap-x-30px gap-y-24px grid-cols-[350px,350px,350px] justify-center">
+        <div class="grid gap-x-30px gap-y-24px grid-cols-[350px,350px,350px] justify-center <md:hidden">
           {this.list.map(item => {
             const srcset = handleSrcset(item.icons)
             return (

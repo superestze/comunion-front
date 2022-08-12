@@ -57,7 +57,7 @@ export default defineComponent({
     return (
       <>
         <Title title="Innovative" class="mt-240px" />
-        <div class="grid gap-x-30px gap-y-24px justify-center mt-78px">
+        <div class="grid gap-x-30px gap-y-24px justify-center mt-78px <md:hidden">
           {this.list.map((item, $index) => {
             const str0 = $index === 0 && `row-start-1 row-end-2 col-start-1 col-end-2`
             const str1 = $index === 1 && `row-start-1 row-end-2 col-start-2 col-end-3`

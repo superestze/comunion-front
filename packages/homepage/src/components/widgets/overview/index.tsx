@@ -26,7 +26,7 @@ export default defineComponent({
           You Can
         </h1>
         <div
-          class="grid grid-rows-4 grid-cols-6 mx-auto bg-transparent grid-cols-[279px,136px,143px,138px,141px,276px] grid-rows-[180px,180px,180px,180px]"
+          class="grid grid-rows-4 grid-cols-6 mx-auto bg-transparent grid-cols-[279px,136px,143px,138px,141px,276px] grid-rows-[180px,180px,180px,180px] <sm:hidden"
           style={{ backgroundColor: 'rgba(255,255,255,0.6)' }}
         >
           <div class="row-start-1 row-end-3 col-start-1 col-end-3 border border-solid pt-54px pl-48px bg-[#5E18FE] text-white">

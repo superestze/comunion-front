@@ -17,7 +17,10 @@ export default defineComponent({
       <div>
         <H1 class="mt-240px" text={this.title || ''} />
         {this.subTitle && (
-          <Subtitle class="mt-22px w-886px text-center mx-auto" text={this.subTitle || ''} />
+          <Subtitle
+            class="mt-22px <md:w-full w-886px text-center mx-auto"
+            text={this.subTitle || ''}
+          />
         )}
       </div>
     )
