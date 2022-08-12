@@ -83,6 +83,26 @@ export default defineComponent({
             )
           })}
         </div>
+        <div class="flex flex-col md:hidden mt-80px">
+          {this.list.map((item, $index) => {
+            const srcset = handleSrcset(item.icons)
+            return (
+              <div
+                class={`${styles.hoverBox} ${animate['undefined-back-pulse']} flex flex-col flex-grow-0 flex-shrink-0 <md:w-auto <md:mx-16 pl-48px ${animate['undefined-border-fade']} hover:text-primary mb-6`}
+                key={item.h1line1}
+              >
+                <div class="w-62px h-62px mt-48px">
+                  <img srcset={srcset} src={item.icons[0]} alt={item.h1line1} />
+                </div>
+                <h1 class="text-24px font-bold text-left mt-24px hover-text">{item.h1line1}</h1>
+                <h1 class="text-24px font-bold text-left hover-text">{item.h1line2}</h1>
+                <p class="text-16px font-bold text-[#555] text-left mt-30px mr-80px leading-normal">
+                  {item.content}
+                </p>
+              </div>
+            )
+          })}
+        </div>
       </div>
     )
   }

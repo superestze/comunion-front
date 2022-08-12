@@ -28,7 +28,7 @@ export default defineComponent({
       document.addEventListener('scroll', scrollFn)
     })
 
-    const show = ref<boolean>(true)
+    const show = ref<boolean>(false)
     return {
       headerClass,
       show
@@ -64,8 +64,8 @@ export default defineComponent({
             </UButton>
           </div>
         </div>
-        <div class="<md:flex justify-between pt-7.5 h-24.25  items-center md:hidden">
-          <div class="flex items-center ml-12">
+        <div class="<md:flex justify-between h-24.25 pl-14 pt-8.4 pr-9.5 overflow-hidden items-center md:hidden w-full">
+          <div class="flex items-center">
             <img
               src={colurfulLogo}
               srcset={`${colurfulLogo}, ${colurfulLogo2} 2x, ${colurfulLogo3} 3x`}
@@ -74,7 +74,7 @@ export default defineComponent({
             />
             <p class="text-primary font-bold text-28px ml-1">COMUNION</p>
           </div>
-          <div class="w-6.5 h-5.5 mr-9.5" onClick={triggerMenu}>
+          <div class="w-6.5 h-5.5" onClick={triggerMenu}>
             <img src={openMenu} />
           </div>
           {this.show && (

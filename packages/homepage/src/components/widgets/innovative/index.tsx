@@ -80,7 +80,28 @@ export default defineComponent({
             )
           })}
         </div>
-        <div class="flex justify-center my-118px">
+        <div class="flex flex-col justify-center mt-78px md:hidden">
+          {this.list.map((item, $index) => {
+            const srcset = handleSrcset(item.icons)
+            return (
+              <div
+                class="grid gap-x-30px gap-y-33px w-auto h-359px bg-[rgba(255,255,255,0.4)] rounded-2px hover:bg-white"
+                key={item.title}
+              >
+                <h1 class="flex items-end text-24px text-[#111] font-bold row-start-1 row-end-2 col-start-1 col-end-2 ml-32px">
+                  {item.title}
+                </h1>
+                <p class="text-16px text-[#555] font-bold row-start-2 row-end-3 col-start-1 col-end-2 ml-32px leading-normal content-start">
+                  {item.content}
+                </p>
+                <div class="row-start-2 row-end-3 col-start-2 col-end-3 w-64px h-64px justify-start items-start mr-40px">
+                  <img srcset={srcset} src={item.icons[0]} alt={item.title} />
+                </div>
+              </div>
+            )
+          })}
+        </div>
+        <div class="flex justify-center my-118px <md:mx-16px">
           <img srcset={`${mission}, ${mission2} 2x, ${mission3} 3x`} src={mission} />
         </div>
       </>

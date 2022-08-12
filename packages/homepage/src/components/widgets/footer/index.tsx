@@ -78,7 +78,7 @@ export default defineComponent({
     }
     return (
       <div class="flex bg-[#131415] justify-center">
-        <div class="flex w-1110px h-368px justify-between pt-87px text-white/60">
+        <div class="flex w-1110px h-368px justify-between pt-87px text-white/60  <md:hidden">
           <div class="flex items-start cursor-pointer" onClick={goHome}>
             <div class="w-25px h-25px mt-3px mr-10px">
               <img srcset={`${logo}, ${logo2} 2x, ${logo3} 3x`} src={logo} class="w-full" />

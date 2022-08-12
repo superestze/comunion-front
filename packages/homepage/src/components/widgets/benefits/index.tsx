@@ -129,6 +129,22 @@ export default defineComponent({
             )
           })}
         </div>
+        <div class="grid gap-x-46px gap-y-20px grid-cols-[1fr,1fr] justify-center md:hidden">
+          {this.list.map(item => {
+            const srcset = handleSrcset(item.icons)
+            return (
+              <div
+                key={item.h1}
+                class={`flex h-96px items-center bg-white rounded-2px ${animate['undefined-grow']}`}
+              >
+                <div class="w-46px h-46px mr-28px ml-41px">
+                  <img class="w-full" src={item.icons[0]} srcset={srcset} alt={item.h1} />
+                </div>
+                <h1 class="text-20px font-bold text-[#111]">{item.h1}</h1>
+              </div>
+            )
+          })}
+        </div>
       </div>
     )
   }
