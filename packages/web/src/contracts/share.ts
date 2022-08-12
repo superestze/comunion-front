@@ -10,31 +10,39 @@ export function wrapTransaction(
   const contractStore = useContractStore()
   return (...fnArgs: any[]) => {
     let waitingText = ''
-    const overrides = fnArgs.pop()
+    let overrides = fnArgs.pop()
     if (Object.prototype.toString.call(overrides) === '[object Object]') {
       waitingText = fnArgs.pop()
     } else {
       waitingText = overrides
+      overrides = {}
     }
     const pengdingText = fnArgs.pop()
-    contractStore.startContract(pengdingText)
+    if (pengdingText) {
+      contractStore.startContract(pengdingText)
+    }
 
     const contract = getContract(contractArgs)
 
     const fn = contract[functionName]
+
     return fn(...fnArgs, overrides)
       .then((res: any) => {
-        contractStore.endContract('success', {
-          success: true,
-          hash: res.hash,
-          text: waitingText,
-          promiseFn: res.wait
-        })
+        if (waitingText) {
+          contractStore.endContract('success', {
+            success: true,
+            hash: res.hash,
+            text: waitingText,
+            promiseFn: res.wait
+          })
+        }
         return res
       })
       .catch((e: any) => {
         console.error(e)
-        contractStore.endContract('failed', { success: false })
+        if (pengdingText || waitingText) {
+          contractStore.endContract('failed', { success: false })
+        }
         if (e.data?.message) {
           message.error(e.data.message)
         }

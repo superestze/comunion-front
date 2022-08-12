@@ -28,6 +28,27 @@ export const services = {
       ...extract('POST', args, [], ['comerID'])
     })
   },
+  'account@modules-of-comer'(args: { comerID: any }) {
+    return requestAdapter<
+      {
+        /**
+   * @description 
+	ModuleStartup - 1
+	ModuleBounty - 2
+	ModuleCrowdfunding - 3
+	ModuleProposal - 4
+
+
+     */
+        module: number
+        hasCreated: boolean
+      }[]
+    >({
+      url: replacePath('/account/profile/modules/:comerID', args),
+      method: 'GET',
+      ...extract('GET', args, [], ['comerID'])
+    })
+  },
   'account@social-add-or-update'(args?: any) {
     return requestAdapter<{
       /**
@@ -68,6 +89,20 @@ export const services = {
       url: replacePath('/account/profile/social', args),
       method: 'DELETE',
       ...extract('DELETE', args, [], [])
+    })
+  },
+  'account@update-bio'(args: { bio: string }) {
+    return requestAdapter<{}>({
+      url: replacePath('/account/profile/bio', args),
+      method: 'POST',
+      ...extract('POST', args, [], [])
+    })
+  },
+  'account@update-comer-skills'(args: { skills: string[] }) {
+    return requestAdapter<{}>({
+      url: replacePath('/account/profile/skills', args),
+      method: 'POST',
+      ...extract('POST', args, [], [])
     })
   },
   'account@update-cover'(args: { image: string }) {
@@ -1461,10 +1496,7 @@ export const services = {
     args: {
       crowdfundingId: any
     } & {
-      /**
-       * @example 1
-       */
-      page: any
+      page: number
     }
   ) {
     return requestAdapter<{
@@ -1477,14 +1509,14 @@ export const services = {
         startupId: number
         comerAvatar: string
         comerName: string
-        investAmount: number
+        amount: number
         access: number
         time: string
       }[]
     }>({
       url: replacePath('/cores/crowdfundings/:crowdfundingId/investments', args),
-      method: 'GET',
-      ...extract('GET', args, ['page'], ['crowdfundingId'])
+      method: 'POST',
+      ...extract('POST', args, [], ['crowdfundingId'])
     })
   },
   'crowdfunding@detail'(args: { crowdfundingId: any }) {
@@ -1498,6 +1530,7 @@ export const services = {
       sellTokenDecimals: number
       sellTokenSupply: number
       maxSellPercent: number
+      maxBuyAmount: number
       buyTokenContract: string
       sellTax: number
       buyPrice: number
@@ -1510,6 +1543,8 @@ export const services = {
       startTime: string
       endTime: string
       poster: string
+      youtube: string
+      detail: string
       description: string
       status: number
     }>({
@@ -1799,6 +1834,20 @@ export const services = {
   ) {
     return requestAdapter<any>({
       url: replacePath('/cores/startups/:startupID/cover', args),
+      method: 'POST',
+      ...extract('POST', args, [], ['startupID'])
+    })
+  },
+  'startup@update-security'(
+    args: {
+      startupID: any
+    } & {
+      kyc: string
+      contractAudit: string
+    }
+  ) {
+    return requestAdapter<{}>({
+      url: replacePath('/cores/startups/:startupID/security', args),
       method: 'POST',
       ...extract('POST', args, [], ['startupID'])
     })

@@ -1,6 +1,5 @@
 import { ULazyImage, UTag, UProgress } from '@comunion/components'
 import dayjs from 'dayjs'
-import { format } from 'timeago.js'
 import { defineComponent, PropType, computed, ref, onMounted } from 'vue'
 import { CrowdfundingStatus, getChainInfoByChainId } from '../utils'
 import { useErc20Contract } from '@/contracts'
@@ -17,25 +16,26 @@ export const CrowdfundingCard = defineComponent({
     }
   },
   setup(props) {
-    const sellTokenName = ref()
-    const buyTokenName = ref()
+    const sellTokenSymbol = ref()
+    const buyTokenSymbol = ref()
     const tokenContract = useErc20Contract()
     const logo = computed(() => {
       return getChainInfoByChainId(props.info.chainId)?.logo
     })
+
+    const buyIsMainCoin = computed(() => {
+      return props.info.sellTokenAddress === props.info.buyTokenAddress
+    })
     // get buy token and sell token
     const getTokenName = async () => {
-      console.log('props.info.sellTokenAddress==>', props.info.sellTokenAddress)
-
       const sellRes = await tokenContract(props.info.sellTokenAddress)
-      sellTokenName.value = await sellRes.name()
-      console.log('sellTokenName.value ==>', sellTokenName.value)
+      sellTokenSymbol.value = await sellRes.symbol()
 
-      if (props.info.sellTokenAddress === props.info.buyTokenAddress) {
-        buyTokenName.value = getChainInfoByChainId(props.info.chainId)?.currencySymbol
+      if (buyIsMainCoin.value) {
+        buyTokenSymbol.value = getChainInfoByChainId(props.info.chainId)?.currencySymbol
       } else {
         const buyTokenRes = await tokenContract(props.info.buyTokenAddress)
-        buyTokenName.value = await buyTokenRes.name()
+        buyTokenSymbol.value = await buyTokenRes.symbol()
       }
     }
 
@@ -43,13 +43,35 @@ export const CrowdfundingCard = defineComponent({
       if (props.info.status === CrowdfundingStatus.CANCELED) {
         return <div class="u-body2">Crowdfunding Canceled</div>
       }
-      if (dayjs().isBefore(dayjs(props.info.startTime))) {
-        return <div>Crowdfunding Starts In：{format('DD:HH:mm:ss')}</div>
+      if (dayjs.utc().isBefore(dayjs(props.info.startTime).utc())) {
+        const [days, hours, minutes, seconds] = dayjs
+          .duration(dayjs(props.info.startTime).diff(dayjs.utc().utc()))
+          .format('DD-HH-mm-ss')
+          .split('-')
+        return (
+          <div class="flex justify-between">
+            <span>Crowdfunding Starts In：</span>
+            <span class="text-primary">
+              {days}:{hours}:{minutes}:{seconds}
+            </span>
+          </div>
+        )
       }
       if (dayjs().isAfter(props.info.endTime)) {
         return <div class="u-body2">Crowdfunding Ended</div>
       }
-      return <div>Crowdfunding Ends In：{format('DD:HH:mm:ss')}</div>
+      const [days, hours, minutes, seconds] = dayjs
+        .duration(dayjs(props.info.endTime).utc().diff(dayjs.utc()))
+        .format('DD-HH-mm-ss')
+        .split('-')
+      return (
+        <div class="flex justify-between">
+          <span>Crowdfunding Ends In：</span>
+          <span class="text-primary">
+            {days}:{hours}:{minutes}:{seconds}
+          </span>
+        </div>
+      )
     })
 
     onMounted(() => {
@@ -103,26 +125,28 @@ export const CrowdfundingCard = defineComponent({
           <div class="flex justify-between mt-2 text-xs">
             <div>
               <span>{props.info.raiseBalance}</span>{' '}
-              <span class="text-grey3">{buyTokenName.value}</span>
+              <span class="text-grey3">{buyTokenSymbol.value}</span>
             </div>
             <div>
               <span class="text-grey3">Raise Goal: </span>{' '}
               <span class="text-primary">
-                {props.info.raiseGoal} {buyTokenName.value}
+                {props.info.raiseGoal} {buyTokenSymbol.value}
               </span>
             </div>
           </div>
-          <div class="mt-6 u-body2">
+          <div class="mt-6 u-body2 flex justify-between">
             <span class="text-grey2">IBO Rate:</span>
-            <span></span>
+            <span class="text-right">
+              1 {buyTokenSymbol.value} = {props.info.buyPrice} {sellTokenSymbol.value}
+            </span>
           </div>
-          <div class="mt-2 u-body2">
+          <div class="mt-2 u-body2 flex justify-between">
             <span class="text-grey2">Swap %:</span>
-            <span></span>
+            <span class="text-right">{props.info.swapPercent} %</span>
           </div>
         </div>
         <div class="w-full h-px bg-purple"></div>
-        <div class="pl-6 py-4">{Time.value}</div>
+        <div class="px-6 py-4 border-t-1 border-purple">{Time.value}</div>
       </div>
     )
   }

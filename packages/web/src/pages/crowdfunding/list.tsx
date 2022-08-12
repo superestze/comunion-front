@@ -31,7 +31,7 @@ const CrowdfundingList = defineComponent({
         })
         const _total = error ? 0 : data!.totalRows
         total.value = _total
-        return { items: error ? [] : data!.rows!, total: _total }
+        return { items: error ? [] : data!.rows ?? [], total: _total }
       }
     )
 
@@ -42,7 +42,7 @@ const CrowdfundingList = defineComponent({
     return () => (
       <div class="mt-10 mb-16">
         <div class="flex mb-8">
-          <h3 class="text-grey1 u-h3">{total.value.toLocaleString()} Startups</h3>
+          <h3 class="text-grey1 u-h3">{total.value.toLocaleString()} Available</h3>
           <div class="flex ml-auto self-end items-center u-title2 ">
             Filter by:
             <UDropdownFilter
@@ -71,7 +71,7 @@ const CrowdfundingList = defineComponent({
             return (
               <div class="grid pb-6 gap-8 grid-cols-1 md:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4">
                 {crowdfundingList.map(crowdfunding => (
-                  <div onClick={() => toDetail(crowdfunding.crowdfundingId)}>
+                  <div class="cursor-pointer" onClick={() => toDetail(crowdfunding.crowdfundingId)}>
                     <CrowdfundingCard key={crowdfunding.crowdfundingId} info={crowdfunding} />
                   </div>
                 ))}

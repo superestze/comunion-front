@@ -1,4 +1,5 @@
 import { UCard } from '@comunion/components'
+import dayjs from 'dayjs'
 import { ethers } from 'ethers'
 import { defineComponent, PropType, ref, computed } from 'vue'
 import { CoinType } from '../[id]'
@@ -59,17 +60,26 @@ export const CrowdfundingInfo = defineComponent({
       }
     }
 
+    const youtubeId = computed(() => {
+      if (props.info.youtube) {
+        const { search } = new URL(props.info.youtube)
+        return search.replace('?v=', '')
+      }
+      return ''
+    })
+
     getBuyTokenInfo()
     getSellTokenInfo()
 
     return () => (
       <UCard title="info">
-        {props.info && (
+        {props.info.youtube && (
           <div class="mb-6">
             <iframe
+              class="rounded-lg"
               width="100%"
               height="320"
-              src={`https://www.youtube.com/embed/WeoBKYVNuQk`}
+              src={`https://www.youtube.com/embed/${youtubeId.value}`}
               title="YouTube video player"
               frameborder="0"
               allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
@@ -77,10 +87,15 @@ export const CrowdfundingInfo = defineComponent({
             ></iframe>
           </div>
         )}
-        <div class="mb-6">
-          <div class="u-title2">Crowdfunding detail：</div>
-          <a class="u-body2">{props.info}</a>
-        </div>
+        {props.info.detail && (
+          <div class="mb-6">
+            <div class="u-title2 mb-1">Crowdfunding detail：</div>
+            <a class="u-body2 text-primary" target="__blank" href={props.info.detail}>
+              {props.info.detail}
+            </a>
+          </div>
+        )}
+        <div class="u-body2 break-all mt-6 mb-10" v-html={props.info.description}></div>
         <div class="grid grid-cols-[220px,1fr] gap-y-6 u-body2">
           <div class="text-grey3">Crowdfunding Address :</div>
           <div class="text-primary">
@@ -128,9 +143,13 @@ export const CrowdfundingInfo = defineComponent({
           <div class="u-body2 text-grey3">Token Decimals :</div>
           <div>{sellCoinInfo.value.decimal}</div>
           <div class="u-body2 text-grey3">Total Supply :</div>
-          <div>{sellCoinInfo.value.supply}</div>
+          <div>
+            {sellCoinInfo.value.supply} {sellCoinInfo.value.symbol}
+          </div>
           <div class="u-body2 text-grey3">Token For Crowdfunding :</div>
-          <div>{props.info.raiseGoal * props.info.buyPrice}</div>
+          <div>
+            {props.info.raiseGoal * props.info.buyPrice} {sellCoinInfo.value.symbol}
+          </div>
           <div class="u-body2 text-grey3">IBO Rate :</div>
           <div>
             1 {buyCoinInfo.value.symbol} = {props.info.buyPrice} {sellCoinInfo.value.symbol}
@@ -140,11 +159,11 @@ export const CrowdfundingInfo = defineComponent({
           <div class="u-body2 text-grey3">Sell Tax :</div>
           <div>{props.info.sellTax} %</div>
           <div class="u-body2 text-grey3">Maximum Sell :</div>
-          <div>{props.info.maxSellPercent}</div>
-          <div class="u-body2 text-grey3">Crowdfunding Start Time :</div>
-          <div>{props.info.startTime}</div>
-          <div class="u-body2 text-grey3">Crowdfunding End Time :</div>
-          <div>{props.info.endTime}</div>
+          <div>{props.info.maxSellPercent} % of the bought token amount</div>
+          <div class="u-body2 text-grey3">Crowdfunding Start Time (UTC):</div>
+          <div>{dayjs.utc(props.info.startTime).format('YYYY-MM-DD HH:mm')}</div>
+          <div class="u-body2 text-grey3">Crowdfunding End Time (UTC):</div>
+          <div>{dayjs.utc(props.info.endTime).format('YYYY-MM-DD HH:mm')}</div>
         </div>
       </UCard>
     )

@@ -1,7 +1,7 @@
 import './style.css'
 
 import { NInputGroup } from 'naive-ui'
-import { AllowedComponentProps, defineComponent, PropType, ref, watch } from 'vue'
+import { AllowedComponentProps, defineComponent, PropType, watch, ref } from 'vue'
 import UInputBigNumber, { UInputBigNumberPropsType } from '../UInputBigNumber/InputBigNumber'
 
 type GroupType = 'withSelect' | 'withUnit'
@@ -42,7 +42,7 @@ const UInputNumberGroup = defineComponent({
     watch(
       () => props.value,
       n => {
-        console.log('n===>', n)
+        inputValue.value = n
       }
     )
     const rightPart = () => {

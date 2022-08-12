@@ -52,6 +52,12 @@ const UInputBigNumber = defineComponent({
         }
       }
     )
+    watch(
+      () => props.value,
+      n => {
+        inputValue.value = n
+      }
+    )
     const blurInput = () => {
       if (inputValue.value) {
         const newValue = new Big(inputValue.value as string)
