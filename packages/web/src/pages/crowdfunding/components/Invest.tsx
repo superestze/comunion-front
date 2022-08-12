@@ -2,7 +2,7 @@ import { UAddress, UButton, UCard, UInputNumberGroup, UModal, UTooltip } from '@
 import { ExchangeOutlined, QuestionFilled } from '@comunion/icons'
 import dayjs from 'dayjs'
 import { BigNumber, Contract, ethers } from 'ethers'
-import { defineComponent, computed, PropType, ref, watch, onMounted } from 'vue'
+import { defineComponent, computed, PropType, ref, onMounted } from 'vue'
 import { CoinType } from '../[id]'
 import { CrowdfundingStatus, getChainInfoByChainId } from '../utils'
 import { useErc20Contract, useCrowdfundingContract } from '@/contracts'
@@ -38,7 +38,7 @@ export const Invest = defineComponent({
     }
   },
   emits: ['refreshCoin'],
-  setup(props, ctx) {
+  async setup(props, ctx) {
     const walletStore = useWalletStore()
     const userStore = useUserStore()
     const contractStore = useContractStore()
@@ -48,6 +48,7 @@ export const Invest = defineComponent({
     const toValue = ref<string>('0.0')
     console.log('fundingContract===>', props.info.crowdfundingContract)
 
+    const fundingContractState = ref()
     const fundingContract = useCrowdfundingContract({
       chainId: walletStore.chainId!,
       addresses: { [walletStore.chainId!]: props.info.crowdfundingContract }
@@ -59,25 +60,38 @@ export const Invest = defineComponent({
 
     const chainInfo = getChainInfoByChainId(props.info.chainId)
 
-    watch(
-      () => fromValue.value,
-      value => {
-        toValue.value = (Number(value) / props.info.buyPrice).toString()
+    const changeFromValue = (value: string) => {
+      if (mode.value === 'buy') {
+        toValue.value = (Number(value) * props.info.buyPrice).toString()
+      } else {
+        toValue.value = (Number(value) / props.info.buyPrice)
+          .toString()
+          .replace(/\.(\d+)/, (e, $1) => {
+            return `.${$1.substr(0, 8)}`
+          })
+          .replace(/(?:\.0*|(\.\d+?)0+)$/, '$1')
       }
-    )
+      console.log('toValue.value==>', toValue.value)
+    }
 
-    watch(
-      () => toValue.value,
-      value => {
+    const changeToValue = (value: string) => {
+      if (mode.value === 'buy') {
+        fromValue.value = (Number(value) / props.info.buyPrice)
+          .toString()
+          .replace(/\.(\d+)/, (e, $1) => {
+            return `.${$1.substr(0, 8)}`
+          })
+          .replace(/(?:\.0*|(\.\d+?)0+)$/, '$1')
+      } else {
         fromValue.value = (Number(value) * props.info.buyPrice).toString()
       }
-    )
+    }
 
     const addInvestRecord = async (txHash: string, access: 1 | 2) => {
       await services['crowdfunding@invest-crowdfunding']({
         crowdfundingId: props.info.crowdfundingId,
         txHash,
-        access: mode.value === 'buy' ? 1 : 2,
+        access,
         buyTokenSymbol:
           mode.value === 'buy' ? props.buyCoinInfo.symbol! : props.sellCoinInfo.symbol!,
         buyTokenAmount: Number(fromValue.value),
@@ -164,7 +178,9 @@ export const Invest = defineComponent({
 
     const disableRemoveOrCancel = computed(() => {
       if (founderOperation.value === 'Remove') {
-        return props.info.status === CrowdfundingStatus.ENDED
+        console.log('执行==', fundingContractState.value)
+
+        return fundingContractState.value[9] === CrowdfundingStatus.ENDED
       } else {
         return countDownTime.value.status !== CrowdfundingStatus.UPCOMING
       }
@@ -182,8 +198,9 @@ export const Invest = defineComponent({
       try {
         removeModal.value = false
         const pendingText = 'Waiting to submit all contents to blockchain for removing'
-        const contractRes: any = await fundingContract.cancel(pendingText, pendingText)
-        await services['crowdfunding@cancel-crowdfunding']({
+        const waitingText = 'Waiting to confirm'
+        const contractRes: any = await fundingContract.remove(pendingText, waitingText)
+        await services['crowdfunding@remove-crowdfunding']({
           crowdfundingId: props.info.crowdfundingId,
           txHash: contractRes.hash
         })
@@ -195,8 +212,9 @@ export const Invest = defineComponent({
     const cancelCrowdfunding = async () => {
       try {
         cancelModal.value = false
-        const pendingText = 'Waiting to submit all contents to blockchain for removing'
-        const contractRes: any = await fundingContract.cancel(pendingText, pendingText)
+        const pendingText = 'Waiting to submit all contents to blockchain for canceling'
+        const waitingText = 'Waiting to confirm'
+        const contractRes: any = await fundingContract.cancel(pendingText, waitingText)
         await services['crowdfunding@cancel-crowdfunding']({
           crowdfundingId: props.info.crowdfundingId,
           txHash: contractRes.hash
@@ -356,7 +374,7 @@ export const Invest = defineComponent({
           await sellToTokenCoin()
         }
       }
-      reloadPage()
+      initPage()
     }
 
     const setMaxBalance = () => {
@@ -364,9 +382,10 @@ export const Invest = defineComponent({
         fromValue.value =
           Math.min(maxBuy.value, Number(props.buyCoinInfo.balance)).toString() || '0'
       } else {
-        toValue.value =
+        fromValue.value =
           Math.min(maxSell.value, Number(props.sellCoinInfo.balance)).toString() || '0'
       }
+      changeFromValue(fromValue.value)
     }
 
     const getMaxAmount = async () => {
@@ -378,11 +397,16 @@ export const Invest = defineComponent({
       console.log('maxSell.value==>', maxSell.value)
     }
 
+    // const getFundingState = async () => {
+    //   fundingContractState.value = await fundingContract.state('', '')
+    // }
+
     onMounted(() => {
       getMaxAmount()
+      // getFundingState()
     })
 
-    const reloadPage = () => {
+    const initPage = () => {
       fromValue.value = '0.0'
       toValue.value = '0.0'
       getMaxAmount()
@@ -473,13 +497,13 @@ export const Invest = defineComponent({
           <div class="u-title2 mb-6">Token Information</div>
           <div class="grid grid-cols-2 gap-y-4 justify-between u-body2">
             <div class="text-grey3">Totally Supply：</div>
-            <div class="text-grey1 text-right">
+            <div class="text-grey1 text-right whitespace-nowrap">
               {props.sellCoinInfo.supply} {props.sellCoinInfo.symbol}{' '}
             </div>
             <div class="text-grey3">Token Name：</div>
-            <div class="text-grey1 text-right">{props.sellCoinInfo.symbol}</div>
+            <div class="text-grey1 text-right whitespace-nowrap">{props.sellCoinInfo.symbol}</div>
             <div class="text-grey3">Token Symbol：</div>
-            <div class="text-grey1 text-right">{props.sellCoinInfo.symbol}</div>
+            <div class="text-grey1 text-right whitespace-nowrap">{props.sellCoinInfo.symbol}</div>
             <div class="text-grey3">Token Contract：</div>
             <div class="text-right">
               <UAddress address={props.info.sellTokenContract} autoSlice={true} />
@@ -517,6 +541,9 @@ export const Invest = defineComponent({
                 )
               }}
               type="withUnit"
+              inputProps={{
+                onChange: changeFromValue
+              }}
               renderUnit={() =>
                 renderUnit(
                   mode.value === 'buy' ? props.buyCoinInfo.symbol! : props.sellCoinInfo.symbol!
@@ -542,6 +569,12 @@ export const Invest = defineComponent({
           <div>
             <UInputNumberGroup
               v-model:value={toValue.value}
+              inputProps={{
+                onChange: changeToValue
+              }}
+              v-slots={{
+                suffix: () => null
+              }}
               type="withUnit"
               renderUnit={() =>
                 renderUnit(

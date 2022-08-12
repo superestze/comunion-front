@@ -61,7 +61,7 @@ export default defineComponent({
 
           {(this.tags || []).length - 3 > 1 ? <UTag>+ {(this.tags || []).length - 3}</UTag> : null}
         </div>
-        <p class="u-body1 text-grey1 break-all line-clamp-2">{this.startup?.mission}</p>
+        <p class="u-body1 text-grey1 break-all line-clamp-2 mt-4">{this.startup?.mission}</p>
         <SocialGroup
           discord={this.startup?.discord}
           website={this.startup?.website}

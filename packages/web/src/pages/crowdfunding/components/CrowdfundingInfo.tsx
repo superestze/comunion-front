@@ -29,7 +29,6 @@ export const CrowdfundingInfo = defineComponent({
     })
 
     const getTokenInfo = async (sellTokenContract: string) => {
-      console.log('执行-----')
       const sellRes = await tokenContract(sellTokenContract)
       // const [name, decimal, supply, symbol] = await Promise.all([
       return await Promise.all([

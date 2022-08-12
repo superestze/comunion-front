@@ -2,6 +2,7 @@ import { ULazyImage, UTag, UProgress } from '@comunion/components'
 import dayjs from 'dayjs'
 import { defineComponent, PropType, computed, ref, onMounted } from 'vue'
 import { CrowdfundingStatus, getChainInfoByChainId } from '../utils'
+import { CROWDFUNDING_TYPES } from '@/constants'
 import { useErc20Contract } from '@/contracts'
 import { ServiceReturn } from '@/services'
 
@@ -74,12 +75,29 @@ export const CrowdfundingCard = defineComponent({
       )
     })
 
+    const getStatusLabelStyle = computed(() => {
+      const statusClassMap = {
+        [CrowdfundingStatus.UPCOMING]:
+          'bg-success rounded text-xs text-white py-0.5 px-2.5 border-1 border-white',
+        [CrowdfundingStatus.LIVE]:
+          'bg-[#00BFA5] rounded text-xs text-white py-0.5 px-2.5 border-1 border-white',
+        [CrowdfundingStatus.ENDED]:
+          'bg-grey5 rounded text-xs text-white py-0.5 px-2.5 border-1 border-white',
+        [CrowdfundingStatus.CANCELED]:
+          'bg-warning rounded text-xs text-white py-0.5 px-2.5 border-1 border-white'
+      }
+      return statusClassMap[props.info.status as keyof typeof statusClassMap]
+    })
+
     onMounted(() => {
       getTokenName()
     })
 
     return () => (
-      <div class="rounded-lg bg-white">
+      <div class="relative rounded-lg bg-white">
+        <div class={[getStatusLabelStyle.value, 'absolute top-4 right-4']}>
+          {CROWDFUNDING_TYPES[props.info.status - 1]}
+        </div>
         <ULazyImage src={props.info.poster} class="h-54 w-full" />
         <div class="p-6">
           <div class="flex justify-between">
@@ -124,13 +142,14 @@ export const CrowdfundingCard = defineComponent({
           </div>
           <div class="flex justify-between mt-2 text-xs">
             <div>
-              <span>{props.info.raiseBalance}</span>{' '}
+              <span class="u-label1 text-base">{props.info.raiseBalance}</span>{' '}
               <span class="text-grey3">{buyTokenSymbol.value}</span>
             </div>
-            <div>
-              <span class="text-grey3">Raise Goal: </span>{' '}
+            <div class="text-xs">
+              <span class="text-grey3">Raise Goal : </span>{' '}
               <span class="text-primary">
-                {props.info.raiseGoal} {buyTokenSymbol.value}
+                <span class="u-label1 text-primary text-base">{props.info.raiseGoal}</span>{' '}
+                {buyTokenSymbol.value}
               </span>
             </div>
           </div>

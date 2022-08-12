@@ -46,7 +46,6 @@ const CrowdfundingDetail = defineComponent({
       try {
         pageLoading.value = true
         const { error, data } = await services['startup@startup-get']({ startupId })
-        console.log('startupInfo==>', error, data)
         if (!error) {
           startupInfo.value = data
         }
