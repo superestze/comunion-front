@@ -35,9 +35,9 @@ export default defineComponent({
         </div>
         <div class="flex h-60px text-[#B3B3B3] w-514px justify-between items-center text-16px">
           <span>Home</span>
-          <span>GCP-NTFs</span>
-          <span>Enterprise</span>
+          <span>GCI</span>
           <span>Dapps</span>
+          <span>Enterprise</span>
           <span>API</span>
         </div>
         <div class="flex items-center">
