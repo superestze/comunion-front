@@ -3,17 +3,6 @@ import dayjs from 'dayjs'
 import { defineComponent, reactive, ref, onMounted } from 'vue'
 import { useRoute } from 'vue-router'
 import { ServiceReturn, services } from '@/services'
-
-interface TestRecord {
-  avatar: string
-  comerName: string
-  amount: string
-  buyTokenName: string
-  sellTokenName: string
-  recordType: string
-  createdTime: string
-}
-
 interface IPagination {
   pageSize: number
   total: number
