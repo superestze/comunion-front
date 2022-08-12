@@ -85,7 +85,7 @@ export default defineComponent({
             const srcset = handleSrcset(item.icons)
             return (
               <div
-                class="grid gap-x-30px gap-y-33px w-auto h-359px bg-[rgba(255,255,255,0.4)] rounded-2px hover:bg-white"
+                class="grid gap-x-30px gap-y-33px mx-auto h-86.5 w-155.5 bg-[rgba(255,255,255,0.4)] rounded-2px hover:bg-white mb-6"
                 key={item.title}
               >
                 <h1 class="flex items-end text-24px text-[#111] font-bold row-start-1 row-end-2 col-start-1 col-end-2 ml-32px">
@@ -101,7 +101,7 @@ export default defineComponent({
             )
           })}
         </div>
-        <div class="flex justify-center my-118px <md:mx-16px">
+        <div class="flex justify-center my-118px <md:w-155.5 <md:mx-auto">
           <img srcset={`${mission}, ${mission2} 2x, ${mission3} 3x`} src={mission} />
         </div>
       </>

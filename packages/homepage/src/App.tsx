@@ -3,6 +3,7 @@ import { UMessage, UMessageProvider, UModalProvider } from '@comunion/components
 import { UStyleProvider } from '@comunion/components/src/UStyleProvider'
 import { defineComponent } from 'vue'
 import app from './app.module.css'
+import Background from './components/widgets/background'
 import Benefits from './components/widgets/benefits'
 import { First } from './components/widgets/describe'
 import Ecomomy from './components/widgets/ecomomy'
@@ -23,7 +24,7 @@ export default defineComponent({
         </UMessageProvider>
         <UModalProvider>
           <div class={app.content}>
-            {/* <Background /> */}
+            <Background />
             <Header />
             <First />
             <Overview />

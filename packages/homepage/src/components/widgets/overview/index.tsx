@@ -26,8 +26,8 @@ export default defineComponent({
           You Can
         </h1>
         <div
-          class=" <mb:hidden grid grid-rows-4 grid-cols-6 mx-auto bg-transparent grid-cols-[279px,136px,143px,138px,141px,276px] grid-rows-[180px,180px,180px,180px]"
-          style={{ backgroundColor: 'rgba(255,255,255,0.6)', display: 'none' }}
+          class="<md:hidden grid grid-rows-4 grid-cols-6 mx-auto bg-transparent grid-cols-[279px,136px,143px,138px,141px,276px] grid-rows-[180px,180px,180px,180px]"
+          style={{ backgroundColor: 'rgba(255,255,255,0.6)' }}
         >
           <div class="row-start-1 row-end-3 col-start-1 col-end-3 border border-solid pt-54px pl-48px bg-[#5E18FE] text-white">
             <h1 class={styles.title36}>Lauch</h1>
@@ -109,13 +109,11 @@ export default defineComponent({
             </div>
           </div>
         </div>
-        {/* grid-cols-[208px,119px,105px,224px] */}
-        {/* pt-54px pl-48px */}
-        {/* <div
-          class="grid grid-rows-4 grid-cols-6 mx-auto bg-transparent grid-cols-[2fr,1fr,1fr,2fr] grid-rows-[205px,205px,170px,170px,205px] md:hidden"
+        <div
+          class="grid grid-rows-4 grid-cols-6 mx-auto bg-transparent grid-cols-[208px,119px,105px,224px] grid-rows-[205px,205px,170px,170px,205px] md:hidden"
           style={{ backgroundColor: 'rgba(255,255,255,0.6)' }}
         >
-          <div class="row-start-1 row-end-3 col-start-1 col-end-3 border border-solid bg-[#5E18FE] text-white">
+          <div class="pt-54px pl-48px row-start-1 row-end-3 col-start-1 col-end-3 border border-solid bg-[#5E18FE] text-white">
             <h1 class={styles.title36}>Lauch</h1>
             <h1 class={`${styles.title36} -mt-10px`}>a startup</h1>
             <p class={`${styles.title14} mt-16px`}>Web3, Crypto, Blockchain, Metaverse etc</p>
@@ -194,7 +192,7 @@ export default defineComponent({
               />
             </div>
           </div>
-        </div> */}
+        </div>
       </div>
     )
   }

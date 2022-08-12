@@ -18,7 +18,7 @@ export default defineComponent({
         <H1 class="mt-240px" text={this.title || ''} />
         {this.subTitle && (
           <Subtitle
-            class="mt-22px <md:w-full w-886px text-center mx-auto"
+            class="mt-22px <md:w-155.5 w-886px text-center mx-auto"
             text={this.subTitle || ''}
           />
         )}

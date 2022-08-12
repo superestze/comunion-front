@@ -28,7 +28,7 @@ export default defineComponent({
       document.addEventListener('scroll', scrollFn)
     })
 
-    const show = ref<boolean>(false)
+    const show = ref<boolean>(true)
     return {
       headerClass,
       show
@@ -64,7 +64,7 @@ export default defineComponent({
             </UButton>
           </div>
         </div>
-        <div class="<md:flex justify-between h-24.25 pl-14 pt-8.4 pr-9.5 overflow-hidden items-center md:hidden w-full">
+        <div class="<md:flex md:hidden relative justify-between h-24.25 pl-14 pt-8.4 pr-9.5 overflow-hidden items-center w-full">
           <div class="flex items-center">
             <img
               src={colurfulLogo}
@@ -80,20 +80,24 @@ export default defineComponent({
           {this.show && (
             <div class="fixed left-0 right-0 top-0 bottom-0 bg-white z-999">
               <div class="flex justify-end">
-                <div class="w-6 h-6 text-[#0C0C0C] mr-16 mt-6" onClick={triggerMenu}>
+                <div class="w-6 h-6 text-[#0C0C0C] mr-16 mt-9" onClick={triggerMenu}>
                   <img src={closeMenu} alt="close" class="w-full" />
                 </div>
               </div>
-              <ul
-                style={{ listStyle: 'none', margin: 0, padding: 0 }}
-                class="text-grey1 text-32px font-bold mt-9"
-              >
-                <li class="h-12 flex items-center mb-15 w-155.5 mx- auto">Home</li>
-                <li class="h-12 flex items-center mb-15 w-155.5 mx- auto">GCI</li>
-                <li class="h-12 flex items-center mb-15 w-155.5 mx- auto">Dapps</li>
-                <li class="h-12 flex items-center mb-15 w-155.5 mx- auto">Enterprise</li>
-                <li class="h-12 flex items-center mb-15 w-155.5 mx- auto">API</li>
+              <ul style={{ listStyle: 'none', padding: 0 }} class=" text-32px font-bold mt-9 ml-16">
+                <li class="h-12 flex items-center mb-15 w-155.5 mx- auto text-grey1">Home</li>
+                <li class="h-12 flex items-center mb-15 w-155.5 mx- auto text-[#B3B3B3]">GCI</li>
+                <li class="h-12 flex items-center mb-15 w-155.5 mx- auto text-[#B3B3B3]">Dapps</li>
+                <li class="h-12 flex items-center mb-15 w-155.5 mx- auto text-[#B3B3B3]">
+                  Enterprise
+                </li>
+                <li class="h-12 flex items-center mb-15 w-155.5 mx- auto text-[#B3B3B3]">API</li>
               </ul>
+              <div class="flex items-center justify-center w-full">
+                <UButton type="primary" class="w-155.5 h-24" onClick={joinComunion}>
+                  <span class="text-30px font-bold">Connect Account</span>
+                </UButton>
+              </div>
             </div>
           )}
         </div>

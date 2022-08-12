@@ -26,7 +26,7 @@ export default defineComponent({
           const srcset = handleSrcset(item.icons)
           return (
             <div
-              class={`flex <md:w-auto <md:mx-16 w-370px h395px flex-col items-center ${styles.hoverBox} ${animate['undefined-back-pulse']}`}
+              class={`flex <md:w-155.5 <md:h-95 <md:mx-auto w-370px h-395px flex-col items-center ${styles.hoverBox} ${animate['undefined-back-pulse']}`}
               key={item.title}
             >
               <div class="w-64px h-64px mt-58px mx-auto">
