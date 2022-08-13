@@ -9,6 +9,7 @@ import { useErc20Contract, useCrowdfundingContract } from '@/contracts'
 import { ServiceReturn, services } from '@/services'
 import { useUserStore, useWalletStore } from '@/stores'
 import { useContractStore } from '@/stores/contract'
+import { formatToFixed } from '@/utils/numberFormat'
 
 export const renderUnit = (name: string) => (
   <div
@@ -64,24 +65,14 @@ export const Invest = defineComponent({
       if (mode.value === 'buy') {
         toValue.value = (Number(value) * props.info.buyPrice).toString()
       } else {
-        toValue.value = (Number(value) / props.info.buyPrice)
-          .toString()
-          .replace(/\.(\d+)/, (e, $1) => {
-            return `.${$1.substr(0, 8)}`
-          })
-          .replace(/(?:\.0*|(\.\d+?)0+)$/, '$1')
+        toValue.value = formatToFixed(Number(value) / props.info.buyPrice, 8)
       }
       console.log('toValue.value==>', toValue.value)
     }
 
     const changeToValue = (value: string) => {
       if (mode.value === 'buy') {
-        fromValue.value = (Number(value) / props.info.buyPrice)
-          .toString()
-          .replace(/\.(\d+)/, (e, $1) => {
-            return `.${$1.substr(0, 8)}`
-          })
-          .replace(/(?:\.0*|(\.\d+?)0+)$/, '$1')
+        fromValue.value = formatToFixed(Number(value) / props.info.buyPrice, 8)
       } else {
         fromValue.value = (Number(value) * props.info.buyPrice).toString()
       }
