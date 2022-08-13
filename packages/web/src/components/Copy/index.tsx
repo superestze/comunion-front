@@ -31,7 +31,7 @@ export default defineComponent({
       >
         <UTooltip show={this.showTooltipRef}>
           {{
-            trigger: () => <CopyOutlined class="u-address__icon" />,
+            trigger: () => <CopyOutlined class="u-address__icon w-4 mt-3px" />,
             default: () => 'Copied!'
           }}
         </UTooltip>

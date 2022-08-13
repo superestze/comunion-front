@@ -64,14 +64,14 @@ export default defineComponent({
           <img src={test} alt="bg" />
         </div>
         <div class="absolute w-30 h-30 rounded-8px left-10 top-60">
-          <UStartupLogo src={''} width="30" height="30" class="rounded !object-contain" />
+          <UStartupLogo src={''} width="30" height="30" class="rounded !object-contain bg-white" />
         </div>
         <div class="flex justify-between mt-6">
           <div class="flex items-center">
-            <p class="ml-46 text-32px font-bold">{this.name}</p>
+            <p class="ml-46 u-h1">{this.name}</p>
             {this.mode > 0 && (
               <UTag
-                class="ml-5 !u-body3-pure"
+                class="ml-5 !u-body3-pure h-5"
                 type="filled"
                 bgColor={STARTUP_TYPES_COLOR_MAP[this.modeName]}
               >
@@ -107,9 +107,9 @@ export default defineComponent({
         <div class="flex justify-between mt-9 ml-10 mr-10 mb-10">
           <div class="flex flex-col">
             <div class="flex gap-2">
-              <div class="flex rounded-2px overflow-hidden h-6 px-2 py-1 text-primary1 border border-primary1">
+              <p class="flex rounded-2px overflow-hidden h-6 px-2 py-1 text-primary1 border border-primary1 text-12px items-center justify-center">
                 123123
-              </div>
+              </p>
             </div>
             <p class="u-body2 mt-5 w-180 ">{this.mission}</p>
           </div>

@@ -77,7 +77,7 @@ export default defineComponent({
                         </div>
                         <div class="flex flex-col ml-6">
                           <p class="u-title2">{item.comerProfile?.name}</p>
-                          <p class="text-12px font-400 text-grey1">
+                          <p class="text-12px font-400 text-grey1 mt-1">
                             {item.comerProfile?.skills.length > 0 &&
                               item.comerProfile?.skills
                                 .map((skill: { name: string }) => skill.name)
@@ -86,7 +86,9 @@ export default defineComponent({
                         </div>
                       </div>
 
-                      <div class="u-body2">Join {dayjs(item.CreatedAt).format('MMMM D, YYYY')}</div>
+                      <div class="u-body2 text-grey3">
+                        Join {dayjs(item.CreatedAt).format('MMMM D, YYYY')}
+                      </div>
                       <p class="flex text-grey3 change mr-9">
                         <PenOutlined
                           class=" w-4 h-4 mr-4.5"

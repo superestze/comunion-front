@@ -7,7 +7,7 @@ import {
   UFormItemsFactory
 } from '@comunion/components'
 import { defineComponent, ref, reactive, PropType, watch } from 'vue'
-import { RectDraggerUpload } from '@/components/Upload/inde'
+import { RectDraggerUpload } from '@/components/Upload'
 import { getStartupTypeFromNumber, STARTUP_TYPES } from '@/constants'
 
 type InfoPropType = {
@@ -132,8 +132,29 @@ export default defineComponent({
       <div class="bg-white rounded-lg border mb-6 relative overflow-hidden min-h-205.5">
         <div class="mx-10 my-9.5">
           <div class="flex mb-14">
-            <RectDraggerUpload tip={{ text: 'Startup logo', tip: '123' }} />
-            <RectDraggerUpload class="ml-16" tip={{ text: 'Startup Banner', tip: '123' }} />
+            <RectDraggerUpload
+              text="Startup logo"
+              tip={() => (
+                <p class="text-white text-center u-body2">
+                  <p>Recommended：180px*180px</p>
+                  <p>Max size：10MB</p>
+                </p>
+              )}
+              fileSize={10000000}
+              accept="image/png, image/jpeg, image/bmp, image/psd, image/svg, image/tiff"
+            />
+            <RectDraggerUpload
+              class="ml-16"
+              text="Startup Banner"
+              tip={() => (
+                <p class="text-white text-center u-body2">
+                  <p>Recommended：1380px*300px</p>
+                  <p>Max size：10MB</p>
+                </p>
+              )}
+              fileSize={1000000}
+              accept="image/png, image/jpeg, image/bmp, image/psd, image/svg, image/tiff"
+            />
           </div>
           <UForm rules={rules} model={this.info} ref={(ref: any) => (this.form = ref)}>
             <UFormItemsFactory fields={this.fields} values={this.info} />

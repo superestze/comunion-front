@@ -1,19 +1,27 @@
-import { UUpload, UUploadDragger } from '@comunion/components'
+import { message, UTooltip, UUpload, UUploadDragger } from '@comunion/components'
 import { QuestionCircleOutlined, RefreshOutlined, UploadFilled } from '@comunion/icons'
-import { defineComponent, ref, PropType } from 'vue'
+import { defineComponent, ref } from 'vue'
 
 import image from './image.png'
-
-type TipType = {
-  text: string
-  tip: string
-}
+import './rect.css'
 
 export default defineComponent({
   props: {
-    tip: {
-      type: Object as PropType<TipType>,
+    text: {
+      type: String,
       required: true
+    },
+    tip: {
+      type: Function,
+      required: true
+    },
+    accept: {
+      type: String,
+      default: () => ''
+    },
+    fileSize: {
+      type: Number,
+      default: () => 0
     }
   },
   setup() {
@@ -23,9 +31,19 @@ export default defineComponent({
     }
   },
   render() {
+    const handleBeforeUpload = (data: any): any => {
+      if (this.fileSize === 0) {
+        return
+      }
+      const { file } = data
+      if (file.file.size > this.fileSize) {
+        message.warning('The image max size is 10MB')
+        return false
+      }
+    }
     return (
       <div>
-        <UUpload>
+        <UUpload onBeforeUpload={handleBeforeUpload} class="rect-upload" accept={this.accept}>
           <UUploadDragger class="w-45 h-45 p-0 overflow-hidden">
             {this.uploaded ? (
               <div class="w-full h-full flex justify-center items-center relative">
@@ -48,8 +66,15 @@ export default defineComponent({
           </UUploadDragger>
         </UUpload>
         <p class="text-14px font-600 text-grey1 mt-2 flex items-center w-45">
-          {this.tip.text}
-          <QuestionCircleOutlined class="text-grey3 w-3 h-3 ml-2 mt-1px" />
+          {this.text}
+          <UTooltip trigger="hover">
+            {{
+              trigger: () => (
+                <QuestionCircleOutlined class="text-grey3 w-3.25 h-3.25 ml-2 mt-3px" />
+              ),
+              default: this.tip()
+            }}
+          </UTooltip>
         </p>
       </div>
     )
