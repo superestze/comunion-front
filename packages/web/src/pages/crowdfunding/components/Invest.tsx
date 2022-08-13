@@ -61,6 +61,14 @@ export const Invest = defineComponent({
 
     const chainInfo = getChainInfoByChainId(props.info.chainId)
 
+    const maxBuyAmount = computed(() => {
+      return Math.min(maxBuy.value, Number(props.buyCoinInfo.balance)).toString() || '0'
+    })
+
+    const maxSellAmount = computed(() => {
+      return Math.min(maxSell.value, Number(props.sellCoinInfo.balance)).toString() || '0'
+    })
+
     const changeFromValue = (value: string) => {
       if (mode.value === 'buy') {
         toValue.value = (Number(value) * props.info.buyPrice).toString()
@@ -431,22 +439,31 @@ export const Invest = defineComponent({
           <div class="u-title2 mb-4">{countDownTime.value.label}</div>
           <div class="flex items-center mb-12">
             <span
-              class={`${countDownTime.value.class} text-center leading-10 rounded-lg w-9 h-10 mr-2`}
+              class={`${countDownTime.value.class} font-semibold text-center leading-10 rounded-lg w-9 h-10 mr-2`}
             >
               {countDownTime.value.value.days}
             </span>
             <span
-              class={[countDownTime.value.class, 'text-center leading-10 rounded-lg w-9 h-10 mr-2']}
+              class={[
+                countDownTime.value.class,
+                'font-semibold text-center leading-10 rounded-lg w-9 h-10 mr-2'
+              ]}
             >
               {countDownTime.value.value.hours}
             </span>
             <span
-              class={[countDownTime.value.class, 'text-center leading-10 rounded-lg w-9 h-10 mr-2']}
+              class={[
+                countDownTime.value.class,
+                'font-semibold text-center leading-10 rounded-lg w-9 h-10 mr-2'
+              ]}
             >
               {countDownTime.value.value.minutes}
             </span>
             <span
-              class={[countDownTime.value.class, 'text-center leading-10 rounded-lg w-9 h-10 mr-2']}
+              class={[
+                countDownTime.value.class,
+                'font-semibold text-center leading-10 rounded-lg w-9 h-10 mr-2'
+              ]}
             >
               {countDownTime.value.value.seconds}
             </span>
@@ -514,7 +531,7 @@ export const Invest = defineComponent({
           </div>
           <div class="flex justify-between mb-2">
             <span>From</span>
-            <span>
+            <span class="u-body3 text-sm text-primary1 italic">
               Balance :{' '}
               {(mode.value === 'buy' ? props.buyCoinInfo.balance : props.sellCoinInfo.balance) || 0}
             </span>
@@ -524,14 +541,15 @@ export const Invest = defineComponent({
               v-model:value={fromValue.value}
               v-slots={{
                 suffix: () => (
-                  <div class="text-primary cursor-pointer" onClick={setMaxBalance}>
+                  <div class="u-label1 text-primary cursor-pointer" onClick={setMaxBalance}>
                     MAX
                   </div>
                 )
               }}
               type="withUnit"
               inputProps={{
-                onChange: changeFromValue
+                onChange: changeFromValue,
+                max: mode.value === 'buy' ? maxBuyAmount.value : maxSellAmount.value
               }}
               renderUnit={() =>
                 renderUnit(
@@ -550,7 +568,7 @@ export const Invest = defineComponent({
           </div>
           <div class="flex justify-between mb-2">
             <span>To</span>
-            <span>
+            <span class="u-body3 text-sm text-primary1 italic">
               Balance :{' '}
               {(mode.value === 'buy' ? props.sellCoinInfo.balance : props.buyCoinInfo.balance) || 0}
             </span>
@@ -559,7 +577,8 @@ export const Invest = defineComponent({
             <UInputNumberGroup
               v-model:value={toValue.value}
               inputProps={{
-                onChange: changeToValue
+                onChange: changeToValue,
+                max: mode.value === 'buy' ? maxSellAmount.value : maxBuyAmount.value
               }}
               v-slots={{
                 suffix: () => null
@@ -614,8 +633,12 @@ export const Invest = defineComponent({
                 <UTooltip>
                   {{
                     trigger: () => <QuestionFilled class="w-4 h-4 text-grey3" />,
-                    default: () =>
-                      'Part of the funds raised will go into the swap pool as a fixed-price exchangeable currency, and part will go directly to the team wallet'
+                    default: () => (
+                      <div class="max-w-90">
+                        Part of the funds raised will go into the swap pool as a fixed-price
+                        exchangeable currency, and part will go directly to the team wallet
+                      </div>
+                    )
                   }}
                 </UTooltip>
               </span>
@@ -633,7 +656,11 @@ export const Invest = defineComponent({
                 <UTooltip>
                   {{
                     trigger: () => <QuestionFilled class="w-4 h-4 text-grey3" />,
-                    default: () => 'When selling tokens, a 20% fee needs to be deducted as sell tax'
+                    default: () => (
+                      <div class="max-w-90">
+                        When selling tokens, a 20% fee needs to be deducted as sell tax
+                      </div>
+                    )
                   }}
                 </UTooltip>
               </span>
@@ -645,7 +672,9 @@ export const Invest = defineComponent({
                 <UTooltip>
                   {{
                     trigger: () => <QuestionFilled class="w-4 h-4 text-grey3" />,
-                    default: () => 'The maximum sellable percentage of tokens you own'
+                    default: () => (
+                      <div class="max-w-90">The maximum sellable percentage of tokens you own</div>
+                    )
                   }}
                 </UTooltip>
               </span>
