@@ -5,7 +5,7 @@ import { CrowdfundingStatus, getChainInfoByChainId } from '../utils'
 import { CROWDFUNDING_TYPES } from '@/constants'
 import { useErc20Contract } from '@/contracts'
 import { ServiceReturn } from '@/services'
-import { formatToFixed } from '@/utils/numberFormat'
+import { formatToFloor } from '@/utils/numberFormat'
 
 export const CrowdfundingCard = defineComponent({
   name: 'CrowdfundingCard',
@@ -134,7 +134,7 @@ export const CrowdfundingCard = defineComponent({
             )}
           </div>
           <div class="text-right mb-2 u-body3 text-sm">
-            {formatToFixed(props.info.raisedPercent * 100, 2)} %
+            {formatToFloor(props.info.raisedPercent * 100, 2)} %
           </div>
           <div>
             <UProgress
@@ -145,7 +145,7 @@ export const CrowdfundingCard = defineComponent({
           </div>
           <div class="flex justify-between mt-2 text-xs">
             <div>
-              <span class="u-label1 text-base">{formatToFixed(props.info.raiseBalance, 2)}</span>{' '}
+              <span class="u-label1 text-base">{formatToFloor(props.info.raiseBalance, 2)}</span>{' '}
               <span class="text-grey3">{buyTokenSymbol.value}</span>
             </div>
             <div class="text-xs">

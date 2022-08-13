@@ -9,7 +9,7 @@ import { useErc20Contract, useCrowdfundingContract } from '@/contracts'
 import { ServiceReturn, services } from '@/services'
 import { useUserStore, useWalletStore } from '@/stores'
 import { useContractStore } from '@/stores/contract'
-import { formatToFixed } from '@/utils/numberFormat'
+import { formatToFloor } from '@/utils/numberFormat'
 
 export const renderUnit = (name: string) => (
   <div
@@ -65,14 +65,14 @@ export const Invest = defineComponent({
       if (mode.value === 'buy') {
         toValue.value = (Number(value) * props.info.buyPrice).toString()
       } else {
-        toValue.value = formatToFixed(Number(value) / props.info.buyPrice, 8)
+        toValue.value = formatToFloor(Number(value) / props.info.buyPrice, 8).toString()
       }
       console.log('toValue.value==>', toValue.value)
     }
 
     const changeToValue = (value: string) => {
       if (mode.value === 'buy') {
-        fromValue.value = formatToFixed(Number(value) / props.info.buyPrice, 8)
+        fromValue.value = formatToFloor(Number(value) / props.info.buyPrice, 8).toString()
       } else {
         fromValue.value = (Number(value) * props.info.buyPrice).toString()
       }
