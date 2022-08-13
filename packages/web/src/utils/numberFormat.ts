@@ -1,6 +1,5 @@
 export function formatToFloor(value: number | string, precision: number) {
   return String(value)
-    .toString()
     .replace(/\.(\d+)/, (e, $1) => {
       return `.${$1.substr(0, precision)}`
     })
@@ -9,7 +8,6 @@ export function formatToFloor(value: number | string, precision: number) {
 
 export function formatToFixed(value: number | string, precision: number) {
   return String(value)
-    .toString()
     .replace(/\.(\d+)/, (e, $1) => {
       if ($1.length > precision) {
         return `.${Math.round(Number($1.substr(0, precision) + '.' + $1[precision + 1]))}`
