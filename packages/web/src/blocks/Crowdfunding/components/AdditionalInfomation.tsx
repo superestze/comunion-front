@@ -8,6 +8,7 @@ import {
 } from '@comunion/components'
 import { defineComponent, PropType, computed, Ref, ref, watch, h } from 'vue'
 import { CrowdfundingInfo } from '../typing'
+import RichEditor from '@/components/Editor'
 
 export interface AdditionalInformationRef {
   additionalInfoForm: FormInst | null
@@ -127,13 +128,12 @@ export const AdditionalInformation = defineComponent({
         ],
         render() {
           return (
-            <h1>check</h1>
-            // <RichEditor
-            //   limit={512}
-            //   placeholder="EX:Comunion is a new era of digital economy"
-            //   class="w-full"
-            //   v-model:value={props.crowdfundingInfo.description}
-            // />
+            <RichEditor
+              limit={512}
+              placeholder="EX:Comunion is a new era of digital economy"
+              class="w-full"
+              v-model:value={props.crowdfundingInfo.description}
+            />
           )
         }
       }

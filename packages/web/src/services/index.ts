@@ -3,6 +3,115 @@ import { requestAdapter } from './a2s.adapter'
 import { extract, replacePath } from './a2s.utils'
 
 export const services = {
+  'account@connectors-of-comer'(
+    args: {
+      comerID: any
+    } & {
+      page: number
+      limit?: number
+    }
+  ) {
+    return requestAdapter<{
+      limit: number
+      page: string
+      totalRows: number
+      totalPages: number
+      rows: {
+        comerId: number
+        comerAvatar: string
+        comerName: string
+        followedByMe: boolean
+      }[]
+    }>({
+      url: replacePath('/account/profile/connectors/:comerID', args),
+      method: 'POST',
+      ...extract('POST', args, [], ['comerID'])
+    })
+  },
+  'account@modules-of-comer'(args: { comerID: any }) {
+    return requestAdapter<
+      {
+        /**
+   * @description 
+	ModuleStartup - 1
+	ModuleBounty - 2
+	ModuleCrowdfunding - 3
+	ModuleProposal - 4
+
+
+     */
+        module: number
+        hasCreated: boolean
+      }[]
+    >({
+      url: replacePath('/account/profile/modules/:comerID', args),
+      method: 'GET',
+      ...extract('GET', args, [], ['comerID'])
+    })
+  },
+  'account@social-add-or-update'(args?: any) {
+    return requestAdapter<{
+      /**
+   * @description 	1-SocialEmail 
+	2-SocialWebsite
+	3-SocialTwitter
+	4-SocialDiscord
+	5-SocialTelegram
+	6-SocialMedium
+	7-SocialFacebook
+	8-SocialLinktre
+     */
+      socialType: number
+      /**
+       * @description 为空表示删除值
+       */
+      socialLink?: string
+    }>({
+      url: replacePath('/account/profile/social', args),
+      method: 'POST',
+      ...extract('POST', args, [], [])
+    })
+  },
+  'account@social-delete'(args?: any) {
+    return requestAdapter<{
+      /**
+   * @description 	1-SocialEmail 
+	2-SocialWebsite
+	3-SocialTwitter
+	4-SocialDiscord
+	5-SocialTelegram
+	6-SocialMedium
+	7-SocialFacebook
+	8-SocialLinktre
+     */
+      socialType: number
+    }>({
+      url: replacePath('/account/profile/social', args),
+      method: 'DELETE',
+      ...extract('DELETE', args, [], [])
+    })
+  },
+  'account@update-bio'(args: { bio: string }) {
+    return requestAdapter<{}>({
+      url: replacePath('/account/profile/bio', args),
+      method: 'POST',
+      ...extract('POST', args, [], [])
+    })
+  },
+  'account@update-comer-skills'(args: { skills: string[] }) {
+    return requestAdapter<{}>({
+      url: replacePath('/account/profile/skills', args),
+      method: 'POST',
+      ...extract('POST', args, [], [])
+    })
+  },
+  'account@update-cover'(args: { image: string }) {
+    return requestAdapter<{}>({
+      url: replacePath('/account/profile/cover', args),
+      method: 'POST',
+      ...extract('POST', args, [], [])
+    })
+  },
   'account@wallet-nonce-get'(args: { address: any }) {
     return requestAdapter<{
       nonce?: string
@@ -1303,6 +1412,19 @@ export const services = {
     })
   },
 
+  'crowdfunding@cancel-crowdfunding'(
+    args: {
+      crowdfundingId: any
+    } & {
+      txHash: string
+    }
+  ) {
+    return requestAdapter<{}>({
+      url: replacePath('/cores/crowdfundings/:crowdfundingId/cancel', args),
+      method: 'POST',
+      ...extract('POST', args, [], ['crowdfundingId'])
+    })
+  },
   'crowdfunding@create-crowdfunding'(args: {
     startupId: number
     chainId: number
@@ -1370,6 +1492,263 @@ export const services = {
       ...extract('GET', args, [], [])
     })
   },
+  'crowdfunding@crowdfunding-investments'(
+    args: {
+      crowdfundingId: any
+    } & {
+      page: number
+    }
+  ) {
+    return requestAdapter<{
+      limit: number
+      page: number
+      totalPages: number
+      totalRows: number
+      rows: {
+        crowdfundingId: number
+        startupId: number
+        comerAvatar: string
+        comerName: string
+        amount: number
+        access: number
+        time: string
+      }[]
+    }>({
+      url: replacePath('/cores/crowdfundings/:crowdfundingId/investments', args),
+      method: 'POST',
+      ...extract('POST', args, [], ['crowdfundingId'])
+    })
+  },
+  'crowdfunding@detail'(args: { crowdfundingId: any }) {
+    return requestAdapter<{
+      crowdfundingId: number
+      chainId: number
+      crowdfundingContract: string
+      teamWallet: string
+      sellTokenContract: string
+      sellTokenName: string
+      sellTokenDecimals: number
+      sellTokenSupply: number
+      maxSellPercent: number
+      maxBuyAmount: number
+      buyTokenContract: string
+      sellTax: number
+      buyPrice: number
+      swapPercent: number
+      raiseBalance: number
+      raiseGoal: number
+      raisedPercent: number
+      startupId: number
+      comerId: number
+      startTime: string
+      endTime: string
+      poster: string
+      youtube: string
+      detail: string
+      description: string
+      status: number
+    }>({
+      url: replacePath('/cores/crowdfundings/:crowdfundingId', args),
+      method: 'GET',
+      ...extract('GET', args, [], ['crowdfundingId'])
+    })
+  },
+  'crowdfunding@ibo-rate-histories'(
+    args: {
+      crowdfundingId: any
+    } & {
+      /**
+       * @example 1
+       */
+      page: any
+    }
+  ) {
+    return requestAdapter<{
+      limit: number
+      page: number
+      totalPages: number
+      totalRows: number
+      rows: {
+        crowdfundingId: number
+        startTime: string
+        buyTokenSymbol: string
+        sellTokenSymbol: string
+        buyPrice: number
+        swapPercent: number
+      }[]
+    }>({
+      url: replacePath('/cores/crowdfundings/:crowdfundingId/histories', args),
+      method: 'GET',
+      ...extract('GET', args, ['page'], ['crowdfundingId'])
+    })
+  },
+  'crowdfunding@invest-crowdfunding'(
+    args: {
+      crowdfundingId: any
+    } & {
+      txHash: string
+      /**
+       * @description 1-买入，2-卖出
+       */
+      access: number
+      buyTokenSymbol: string
+      buyTokenAmount: number
+      sellTokenSymbol: string
+      sellTokenAmount: number
+      price: number
+    }
+  ) {
+    return requestAdapter<{}>({
+      url: replacePath('/cores/crowdfundings/:crowdfundingId/invest', args),
+      method: 'POST',
+      ...extract('POST', args, [], ['crowdfundingId'])
+    })
+  },
+  'crowdfunding@modify-crowdfunding'(
+    args: {
+      crowdfundingId: any
+    } & {
+      /**
+       * @description 如果没有修改下面任一值，不需要和合约交互
+       */
+      txHash?: string
+      swapPercent?: number
+      buyPrice?: string
+      maxBuyAmount?: number
+      maxSellPercent?: number
+      endTime?: string
+    }
+  ) {
+    return requestAdapter<{}>({
+      url: replacePath('/cores/crowdfundings/:crowdfundingId/modify', args),
+      method: 'PUT',
+      ...extract('PUT', args, [], ['crowdfundingId'])
+    })
+  },
+  'crowdfunding@participated-crowdfunding-list'(args: {
+    page: number
+    limit?: number
+    /**
+     * @description 暂时不支持搜索
+     */
+    keyword?: string
+  }) {
+    return requestAdapter<{
+      limit: number
+      page: number
+      totalPages: number
+      totalRows: number
+      rows: {
+        crowdfundingId: number
+        crowdfundingContract: string
+        startupId: number
+        comerId: number
+        startupName: string
+        startupLogo: string
+        raiseBalance: number
+        raisedPercent: number
+        buyTokenSymbol: string
+        buyTokenAmount: number
+        status: number
+      }[]
+    }>({
+      url: replacePath('/cores/crowdfundings/participated', args),
+      method: 'POST',
+      ...extract('POST', args, [], [])
+    })
+  },
+  'crowdfunding@posted-crowdfunding-list'(args: {
+    page: number
+    limit?: number
+    /**
+     * @description 暂时不支持搜索
+     */
+    keyword?: string
+  }) {
+    return requestAdapter<{
+      limit: number
+      page: number
+      totalPages: number
+      totalRows: number
+      rows: {
+        crowdfundingId: number
+        /**
+         * @description 合约地址
+         */
+        crowdfundingContract: string
+        startupId: number
+        comerId: number
+        startupName: string
+        startupLogo: string
+        startTime: string
+        endTime: string
+        raiseBalance: number
+        raisedPercent: number
+        status: number
+      }[]
+    }>({
+      url: replacePath('/cores/crowdfundings/posted', args),
+      method: 'POST',
+      ...extract('POST', args, [], [])
+    })
+  },
+  'crowdfunding@public-crowdfunding-list'(args: {
+    page: number
+    limit?: number
+    /**
+     * @description 1,2,3,4
+     */
+    mode?: number
+    keyword?: string
+  }) {
+    return requestAdapter<{
+      limit: number
+      page: number
+      totalPages: number
+      totalRows: number
+      rows: {
+        crowdfundingId: number
+        /**
+         * @description 合约地址
+         */
+        crowdfundingContract: string
+        startupId: number
+        comerId: number
+        startupName: string
+        startTime: string
+        endTime: string
+        raiseBalance: number
+        raiseGoal: number
+        raisedPercent: number
+        buyPrice: number
+        swapPercent: number
+        poster: string
+        status: number
+        kyc?: string
+        chainId: number
+        contractAudit?: string
+        buyTokenAddress: string
+        sellTokenAddress: string
+      }[]
+    }>({
+      url: replacePath('/cores/crowdfundings', args),
+      method: 'POST',
+      ...extract('POST', args, [], [])
+    })
+  },
+  'crowdfunding@remove-crowdfunding'(
+    args: {
+      crowdfundingId: any
+    } & {
+      txHash: string
+    }
+  ) {
+    return requestAdapter<{}>({
+      url: replacePath('/cores/crowdfundings/:crowdfundingId/remove', args),
+      method: 'POST',
+      ...extract('POST', args, [], ['crowdfundingId'])
+    })
+  },
 
   'startup@startup-get'(args: { startupId: any }) {
     return requestAdapter<{
@@ -1429,6 +1808,48 @@ export const services = {
       url: replacePath('/cores/startups/{startupId}', args),
       method: 'GET',
       ...extract('GET', args, [], ['startupId'])
+    })
+  },
+  'startup@startup-list-createdBy-comer'(args: { comerID: any }) {
+    return requestAdapter<{
+      list: {
+        startupId: number
+        comerId: number
+        updatedAt: string
+        isFollowed: boolean
+      }[]
+      total: number
+    }>({
+      url: replacePath('/cores//startups/comer/:comerID', args),
+      method: 'GET',
+      ...extract('GET', args, [], ['comerID'])
+    })
+  },
+  'startup@update-cover'(
+    args: {
+      startupID: any
+    } & {
+      image: string
+    }
+  ) {
+    return requestAdapter<any>({
+      url: replacePath('/cores/startups/:startupID/cover', args),
+      method: 'POST',
+      ...extract('POST', args, [], ['startupID'])
+    })
+  },
+  'startup@update-security'(
+    args: {
+      startupID: any
+    } & {
+      kyc: string
+      contractAudit: string
+    }
+  ) {
+    return requestAdapter<{}>({
+      url: replacePath('/cores/startups/:startupID/security', args),
+      method: 'POST',
+      ...extract('POST', args, [], ['startupID'])
     })
   },
   'startup@startup-list'(args: {

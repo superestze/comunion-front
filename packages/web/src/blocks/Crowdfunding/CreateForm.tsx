@@ -139,6 +139,8 @@ const CreateCrowdfundingForm = defineComponent({
           ethers.utils.parseUnits(crowdfundingInfo.maxBuyAmount!.toString(), 18),
           ethers.utils.parseUnits(crowdfundingInfo.maxSell!.toString(), 2),
           crowdfundingInfo.teamWallet,
+          dayjs(crowdfundingInfo.startTime).valueOf() / 1000,
+          dayjs(crowdfundingInfo.endTime).valueOf() / 1000,
           'Waiting to submit all contents to blockchain for creating crowdfunding',
           `Crowdfunding is Creating`
         )
@@ -172,8 +174,8 @@ const CreateCrowdfundingForm = defineComponent({
           buyPrice: crowdfundingInfo.buyPrice!,
           sellTax: crowdfundingInfo.sellTax!,
           maxBuyAmount: crowdfundingInfo.maxBuyAmount!,
-          startTime: dayjs(crowdfundingInfo.startTime!).toISOString(),
-          endTime: dayjs(crowdfundingInfo.endTime!).toISOString(),
+          startTime: dayjs(crowdfundingInfo.startTime!).utc().toISOString(),
+          endTime: dayjs(crowdfundingInfo.endTime!).utc().toISOString(),
           poster: crowdfundingInfo.poster.url,
           description: crowdfundingInfo.description!,
           sellTokenContract: crowdfundingInfo.sellTokenContract!,
