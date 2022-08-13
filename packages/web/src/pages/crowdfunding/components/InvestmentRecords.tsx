@@ -10,6 +10,10 @@ interface IPagination {
   loading: boolean
 }
 
+export interface InvestmentsRecordsExpose {
+  getInvestRecord: () => void
+}
+
 export const InvestmentRecords = defineComponent({
   name: 'InvestmentRecords',
   props: {
@@ -20,7 +24,7 @@ export const InvestmentRecords = defineComponent({
       type: String
     }
   },
-  setup(props) {
+  setup(props, ctx) {
     const route = useRoute()
     const pagination = reactive<IPagination>({
       pageSize: 20,
@@ -61,16 +65,28 @@ export const InvestmentRecords = defineComponent({
       getInvestRecord(pagination.page)
     })
 
-    return () => (
+    ctx.expose({
+      getInvestRecord
+    })
+
+    return {
+      pagination,
+      investRecords,
+      getInvestRecord,
+      getAmount
+    }
+  },
+  render() {
+    return (
       <UCard title="IBO Rate History">
         <UScrollList
-          triggered={pagination.loading}
-          page={pagination.page}
-          pageSize={pagination.pageSize}
-          total={pagination.total}
-          onLoadMore={() => getInvestRecord(pagination.page)}
+          triggered={this.pagination.loading}
+          page={this.pagination.page}
+          pageSize={this.pagination.pageSize}
+          total={this.pagination.total}
+          onLoadMore={() => this.getInvestRecord(this.pagination.page)}
         >
-          {(investRecords.value ?? []).map(record => {
+          {(this.investRecords ?? []).map(record => {
             return (
               <div class="mt-6">
                 <div class="flex items-center">
@@ -95,7 +111,7 @@ export const InvestmentRecords = defineComponent({
                       {dayjs(record.time).format('YYYY-MM-DD HH:mm')}
                     </div>
                   </div>
-                  <div class="ml-auto text-primary">{getAmount(record)}</div>
+                  <div class="ml-auto text-primary">{this.getAmount(record)}</div>
                 </div>
                 <div class="h-px ml-14 bg-grey5"></div>
               </div>

@@ -9,6 +9,7 @@ import { useErc20Contract, useCrowdfundingContract } from '@/contracts'
 import { ServiceReturn, services } from '@/services'
 import { useUserStore, useWalletStore } from '@/stores'
 import { useContractStore } from '@/stores/contract'
+import { formatToFloor } from '@/utils/numberFormat'
 
 export const renderUnit = (name: string) => (
   <div
@@ -38,7 +39,7 @@ export const Invest = defineComponent({
     }
   },
   emits: ['refreshCoin'],
-  async setup(props, ctx) {
+  setup(props, ctx) {
     const walletStore = useWalletStore()
     const userStore = useUserStore()
     const contractStore = useContractStore()
@@ -48,7 +49,7 @@ export const Invest = defineComponent({
     const toValue = ref<string>('0.0')
     console.log('fundingContract===>', props.info.crowdfundingContract)
 
-    const fundingContractState = ref()
+    const fundingContractState = ref([])
     const fundingContract = useCrowdfundingContract({
       chainId: walletStore.chainId!,
       addresses: { [walletStore.chainId!]: props.info.crowdfundingContract }
@@ -64,24 +65,14 @@ export const Invest = defineComponent({
       if (mode.value === 'buy') {
         toValue.value = (Number(value) * props.info.buyPrice).toString()
       } else {
-        toValue.value = (Number(value) / props.info.buyPrice)
-          .toString()
-          .replace(/\.(\d+)/, (e, $1) => {
-            return `.${$1.substr(0, 8)}`
-          })
-          .replace(/(?:\.0*|(\.\d+?)0+)$/, '$1')
+        toValue.value = formatToFloor(Number(value) / props.info.buyPrice, 8).toString()
       }
       console.log('toValue.value==>', toValue.value)
     }
 
     const changeToValue = (value: string) => {
       if (mode.value === 'buy') {
-        fromValue.value = (Number(value) / props.info.buyPrice)
-          .toString()
-          .replace(/\.(\d+)/, (e, $1) => {
-            return `.${$1.substr(0, 8)}`
-          })
-          .replace(/(?:\.0*|(\.\d+?)0+)$/, '$1')
+        fromValue.value = formatToFloor(Number(value) / props.info.buyPrice, 8).toString()
       } else {
         fromValue.value = (Number(value) * props.info.buyPrice).toString()
       }
@@ -178,8 +169,6 @@ export const Invest = defineComponent({
 
     const disableRemoveOrCancel = computed(() => {
       if (founderOperation.value === 'Remove') {
-        console.log('执行==', fundingContractState.value)
-
         return fundingContractState.value[9] === CrowdfundingStatus.ENDED
       } else {
         return countDownTime.value.status !== CrowdfundingStatus.UPCOMING
@@ -310,8 +299,8 @@ export const Invest = defineComponent({
         )
         await approveRes.wait()
         const contractRes: any = await fundingContract.sell(
-          fromAmount,
           toAmount,
+          fromAmount,
           sellPendingText,
           waitingText
         )
@@ -344,8 +333,8 @@ export const Invest = defineComponent({
         const toAmount = ethers.utils.parseUnits(toValue.value, props.buyCoinInfo.decimal)
 
         const contractRes: any = await fundingContract.sell(
-          fromAmount,
           toAmount,
+          fromAmount,
           sellPendingText,
           waitingText
         )

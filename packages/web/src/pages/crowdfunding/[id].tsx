@@ -6,7 +6,7 @@ import { useRoute, useRouter } from 'vue-router'
 import { CrowdfundingInfo } from './components/CrowdfundingInfo'
 import { IBORateHistory } from './components/IBORateHistory'
 import { Invest } from './components/Invest'
-import { InvestmentRecords } from './components/InvestmentRecords'
+import { InvestmentRecords, InvestmentsRecordsExpose } from './components/InvestmentRecords'
 import StartupCard from './components/StartupCard'
 import { getChainInfoByChainId } from './utils'
 import { useErc20Contract } from '@/contracts'
@@ -28,6 +28,8 @@ const CrowdfundingDetail = defineComponent({
     const router = useRouter()
     const route = useRoute()
     const walletStore = useWalletStore()
+
+    const investRecordsRef = ref<InvestmentsRecordsExpose>()
     const crowdfundingInfo = ref<ServiceReturn<'crowdfunding@detail'>>()
     const startupInfo = ref()
     const buyCoinInfo = ref<CoinType>({ name: '', address: '' })
@@ -114,6 +116,11 @@ const CrowdfundingDetail = defineComponent({
       }
     }
 
+    const initPage = async () => {
+      getTokenName()
+      investRecordsRef.value?.getInvestRecord()
+    }
+
     onMounted(() => {
       getCrowdfundingInfo(Number(route.params.id))
     })
@@ -135,7 +142,7 @@ const CrowdfundingDetail = defineComponent({
                 buyCoinInfo={buyCoinInfo.value}
                 sellCoinInfo={sellCoinInfo.value}
                 info={crowdfundingInfo.value}
-                onRefreshCoin={getTokenName}
+                onRefreshCoin={initPage}
               />
             )}
             {crowdfundingInfo.value && <CrowdfundingInfo info={crowdfundingInfo.value} />}
@@ -148,6 +155,7 @@ const CrowdfundingDetail = defineComponent({
             )}
             <IBORateHistory class="mb-6" />
             <InvestmentRecords
+              ref={(ref: any) => (investRecordsRef.value = ref)}
               buyTokenName={buyCoinInfo.value.symbol}
               sellTokenName={sellCoinInfo.value.symbol}
             />
