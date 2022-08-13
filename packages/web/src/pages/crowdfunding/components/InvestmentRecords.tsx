@@ -10,6 +10,10 @@ interface IPagination {
   loading: boolean
 }
 
+export interface InvestmentsRecordsExpose {
+  getInvestRecord: () => void
+}
+
 export const InvestmentRecords = defineComponent({
   name: 'InvestmentRecords',
   props: {
@@ -20,7 +24,7 @@ export const InvestmentRecords = defineComponent({
       type: String
     }
   },
-  setup(props) {
+  setup(props, ctx) {
     const route = useRoute()
     const pagination = reactive<IPagination>({
       pageSize: 20,
@@ -56,6 +60,10 @@ export const InvestmentRecords = defineComponent({
         console.error('error', error)
       }
     }
+
+    ctx.expose({
+      getInvestRecord
+    })
 
     onMounted(() => {
       getInvestRecord(pagination.page)

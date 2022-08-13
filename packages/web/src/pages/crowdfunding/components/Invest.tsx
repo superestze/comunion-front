@@ -38,7 +38,7 @@ export const Invest = defineComponent({
     }
   },
   emits: ['refreshCoin'],
-  async setup(props, ctx) {
+  setup(props, ctx) {
     const walletStore = useWalletStore()
     const userStore = useUserStore()
     const contractStore = useContractStore()
@@ -48,7 +48,7 @@ export const Invest = defineComponent({
     const toValue = ref<string>('0.0')
     console.log('fundingContract===>', props.info.crowdfundingContract)
 
-    const fundingContractState = ref()
+    const fundingContractState = ref([])
     const fundingContract = useCrowdfundingContract({
       chainId: walletStore.chainId!,
       addresses: { [walletStore.chainId!]: props.info.crowdfundingContract }
@@ -178,8 +178,6 @@ export const Invest = defineComponent({
 
     const disableRemoveOrCancel = computed(() => {
       if (founderOperation.value === 'Remove') {
-        console.log('执行==', fundingContractState.value)
-
         return fundingContractState.value[9] === CrowdfundingStatus.ENDED
       } else {
         return countDownTime.value.status !== CrowdfundingStatus.UPCOMING
@@ -310,8 +308,8 @@ export const Invest = defineComponent({
         )
         await approveRes.wait()
         const contractRes: any = await fundingContract.sell(
-          fromAmount,
           toAmount,
+          fromAmount,
           sellPendingText,
           waitingText
         )
@@ -344,8 +342,8 @@ export const Invest = defineComponent({
         const toAmount = ethers.utils.parseUnits(toValue.value, props.buyCoinInfo.decimal)
 
         const contractRes: any = await fundingContract.sell(
-          fromAmount,
           toAmount,
+          fromAmount,
           sellPendingText,
           waitingText
         )

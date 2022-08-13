@@ -104,7 +104,7 @@ export const CrowdfundingCard = defineComponent({
             <span class="u-h3">{props.info.startupName}</span>
             <img src={logo.value} />
           </div>
-          <div>
+          <div class="min-h-6">
             {props.info.kyc && (
               <UTag
                 class="u-body3 mr-1"
@@ -132,7 +132,9 @@ export const CrowdfundingCard = defineComponent({
               </UTag>
             )}
           </div>
-          <div class="text-right mb-2 u-body3 text-sm">{props.info.raisedPercent * 100} %</div>
+          <div class="text-right mb-2 u-body3 text-sm">
+            {(props.info.raisedPercent * 100).toFixed(2)} %
+          </div>
           <div>
             <UProgress
               showIndicator={false}
@@ -142,7 +144,9 @@ export const CrowdfundingCard = defineComponent({
           </div>
           <div class="flex justify-between mt-2 text-xs">
             <div>
-              <span class="u-label1 text-base">{props.info.raiseBalance}</span>{' '}
+              <span class="u-label1 text-base">
+                {(Number(props.info.raiseBalance) || 0).toFixed(2)}
+              </span>{' '}
               <span class="text-grey3">{buyTokenSymbol.value}</span>
             </div>
             <div class="text-xs">
