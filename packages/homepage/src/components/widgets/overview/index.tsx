@@ -22,7 +22,10 @@ export default defineComponent({
   render() {
     return (
       <div class="flex w-full mt-80px flex-col justify-center relative">
-        <h1 class="mb-41px text-20px text-center" style={{ color: 'rgba(17,17,17,0.6)' }}>
+        <h1
+          class="mb-41px text-20px text-center <md:text-6.5"
+          style={{ color: 'rgba(17,17,17,0.6)' }}
+        >
           You Can
         </h1>
         <div
@@ -113,11 +116,13 @@ export default defineComponent({
           class="grid grid-rows-4 grid-cols-6 mx-auto bg-transparent grid-cols-[208px,119px,105px,224px] grid-rows-[205px,205px,170px,170px,205px] md:hidden"
           style={{ backgroundColor: 'rgba(255,255,255,0.6)' }}
         >
-          <div class="pt-54px pl-48px row-start-1 row-end-3 col-start-1 col-end-3 border border-solid bg-[#5E18FE] text-white">
-            <h1 class={styles.title36}>Lauch</h1>
-            <h1 class={`${styles.title36} -mt-10px`}>a startup</h1>
-            <p class={`${styles.title14} mt-16px`}>Web3, Crypto, Blockchain, Metaverse etc</p>
-            <div class="mt-85px w-54px h-54px">
+          <div class="pt-32px pl-40px row-start-1 row-end-3 col-start-1 col-end-3 border border-solid bg-[#5E18FE] text-white">
+            <h1 class={styles.title30}>Lauch</h1>
+            <h1 class={`${styles.title30} -mt-10px`}>a startup</h1>
+            <p class={`${styles.title20} mt-16px text-white/70`}>
+              Web3, Crypto, Blockchain, Metaverse etc
+            </p>
+            <div class="mt-140px w-42px h-42px">
               <img
                 class="w-full"
                 srcset={`${rocket}, ${rocket2} 2x, ${rocket3} 3x`}
@@ -126,16 +131,16 @@ export default defineComponent({
               />
             </div>
           </div>
-          <div class="row-start-1 row-end-2 col-start-3 col-end-5 border pt-54px pl-48px">
-            <h1 class={styles.title36}>Start, Run + Grow</h1>
-            <h1 class={`${styles.title36} -mt-10px`}>Your business</h1>
-            <div class="mt-125px w-54px h-54px">
+          <div class="row-start-1 row-end-2 col-start-3 col-end-5 border pt-32px pl-36px">
+            <h1 class={styles.title26}>Start, Run + Grow</h1>
+            <h1 class={`${styles.title26} -mt-10px`}>Your business</h1>
+            <div class="mt-48px w-42px h-42px">
               <img class="w-full" srcset={`${up}, ${up2} 2x, ${up3} 3x`} src={up} alt="up" />
             </div>
           </div>
           <div class="row-start-2 row-end-3 col-start-3 col-end-5 border pt-32px pl-36px">
-            <h1 class={styles.title24}>Raise money</h1>
-            <div class="mt-30px w-54px h-54px">
+            <h1 class={styles.title26}>Raise money</h1>
+            <div class="mt-50px w-42px h-42px">
               <img
                 class="w-full"
                 srcset={`${wallet}, ${wallet2} 2x, ${wallet3} 3x`}
@@ -144,17 +149,17 @@ export default defineComponent({
               />
             </div>
           </div>
-          <div class="row-start-3 row-end-4 col-start-4 col-end-5 border pt-32px pl-36px">
-            <h1 class={styles.title24}>Earn through</h1>
-            <h1 class={`${styles.title24} -mt-10px`}>bounties</h1>
+          <div class="row-start-3 row-end-4 col-start-4 col-end-5 border pt-36px pl-24px">
+            <h1 class={styles.title26}>Earn through</h1>
+            <h1 class={`${styles.title26} -mt-10px`}>bounties</h1>
           </div>
-          <div class="row-start-3 row-end-5 col-start-1 col-end-2 border pt-52px pl-32px">
-            <h1 class={styles.title24}>Build an</h1>
-            <h1 class={`${styles.title24} -mt-10px`}>organization</h1>
-            <p class={`${styles.title14} mt-12px`} style={{ color: 'rgba(17, 17, 17, 0.5)' }}>
+          <div class="row-start-3 row-end-5 col-start-1 col-end-2 border pt-36px pl-24px">
+            <h1 class={styles.title26}>Build an</h1>
+            <h1 class={`${styles.title26} -mt-10px`}>organization</h1>
+            <p class={`${styles.title20} mt-12px`} style={{ color: 'rgba(17, 17, 17, 0.5)' }}>
               DAO, NGO,Commercial and Community etc
             </p>
-            <div class="mt-104px w-54px h-54px">
+            <div class="mt-51px w-42px h-42px">
               <img
                 class="w-full"
                 srcset={`${group}, ${group2} 2x, ${group3} 3x`}
@@ -163,27 +168,28 @@ export default defineComponent({
               />
             </div>
           </div>
-          <div class="row-start-3 row-end-4 col-start-2 col-end-4 border pt-52px pl-32px">
-            <h1 class={styles.title24}>Invest</h1>
-            <h1 class={`${styles.title24} -mt-10px`}>early startups</h1>
+          <div class="row-start-3 row-end-4 col-start-2 col-end-4 border pt-36px pl-24px">
+            <h1 class={styles.title26}>Invest</h1>
+            <h1 class={`${styles.title26} -mt-10px`}>early startups</h1>
           </div>
-          <div class="row-start-5 row-end-6 col-start-1 col-end-3 border pt-36px pl-32px">
-            <h1 class={styles.title24}>Buy and Sell</h1>
-            <p class={`${styles.title14} mt-14px`} style={{ color: 'rgba(17, 17, 17, 0.5)' }}>
+          <div class="row-start-5 row-end-6 col-start-1 col-end-3 border pt-42px pl-24px">
+            <h1 class={styles.title26}>Buy and Sell</h1>
+            <p class={`${styles.title20} mt-14px`} style={{ color: 'rgba(17, 17, 17, 0.5)' }}>
               Crypto, NFTs, Goods or Services etc
             </p>
           </div>
-          <div class="row-start-4 row-end-5 col-start-2 col-end-4 border pt-52px pl-32px">
-            <h1 class={styles.title24}>Connect</h1>
-            <h1 class={`${styles.title24} -mt-10px`}>global talents</h1>
+          <div class="row-start-4 row-end-5 col-start-2 col-end-4 border pt-26px pl-24px">
+            <h1 class={styles.title26}>Connect</h1>
+            <h1 class={`${styles.title26} -mt-10px`}>global talents</h1>
           </div>
-          <div class="row-start-4 row-end-5 col-start-4 col-end-5 border pt-52px pl-32px">
-            <h1 class={styles.title24}>Freelance work </h1>
-            <h1 class={`${styles.title24} -mt-10px`}>marketplace</h1>
+          <div class="row-start-4 row-end-5 col-start-4 col-end-5 border pt-26px pl-24px">
+            <h1 class={styles.title26}>Freelance</h1>
+            <h1 class={`${styles.title26} -mt-10px`}>work</h1>
+            <h1 class={`${styles.title26} -mt-10px`}>marketplace</h1>
           </div>
-          <div class="row-start-5 row-end-6 col-start-3 col-end-5 border pt-36px pl-32px">
+          <div class="row-start-5 row-end-6 col-start-3 col-end-5 border pt-42px pl-24px">
             <h1 class={styles.title24}>Dapp store as a service</h1>
-            <div class="mt-37px w-54px h-54px">
+            <div class="mt-31px w-42px h-42px">
               <img
                 class="w-full"
                 srcset={`${store}, ${store} 2x, ${store3} 3x`}

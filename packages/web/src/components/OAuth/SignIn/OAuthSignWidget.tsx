@@ -26,14 +26,24 @@ export default defineComponent({
     return () => (
       <>
         <UModal show={associateWalletVisible.value}></UModal>
-        <div class="flex flex-col">
-          <OAuthSignBtn onTriggerBtn={googleLogin}>
-            <GoogleFilled class="h-20px w-20px ml-16px mr-41px" />
-            <span class="text-[#231944] font-bold text-14px">Sign in with Google</span>
+        <div class="flex flex-col <md:mx-auto">
+          <OAuthSignBtn
+            onTriggerBtn={googleLogin}
+            class="<md:w-586px <md:h-96px <md:rounded-12px <md:flex"
+          >
+            <GoogleFilled class="h-20px w-20px ml-16px mr-41px <md:text-36px <md:ml-30px <md:mr-70px" />
+            <span class="text-[#231944] font-bold text-14px <md:text-32px">
+              Sign in with Google
+            </span>
           </OAuthSignBtn>
-          <OAuthSignBtn onTriggerBtn={githubLogin} class="mt-20px">
-            <GithubFilled class="h-20px w-20px ml-16px mr-41px" />
-            <span class="text-[#231944] font-bold text-14px">Sign in with Github</span>
+          <OAuthSignBtn
+            onTriggerBtn={githubLogin}
+            class="mt-20px <md:w-586px <md:h-96px <md:mt-36px <md:rounded-12px <md:flex"
+          >
+            <GithubFilled class="h-20px w-20px ml-16px mr-41px <md:text-36px <md:ml-30px <md:mr-70px" />
+            <span class="text-[#231944] font-bold text-14px <md:text-32px">
+              Sign in with Github
+            </span>
           </OAuthSignBtn>
         </div>
       </>

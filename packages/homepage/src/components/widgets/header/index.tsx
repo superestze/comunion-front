@@ -28,7 +28,7 @@ export default defineComponent({
       document.addEventListener('scroll', scrollFn)
     })
 
-    const show = ref<boolean>(true)
+    const show = ref<boolean>(false)
     return {
       headerClass,
       show

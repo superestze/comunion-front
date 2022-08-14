@@ -23,7 +23,7 @@ export default defineComponent({
   },
   render() {
     return (
-      <p class="text-16px text-center font-bold" style={this.subTitleColor}>
+      <p class="text-16px text-center font-bold <md:text-6" style={this.subTitleColor}>
         {this.text}
       </p>
     )
