@@ -32,10 +32,10 @@ const NoStartupTip = defineComponent({
             Please do create a startup before creating a bounty.
           </div>
           <div class="flex justify-end mt-20">
-            <UButton size="large" type="primary" ghost class="w-41 mr-4" onClick={close}>
+            <UButton type="primary" ghost class="w-41 mr-4 h-9" onClick={close}>
               Cancel
             </UButton>
-            <UButton size="large" type="primary" class="w-41" onClick={toCreateStartup}>
+            <UButton type="primary" class="w-41 h-9" onClick={toCreateStartup}>
               Go to create
             </UButton>
           </div>

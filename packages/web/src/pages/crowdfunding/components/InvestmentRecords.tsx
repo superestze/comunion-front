@@ -98,11 +98,11 @@ export const InvestmentRecords = defineComponent({
                     <div class="mb-2">
                       <span class="u-title2">{record.comerName}</span>
                       {record.access === 1 ? (
-                        <span class="px-2 py-1 ml-2 rounded-sm text-white text-xs bg-[#00BFA5]">
+                        <span class="px-2 py-0.5 ml-2 rounded-sm text-white text-xs bg-[#00BFA5]">
                           Invest
                         </span>
                       ) : (
-                        <span class="px-2 py-1 ml-2 rounded-sm text-white text-xs bg-warning">
+                        <span class="px-2 py-0.5 ml-2 rounded-sm text-white text-xs bg-warning">
                           Withdraw
                         </span>
                       )}

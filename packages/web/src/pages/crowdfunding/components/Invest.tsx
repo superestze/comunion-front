@@ -10,6 +10,7 @@ import { ServiceReturn, services } from '@/services'
 import { useUserStore, useWalletStore } from '@/stores'
 import { useContractStore } from '@/stores/contract'
 import { formatToFloor } from '@/utils/numberFormat'
+import './invest.css'
 
 export const renderUnit = (name: string) => (
   <div
@@ -48,8 +49,9 @@ export const Invest = defineComponent({
     const fromValue = ref<string>('0.0')
     const toValue = ref<string>('0.0')
     console.log('fundingContract===>', props.info.crowdfundingContract)
+    console.log('walletStore.chainId===>', walletStore.chainId)
 
-    const fundingContractState = ref([])
+    const fundingContractState = ref()
     const fundingContract = useCrowdfundingContract({
       chainId: walletStore.chainId!,
       addresses: { [walletStore.chainId!]: props.info.crowdfundingContract }
@@ -71,18 +73,18 @@ export const Invest = defineComponent({
 
     const changeFromValue = (value: string) => {
       if (mode.value === 'buy') {
-        toValue.value = (Number(value) * props.info.buyPrice).toString()
+        toValue.value = formatToFloor(Number(value) * props.info.buyPrice, 8)
       } else {
-        toValue.value = formatToFloor(Number(value) / props.info.buyPrice, 8).toString()
+        toValue.value = formatToFloor(Number(value) / props.info.buyPrice, 8)
       }
       console.log('toValue.value==>', toValue.value)
     }
 
     const changeToValue = (value: string) => {
       if (mode.value === 'buy') {
-        fromValue.value = formatToFloor(Number(value) / props.info.buyPrice, 8).toString()
+        fromValue.value = formatToFloor(Number(value) / props.info.buyPrice, 8)
       } else {
-        fromValue.value = (Number(value) * props.info.buyPrice).toString()
+        fromValue.value = formatToFloor(Number(value) * props.info.buyPrice, 8)
       }
     }
 
@@ -177,7 +179,7 @@ export const Invest = defineComponent({
 
     const disableRemoveOrCancel = computed(() => {
       if (founderOperation.value === 'Remove') {
-        return fundingContractState.value[9] === CrowdfundingStatus.ENDED
+        return fundingContractState.value?.[9] === CrowdfundingStatus.ENDED
       } else {
         return countDownTime.value.status !== CrowdfundingStatus.UPCOMING
       }
@@ -185,8 +187,7 @@ export const Invest = defineComponent({
 
     const founderOperation = computed(() => {
       return countDownTime.value.status === CrowdfundingStatus.ENDED ||
-        (props.info.status === CrowdfundingStatus.LIVE &&
-          props.info.raiseBalance === props.info.raiseGoal)
+        (props.info.status === CrowdfundingStatus.LIVE && props.info.raisedPercent === 1)
         ? 'Remove'
         : 'Cancel'
     })
@@ -376,17 +377,17 @@ export const Invest = defineComponent({
 
     const setMaxBalance = () => {
       if (mode.value === 'buy') {
-        fromValue.value =
-          Math.min(maxBuy.value, Number(props.buyCoinInfo.balance)).toString() || '0'
+        fromValue.value = maxBuyAmount.value
       } else {
-        fromValue.value =
-          Math.min(maxSell.value, Number(props.sellCoinInfo.balance)).toString() || '0'
+        fromValue.value = maxSellAmount.value
       }
       changeFromValue(fromValue.value)
     }
 
     const getMaxAmount = async () => {
       const buyRes = await fundingContract.maxBuyAmount('', '')
+      console.log('buyRes===>', buyRes)
+
       maxBuy.value = ethers.utils.formatUnits(buyRes[0], props.buyCoinInfo.decimal)
 
       const sellRes = await fundingContract.maxSellAmount('', '')
@@ -394,13 +395,13 @@ export const Invest = defineComponent({
       console.log('maxSell.value==>', maxSell.value)
     }
 
-    // const getFundingState = async () => {
-    //   fundingContractState.value = await fundingContract.state('', '')
-    // }
+    const getFundingState = async () => {
+      fundingContractState.value = await fundingContract.state('', '')
+    }
 
     onMounted(() => {
       getMaxAmount()
-      // getFundingState()
+      getFundingState()
     })
 
     const initPage = () => {
@@ -434,7 +435,7 @@ export const Invest = defineComponent({
     }
 
     return () => (
-      <div class="flex items-stretch gap-6 p-10 bg-white border-1 border-grey5 mb-6 rounded-lg">
+      <div class="flex items-stretch gap-6 p-10 bg-white border-1 border-grey5 mb-6 rounded-lg invest">
         <div class="flex-1">
           <div class="u-title2 mb-4">{countDownTime.value.label}</div>
           <div class="flex items-center mb-12">
@@ -501,28 +502,38 @@ export const Invest = defineComponent({
             </div>
           </div>
           <div class="u-title2 mb-6">Token Information</div>
-          <div class="grid grid-cols-2 gap-y-4 justify-between u-body2">
-            <div class="text-grey3">Totally Supply：</div>
-            <div class="text-grey1 text-right whitespace-nowrap">
-              {props.sellCoinInfo.supply} {props.sellCoinInfo.symbol}{' '}
+          <div class="u-body2">
+            <div class="token-info-item">
+              <span class="token-info-item-label">Totally Supply：</span>
+              <span class="text-grey1  whitespace-nowrap">
+                {props.sellCoinInfo.supply} {props.sellCoinInfo.symbol}{' '}
+              </span>
             </div>
-            <div class="text-grey3">Token Name：</div>
-            <div class="text-grey1 text-right whitespace-nowrap">{props.sellCoinInfo.symbol}</div>
-            <div class="text-grey3">Token Symbol：</div>
-            <div class="text-grey1 text-right whitespace-nowrap">{props.sellCoinInfo.symbol}</div>
-            <div class="text-grey3">Token Contract：</div>
-            <div class="text-right">
-              <UAddress address={props.info.sellTokenContract} autoSlice={true} />
+            <div class="token-info-item">
+              <span class="token-info-item-label">Token Name：</span>
+              <span class="text-grey1  whitespace-nowrap">{props.sellCoinInfo.symbol}</span>
+            </div>
+            <div class="token-info-item">
+              <span class="token-info-item-label">Token Symbol：</span>
+              <span class="text-grey1  whitespace-nowrap">{props.sellCoinInfo.symbol}</span>
+            </div>
+            <div class="token-info-item mb-0">
+              <div class="token-info-item-label">Token Contract：</div>
+              <UAddress
+                class="token-info-item-address"
+                address={props.info.sellTokenContract}
+                autoSlice={true}
+              />
             </div>
           </div>
         </div>
         <div class="w-px bg-grey5"></div>
         <div class="flex-1">
           <div class="flex justify-between mb-2">
-            <span class="u-title1">{mode.value === 'buy' ? 'INVEST' : 'SELL'}</span>
+            <span class="u-title1 font-orbitron">{mode.value === 'buy' ? 'INVEST' : 'SELL'}</span>
             <span class="bg-[rgba(83,49,244,0.06)] flex items-center px-4 py-1 text-primary1 rounded-4xl leading-snug">
               <img src={chainInfo?.logo} class="w-5 h-5" />{' '}
-              <span class="ml-2">{chainInfo?.name}</span>
+              <span class="ml-2 font-opensans">{chainInfo?.name}</span>
             </span>
           </div>
           <div class="u-body2 !text-primary mb-10">
@@ -530,7 +541,7 @@ export const Invest = defineComponent({
             {props.sellCoinInfo.symbol}
           </div>
           <div class="flex justify-between mb-2">
-            <span>From</span>
+            <span class="u-body2 text-grey3">From</span>
             <span class="u-body3 text-sm text-primary1 italic">
               Balance :{' '}
               {(mode.value === 'buy' ? props.buyCoinInfo.balance : props.sellCoinInfo.balance) || 0}
@@ -548,8 +559,8 @@ export const Invest = defineComponent({
               }}
               type="withUnit"
               inputProps={{
-                onChange: changeFromValue,
-                max: mode.value === 'buy' ? maxBuyAmount.value : maxSellAmount.value
+                onInput: changeFromValue
+                // max: mode.value === 'buy' ? maxBuyAmount.value : maxSellAmount.value
               }}
               renderUnit={() =>
                 renderUnit(
@@ -567,7 +578,7 @@ export const Invest = defineComponent({
             </div>
           </div>
           <div class="flex justify-between mb-2">
-            <span>To</span>
+            <span class="u-body2 text-grey3">To</span>
             <span class="u-body3 text-sm text-primary1 italic">
               Balance :{' '}
               {(mode.value === 'buy' ? props.sellCoinInfo.balance : props.buyCoinInfo.balance) || 0}
@@ -577,8 +588,8 @@ export const Invest = defineComponent({
             <UInputNumberGroup
               v-model:value={toValue.value}
               inputProps={{
-                onChange: changeToValue,
-                max: mode.value === 'buy' ? maxSellAmount.value : maxBuyAmount.value
+                onInput: changeToValue
+                // max: mode.value === 'buy' ? maxSellAmount.value : maxBuyAmount.value
               }}
               v-slots={{
                 suffix: () => null
