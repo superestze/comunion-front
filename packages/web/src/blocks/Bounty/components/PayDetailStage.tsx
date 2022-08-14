@@ -25,11 +25,11 @@ const PayDetailStage = defineComponent({
     const payStageForm = ref<FormInst | null>(null)
     const payStagesTotal = computed(() => {
       const usdcTotal = props.bountyInfo.stages.reduce(
-        (total, stage) => total + stage.token1Amount,
+        (total, stage) => total + Number(stage.token1Amount),
         0
       )
       const tokenTotal = props.bountyInfo.stages.reduce(
-        (total, stage) => total + stage.token2Amount,
+        (total, stage) => total + Number(stage.token2Amount),
         0
       )
       return {
