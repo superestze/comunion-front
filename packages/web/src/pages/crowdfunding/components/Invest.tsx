@@ -64,11 +64,17 @@ export const Invest = defineComponent({
     const chainInfo = getChainInfoByChainId(props.info.chainId)
 
     const maxBuyAmount = computed(() => {
-      return Math.min(maxBuy.value, Number(props.buyCoinInfo.balance)).toString() || '0'
+      return (
+        formatToFloor(Math.min(maxBuy.value, Number(props.buyCoinInfo.balance)).toString(), 8) ||
+        '0'
+      )
     })
 
     const maxSellAmount = computed(() => {
-      return Math.min(maxSell.value, Number(props.sellCoinInfo.balance)).toString() || '0'
+      return (
+        formatToFloor(Math.min(maxSell.value, Number(props.sellCoinInfo.balance)).toString(), 8) ||
+        '0'
+      )
     })
 
     const changeFromValue = (value: string) => {
@@ -187,7 +193,7 @@ export const Invest = defineComponent({
 
     const founderOperation = computed(() => {
       return countDownTime.value.status === CrowdfundingStatus.ENDED ||
-        (props.info.status === CrowdfundingStatus.LIVE && props.info.raisedPercent === 1)
+        (props.info.status === CrowdfundingStatus.LIVE && props.info.raisedPercent * 100 === 100)
         ? 'Remove'
         : 'Cancel'
     })
@@ -374,6 +380,15 @@ export const Invest = defineComponent({
       }
       initPage()
     }
+
+    const disabledBuyOrSell = computed(() => {
+      return (
+        countDownTime.value.status !== CrowdfundingStatus.LIVE ||
+        Number(fromValue.value) <= 0 ||
+        (mode.value === 'buy' && fromValue.value > maxBuyAmount.value) ||
+        (mode.value === 'sell' && toValue.value > maxSellAmount.value)
+      )
+    })
 
     const setMaxBalance = () => {
       if (mode.value === 'buy') {
@@ -629,10 +644,7 @@ export const Invest = defineComponent({
                 '--n-border-disabled': '1px solid #E0E0E0'
               }}
               onClick={buyOrSell}
-              disabled={
-                countDownTime.value.status !== CrowdfundingStatus.LIVE ||
-                Number(fromValue.value) === 0
-              }
+              disabled={disabledBuyOrSell.value}
             >
               {mode.value === 'buy' ? 'Buy' : 'Sell'}
             </UButton>

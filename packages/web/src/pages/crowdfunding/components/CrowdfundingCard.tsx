@@ -99,7 +99,7 @@ export const CrowdfundingCard = defineComponent({
         <div class={[getStatusLabelStyle.value, 'absolute top-4 right-4']}>
           {CROWDFUNDING_TYPES[props.info.status - 1]}
         </div>
-        <ULazyImage src={props.info.poster} class="h-54 w-full rounded-lg" />
+        <ULazyImage src={props.info.poster} class="h-54 w-full rounded-t-lg" />
         <div class="p-6">
           <div class="flex justify-between">
             <span class="u-h3">{props.info.startupName}</span>

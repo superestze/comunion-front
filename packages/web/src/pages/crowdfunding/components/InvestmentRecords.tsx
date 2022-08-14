@@ -89,7 +89,7 @@ export const InvestmentRecords = defineComponent({
           {(this.investRecords ?? []).map(record => {
             return (
               <div class="mt-6">
-                <div class="flex items-center">
+                <div class="flex items-start">
                   <ULazyImage
                     src={record.comerAvatar ?? ''}
                     class="rounded-full cursor-pointer h-10 w-10"
