@@ -33,7 +33,7 @@ export default defineComponent({
           <img class="w-full" src={bgBubble4} />
         </div>
         <div class="absolute left-0px bottom-700px <md:bottom-696">
-          <img class="w-full <md:h-32.5" src={bgBubble3} />
+          <img class="w-full <md:h-32.5 <md:w-16.25" src={bgBubble3} />
         </div>
       </>
     )

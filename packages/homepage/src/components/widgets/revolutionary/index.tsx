@@ -91,7 +91,7 @@ export default defineComponent({
                 class={`${styles.hoverBox} ${animate['undefined-back-pulse']} flex flex-col <md:w-155.5 <md:h-91 <md:mx-auto pl-14.5 ${animate['undefined-border-fade']} hover:text-primary mb-6`}
                 key={item.h1line1}
               >
-                <div class="w-15.5 h-15.5 mt-14.5">
+                <div class="w-15.5 h-15.5 mt-12">
                   <img srcset={srcset} src={item.icons[0]} alt={item.h1line1} />
                 </div>
                 <h1 class="font-bold text-left mt-6 hover-text text-[2.5rem]">{item.h1line1}</h1>
