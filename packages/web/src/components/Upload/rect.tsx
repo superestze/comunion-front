@@ -69,9 +69,7 @@ export default defineComponent({
           {this.text}
           <UTooltip trigger="hover">
             {{
-              trigger: () => (
-                <QuestionCircleOutlined class="text-grey3 w-3.25 h-3.25 ml-2 mt-3px" />
-              ),
+              trigger: () => <QuestionCircleOutlined class="text-grey3 w-4 h-4 ml-2" />,
               default: this.tip()
             }}
           </UTooltip>
