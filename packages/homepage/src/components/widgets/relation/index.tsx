@@ -45,7 +45,7 @@ export default defineComponent({
     return (
       <>
         <Title title="A New Relation of Production " subTitle="shift your role liberally" />
-        <div class="flex justify-center mt-136px">
+        <div class="flex justify-center mt-136px <md:mx-auto <md:w-155.5">
           <img src={relation} alt="relation" srcset={srcset} />
         </div>
         <Blocks list={list} class="mt-155px" />

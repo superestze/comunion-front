@@ -113,7 +113,7 @@ export default defineComponent({
         class="w-full h-1142px mt-240px pt-160px relative"
       >
         <H1 color="#fff" text="Benefits" class="mb-70px" />
-        <div class="grid gap-x-30px gap-y-24px grid-cols-[350px,350px,350px] justify-center">
+        <div class="grid gap-x-30px gap-y-24px grid-cols-[350px,350px,350px] justify-center <md:hidden">
           {this.list.map(item => {
             const srcset = handleSrcset(item.icons)
             return (
@@ -122,6 +122,22 @@ export default defineComponent({
                 class={`flex h-150px items-center bg-white rounded-2px ${animate['undefined-grow']}`}
               >
                 <div class="w-46px h-46px mr-28px ml-41px">
+                  <img class="w-full" src={item.icons[0]} srcset={srcset} alt={item.h1} />
+                </div>
+                <h1 class="text-20px font-bold text-[#111]">{item.h1}</h1>
+              </div>
+            )
+          })}
+        </div>
+        <div class="grid gap-x-46px gap-y-20px grid-cols-[304px,304px] justify-center md:hidden">
+          {this.list.map(item => {
+            const srcset = handleSrcset(item.icons)
+            return (
+              <div
+                key={item.h1}
+                class={`flex h-96px items-center bg-white rounded-2px ${animate['undefined-grow']}`}
+              >
+                <div class="w-46px h-46px mr-4 ml-9">
                   <img class="w-full" src={item.icons[0]} srcset={srcset} alt={item.h1} />
                 </div>
                 <h1 class="text-20px font-bold text-[#111]">{item.h1}</h1>

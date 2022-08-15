@@ -63,7 +63,7 @@ export default defineComponent({
           title="Revolutionary"
           subTitle="Generates an all-in-one meeting place for being dedicated to building a thriving and collaborative ecosystem, community, and economy"
         />
-        <div class="flex flex-row flex-wrap w-1120px mx-auto mt-80px">
+        <div class="flex flex-row flex-wrap w-1120px mx-auto mt-80px <md:hidden">
           {this.list.map((item, $index) => {
             const srcset = handleSrcset(item.icons)
             return (
@@ -77,6 +77,26 @@ export default defineComponent({
                 <h1 class="text-24px font-bold text-left mt-24px hover-text">{item.h1line1}</h1>
                 <h1 class="text-24px font-bold text-left hover-text">{item.h1line2}</h1>
                 <p class="text-16px font-bold text-[#555] text-left mt-30px mr-80px leading-normal">
+                  {item.content}
+                </p>
+              </div>
+            )
+          })}
+        </div>
+        <div class="flex flex-col md:hidden mt-80px">
+          {this.list.map((item, $index) => {
+            const srcset = handleSrcset(item.icons)
+            return (
+              <div
+                class={`${styles.hoverBox} ${animate['undefined-back-pulse']} flex flex-col <md:w-155.5 <md:h-91 <md:mx-auto pl-58px ${animate['undefined-border-fade']} hover:text-primary mb-6`}
+                key={item.h1line1}
+              >
+                <div class="w-48px h-48px mt-58px">
+                  <img srcset={srcset} src={item.icons[0]} alt={item.h1line1} />
+                </div>
+                <h1 class="font-bold text-left mt-24px hover-text text-40px">{item.h1line1}</h1>
+                <h1 class="font-bold text-left hover-text text-40px">{item.h1line2}</h1>
+                <p class="text-24px font-400 text-[#555] text-left mt-30px mr-80px leading-normal">
                   {item.content}
                 </p>
               </div>

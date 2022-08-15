@@ -3,9 +3,24 @@
   font-size: 36px;
 }
 
+.title30 {
+  font-weight: 700;
+  font-size: 30px;
+}
+
+.title26 {
+  font-weight: 700;
+  font-size: 26px;
+}
+
 .title24 {
   font-weight: 700;
   font-size: 24px;
+}
+
+.title20 {
+  font-weight: 700;
+  font-size: 20px;
 }
 
 .title14 {
