@@ -1,7 +1,7 @@
 .u-form-factory {
   &_item {
     .n-form-item-label {
-      @apply u-title2;
+      @apply u-title2 text-sm;
     }
 
     .n-form-item-feedback-wrapper {

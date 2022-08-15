@@ -127,11 +127,11 @@ export const VerifyToken = defineComponent({
         render(value) {
           return (
             <div class="grid grid-cols-[100px,2fr]">
-              <div class="u-body1 text-grey3 mb-6">Name:</div>
+              <div class="u-body2 text-grey3 mb-6">Name:</div>
               <div>{props.crowdfundingInfo.sellTokenName}</div>
-              <div class="u-body1 text-grey3 mb-6">Symbol:</div>
+              <div class="u-body2 text-grey3 mb-6">Symbol:</div>
               <div>{props.crowdfundingInfo.sellTokenSymbol}</div>
-              <div class="u-body1 text-grey3">Decimals:</div>
+              <div class="u-body2 text-grey3">Decimals:</div>
               <div>{props.crowdfundingInfo.sellTokenDecimals}</div>
             </div>
           )

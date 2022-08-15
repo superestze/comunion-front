@@ -78,7 +78,7 @@ export const InvestmentRecords = defineComponent({
   },
   render() {
     return (
-      <UCard title="IBO Rate History">
+      <UCard title="INVESTMENT RECORD">
         <UScrollList
           triggered={this.pagination.loading}
           page={this.pagination.page}
@@ -89,7 +89,7 @@ export const InvestmentRecords = defineComponent({
           {(this.investRecords ?? []).map(record => {
             return (
               <div class="mt-6">
-                <div class="flex items-center">
+                <div class="flex items-start">
                   <ULazyImage
                     src={record.comerAvatar ?? ''}
                     class="rounded-full cursor-pointer h-10 w-10"
@@ -98,11 +98,11 @@ export const InvestmentRecords = defineComponent({
                     <div class="mb-2">
                       <span class="u-title2">{record.comerName}</span>
                       {record.access === 1 ? (
-                        <span class="px-2 py-1 ml-2 rounded-sm text-white text-xs bg-info">
+                        <span class="px-2 py-0.5 ml-2 rounded-sm text-white text-xs bg-[#00BFA5]">
                           Invest
                         </span>
                       ) : (
-                        <span class="px-2 py-1 ml-2 rounded-sm text-white text-xs bg-warning">
+                        <span class="px-2 py-0.5 ml-2 rounded-sm text-white text-xs bg-warning">
                           Withdraw
                         </span>
                       )}
@@ -111,7 +111,7 @@ export const InvestmentRecords = defineComponent({
                       {dayjs(record.time).format('YYYY-MM-DD HH:mm')}
                     </div>
                   </div>
-                  <div class="ml-auto text-primary">{this.getAmount(record)}</div>
+                  <div class="ml-auto text-primary font-semibold">{this.getAmount(record)}</div>
                 </div>
                 <div class="h-px ml-14 bg-grey5"></div>
               </div>

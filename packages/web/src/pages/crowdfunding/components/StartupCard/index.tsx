@@ -41,17 +41,19 @@ export default defineComponent({
           </div>
           <div class="flex flex-col ml-24px">
             <div class="flex items-center mb-12px">
-              <span class="u-h2">{this.startup?.name}</span>
+              <span class="u-h2 truncate">{this.startup?.name}</span>
             </div>
-            {(this.startup?.mode || 0) > 0 && (
-              <UTag
-                class="!u-body3-pure w-55px"
-                type="filled"
-                bgColor={STARTUP_TYPES_COLOR_MAP[this.modeName]}
-              >
-                {this.modeName}
-              </UTag>
-            )}
+            <div class="flex">
+              {(this.startup?.mode || 0) > 0 && (
+                <UTag
+                  class="u-body3-pure text-xs !h-5"
+                  type="filled"
+                  bgColor={STARTUP_TYPES_COLOR_MAP[this.modeName]}
+                >
+                  {this.modeName}
+                </UTag>
+              )}
+            </div>
           </div>
         </div>
         <div class={['flex flex-wrap gap-2 mt-20px']}>

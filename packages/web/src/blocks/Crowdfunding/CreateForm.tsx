@@ -259,7 +259,6 @@ const CreateCrowdfundingForm = defineComponent({
             </div>
             <div class="flex justify-end mt-20">
               <UButton
-                size="large"
                 type="primary"
                 ghost
                 class="w-41 mr-4"
@@ -267,7 +266,7 @@ const CreateCrowdfundingForm = defineComponent({
               >
                 Cancel
               </UButton>
-              <UButton size="large" type="primary" class="w-41" onClick={this.closeDrawer}>
+              <UButton type="primary" class="w-41" onClick={this.closeDrawer}>
                 Yes
               </UButton>
             </div>

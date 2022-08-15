@@ -133,7 +133,7 @@ export const CrowdfundingInformation = defineComponent({
                 <span class="n-form-item-label__asterisk">&nbsp;*</span>
                 <UTooltip placement="right">
                   {{
-                    trigger: () => <QuestionFilled class="text-grey3" />,
+                    trigger: () => <QuestionFilled class="text-grey3 w-4 h-4" />,
                     default: () => (
                       <div class="w-60">
                         Part of the funds raised will go into the swap pool as a fixed-price

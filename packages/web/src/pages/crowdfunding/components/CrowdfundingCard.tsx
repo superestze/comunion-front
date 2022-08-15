@@ -43,7 +43,7 @@ export const CrowdfundingCard = defineComponent({
 
     const Time = computed(() => {
       if (props.info.status === CrowdfundingStatus.CANCELED) {
-        return <div class="u-body2">Crowdfunding Canceled</div>
+        return <div class="u-body2 text-grey4">Crowdfunding Canceled</div>
       }
       if (dayjs.utc().isBefore(dayjs(props.info.startTime).utc())) {
         const [days, hours, minutes, seconds] = dayjs
@@ -60,7 +60,7 @@ export const CrowdfundingCard = defineComponent({
         )
       }
       if (dayjs().isAfter(props.info.endTime)) {
-        return <div class="u-body2">Crowdfunding Ended</div>
+        return <div class="u-body2 text-grey4">Crowdfunding Ended</div>
       }
       const [days, hours, minutes, seconds] = dayjs
         .duration(dayjs(props.info.endTime).utc().diff(dayjs.utc()))
@@ -83,9 +83,9 @@ export const CrowdfundingCard = defineComponent({
         [CrowdfundingStatus.LIVE]:
           'bg-[#00BFA5] rounded text-xs text-white py-0.5 px-2.5 border-1 border-white',
         [CrowdfundingStatus.ENDED]:
-          'bg-grey5 rounded text-xs text-white py-0.5 px-2.5 border-1 border-white',
+          'bg-warning rounded text-xs text-white py-0.5 px-2.5 border-1 border-white',
         [CrowdfundingStatus.CANCELED]:
-          'bg-warning rounded text-xs text-white py-0.5 px-2.5 border-1 border-white'
+          'bg-grey5 rounded text-xs text-white py-0.5 px-2.5 border-1 border-white'
       }
       return statusClassMap[props.info.status as keyof typeof statusClassMap]
     })
@@ -99,7 +99,7 @@ export const CrowdfundingCard = defineComponent({
         <div class={[getStatusLabelStyle.value, 'absolute top-4 right-4']}>
           {CROWDFUNDING_TYPES[props.info.status - 1]}
         </div>
-        <ULazyImage src={props.info.poster} class="h-54 w-full" />
+        <ULazyImage src={props.info.poster} class="h-54 w-full rounded-t-lg" />
         <div class="p-6">
           <div class="flex justify-between">
             <span class="u-h3">{props.info.startupName}</span>
@@ -107,28 +107,12 @@ export const CrowdfundingCard = defineComponent({
           </div>
           <div class="min-h-6">
             {props.info.kyc && (
-              <UTag
-                class="u-body3 mr-1"
-                type="filled"
-                bgColor="#EC53A4"
-                style={{
-                  'font-weight': '700',
-                  'font-size': '14px'
-                }}
-              >
+              <UTag class="text-xs font-semibold mr-1 !h-5" type="filled" bgColor="#EC53A4">
                 KYC
               </UTag>
             )}
             {props.info.contractAudit && (
-              <UTag
-                class="u-body3 mr-1"
-                type="filled"
-                bgColor="#5331F4"
-                style={{
-                  'font-weight': '700',
-                  'font-size': '14px'
-                }}
-              >
+              <UTag class="text-xs font-semibold mr-1 !h-5" type="filled" bgColor="#5331F4">
                 AUDIT
               </UTag>
             )}
