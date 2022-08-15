@@ -101,7 +101,7 @@ export const Invest = defineComponent({
         access,
         buyTokenSymbol: props.buyCoinInfo.symbol!,
         buyTokenAmount: mode.value === 'buy' ? Number(fromValue.value) : Number(toValue.value),
-        sellTokenSymbol: props.buyCoinInfo.symbol!,
+        sellTokenSymbol: props.sellCoinInfo.symbol!,
         sellTokenAmount: mode.value === 'buy' ? Number(toValue.value) : Number(fromValue.value),
         price: Number(props.info.buyPrice)
       })
