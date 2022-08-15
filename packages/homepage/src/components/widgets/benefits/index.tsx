@@ -110,9 +110,9 @@ export default defineComponent({
         style={{
           background: 'linear-gradient(135deg, #5E18FE 0%, #45249F 100%)'
         }}
-        class="w-full h-1142px mt-240px pt-160px relative"
+        class="w-full h-285.5 mt-60 pt-40 relative"
       >
-        <H1 color="#fff" text="Benefits" class="mb-70px" />
+        <H1 color="#fff" text="Benefits" class="mb-17.5" />
         <div class="grid gap-x-30px gap-y-24px grid-cols-[350px,350px,350px] justify-center <md:hidden">
           {this.list.map(item => {
             const srcset = handleSrcset(item.icons)
@@ -129,18 +129,18 @@ export default defineComponent({
             )
           })}
         </div>
-        <div class="grid gap-x-46px gap-y-20px grid-cols-[304px,304px] justify-center md:hidden">
+        <div class="grid gap-x-11.5 gap-y-5 grid-cols-[19rem,19rem] justify-center md:hidden">
           {this.list.map(item => {
             const srcset = handleSrcset(item.icons)
             return (
               <div
                 key={item.h1}
-                class={`flex h-96px items-center bg-white rounded-2px ${animate['undefined-grow']}`}
+                class={`flex h-24 items-center bg-white rounded-2px ${animate['undefined-grow']}`}
               >
-                <div class="w-46px h-46px mr-4 ml-9">
+                <div class="w-11.5 h-11.5 mr-4 ml-9">
                   <img class="w-full" src={item.icons[0]} srcset={srcset} alt={item.h1} />
                 </div>
-                <h1 class="text-20px font-bold text-[#111]">{item.h1}</h1>
+                <h1 class="text-[1.5rem] font-bold text-[#111]">{item.h1}</h1>
               </div>
             )
           })}

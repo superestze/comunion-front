@@ -29,18 +29,18 @@ export default defineComponent({
               class={`flex <md:w-155.5 <md:h-95 <md:mx-auto w-370px h-395px flex-col items-center ${styles.hoverBox} ${animate['undefined-back-pulse']}`}
               key={item.title}
             >
-              <div class="w-64px h-64px mt-58px mx-auto">
+              <div class="w-16 h-16 mt-14.5 mx-auto">
                 <img src={item.icons[0]} srcset={srcset} alt={item.title} />
               </div>
-              <h1 class="text-24px font-bold text-center mt-40px text-center mb-25px text-[#111] <md:mt-36px <md:mb-12px">
+              <h1 class="text-[1.5rem] font-bold text-center mt-10 text-center mb-6.25 text-[#111] <md:mt-9 <md:mb-3">
                 {item.title}
               </h1>
               {item.subtitle && (
-                <h3 class="text-20px font-bold text-center text-center mb-3px text-[#555] <md:mb-11px">
+                <h3 class="text-[1.25rem] font-bold text-center text-center mb-0.75 text-[#555] <md:mb-3">
                   {item.subtitle}
                 </h3>
               )}
-              <p class="text-16px text-center mb-72px mt-3px mx-33px text-[#555] leading-normal <md:w-320px <md:mx-auto">
+              <p class="text-[1rem] text-center mb-18 mt-1 mx-8.5 text-[#555] leading-normal <md:w-80 <md:mx-auto">
                 {item.content}
               </p>
             </div>

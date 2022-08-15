@@ -72,7 +72,7 @@ export default defineComponent({
               alt="logo"
               class="w-9 h-9"
             />
-            <p class="text-primary font-bold text-28px ml-1">COMUNION</p>
+            <p class="text-primary font-bold text-[1.75rem] ml-1">COMUNION</p>
           </div>
           <div class="w-6.5 h-5.5" onClick={triggerMenu}>
             <img src={openMenu} />
@@ -84,7 +84,7 @@ export default defineComponent({
                   <img src={closeMenu} alt="close" class="w-full" />
                 </div>
               </div>
-              <ul style={{ listStyle: 'none', padding: 0 }} class=" text-32px font-bold mt-9 ml-16">
+              <ul style={{ listStyle: 'none', padding: 0 }} class="text-4xl font-bold mt-9 ml-16">
                 <li class="h-12 flex items-center mb-15 w-155.5 mx- auto text-grey1">Home</li>
                 <li class="h-12 flex items-center mb-15 w-155.5 mx- auto text-[#B3B3B3]">GCI</li>
                 <li class="h-12 flex items-center mb-15 w-155.5 mx- auto text-[#B3B3B3]">Dapps</li>
@@ -95,7 +95,7 @@ export default defineComponent({
               </ul>
               <div class="flex items-center justify-center w-full">
                 <UButton type="primary" class="w-155.5 h-24" onClick={joinComunion}>
-                  <span class="text-30px font-bold">Connect Account</span>
+                  <span class="text-3xl font-bold">Connect Account</span>
                 </UButton>
               </div>
             </div>

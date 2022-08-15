@@ -57,7 +57,7 @@ export default defineComponent({
           <p class="mt-36px text-white text-left text-14px leading-20px sm:m-auto sm:mt-50px sm:text-center sm:text-20px">
             Comunion is devoted to :
           </p>
-          <div class="flex m-auto mt-100px justify-between sm:w-1110px <sm:hidden">
+          <div class="flex m-auto mt-25 justify-between sm:w-1110px <sm:hidden">
             <div class="text-30px w-400px">
               {infoList.map((item, index) => (
                 <button

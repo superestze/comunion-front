@@ -15,10 +15,10 @@ export default defineComponent({
   render() {
     return (
       <div>
-        <H1 class="mt-240px" text={this.title || ''} />
+        <H1 class="mt-60" text={this.title || ''} />
         {this.subTitle && (
           <Subtitle
-            class="mt-22px <md:w-317px w-886px text-center mx-auto"
+            class="mt-5.5 <md:w-317px w-886px text-center mx-auto"
             text={this.subTitle || ''}
           />
         )}
