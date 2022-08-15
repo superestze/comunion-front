@@ -83,20 +83,20 @@ export default defineComponent({
             )
           })}
         </div>
-        <div class="flex flex-col md:hidden mt-80px">
+        <div class="flex flex-col md:hidden mt-20">
           {this.list.map((item, $index) => {
             const srcset = handleSrcset(item.icons)
             return (
               <div
-                class={`${styles.hoverBox} ${animate['undefined-back-pulse']} flex flex-col <md:w-155.5 <md:h-91 <md:mx-auto pl-58px ${animate['undefined-border-fade']} hover:text-primary mb-6`}
+                class={`${styles.hoverBox} ${animate['undefined-back-pulse']} flex flex-col <md:w-155.5 <md:h-91 <md:mx-auto pl-14.5 ${animate['undefined-border-fade']} hover:text-primary mb-6`}
                 key={item.h1line1}
               >
-                <div class="w-48px h-48px mt-58px">
+                <div class="w-15.5 h-15.5 mt-14.5">
                   <img srcset={srcset} src={item.icons[0]} alt={item.h1line1} />
                 </div>
-                <h1 class="font-bold text-left mt-24px hover-text text-40px">{item.h1line1}</h1>
-                <h1 class="font-bold text-left hover-text text-40px">{item.h1line2}</h1>
-                <p class="text-24px font-400 text-[#555] text-left mt-30px mr-80px leading-normal">
+                <h1 class="font-bold text-left mt-6 hover-text text-[2.5rem]">{item.h1line1}</h1>
+                <h1 class="font-bold text-left hover-text text-[2.5rem]">{item.h1line2}</h1>
+                <p class="text-[1.5rem] font-400 text-[#555] text-left mt-7.5 mr-20 leading-normal">
                   {item.content}
                 </p>
               </div>

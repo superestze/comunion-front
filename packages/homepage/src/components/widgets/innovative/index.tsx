@@ -56,7 +56,7 @@ export default defineComponent({
   render() {
     return (
       <>
-        <Title title="Innovative" class="mt-240px" />
+        <Title title="Innovative" class="mt-60" />
         <div class="grid gap-x-30px gap-y-24px justify-center mt-78px <md:hidden">
           {this.list.map((item, $index) => {
             const str0 = $index === 0 && `row-start-1 row-end-2 col-start-1 col-end-2`
@@ -80,21 +80,21 @@ export default defineComponent({
             )
           })}
         </div>
-        <div class="flex flex-col justify-center mt-78px md:hidden relative z-1">
+        <div class="flex flex-col justify-center mt-19.5 md:hidden relative z-1">
           {this.list.map((item, $index) => {
             const srcset = handleSrcset(item.icons)
             return (
               <div
-                class="grid gap-x-30px gap-y-33px mx-auto h-86.5 w-155.5 bg-[rgba(255,255,255,0.4)] rounded-2px hover:bg-white mb-6"
+                class="grid gap-x-7.5 gap-y-8.25 mx-auto h-86.5 w-155.5 bg-[rgba(255,255,255,0.4)] rounded-2px hover:bg-white mb-6"
                 key={item.title}
               >
-                <h1 class="flex items-end text-36px text-[#111] font-bold row-start-1 row-end-2 col-start-1 col-end-2 ml-48px">
+                <h1 class="flex items-end text-[2.25rem] text-[#111] font-bold row-start-1 row-end-2 col-start-1 col-end-2 ml-12">
                   {item.title}
                 </h1>
-                <p class="text-24px text-[#555] font-bold row-start-2 row-end-3 col-start-1 col-end-2 ml-48px leading-normal content-start">
+                <p class="text-[1.5rem] text-[#555] font-bold row-start-2 row-end-3 col-start-1 col-end-2 ml-12 leading-normal content-start">
                   {item.content}
                 </p>
-                <div class="row-start-2 row-end-3 col-start-2 col-end-3 w-72px h-72px justify-start items-start mr-48px">
+                <div class="row-start-2 row-end-3 col-start-2 col-end-3 w-18 h-18 justify-start items-start mr-12">
                   <img srcset={srcset} src={item.icons[0]} alt={item.title} />
                 </div>
               </div>
