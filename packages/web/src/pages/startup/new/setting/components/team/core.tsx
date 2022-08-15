@@ -59,7 +59,7 @@ export default defineComponent({
           <div class="flex items-center mb-8">
             <ModuleTags tasks={this.group} onSelectedChange={handleSelectedChange} />
             <div class="flex ml-2 w-4 h-4" onClick={handleGroupDialog}>
-              <SettingOutlined class="w-full" />
+              <SettingOutlined class="w-full text-grey3" />
             </div>
           </div>
           <UPaginatedList
@@ -76,7 +76,7 @@ export default defineComponent({
                           <ULazyImage class="w-full" src={item.comerProfile?.avatar || ''} />
                         </div>
                         <div class="flex flex-col ml-6">
-                          <p class="u-title2">{item.comerProfile?.name}</p>
+                          <p class="u-title2 font-orbitron">{item.comerProfile?.name}</p>
                           <p class="text-12px font-400 text-grey1 mt-1">
                             {item.comerProfile?.skills.length > 0 &&
                               item.comerProfile?.skills
