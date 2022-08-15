@@ -99,12 +99,10 @@ export const Invest = defineComponent({
         crowdfundingId: props.info.crowdfundingId,
         txHash,
         access,
-        buyTokenSymbol:
-          mode.value === 'buy' ? props.buyCoinInfo.symbol! : props.sellCoinInfo.symbol!,
-        buyTokenAmount: Number(fromValue.value),
-        sellTokenSymbol:
-          mode.value === 'buy' ? props.sellCoinInfo.symbol! : props.buyCoinInfo.symbol!,
-        sellTokenAmount: Number(toValue.value),
+        buyTokenSymbol: props.buyCoinInfo.symbol!,
+        buyTokenAmount: mode.value === 'buy' ? Number(fromValue.value) : Number(toValue.value),
+        sellTokenSymbol: props.buyCoinInfo.symbol!,
+        sellTokenAmount: mode.value === 'buy' ? Number(toValue.value) : Number(fromValue.value),
         price: Number(props.info.buyPrice)
       })
     }
