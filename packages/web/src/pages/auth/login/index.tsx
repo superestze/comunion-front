@@ -51,7 +51,7 @@ export default defineComponent({
     }
     return (
       <>
-        <div class="flex w-100vw h-100vh justify-center items-center bg-[#EDEDF2] <md:hidden">
+        <div class="flex w-100vw h-100vh justify-center items-center bg-[#EDEDF2]">
           <MoreNavigationPage />
           <div class="flex w-1245px h-542px bg-white relative justify-end rounded-8px">
             <div class="flex flex-col absolute h-606px w-635px text-white bg-primary left-100px -top-32px pl-64px pt-162px rounded-2px">
@@ -104,8 +104,8 @@ export default defineComponent({
             </div>
           </div>
         </div>
-        <div class="flex flex-col w-100vw h-100vh bg-[#EDEDF2] md:hidden">
-          <div class="mx-auto w-68px h-68px mt-100px mb-46px">
+        <div class="flex flex-col w-100vw h-100vh bg-[#EDEDF2] hidden">
+          <div class="mx-auto w-17 h-17 mt-25 mb-11.5">
             <img
               src={logo}
               srcset={`${logo}, ${logo2} 2x, ${logo3} 3x`}
@@ -113,22 +113,22 @@ export default defineComponent({
               class="w-full"
             />
           </div>
-          <p class="text-[#111111] text-48px font-bold text-center">Comunion</p>
-          <p class="mt-102px mb-32px text-center text-[#111111]/6">WALLET</p>
+          <p class="text-[#111111] text-[3rem] font-bold text-center">Comunion</p>
+          <p class="mt-25.5 mb-8 text-center text-[#111111]/6">WALLET</p>
           <UButton
-            class="h-96px text-white text-16px w-586px text-center relative mx-auto rounded-12px"
+            class="h-24 text-white text-4 w-146.5 text-center relative mx-auto rounded-3"
             size="small"
             type="primary"
             loading={this.loading}
             onClick={walletLogin}
           >
-            <WalletOutlined class="h-32px w-32px absolute left-38px top-31px" />
-            <span class="text-32px font-bold">Connect to a wallet</span>
+            <WalletOutlined class="h-8 w-8 absolute left-9.5 top-8" />
+            <span class="text-8 font-bold">Connect to a wallet</span>
           </UButton>
-          <div class="flex my-60px items-center w-586px mx-auto">
+          <div class="flex my-15 items-center w-146.5 mx-auto">
             <div class="bg-[#666] h-[1px] flex-grow" />
             <div
-              class="text-[26px] leading-5 w-[80px] text-center font-bold"
+              class="text-[1.625rem] leading-5 w-20 text-center font-bold"
               style={{ color: 'rgba(17,17,17,0.6)' }}
             >
               OR
