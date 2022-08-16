@@ -4,14 +4,20 @@
 }
 
 .hoverBox:nth-child(1) {
-  border-right-width: 0;
-  border-bottom-width: 0;
+  @media (min-width: 768px) {
+    border-right-width: 0;
+    border-bottom-width: 0;
+  }
 }
 
 .hoverBox:nth-child(2) {
-  border-bottom-width: 0;
+  @media (min-width: 768px) {
+    border-bottom-width: 0;
+  }
 }
 
 .hoverBox:nth-child(3) {
-  border-right-width: 0;
+  @media (min-width: 768px) {
+    border-right-width: 0;
+  }
 }

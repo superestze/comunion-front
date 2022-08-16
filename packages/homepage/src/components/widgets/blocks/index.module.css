@@ -1,6 +1,12 @@
 .hoverBox {
   border: 1px solid rgb(02 102 102 / 40%);
-  border-right-color: transparent;
+  @media (max-width: 767.9px) {
+    border-bottom-color: transparent;
+  }
+
+  @media (min-width: 768px) {
+    border-right-color: transparent;
+  }
 }
 
 .hoverBox:last-child {
@@ -8,7 +14,13 @@
 }
 
 .hoverBox:hover + .hoverBox {
-  border-left-color: transparent;
+  @media (max-width: 767.9px) {
+    border-top-color: transparent;
+  }
+
+  @media (min-width: 768px) {
+    border-left-color: transparent;
+  }
 }
 
 .hoverBox:hover {
