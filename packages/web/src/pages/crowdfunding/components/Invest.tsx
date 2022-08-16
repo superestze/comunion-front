@@ -254,7 +254,7 @@ export const Invest = defineComponent({
             value: ethers.utils.parseEther(fromValue.value)
           }
         )
-        if (contractRes) {
+        if (contractRes && contractRes.hash) {
           await addInvestRecord(contractRes.hash, 1)
         }
       } catch (error) {
@@ -285,7 +285,7 @@ export const Invest = defineComponent({
           waitingText
         )
 
-        if (contractRes) {
+        if (contractRes && contractRes.hash) {
           await addInvestRecord(contractRes.hash, 1)
         }
       } catch (error) {
@@ -296,7 +296,7 @@ export const Invest = defineComponent({
 
     const sellToMainCoin = async () => {
       try {
-        const fromAmount = ethers.utils.parseUnits(fromValue.value)
+        const fromAmount = ethers.utils.parseUnits(fromValue.value, props.sellCoinInfo.decimal!)
         const toAmount = ethers.utils.parseUnits(toValue.value)
         const sellPendingText = 'Waiting to submit all contents to blockchain for selling'
         const waitingText = 'Waiting to confirm'
@@ -304,11 +304,11 @@ export const Invest = defineComponent({
           'Waiting to submit all contents to blockchain for approval deposit'
         contractStore.startContract(approvePendingText)
 
-        const sellTokenRes = await tokenContract(props.info.sellTokenContract)
+        const sellTokenRes = tokenContract(props.info.sellTokenContract)
 
         const approveRes: Contract = await sellTokenRes.approve(
           props.info.crowdfundingContract,
-          ethers.utils.parseUnits(fromValue.value.toString(), props.sellCoinInfo.decimal!)
+          fromAmount
         )
         await approveRes.wait()
         const contractRes: any = await fundingContract.sell(
@@ -318,11 +318,12 @@ export const Invest = defineComponent({
           waitingText
         )
 
-        if (contractRes) {
+        if (contractRes && contractRes.hash) {
           await addInvestRecord(contractRes.hash, 2)
         }
       } catch (error) {
         console.error('error', error)
+        contractStore.endContract('failed', { success: false })
       }
     }
 
@@ -336,10 +337,10 @@ export const Invest = defineComponent({
         const approvePendingText =
           'Waiting to submit all contents to blockchain for approval deposit'
         contractStore.startContract(approvePendingText)
-        const sellTokenRes = await tokenContract(props.info.sellTokenContract)
+        const sellTokenRes = tokenContract(props.info.sellTokenContract)
         const approveRes: Contract = await sellTokenRes.approve(
           props.info.crowdfundingContract,
-          ethers.utils.parseUnits(fromValue.value.toString(), props.sellCoinInfo.decimal!)
+          fromAmount
         )
         await approveRes.wait()
 
@@ -352,11 +353,12 @@ export const Invest = defineComponent({
           waitingText
         )
 
-        if (contractRes) {
+        if (contractRes && contractRes.hash) {
           await addInvestRecord(contractRes.hash, 2)
         }
       } catch (error) {
         console.error('error', error)
+        contractStore.endContract('failed', { success: false })
       }
     }
 
@@ -404,12 +406,13 @@ export const Invest = defineComponent({
       maxBuy.value = ethers.utils.formatUnits(buyRes[0], props.buyCoinInfo.decimal)
 
       const sellRes = await fundingContract.maxSellAmount('', '')
-      maxSell.value = ethers.utils.formatUnits(sellRes[0], props.sellCoinInfo.decimal)
+      maxSell.value = ethers.utils.formatUnits(sellRes[1], props.sellCoinInfo.decimal)
       console.log('maxSell.value==>', maxSell.value)
     }
 
     const getFundingState = async () => {
       fundingContractState.value = await fundingContract.state('', '')
+      console.log('fundingContractState.value===>', fundingContractState.value)
     }
 
     onMounted(() => {
