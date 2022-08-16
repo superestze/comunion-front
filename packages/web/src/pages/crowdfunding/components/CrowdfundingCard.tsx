@@ -29,8 +29,6 @@ export const CrowdfundingCard = defineComponent({
       swapAmount: 0
     })
 
-    const fundingContractState = ref()
-
     const logo = computed(() => {
       return getChainInfoByChainId(props.info.chainId)?.logo
     })
