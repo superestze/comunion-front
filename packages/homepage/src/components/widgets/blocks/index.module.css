@@ -1,5 +1,5 @@
 .hoverBox {
-  border: 1px solid rgb(02 102 102 / 40%);
+  border: 1px solid rgb(102 102 102 / 40%);
   @media (max-width: 767.9px) {
     border-bottom-color: transparent;
   }
@@ -10,7 +10,7 @@
 }
 
 .hoverBox:last-child {
-  border: 1px solid rgb(02 102 102 / 40%);
+  border: 1px solid rgb(102 102 102 / 40%);
 }
 
 .hoverBox:hover + .hoverBox {
