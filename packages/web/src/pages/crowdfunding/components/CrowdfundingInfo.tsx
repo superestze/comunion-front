@@ -159,9 +159,9 @@ export const CrowdfundingInfo = defineComponent({
           <div>{props.info.sellTax} %</div>
           <div class="u-body2 text-grey3">Maximum Sell :</div>
           <div>{props.info.maxSellPercent} % of the bought token amount</div>
-          <div class="u-body2 text-grey3">Crowdfunding Start Time (UTC):</div>
+          <div class="u-body2 text-grey3">Crowdfunding Start Time (UTC) :</div>
           <div>{dayjs.utc(props.info.startTime).format('YYYY-MM-DD HH:mm')}</div>
-          <div class="u-body2 text-grey3">Crowdfunding End Time (UTC):</div>
+          <div class="u-body2 text-grey3">Crowdfunding End Time (UTC) :</div>
           <div>{dayjs.utc(props.info.endTime).format('YYYY-MM-DD HH:mm')}</div>
         </div>
       </UCard>

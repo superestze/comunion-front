@@ -48,6 +48,12 @@ export const Invest = defineComponent({
     const removeModal = ref(false)
     const fromValue = ref<string>('0.0')
     const toValue = ref<string>('0.0')
+    const raiseState = ref({
+      raiseAmount: 0,
+      raiseGoal: 0,
+      raisePercent: 0,
+      swapAmount: 0
+    })
     console.log('fundingContract===>', props.info.crowdfundingContract)
     console.log('walletStore.chainId===>', walletStore.chainId)
 
@@ -254,7 +260,7 @@ export const Invest = defineComponent({
             value: ethers.utils.parseEther(fromValue.value)
           }
         )
-        if (contractRes) {
+        if (contractRes && contractRes.hash) {
           await addInvestRecord(contractRes.hash, 1)
         }
       } catch (error) {
@@ -285,7 +291,7 @@ export const Invest = defineComponent({
           waitingText
         )
 
-        if (contractRes) {
+        if (contractRes && contractRes.hash) {
           await addInvestRecord(contractRes.hash, 1)
         }
       } catch (error) {
@@ -296,7 +302,7 @@ export const Invest = defineComponent({
 
     const sellToMainCoin = async () => {
       try {
-        const fromAmount = ethers.utils.parseUnits(fromValue.value)
+        const fromAmount = ethers.utils.parseUnits(fromValue.value, props.sellCoinInfo.decimal!)
         const toAmount = ethers.utils.parseUnits(toValue.value)
         const sellPendingText = 'Waiting to submit all contents to blockchain for selling'
         const waitingText = 'Waiting to confirm'
@@ -304,11 +310,11 @@ export const Invest = defineComponent({
           'Waiting to submit all contents to blockchain for approval deposit'
         contractStore.startContract(approvePendingText)
 
-        const sellTokenRes = await tokenContract(props.info.sellTokenContract)
+        const sellTokenRes = tokenContract(props.info.sellTokenContract)
 
         const approveRes: Contract = await sellTokenRes.approve(
           props.info.crowdfundingContract,
-          ethers.utils.parseUnits(fromValue.value.toString(), props.sellCoinInfo.decimal!)
+          fromAmount
         )
         await approveRes.wait()
         const contractRes: any = await fundingContract.sell(
@@ -318,11 +324,12 @@ export const Invest = defineComponent({
           waitingText
         )
 
-        if (contractRes) {
+        if (contractRes && contractRes.hash) {
           await addInvestRecord(contractRes.hash, 2)
         }
       } catch (error) {
         console.error('error', error)
+        contractStore.endContract('failed', { success: false })
       }
     }
 
@@ -336,10 +343,10 @@ export const Invest = defineComponent({
         const approvePendingText =
           'Waiting to submit all contents to blockchain for approval deposit'
         contractStore.startContract(approvePendingText)
-        const sellTokenRes = await tokenContract(props.info.sellTokenContract)
+        const sellTokenRes = tokenContract(props.info.sellTokenContract)
         const approveRes: Contract = await sellTokenRes.approve(
           props.info.crowdfundingContract,
-          ethers.utils.parseUnits(fromValue.value.toString(), props.sellCoinInfo.decimal!)
+          fromAmount
         )
         await approveRes.wait()
 
@@ -352,11 +359,12 @@ export const Invest = defineComponent({
           waitingText
         )
 
-        if (contractRes) {
+        if (contractRes && contractRes.hash) {
           await addInvestRecord(contractRes.hash, 2)
         }
       } catch (error) {
         console.error('error', error)
+        contractStore.endContract('failed', { success: false })
       }
     }
 
@@ -404,12 +412,18 @@ export const Invest = defineComponent({
       maxBuy.value = ethers.utils.formatUnits(buyRes[0], props.buyCoinInfo.decimal)
 
       const sellRes = await fundingContract.maxSellAmount('', '')
-      maxSell.value = ethers.utils.formatUnits(sellRes[0], props.sellCoinInfo.decimal)
+      maxSell.value = ethers.utils.formatUnits(sellRes[1], props.sellCoinInfo.decimal)
       console.log('maxSell.value==>', maxSell.value)
     }
 
     const getFundingState = async () => {
       fundingContractState.value = await fundingContract.state('', '')
+      raiseState.value.raiseGoal = Number(ethers.utils.formatEther(fundingContractState.value[0]))
+      raiseState.value.raiseAmount = Number(ethers.utils.formatEther(fundingContractState.value[1]))
+      raiseState.value.raisePercent =
+        Number(formatToFloor(raiseState.value.raiseAmount / raiseState.value.raiseGoal, 2)) * 100
+      raiseState.value.swapAmount = Number(ethers.utils.formatEther(fundingContractState.value[2]))
+      console.log('fundingContractState.value===>', fundingContractState.value)
     }
 
     onMounted(() => {
@@ -486,29 +500,27 @@ export const Invest = defineComponent({
           <div class="grid grid-cols-2 gap-4 mb-13">
             <div class="rounded-lg h-22 flex flex-col justify-center pl-4 bg-[rgba(83,49,244,0.06)]">
               <div class="leading-loose text-primary flex items-end">
-                <span class="mr-1">{numberTip(props.info.raiseBalance)}</span>
+                <span class="mr-1">{numberTip(raiseState.value.raiseAmount)}</span>
                 {props.buyCoinInfo.symbol}
               </div>
               <div class="text-xs text-grey3">Raised</div>
             </div>
             <div class="rounded-lg h-22 flex flex-col justify-center pl-4 bg-[rgba(83,49,244,0.06)]">
               <div class="leading-loose text-primary flex items-end">
-                <span class="mr-1">{numberTip(props.info.raisedPercent * 100)}</span>%
+                <span class="mr-1">{numberTip(raiseState.value.raisePercent)}</span>%
               </div>
               <div class="text-xs text-grey3">Progress</div>
             </div>
             <div class="rounded-lg h-22 flex flex-col justify-center pl-4 bg-[rgba(28,96,243,0.06)] bg-opacity-6">
               <div class="leading-loose text-primary flex items-end">
-                <span class="mr-1">{numberTip(props.info.raiseGoal)}</span>
+                <span class="mr-1">{numberTip(raiseState.value.raiseGoal)}</span>
                 {props.buyCoinInfo.symbol}
               </div>
               <div class="text-xs text-grey3">Raised Goal</div>
             </div>
             <div class="rounded-lg h-22 flex flex-col justify-center pl-4 bg-[rgba(28,96,243,0.06)] bg-opacity-6">
               <div class="leading-loose text-primary flex items-end">
-                <span class="mr-1">
-                  {numberTip((props.info.raiseBalance * props.info.swapPercent) / 100)}
-                </span>
+                <span class="mr-1">{numberTip(raiseState.value.swapAmount)}</span>
                 {props.buyCoinInfo.symbol}
               </div>
               <div class="text-xs text-grey3">Available Swap</div>
