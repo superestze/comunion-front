@@ -26,7 +26,7 @@ export default defineComponent({
     return () => (
       <>
         <UModal show={associateWalletVisible.value}></UModal>
-        <div class="flex flex-col">
+        <div class="flex flex-col <md:mx-auto">
           <OAuthSignBtn onTriggerBtn={googleLogin}>
             <GoogleFilled class="h-20px w-20px ml-16px mr-41px" />
             <span class="text-[#231944] font-bold text-14px">Sign in with Google</span>
