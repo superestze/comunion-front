@@ -1,9 +1,10 @@
 import { ULazyImage, UTag, UProgress } from '@comunion/components'
 import dayjs from 'dayjs'
+import { ethers } from 'ethers'
 import { defineComponent, PropType, computed, ref, onMounted } from 'vue'
 import { CrowdfundingStatus, getChainInfoByChainId } from '../utils'
 import { CROWDFUNDING_TYPES } from '@/constants'
-import { useErc20Contract } from '@/contracts'
+import { useErc20Contract, useCrowdfundingContract } from '@/contracts'
 import { ServiceReturn } from '@/services'
 import { formatToFloor } from '@/utils/numberFormat'
 
@@ -21,9 +22,30 @@ export const CrowdfundingCard = defineComponent({
     const sellTokenSymbol = ref()
     const buyTokenSymbol = ref()
     const tokenContract = useErc20Contract()
+    const raiseState = ref({
+      raiseAmount: 0,
+      raiseGoal: 0,
+      raisePercent: 0,
+      swapAmount: 0
+    })
+
     const logo = computed(() => {
       return getChainInfoByChainId(props.info.chainId)?.logo
     })
+
+    const fundingContract = useCrowdfundingContract({
+      chainId: props.info.chainId!,
+      addresses: { [props.info.chainId!]: props.info.crowdfundingContract }
+    })
+
+    const getFundingState = async () => {
+      const fundingContractState = await fundingContract.state('', '')
+      raiseState.value.raiseGoal = Number(ethers.utils.formatEther(fundingContractState[0]))
+      raiseState.value.raiseAmount = Number(ethers.utils.formatEther(fundingContractState[1]))
+      raiseState.value.raisePercent =
+        Number(formatToFloor(raiseState.value.raiseAmount / raiseState.value.raiseGoal, 2)) * 100
+      raiseState.value.swapAmount = Number(ethers.utils.formatEther(fundingContractState[2]))
+    }
 
     const buyIsMainCoin = computed(() => {
       return props.info.sellTokenAddress === props.info.buyTokenAddress
@@ -92,6 +114,7 @@ export const CrowdfundingCard = defineComponent({
 
     onMounted(() => {
       getTokenName()
+      getFundingState()
     })
 
     return () => (
@@ -117,25 +140,23 @@ export const CrowdfundingCard = defineComponent({
               </UTag>
             )}
           </div>
-          <div class="text-right mb-2 u-body3 text-sm">
-            {formatToFloor(props.info.raisedPercent * 100, 2)} %
-          </div>
+          <div class="text-right mb-2 u-body3 text-sm">{raiseState.value.raisePercent} %</div>
           <div>
             <UProgress
               showIndicator={false}
-              percentage={props.info.raisedPercent * 100}
+              percentage={raiseState.value.raisePercent}
               height={6}
             />
           </div>
           <div class="flex justify-between mt-2 text-xs">
             <div>
-              <span class="u-label1 text-base">{formatToFloor(props.info.raiseBalance, 2)}</span>{' '}
+              <span class="u-label1 text-base">{raiseState.value.raiseAmount}</span>{' '}
               <span class="text-grey3">{buyTokenSymbol.value}</span>
             </div>
             <div class="text-xs">
               <span class="text-grey3">Raise Goal : </span>{' '}
               <span class="text-primary">
-                <span class="u-label1 text-primary text-base">{props.info.raiseGoal}</span>{' '}
+                <span class="u-label1 text-primary text-base">{raiseState.value.raiseGoal}</span>{' '}
                 {buyTokenSymbol.value}
               </span>
             </div>

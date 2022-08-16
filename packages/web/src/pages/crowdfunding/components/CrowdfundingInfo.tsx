@@ -102,7 +102,7 @@ export const CrowdfundingInfo = defineComponent({
               target="_blank"
               href={
                 networkInfo?.explorerUrl
-                  ? `${networkInfo?.explorerUrl}/tx/${props.info.crowdfundingContract}`
+                  ? `${networkInfo?.explorerUrl}/address/${props.info.crowdfundingContract}`
                   : '#'
               }
             >
@@ -115,7 +115,7 @@ export const CrowdfundingInfo = defineComponent({
               target="_blank"
               href={
                 networkInfo?.explorerUrl
-                  ? `${networkInfo?.explorerUrl}/tx/${props.info.teamWallet}`
+                  ? `${networkInfo?.explorerUrl}/address/${props.info.teamWallet}`
                   : '#'
               }
             >
@@ -128,7 +128,7 @@ export const CrowdfundingInfo = defineComponent({
               target="_blank"
               href={
                 networkInfo?.explorerUrl
-                  ? `${networkInfo?.explorerUrl}/tx/${props.info.sellTokenContract}`
+                  ? `${networkInfo?.explorerUrl}/address/${props.info.sellTokenContract}`
                   : '#'
               }
             >

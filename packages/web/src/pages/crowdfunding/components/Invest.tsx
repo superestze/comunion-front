@@ -54,8 +54,6 @@ export const Invest = defineComponent({
       raisePercent: 0,
       swapAmount: 0
     })
-    console.log('fundingContract===>', props.info.crowdfundingContract)
-    console.log('walletStore.chainId===>', walletStore.chainId)
 
     const fundingContractState = ref()
     const fundingContract = useCrowdfundingContract({
