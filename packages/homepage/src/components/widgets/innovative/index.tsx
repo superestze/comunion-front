@@ -91,7 +91,7 @@ export default defineComponent({
                 <h1 class="flex items-end text-[2.25rem] text-[#111] font-bold row-start-1 row-end-2 col-start-1 col-end-2 ml-12">
                   {item.title}
                 </h1>
-                <p class="text-[1.5rem] text-[#555] font-bold row-start-2 row-end-3 col-start-1 col-end-2 ml-12 leading-normal content-start">
+                <p class="text-[1.5rem] text-[#555] font-400 row-start-2 row-end-3 col-start-1 col-end-2 ml-12 leading-normal content-start">
                   {item.content}
                 </p>
                 <div class="row-start-2 row-end-3 col-start-2 col-end-3 w-18 h-18 justify-start items-start mr-12">
