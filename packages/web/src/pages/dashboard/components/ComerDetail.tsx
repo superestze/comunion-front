@@ -100,7 +100,8 @@ const ComerDetail = defineComponent({
                             <div class="content flex items-center">
                               <div class="h-full w-22 mr-5">
                                 <UPopover
-                                  placement="left-start"
+                                  trigger="click"
+                                  placement="top"
                                   v-slots={{
                                     trigger: () => (
                                       <UStartupLogo
