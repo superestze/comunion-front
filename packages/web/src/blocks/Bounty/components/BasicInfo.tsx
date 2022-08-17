@@ -14,6 +14,7 @@ import { MinusCircleOutlined, AddCircleOutlined } from '@comunion/icons'
 import dayjs from 'dayjs'
 import { defineComponent, PropType, ref, computed, Ref, h, onMounted } from 'vue'
 import { BountyInfo, ContactType } from '../typing'
+import RichEditor from '@/components/Editor'
 import { services } from '@/services'
 import { useUserStore } from '@/stores'
 import { validateEmail } from '@/utils/type'
@@ -241,12 +242,11 @@ const BountyBasicInfo = defineComponent({
         rules: [{ required: true, message: 'Describe the details of the bounty' }],
         render() {
           return (
-            <h1>check</h1>
-            // <RichEditor
-            //   placeholder="Describe the details of the bounty"
-            //   class="w-full"
-            //   v-model:value={props.bountyInfo.description}
-            // />
+            <RichEditor
+              placeholder="Describe the details of the bounty"
+              class="w-full"
+              v-model:value={props.bountyInfo.description}
+            />
           )
         }
       }
