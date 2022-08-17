@@ -12,7 +12,7 @@ import PayDetailPeriod, { PayDetailPeriodRef } from './components/PayDetailPerio
 import PayDetailStage, { PayDetailStageRef } from './components/PayDetailStage'
 import { BountyInfo } from './typing'
 import Steps from '@/components/Step'
-import { useBountyContract, useErc20Contract } from '@/contracts'
+import { useBountyFactoryContract, useErc20Contract } from '@/contracts'
 import { BountyAddresses as bountyAddresses } from '@/contracts/bounty'
 import { AVAX_USDC_ADDR } from '@/contracts/utils'
 import { services } from '@/services'
@@ -29,7 +29,7 @@ const CreateBountyForm = defineComponent({
     const contractStore = useContractStore()
     const stepOptions = ref([{ name: 'Bounty' }, { name: 'Payment' }, { name: 'Deposit' }])
 
-    const bountyContract = useBountyContract()
+    const bountyContract = useBountyFactoryContract()
     const modalVisibleState = ref(false)
     const modalClickYesToWhere = ref('')
     const router = useRouter()
