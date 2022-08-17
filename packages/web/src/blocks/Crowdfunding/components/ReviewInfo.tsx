@@ -14,52 +14,81 @@ export const ReviewInfo = defineComponent({
   },
   render() {
     return (
-      <div class="review-info grid grid-cols-[220px,1fr]">
-        <div class="title">Startup:</div>
-        <div>{this.crowdfundingInfo.startupName}</div>
-        <div class="title">Token Contract :</div>
-        <div>{this.crowdfundingInfo.sellTokenContract}</div>
-        <div class="title">Team Wallet Address :</div>
-        <div>{this.crowdfundingInfo.teamWallet}</div>
-        <div class="title">Raise Goal :</div>
-        <div>
-          {this.crowdfundingInfo.raiseGoal} {this.crowdfundingInfo.buyTokenName}
+      <div class="review-info">
+        <div class="review-info-item">
+          <div class="title">Startup:</div>
+          <div>{this.crowdfundingInfo.startupName}</div>
         </div>
-        <div class="title">Tokens For Crowdfunding :</div>
-        <div>
-          {this.crowdfundingInfo.buyPrice! * this.crowdfundingInfo.raiseGoal!}{' '}
-          {this.crowdfundingInfo.sellTokenName}
+        <div class="review-info-item">
+          <div class="title">Token Contract :</div>
+          <div>{this.crowdfundingInfo.sellTokenContract}</div>
         </div>
-        <div class="title">Swap :</div>
-        <div>{this.crowdfundingInfo.swapPercent}%</div>
-        <div class="title">IBO Rate :</div>
-        <div>
-          1 {this.crowdfundingInfo.buyTokenName} = {this.crowdfundingInfo.buyPrice}{' '}
-          {this.crowdfundingInfo.sellTokenName}
+        <div class="review-info-item">
+          <div class="title">Team Wallet Address :</div>
+          <div>{this.crowdfundingInfo.teamWallet}</div>
         </div>
-        <div class="title">Maximum Buy :</div>
-        <div>
-          {this.crowdfundingInfo.maxBuyAmount} {this.crowdfundingInfo.buyTokenName}
+        <div class="review-info-item">
+          <div class="title">Raise Goal :</div>
+          <div>
+            {this.crowdfundingInfo.raiseGoal} {this.crowdfundingInfo.buyTokenName}
+          </div>
         </div>
-        <div class="title">Sell Tax :</div>
-        <div>{this.crowdfundingInfo.sellTax} %</div>
-        <div class="title">Maximum Sell :</div>
-        <div>{this.crowdfundingInfo.maxSell} % of the bought token amount</div>
-        <div class="title">Crowdfunding Start Time :</div>
-        <div>{dayjs(this.crowdfundingInfo.startTime).format('YYYY-MM-DD HH:mm:ss')}</div>
-        <div class="title">Crowdfunding End Time :</div>
-        <div>{dayjs(this.crowdfundingInfo.endTime).format('YYYY-MM-DD HH:mm:ss')}</div>
-        {!!this.crowdfundingInfo.youtube && <div class="title">Youtube :</div>}
+        <div class="review-info-item">
+          <div class="title">Tokens For Crowdfunding :</div>
+          <div>
+            {this.crowdfundingInfo.buyPrice! * this.crowdfundingInfo.raiseGoal!}{' '}
+            {this.crowdfundingInfo.sellTokenName}
+          </div>
+        </div>
+        <div class="review-info-item">
+          <div class="title">Swap :</div>
+          <div>{this.crowdfundingInfo.swapPercent}%</div>
+        </div>
+        <div class="review-info-item">
+          <div class="title">IBO Rate :</div>
+          <div>
+            1 {this.crowdfundingInfo.buyTokenName} = {this.crowdfundingInfo.buyPrice}{' '}
+            {this.crowdfundingInfo.sellTokenName}
+          </div>
+        </div>
+        <div class="review-info-item">
+          <div class="title">Maximum Buy :</div>
+          <div>
+            {this.crowdfundingInfo.maxBuyAmount} {this.crowdfundingInfo.buyTokenName}
+          </div>
+        </div>
+        <div class="review-info-item">
+          <div class="title">Sell Tax :</div>
+          <div>{this.crowdfundingInfo.sellTax} %</div>
+        </div>
+        <div class="review-info-item">
+          <div class="title">Maximum Sell :</div>
+          <div>{this.crowdfundingInfo.maxSell} % of the bought token amount</div>
+        </div>
+        <div class="review-info-item">
+          <div class="title">Crowdfunding Start Time :</div>
+          <div>{dayjs(this.crowdfundingInfo.startTime).format('YYYY-MM-DD HH:mm')}</div>
+        </div>
+        <div class="review-info-item">
+          <div class="title">Crowdfunding End Time :</div>
+          <div>{dayjs(this.crowdfundingInfo.endTime).format('YYYY-MM-DD HH:mm')}</div>
+        </div>
         {!!this.crowdfundingInfo.youtube && (
-          <a href={this.crowdfundingInfo.youtube} target="__blank" class="text-primary">
-            {this.crowdfundingInfo.youtube}
-          </a>
+          <div class="review-info-item">
+            <div class="title">Youtube :</div>
+            <a href={this.crowdfundingInfo.youtube} target="__blank" class="text-primary">
+              {this.crowdfundingInfo.youtube}
+            </a>
+          </div>
         )}
-        {!!this.crowdfundingInfo.detail && <div class="title">Crowdfunding detail :</div>}
         {!!this.crowdfundingInfo.detail && (
-          <a href={this.crowdfundingInfo.detail} target="__blank" class="text-primary">
-            {this.crowdfundingInfo.detail}
-          </a>
+          <div class="review-info-item">
+            <div class="title">Crowdfunding detail :</div>
+
+            <a href={this.crowdfundingInfo.detail} target="__blank" class="text-primary">
+              {this.crowdfundingInfo.detail}
+            </a>
+          </div>
         )}
       </div>
     )

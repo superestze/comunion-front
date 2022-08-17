@@ -39,6 +39,12 @@ const UInputNumberGroup = defineComponent({
         ctx.emit('update:value', n)
       }
     )
+    watch(
+      () => props.value,
+      n => {
+        inputValue.value = n
+      }
+    )
     const rightPart = () => {
       if (props.type === 'withUnit') {
         return props.renderUnit?.()
@@ -51,7 +57,11 @@ const UInputNumberGroup = defineComponent({
     return () => (
       <div class={['u-input-number-group', props.class]}>
         <NInputGroup>
-          <UInputBigNumber v-model:value={inputValue.value} {...props.inputProps} />
+          <UInputBigNumber
+            v-model:value={inputValue.value}
+            {...props.inputProps}
+            v-slots={ctx.slots}
+          />
           {rightPart()}
         </NInputGroup>
       </div>
