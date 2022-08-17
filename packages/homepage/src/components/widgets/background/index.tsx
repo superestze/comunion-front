@@ -26,10 +26,10 @@ export default defineComponent({
         <div class="absolute bottom-1200px right-0 <md:bottom-696">
           <img class="w-full" srcset={bg2} src={bgBubble2} />
         </div>
-        <div class="absolute left-0px top-1300px">
-          <img class="w-full" src={bgBubble3} />
+        <div class="absolute left-0px top-1300px <md:top-403.5">
+          <img class="w-full <md:h-22 <md:w-10" src={bgBubble3} />
         </div>
-        <div class="absolute right-0px top-2100px">
+        <div class="absolute right-0px top-2100px <md:hidden">
           <img class="w-full" src={bgBubble4} />
         </div>
         <div class="absolute left-0px bottom-700px <md:bottom-696">
