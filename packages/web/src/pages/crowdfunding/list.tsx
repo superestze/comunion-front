@@ -3,13 +3,15 @@ import {
   UPaginatedList,
   UPaginatedListPropsType,
   UInputGroup,
-  USearch
+  USearch,
+  message
 } from '@comunion/components'
 import { defineComponent, ref, computed } from 'vue'
 import { useRouter } from 'vue-router'
 import { CrowdfundingCard } from './components/CrowdfundingCard'
 import { CrowdfundingType, CROWDFUNDING_TYPES } from '@/constants'
 import { ServiceReturn, services } from '@/services'
+import { useWalletStore } from '@/stores'
 
 const CrowdfundingList = defineComponent({
   name: 'CrowdfundingList',
@@ -18,6 +20,7 @@ const CrowdfundingList = defineComponent({
     const inputMember = ref<string>('')
     const total = ref(0)
     const router = useRouter()
+    const walletStore = useWalletStore()
     const dataService = computed<UPaginatedListPropsType['service']>(
       () => async (page, pageSize) => {
         const { error, data } = await services['crowdfunding@public-crowdfunding-list']({
@@ -35,8 +38,23 @@ const CrowdfundingList = defineComponent({
       }
     )
 
-    const toDetail = (crowdfundingId: number) => {
-      router.push('/crowdfunding/' + crowdfundingId)
+    const checkSupportNetwork = async () => {
+      await walletStore.ensureWalletConnected()
+      if (!walletStore.isNetworkSupported) {
+        message.warning('Please switch to the supported network to create a bounty')
+        // not supported network, try to switch
+        walletStore.openNetworkSwitcher()
+        return false
+      } else {
+        return true
+      }
+    }
+
+    const toDetail = async (crowdfundingId: number) => {
+      const isSupport = await checkSupportNetwork()
+      if (isSupport) {
+        router.push('/crowdfunding/' + crowdfundingId)
+      }
     }
 
     return () => (
