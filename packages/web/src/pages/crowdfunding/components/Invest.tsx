@@ -194,10 +194,7 @@ export const Invest = defineComponent({
     })
 
     const founderOperation = computed(() => {
-      return countDownTime.value.status === CrowdfundingStatus.ENDED ||
-        (props.info.status === CrowdfundingStatus.LIVE && props.info.raisedPercent * 100 === 100)
-        ? 'Remove'
-        : 'Cancel'
+      return countDownTime.value.status === CrowdfundingStatus.ENDED ? 'Remove' : 'Cancel'
     })
 
     const removeCrowdfunding = async () => {
@@ -419,7 +416,7 @@ export const Invest = defineComponent({
       raiseState.value.raiseGoal = Number(ethers.utils.formatEther(fundingContractState.value[0]))
       raiseState.value.raiseAmount = Number(ethers.utils.formatEther(fundingContractState.value[1]))
       raiseState.value.raisePercent =
-        Number(formatToFloor(raiseState.value.raiseAmount / raiseState.value.raiseGoal, 2)) * 100
+        Number(formatToFloor(raiseState.value.raiseAmount / raiseState.value.raiseGoal, 4)) * 100
       raiseState.value.swapAmount = Number(ethers.utils.formatEther(fundingContractState.value[2]))
       console.log('fundingContractState.value===>', fundingContractState.value)
     }
