@@ -6,7 +6,7 @@ import { useWalletStore } from '@/stores'
 export const BountyAddresses: Record<number, string> = {}
 
 const abi =
-  '[{"inputs":[{"internalType":"uint256","name":"_amount","type":"uint256"}],"name":"applyFor","outputs":[],"stateMutability":"payable","type":"function"},{"inputs":[{"internalType":"address","name":"_address","type":"address"}],"name":"approveApplicant","outputs":[],"stateMutability":"nonpayable","type":"function"},{"inputs":[],"name":"close","outputs":[],"stateMutability":"payable","type":"function"},{"inputs":[{"internalType":"uint256","name":"_amount","type":"uint256"}],"name":"deposit","outputs":[],"stateMutability":"payable","type":"function"},{"inputs":[],"name":"lock","outputs":[],"stateMutability":"payable","type":"function"},{"inputs":[],"name":"owner","outputs":[{"internalType":"address","name":"","type":"address"}],"stateMutability":"view","type":"function"},{"inputs":[],"name":"postUpdate","outputs":[],"stateMutability":"nonpayable","type":"function"},{"inputs":[],"name":"release","outputs":[],"stateMutability":"payable","type":"function"},{"inputs":[],"name":"releaseMyDeposit","outputs":[],"stateMutability":"payable","type":"function"},{"inputs":[],"name":"renounceOwnership","outputs":[],"stateMutability":"nonpayable","type":"function"},{"inputs":[],"name":"state","outputs":[{"internalType":"uint8","name":"_bountyStatus","type":"uint8"},{"internalType":"uint256","name":"_applicantCount","type":"uint256"},{"internalType":"uint256","name":"_depositBalance","type":"uint256"},{"internalType":"uint256","name":"_founderDepositAmount","type":"uint256"},{"internalType":"uint256","name":"_applicantDepositAmount","type":"uint256"},{"internalType":"uint256","name":"_applicantDepositMinAmount","type":"uint256"},{"internalType":"bool","name":"_depositLock","type":"bool"},{"internalType":"uint256","name":"_timeLock","type":"uint256"},{"internalType":"uint8","name":"_myRole","type":"uint8"},{"internalType":"uint256","name":"_myDepositAmount","type":"uint256"},{"internalType":"uint8","name":"_myStatus","type":"uint8"}],"stateMutability":"view","type":"function"},{"inputs":[{"internalType":"address","name":"newOwner","type":"address"}],"name":"transferOwnership","outputs":[],"stateMutability":"nonpayable","type":"function"},{"inputs":[{"internalType":"address","name":"_address","type":"address"}],"name":"unapproveApplicant","outputs":[],"stateMutability":"nonpayable","type":"function"},{"inputs":[],"name":"unlock","outputs":[],"stateMutability":"payable","type":"function"},{"inputs":[{"internalType":"enum Bounty.BountyStatus","name":"_status","type":"uint8"},{"internalType":"uint256","name":"_applicantMinAmount","type":"uint256"},{"internalType":"uint256","name":"_deadline","type":"uint256"}],"name":"updForTest","outputs":[],"stateMutability":"nonpayable","type":"function"},{"inputs":[{"internalType":"address","name":"_founder","type":"address"}],"name":"updFounder","outputs":[],"stateMutability":"nonpayable","type":"function"},{"inputs":[],"name":"whoAmI","outputs":[{"internalType":"uint8","name":"_role","type":"uint8"},{"internalType":"uint256","name":"_depositAmount","type":"uint256"},{"internalType":"uint8","name":"_applicantStatus","type":"uint8"}],"stateMutability":"view","type":"function"}]'
+  '[{"inputs":[{"internalType":"uint256","name":"_amount","type":"uint256"}],"name":"applyFor","outputs":[],"stateMutability":"payable","type":"function"},{"inputs":[{"internalType":"address","name":"_address","type":"address"}],"name":"approveApplicant","outputs":[],"stateMutability":"nonpayable","type":"function"},{"inputs":[],"name":"close","outputs":[],"stateMutability":"payable","type":"function"},{"inputs":[{"internalType":"uint256","name":"_amount","type":"uint256"}],"name":"deposit","outputs":[],"stateMutability":"payable","type":"function"},{"inputs":[],"name":"lock","outputs":[],"stateMutability":"payable","type":"function"},{"inputs":[],"name":"owner","outputs":[{"internalType":"address","name":"","type":"address"}],"stateMutability":"view","type":"function"},{"inputs":[],"name":"postUpdate","outputs":[],"stateMutability":"nonpayable","type":"function"},{"inputs":[],"name":"release","outputs":[],"stateMutability":"payable","type":"function"},{"inputs":[],"name":"releaseMyDeposit","outputs":[],"stateMutability":"payable","type":"function"},{"inputs":[],"name":"renounceOwnership","outputs":[],"stateMutability":"nonpayable","type":"function"},{"inputs":[],"name":"state","outputs":[{"internalType":"uint8","name":"_bountyStatus","type":"uint8"},{"internalType":"uint256","name":"_applicantCount","type":"uint256"},{"internalType":"uint256","name":"_depositBalance","type":"uint256"},{"internalType":"uint256","name":"_founderDepositAmount","type":"uint256"},{"internalType":"uint256","name":"_applicantDepositAmount","type":"uint256"},{"internalType":"uint256","name":"_applicantDepositMinAmount","type":"uint256"},{"internalType":"bool","name":"_depositLock","type":"bool"},{"internalType":"uint256","name":"_timeLock","type":"uint256"},{"internalType":"uint8","name":"_myRole","type":"uint8"},{"internalType":"uint256","name":"_myDepositAmount","type":"uint256"},{"internalType":"uint8","name":"_myStatus","type":"uint8"}],"stateMutability":"view","type":"function"},{"inputs":[{"internalType":"address","name":"newOwner","type":"address"}],"name":"transferOwnership","outputs":[],"stateMutability":"nonpayable","type":"function"},{"inputs":[{"internalType":"address","name":"_address","type":"address"}],"name":"unapproveApplicant","outputs":[],"stateMutability":"nonpayable","type":"function"},{"inputs":[],"name":"unlock","outputs":[],"stateMutability":"payable","type":"function"},{"inputs":[],"name":"whoAmI","outputs":[{"internalType":"uint8","name":"_role","type":"uint8"},{"internalType":"uint256","name":"_depositAmount","type":"uint256"},{"internalType":"uint8","name":"_applicantStatus","type":"uint8"}],"stateMutability":"view","type":"function"}]'
 
 export function useBountyContract(
   params: Omit<GetContractArgs, 'abi'> = { addresses: BountyAddresses }
@@ -69,20 +69,6 @@ export function useBountyContract(
     overrides?: any
   ) => Promise<[]>
   unlock: (pendingText: string, waitingText: string, overrides?: any) => Promise<[]>
-  updForTest: (
-    _status: number,
-    _applicantMinAmount: number | BigNumber,
-    _deadline: number | BigNumber,
-    pendingText: string,
-    waitingText: string,
-    overrides?: any
-  ) => Promise<[]>
-  updFounder: (
-    _founder: string,
-    pendingText: string,
-    waitingText: string,
-    overrides?: any
-  ) => Promise<[]>
   whoAmI: (
     pendingText: string,
     waitingText: string,
@@ -125,8 +111,6 @@ export function useBountyContract(
       'unapproveApplicant'
     ),
     unlock: wrapTransaction({ ...getContractArgs.value, ...params }, 'unlock'),
-    updForTest: wrapTransaction({ ...getContractArgs.value, ...params }, 'updForTest'),
-    updFounder: wrapTransaction({ ...getContractArgs.value, ...params }, 'updFounder'),
     whoAmI: wrapTransaction({ ...getContractArgs.value, ...params }, 'whoAmI')
   }
 }
