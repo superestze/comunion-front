@@ -23,7 +23,7 @@ export default defineComponent({
   },
   render() {
     return (
-      <h1 class="text-40px text-center font-bold <md:text-5xl" style={this.h1Color}>
+      <h1 class="text-40px text-center font-bold <md:text-[3rem]" style={this.h1Color}>
         {this.text}
       </h1>
     )

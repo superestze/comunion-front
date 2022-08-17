@@ -1,4 +1,4 @@
-import { UButton } from '@comunion/components'
+import { message, UButton } from '@comunion/components'
 import { defineComponent, onMounted, onUnmounted, ref } from 'vue'
 
 import colurfulLogo from '@/assets/20220725/colorful.png'
@@ -37,6 +37,9 @@ export default defineComponent({
   render() {
     const triggerMenu = () => {
       this.show = !this.show
+    }
+    const mobileJoinComunion = () => {
+      message.info('Please connect your account using pc ')
     }
     return (
       <>
@@ -94,7 +97,7 @@ export default defineComponent({
                 <li class="h-12 flex items-center mb-15 w-155.5 mx- auto text-[#B3B3B3]">API</li>
               </ul>
               <div class="flex items-center justify-center w-full">
-                <UButton type="primary" class="w-155.5 h-24" onClick={joinComunion}>
+                <UButton type="primary" class="w-155.5 h-24" onClick={mobileJoinComunion}>
                   <span class="text-3xl font-bold">Connect Account</span>
                 </UButton>
               </div>

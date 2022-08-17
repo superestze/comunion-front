@@ -21,9 +21,9 @@ import wallet3 from '@/assets/20220725/wallet@3x.png'
 export default defineComponent({
   render() {
     return (
-      <div class="flex w-full mt-80px flex-col justify-center relative">
+      <div class="flex w-full mt-80px flex-col justify-center relative <md:mt-21">
         <h1
-          class="mb-41px text-20px text-center <md:text-2xl"
+          class="mb-41px text-20px text-center <md:text-[1.625rem] <md:mb-9"
           style={{ color: 'rgba(17,17,17,0.6)' }}
         >
           You Can
