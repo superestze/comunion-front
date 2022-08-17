@@ -689,7 +689,8 @@ export const Invest = defineComponent({
                     trigger: () => <QuestionFilled class="w-4 h-4 text-grey3" />,
                     default: () => (
                       <div class="max-w-90">
-                        When selling tokens, a 20% fee needs to be deducted as sell tax
+                        When selling tokens, a {props.info.sellTax} % fee needs to be deducted as
+                        sell tax
                       </div>
                     )
                   }}

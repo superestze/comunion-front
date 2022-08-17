@@ -42,7 +42,7 @@ export const InvestmentRecords = defineComponent({
       let tokenName = props.buyTokenName
       if (record.access === 2) {
         operator = '-'
-        tokenName = props.sellTokenName
+        tokenName = props.buyTokenName
       }
       return `${operator} ${record.amount} ${tokenName}`
     }
