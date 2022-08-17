@@ -1,5 +1,6 @@
 export * from './erc20'
 export * from './startup'
+export * from './bountyFactory'
 export * from './bounty'
 export * from './crowdfundingFactory'
 export * from './crowdfunding'

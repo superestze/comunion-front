@@ -23,7 +23,12 @@ export default defineConfig({
   server: {
     port: process.env.PORT ? +process.env.PORT : 9001,
     proxy: {
-      '/api': 'https://api.d.comunion.io'
+      // '/api': 'https://api.d.comunion.io'
+      '/api': {
+        target: 'http://47.242.63.60:8090',
+        changeOrigin: true,
+        rewrite: (path: string) => path.replace(/^\/api/, '')
+      }
     }
   },
   define: {
