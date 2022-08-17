@@ -13,13 +13,13 @@ type LiItem = {
 function liRender(item: LiItem) {
   if (item.heading) {
     return (
-      <li class="text-[1.25rem] font-bold mb-8 <md:mb-12 <md:mt-20 <md:text-[2rem]">
+      <li class="text-[1.25rem] font-bold mb-8 <md:mb-12 <md:mt-20 <md:text-[2.25rem]">
         {item.title}
       </li>
     )
   }
   return (
-    <li class="text-[1rem] font-400 mb-4 hover:text-white <md:mb-15 <md:text-[1.25rem]">
+    <li class="text-[1rem] font-400 mb-4 hover:text-white <md:mb-15 <md:text-[1.5rem]">
       {item.url ? (
         <a key={item.title} href={item.url} target="_blank">
           {item.title}
@@ -97,12 +97,12 @@ export default defineComponent({
             </ul>
           ))}
         </div>
-        <div class="flex flex-col w-full justify-between pt-21.75 text-white/60  md:hidden pt-45 pl-16.25">
+        <div class="flex flex-col w-full justify-between text-white/60 md:hidden pt-45 pl-16.25 pb-45">
           <div class="flex items-start cursor-pointer mb-20" onClick={goHome}>
             <div class="w-6.25 h-6.25 mt-1 mr-2.5">
               <img srcset={`${logo}, ${logo2} 2x, ${logo3} 3x`} src={logo} class="w-full" />
             </div>
-            <p class="text-[1.875rem] font-bold">About Us</p>
+            <p class="text-[2.8125rem] font-bold">About Us</p>
           </div>
           {list.map(items => (
             <ul class="list-none m-0 p-0">
