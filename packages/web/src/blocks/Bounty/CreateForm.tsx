@@ -98,6 +98,7 @@ const CreateBountyForm = defineComponent({
     const contractSubmit = async () => {
       const approvePendingText = 'Waiting to submit all contents to blockchain for approval deposit'
       const value = bountyInfo.deposit
+      const applicantsDeposit = bountyInfo.applicantsDeposit
 
       try {
         /* first approve amount to bountyFactory */
@@ -105,6 +106,9 @@ const CreateBountyForm = defineComponent({
         const usdcRes = await usdcTokenContract(usdcTokenAddress) // construct erc20 contract
         const decimal = await usdcRes.decimals()
         const bountyAmount = BigNumber.from(value).mul(BigNumber.from(10).pow(decimal)) // convert usdc unit to wei
+        const applicantsDepositAmount = BigNumber.from(applicantsDeposit).mul(
+          BigNumber.from(10).pow(decimal)
+        ) // convert usdc unit to wei
         contractStore.startContract(approvePendingText)
         const bountyFactoryAddress = bountyAddresses[walletStore.chainId!]
         // approve amount to bounty factory contract
@@ -112,7 +116,10 @@ const CreateBountyForm = defineComponent({
         await approveRes.wait()
         // second send tx to bountyFactory create bounty
         const contractRes: any = await bountyContract.createBounty(
+          bountyInfo.token1Symbol,
           bountyAmount,
+          applicantsDepositAmount,
+          dayjs(bountyInfo.expiresIn).utc().valueOf() / 1000,
           'Waiting to submit all contents to blockchain for creating bounty',
           `<div class="flex items-center">Bounty "<span class="truncate max-w-20">${bountyInfo.title}</span>" is Creating</div>`
         )
@@ -157,7 +164,7 @@ const CreateBountyForm = defineComponent({
             startupID: bountyInfo.startupID as number,
             comerID: userStore.profile?.comerID,
             title: bountyInfo.title,
-            expiresIn: dayjs(bountyInfo.expiresIn).format('YYYY-MM-DD HH:mm:ss'),
+            expiresIn: dayjs(bountyInfo.expiresIn).utc().format('YYYY-MM-DD HH:mm:ss'),
             contact: bountyInfo.contact
               .filter(item => item.value)
               .map(item => ({ contactType: item.type, contactAddress: item.value })),
