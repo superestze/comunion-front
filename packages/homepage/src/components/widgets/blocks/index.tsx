@@ -32,15 +32,15 @@ export default defineComponent({
               <div class="w-16 h-16 mt-14.5 mx-auto">
                 <img src={item.icons[0]} srcset={srcset} alt={item.title} />
               </div>
-              <h1 class="text-[2.5rem] font-bold text-center mt-10 text-center mb-6.25 text-[#111] <md:mt-9 <md:mb-3">
+              <h1 class="text-[1.5rem] font-bold text-center mt-10 text-center mb-6.25 text-[#111] <md:mt-9 <md:mb-3 <md:text-[2.5rem]">
                 {item.title}
               </h1>
               {item.subtitle && (
-                <h3 class="text-[1.875rem] font-bold text-center text-center mb-0.75 text-[#555] <md:mb-3">
+                <h3 class="text-[1.25rem] font-bold text-center text-center mb-0.75 text-[#555] <md:mb-3 <md:text-[1.875rem]">
                   {item.subtitle}
                 </h3>
               )}
-              <p class="text-[1.5rem] text-center mb-18 mt-1 mx-8.5 text-[#555] leading-normal <md:w-260px <md:mx-auto">
+              <p class="text-[1rem] text-center mb-18 mt-1 mx-8.5 text-[#555] leading-normal <md:w-260px <md:mx-auto <md:text-[1.5rem]">
                 {item.content}
               </p>
             </div>
