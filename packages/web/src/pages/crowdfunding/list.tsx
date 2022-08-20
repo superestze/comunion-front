@@ -9,6 +9,7 @@ import {
 import { defineComponent, ref, computed } from 'vue'
 import { useRouter } from 'vue-router'
 import { CrowdfundingCard } from './components/CrowdfundingCard'
+import { getChainInfoByChainId } from './utils'
 import { CrowdfundingType, CROWDFUNDING_TYPES } from '@/constants'
 import { ServiceReturn, services } from '@/services'
 import { useWalletStore } from '@/stores'
@@ -38,20 +39,30 @@ const CrowdfundingList = defineComponent({
       }
     )
 
-    const checkSupportNetwork = async () => {
-      await walletStore.ensureWalletConnected()
-      if (!walletStore.isNetworkSupported) {
-        message.warning('Please switch to the supported network to create a bounty')
+    const checkSupportNetwork = async (chainId: number) => {
+      const chainInfo = getChainInfoByChainId(chainId)
+      if (chainId && walletStore.chainId !== chainId) {
+        walletStore.wallet?.switchNetwork(chainId)
+        message.warning(`Please switch to ${chainInfo?.name}`)
         // not supported network, try to switch
         walletStore.openNetworkSwitcher()
         return false
       } else {
         return true
       }
+      // await walletStore.ensureWalletConnected()
+      // if (!walletStore.isNetworkSupported) {
+      //   message.warning('Please switch to the ')
+      //   // not supported network, try to switch
+      //   walletStore.openNetworkSwitcher()
+      //   return false
+      // } else {
+      //   return true
+      // }
     }
 
-    const toDetail = async (crowdfundingId: number) => {
-      const isSupport = await checkSupportNetwork()
+    const toDetail = async (crowdfundingId: number, chainId: number) => {
+      const isSupport = await checkSupportNetwork(chainId)
       if (isSupport) {
         router.push('/crowdfunding/' + crowdfundingId)
       }
@@ -89,7 +100,10 @@ const CrowdfundingList = defineComponent({
             return (
               <div class="grid pb-6 gap-8 grid-cols-1 md:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4">
                 {crowdfundingList.map(crowdfunding => (
-                  <div class="cursor-pointer" onClick={() => toDetail(crowdfunding.crowdfundingId)}>
+                  <div
+                    class="cursor-pointer"
+                    onClick={() => toDetail(crowdfunding.crowdfundingId, crowdfunding.chainId)}
+                  >
                     <CrowdfundingCard key={crowdfunding.crowdfundingId} info={crowdfunding} />
                   </div>
                 ))}
