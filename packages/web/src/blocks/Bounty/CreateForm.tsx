@@ -3,7 +3,7 @@ import { UButton, UCard, UModal, UTabPane, UTabs } from '@comunion/components'
 import { PeriodOutlined, StageOutlined, WarningFilled } from '@comunion/icons'
 import dayjs from 'dayjs'
 
-import { BigNumber, Contract } from 'ethers'
+import { Contract, ethers } from 'ethers'
 import { defineComponent, ref, reactive, watch } from 'vue'
 import { useRouter } from 'vue-router'
 import BountyBasicInfo, { BountyBasicInfoRef, MAX_AMOUNT } from './components/BasicInfo'
@@ -13,7 +13,7 @@ import PayDetailStage, { PayDetailStageRef } from './components/PayDetailStage'
 import { BountyInfo } from './typing'
 import Steps from '@/components/Step'
 import { useBountyFactoryContract, useErc20Contract } from '@/contracts'
-import { BountyAddresses as bountyAddresses } from '@/contracts/bounty'
+import { BountyFactoryAddresses as bountyFactoryAddresses } from '@/contracts/bountyFactory'
 import { AVAX_USDC_ADDR } from '@/contracts/utils'
 import { services } from '@/services'
 import { useUserStore, useWalletStore } from '@/stores'
@@ -105,18 +105,22 @@ const CreateBountyForm = defineComponent({
         const usdcTokenAddress = AVAX_USDC_ADDR[walletStore.chainId!] // get usdc contract address
         const usdcRes = await usdcTokenContract(usdcTokenAddress) // construct erc20 contract
         const decimal = await usdcRes.decimals()
-        const bountyAmount = BigNumber.from(value).mul(BigNumber.from(10).pow(decimal)) // convert usdc unit to wei
-        const applicantsDepositAmount = BigNumber.from(applicantsDeposit).mul(
-          BigNumber.from(10).pow(decimal)
+        const bountyAmount = ethers.utils.parseUnits(value.toString(), decimal) // convert usdc unit to wei
+        const applicantsDepositAmount = ethers.utils.parseUnits(
+          applicantsDeposit.toString(),
+          decimal
         ) // convert usdc unit to wei
-        contractStore.startContract(approvePendingText)
-        const bountyFactoryAddress = bountyAddresses[walletStore.chainId!]
-        // approve amount to bounty factory contract
-        const approveRes: Contract = await usdcRes.approve(bountyFactoryAddress, bountyAmount)
-        await approveRes.wait()
+        if (value !== 0) {
+          contractStore.startContract(approvePendingText)
+          const bountyFactoryAddress = bountyFactoryAddresses[walletStore.chainId!]
+          // approve amount to bounty factory contract
+          const approveRes: Contract = await usdcRes.approve(bountyFactoryAddress, bountyAmount)
+          await approveRes.wait()
+        }
+
         // second send tx to bountyFactory create bounty
         const contractRes: any = await bountyContract.createBounty(
-          bountyInfo.token1Symbol,
+          usdcTokenAddress,
           bountyAmount,
           applicantsDepositAmount,
           dayjs(bountyInfo.expiresIn).utc().valueOf() / 1000,
