@@ -1,6 +1,7 @@
 import { UButton } from '@comunion/components'
 import { defineComponent, ref } from 'vue'
 import { ApplyDialog } from '../Dialog'
+import { APPLICANT_STATUS } from '@/constants'
 
 export default defineComponent({
   props: {
@@ -8,13 +9,13 @@ export default defineComponent({
       type: Boolean,
       default: () => false
     },
-    applicantDeposit: {
+    applicantDepositMinAmount: {
       type: Number,
       default: () => 0
     },
     applicantApplyStatus: {
       type: Number,
-      require: true
+      required: true
     }
   },
   setup() {
@@ -24,10 +25,7 @@ export default defineComponent({
     }
   },
   render() {
-    const applyBounty = (done?: boolean | MouseEvent) => {
-      if (typeof done === 'boolean' && done) {
-        // this.mode = 'applyed'
-      }
+    const applyBounty = () => {
       this.applyBountyDialogVisible = !this.applyBountyDialogVisible
     }
     return (
@@ -36,15 +34,15 @@ export default defineComponent({
           title="Apply"
           visible={this.applyBountyDialogVisible}
           onTriggerDialog={applyBounty}
-          deposit={this.applicantDeposit}
+          deposit={this.applicantDepositMinAmount}
         />
         <UButton
           type="primary"
-          class="w-321px mt-60px mb-48px mx-auto"
+          class={`w-321px mt-60px mb-48px mx-auto ${this.disabled && 'text-white'}`}
           onClick={applyBounty}
           disabled={this.disabled}
         >
-          {this.applicantApplyStatus === 0 ? 'Pending' : 'Apply'}
+          {this.applicantApplyStatus === APPLICANT_STATUS.APPLIED ? 'Pending' : 'Apply'}
         </UButton>
       </>
     )

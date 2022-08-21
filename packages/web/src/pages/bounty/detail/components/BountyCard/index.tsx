@@ -7,6 +7,7 @@ import More from '@/components/More'
 import { StretchTags } from '@/components/Tags'
 import { BOUNTY_TYPES_COLOR_MAP } from '@/constants'
 import { ServiceReturn } from '@/services'
+import { useBountyContractStore } from '@/stores/bountyContract'
 
 export default defineComponent({
   props: {
@@ -20,14 +21,9 @@ export default defineComponent({
     const handleMore = () => {
       fold.value = !fold.value
     }
+    const bountyContractStore = useBountyContractStore()
     const bountyStatus = computed(() => {
-      if (typeof props.bountyDetail?.status === 'number' && props.bountyDetail.status >= 0) {
-        return BOUNTY_TYPES_COLOR_MAP[props.bountyDetail.status]
-      }
-      return {
-        label: `error ${props.bountyDetail?.status}`,
-        value: '#00BFA5'
-      }
+      return BOUNTY_TYPES_COLOR_MAP[bountyContractStore.bountyContractInfo.bountyStatus]
     })
     const createdAt = computed(() => {
       if (props.bountyDetail?.createdAt) {
@@ -40,7 +36,7 @@ export default defineComponent({
     const showMoreBtn = ref<boolean>()
 
     onMounted(() => {
-      if (pRef.value.ele.scrollHeight > pRef.value.ele.offsetHeight) {
+      if (pRef.value.ele.scrollHeight > 60) {
         showMoreBtn.value = true
       }
     })

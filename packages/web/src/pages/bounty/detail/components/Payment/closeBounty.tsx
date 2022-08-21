@@ -1,25 +1,31 @@
 import { UButton } from '@comunion/components'
-import { defineComponent, ref } from 'vue'
+import { defineComponent, ref, computed } from 'vue'
+import { useBountyContractWrapper } from '../../hooks/useBountyContractWrapper'
 import { BasicDialog } from '../Dialog'
+import { BOUNTY_STATUS } from '@/constants'
 import { services } from '@/services'
+import { useBountyContractStore } from '@/stores/bountyContract'
 
 export default defineComponent({
-  props: {
-    disibled: {
-      type: Boolean,
-      default: () => false
-    }
-  },
   setup() {
     const visibleFailCloseBounty = ref<boolean>(false)
+    const { bountyContract } = useBountyContractWrapper()
+    const bountyContractStore = useBountyContractStore()
+
+    const disabled = computed(() => {
+      return bountyContractStore.bountyContractInfo.bountyStatus === BOUNTY_STATUS.COMPLETED
+    })
     return {
-      visibleFailCloseBounty
+      visibleFailCloseBounty,
+      close: bountyContract.close,
+      disabled
     }
   },
   render() {
     const closeBounty = async () => {
+      await this.close('', '')
       const { error } = await services['bounty@bounty-close']({
-        bountyID: parseInt(this.$route.query.bountyId as string)
+        bountyID: this.$route.query.bountyId as string
       })
       if (error) {
         triggerDialog()
@@ -47,9 +53,10 @@ export default defineComponent({
         />
         <UButton
           ghost
-          class="w-321px mt-60px mb-48px mx-auto"
-          disabled={this.disibled}
+          class="w-80 mt-15 mb-12 mx-auto"
+          disabled={this.disabled}
           onClick={closeBounty}
+          size="small"
         >
           Close bounty
         </UButton>

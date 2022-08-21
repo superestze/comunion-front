@@ -1,6 +1,8 @@
 import { UButton } from '@comunion/components'
-import { defineComponent, ref } from 'vue'
+import { defineComponent, ref, computed } from 'vue'
 import { PostUpdateDialog } from '../Dialog'
+import { APPLICANT_STATUS, BOUNTY_STATUS, USER_ROLE } from '@/constants'
+import { useBountyContractStore } from '@/stores/bountyContract'
 
 export default defineComponent({
   props: {
@@ -12,8 +14,19 @@ export default defineComponent({
   },
   setup() {
     const visible = ref<boolean>(false)
+    const bountyContractStore = useBountyContractStore()
+    const disabled = computed(() => {
+      if (bountyContractStore.bountyContractInfo.bountyStatus < BOUNTY_STATUS.WORKSTARTED) {
+        return true
+      }
+      if (bountyContractStore.bountyContractInfo.role === USER_ROLE.FOUNDER) {
+        return false
+      }
+      return bountyContractStore.bountyContractInfo.status !== APPLICANT_STATUS.APPROVED
+    })
     return {
-      visible
+      visible,
+      disabled
     }
   },
   render() {

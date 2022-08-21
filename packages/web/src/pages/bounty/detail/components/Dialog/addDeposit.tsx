@@ -9,10 +9,14 @@ import {
   UInputNumberGroup,
   UModal
 } from '@comunion/components'
-import { defineComponent, Ref, computed, ref, reactive } from 'vue'
+import { ethers } from 'ethers'
+import { defineComponent, Ref, computed, ref, reactive, watch } from 'vue'
+import {
+  useBountyContractWrapper,
+  BountyContractReturnType
+} from '../../hooks/useBountyContractWrapper'
 import { MAX_AMOUNT, renderUnit } from '@/blocks/Bounty/components/BasicInfo'
 import { services } from '@/services'
-import { useBountyStore } from '@/stores'
 
 export default defineComponent({
   props: {
@@ -22,10 +26,19 @@ export default defineComponent({
     }
   },
   emits: ['triggerDialog'],
-  setup() {
+  setup(props) {
     const formData = reactive({
       increaseDeposit: null
     })
+
+    watch(
+      () => props.visible,
+      value => {
+        if (value) {
+          formData.increaseDeposit = null
+        }
+      }
+    )
 
     const fields: Ref<FormFactoryField[]> = computed(() => [
       {
@@ -73,14 +86,17 @@ export default defineComponent({
     ])
     const addDepositFields = getFieldsRules(fields.value)
     const form = ref<FormInst>()
-    const bountyStore = useBountyStore()
-    const { getBountyPayment } = bountyStore
+
+    const { bountyContract, approve, chainId } = useBountyContractWrapper()
+    const { deposit } = bountyContract
     return {
       addDepositFields,
       fields,
       form,
       formData,
-      getBountyPayment
+      deposit,
+      approve,
+      chainId
     }
   },
   render() {
@@ -95,15 +111,23 @@ export default defineComponent({
       }
       this.form?.validate(async err => {
         if (typeof err === 'undefined') {
+          await this.approve(
+            '0x11FF42b0cBAC4E5DE2bC0C9B973F40790a40A17a',
+            ethers.utils.parseUnits((this.formData.increaseDeposit || '').toString(), 18)
+          )
+          const response = (await this.deposit(
+            ethers.utils.parseUnits(this.formData.increaseDeposit || '', 18),
+            '',
+            ''
+          )) as unknown as BountyContractReturnType
           const { error } = await services['bounty@bounty-add-deposit']({
             bountyID: this.$route.query.bountyId as string,
-            chainID: 11111,
-            txHash: '11111',
+            chainID: this.chainId,
+            txHash: response.hash,
             tokenSymbol: 'USDC',
             tokenAmount: this.formData.increaseDeposit as unknown as number
           })
           if (!error) {
-            this.getBountyPayment(this.$route.query.bountyId as string)
             triggerDialog()
           }
         }

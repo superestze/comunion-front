@@ -1,23 +1,22 @@
 import { UButton } from '@comunion/components'
 import { defineComponent, ref } from 'vue'
+import { useBountyContractWrapper } from '../../hooks/useBountyContractWrapper'
 import { BasicDialog } from '../Dialog'
 import { services } from '@/services'
-import { useBountyStore } from '@/stores'
+import { useBountyContractStore } from '@/stores/bountyContract'
 
 export default defineComponent({
-  props: {
-    lock: {
-      type: Boolean,
-      default: () => false
-    }
-  },
   setup() {
     const visible = ref<boolean>(false)
-    const bounty = useBountyStore()
-    const { getBountyStatus } = bounty
+    const bountyContractStore = useBountyContractStore()
+    const { bountyContract, gap } = useBountyContractWrapper()
+    const { lock, unlock } = bountyContract
     return {
       visible,
-      getBountyStatus
+      lock,
+      unlock,
+      depositLock: bountyContractStore.bountyContractInfo.depositLock,
+      gap
     }
   },
   render() {
@@ -25,22 +24,23 @@ export default defineComponent({
       this.visible = !this.visible
     }
     const handleUnLockDeposit = async () => {
+      await this.unlock('', '')
       const { error } = await services['bounty@bounty-applicants-unlock']({
         bountyID: parseInt(this.$route.query.bountyId as string)
       })
       if (!error) {
-        this.getBountyStatus(this.$route.query.bountyId as string)
         triggerDialog()
       }
     }
 
     const handleLockDeposit = async () => {
-      const { error } = await services['bounty@bounty-applicant-lock']({
+      if (this.gap < 0) {
+        return
+      }
+      await this.lock('', '')
+      services['bounty@bounty-applicant-lock']({
         bountyID: parseInt(this.$route.query.bountyId as string)
       })
-      if (!error) {
-        this.getBountyStatus(this.$route.query.bountyId as string)
-      }
     }
     return (
       <>
@@ -67,7 +67,7 @@ export default defineComponent({
             )
           }}
         />
-        {this.lock ? (
+        {this.depositLock ? (
           <UButton type="primary" class="w-321px mt-60px mb-48px mx-auto" onClick={triggerDialog}>
             UnLock
           </UButton>

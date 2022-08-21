@@ -25,7 +25,7 @@ export default defineConfig({
     proxy: {
       // '/api': 'https://api.d.comunion.io'
       '/api': {
-        target: 'http://47.242.63.60:8090',
+        target: 'http://47.242.63.60:9001',
         changeOrigin: true,
         rewrite: (path: string) => path.replace(/^\/api/, '')
       }

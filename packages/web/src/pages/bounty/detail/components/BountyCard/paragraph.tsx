@@ -1,7 +1,6 @@
-import { UScrollbar, UTooltip } from '@comunion/components'
-import { CopyOutlined } from '@comunion/icons'
-import copy from 'copy-to-clipboard'
+import { UScrollbar } from '@comunion/components'
 import { defineComponent, computed, ref } from 'vue'
+import Copy from '@/components/Copy'
 
 export default defineComponent({
   props: {
@@ -39,13 +38,13 @@ export default defineComponent({
   },
   setup(props, ctx) {
     const contentClass = computed(() => {
-      return `flex-grow-1 text-16px flex items-center ${props.contentClass}`
+      return `flex-grow-1 u-title2 flex items-center ${props.contentClass}`
     })
 
     const foldClass = computed(() => {
       const str = 'whitespace-pre-wrap break-all overflow-hidden'
       if (props.fold) {
-        return `${str} overflow-ellipsis line-clamp-3 ${contentClass.value} min-h-20px`
+        return `${str} overflow-ellipsis line-clamp-3 ${contentClass.value}`
       }
       return `${str} ${contentClass.value}`
     })
@@ -65,7 +64,9 @@ export default defineComponent({
   render() {
     return (
       <div class="flex">
-        <div class="w-169px flex-shrink-0 text-grey3 text-14px flex items-start">{this.label}</div>
+        <div class="w-28 flex-shrink-0 text-grey3 u-title2 flex items-start mr-11.5">
+          {this.label}
+        </div>
         {this.foldAble ? (
           <UScrollbar style={{ maxHeight: `${this.maxHeight}px` }}>
             <p class={this.foldClass} ref={(ref: any) => (this.ele = ref)} v-html={this.content} />
@@ -73,26 +74,7 @@ export default defineComponent({
         ) : (
           <p class={`${this.contentClass} h-20px`}>
             {this.content}
-            {this.pasteboard ? (
-              <span
-                class="u-address__copy"
-                onClick={e => {
-                  e.stopPropagation()
-                  this.showTooltipRef = copy(this.content || '')
-                }}
-                onMouseleave={e => {
-                  e.stopPropagation()
-                  this.showTooltipRef = false
-                }}
-              >
-                <UTooltip show={this.showTooltipRef}>
-                  {{
-                    trigger: () => <CopyOutlined class="u-address__icon" />,
-                    default: () => 'Copied!'
-                  }}
-                </UTooltip>
-              </span>
-            ) : null}
+            {this.pasteboard ? <Copy content={this.content || ''} /> : null}
           </p>
         )}
       </div>
