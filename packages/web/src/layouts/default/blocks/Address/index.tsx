@@ -1,7 +1,7 @@
+import { UButton } from '@comunion/components'
 import { SignOutFilled } from '@comunion/icons'
 import { shortenAddress } from '@comunion/utils'
 import { defineComponent } from 'vue'
-import HeaderButton from '../../components/HeaderButton'
 import HeaderDropdown from '../../components/HeaderDropdown'
 import { useUserStore, useWalletStore } from '@/stores'
 
@@ -30,15 +30,18 @@ const WalletAddress = defineComponent({
     return () => {
       // userStore.
       const btn = (
-        <HeaderButton class={ctx.attrs.class} onClick={connectWallet}>
+        // <HeaderButton class={ctx.attrs.class} onClick={connectWallet}>
+
+        // </HeaderButton>
+        <UButton size="small" onClick={connectWallet} class="h-8">
           {walletStore.connected && walletStore.address
             ? shortenAddress(walletStore.address)
             : 'Connect Wallet'}
-        </HeaderButton>
+        </UButton>
       )
 
       return (
-        <div class="h-10 leading-normal">
+        <>
           {walletStore.connected ? (
             <HeaderDropdown
               placement="bottom-end"
@@ -59,7 +62,7 @@ const WalletAddress = defineComponent({
           ) : (
             btn
           )}
-        </div>
+        </>
       )
     }
   }

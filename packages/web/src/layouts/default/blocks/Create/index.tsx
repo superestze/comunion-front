@@ -1,13 +1,8 @@
-import {
-  PlusOutlined,
-  CreateStartupFilled,
-  CreateBountyFilled,
-  CreateOfferingFilled
-} from '@comunion/icons'
+import { UButton } from '@comunion/components'
+import { CreateStartupFilled, CreateBountyFilled, CreateOfferingFilled } from '@comunion/icons'
 import { defineComponent, ref, watch } from 'vue'
 import HeaderDropdown from '../../components/HeaderDropdown'
 import NoStartupTip from './components/NoStartupTip'
-import styles from './index.module.css'
 import CreateBountyBlock, { CreateBountyRef } from '@/blocks/Bounty/Create'
 import CreateCrowdfundingBlock, { CreateCrowdfundingRef } from '@/blocks/Crowdfunding/Create'
 import CreateStartupBlock, { CreateStartupRef } from '@/blocks/Startup/Create'
@@ -77,9 +72,7 @@ const CreateBlock = defineComponent({
         <CreateCrowdfundingBlock ref={createCrowdfundingRef} />
         <NoStartupTip ref={NoStartupTipRef} onToCreate={onCreateStartup} />
         <HeaderDropdown
-          // width={356}
           title="Create"
-          class={styles.dropdown}
           options={[
             {
               key: 'startup',
@@ -131,10 +124,10 @@ const CreateBlock = defineComponent({
             }
           ]}
         >
-          <button class={[styles.btn, ctx.attrs.class]}>
-            <PlusOutlined class="h-6 mr-1.5 text-white w-6" />
-            <span class="text-white u-body1">CREATE</span>
-          </button>
+          <UButton type="primary" size="small" class="w-19.25 text-white u-body2 h-8">
+            CREATE
+          </UButton>
+          {/* <button class={[styles.btn, ctx.attrs.class]}></button> */}
         </HeaderDropdown>
       </>
     )

@@ -26,18 +26,18 @@ const UserAvatar = defineComponent({
             {
               key: 'dashboard',
               icon: () => <UserFilled class="!text-primary" />,
-              label: () => 'My Dashboard'
+              label: () => <span class="text-primary hover:text-primary1">My Dashboard</span>
             },
             {
               key: 'logout',
               icon: () => <SignOutFilled class="bg-purple rounded-3xl !text-primary" />,
-              label: 'Sign out'
+              label: () => <span class="text-primary hover:text-primary1">Sign out</span>
             }
           ]}
         >
           <ULazyImage
             src={userStore.profile?.avatar ?? ''}
-            class="rounded-full cursor-pointer h-10 w-10"
+            class="rounded-full cursor-pointer h-8 w-8"
           />
         </HeaderDropdown>
       ) : (

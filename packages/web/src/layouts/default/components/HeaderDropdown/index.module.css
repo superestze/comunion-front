@@ -8,6 +8,13 @@
   :global {
     .n-dropdown-option-body {
       background: none !important;
+      &::before {
+        left: 0px !important;
+        right: 0px !important;
+      }
+      &::hover {
+        color: #3f2d99 !important;
+      }
 
       @apply rounded-md min-w-180px items-center !h-auto;
 
