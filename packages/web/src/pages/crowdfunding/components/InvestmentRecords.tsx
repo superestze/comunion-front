@@ -42,7 +42,7 @@ export const InvestmentRecords = defineComponent({
       let tokenName = props.buyTokenName
       if (record.access === 2) {
         operator = '-'
-        tokenName = props.sellTokenName
+        tokenName = props.buyTokenName
       }
       return `${operator} ${record.amount} ${tokenName}`
     }
@@ -95,15 +95,15 @@ export const InvestmentRecords = defineComponent({
                     class="rounded-full cursor-pointer h-10 w-10"
                   />
                   <div class="ml-4">
-                    <div class="mb-2">
-                      <span class="u-title2">{record.comerName}</span>
+                    <div class="mb-2 flex items-center">
+                      <div class="u-title2 truncate max-w-35">{record.comerName}</div>
                       {record.access === 1 ? (
                         <span class="px-2 py-0.5 ml-2 rounded-sm text-white text-xs bg-[#00BFA5]">
                           Invest
                         </span>
                       ) : (
                         <span class="px-2 py-0.5 ml-2 rounded-sm text-white text-xs bg-warning">
-                          Withdraw
+                          Sell
                         </span>
                       )}
                     </div>

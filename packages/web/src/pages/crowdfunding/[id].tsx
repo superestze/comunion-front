@@ -147,7 +147,7 @@ const CrowdfundingDetail = defineComponent({
             )}
             {crowdfundingInfo.value && <CrowdfundingInfo info={crowdfundingInfo.value} />}
           </div>
-          <div class="flex-1">
+          <div class="flex-1 min-w-111">
             {startupInfo.value && (
               <UCard class="mb-6">
                 <StartupCard startup={startupInfo.value} />

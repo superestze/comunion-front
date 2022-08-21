@@ -3,7 +3,7 @@ import { UButton, UCard, UModal, UTabPane, UTabs } from '@comunion/components'
 import { PeriodOutlined, StageOutlined, WarningFilled } from '@comunion/icons'
 import dayjs from 'dayjs'
 
-import { BigNumber, Contract } from 'ethers'
+import { Contract, ethers } from 'ethers'
 import { defineComponent, ref, reactive, watch } from 'vue'
 import { useRouter } from 'vue-router'
 import BountyBasicInfo, { BountyBasicInfoRef, MAX_AMOUNT } from './components/BasicInfo'
@@ -12,8 +12,8 @@ import PayDetailPeriod, { PayDetailPeriodRef } from './components/PayDetailPerio
 import PayDetailStage, { PayDetailStageRef } from './components/PayDetailStage'
 import { BountyInfo } from './typing'
 import Steps from '@/components/Step'
-import { useBountyContract, useErc20Contract } from '@/contracts'
-import { BountyAddresses as bountyAddresses } from '@/contracts/bounty'
+import { useBountyFactoryContract, useErc20Contract } from '@/contracts'
+import { BountyFactoryAddresses as bountyFactoryAddresses } from '@/contracts/bountyFactory'
 import { AVAX_USDC_ADDR } from '@/contracts/utils'
 import { services } from '@/services'
 import { useUserStore, useWalletStore } from '@/stores'
@@ -29,7 +29,7 @@ const CreateBountyForm = defineComponent({
     const contractStore = useContractStore()
     const stepOptions = ref([{ name: 'Bounty' }, { name: 'Payment' }, { name: 'Deposit' }])
 
-    const bountyContract = useBountyContract()
+    const bountyContract = useBountyFactoryContract()
     const modalVisibleState = ref(false)
     const modalClickYesToWhere = ref('')
     const router = useRouter()
@@ -98,21 +98,32 @@ const CreateBountyForm = defineComponent({
     const contractSubmit = async () => {
       const approvePendingText = 'Waiting to submit all contents to blockchain for approval deposit'
       const value = bountyInfo.deposit
+      const applicantsDeposit = bountyInfo.applicantsDeposit
 
       try {
         /* first approve amount to bountyFactory */
         const usdcTokenAddress = AVAX_USDC_ADDR[walletStore.chainId!] // get usdc contract address
         const usdcRes = await usdcTokenContract(usdcTokenAddress) // construct erc20 contract
         const decimal = await usdcRes.decimals()
-        const bountyAmount = BigNumber.from(value).mul(BigNumber.from(10).pow(decimal)) // convert usdc unit to wei
-        contractStore.startContract(approvePendingText)
-        const bountyFactoryAddress = bountyAddresses[walletStore.chainId!]
-        // approve amount to bounty factory contract
-        const approveRes: Contract = await usdcRes.approve(bountyFactoryAddress, bountyAmount)
-        await approveRes.wait()
+        const bountyAmount = ethers.utils.parseUnits(value.toString(), decimal) // convert usdc unit to wei
+        const applicantsDepositAmount = ethers.utils.parseUnits(
+          applicantsDeposit.toString(),
+          decimal
+        ) // convert usdc unit to wei
+        if (value !== 0) {
+          contractStore.startContract(approvePendingText)
+          const bountyFactoryAddress = bountyFactoryAddresses[walletStore.chainId!]
+          // approve amount to bounty factory contract
+          const approveRes: Contract = await usdcRes.approve(bountyFactoryAddress, bountyAmount)
+          await approveRes.wait()
+        }
+
         // second send tx to bountyFactory create bounty
         const contractRes: any = await bountyContract.createBounty(
+          usdcTokenAddress,
           bountyAmount,
+          applicantsDepositAmount,
+          dayjs(bountyInfo.expiresIn).utc().valueOf() / 1000,
           'Waiting to submit all contents to blockchain for creating bounty',
           `<div class="flex items-center">Bounty "<span class="truncate max-w-20">${bountyInfo.title}</span>" is Creating</div>`
         )
@@ -157,7 +168,7 @@ const CreateBountyForm = defineComponent({
             startupID: bountyInfo.startupID as number,
             comerID: userStore.profile?.comerID,
             title: bountyInfo.title,
-            expiresIn: dayjs(bountyInfo.expiresIn).format('YYYY-MM-DD HH:mm:ss'),
+            expiresIn: dayjs(bountyInfo.expiresIn).utc().format('YYYY-MM-DD HH:mm:ss'),
             contact: bountyInfo.contact
               .filter(item => item.value)
               .map(item => ({ contactType: item.type, contactAddress: item.value })),

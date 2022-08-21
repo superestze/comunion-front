@@ -31,11 +31,11 @@ export default defineComponent({
     return (
       <div>
         <div class="flex">
-          <div class="w-80px h-80px">
+          <div class="w-15 h-15">
             <UStartupLogo
               src={this.startup?.logo || ''}
-              width="20"
-              height="20"
+              width="15"
+              height="15"
               class="rounded !object-contain"
             />
           </div>

@@ -3,13 +3,16 @@ import {
   UPaginatedList,
   UPaginatedListPropsType,
   UInputGroup,
-  USearch
+  USearch,
+  message
 } from '@comunion/components'
 import { defineComponent, ref, computed } from 'vue'
 import { useRouter } from 'vue-router'
 import { CrowdfundingCard } from './components/CrowdfundingCard'
+import { getChainInfoByChainId } from './utils'
 import { CrowdfundingType, CROWDFUNDING_TYPES } from '@/constants'
 import { ServiceReturn, services } from '@/services'
+import { useWalletStore } from '@/stores'
 
 const CrowdfundingList = defineComponent({
   name: 'CrowdfundingList',
@@ -18,6 +21,7 @@ const CrowdfundingList = defineComponent({
     const inputMember = ref<string>('')
     const total = ref(0)
     const router = useRouter()
+    const walletStore = useWalletStore()
     const dataService = computed<UPaginatedListPropsType['service']>(
       () => async (page, pageSize) => {
         const { error, data } = await services['crowdfunding@public-crowdfunding-list']({
@@ -35,8 +39,33 @@ const CrowdfundingList = defineComponent({
       }
     )
 
-    const toDetail = (crowdfundingId: number) => {
-      router.push('/crowdfunding/' + crowdfundingId)
+    const checkSupportNetwork = async (chainId: number) => {
+      const chainInfo = getChainInfoByChainId(chainId)
+      if (chainId && walletStore.chainId !== chainId) {
+        walletStore.wallet?.switchNetwork(chainId)
+        message.warning(`Please switch to ${chainInfo?.name}`)
+        // not supported network, try to switch
+        walletStore.openNetworkSwitcher()
+        return false
+      } else {
+        return true
+      }
+      // await walletStore.ensureWalletConnected()
+      // if (!walletStore.isNetworkSupported) {
+      //   message.warning('Please switch to the ')
+      //   // not supported network, try to switch
+      //   walletStore.openNetworkSwitcher()
+      //   return false
+      // } else {
+      //   return true
+      // }
+    }
+
+    const toDetail = async (crowdfundingId: number, chainId: number) => {
+      const isSupport = await checkSupportNetwork(chainId)
+      if (isSupport) {
+        router.push('/crowdfunding/' + crowdfundingId)
+      }
     }
 
     return () => (
@@ -71,7 +100,10 @@ const CrowdfundingList = defineComponent({
             return (
               <div class="grid pb-6 gap-8 grid-cols-1 md:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4">
                 {crowdfundingList.map(crowdfunding => (
-                  <div class="cursor-pointer" onClick={() => toDetail(crowdfunding.crowdfundingId)}>
+                  <div
+                    class="cursor-pointer"
+                    onClick={() => toDetail(crowdfunding.crowdfundingId, crowdfunding.chainId)}
+                  >
                     <CrowdfundingCard key={crowdfunding.crowdfundingId} info={crowdfunding} />
                   </div>
                 ))}
