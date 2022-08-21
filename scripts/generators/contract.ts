@@ -66,29 +66,6 @@ async function fetchContracts(): Promise<ContractItem[]> {
   return contracts
 }
 
-// https://raw.githubusercontent.com/comunion-io/comunion-contract/main/contracts/artifacts/Startup.json
-// https://raw.githubusercontent.com/comunion-io/comunion-contract/main/contracts/artifacts/Bounty.json
-function fetchContractsFromLocal(): ContractItem[] {
-  // eslint-disable-next-line @typescript-eslint/no-var-requires
-  const configurations = require('../json/contractAddress.json') as ContractAddressConfiguration
-  // const configs = [StartupJson, BountyJson]
-  const contracts: ContractItem[] = []
-  for (const config of configurations) {
-    // eslint-disable-next-line @typescript-eslint/no-var-requires
-    const abis = (require(`../json/${config.name}.json`) as { abi: ABIItem[] }).abi.filter(
-      abi => abi.type === 'function'
-    )
-    contracts.push({
-      title: config.name,
-      abi: JSON.stringify(abis),
-      abiArr: abis,
-      addresses: config.addresses.filter(network => !!network.address)
-    })
-  }
-
-  return contracts
-}
-
 const contractTypeMap = {
   string: 'string',
   address: 'string',
@@ -104,8 +81,7 @@ export async function generateContracts() {
   // const ora = await import('ora')
   // const spinner = ora('Parsing contracts').start()
   const contractFolder = resolve(__dirname, '../../packages/web/src/contracts')
-  // const contracts = await fetchContracts()
-  const contracts = await fetchContractsFromLocal()
+  const contracts = await fetchContracts()
   // spinner.text = 'Writing files'
   for (const contract of contracts) {
     await renderToFile(
