@@ -120,7 +120,7 @@ export default defineComponent({
           name: props.activity?.name || '',
           date: format(props.activity?.timestamp || '', 'comunionTimeAgo'),
           dateTime: dayjs(props.activity?.timestamp || '').format('MMM D'),
-          url: transcationUrl[chainId],
+          url: transcationUrl[chainId as number],
           content: JSON.parse(props.activity?.content as string) as TransactionContent
         }
         return () => <>{transactionMessage(obj)}</>

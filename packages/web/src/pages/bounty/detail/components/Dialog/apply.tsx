@@ -203,7 +203,7 @@ const ApplyDialog = defineComponent({
               description: this.formData.description
             },
             applicantsDeposit: {
-              chainID: this.chainId,
+              chainID: this.chainId as number,
               txHash: response ? response.hash : '',
               tokenSymbol: 'USDC',
               tokenAmount: this.formData.deposit
