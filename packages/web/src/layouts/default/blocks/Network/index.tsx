@@ -1,6 +1,6 @@
+import { UButton } from '@comunion/components'
 import { ArrowDownOutlined } from '@comunion/icons'
 import { defineComponent, computed, ref, watchEffect } from 'vue'
-import HeaderButton from '../../components/HeaderButton'
 import HeaderDropdown from '../../components/HeaderDropdown'
 import { ChainNetworkType, supportedNetworks } from '@/constants'
 import { useWalletStore } from '@/stores'
@@ -46,7 +46,7 @@ const NetworkSwitcher = defineComponent({
         }))}
         onSelect={onSelectNetwork}
       >
-        <HeaderButton class={ctx.attrs.class}>
+        <UButton size="small" class="h-8">
           <div class="flex flex-nowrap items-center" ref={btnRef}>
             {networkCache.value && (
               <>
@@ -56,7 +56,8 @@ const NetworkSwitcher = defineComponent({
             )}
             <ArrowDownOutlined class="h-4 ml-2 w-4" />
           </div>
-        </HeaderButton>
+        </UButton>
+        {/* <HeaderButton class={ctx.attrs.class}></HeaderButton> */}
       </HeaderDropdown>
     )
   }
