@@ -28,28 +28,28 @@ export const services = {
       ...extract('POST', args, [], ['comerID'])
     })
   },
-  'account@educations'(
-    args: {
+  'account@educations'(args: {
+    educations: {
       school: string
-      majro: string
-      graducatedAt: string
+      major: string
+      graduatedAt: string
     }[]
-  ) {
+  }) {
     return requestAdapter<{}>({
       url: replacePath('/account/profile/educations', args),
       method: 'POST',
       ...extract('POST', args, [], [])
     })
   },
-  'account@langages'(
-    args: {
+  'account@languages'(args: {
+    languages: {
       language: string
       /**
-       * @description Beginner 、Elementary、Intermediate、Advanced
+       * @description Beginner、Elementary 、Intermediate、Advanced
        */
       level: string
     }[]
-  ) {
+  }) {
     return requestAdapter<{}>({
       url: replacePath('/account/profile/languages', args),
       method: 'POST',
