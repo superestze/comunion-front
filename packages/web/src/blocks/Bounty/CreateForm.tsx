@@ -180,7 +180,7 @@ const CreateBountyForm = defineComponent({
           payDetail,
           deposit: {
             tokenSymbol: bountyInfo.token1Symbol,
-            tokenAmount: bountyInfo.deposit
+            tokenAmount: +bountyInfo.deposit
           },
           chainInfo: {
             chainID: walletStore.chainId,
