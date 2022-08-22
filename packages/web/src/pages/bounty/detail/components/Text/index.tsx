@@ -46,7 +46,7 @@ export default defineComponent({
         <span
           class={`u-h1 ${
             ctx.attrs['text-color'] || 'text-primary'
-          } leading-none text-50px font-orbitron`}
+          } leading-none text-36px font-orbitron`}
         >
           {props.value}
         </span>
@@ -62,8 +62,8 @@ export default defineComponent({
         <div class="flex justify-end">
           {this.plus ? (
             <span class="flex flex-col justify-end pb-6px">
-              <span class="text-16px"></span>
-              <span class="text-18px" data-name="placeholder">
+              <span class="text-[1rem]"></span>
+              <span class="text-[1.5rem]" data-name="placeholder">
                 +
               </span>
             </span>
@@ -74,8 +74,8 @@ export default defineComponent({
           ? this.$slots.unit()
           : this.unit && (
               <span class="flex flex-col justify-end pb-6px text-grey1">
-                <span class="text-16px"></span>
-                <span class="text-16px">{this.unit}</span>
+                <span class="text-[1rem]"></span>
+                <span class="text-[1rem]">{this.unit}</span>
               </span>
             )}
       </p>

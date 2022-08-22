@@ -1,5 +1,18 @@
-import { UBreadcrumb, UBreadcrumbItem, UCard, UNoContent, USpin } from '@comunion/components'
-import { ArrowLeftOutlined, EmptyFilled, PeriodOutlined, StageOutlined } from '@comunion/icons'
+import {
+  UBreadcrumb,
+  UBreadcrumbItem,
+  UCard,
+  UNoContent,
+  USpin,
+  UTooltip
+} from '@comunion/components'
+import {
+  ArrowLeftOutlined,
+  EmptyFilled,
+  PeriodOutlined,
+  StageOutlined,
+  ClockOutlined
+} from '@comunion/icons'
 import { defineComponent, computed, ref } from 'vue'
 import { useRoute } from 'vue-router'
 import BountyCard from './components/BountyCard'
@@ -9,7 +22,10 @@ import PersonalCard from './components/PersonalCard'
 import PostUpdate from './components/PostUpdate'
 import StartupCard from './components/StartupCard'
 import Unapprove from './components/Unapprove'
+import { useBountyContractWrapper } from './hooks/useBountyContractWrapper'
+import { BOUNTY_STATUS, USER_ROLE } from '@/constants'
 import { useBountyStore } from '@/stores'
+import { useBountyContractStore } from '@/stores/bountyContract'
 
 export default defineComponent({
   name: 'BountyDetail',
@@ -24,9 +40,15 @@ export default defineComponent({
     })
     const bountySection = computed(() => bountyStore.bountySection)
 
+    const bountyContractStore = useBountyContractStore()
+    const { bountyContract, gap } = useBountyContractWrapper()
+    bountyContractStore.initialize(bountyContract, route.query.bountyId as string, true)
+
     return {
       bountySection,
-      loading
+      loading,
+      bountyContractInfo: bountyContractStore.bountyContractInfo,
+      gap
     }
   },
   render() {
@@ -81,9 +103,8 @@ export default defineComponent({
             >
               {this.bountySection.bountyPayment && (
                 <Payment
+                  bountyContractInfo={this.bountyContractInfo}
                   paymentInfo={this.bountySection.bountyPayment}
-                  stageNum={this.bountySection.detail?.status}
-                  bountyStatus={this.bountySection.bountyStatus}
                 />
               )}
             </UCard>
@@ -92,7 +113,40 @@ export default defineComponent({
               class="mb-6"
               v-slots={{
                 'header-extra': () => (
-                  <PostUpdate disabled={this.bountySection.detail?.status === 1} />
+                  <div class="flex items-center">
+                    {this.bountyContractInfo.bountyStatus >= BOUNTY_STATUS.WORKSTARTED && (
+                      <>
+                        <UTooltip placement="bottom">
+                          {{
+                            trigger: () => (
+                              <ClockOutlined
+                                class={`${
+                                  this.gap >= 0 ? 'text-grey4' : 'text-error'
+                                } w-4 h-4 mr-2.5`}
+                              />
+                            ),
+                            default: () => (
+                              <div class="text-white w-84">
+                                Post an update at least every 5 days, otherwise you will lose the
+                                permission to lock the deposit, and the founder can unlock.
+                              </div>
+                            )
+                          }}
+                        </UTooltip>
+                        {this.gap >= 0 ? (
+                          <p class="u-body3 text-grey3 flex items-center mr-4">
+                            Founder can unlock after{' '}
+                            <span class="text-parimary mx-1">{this.gap}</span> days
+                          </p>
+                        ) : (
+                          <p class="u-body3 text-error flex items-center mr-4">
+                            Founder can already unlock deposits
+                          </p>
+                        )}
+                      </>
+                    )}
+                    <PostUpdate />
+                  </div>
                 )
               }}
             >
@@ -112,10 +166,7 @@ export default defineComponent({
               {this.bountySection.applicantsList && this.bountySection.applicantsList.length > 0 ? (
                 <>
                   {this.bountySection.applicantsList.map(applicant => (
-                    <ApplicantBubble
-                      applicant={applicant}
-                      stageNum={this.bountySection.detail?.status}
-                    />
+                    <ApplicantBubble applicant={applicant} />
                   ))}
                 </>
               ) : (
@@ -152,7 +203,7 @@ export default defineComponent({
               v-slots={{
                 'header-extra': () => (
                   <>
-                    {this.bountySection.bountyStatus?.role === 1 &&
+                    {this.bountyContractInfo.role === USER_ROLE.FOUNDER &&
                       this.bountySection.approvedPeople && <Unapprove />}
                   </>
                 )
@@ -181,8 +232,12 @@ export default defineComponent({
             <UCard title="DEPOSIT RECORDS">
               {this.bountySection.depositRecords && this.bountySection.depositRecords.length > 0 ? (
                 <>
-                  {this.bountySection.depositRecords.map(item => (
-                    <DepositBubble depositInfo={item} key={item.name} />
+                  {this.bountySection.depositRecords.map((item, index) => (
+                    <DepositBubble
+                      class={`mb-6 ${index === 0 && 'mt-10'}`}
+                      depositInfo={item}
+                      key={item.name}
+                    />
                   ))}
                 </>
               ) : (

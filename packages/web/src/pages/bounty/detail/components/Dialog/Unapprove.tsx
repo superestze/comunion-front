@@ -1,7 +1,9 @@
 import { UButton } from '@comunion/components'
 import { defineComponent, PropType, computed } from 'vue'
+import { useBountyContractWrapper } from '../../hooks/useBountyContractWrapper'
 import Basic from './basic'
-import { useUserStore } from '@/stores'
+import { services } from '@/services'
+import { useUserStore, useWalletStore } from '@/stores'
 
 export type VisibleMap = {
   visibleUnapproveConfirm: boolean
@@ -17,11 +19,17 @@ export const UnapprovePromptSet = defineComponent({
   },
   setup() {
     const userStore = useUserStore()
+    const walletStore = useWalletStore()
+    const { bountyContract } = useBountyContractWrapper()
+    const { unapproveApplicant } = bountyContract
+
     const profile = computed(() => {
       return userStore.profile
     })
     return {
-      profile
+      profile,
+      unapproveApplicant,
+      address: walletStore.address
     }
   },
   render() {
@@ -33,14 +41,18 @@ export const UnapprovePromptSet = defineComponent({
         closeUnapproveConfirm()
         return
       }
-
-      // const { error } = await services['bounty@bounty-founder-unapprove']({
-      //   applicantComerID: this.profile?.comerID
-      // })
-      // if (!error) {
-      //   closeUnapproveConfirm()
-      //   return
-      // }
+      if (!this.address) {
+        return
+      }
+      await this.unapproveApplicant(this.address, '', '')
+      const { error } = await services['bounty@bounty-founder-unapprove']({
+        bountyID: this.$route.query.bountyId as string,
+        applicantComerID: this.profile?.comerID
+      })
+      if (!error) {
+        closeUnapproveConfirm()
+        return
+      }
       this.visibleMap!.visibleUnapproveFail = true
     }
 

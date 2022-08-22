@@ -39,13 +39,13 @@ export default defineComponent({
               class="rounded !object-contain"
             />
           </div>
-          <div class="flex flex-col ml-24px">
+          <div class="flex flex-col ml-6">
             <div class="flex items-center mb-12px">
               <span class="u-h2">{this.startup?.title}</span>
             </div>
             {(this.startup?.mode || 0) > 0 && (
               <UTag
-                class="!u-body3-pure w-55px"
+                class="!u-body3-pure"
                 type="filled"
                 bgColor={STARTUP_TYPES_COLOR_MAP[this.modeName]}
               >

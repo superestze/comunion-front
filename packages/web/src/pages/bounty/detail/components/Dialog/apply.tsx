@@ -10,8 +10,14 @@ import {
   UInputNumberGroup,
   UModal
 } from '@comunion/components'
-import { defineComponent, Ref, computed, h, ref, reactive, watchEffect } from 'vue'
+import { ethers } from 'ethers'
+import { defineComponent, Ref, computed, h, ref, reactive, watch } from 'vue'
+import {
+  BountyContractReturnType,
+  useBountyContractWrapper
+} from '../../hooks/useBountyContractWrapper'
 import { MAX_AMOUNT, renderUnit } from '@/blocks/Bounty/components/BasicInfo'
+import { services } from '@/services'
 import { useBountyStore } from '@/stores'
 
 type checkboxItem = {
@@ -23,15 +29,15 @@ const ApplyDialog = defineComponent({
   props: {
     visible: {
       type: Boolean,
-      require: true
+      required: true
     },
     title: {
       type: String,
-      require: true
+      required: true
     },
     deposit: {
       type: Number,
-      require: true
+      required: true
     }
   },
   emits: ['triggerDialog'],
@@ -40,9 +46,17 @@ const ApplyDialog = defineComponent({
       deposit: 0,
       description: ''
     })
-    watchEffect(() => {
-      formData.deposit = props.deposit || 0
-    })
+    watch(
+      () => props.visible,
+      value => {
+        if (value) {
+          formData.deposit = props.deposit || 0
+          formData.description = ''
+        }
+      }
+    )
+
+    const { bountyContract, approve, chainId } = useBountyContractWrapper()
     const fields: Ref<FormFactoryField[]> = computed(() => [
       {
         t: 'custom',
@@ -146,7 +160,10 @@ const ApplyDialog = defineComponent({
       termsClass,
       acceptClass,
       formData,
-      getApplicants
+      getApplicants,
+      bountyContract,
+      approve,
+      chainId
     }
   },
   render() {
@@ -164,20 +181,34 @@ const ApplyDialog = defineComponent({
         triggerDialog(false)
         return
       }
-      this.form?.validate(err => {
+      this.form?.validate(async err => {
         if (typeof err === 'undefined' && this.terms.value && this.accept.value) {
-          // services['bounty@bounty-applicants-deposit']({
-          //   applicants: {
-          //     bountyID: parseInt(this.$route.query.bountyId as string),
-          //     description: this.formData.description
-          //   },
-          //   applicantsDeposit: {
-          //     // chainID: 0,
-          //     // txHash: '',
-          //     tokenSymbol: '',
-          //     tokenAmount: this.formData.deposit
-          //   }
-          // })
+          console.log(ethers.utils.parseUnits(this.formData.deposit.toString(), 18))
+          let response!: BountyContractReturnType
+          if (this.formData.deposit >= this.deposit) {
+            await this.approve(
+              '0x11FF42b0cBAC4E5DE2bC0C9B973F40790a40A17a',
+              ethers.utils.parseUnits(this.formData.deposit.toString(), 18)
+            )
+            response = (await this.bountyContract.applyFor(
+              ethers.utils.parseUnits(this.formData.deposit.toString(), 18),
+              '',
+              ''
+            )) as unknown as BountyContractReturnType
+          }
+
+          await services['bounty@bounty-applicants-apply']({
+            bountyID: parseInt(this.$route.query.bountyId as string),
+            applicants: {
+              description: this.formData.description
+            },
+            applicantsDeposit: {
+              chainID: this.chainId as number,
+              txHash: response ? response.hash : '',
+              tokenSymbol: 'USDC',
+              tokenAmount: this.formData.deposit
+            }
+          })
           this.getApplicants(this.$route.query.bountyId as string)
           triggerDialog(true)
         }

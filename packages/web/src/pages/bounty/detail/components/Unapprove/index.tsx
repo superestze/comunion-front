@@ -19,7 +19,7 @@ export default defineComponent({
     return (
       <>
         <UnapprovePromptSet visibleMap={this.unapproveVisibleMap} />
-        <UButton type="primary" ghost size="small" class="w-120px" onClick={openUnapproveConfirm}>
+        <UButton type="primary" ghost size="small" class="w-30" onClick={openUnapproveConfirm}>
           Unapprove
         </UButton>
       </>

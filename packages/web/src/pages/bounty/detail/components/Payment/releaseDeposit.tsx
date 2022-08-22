@@ -1,18 +1,33 @@
 import { UButton } from '@comunion/components'
-import { defineComponent, ref } from 'vue'
+import { defineComponent, ref, computed } from 'vue'
+import {
+  BountyContractReturnType,
+  useBountyContractWrapper
+} from '../../hooks/useBountyContractWrapper'
 import { BasicDialog } from '../Dialog'
+import { BOUNTY_STATUS } from '@/constants'
+import { services } from '@/services'
+import { useBountyContractStore } from '@/stores/bountyContract'
 
 export default defineComponent({
-  props: {
-    lock: {
-      type: Boolean,
-      default: () => false
-    }
-  },
   setup() {
     const visible = ref<boolean>(false)
+    const { bountyContract, chainId } = useBountyContractWrapper()
+    const { release } = bountyContract
+    const bountyContractStore = useBountyContractStore()
+
+    const disabled = computed(() => {
+      return (
+        bountyContractStore.bountyContractInfo.depositLock ||
+        bountyContractStore.bountyContractInfo.bountyStatus >= BOUNTY_STATUS.COMPLETED ||
+        bountyContractStore.dontContract
+      )
+    })
     return {
-      visible
+      visible,
+      release,
+      disabled,
+      chainId
     }
   },
   render() {
@@ -20,12 +35,15 @@ export default defineComponent({
       this.visible = !this.visible
     }
     const handleReleaseDeposit = async () => {
-      // const { error } = await services['bounty@bounty-founder-release']({
-      //   bountyID: parseInt(this.$route.query.bountyId as string)
-      // })
-      // if (!error) {
-      //   triggerDialog()
-      // }
+      const response = (await this.release('', '')) as unknown as BountyContractReturnType
+      const { error } = await services['bounty@bounty-release']({
+        bountyID: parseInt(this.$route.query.bountyId as string),
+        chainID: this.chainId,
+        TxHash: response.hash
+      })
+      if (!error) {
+        triggerDialog()
+      }
     }
     return (
       <>
@@ -52,7 +70,13 @@ export default defineComponent({
             )
           }}
         />
-        <UButton class="w-148px" type="primary" disabled={this.lock} onClick={triggerDialog}>
+        <UButton
+          class="w-37"
+          type="primary"
+          disabled={this.disabled}
+          onClick={triggerDialog}
+          size="small"
+        >
           Release
         </UButton>
       </>

@@ -32,3 +32,33 @@ export const BOUNTY_TYPES_COLOR_MAP = [
     value: '#DF4F51'
   }
 ] as const
+
+export enum BOUNTY_STATUS {
+  PENDING,
+  READYTOWORK,
+  WORKSTARTED,
+  COMPLETED,
+  EXPIRED
+}
+
+export enum APPLICANT_STATUS {
+  PENDING,
+  APPLIED,
+  REFUNDED,
+  WITHDRAW,
+  REFUESED,
+  APPROVED,
+  UNAPPROVED
+}
+
+export enum USER_ROLE {
+  PENDING,
+  FOUNDER,
+  APPLICANT,
+  OTHERS
+}
+
+export const transcationUrl: { [key: number]: string } = {
+  43113: 'https://cchain.explorer.avax-test.network/tx/',
+  43114: 'https://etherscan.io/tx/'
+}

@@ -8,9 +8,11 @@ import {
   UFormItemsFactory,
   UModal
 } from '@comunion/components'
-import { defineComponent, Ref, computed, reactive, ref } from 'vue'
+import { defineComponent, reactive, ref, watch } from 'vue'
+import { useBountyContractWrapper } from '../../hooks/useBountyContractWrapper'
 import { services } from '@/services'
 import { useBountyStore } from '@/stores'
+import { useBountyContractStore } from '@/stores/bountyContract'
 
 export default defineComponent({
   props: {
@@ -20,54 +22,57 @@ export default defineComponent({
     }
   },
   emits: ['triggerDialog'],
-  setup() {
+  setup(props) {
     const info = reactive({
       update: ''
     })
-    const fields: Ref<FormFactoryField[]> = computed(() => [
+
+    watch(
+      () => props.visible,
+      value => {
+        if (value) {
+          info.update = ''
+        }
+      }
+    )
+    const fields: FormFactoryField[] = [
       {
-        t: 'custom',
+        t: 'string',
         title: 'This update will be shown on activity',
         name: 'update',
-        formItemProps: {
-          feedback: 'Please enter an update',
-          themeOverrides: {
-            feedbackTextColor: 'var(--u-grey-4-color)',
-            feedbackFontSizeMedium: '12px'
-          }
-        },
+        placeholder: '',
+        minlength: 100,
+        required: true,
+        type: 'textarea',
         rules: [
           {
             required: true,
-            validator: (rule, value: string) => {
-              return value.trim() !== ''
-            },
-            trigger: 'blur'
+            message: 'Please enter an update'
           }
         ],
-        render() {
-          return (
-            <h1>check</h1>
-            // <RichEditor
-            //   placeholder="Describe the details of the bounty"
-            //   class="w-full"
-            //   v-model:value={info.update}
-            // />
-          )
+        autosize: {
+          minRows: 5,
+          maxRows: 10
         }
       }
-    ])
+    ]
 
-    const postUpdateFields = getFieldsRules(fields.value)
+    const postUpdateFields = getFieldsRules(fields)
     const form = ref<FormInst>()
     const bountyStore = useBountyStore()
+    const bountyContractStore = useBountyContractStore()
     const { getActivities } = bountyStore
+    const { bountyContract, gap } = useBountyContractWrapper()
+    const { postUpdate } = bountyContract
     return {
       postUpdateFields,
       fields,
       info,
       form,
-      getActivities
+      getActivities,
+      postUpdate,
+      bountyContractInfo: bountyContractStore.bountyContractInfo,
+      gap
     }
   },
   render() {
@@ -82,6 +87,9 @@ export default defineComponent({
       }
       this.form?.validate(async err => {
         if (typeof err === 'undefined') {
+          if (this.gap >= 0) {
+            await this.postUpdate('', '')
+          }
           const { error } = await services['bounty@bounty-activities']({
             sourceType: 1,
             content: this.info.update,
@@ -116,10 +124,15 @@ export default defineComponent({
               <UFormItemsFactory fields={this.fields} values={this.info} />
             </UForm>
             <div class="flex justify-end">
-              <UButton class="mr-16px w-164px" type="default" onClick={userBehavier('cancel')}>
+              <UButton
+                class="mr-16px w-164px"
+                type="default"
+                onClick={userBehavier('cancel')}
+                size="small"
+              >
                 cancel
               </UButton>
-              <UButton class="w-164px" type="primary" onClick={userBehavier('submit')}>
+              <UButton class="w-164px" type="primary" onClick={userBehavier('submit')} size="small">
                 submit
               </UButton>
             </div>

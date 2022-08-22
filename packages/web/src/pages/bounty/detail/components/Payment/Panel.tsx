@@ -5,26 +5,25 @@ import { ProjectCardWithDialog } from '../ProjectCard'
 import ProjectCarousel from '../ProjectCarousel'
 import Text from '../Text'
 import PaymentCard from './Card'
+import ReleaseApplicant from './ReleaseApplicant'
 import AddDeposit from './addDeposit'
+import ApplyBounty from './applyBounty'
 import CloseBounty from './closeBounty'
 import Lock from './lock'
 import ReleaseDeposit from './releaseDeposit'
+import { APPLICANT_STATUS, BOUNTY_STATUS, USER_ROLE } from '@/constants'
 import { ServiceReturn } from '@/services'
+import { BountyContractInfoType } from '@/stores/bountyContract'
 
 export default defineComponent({
   props: {
+    bountyContractInfo: {
+      type: Object as PropType<BountyContractInfoType>,
+      required: true
+    },
     paymentInfo: {
       type: Object as PropType<ServiceReturn<'bounty@bounty-payment'>>,
       required: true
-    },
-    stageNum: {
-      type: Number,
-      require: true,
-      default: () => 0
-    },
-    bountyStatus: {
-      type: Object as PropType<ServiceReturn<'bounty@bounty-detail-status'>>,
-      require: true
     }
   },
   setup(props) {
@@ -49,31 +48,20 @@ export default defineComponent({
       return []
     })
 
-    const bountyDepositLock = computed<boolean>(() => {
-      return props.paymentInfo?.bountyDepositStatus === 3
-    })
-
-    const roleName = computed<string>(() => {
-      if (props.bountyStatus?.role === 1) {
-        return 'founder'
+    const bountyApplicantAmount = computed(() => {
+      if (props.bountyContractInfo.role === USER_ROLE.APPLICANT) {
+        if (props.bountyContractInfo.bountyStatus >= 2) {
+          return props.bountyContractInfo.myDepositAmount
+        }
       }
-      return 'applicant'
-    })
-
-    const applicantApplyStatus = computed<number>(() => {
-      if (typeof props.paymentInfo?.applicantApplyStatus === 'number') {
-        return props.paymentInfo?.applicantApplyStatus
-      }
-      return -1
+      return props.bountyContractInfo.applicantDepositAmount
     })
 
     return {
       payMode,
       stageTerms,
       periodTerms,
-      bountyDepositLock,
-      roleName,
-      applicantApplyStatus
+      bountyApplicantAmount
     }
   },
   render() {
@@ -82,18 +70,21 @@ export default defineComponent({
         <div class="flex justify-between mt-26px">
           <PaymentCard
             title="Rewards"
-            class="w-401px"
+            class="w-100"
             v-slots={{
               btn: () => (
                 <>
-                  {/* {this.roleName === 'applicant' && (
+                  {this.bountyContractInfo.role != USER_ROLE.FOUNDER && (
                     <ApplyBounty
-                      disabled={this.stageNum >= 2 || this.applicantApplyStatus >= 0}
-                      applicantApplyStatus={this.applicantApplyStatus}
-                      applicantDeposit={this.paymentInfo?.bountyPaymentInfo?.applicantDeposit}
+                      disabled={
+                        this.bountyContractInfo.status === APPLICANT_STATUS.APPLIED ||
+                        this.bountyContractInfo.bountyStatus >= BOUNTY_STATUS.WORKSTARTED
+                      }
+                      applicantApplyStatus={this.bountyContractInfo.status}
+                      applicantDepositMinAmount={this.bountyContractInfo.applicantDepositMinAmount}
                     />
-                  )} */}
-                  {this.roleName === 'founder' && <CloseBounty disibled={this.stageNum >= 3} />}
+                  )}
+                  {this.bountyContractInfo.role === USER_ROLE.FOUNDER && <CloseBounty />}
                 </>
               ),
               text: () => (
@@ -106,54 +97,67 @@ export default defineComponent({
                       enhance={true}
                     />
                   )}
-                  {this.paymentInfo?.rewards?.token2Symbol && (
-                    <Text
-                      value={`${this.paymentInfo.rewards.token2Amount || 0}`}
-                      class="mt-40px"
-                      unit={this.paymentInfo.rewards.token2Symbol}
-                      plus={true}
-                      enhance={true}
-                    />
-                  )}
+                  <Text
+                    value={`${this.paymentInfo?.rewards?.token2Amount || 0}`}
+                    class="mt-40px"
+                    unit={this.paymentInfo?.rewards?.token2Symbol || 'TOKEN'}
+                    plus={true}
+                    enhance={true}
+                  />
                 </>
               )
             }}
           />
           <PaymentCard
-            class="w-401px"
-            lock={this.bountyDepositLock}
+            class="w-100"
+            lock={this.bountyContractInfo.depositLock}
             v-slots={{
               title: () => (
                 <p
                   class="flex justify-between items-center h-72px"
                   style={{
-                    backgroundColor: this.bountyDepositLock ? 'rgba(223, 79, 81, 0.12)' : '#F5F6FA'
+                    backgroundColor: this.bountyContractInfo.depositLock
+                      ? 'rgba(223, 79, 81, 0.12)'
+                      : '#F5F6FA'
                   }}
                 >
                   <span class="text-20px ml-24px opacity-100">Deposit</span>
-                  {this.bountyDepositLock ? (
-                    <LockKeyOutlined class="mr-24px" />
+                  {this.bountyContractInfo.depositLock ? (
+                    <LockKeyOutlined class="mr-6" />
                   ) : (
-                    <UnlockKeyOutlined class="mr-24px" />
+                    <UnlockKeyOutlined class="mr-6" />
                   )}
                 </p>
               ),
               btn: () => (
                 <>
-                  {this.stageNum >= 2 && this.roleName === 'applicant' && (
-                    <Lock lock={this.bountyDepositLock} />
+                  {this.bountyContractInfo.role != USER_ROLE.FOUNDER && (
+                    <>
+                      {this.bountyContractInfo.bountyStatus < BOUNTY_STATUS.WORKSTARTED && (
+                        <ReleaseApplicant
+                          disabled={this.bountyContractInfo.status !== APPLICANT_STATUS.APPLIED}
+                        />
+                      )}
+                      {this.bountyContractInfo.bountyStatus >= BOUNTY_STATUS.WORKSTARTED &&
+                        this.bountyContractInfo.status !== APPLICANT_STATUS.APPROVED && (
+                          <ReleaseApplicant disabled={true} />
+                        )}
+                      {this.bountyContractInfo.status === APPLICANT_STATUS.APPROVED && <Lock />}
+                    </>
                   )}
-                  {this.stageNum < 3 && this.roleName === 'founder' && (
-                    <div class="flex w-322px mt-60px mb-48px mx-auto">
-                      <AddDeposit disibled={this.bountyStatus?.release} />
-                      <ReleaseDeposit lock={this.bountyDepositLock} />
-                    </div>
+                  {this.bountyContractInfo.role === USER_ROLE.FOUNDER && (
+                    <>
+                      {this.bountyContractInfo.timeLock === 0 &&
+                      this.bountyContractInfo.depositLock ? (
+                        <Lock />
+                      ) : (
+                        <div class="flex w-322px mt-60px mb-48px mx-auto">
+                          <AddDeposit />
+                          <ReleaseDeposit />
+                        </div>
+                      )}
+                    </>
                   )}
-                  {/* {this.roleName === 'applicant' && this.stageNum === 1 && (
-                    <ReleaseApplicant
-                      disabled={(this.paymentInfo?.bountyPaymentInfo?.applicantDeposit || 0) === 0}
-                    />
-                  )} */}
                 </>
               ),
               text: () => (
@@ -161,7 +165,7 @@ export default defineComponent({
                   <Text
                     class="mt-60px"
                     text-color="text-warning"
-                    value={`${this.paymentInfo?.bountyPaymentInfo?.founderDeposit || 0}`}
+                    value={`${this.bountyContractInfo.founderDepositAmount || 0}`}
                     enhance={true}
                     v-slots={{
                       unit: () => (
@@ -175,7 +179,7 @@ export default defineComponent({
                   <Text
                     class="mt-40px"
                     text-color="text-warning"
-                    value={`${this.paymentInfo?.applicantsTotalDeposit || 0}`}
+                    value={`${this.bountyApplicantAmount}`}
                     enhance={true}
                     v-slots={{
                       unit: () => (

@@ -32,7 +32,7 @@ export const CrowdfundingCard = defineComponent({
     const logo = computed(() => {
       return getChainInfoByChainId(props.info.chainId)?.logo
     })
-
+    console.log(props.info.chainId, props.info.crowdfundingContract)
     const fundingContract = useCrowdfundingContract({
       chainId: props.info.chainId!,
       addresses: { [props.info.chainId!]: props.info.crowdfundingContract }

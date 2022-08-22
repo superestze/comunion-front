@@ -1,21 +1,20 @@
 import { UButton, UScrollbar } from '@comunion/components'
 import { format } from 'timeago.js'
 import { defineComponent, PropType, ref, computed } from 'vue'
+import { useBountyContractWrapper } from '../../hooks/useBountyContractWrapper'
 import Basic from '../Dialog/basic'
 import Bubble from './core'
 import { ItemType } from './getItemType'
-import { ServiceReturn } from '@/services'
+import { BOUNTY_STATUS, USER_ROLE } from '@/constants'
+import { ServiceReturn, services } from '@/services'
 import { useBountyStore, useUserStore } from '@/stores'
+import { useBountyContractStore } from '@/stores/bountyContract'
 
 export default defineComponent({
   props: {
     applicant: {
       type: Object as PropType<ItemType<ServiceReturn<'bounty@bounty-list-applicants'>>>,
       required: true
-    },
-    stageNum: {
-      type: Number,
-      require: true
     }
   },
   setup(props) {
@@ -23,23 +22,34 @@ export default defineComponent({
     const userStore = useUserStore()
     const bountyStore = useBountyStore()
 
-    const { getApprovedPeople, getBountyPayment, get } = bountyStore
+    const { getApprovedPeople, get } = bountyStore
+
+    const bountyContractStore = useBountyContractStore()
+    const { bountyContract } = useBountyContractWrapper()
+    const { approveApplicant } = bountyContract
 
     const formatDate = computed(() => {
       return format(props.applicant?.applyAt || '', 'comunionTimeAgo')
     })
 
     const approveDisabled = computed(() => {
-      return bountyStore.bountyStatus?.role !== 1
+      return (
+        bountyContractStore.bountyContractInfo.role !== USER_ROLE.FOUNDER ||
+        bountyContractStore.bountyContractInfo.bountyStatus >= BOUNTY_STATUS.WORKSTARTED
+      )
     })
+
+    const stageNum = computed(() => bountyContractStore.bountyContractInfo.bountyStatus)
+
     return {
       visible,
       profile: userStore.profile,
       formatDate,
       getApprovedPeople,
-      getBountyPayment,
       approveDisabled,
-      get
+      get,
+      approveApplicant,
+      stageNum
     }
   },
   render() {
@@ -52,18 +62,17 @@ export default defineComponent({
         triggerDialog()
         return
       }
-
-      // const { error } = await services['bounty@bounty-founder-approve']({
-      //   bountyID: parseInt(this.$route.query.bountyId as string),
-      //   applicantComerID: this.profile?.comerID
-      // })
-      // if (!error) {
-      //   this.get(this.$route.query.bountyId as string)
-      //   this.getApprovedPeople(this.$route.query.bountyId as string)
-      //   this.getBountyPayment(this.$route.query.bountyId as string)
-      //   triggerDialog()
-      //   return
-      // }
+      await this.approveApplicant(this.applicant?.address || '', '', '')
+      const { error } = await services['bounty@bounty-founder-approve']({
+        bountyID: parseInt(this.$route.query.bountyId as string),
+        applicantComerID: this.profile?.comerID
+      })
+      if (!error) {
+        this.get(this.$route.query.bountyId as string)
+        this.getApprovedPeople(this.$route.query.bountyId as string)
+        triggerDialog()
+        return
+      }
     }
     return (
       <>
@@ -97,7 +106,7 @@ export default defineComponent({
                   <div class="flex items-center">
                     <p class="text-14px text-grey3 mr-16px">{this.formatDate}</p>
                     <UButton
-                      disabled={this.approveDisabled || (this.stageNum || 0) >= 2}
+                      disabled={this.approveDisabled || this.stageNum >= BOUNTY_STATUS.WORKSTARTED}
                       class="w-120px"
                       type="primary"
                       size="small"
@@ -111,7 +120,7 @@ export default defineComponent({
                   style={{ maxHeight: '120px' }}
                   class="bg-purple rounded-8px text-black mt-12px py-16px px-24px overflow-hidden"
                 >
-                  {/* <p>{this.applicant?.desription}</p> */}
+                  <p>{this.applicant?.description}</p>
                 </UScrollbar>
               </div>
             )

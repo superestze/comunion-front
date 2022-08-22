@@ -10,7 +10,6 @@ export type BountyState = {
   applicantsList: ServiceReturn<'bounty@bounty-list-applicants'> | []
   depositRecords: ServiceReturn<'bounty@bounty-deposit-records'> | []
   bountyPayment: ServiceReturn<'bounty@bounty-payment'> | null
-  bountyStatus: ServiceReturn<'bounty@bounty-detail-status'> | null
 }
 
 export const useBountyStore = defineStore('bounty', {
@@ -22,8 +21,7 @@ export const useBountyStore = defineStore('bounty', {
     activitiesList: [],
     applicantsList: [],
     depositRecords: [],
-    bountyPayment: null,
-    bountyStatus: null
+    bountyPayment: null
   }),
   getters: {
     bountySection(state): BountyState {
@@ -35,15 +33,13 @@ export const useBountyStore = defineStore('bounty', {
         activitiesList: state.activitiesList,
         applicantsList: state.applicantsList,
         depositRecords: state.depositRecords,
-        bountyPayment: state.bountyPayment,
-        bountyStatus: this.bountyStatus
+        bountyPayment: state.bountyPayment
       }
     }
   },
   actions: {
     initialize(bountyId: string) {
       const list = [
-        this.getBountyStatus(bountyId),
         this.get(bountyId),
         this.getStartup(bountyId),
         this.getFounder(bountyId),
@@ -54,14 +50,6 @@ export const useBountyStore = defineStore('bounty', {
         this.getDepositRecords(bountyId)
       ]
       return Promise.all(list)
-    },
-    async getBountyStatus(id: string) {
-      const { error, data } = await services['bounty@bounty-detail-status']({ bountyID: id })
-      if (!error) {
-        this.bountyStatus = data
-        return data
-      }
-      return
     },
     async get(id: string) {
       const { error, data } = await services['bounty@bounty-get-detail']({ bountyID: id })

@@ -39,7 +39,7 @@ export default defineComponent({
               class="rounded !object-contain"
             />
           </div>
-          <div class="flex flex-col ml-24px">
+          <div class="flex flex-col ml-6">
             <div class="flex items-center mb-12px">
               <span class="u-h2 truncate">{this.startup?.name}</span>
             </div>
