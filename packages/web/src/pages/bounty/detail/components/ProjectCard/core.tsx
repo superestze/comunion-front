@@ -27,14 +27,6 @@ export default defineComponent({
   emits: ['pay'],
   setup(props) {
     const bountyContractStore = useBountyContractStore()
-    const leftTopCorner = computed(() => {
-      const str =
-        'u-title2 text-primary absolute -left-2 -top-2 z-1 text-primary w-11.5 h-7 flex justify-center items-center rounded-4px'
-      if (props.info?.status === 2) {
-        return `${str} bg-purple-light`
-      }
-      return `${str} bg-purple`
-    })
 
     const index = computed(() => {
       if (props.info?.seqNum) {
@@ -67,7 +59,6 @@ export default defineComponent({
       return bountyContractStore.bountyContractInfo.bountyStatus >= BOUNTY_STATUS.WORKSTARTED
     })
     return {
-      leftTopCorner,
       index,
       payBtnAbled,
       wrapperClass,
@@ -91,7 +82,9 @@ export default defineComponent({
             </div>
           </>
         )}
-        <div class={this.leftTopCorner}>{this.index}</div>
+        <div class="u-title2 text-primary absolute -left-2 -top-2 z-1 text-primary w-11.5 h-7 flex justify-center items-center rounded-4px bg-purple-light">
+          {this.index}
+        </div>
         {this.info?.token1Symbol && (
           <Text
             class="mt-8"

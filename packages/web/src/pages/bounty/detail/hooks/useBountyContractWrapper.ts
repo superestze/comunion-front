@@ -3,7 +3,7 @@ import { BigNumber } from 'ethers'
 import { computed } from 'vue'
 import { useBountyContract, useErc20Contract } from '@/contracts'
 import { AVAX_USDC_ADDR } from '@/contracts/utils'
-import { useWalletStore } from '@/stores'
+import { useBountyStore, useWalletStore } from '@/stores'
 import { useBountyContractStore } from '@/stores/bountyContract'
 
 export type BountyContractReturnType = {
@@ -47,10 +47,11 @@ export type BountyContractReturnType = {
 
 export function useBountyContractWrapper() {
   const walletStore = useWalletStore()
+  const bountyStore = useBountyStore()
   const bountyContractStore = useBountyContractStore()
   const bountyContract = useBountyContract({
     chainId: walletStore.chainId,
-    addresses: { [walletStore.chainId!]: '0x11FF42b0cBAC4E5DE2bC0C9B973F40790a40A17a' }
+    addresses: { [walletStore.chainId!]: bountyStore.bountySection?.detail?.depositContract || '' }
   })
 
   const usdcTokenContract = useErc20Contract()
@@ -73,6 +74,6 @@ export function useBountyContractWrapper() {
     usdc,
     approve,
     gap,
-    chainId: 43113
+    chainId: walletStore.chainId
   }
 }

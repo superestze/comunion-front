@@ -69,15 +69,17 @@ export default defineComponent({
               <StretchTags tags={this.bountyDetail?.applicantsSkills} />
             )}
           </div>
-          <UTag
-            class="ml-5 text-12px w-110px flex justify-center flex-shrink-0"
-            type="outlined"
-            style={{
-              color: this.bountyStatus.value
-            }}
-          >
-            {this.bountyStatus.label}
-          </UTag>
+          {this.bountyStatus && (
+            <UTag
+              class="ml-5 text-12px w-110px flex justify-center flex-shrink-0"
+              type="outlined"
+              style={{
+                color: this.bountyStatus.value
+              }}
+            >
+              {this.bountyStatus.label}
+            </UTag>
+          )}
         </div>
         <Paragraph
           class="mt-40px"

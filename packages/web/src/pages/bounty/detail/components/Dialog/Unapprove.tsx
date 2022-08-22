@@ -2,6 +2,7 @@ import { UButton } from '@comunion/components'
 import { defineComponent, PropType, computed } from 'vue'
 import { useBountyContractWrapper } from '../../hooks/useBountyContractWrapper'
 import Basic from './basic'
+import { services } from '@/services'
 import { useUserStore, useWalletStore } from '@/stores'
 
 export type VisibleMap = {
@@ -43,15 +44,15 @@ export const UnapprovePromptSet = defineComponent({
       if (!this.address) {
         return
       }
-      const response = await this.unapproveApplicant(this.address, '', '')
-      console.log(response)
-      // const { error } = await services['bounty@bounty-founder-unapprove']({
-      //   applicantComerID: this.profile?.comerID
-      // })
-      // if (!error) {
-      //   closeUnapproveConfirm()
-      //   return
-      // }
+      await this.unapproveApplicant(this.address, '', '')
+      const { error } = await services['bounty@bounty-founder-unapprove']({
+        bountyID: this.$route.query.bountyId as string,
+        applicantComerID: this.profile?.comerID
+      })
+      if (!error) {
+        closeUnapproveConfirm()
+        return
+      }
       this.visibleMap!.visibleUnapproveFail = true
     }
 

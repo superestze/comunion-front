@@ -908,7 +908,7 @@ export const services = {
       ...extract('POST', args, [], ['bountyID', 'applicantComerID'])
     })
   },
-  'bounty@bounty-founder-unapprove(暂时用不到)'(
+  'bounty@bounty-founder-unapprove'(
     args: {
       bountyID: any
       applicantComerID: any
@@ -917,9 +917,9 @@ export const services = {
     return requestAdapter<{
       data?: string
     }>({
-      url: replacePath('/bounty/founder/{bountyID}/unapproved/{applicantComerID}', args),
-      method: 'PUT',
-      ...extract('PUT', args, [], ['bountyID', 'applicantComerID'])
+      url: replacePath('/bounty/{bountyID}/unapprove/{applicantComerID}', args),
+      method: 'POST',
+      ...extract('POST', args, [], ['bountyID', 'applicantComerID'])
     })
   },
   'bounty@bounty-get-detail'(args: { bountyID: any }) {
@@ -942,6 +942,10 @@ export const services = {
         contactAddress?: string
       }[]
       createdAt?: string
+      /**
+       * @description 押金合约地址
+       */
+      depositContract?: string
     }>({
       url: replacePath('/bounty/{bountyID}/detail', args),
       method: 'GET',

@@ -2,6 +2,7 @@ import { ethers } from 'ethers'
 import { defineStore } from 'pinia'
 import { useRequest } from 'vue-request'
 import { useBountyContract } from '@/contracts'
+import { services } from '@/services'
 
 export type BountyContractInfoType = {
   bountyStatus: number
@@ -58,31 +59,28 @@ export const useBountyContractStore = defineStore('bountyContract', {
     ) {
       const getState = () => {
         return new Promise((resolve, reject) => {
-          // if (
-          //   this.bountyContractInfo.founderDepositAmount === 0 &&
-          //   this.bountyContractInfo.myDepositAmount === 0
-          // ) {
-          //   services['bounty@bounty-state']({ bountyID: bountyId }).then(response => {
-          //     const { error, data } = response
-          //     if (!error) {
-          //       this.bountyContractInfo.applicantCount = data.applicantCount || 0
-          //       this.bountyContractInfo.applicantDepositAmount = data.applicantDepositAmount || 0
-          //       this.bountyContractInfo.applicantDepositMinAmount =
-          //         data.applicantDepositMinAmount || 0
-          //       this.bountyContractInfo.bountyStatus = data.bountyStatus || 0
-          //       this.bountyContractInfo.depositBalance = data.depositBalance || 0
-          //       this.bountyContractInfo.depositLock = data.depositLock as boolean
-          //       this.bountyContractInfo.founderDepositAmount = data.founderDepositAmount || 0
-          //       this.bountyContractInfo.myDepositAmount = data.myDepositAmount || 0
-          //       this.bountyContractInfo.role = data.myRole || 0
-          //       this.bountyContractInfo.status = data.myStatus || 0
-          //       this.bountyContractInfo.timeLock = data.timeLock || 0
-          //       resolve(data)
-          //     }
-          //     reject(error)
-          //   })
-          //   return
-          // }
+          if (this.dontContract) {
+            services['bounty@bounty-state']({ bountyID: bountyId }).then(response => {
+              const { error, data } = response
+              if (!error) {
+                this.bountyContractInfo.applicantCount = data.applicantCount || 0
+                this.bountyContractInfo.applicantDepositAmount = data.applicantDepositAmount || 0
+                this.bountyContractInfo.applicantDepositMinAmount =
+                  data.applicantDepositMinAmount || 0
+                this.bountyContractInfo.bountyStatus = data.bountyStatus || 0
+                this.bountyContractInfo.depositBalance = data.depositBalance || 0
+                this.bountyContractInfo.depositLock = data.depositLock as boolean
+                this.bountyContractInfo.founderDepositAmount = data.founderDepositAmount || 0
+                this.bountyContractInfo.myDepositAmount = data.myDepositAmount || 0
+                this.bountyContractInfo.role = data.myRole || 0
+                this.bountyContractInfo.status = data.myStatus || 0
+                this.bountyContractInfo.timeLock = data.timeLock || 0
+                resolve(data)
+              }
+              reject(error)
+            })
+            return
+          }
           // [
           //   /** _bountyStatus */ number,
           //   /** _applicantCount */ number | BigNumber,
