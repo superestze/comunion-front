@@ -87,14 +87,16 @@ export default defineComponent({
         </div>
         {this.info?.token1Symbol && (
           <Text
-            class="mt-8"
+            class="mt-8 w-full"
+            half={true}
             unit={this.info.token1Symbol}
             value={`${this.info.token1Amount || 0}`}
           />
         )}
         {this.info?.token2Symbol && (
           <Text
-            class="mt-3"
+            class="mt-3 w-full"
+            half={true}
             unit={this.info.token2Symbol}
             value={`${this.info.token2Amount || 0}`}
             plus={true}

@@ -553,7 +553,7 @@ export const Invest = defineComponent({
             <span class="u-title1 font-orbitron">{mode.value === 'buy' ? 'INVEST' : 'SELL'}</span>
             <span class="bg-[rgba(83,49,244,0.06)] flex items-center px-4 py-1 text-primary1 rounded-4xl leading-snug">
               <img src={chainInfo?.logo} class="w-5 h-5" />{' '}
-              <span class="ml-2 font-opensans">{chainInfo?.name}</span>
+              <span class="ml-2 font-opensans font-600">{chainInfo?.name}</span>
             </span>
           </div>
           <div class="u-body2 !text-primary mb-10">

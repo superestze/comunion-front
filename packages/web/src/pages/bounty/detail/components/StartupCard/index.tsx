@@ -29,8 +29,8 @@ export default defineComponent({
   },
   render() {
     return (
-      <div>
-        <div class="flex">
+      <>
+        <div class="flex 123">
           <div class="w-80px h-80px">
             <UStartupLogo
               src={this.startup?.logo || ''}
@@ -70,7 +70,7 @@ export default defineComponent({
           docs={this.startup?.docs}
           class="flex gap-4 mt-7"
         />
-      </div>
+      </>
     )
   }
 })

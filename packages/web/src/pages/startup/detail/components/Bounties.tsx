@@ -47,9 +47,7 @@ const BountiesCard = defineComponent({
     })
 
     const handleCard = (bountyId: number) => () => {
-      // router.push(`/bounty/detail?bountyId=${bountyId}`)
-      console.log(bountyId)
-      router.push(`/bounty/detail?bountyId=141875642314752`)
+      router.push(`/bounty/detail?bountyId=${bountyId}&from=1`)
     }
 
     return () => (
