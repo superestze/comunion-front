@@ -6,8 +6,6 @@ import CreateBlock from '../Create'
 import NetworkSwitcher from '../Network'
 import UserAvatar from '../UserAvatar'
 
-let top = 0
-
 const TheHeader = defineComponent({
   name: 'TheHeader',
   setup() {
@@ -36,10 +34,7 @@ const TheHeader = defineComponent({
     const onScroll = () => {
       const scrollTop =
         window.pageYOffset || document.documentElement.scrollTop || document.body.scrollTop
-      const scroll = scrollTop - top
-      top = scrollTop
-      console.log(scrollTop)
-      if (scroll > 0) {
+      if (scrollTop > 0) {
         sticky.value = 'bg-white/80'
       } else {
         sticky.value = ''
@@ -82,7 +77,7 @@ const TheHeader = defineComponent({
             <RouterLink
               key={nav.name}
               class={[
-                'transition u-body2 hover:text-primary font-bold',
+                'transition u-body2 hover:text-primary font-bold text-primary1',
                 nav.disabled ? '!text-grey4 cursor-default' : ''
               ]}
               activeClass="text-primary"
