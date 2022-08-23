@@ -6,8 +6,6 @@ import CreateBlock from '../Create'
 import NetworkSwitcher from '../Network'
 import UserAvatar from '../UserAvatar'
 
-const top = 0
-
 const TheHeader = defineComponent({
   name: 'TheHeader',
   setup() {
