@@ -125,7 +125,7 @@ const CreateBlock = defineComponent({
           ]}
         >
           <UButton type="primary" size="small" class="w-19.25 text-white u-body2 h-8">
-            CREATE
+            Create
           </UButton>
           {/* <button class={[styles.btn, ctx.attrs.class]}></button> */}
         </HeaderDropdown>
