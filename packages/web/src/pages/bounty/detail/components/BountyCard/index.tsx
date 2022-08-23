@@ -4,7 +4,6 @@ import { format } from 'timeago.js'
 import { defineComponent, ref, PropType, computed, onMounted } from 'vue'
 import Paragraph from './paragraph'
 import More from '@/components/More'
-import { StretchTags } from '@/components/Tags'
 import { BOUNTY_TYPES_COLOR_MAP } from '@/constants'
 import { ServiceReturn } from '@/services'
 import { useBountyContractStore } from '@/stores/bountyContract'
@@ -54,7 +53,7 @@ export default defineComponent({
     return (
       <div>
         <div class="flex justify-between items-center">
-          <div class="flex flex-col">
+          <div class="flex flex-col flex-grow">
             <UTooltip trigger="hover">
               {{
                 trigger: () => (
@@ -65,9 +64,14 @@ export default defineComponent({
                 default: () => this.bountyDetail?.title
               }}
             </UTooltip>
-            {Array.isArray(this.bountyDetail?.applicantsSkills) && (
-              <StretchTags tags={this.bountyDetail?.applicantsSkills} />
-            )}
+            <div class="flex flex-row mt-5.5">
+              {Array.isArray(this.bountyDetail?.applicantSkills) &&
+                this.bountyDetail?.applicantSkills.map(value => (
+                  <p class="w-auto flex rounded-2px overflow-hidden h-6 px-2 py-1 text-primary1 border border-primary1 text-12px items-center justify-center">
+                    {value}
+                  </p>
+                ))}
+            </div>
           </div>
           {this.bountyStatus && (
             <UTag
@@ -91,7 +95,7 @@ export default defineComponent({
           return (
             <Paragraph
               class="mt-18px"
-              label={this.contactLabel[(item.contactType || 0) - 1]}
+              label={`${this.contactLabel[(item.contactType || 0) - 1]} :`}
               content={item.contactAddress}
               contentClass="text-primary"
               pasteboard={true}

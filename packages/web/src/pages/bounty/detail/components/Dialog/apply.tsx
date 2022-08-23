@@ -61,14 +61,8 @@ const ApplyDialog = defineComponent({
       {
         t: 'custom',
         name: 'deposit',
-        title: '1. Deposit.',
-        formItemProps: {
-          feedback: `Minimum deposit ${formData.deposit} USDC for applying bounty`,
-          themeOverrides: {
-            feedbackTextColor: 'var(--u-grey-4-color)',
-            feedbackFontSizeMedium: '12px'
-          }
-        },
+        label: '1.Deposit',
+        title: '1. Deposit',
         rules: [
           {
             required: true,
@@ -80,14 +74,13 @@ const ApplyDialog = defineComponent({
           }
         ],
         slots: {
-          label: () => [
+          label: () => [h(<div>1.Deposit</div>)],
+          feedback: () => [
             h(
-              <div>
-                Applicants deposit
-                <span class="text-xs text-grey4 ml-4">
-                  Applicant must deposit usdc for applying the bounty
-                </span>
-              </div>
+              <span class="text-12px text-grey4">
+                Minimum deposit <span class="text-primary">{formData.deposit}</span> USDC for
+                applying bounty
+              </span>
             )
           ]
         },
@@ -116,13 +109,13 @@ const ApplyDialog = defineComponent({
         t: 'string',
         title: '2.Submit your executing plan.',
         name: 'description',
-        required: true,
         type: 'textarea',
         placeholder: 'Input your execution plan',
         minlength: 30,
         rules: [
-          { min: 30, message: 'At least more than 30 characters', required: true },
-          { max: 1000, message: 'No more than 1000 characters', required: true }
+          { required: true, message: `The executing plan can't be blank.` },
+          { min: 30, message: 'At least more than 30 characters' },
+          { max: 1000, message: 'No more than 1000 characters' }
         ],
         // @ts-ignore
         autosize: {
@@ -269,10 +262,10 @@ const ApplyDialog = defineComponent({
             </UCheckbox>
             <div class="flex justify-end mt-40px">
               <UButton class="mr-16px w-164px" type="default" onClick={userBehavier('cancel')}>
-                cancel
+                Cancel
               </UButton>
               <UButton class="w-164px" type="primary" onClick={userBehavier('submit')}>
-                submit
+                Submit
               </UButton>
             </div>
           </>

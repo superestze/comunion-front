@@ -1,18 +1,5 @@
-import {
-  UBreadcrumb,
-  UBreadcrumbItem,
-  UCard,
-  UNoContent,
-  USpin,
-  UTooltip
-} from '@comunion/components'
-import {
-  ArrowLeftOutlined,
-  EmptyFilled,
-  PeriodOutlined,
-  StageOutlined,
-  ClockOutlined
-} from '@comunion/icons'
+import { UBreadcrumb, UBreadcrumbItem, UCard, USpin, UTooltip } from '@comunion/components'
+import { ArrowLeftOutlined, PeriodOutlined, StageOutlined, ClockOutlined } from '@comunion/icons'
 import { defineComponent, computed, ref } from 'vue'
 import { useRoute } from 'vue-router'
 import BountyCard from './components/BountyCard'
@@ -24,6 +11,8 @@ import StartupCard from './components/StartupCard'
 import Unapprove from './components/Unapprove'
 import { useBountyContractWrapper } from './hooks/useBountyContractWrapper'
 import { BOUNTY_STATUS, USER_ROLE } from '@/constants'
+import { getChainInfoByChainId } from '@/pages/crowdfunding/utils'
+import router from '@/router'
 import { useBountyStore } from '@/stores'
 import { useBountyContractStore } from '@/stores/bountyContract'
 
@@ -41,14 +30,17 @@ export default defineComponent({
     const bountySection = computed(() => bountyStore.bountySection)
 
     const bountyContractStore = useBountyContractStore()
-    const { bountyContract, gap } = useBountyContractWrapper()
+    const { bountyContract, gap, chainId } = useBountyContractWrapper()
     bountyContractStore.initialize(bountyContract, route.query.bountyId as string, true)
+
+    const chainInfo = getChainInfoByChainId(chainId as number)
 
     return {
       bountySection,
       loading,
       bountyContractInfo: bountyContractStore.bountyContractInfo,
-      gap
+      gap,
+      chainInfo
     }
   },
   render() {
@@ -57,11 +49,8 @@ export default defineComponent({
         <UBreadcrumb class="mb-10 mt-10">
           <UBreadcrumbItem v-slots={{ separator: () => <ArrowLeftOutlined /> }} />
           <UBreadcrumbItem>
-            <span
-              class="u-label2 cursor-pointer uppercase text-primary"
-              onClick={this.$router.back}
-            >
-              Back
+            <span class="u-label2 cursor-pointer uppercase text-primary" onClick={router.back}>
+              BACK
             </span>
           </UBreadcrumbItem>
         </UBreadcrumb>
@@ -90,12 +79,11 @@ export default defineComponent({
                         </>
                       )}
                     </p>
-                    <div
-                      class="flex w-164px h-34px items-center rounded-35px justify-center font-opensans"
-                      style={{ backgroundColor: 'rgba(245,243,254,0.9)' }}
-                    >
-                      {/* <EthereumFilled /> */}
-                      <span class="text-primary1 ml-8px text-16px">Ethereum</span>
+                    <div class="flex bg-[rgba(83,49,244,0.06)] h-34px items-center rounded-35px justify-center font-opensans">
+                      <span class="flex items-center px-4 py-1 rounded-4xl leading-snug text-primary1 ml-8px text-16px">
+                        <img src={this.chainInfo?.logo} class="w-5 h-5" />{' '}
+                        <span class="ml-2 font-opensans">{this.chainInfo?.name}</span>
+                      </span>
                     </div>
                   </div>
                 )
@@ -112,74 +100,74 @@ export default defineComponent({
               title="ACTIVITIES"
               class="mb-6"
               v-slots={{
-                'header-extra': () => (
-                  <div class="flex items-center">
-                    {this.bountyContractInfo.bountyStatus >= BOUNTY_STATUS.WORKSTARTED && (
-                      <>
-                        <UTooltip placement="bottom">
-                          {{
-                            trigger: () => (
-                              <ClockOutlined
-                                class={`${
-                                  this.gap >= 0 ? 'text-grey4' : 'text-error'
-                                } w-4 h-4 mr-2.5`}
-                              />
-                            ),
-                            default: () => (
-                              <div class="text-white w-84">
-                                Post an update at least every 5 days, otherwise you will lose the
-                                permission to lock the deposit, and the founder can unlock.
-                              </div>
-                            )
-                          }}
-                        </UTooltip>
-                        {this.gap >= 0 ? (
-                          <p class="u-body3 text-grey3 flex items-center mr-4">
-                            Founder can unlock after{' '}
-                            <span class="text-parimary mx-1">{this.gap}</span> days
-                          </p>
-                        ) : (
-                          <p class="u-body3 text-error flex items-center mr-4">
-                            Founder can already unlock deposits
-                          </p>
+                'header-extra': () => {
+                  if (
+                    this.bountySection.activitiesList &&
+                    this.bountySection.activitiesList.length > 0
+                  ) {
+                    return (
+                      <div class="flex items-center">
+                        {this.bountyContractInfo.bountyStatus >= BOUNTY_STATUS.WORKSTARTED && (
+                          <>
+                            <UTooltip placement="bottom">
+                              {{
+                                trigger: () => (
+                                  <ClockOutlined
+                                    class={`${
+                                      this.gap >= 0 ? 'text-grey4' : 'text-error'
+                                    } w-4 h-4 mr-2.5`}
+                                  />
+                                ),
+                                default: () => (
+                                  <div class="text-white w-84">
+                                    Post an update at least every 5 days, otherwise you will lose
+                                    the permission to lock the deposit, and the founder can unlock.
+                                  </div>
+                                )
+                              }}
+                            </UTooltip>
+                            {this.gap >= 0 ? (
+                              <p class="u-body3 text-grey3 flex items-center mr-4">
+                                Founder can unlock after{' '}
+                                <span class="text-parimary mx-1">{this.gap}</span> days
+                              </p>
+                            ) : (
+                              <p class="u-body3 text-error flex items-center mr-4">
+                                Founder can already unlock deposits
+                              </p>
+                            )}
+                          </>
                         )}
-                      </>
-                    )}
-                    <PostUpdate />
-                  </div>
-                )
+                        <PostUpdate />
+                      </div>
+                    )
+                  }
+                  return
+                }
               }}
             >
-              {this.bountySection.activitiesList && this.bountySection.activitiesList.length > 0 ? (
+              {this.bountySection.activitiesList && this.bountySection.activitiesList.length > 0 && (
                 <>
                   {this.bountySection.activitiesList.map(activity => (
                     <ActivityBubble activity={activity} />
                   ))}
                 </>
-              ) : (
-                <UNoContent textTip="NO ACTIVITIES YET" class="my-10">
-                  <EmptyFilled />
-                </UNoContent>
               )}
             </UCard>
             <UCard title="APPLICANTS">
-              {this.bountySection.applicantsList && this.bountySection.applicantsList.length > 0 ? (
+              {this.bountySection.applicantsList && this.bountySection.applicantsList.length > 0 && (
                 <>
                   {this.bountySection.applicantsList.map(applicant => (
                     <ApplicantBubble applicant={applicant} />
                   ))}
                 </>
-              ) : (
-                <UNoContent textTip="NO APPLICANTS YET" class="my-10">
-                  <EmptyFilled />
-                </UNoContent>
               )}
             </UCard>
           </div>
           <div class="basis-1/3">
-            <UCard class="mb-6">
+            <div class="bg-white p-10 rounded-lg border mb-6">
               {this.bountySection.startup && <StartupCard startup={this.bountySection.startup} />}
-            </UCard>
+            </div>
             <UCard title="FOUNDER" class="mb-6">
               {this.bountySection.founder && (
                 <PersonalCard
@@ -209,7 +197,7 @@ export default defineComponent({
                 )
               }}
             >
-              {this.bountySection.approvedPeople ? (
+              {this.bountySection.approvedPeople && (
                 <PersonalCard
                   profile={this.bountySection.approvedPeople}
                   class="mt-20px"
@@ -223,14 +211,10 @@ export default defineComponent({
                     timeZone: 'timeZone'
                   }}
                 />
-              ) : (
-                <UNoContent textTip="NO APPROVED" class="my-10">
-                  <EmptyFilled />
-                </UNoContent>
               )}
             </UCard>
             <UCard title="DEPOSIT RECORDS">
-              {this.bountySection.depositRecords && this.bountySection.depositRecords.length > 0 ? (
+              {this.bountySection.depositRecords && this.bountySection.depositRecords.length > 0 && (
                 <>
                   {this.bountySection.depositRecords.map((item, index) => (
                     <DepositBubble
@@ -240,10 +224,6 @@ export default defineComponent({
                     />
                   ))}
                 </>
-              ) : (
-                <UNoContent textTip="NO DEPOSIT RECORDS YET" class="my-10">
-                  <EmptyFilled />
-                </UNoContent>
               )}
             </UCard>
           </div>

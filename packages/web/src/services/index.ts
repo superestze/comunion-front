@@ -929,7 +929,7 @@ export const services = {
        * @description 1:Ready to work 2:Work started 3:Completed 4:Expired
        */
       status?: number
-      applicantsSkills?: string[]
+      applicantSkills?: string[]
       discussionLink?: string
       expiresIn?: string
       applicantsDeposit?: number

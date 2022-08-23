@@ -17,6 +17,10 @@ export default defineComponent({
     plus: {
       type: Boolean,
       default: () => false
+    },
+    half: {
+      type: Boolean,
+      default: () => false
     }
   },
   setup(props, ctx) {
@@ -59,7 +63,7 @@ export default defineComponent({
   render() {
     return (
       <p class="text-primary flex justify-center">
-        <div class="flex justify-end">
+        <div class={`flex justify-end ${this.half ? 'basis-1/2' : 'basis-2/3'}`}>
           {this.plus ? (
             <span class="flex flex-col justify-end pb-6px">
               <span class="text-[1rem]"></span>
@@ -70,14 +74,16 @@ export default defineComponent({
           ) : null}
           {this.formatText}
         </div>
-        {this.$slots.unit
-          ? this.$slots.unit()
-          : this.unit && (
-              <span class="flex flex-col justify-end pb-6px text-grey1">
-                <span class="text-[1rem]"></span>
-                <span class="text-[1rem]">{this.unit}</span>
-              </span>
-            )}
+        <div class={`flex justify-start ${this.half ? 'basis-1/2' : 'basis-1/3'}`}>
+          {this.$slots.unit
+            ? this.$slots.unit()
+            : this.unit && (
+                <span class="flex flex-col justify-end pb-6px text-grey1">
+                  <span class="text-[1rem]"></span>
+                  <span class="text-[1rem]">{this.unit}</span>
+                </span>
+              )}
+        </div>
       </p>
     )
   }
