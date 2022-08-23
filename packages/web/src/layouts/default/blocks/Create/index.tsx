@@ -72,7 +72,6 @@ const CreateBlock = defineComponent({
         <CreateCrowdfundingBlock ref={createCrowdfundingRef} />
         <NoStartupTip ref={NoStartupTipRef} onToCreate={onCreateStartup} />
         <HeaderDropdown
-          title="Create"
           options={[
             {
               key: 'startup',
