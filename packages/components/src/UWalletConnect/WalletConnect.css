@@ -28,6 +28,10 @@
     @apply bg-[#EDEDF2];
   }
 
+  &__text-notallowed {
+    color: #c0c0c0;
+  }
+
   &__item-icon {
     display: inline-block;
     width: 32px;

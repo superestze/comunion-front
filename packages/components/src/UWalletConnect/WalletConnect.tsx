@@ -108,7 +108,9 @@ const UWalletConnect = defineComponent({
                 }}
               >
                 <img src={item.icon} class="u-wallet-connect__item-icon" />
-                <div class={`${item.allowed ? '' : 'text-[#C0C0C0]'}`}>{item.name}</div>
+                <div class={`${item.allowed ? '' : 'u-wallet-connect__text-notallowed'}`}>
+                  {item.name}
+                </div>
               </div>
             ))}
           </div>
