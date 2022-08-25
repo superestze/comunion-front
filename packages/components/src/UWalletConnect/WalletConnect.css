@@ -15,12 +15,12 @@
 
   &__wrap {
     justify-content: space-between;
-    width: 426px;
+    width: 26.6rem;
   }
 
   &__item {
-    width: 208px;
-    height: 98px;
+    width: 13rem;
+    height: 6.125rem;
     padding: 1rem 0;
   }
 
@@ -34,9 +34,9 @@
 
   &__item-icon {
     display: inline-block;
-    width: 32px;
-    height: 32px;
-    margin: 8px 0;
+    width: 2rem;
+    height: 2rem;
+    margin: 0.5rem 0;
     object-fit: contain;
   }
 
