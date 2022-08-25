@@ -1,5 +1,5 @@
 .u-wallet-connect {
-  @apply bg-white rounded-2xl py-8 px-14 w-145 relative;
+  @apply bg-white rounded-2xl py-8 px-14 w-145 relative !pb-12;
 
   &__close-icon {
     @apply absolute top-3 right-5.25 w-6 h-6 text-grey6 cursor-pointer;
@@ -10,7 +10,34 @@
   }
 
   &__subtitle {
-    @apply mt-3 text-sm leading-none text-grey2;
+    @apply mb-5 leading-none font-bold !text-[#211B42];
+  }
+
+  &__wrap {
+    justify-content: space-between;
+    width: 26.6rem;
+  }
+
+  &__item {
+    width: 13rem;
+    height: 6.125rem;
+    padding: 1rem 0;
+  }
+
+  &__item:hover {
+    @apply bg-[#EDEDF2];
+  }
+
+  &__text-notallowed {
+    color: #c0c0c0;
+  }
+
+  &__item-icon {
+    display: inline-block;
+    width: 2rem;
+    height: 2rem;
+    margin: 0.5rem 0;
+    object-fit: contain;
   }
 
   &__wallets {

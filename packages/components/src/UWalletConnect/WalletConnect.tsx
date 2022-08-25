@@ -1,8 +1,14 @@
-import { WalletConnectFilled, MetamaskFilled, CloseOutlined } from '@comunion/icons'
-import { NGrid, NGridItem, NModal } from 'naive-ui'
+import { CloseOutlined } from '@comunion/icons'
+import { NModal } from 'naive-ui'
 import type { ExtractPropTypes, PropType } from 'vue'
-import { defineComponent } from 'vue'
+import { defineComponent, ref } from 'vue'
 import './WalletConnect.css'
+import IconCoinbaseWallet from './assets/wallet/CoinbaseWallet.png'
+import IconMetaMask from './assets/wallet/MetaMask.png'
+import IconSafepalWallet from './assets/wallet/SafepalWallet.png'
+import IconTokenPocket from './assets/wallet/TokenPocket.png'
+import IconTrustWallet from './assets/wallet/TrustWallet.png'
+import IconWalletConnect from './assets/wallet/WalletConnect.png'
 
 export const UWalletConnectProps = {
   show: {
@@ -13,7 +19,17 @@ export const UWalletConnectProps = {
     type: Function as PropType<(v: boolean) => void>
   },
   onClick: {
-    type: Function as PropType<(type: 'MetaMask' | 'WalletConnect') => void>
+    type: Function as PropType<
+      (
+        type:
+          | 'MetaMask'
+          | 'WalletConnect'
+          | 'TrustWallet'
+          | 'Coinbase Wallet'
+          | 'Safepal Wallet'
+          | 'TokenPocket'
+      ) => void
+    >
   },
   onClose: {
     type: Function as PropType<() => void>
@@ -26,6 +42,51 @@ const UWalletConnect = defineComponent({
   name: 'UWalletConnect',
   props: UWalletConnectProps,
   setup(props) {
+    interface WalletItem {
+      name:
+        | 'MetaMask'
+        | 'WalletConnect'
+        | 'TrustWallet'
+        | 'Coinbase Wallet'
+        | 'Safepal Wallet'
+        | 'TokenPocket'
+      icon: string
+      allowed: boolean
+    }
+
+    const items = ref<WalletItem[]>([
+      {
+        name: 'MetaMask',
+        icon: IconMetaMask,
+        allowed: true
+      },
+      {
+        name: 'WalletConnect',
+        icon: IconWalletConnect,
+        allowed: false
+      },
+      {
+        name: 'TrustWallet',
+        icon: IconTrustWallet,
+        allowed: false
+      },
+      {
+        name: 'Coinbase Wallet',
+        icon: IconCoinbaseWallet,
+        allowed: false
+      },
+      {
+        name: 'Safepal Wallet',
+        icon: IconSafepalWallet,
+        allowed: false
+      },
+      {
+        name: 'TokenPocket',
+        icon: IconTokenPocket,
+        allowed: false
+      }
+    ])
+
     return () => (
       <NModal
         show={props.show}
@@ -35,27 +96,24 @@ const UWalletConnect = defineComponent({
       >
         <div class="u-wallet-connect">
           <CloseOutlined class="u-wallet-connect__close-icon" onClick={props.onClose} />
-          <p class="u-wallet-connect__subtitle">Connect your MeteMask or scan with WalletConnect</p>
-          <NGrid xGap={16} yGap={16} cols={2} class="u-wallet-connect__wallets">
-            <NGridItem>
-              <div class="u-wallet-connect__wallet" onClick={() => props.onClick?.('MetaMask')}>
-                <MetamaskFilled />
-                MetaMask
+          <p class="u-wallet-connect__subtitle">Connect to a wallet</p>
+          <div class="u-wallet-connect__wrap flex flex-wrap m-auto">
+            {items.value.map(item => (
+              <div
+                class={`u-wallet-connect__item  p-1rem mt-10px border border-[#EDEDF2] text-center${
+                  item.allowed ? ' cursor-pointer' : ' cursor-not-allowed'
+                } `}
+                onClick={() => {
+                  item.allowed && props.onClick?.(item.name)
+                }}
+              >
+                <img src={item.icon} class="u-wallet-connect__item-icon" />
+                <div class={`${item.allowed ? '' : 'u-wallet-connect__text-notallowed'}`}>
+                  {item.name}
+                </div>
               </div>
-            </NGridItem>
-            <NGridItem>
-              {/*TODO zehui: after this OK, please uncomment this*/}
-              {/*<div*/}
-              {/*  class="u-wallet-connect__wallet"*/}
-              {/*  onClick={() => props.onClick?.('WalletConnect')}*/}
-              {/*>*/}
-              <div class="u-wallet-connect__wallet u-not-allow">
-                <WalletConnectFilled />
-                Wallet Connect
-              </div>
-            </NGridItem>
-          </NGrid>
-          {/* <a class="text-primary">What is wallet？</a> */}
+            ))}
+          </div>
         </div>
       </NModal>
     )
