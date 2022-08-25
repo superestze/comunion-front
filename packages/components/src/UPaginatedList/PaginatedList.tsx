@@ -45,7 +45,7 @@ const UPaginatedList = defineComponent({
       <>
         {props.children?.(data)}
         {(!props.hidePaginationOnSinglePage || data.total > data.dataSource.length) && (
-          <div class="u-paginated-list">
+          <div class="flex justify-end mt-10">
             <UPagination
               v-model:page={data.page}
               itemCount={data.total}

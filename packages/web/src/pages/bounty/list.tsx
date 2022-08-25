@@ -47,9 +47,9 @@ const StartupsPage = defineComponent({
     return () => (
       <div class="mt-10 mb-16">
         <div class="flex mb-8">
-          <h3 class="text-grey1 u-h3">{pagination.total?.toLocaleString()} Bounties available</h3>
+          {/* <h3 class="text-grey1 u-h3">{pagination.total?.toLocaleString()} Bounties available</h3> */}
           <div class="flex ml-auto self-end items-center u-title2 ">
-            Sort by:
+            Filter by:
             <UDropdownFilter
               options={BOUNTY_TYPES.map(item => ({ label: item, value: item }))}
               placeholder="Startup Type"
