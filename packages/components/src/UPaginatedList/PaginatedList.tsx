@@ -1,7 +1,6 @@
 import { usePaginate } from '@comunion/hooks'
 import { defineComponent, ExtractPropTypes, PropType, VNode } from 'vue'
 import { UPagination } from '../UPagination'
-import './PaginatedList.css'
 
 type ServiceArgs = Parameters<typeof usePaginate>[0]
 
