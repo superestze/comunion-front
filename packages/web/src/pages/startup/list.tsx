@@ -1,6 +1,15 @@
 import { UDropdownFilter, UInputGroup, USearch } from '@comunion/components'
 
-import { defineComponent, ref, computed, reactive, onMounted, nextTick, onBeforeUnmount } from 'vue'
+import {
+  defineComponent,
+  ref,
+  computed,
+  reactive,
+  onMounted,
+  nextTick,
+  onBeforeUnmount,
+  watch
+} from 'vue'
 import StartupCard from './components/StartupCard'
 import StartupSkeleton from './components/StartupSkeleton'
 import { StartupTypesType, STARTUP_TYPES } from '@/constants'
@@ -46,6 +55,19 @@ const StartupsPage = defineComponent({
       await getStartups()
       pagination.loading = false
     }
+    // 筛选条件
+    watch(
+      () => startupType.value,
+      () => {
+        onLoadMore(1)
+      }
+    )
+    watch(
+      () => inputMember.value,
+      () => {
+        onLoadMore(1)
+      }
+    )
 
     const isLastPage = computed(() => {
       return (pagination.page || 0) * (pagination.pageSize || 0) >= (pagination.total || 0)
