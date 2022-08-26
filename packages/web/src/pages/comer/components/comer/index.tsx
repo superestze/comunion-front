@@ -5,16 +5,24 @@ import {
   UButton,
   UForm,
   UFormItemsFactory,
-  ULazyImage
+  ULazyImage,
+  useUpload,
+  UUpload
 } from '@comunion/components'
 import { PenOutlined, UploadFilled } from '@comunion/icons'
+import { CustomRequest } from 'naive-ui/lib/upload/src/interface'
 import { defineComponent, computed, ref, reactive, watchEffect } from 'vue'
+import { useRoute } from 'vue-router'
+import { useComer } from '../../hooks/comer'
 import { btnGroup } from '../btnGroup'
 import Edit from '../edit'
 
-import testImg from './onlytestcomerbg.png'
+import defaultImg from './default.png'
 import AvatarSelect from '@/components/Profile/AvatarSelect'
 import { UTC_OPTIONS } from '@/constants'
+import { services } from '@/services'
+
+import './rect.css'
 
 export default defineComponent({
   props: {
@@ -38,11 +46,17 @@ export default defineComponent({
       default: () => '',
       required: true
     },
+    cover: {
+      type: String,
+      default: () => defaultImg,
+      requried: true
+    },
     view: {
       type: Boolean,
       default: () => false
     }
   },
+  emits: ['Done'],
   setup(props) {
     const subTitle = computed(() => {
       return `${props.location}, ${props.timeZone}`
@@ -78,7 +92,8 @@ export default defineComponent({
       avatar: props.avatar,
       name: props.name,
       location: props.location,
-      timeZone: props.timeZone
+      timeZone: props.timeZone,
+      cover: props.cover
     })
 
     watchEffect(() => {
@@ -86,6 +101,51 @@ export default defineComponent({
       info.name = props.name
       info.location = props.location
       info.timeZone = props.timeZone
+      info.cover = props.cover
+    })
+
+    const { onUpload } = useUpload()
+
+    const customRequest: CustomRequest = async ({ file, onProgress, onFinish, onError }) => {
+      if (file.file) {
+        onUpload(file.file, percent => {
+          onProgress({ percent })
+        })
+          .then(url => {
+            console.log(url)
+            info.cover = url as string
+            onFinish()
+          })
+          .catch(err => {
+            onError()
+          })
+      }
+    }
+    const follow = ref<boolean>(false)
+
+    const route = useRoute()
+
+    const comerService = useComer(route.query.id as string)
+
+    const toggleFollow = async (onlyGet = false) => {
+      if (!onlyGet) {
+        if (follow.value) {
+          await comerService.unfollow()
+        } else {
+          await comerService.follow()
+        }
+      }
+      if (props.view) {
+        const { error, data } = await comerService.followByMe()
+        if (!error) {
+          follow.value = data.isFollowed
+        }
+      }
+    }
+    toggleFollow(true)
+
+    const imageUrl = computed(() => {
+      return info.cover || defaultImg
     })
 
     return {
@@ -94,7 +154,11 @@ export default defineComponent({
       showAvatarModal,
       fields,
       info,
-      form
+      form,
+      customRequest,
+      toggleFollow,
+      follow,
+      imageUrl
     }
   },
   render() {
@@ -105,9 +169,18 @@ export default defineComponent({
       this.showAvatarModal = true
     }
     const handleSubmit = () => {
-      this.form?.validate(err => {
+      this.form?.validate(async err => {
         if (typeof err === 'undefined') {
           console.log(this.info)
+          await services['account@update-basic-info']({
+            name: this.info.name,
+            cover: this.info.cover,
+            avatar: this.info.avatar,
+            timeZone: this.info.timeZone,
+            location: this.info.location
+          })
+          this.$emit('Done')
+          handleEditMode()
         }
       })
     }
@@ -119,11 +192,17 @@ export default defineComponent({
         {this.editMode ? (
           <>
             <AvatarSelect v-model:show={this.showAvatarModal} v-model:avatar={this.info.avatar} />
-            <div class="flex w-full h-180px relative">
-              <div class="bg-[rgba(0,0,0,0.5)] absolute left-0 right-0 top-0 bottom-0"></div>
-              <img src={testImg} alt="bg" class="w-full" />
-              <PenOutlined class="h-4 mr-3 w-4 text-white absolute left-1/2 top-1/2 -ml-2 -mt-2" />
-            </div>
+            <UUpload
+              class="rect-upload"
+              customRequest={this.customRequest}
+              accept="image/png, image/jpeg, image/bmp, image/psd, image/svg, image/tiff"
+            >
+              <div class="flex w-full h-180px relative">
+                <div class="bg-[rgba(0,0,0,0.5)] absolute left-0 right-0 top-0 bottom-0"></div>
+                <img src={this.imageUrl} alt="bg" class="w-full object-fill" />
+                <PenOutlined class="h-4 mr-3 w-4 text-white absolute left-1/2 top-1/2 -ml-2 -mt-2" />
+              </div>
+            </UUpload>
             <div
               class="absolute rounded-1/2 h-20 w-20 left-1/2 top-155px -ml-10 overflow-hidden"
               onClick={showAvatarSelect}
@@ -142,7 +221,7 @@ export default defineComponent({
         ) : (
           <>
             <div class="flex w-full h-180px">
-              <img src={testImg} alt="bg" class="w-full" />
+              <img src={this.imageUrl} alt="bg" class="w-full object-fill" />
             </div>
             <ULazyImage
               class="rounded-1/2 h-80px w-80px absolute left-40px top-155px"
@@ -150,9 +229,27 @@ export default defineComponent({
             />
             <div class="w-full flex justify-end mt-20px">
               {this.view ? (
-                <UButton type="primary" class="w-40 mr-6" size="small">
-                  Connect
-                </UButton>
+                <>
+                  {this.follow ? (
+                    <UButton
+                      type="primary"
+                      class="w-40 mr-6"
+                      size="small"
+                      onClick={() => this.toggleFollow()}
+                    >
+                      Unconnect
+                    </UButton>
+                  ) : (
+                    <UButton
+                      type="primary"
+                      class="w-40 mr-6"
+                      size="small"
+                      onClick={() => this.toggleFollow()}
+                    >
+                      Connect
+                    </UButton>
+                  )}
+                </>
               ) : (
                 <Edit class="mr-24px" onHandleClick={handleEditMode} />
               )}

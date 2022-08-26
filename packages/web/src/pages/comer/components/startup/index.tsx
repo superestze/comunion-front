@@ -52,7 +52,8 @@ export default defineComponent({
         pagination.total = 0
         startups.value = []
         getStartups()
-      }
+      },
+      { immediate: true }
     )
 
     return {

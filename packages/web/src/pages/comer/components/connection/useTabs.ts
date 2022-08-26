@@ -1,9 +1,7 @@
-import { computed } from 'vue'
+import { computed, reactive } from 'vue'
+import { services } from '@/services'
 
-const mock = { total1: 98, total2: 300, total3: 14000 }
-
-export function useTabs() {
-  const { total1, total2, total3 } = mock
+export function useTabs(comerId: number) {
   const converset = (numeric: number) => {
     const result = numeric % 10000
     if (result === numeric) {
@@ -11,22 +9,39 @@ export function useTabs() {
     }
     return `${(numeric / 10000).toFixed(1)}w`
   }
-  console.log(converset(total1), converset(total2), converset(total3))
+
+  const count = reactive({
+    startupCnt: 0,
+    comerCnt: 0,
+    followerCnt: 0
+  })
+
+  services['account@connected-count']({
+    comerID: comerId
+  }).then(response => {
+    const { error, data } = response
+    if (!error) {
+      count.startupCnt = data.startupCnt
+      count.comerCnt = data.comerCnt
+      count.followerCnt = data.followerCnt
+    }
+  })
+
   const tabs = computed(() => [
     {
       id: '0',
       title: 'STARTUP',
-      subTitle: `(${converset(total1)})`
+      subTitle: `(${converset(count.startupCnt)})`
     },
     {
       id: '1',
       title: 'COMER',
-      subTitle: `(${converset(total2)})`
+      subTitle: `(${converset(count.comerCnt)})`
     },
     {
       id: '2',
       title: 'CONNECTOR',
-      subTitle: `(${converset(total3)})`
+      subTitle: `(${converset(count.followerCnt)})`
     }
   ])
   return {

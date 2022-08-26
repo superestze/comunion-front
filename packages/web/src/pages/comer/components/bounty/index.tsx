@@ -53,7 +53,8 @@ export default defineComponent({
       () => {
         tabChange()
         getBounties()
-      }
+      },
+      { immediate: true }
     )
 
     return {

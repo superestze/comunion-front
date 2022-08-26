@@ -3,6 +3,8 @@ import { EmptyFilled } from '@comunion/icons'
 import { defineComponent, ref, watch, onMounted } from 'vue'
 
 import Switch from './switch'
+import { useConnector } from './useConnector'
+import { useFollowComer } from './useFollowComer'
 import { useFollowedStartups } from './useFollowedStartups'
 import { useTabs } from './useTabs'
 import { BasicItem } from '@/components/ListItem'
@@ -13,21 +15,29 @@ export default defineComponent({
     view: {
       type: Boolean,
       default: () => false
+    },
+    comerId: {
+      type: Number,
+      required: true
     }
   },
-  setup() {
-    const followedStartups = useFollowedStartups()
-    const tabsInstance = useTabs()
+  setup(props) {
+    const followedStartups = useFollowedStartups(props.comerId)
+    const connector = useConnector(props.comerId)
+    const tabsInstance = useTabs(props.comerId)
+    const followComer = useFollowComer(props.comerId)
     const currentTabId = ref<string>('0')
 
     const loadData = (id: string, reset = false) => {
       if (id === '0') {
         if (reset) followedStartups.reset()
-        followedStartups.getFollowList(0)
+        followedStartups.getFollowList()
       } else if (id === '1') {
-        // todo
+        if (reset) followComer.reset()
+        followComer.getFollowList()
       } else if (id === '2') {
-        // todo
+        if (reset) connector.reset()
+        connector.getConnector()
       }
     }
 
@@ -42,31 +52,46 @@ export default defineComponent({
 
     return {
       followedStartups,
+      followComer,
+      connector,
       tabsInstance,
       currentTabId
     }
   },
   render() {
-    console.log(this.followedStartups)
     const tabsChange = (id: string) => {
       this.currentTabId = id
     }
     const handleMore = () => {
       if (this.currentTabId === '0') {
-        this.followedStartups.offset.value += 5
-        this.followedStartups.getFollowList(this.followedStartups.offset.value)
+        this.followedStartups.page.value += 1
+        this.followedStartups.getFollowList()
+      } else if (this.currentTabId === '1') {
+        this.followComer.page.value += 1
+        this.followComer.getFollowList()
+      } else if (this.currentTabId === '2') {
+        this.connector.page.value += 1
+        this.connector.getConnector()
       }
     }
 
     const handleConnect = (item: any) => {
       if (this.currentTabId === '0') {
-        this.followedStartups.connect(item.id, item.cb)
+        this.followedStartups.connect(item.startupId, item.cb)
+      } else if (this.currentTabId === '1') {
+        this.followComer.connect(item.comerId, item.cb)
+      } else if (this.currentTabId === '2') {
+        this.connector.connect(item.comerId, item.cb)
       }
     }
 
     const handleUnConnect = (item: any) => {
       if (this.currentTabId === '0') {
-        this.followedStartups.unconnect(item.id, item.cb)
+        this.followedStartups.unconnect(item.startupId, item.cb)
+      } else if (this.currentTabId === '1') {
+        this.followComer.unconnect(item.comerId, item.cb)
+      } else if (this.currentTabId === '2') {
+        this.connector.unconnect(item.comerId, item.cb)
       }
     }
     return (
@@ -80,19 +105,22 @@ export default defineComponent({
           <div class="flex flex-col">
             {this.currentTabId === '0' && (
               <>
-                {Array.isArray(this.followedStartups.list) &&
-                (this.followedStartups.list?.length || 0) > 0 ? (
+                {this.followedStartups.list.value.length > 0 ? (
                   <>
-                    {this.followedStartups.list.map(item => {
+                    {this.followedStartups.list.value.map(item => {
                       return (
                         <BasicItem
                           item={item}
                           onConnect={handleConnect}
                           onUnconnect={handleUnConnect}
+                          keyMap={{
+                            name: 'startupName',
+                            follow: 'followedByMe'
+                          }}
                           v-slots={{
                             avatar: () => (
                               <div class="flex items-center w-9 h-9 overflow-hidden">
-                                <UStartupLogo src={item.logo} width="9" height="9" />
+                                <UStartupLogo src={item.startupLogo} width="9" height="9" />
                               </div>
                             )
                           }}
@@ -105,12 +133,96 @@ export default defineComponent({
                     <EmptyFilled />
                   </UNoContent>
                 )}
-                <div class="flex justify-center mt-5">
-                  <LoadingBtn
-                    onMore={handleMore}
-                    end={(this.followedStartups.list?.length || 0) >= this.followedStartups.total}
-                  />
-                </div>
+                {this.followedStartups.total.value > 5 && (
+                  <div class="flex justify-center mt-5">
+                    <LoadingBtn
+                      onMore={handleMore}
+                      end={
+                        this.followedStartups.list.value.length >= this.followedStartups.total.value
+                      }
+                    />
+                  </div>
+                )}
+              </>
+            )}
+            {this.currentTabId === '1' && (
+              <>
+                {this.followComer.list.value.length > 0 ? (
+                  <>
+                    {this.followComer.list.value.map(item => {
+                      return (
+                        <BasicItem
+                          item={item}
+                          onConnect={handleConnect}
+                          onUnconnect={handleUnConnect}
+                          keyMap={{
+                            name: 'comerName',
+                            follow: 'followedByMe'
+                          }}
+                          v-slots={{
+                            avatar: () => (
+                              <div class="flex items-center w-9 h-9 overflow-hidden">
+                                <UStartupLogo src={item.comerAvatar} width="9" height="9" />
+                              </div>
+                            )
+                          }}
+                        />
+                      )
+                    })}
+                  </>
+                ) : (
+                  <UNoContent textTip="NO ACTIVITIES YET" class="my-10">
+                    <EmptyFilled />
+                  </UNoContent>
+                )}
+                {this.followComer.total.value > 5 && (
+                  <div class="flex justify-center mt-5">
+                    <LoadingBtn
+                      onMore={handleMore}
+                      end={this.followComer.list.value.length >= this.followComer.total.value}
+                    />
+                  </div>
+                )}
+              </>
+            )}
+            {this.currentTabId === '2' && (
+              <>
+                {Array.isArray(this.connector.list) && (this.connector.list?.length || 0) > 0 ? (
+                  <>
+                    {this.connector.list.map(item => {
+                      return (
+                        <BasicItem
+                          item={item}
+                          onConnect={handleConnect}
+                          onUnconnect={handleUnConnect}
+                          keyMap={{
+                            name: 'comerName',
+                            follow: 'followedByMe'
+                          }}
+                          v-slots={{
+                            avatar: () => (
+                              <div class="flex items-center w-9 h-9 overflow-hidden">
+                                <UStartupLogo src={item.comerAvatar} width="9" height="9" />
+                              </div>
+                            )
+                          }}
+                        />
+                      )
+                    })}
+                  </>
+                ) : (
+                  <UNoContent textTip="NO ACTIVITIES YET" class="my-10">
+                    <EmptyFilled />
+                  </UNoContent>
+                )}
+                {this.connector.total.value > 5 && (
+                  <div class="flex justify-center mt-5">
+                    <LoadingBtn
+                      onMore={handleMore}
+                      end={this.connector.list.value.length >= this.connector.total.value}
+                    />
+                  </div>
+                )}
               </>
             )}
           </div>

@@ -1,16 +1,33 @@
 import { UButton } from '@comunion/components'
 import { CheckFilled, PlusOutlined } from '@comunion/icons'
-import { defineComponent, PropType, ref } from 'vue'
+import { defineComponent, PropType, ref, watch } from 'vue'
 
 export default defineComponent({
   props: {
     item: {
       type: Object as PropType<any>,
       required: true
+    },
+    keyMap: {
+      type: Object as PropType<{ [key: string]: string }>,
+      default: () => ({
+        name: 'name',
+        follow: 'follow'
+      })
     }
   },
   setup(props) {
-    const connect = ref<boolean>(!props.item.isDeleted)
+    const connect = ref<boolean>(!props.item[props.keyMap.follow])
+
+    watch(
+      () => props.item[props.keyMap.follow],
+      value => {
+        connect.value = value
+      },
+      {
+        immediate: true
+      }
+    )
     return {
       connect
     }
@@ -42,7 +59,9 @@ export default defineComponent({
           {typeof this.$slots.content === 'function' ? (
             this.$slots.content()
           ) : (
-            <div class="w-full text-16px font-600 text-grey1 items-center">{this.item.name}</div>
+            <div class="w-full text-16px font-600 text-grey1 items-center">
+              {this.item[this.keyMap.name]}
+            </div>
           )}
           {this.connect ? (
             <UButton
