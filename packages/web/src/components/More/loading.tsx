@@ -15,11 +15,7 @@ export default defineComponent({
     }
     return (
       <>
-        {this.end ? (
-          <div class="w-100px flex justify-center items-center text-primary">
-            <span class="u-title2 mr-4 text-primary">End</span>
-          </div>
-        ) : (
+        {this.end ? null : (
           <div
             class="w-100px flex justify-end items-center text-primary cursor-pointer"
             onClick={handleMore}

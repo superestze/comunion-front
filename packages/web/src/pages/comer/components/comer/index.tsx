@@ -23,6 +23,7 @@ import { UTC_OPTIONS } from '@/constants'
 import { services } from '@/services'
 
 import './rect.css'
+import { useUserStore } from '@/stores'
 
 export default defineComponent({
   props: {
@@ -148,6 +149,11 @@ export default defineComponent({
       return info.cover || defaultImg
     })
 
+    const userStore = useUserStore()
+    const self = computed(() => {
+      return `${route.query.id}` === `${userStore.profile?.comerID}`
+    })
+
     return {
       subTitle,
       editMode,
@@ -158,7 +164,8 @@ export default defineComponent({
       customRequest,
       toggleFollow,
       follow,
-      imageUrl
+      imageUrl,
+      self
     }
   },
   render() {
@@ -207,7 +214,7 @@ export default defineComponent({
               class="absolute rounded-1/2 h-20 w-20 left-1/2 top-155px -ml-10 overflow-hidden"
               onClick={showAvatarSelect}
             >
-              <UploadFilled class="absolute top-1/2 left-1/2 w-6 h-6 -ml-2 -mt-2" />
+              <UploadFilled class="absolute top-1/2 left-1/2 w-6 h-6 -ml-3 -mt-3 text-white z-1" />
               <div class="absolute top-0 right-0 bottom-0 left-0 bg-[rgba(0,0,0,0.5)]"></div>
               <ULazyImage class="rounded-1/2 h-80px w-80px" src={this.info.avatar} />
             </div>
@@ -230,22 +237,30 @@ export default defineComponent({
             <div class="w-full flex justify-end mt-20px">
               {this.view ? (
                 <>
-                  {this.follow ? (
-                    <UButton
-                      type="primary"
-                      class="w-40 mr-6"
-                      size="small"
-                      onClick={() => this.toggleFollow()}
-                    >
-                      Unconnect
-                    </UButton>
+                  {!self ? (
+                    <>
+                      {this.follow ? (
+                        <UButton
+                          type="primary"
+                          class="w-40 mr-6"
+                          size="small"
+                          onClick={() => this.toggleFollow()}
+                        >
+                          Unconnect
+                        </UButton>
+                      ) : (
+                        <UButton
+                          type="primary"
+                          class="w-40 mr-6"
+                          size="small"
+                          onClick={() => this.toggleFollow()}
+                        >
+                          Connect
+                        </UButton>
+                      )}
+                    </>
                   ) : (
-                    <UButton
-                      type="primary"
-                      class="w-40 mr-6"
-                      size="small"
-                      onClick={() => this.toggleFollow()}
-                    >
+                    <UButton class="w-40 mr-6 invisible" size="small">
                       Connect
                     </UButton>
                   )}
@@ -254,7 +269,7 @@ export default defineComponent({
                 <Edit class="mr-24px" onHandleClick={handleEditMode} />
               )}
             </div>
-            <div class="w-full flex mt-30px flex-col ml-50px mb-24px">
+            <div class="flex mt-30px flex-col ml-50px mb-24px mr-50px">
               <p class="text-16px font-600 text-primary2">{this.name}</p>
               <p class="text-14px text-grey3 mt-2">{this.subTitle}</p>
             </div>

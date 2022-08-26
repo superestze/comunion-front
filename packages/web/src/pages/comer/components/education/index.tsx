@@ -67,7 +67,7 @@ export default defineComponent({
         required: true,
         type: 'year',
         class: 'w-full',
-        actions: ['clear']
+        actions: []
       }
     ]
 

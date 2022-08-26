@@ -1,6 +1,6 @@
 import { UButton } from '@comunion/components'
 import { CheckFilled, PlusOutlined } from '@comunion/icons'
-import { defineComponent, PropType, ref, watch } from 'vue'
+import { defineComponent, PropType, ref, watch, computed } from 'vue'
 
 export default defineComponent({
   props: {
@@ -18,6 +18,9 @@ export default defineComponent({
   },
   setup(props) {
     const connect = ref<boolean>(!props.item[props.keyMap.follow])
+    const disabled = computed(() => {
+      return typeof props.item[props.keyMap.follow] === 'undefined'
+    })
 
     watch(
       () => props.item[props.keyMap.follow],
@@ -29,7 +32,8 @@ export default defineComponent({
       }
     )
     return {
-      connect
+      connect,
+      disabled
     }
   },
   emits: ['connect', 'unconnect'],
@@ -69,6 +73,7 @@ export default defineComponent({
               size="tiny"
               secondary
               type="tertiary"
+              disabled={this.disabled}
               onClick={handleUnconnect}
             >
               <CheckFilled class="mr-2" />
@@ -80,6 +85,7 @@ export default defineComponent({
               size="tiny"
               ghost
               type="primary"
+              disabled={this.disabled}
               onClick={handleConnect}
             >
               <PlusOutlined class="mr-2 w-4 h-4" />
