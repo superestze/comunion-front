@@ -119,7 +119,12 @@ export default defineComponent({
                           }}
                           v-slots={{
                             avatar: () => (
-                              <div class="flex items-center w-9 h-9 overflow-hidden">
+                              <div
+                                class="flex items-center w-9 h-9 overflow-hidden cursor-pointer"
+                                onClick={() =>
+                                  this.$router.push(`/startup/detail?startupId=${item.startupId}`)
+                                }
+                              >
                                 <UStartupLogo src={item.startupLogo} width="9" height="9" />
                               </div>
                             )
@@ -129,7 +134,7 @@ export default defineComponent({
                     })}
                   </>
                 ) : (
-                  <UNoContent textTip="NO ACTIVITIES YET" class="my-10">
+                  <UNoContent textTip="NO STARTUP YET" class="my-10">
                     <EmptyFilled />
                   </UNoContent>
                 )}
@@ -161,7 +166,10 @@ export default defineComponent({
                           }}
                           v-slots={{
                             avatar: () => (
-                              <div class="flex items-center w-9 h-9 overflow-hidden">
+                              <div
+                                class="flex items-center w-9 h-9 overflow-hidden cursor-pointer"
+                                onClick={() => this.$router.push(`/comer?id=${item.comerId}`)}
+                              >
                                 <UStartupLogo src={item.comerAvatar} width="9" height="9" />
                               </div>
                             )
@@ -171,7 +179,7 @@ export default defineComponent({
                     })}
                   </>
                 ) : (
-                  <UNoContent textTip="NO ACTIVITIES YET" class="my-10">
+                  <UNoContent textTip="NO COMER YET" class="my-10">
                     <EmptyFilled />
                   </UNoContent>
                 )}
@@ -187,9 +195,9 @@ export default defineComponent({
             )}
             {this.currentTabId === '2' && (
               <>
-                {Array.isArray(this.connector.list) && (this.connector.list?.length || 0) > 0 ? (
+                {this.connector.list.value.length > 0 ? (
                   <>
-                    {this.connector.list.map(item => {
+                    {this.connector.list.value.map(item => {
                       return (
                         <BasicItem
                           item={item}
@@ -201,7 +209,10 @@ export default defineComponent({
                           }}
                           v-slots={{
                             avatar: () => (
-                              <div class="flex items-center w-9 h-9 overflow-hidden">
+                              <div
+                                class="flex items-center w-9 h-9 overflow-hidden cursor-pointer"
+                                onClick={() => this.$router.push(`/comer?id=${item.comerId}`)}
+                              >
                                 <UStartupLogo src={item.comerAvatar} width="9" height="9" />
                               </div>
                             )
@@ -211,7 +222,7 @@ export default defineComponent({
                     })}
                   </>
                 ) : (
-                  <UNoContent textTip="NO ACTIVITIES YET" class="my-10">
+                  <UNoContent textTip="NO CONNECTOR YET" class="my-10">
                     <EmptyFilled />
                   </UNoContent>
                 )}

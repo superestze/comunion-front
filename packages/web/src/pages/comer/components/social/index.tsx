@@ -65,23 +65,39 @@ export default defineComponent({
       value: ''
     })
     const form = ref<FormInst>()
-    const fields = computed<FormFactoryField[]>(() => [
-      {
-        t: 'select',
-        title: 'Social tool',
-        name: 'type',
-        required: true,
-        placeholder: 'Select a social tool',
-        options: SocialTypeList
-      },
-      {
-        t: 'website',
-        title: 'URL',
-        name: 'value',
-        required: true,
-        placeholder: 'Input the URL'
+    const fields = computed<FormFactoryField[]>(() => {
+      const fields: FormFactoryField[] = [
+        {
+          t: 'select',
+          title: 'Social tool',
+          name: 'type',
+          required: true,
+          placeholder: 'Select a social tool',
+          options: SocialTypeList
+        }
+      ]
+      if (info.type === 'Email') {
+        fields.push({
+          title: 'Address',
+          name: 'value',
+          required: true,
+          rules: [
+            { type: 'string', message: 'Input the Address' },
+            { type: 'email', message: 'Enter the correct email address' }
+          ],
+          placeholder: 'Input the Address'
+        })
+      } else {
+        fields.push({
+          t: 'website',
+          title: 'Address',
+          name: 'value',
+          required: true,
+          placeholder: 'Input the Address'
+        })
       }
-    ])
+      return fields
+    })
 
     const socials = computed(() => {
       const result = []
@@ -208,7 +224,7 @@ export default defineComponent({
             ) : (
               <div class="my-6 flex gap-4 cursor-pointer flex-wrap">
                 {this.socials.length === 0 ? (
-                  <p class="text-14px font-[400] text-grey4 mt-6">Add your social</p>
+                  <p class="text-14px font-[400] text-grey4">Add your social</p>
                 ) : (
                   <>{socialIconComponent(this.socialsObj, editIcon, delIcon)}</>
                 )}

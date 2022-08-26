@@ -178,7 +178,7 @@ export default defineComponent({
                         <div class="flex items-center ml-4">
                           <p
                             title={LanguageList.find(l => l.value === item.language)?.label}
-                            class="text-grey1 text-14px font-600 w-40 overflow-hidden whitespace-nowrap overflow-ellipsis"
+                            class="text-grey1 text-14px font-600 max-w-40 overflow-hidden whitespace-nowrap overflow-ellipsis"
                           >
                             {LanguageList.find(l => l.value === item.language)?.label}
                           </p>
