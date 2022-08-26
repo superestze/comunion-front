@@ -33,8 +33,8 @@ const StartupsPage = defineComponent({
       loading: false
     })
 
-    const StartupsList = ref<StartupItem[]>([])
-    const getStartups = async () => {
+    const DataList = ref<StartupItem[]>([])
+    const fetchData = async () => {
       const { error, data } = await services['startup@startup-list']({
         limit: pagination.pageSize,
         offset: pagination.pageSize * (pagination.page - 1),
@@ -45,14 +45,14 @@ const StartupsPage = defineComponent({
         keyword: inputMember.value
       })
       if (!error) {
-        StartupsList.value.push(...(data!.list as unknown as StartupItem[]))
+        DataList.value.push(...(data!.list as unknown as StartupItem[]))
         pagination.total = data!.total
       }
     }
     const onLoadMore = async (p: number) => {
       pagination.loading = true
       pagination.page = p
-      await getStartups()
+      await fetchData()
       pagination.loading = false
     }
     // 筛选条件
@@ -129,7 +129,7 @@ const StartupsPage = defineComponent({
         </div>
 
         <div class="grid pb-6 gap-8 grid-cols-2 md:grid-cols-3 lg:grid-cols-4 xl:grid-cols-5 2xl:grid-cols-6">
-          {StartupsList.value.map((startup, i) => (
+          {DataList.value.map((startup, i) => (
             <StartupCard startup={startup} key={i} />
           ))}
           {/* 骨架元素 */}
