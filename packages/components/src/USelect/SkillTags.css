@@ -4,10 +4,16 @@
 
     .v-overflow {
       @apply h-8;
+
+      .n-base-selection-tag-wrapper {
+        .n-tag {
+          @apply !h-8;
+        }
+      }
     }
 
     .n-tag.n-tag--closable {
-      @apply rounded-none bg-[var(--u-purple-color)] text-sm h-8;
+      @apply rounded-none bg-[var(--u-purple-color)] text-sm !h-8;
 
       .n-tag__content {
         @apply text-grey1;

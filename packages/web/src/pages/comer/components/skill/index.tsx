@@ -10,6 +10,7 @@ import { PlusOutlined } from '@comunion/icons'
 import { defineComponent, ref, reactive, PropType, watchEffect } from 'vue'
 import { btnGroup } from '../btnGroup'
 import Edit from '../edit'
+import { services } from '@/services'
 
 export default defineComponent({
   props: {
@@ -22,6 +23,7 @@ export default defineComponent({
       default: () => false
     }
   },
+  emits: ['Done'],
   setup(props) {
     const editMode = ref<boolean>(false)
 
@@ -51,13 +53,22 @@ export default defineComponent({
     }
   },
   render() {
-    const handleEditMode = () => {
-      this.editMode = !this.editMode
-    }
+    const handleEditMode =
+      (cancel = false) =>
+      () => {
+        if (cancel) {
+          this.info.skills = this.skills
+        }
+        this.editMode = !this.editMode
+      }
     const handleSubmit = () => {
-      this.form?.validate(err => {
+      this.form?.validate(async err => {
         if (typeof err === 'undefined') {
-          console.log(this.info.skills)
+          await services['account@update-comer-skills']({
+            skills: this.info.skills
+          })
+          handleEditMode()()
+          this.$emit('Done')
         }
       })
     }
@@ -76,7 +87,7 @@ export default defineComponent({
                   return
                 }
                 return (
-                  <Edit onHandleClick={handleEditMode}>
+                  <Edit onHandleClick={handleEditMode()}>
                     <PlusOutlined class="h-4 mr-3 w-4" />
                     ADD NEW
                   </Edit>
@@ -89,7 +100,7 @@ export default defineComponent({
                 <UForm rules={rules} model={this.info} ref={(ref: any) => (this.form = ref)}>
                   <UFormItemsFactory fields={this.fields} values={this.info} />
                 </UForm>
-                {btnGroup(handleEditMode, handleSubmit)}
+                {btnGroup(handleEditMode(true), handleSubmit)}
               </div>
             ) : (
               <div class="flex flex-wrap mt-6">

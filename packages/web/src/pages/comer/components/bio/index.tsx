@@ -10,6 +10,7 @@ import { defineComponent, ref, onMounted, reactive, watchEffect } from 'vue'
 import { btnGroup } from '../btnGroup'
 import Edit from '../edit'
 import More from '@/components/More/shadow'
+import { services } from '@/services'
 
 export default defineComponent({
   props: {
@@ -23,6 +24,7 @@ export default defineComponent({
       default: () => false
     }
   },
+  emits: ['Done'],
   setup(props) {
     const editMode = ref<boolean>(false)
 
@@ -31,9 +33,9 @@ export default defineComponent({
 
     onMounted(() => {
       setTimeout(() => {
-        if (pRef.value.scrollHeight > 164) {
-          showMoreBtn.value = true
-        }
+        // if (pRef.value.scrollHeight > 164) {
+        showMoreBtn.value = true
+        // }
       }, 1000)
     })
 
@@ -81,8 +83,12 @@ export default defineComponent({
     const handleMore = () => {
       this.fold = !this.fold
     }
-    const handleSubmit = () => {
+    const handleSubmit = async () => {
       if (this.info.bio.trim() === '') {
+        await services['account@update-bio']({
+          bio: this.content
+        })
+        this.$emit('Done')
         handleEditMode()
         return
       }

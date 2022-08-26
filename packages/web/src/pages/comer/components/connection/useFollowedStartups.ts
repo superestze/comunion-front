@@ -1,32 +1,32 @@
 import { ref } from 'vue'
 import { ServiceReturn, services } from '@/services'
 
-type AttrType<T> = T extends { list: infer M } ? M : T
+type AttrType<T> = T extends { rows: infer M } ? M : T
 
-type ListType = AttrType<ServiceReturn<'startup@startup-list-followed'>>
+type ListType = AttrType<ServiceReturn<'account@followed-startups-by-comer'>>
 
-export function useFollowedStartups() {
-  const list = ref<ListType>([])
+export function useFollowedStartups(comerId: number) {
+  const list = ref<NonNullable<ListType>>([])
   const total = ref<number>(0)
-  const offset = ref<number>(0)
-  const getFollowList = async (offset: number) => {
-    const { error, data } = await services['startup@startup-list-followed']({
-      limit: offset + 5,
-      offset,
-      keyword: null,
-      mode: null
+  const page = ref<number>(1)
+  const limit = 5
+  const getFollowList = async () => {
+    const { error, data } = await services['account@followed-startups-by-comer']({
+      limit,
+      page: page.value,
+      comerID: comerId
     })
     if (!error) {
-      if (data.list) {
+      if (data.rows) {
         if (list.value) {
-          list.value.push(...data.list)
+          list.value.push(...data.rows)
         } else {
-          list.value = data.list
+          list.value = data.rows || []
         }
       } else {
         list.value = []
       }
-      total.value = data.total
+      total.value = data.totalRows
     }
   }
 
@@ -50,9 +50,9 @@ export function useFollowedStartups() {
   }
 
   return {
-    list: list.value,
-    total: total.value,
-    offset,
+    list,
+    total,
+    page,
     getFollowList,
     connect,
     unconnect,

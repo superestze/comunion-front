@@ -88,34 +88,61 @@ export const LanguageList = [
 export const SocialTypeList = [
   {
     label: 'Website',
-    value: 'Website'
+    value: 'Website',
+    serviceKey: 'website'
   },
   {
     label: 'Discord',
-    value: 'Discord'
+    value: 'Discord',
+    serviceKey: 'discord'
   },
   {
     label: 'Facebook',
-    value: 'Facebook'
+    value: 'Facebook',
+    serviceKey: 'facebook'
   },
   {
     label: 'Linktree',
-    value: 'Linktree'
+    value: 'Linktree',
+    serviceKey: 'linktree'
   },
   {
     label: 'Telegram',
-    value: 'Telegram'
+    value: 'Telegram',
+    serviceKey: 'telegram'
   },
   {
     label: 'Twitter',
-    value: 'Twitter'
+    value: 'Twitter',
+    serviceKey: 'twitter'
   },
   {
     label: 'Email',
-    value: 'Email'
+    value: 'Email',
+    serviceKey: 'email'
   },
   {
     label: 'Medium',
-    value: 'Medium'
+    value: 'Medium',
+    serviceKey: 'medium'
   }
 ]
+
+// 1-SocialEmail
+// 2-SocialWebsite
+// 3-SocialTwitter
+// 4-SocialDiscord
+// 5-SocialTelegram
+// 6-SocialMedium
+// 7-SocialFacebook
+// 8-SocialLinktre
+export const soureType: { [key: string]: number } = {
+  Website: 2,
+  Discord: 4,
+  Facebook: 7,
+  Linktree: 8,
+  Telegram: 5,
+  Twitter: 3,
+  Email: 1,
+  Medium: 6
+}

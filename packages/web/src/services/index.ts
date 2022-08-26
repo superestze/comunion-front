@@ -3,7 +3,58 @@ import { requestAdapter } from './a2s.adapter'
 import { extract, replacePath } from './a2s.utils'
 
 export const services = {
-  'account@connectors-of-comer'(
+  'account@connected-count'(args: { comerID: any }) {
+    return requestAdapter<{
+      startupCnt: number
+      comerCnt: number
+      followerCnt: number
+    }>({
+      url: replacePath('/account/comer/:comerID/connected-count', args),
+      method: 'GET',
+      ...extract('GET', args, [], ['comerID'])
+    })
+  },
+  'account@data-count'(
+    args: {
+      comerID: any
+    } & {
+      /**
+       * @description 1-Posted, 2-Participated
+       * @example 1
+       */
+      type: any
+    }
+  ) {
+    return requestAdapter<{
+      type: number
+      startupCnt: number
+      bountyCnt: number
+      crowdfundingCnt: number
+      proposalCnt: number
+    }>({
+      url: replacePath('/account/comer/:comerID/data-count', args),
+      method: 'GET',
+      ...extract('GET', args, ['type'], ['comerID'])
+    })
+  },
+  'account@educations'(args: {
+    educations: {
+      school: string
+      major: string
+      /**
+       * @description 传时间戳
+       */
+      graduatedAt: number
+      id: string
+    }[]
+  }) {
+    return requestAdapter<{}>({
+      url: replacePath('/account/profile/educations', args),
+      method: 'POST',
+      ...extract('POST', args, [], [])
+    })
+  },
+  'account@followed-by-comer'(
     args: {
       comerID: any
     } & {
@@ -23,27 +74,65 @@ export const services = {
         followedByMe: boolean
       }[]
     }>({
-      url: replacePath('/account/profile/connectors/:comerID', args),
+      url: replacePath('/account/comer/:comerID/following', args),
       method: 'POST',
       ...extract('POST', args, [], ['comerID'])
     })
   },
-  'account@educations'(args: {
-    educations: {
-      school: string
-      major: string
-      graduatedAt: string
-    }[]
-  }) {
-    return requestAdapter<{}>({
-      url: replacePath('/account/profile/educations', args),
+  'account@followed-startups-by-comer'(
+    args: {
+      comerID: any
+    } & {
+      page: number
+      limit: number
+    }
+  ) {
+    return requestAdapter<{
+      limit: number
+      page: string
+      totalRows: number
+      totalPages: number
+      rows: {
+        startupId: number
+        startupLogo: string
+        startupName: string
+        followedByMe: boolean
+      }[]
+    }>({
+      url: replacePath('/account/comer/:comerID/followed-startups', args),
       method: 'POST',
-      ...extract('POST', args, [], [])
+      ...extract('POST', args, [], ['comerID'])
+    })
+  },
+  'account@followers-of-comer'(
+    args: {
+      comerID: any
+    } & {
+      page: number
+      limit?: number
+    }
+  ) {
+    return requestAdapter<{
+      limit: number
+      page: string
+      totalRows: number
+      totalPages: number
+      rows: {
+        comerId: number
+        comerAvatar: string
+        comerName: string
+        followedByMe: boolean
+      }[]
+    }>({
+      url: replacePath('/account/comer/:comerID/fans', args),
+      method: 'POST',
+      ...extract('POST', args, [], ['comerID'])
     })
   },
   'account@languages'(args: {
     languages: {
       language: string
+      id: string
       /**
        * @description Beginner、Elementary 、Intermediate、Advanced
        */
@@ -77,46 +166,42 @@ export const services = {
       ...extract('GET', args, [], ['comerID'])
     })
   },
-  'account@social-add-or-update'(args?: any) {
-    return requestAdapter<{
-      /**
-   * @description 	1-SocialEmail 
-	2-SocialWebsite
-	3-SocialTwitter
-	4-SocialDiscord
-	5-SocialTelegram
-	6-SocialMedium
-	7-SocialFacebook
-	8-SocialLinktre
+  'account@social-add-or-update'(args: {
+    /**
+     * @description 	1-SocialEmail 	2-SocialWebsite	3-SocialTwitter	4-SocialDiscord	5-SocialTelegram	6-SocialMedium	7-SocialFacebook	8-SocialLinktre
      */
-      socialType: number
-      /**
-       * @description 为空表示删除值
-       */
-      socialLink?: string
-    }>({
+    socialType: number
+    socialLink?: string
+  }) {
+    return requestAdapter<{}>({
       url: replacePath('/account/profile/social', args),
       method: 'POST',
       ...extract('POST', args, [], [])
     })
   },
-  'account@social-delete'(args?: any) {
-    return requestAdapter<{
-      /**
-   * @description 	1-SocialEmail 
-	2-SocialWebsite
-	3-SocialTwitter
-	4-SocialDiscord
-	5-SocialTelegram
-	6-SocialMedium
-	7-SocialFacebook
-	8-SocialLinktre
+  'account@social-delete'(args: {
+    /**
+     * @description 	1-SocialEmail 	2-SocialWebsite	3-SocialTwitter	4-SocialDiscord	5-SocialTelegram	6-SocialMedium	7-SocialFacebook	8-SocialLinktre
      */
-      socialType: number
-    }>({
+    socialType?: number
+  }) {
+    return requestAdapter<{}>({
       url: replacePath('/account/profile/social', args),
       method: 'DELETE',
       ...extract('DELETE', args, [], [])
+    })
+  },
+  'account@update-basic-info'(args: {
+    name: string
+    cover?: string
+    avatar?: string
+    timeZone: string
+    location?: string
+  }) {
+    return requestAdapter<{}>({
+      url: replacePath('/account/profile/basic', args),
+      method: 'PUT',
+      ...extract('PUT', args, [], [])
     })
   },
   'account@update-bio'(args: { bio: string }) {
@@ -164,6 +249,7 @@ export const services = {
         comerID: number
         name: string
         avatar: string
+        cover: string
         location: string
         timeZone: string
         website: string
@@ -173,6 +259,17 @@ export const services = {
         telegram: string
         medium: string
         bio: string
+        facebook: string
+        linktree: string
+        languages: {
+          language: string
+          level: string
+        }[]
+        educations: {
+          school: string
+          major: string
+          graduatedAt: string
+        }[]
         skills: {
           id: number
           createdAt: string
@@ -181,6 +278,7 @@ export const services = {
           name: string
           category: string
           isIndex: boolean
+          field_7: string
         }[]
       }
       /**
@@ -608,6 +706,15 @@ export const services = {
       medium: string
       facebook?: string
       linktree?: string
+      languages: {
+        language: string
+        level: string
+      }[]
+      educations: {
+        school: string
+        major: string
+        graduatedAt: string
+      }[]
       bio?: string
       skills?: {
         id?: number
@@ -1705,6 +1812,39 @@ export const services = {
       ...extract('POST', args, [], ['crowdfundingId'])
     })
   },
+  'crowdfunding@crowdfunding-list-of-startup'(
+    args: {
+      startupId: any
+    } & {}
+  ) {
+    return requestAdapter<
+      {
+        crowdfundingId: number
+        startupId: number
+        comerId: number
+        startupName: string
+        endTime: string
+        raiseBalance: number
+        raiseGoal: number
+        raisedPercent: number
+        buyPrice: number
+        swapPercent: number
+        poster: string
+        status: number
+        chainId: number
+        buyTokenAddress: string
+        sellTokenAddress: string
+        startTime: string
+        crowdfundingContract: string
+        contractAudit: string
+        kyc: string
+      }[]
+    >({
+      url: replacePath('/cores/crowdfundings/startup/:startupId', args),
+      method: 'POST',
+      ...extract('POST', args, [], ['startupId'])
+    })
+  },
   'crowdfunding@detail'(args: { crowdfundingId: any }) {
     return requestAdapter<{
       crowdfundingId: number
@@ -2023,6 +2163,31 @@ export const services = {
       url: replacePath('/cores/startups/:startupID/social', args),
       method: 'DELETE',
       ...extract('DELETE', args, [], ['startupID'])
+    })
+  },
+  'startup@startup-basic-setting-update-new'(
+    args: {
+      startupId: any
+    } & {
+      name: string
+      logo: string
+      cover: string
+      /**
+   * @description 	ModeESG Mode = 1
+	ModeNGO Mode = 2
+	ModeDAO Mode = 3
+	ModeCOM Mode = 4
+
+     */
+      mode: number
+      mission: string
+      overview: string
+    }
+  ) {
+    return requestAdapter<{}>({
+      url: replacePath('/cores/startups/{startupId}/basicSetting1', args),
+      method: 'PUT',
+      ...extract('PUT', args, [], ['startupId'])
     })
   },
   'startup@startup-get'(args: { startupId: any }) {

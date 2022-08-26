@@ -132,7 +132,7 @@ export default defineComponent({
       loading.value = true
       services['account@oauth-account-unlink']({ accountID: currentUnbindAccountId.value })
         .then(() => {
-          profileStore.get().then(() => {
+          profileStore.get(() => {
             unBindVisible.value = false
           })
         })
