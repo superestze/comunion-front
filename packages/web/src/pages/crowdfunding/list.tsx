@@ -100,12 +100,11 @@ const CrowdfundingList = defineComponent({
             return (
               <div class="grid pb-6 gap-8 grid-cols-1 md:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4">
                 {crowdfundingList.map(crowdfunding => (
-                  <div
-                    class="cursor-pointer"
+                  <CrowdfundingCard
+                    key={crowdfunding.crowdfundingId}
+                    info={crowdfunding}
                     onClick={() => toDetail(crowdfunding.crowdfundingId, crowdfunding.chainId)}
-                  >
-                    <CrowdfundingCard key={crowdfunding.crowdfundingId} info={crowdfunding} />
-                  </div>
+                  />
                 ))}
               </div>
             )
