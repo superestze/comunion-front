@@ -1,5 +1,5 @@
 import { UDropdownFilter, UInputGroup, USearch } from '@comunion/components'
-
+import { debounce } from '@comunion/utils'
 import {
   defineComponent,
   ref,
@@ -59,13 +59,17 @@ const StartupsPage = defineComponent({
     watch(
       () => startupType.value,
       () => {
-        onLoadMore(1)
+        setTimeout(() => {
+          onLoadMore(1)
+        }, 0)
       }
     )
+
+    const debounceLoad = debounce(onLoadMore, 1)
     watch(
       () => inputMember.value,
       () => {
-        onLoadMore(1)
+        debounceLoad(300)
       }
     )
 
