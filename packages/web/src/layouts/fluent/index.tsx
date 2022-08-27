@@ -1,7 +1,7 @@
 import { ULogo, UTransactionContainer, UTransactionWaiting } from '@comunion/components'
 import { defineComponent, watchEffect } from 'vue'
 import { RouterLink, RouterView, useRouter, useRoute } from 'vue-router'
-import TheHeader from './blocks/TheHeader'
+import TheHeader from '../default/blocks/TheHeader'
 import styles from './index.module.css'
 import { FOOTER_LINKS } from '@/constants'
 import { useUserStore, useWalletStore } from '@/stores'
