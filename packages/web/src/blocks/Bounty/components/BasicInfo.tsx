@@ -62,7 +62,7 @@ const BountyBasicInfo = defineComponent({
         name: 'startupID',
         placeholder: 'Select a startup',
         rules: [
-          { required: true, message: ' Please select a startup', type: 'number', trigger: 'blur' }
+          { required: true, message: 'Startup cannot be blank', type: 'number', trigger: 'blur' }
         ],
         options: startupOptions.value
       },
@@ -70,9 +70,16 @@ const BountyBasicInfo = defineComponent({
         t: 'string',
         title: 'Title',
         name: 'title',
-        rules: [{ required: true, message: 'Please enter the title', trigger: 'blur' }],
         placeholder: 'Title',
-        maxlength: 200
+        maxlength: 200,
+        rules: [
+          { required: true, message: 'Title cannot be blank', type: 'string', trigger: 'blur' },
+          {
+            validator: (rule, value) => value.length > 12,
+            message: 'Bounty title must be 12 characters or more',
+            trigger: 'blur'
+          }
+        ]
       },
       {
         t: 'date',
@@ -81,8 +88,15 @@ const BountyBasicInfo = defineComponent({
         title: 'Expires In',
         name: 'expiresIn',
         actions: ['clear', 'confirm'],
+        required: true,
         rules: [
-          { required: true, message: 'Please set the apply cutoff date' },
+          {
+            required: true,
+            message: 'Apply Cutoff Date cannot be blank',
+            type: 'date',
+            trigger: 'blur'
+          },
+
           {
             validator: (rule, value) => {
               if (!value) return true
@@ -140,7 +154,7 @@ const BountyBasicInfo = defineComponent({
                         class="w-50"
                       ></USelect>
                       <UInput
-                        class="flex-1 rounded-r-lg"
+                        class="rounded-r-lg flex-1"
                         v-model:value={item.value}
                         inputProps={{ type: item.type === 1 ? 'email' : 'text' }}
                         status={
@@ -152,24 +166,24 @@ const BountyBasicInfo = defineComponent({
                     </UInputGroup>
                     {props.bountyInfo.contact.length > 1 && (
                       <div
-                        class="flex items-center cursor-pointer"
+                        class="cursor-pointer flex items-center"
                         onClick={() => ctx.emit('delContact', itemIndex)}
                       >
-                        <MinusCircleOutlined class="w-5 h-5 ml-4.5" />
+                        <MinusCircleOutlined class="h-5 ml-4.5 w-5" />
                       </div>
                     )}
 
                     {itemIndex + 1 === props.bountyInfo.contact.length && itemIndex < 5 && (
                       <div
-                        class="flex items-center cursor-pointer"
+                        class="cursor-pointer flex items-center"
                         onClick={() => ctx.emit('addContact')}
                       >
-                        <AddCircleOutlined class="w-5 h-5 ml-4.5" />
+                        <AddCircleOutlined class="h-5 ml-4.5 w-5" />
                       </div>
                     )}
                   </div>
                   {item.type === 1 && item.value && !validateEmail(item.value) && (
-                    <div class="ml-50 text-error">Please enter the correct email address</div>
+                    <div class="text-error ml-50">Please enter the correct email address</div>
                   )}
                 </div>
               ))}
@@ -186,10 +200,10 @@ const BountyBasicInfo = defineComponent({
       },
       {
         t: 'skillTags',
-        title: 'Applicants skills',
-        name: 'applicantsSkills',
-        placeholder: 'Applicants skills',
-        rules: [{ required: true, message: 'Select at least one category' }]
+        title: 'Applicant skills',
+        name: 'applicantSkills',
+        placeholder: 'Applicant skills',
+        required: true
       },
       {
         t: 'custom',
@@ -207,7 +221,7 @@ const BountyBasicInfo = defineComponent({
             h(
               <div>
                 Applicants deposit
-                <span class="text-xs text-grey4 ml-4">
+                <span class="text-xs ml-4 text-grey4">
                   Applicant must deposit usdc for applying the bounty
                 </span>
               </div>
@@ -239,7 +253,7 @@ const BountyBasicInfo = defineComponent({
         t: 'custom',
         title: 'Description',
         name: 'description',
-        rules: [{ required: true, message: 'Describe the details of the bounty' }],
+        required: true,
         render() {
           return (
             <RichEditor
@@ -260,10 +274,16 @@ const BountyBasicInfo = defineComponent({
           comerID
         })
         if (!error) {
-          startupOptions.value = (data.list || []).map(startup => ({
-            label: startup.name!,
-            value: startup.startupID!
-          }))
+          startupOptions.value = (data.list || [])
+            .map(startup => ({
+              label: startup.name!,
+              value: startup.startupID!
+            }))
+            .sort(function compareFunction(param1, param2) {
+              return param1.label.localeCompare(param2.label, 'zh-Hans-CN', {
+                sensitivity: 'accent'
+              })
+            })
         }
       } catch (error) {
         console.error('error', error)

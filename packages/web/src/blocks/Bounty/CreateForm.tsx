@@ -43,7 +43,7 @@ const CreateBountyForm = defineComponent({
       expiresIn: undefined,
       contact: [{ type: 1, value: '' }],
       discussionLink: '',
-      applicantsSkills: [],
+      applicantSkills: [],
       applicantsDeposit: 0,
       description: '',
       payDetailType: 'stage',
@@ -173,7 +173,7 @@ const CreateBountyForm = defineComponent({
               .filter(item => item.value)
               .map(item => ({ contactType: item.type, contactAddress: item.value })),
             discussionLink: bountyInfo.discussionLink,
-            applicantsSkills: bountyInfo.applicantsSkills,
+            applicantSkills: bountyInfo.applicantSkills,
             applicantsDeposit: bountyInfo.applicantsDeposit,
             description: bountyInfo.description
           },

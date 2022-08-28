@@ -121,14 +121,21 @@ const PayDetailStage = defineComponent({
               </div>
               <UFormItem
                 path={`${stageIndex}.terms`}
-                rule={{
-                  required: true,
-                  message: 'please input the payment term',
-                  trigger: 'blur'
-                }}
+                rule={[
+                  {
+                    required: true,
+                    message: 'Stage decription cannot be blank',
+                    trigger: 'blur'
+                  },
+                  {
+                    validator: (rule, value) => value.length > 12,
+                    message: 'Stage decription must be 12 characters or more',
+                    trigger: 'blur'
+                  }
+                ]}
               >
                 <UInput
-                  placeholder="The payment after applicant complete some tasks"
+                  placeholder="Will pay after applicant complete this stage"
                   type="textarea"
                   rows={1}
                   class="-mt-1"

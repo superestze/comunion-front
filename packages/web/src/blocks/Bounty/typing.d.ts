@@ -9,7 +9,7 @@ export interface BountyInfo {
   expiresIn: number | undefined
   contact: ContactType[]
   discussionLink: string
-  applicantsSkills: never[]
+  applicantSkills: never[]
   applicantsDeposit: number
   description: string
   payDetailType: string

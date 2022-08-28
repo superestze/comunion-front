@@ -174,7 +174,7 @@ export default defineComponent({
                   profile={this.bountySection.founder}
                   class="mt-20px"
                   keyMap={{
-                    skills: 'applicantsSkills',
+                    skills: 'applicantSkills',
                     comerId: 'comerID',
                     name: 'name',
                     avatar: 'image',
@@ -202,7 +202,7 @@ export default defineComponent({
                   profile={this.bountySection.approvedPeople}
                   class="mt-20px"
                   keyMap={{
-                    skills: 'applicantsSkills',
+                    skills: 'applicantSkills',
                     comerId: 'comerID',
                     name: 'name',
                     avatar: 'image',

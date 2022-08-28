@@ -21,7 +21,7 @@ export default defineComponent({
     keyMap: {
       type: Object as PropType<{ [key: string]: string }>,
       default: () => ({
-        skills: 'applicantsSkills',
+        skills: 'applicantSkills',
         comerId: 'comerId',
         name: 'name',
         avatar: 'avatar',
