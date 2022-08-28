@@ -131,8 +131,8 @@ const StartupsPage = defineComponent({
         </div>
 
         <div class="grid pb-6 gap-8 grid-cols-2 md:grid-cols-3 lg:grid-cols-4 xl:grid-cols-5 2xl:grid-cols-6">
-          {DataList.value.map((startup, i) => (
-            <StartupCard startup={startup} key={i} />
+          {DataList.value.map(startup => (
+            <StartupCard startup={startup} key={startup.id} />
           ))}
           {pagination.loading &&
             new Array(pagination.pageSize).fill('').map(item => <StartupSkeleton />)}
