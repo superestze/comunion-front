@@ -104,11 +104,11 @@ export const allNetworks: ChainNetworkType[] = [
     explorerUrl: 'https://polygonscan.com'
   }
 ]
-interface Networks_COLOR_MAP_TYPE {
+interface NETWORKS_COLOR_MAP_TYPE {
   [key: string]: string
 }
 
-export const Networks_COLOR_MAP: Networks_COLOR_MAP_TYPE = {
+export const NETWORKS_COLOR_MAP: NETWORKS_COLOR_MAP_TYPE = {
   Polygon: '#8247E5',
   Avalanche: '#E84142',
   AvalancheTestnet: '#E84142',
@@ -117,7 +117,7 @@ export const Networks_COLOR_MAP: Networks_COLOR_MAP_TYPE = {
   Ethereum: '#627EEA'
 } as const
 
-export const Networks_SUBCOLOR_MAP: Networks_COLOR_MAP_TYPE = {
+export const NETWORKS_SUBCOLOR_MAP: NETWORKS_COLOR_MAP_TYPE = {
   Polygon: '#8247E50F',
   Avalanche: '#E841420F',
   AvalancheTestnet: '#E841420F',

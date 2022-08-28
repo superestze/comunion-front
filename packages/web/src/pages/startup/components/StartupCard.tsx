@@ -7,8 +7,8 @@ import {
   StartupTypesType,
   STARTUP_TYPES_COLOR_MAP,
   STARTUP_TYPES_SUBCOLOR_MAP,
-  Networks_COLOR_MAP,
-  Networks_SUBCOLOR_MAP
+  NETWORKS_COLOR_MAP,
+  NETWORKS_SUBCOLOR_MAP
 } from '@/constants'
 import { getChainInfoByChainId } from '@/pages/crowdfunding/utils'
 import { StartupItem } from '@/types'
@@ -70,8 +70,8 @@ const StartupCard = defineComponent({
                   <div
                     class="rounded flex py-0.25rem px-0.5rem items-center"
                     style={{
-                      color: Networks_COLOR_MAP[theChainName.split(' ').join('')],
-                      background: Networks_SUBCOLOR_MAP[theChainName.split(' ').join('')]
+                      color: NETWORKS_COLOR_MAP[theChainName.split(' ').join('')],
+                      background: NETWORKS_SUBCOLOR_MAP[theChainName.split(' ').join('')]
                     }}
                   >
                     <img
