@@ -32,16 +32,15 @@ const StartupCard = defineComponent({
     const toStartDetail = (startupInfo: StartupItem) => {
       router.push({ path: '/startup/detail', query: { startupId: startupInfo.id } })
     }
-    // 提取几个复用变量
-    const ChainName = getChainInfoByChainId(props.startup.chainID)?.shortName
-    const StartupTagClass =
+    const theChainName = getChainInfoByChainId(props.startup.chainID)?.shortName
+    const STARTUP_TAG_CLASS =
       'inline-block h-1.25rem leading-5 px-0.5rem text-[#3F2D99] border-1 border-[#3F2D99] rounded-sm'
-    const StartupSubTagClass =
+    const STARTUP_SUB_TAG_CLASS =
       'inline-block ml-1 h-1.25rem leading-5 px-0.5rem text-[#fff] rounded-sm'
 
     return () => (
       <div
-        class="bg-white rounded h-80 relative cursor-pointer top-0 hover:shadow-md hover:-top-0.5rem"
+        class="bg-white rounded cursor-pointer h-80 top-0 relative hover:shadow-md hover:-top-0.5rem"
         style="transition:all ease .3s"
         onClick={() => toStartDetail(props.startup)}
       >
@@ -51,13 +50,13 @@ const StartupCard = defineComponent({
               src={props.startup.logo}
               width="8"
               height="12"
-              class="rounded h-3.75rem w-3.75rem !object-cover mr-0.75rem"
+              class="rounded h-3.75rem mr-0.75rem w-3.75rem !object-cover"
             />
             <div class="flex-1 ">
-              <div class="float-right mb-0.5rem">
+              <div class="mb-0.5rem float-right">
                 {props.startup.mode > 0 && (
                   <UTag
-                    class="u-body3 !text-14px !font-bold !rounded-bl-md !rounded-tr-md"
+                    class="u-body3 !rounded-bl-md !rounded-tr-md !font-bold !text-14px"
                     type="filled"
                     bgColor={STARTUP_TYPES_SUBCOLOR_MAP[modeName]}
                     style={{ color: STARTUP_TYPES_COLOR_MAP[modeName] }}
@@ -67,19 +66,19 @@ const StartupCard = defineComponent({
                 )}
               </div>
               <div class="float-right clear-right">
-                {ChainName && (
+                {theChainName && (
                   <div
-                    class="flex items-center py-0.25rem px-0.5rem rounded"
+                    class="rounded flex py-0.25rem px-0.5rem items-center"
                     style={{
-                      color: Networks_COLOR_MAP[ChainName.split(' ').join('')],
-                      background: Networks_SUBCOLOR_MAP[ChainName.split(' ').join('')]
+                      color: Networks_COLOR_MAP[theChainName.split(' ').join('')],
+                      background: Networks_SUBCOLOR_MAP[theChainName.split(' ').join('')]
                     }}
                   >
                     <img
                       src={getChainInfoByChainId(props.startup.chainID)?.logo}
-                      class="w-1.25rem h-1.25rem mr-0.2rem"
+                      class="h-1.25rem mr-0.2rem w-1.25rem"
                     />
-                    <span class="text-12px truncate">{ChainName}</span>
+                    <span class="text-12px truncate">{theChainName}</span>
                   </div>
                 )}
               </div>
@@ -90,11 +89,11 @@ const StartupCard = defineComponent({
             {props.startup.name}
           </div>
           <p class="h-14 mb-6 break-all u-body1 line-clamp-3">{props.startup.mission}</p>
-          <div class="flex flex-wrap gap-1 text-0.75rem">
+          <div class="flex flex-wrap text-0.75rem gap-1">
             {hashtagsArray.map((key, value) => {
               return (
                 value < 4 && (
-                  <span key={value} class={StartupTagClass}>
+                  <span key={value} class={STARTUP_TAG_CLASS}>
                     {key}
                   </span>
                 )
@@ -102,20 +101,22 @@ const StartupCard = defineComponent({
             })}
 
             {hashtagsArray.length - 4 > 0 ? (
-              <span class={StartupTagClass}>+ {hashtagsArray.length - 4}</span>
+              <span class={STARTUP_TAG_CLASS}>+ {hashtagsArray.length - 4}</span>
             ) : null}
           </div>
           {/* 底部 */}
-          <div class="absolute bottom-6 left-6 right-6 text-0.75rem">
+          <div class="right-6 bottom-6 left-6 text-0.75rem absolute">
             <div class="flex items-center">
-              <span class="inline-block text-[#636366] bg-[#F4F4F4] h-1.625rem leading-1.625rem px-0.5rem rounded-bl-md rounded-tr-md">
+              <span class="rounded-bl-md rounded-tr-md bg-[#F4F4F4] h-1.625rem px-0.5rem text-[#636366] leading-1.625rem inline-block">
                 <em class="font-700 mr-0.2rem">{props.startup.followCount}</em>
                 Connections
               </span>
               <div class="flex-1"></div>
-              {props.startup.kyc && <span class={StartupSubTagClass + ' bg-[#EC53A4]'}>KYC</span>}
+              {props.startup.kyc && (
+                <span class={STARTUP_SUB_TAG_CLASS + ' bg-[#EC53A4]'}>KYC</span>
+              )}
               {props.startup.contractAudit && (
-                <span class={StartupSubTagClass + ' bg-[#5331F4]'}>AUDIT</span>
+                <span class={STARTUP_SUB_TAG_CLASS + ' bg-[#5331F4]'}>AUDIT</span>
               )}
             </div>
           </div>
