@@ -49,7 +49,7 @@ const BountyPage = defineComponent({
       await fetchData()
       pagination.loading = false
     }
-    // 搜索条件
+    // filter
     watch(
       () => CreatedType.value,
       () => {
@@ -71,7 +71,6 @@ const BountyPage = defineComponent({
 
         if (bodyRect.height + bodyRect.top - winHeight < 240) {
           if (isLastPage.value) {
-            // 最后一页移除事件监听
             document.removeEventListener('scroll', scrollHandler)
           } else {
             pagination.page++
@@ -86,7 +85,6 @@ const BountyPage = defineComponent({
         winHeight = window.innerHeight
         body = document.body
         document.addEventListener('scroll', scrollHandler)
-        // 首次加载
         onLoadMore(pagination.page)
       })
     })
@@ -94,9 +92,6 @@ const BountyPage = defineComponent({
     onBeforeUnmount(() => {
       document.removeEventListener('scroll', scrollHandler)
     })
-
-    // TODO
-    // 骨架屏，调内容样式
 
     return () => (
       <div class="mt-10 mb-16">
@@ -117,7 +112,6 @@ const BountyPage = defineComponent({
         {DataList.value.map((item, i) => (
           <BountyCard key={i} startup={item} />
         ))}
-        {/* 骨架元素 */}
         {pagination.loading &&
           new Array(pagination.pageSize).fill('').map(item => <BountySkeleton />)}
       </div>

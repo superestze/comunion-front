@@ -55,7 +55,7 @@ const StartupsPage = defineComponent({
       await fetchData()
       pagination.loading = false
     }
-    // 筛选条件
+    // filter
     watch(
       () => startupType.value,
       () => {
@@ -85,7 +85,6 @@ const StartupsPage = defineComponent({
 
         if (bodyRect.height + bodyRect.top - winHeight < 240) {
           if (isLastPage.value) {
-            // 最后一页移除事件监听
             document.removeEventListener('scroll', scrollHandler)
           } else {
             pagination.page++
@@ -100,7 +99,6 @@ const StartupsPage = defineComponent({
         winHeight = window.innerHeight
         body = document.body
         document.addEventListener('scroll', scrollHandler)
-        // 首次加载
         onLoadMore(pagination.page)
       })
     })
@@ -136,7 +134,6 @@ const StartupsPage = defineComponent({
           {DataList.value.map((startup, i) => (
             <StartupCard startup={startup} key={i} />
           ))}
-          {/* 骨架元素 */}
           {pagination.loading &&
             new Array(pagination.pageSize).fill('').map(item => <StartupSkeleton />)}
         </div>
