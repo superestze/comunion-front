@@ -130,7 +130,7 @@ const StartupsPage = defineComponent({
           </div>
         </div>
 
-        <div class="grid pb-6 gap-8 grid-cols-2 md:grid-cols-3 lg:grid-cols-4 xl:grid-cols-5 2xl:grid-cols-6">
+        <div class="grid pb-6 gap-8 grid-cols-1 md:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4">
           {DataList.value.map(startup => (
             <StartupCard startup={startup} key={startup.id} />
           ))}
