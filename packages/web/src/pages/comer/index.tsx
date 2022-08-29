@@ -17,6 +17,13 @@ import Startup from './components/startup'
 import { useModuleTag } from './hooks/useModuleTag'
 import { useProfile } from './hooks/useProfile'
 
+const keyValue: Record<string, string> = {
+  Startup: 'startupCnt',
+  Bounty: 'bountyCnt',
+  Crowdfunding: 'crowdfundingCnt',
+  Proposal: 'proposalCnt'
+}
+
 export default defineComponent({
   setup() {
     const route = useRoute()
@@ -34,12 +41,27 @@ export default defineComponent({
     const moduleTag = useModuleTag()
 
     const nothingToShow = computed(() => {
-      return (
-        moduleTag.tagCount.bountyCnt === 0 &&
-        moduleTag.tagCount.crowdfundingCnt === 0 &&
-        moduleTag.tagCount.proposalCnt === 0 &&
-        moduleTag.tagCount.startupCnt === 0
-      )
+      const all = selectedTasks.value.find(value => value === 'All')
+      if (all) {
+        return (
+          moduleTag.tagCount.bountyCnt === 0 &&
+          moduleTag.tagCount.crowdfundingCnt === 0 &&
+          moduleTag.tagCount.proposalCnt === 0 &&
+          moduleTag.tagCount.startupCnt === 0
+        )
+      }
+      console.log(selectedTasks.value)
+      const result = selectedTasks.value
+        .map(value => {
+          return moduleTag.tagCount[keyValue[value]]
+        })
+        .reduce((pre: any, next) => {
+          if (typeof pre === 'number') {
+            return pre === 0 && next === 0
+          }
+          return pre && next === 0
+        })
+      return typeof result === 'number' ? result === 0 : result
     })
 
     watch(

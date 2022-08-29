@@ -237,7 +237,7 @@ export default defineComponent({
             <div class="w-full flex justify-end mt-20px">
               {this.view ? (
                 <>
-                  {!self ? (
+                  {!this.self ? (
                     <>
                       {this.follow ? (
                         <UButton
@@ -271,7 +271,7 @@ export default defineComponent({
             </div>
             <div class="flex mt-30px flex-col ml-50px mb-24px mr-50px">
               <p class="text-16px font-600 text-primary2">{this.name}</p>
-              <p class="text-14px text-grey3 mt-2">{this.subTitle}</p>
+              <p class="text-14px text-grey3 mt-2 leading-normal">{this.subTitle}</p>
             </div>
           </>
         )}
