@@ -16,9 +16,11 @@ export const CrowdfundingCard = defineComponent({
         NonNullable<ServiceReturn<'crowdfunding@public-crowdfunding-list'>>['rows'][number]
       >,
       required: true
+    },
+    onClick: {
+      type: Function as PropType<() => void>
     }
   },
-  emtis: ['click'],
   setup(props, ctx) {
     const sellTokenSymbol = ref()
     const buyTokenSymbol = ref()
@@ -66,10 +68,10 @@ export const CrowdfundingCard = defineComponent({
 
     const Time = computed(() => {
       if (props.info.status === CrowdfundingStatus.CANCELED) {
-        return <div class="u-body2 text-grey4">Canceled</div>
+        return <div class="text-grey4 u-body2">Canceled</div>
       }
       if (dayjs().isAfter(props.info.endTime)) {
-        return <div class="u-body2 text-grey4">Ended</div>
+        return <div class="text-grey4 u-body2">Ended</div>
       }
 
       if (dayjs.utc().isBefore(dayjs(props.info.startTime).utc())) {
@@ -118,9 +120,9 @@ export const CrowdfundingCard = defineComponent({
 
     return () => (
       <div
-        class="relative rounded-lg bg-white cursor-pointer top-0 hover:shadow-md hover:-top-0.5rem"
+        class="bg-white rounded-lg cursor-pointer top-0 relative hover:shadow-md hover:-top-0.5rem"
         style="transition:all ease .3s"
-        onClick={() => ctx.emit('click')}
+        onClick={() => props.onClick?.()}
       >
         <div
           class={[
@@ -130,29 +132,29 @@ export const CrowdfundingCard = defineComponent({
         >
           {CROWDFUNDING_TYPES[props.info.status - 1]}
         </div>
-        <ULazyImage src={props.info.poster} class="h-10.75rem w-full rounded-t-lg" />
+        <ULazyImage src={props.info.poster} class="rounded-t-lg h-10.75rem w-full" />
         <div class="p-6">
-          <div class="flex items-center mb-2">
-            <span class="flex-1 mr-4 u-h3 truncate">{props.info.startupName}</span>
+          <div class="flex mb-2 items-center">
+            <span class="flex-1 mr-4 truncate u-h3">{props.info.startupName}</span>
             <img src={logo.value} />
           </div>
           <div class="flex mb-2">
             <div class="flex-1 text-0.75rem">
               <div class="text-grey3  leading-6">Raise Goal : </div>
               <div class="text-primary ">
-                <strong class="text-1.25rem mr-1" style="font-family: Orbitron,sans-serif;">
+                <strong class="mr-1 text-1.25rem" style="font-family: Orbitron,sans-serif;">
                   {raiseState.value.raiseGoal}
                 </strong>
                 <strong>{buyTokenSymbol.value}</strong>
               </div>
             </div>
             {props.info.kyc && (
-              <UTag class="text-xs font-semibold mr-1 !h-5" type="filled" bgColor="#EC53A4">
+              <UTag class="font-semibold text-xs mr-1 !h-5" type="filled" bgColor="#EC53A4">
                 KYC
               </UTag>
             )}
             {props.info.contractAudit && (
-              <UTag class="text-xs font-semibold mr-1 !h-5" type="filled" bgColor="#5331F4">
+              <UTag class="font-semibold text-xs mr-1 !h-5" type="filled" bgColor="#5331F4">
                 AUDIT
               </UTag>
             )}
@@ -165,26 +167,26 @@ export const CrowdfundingCard = defineComponent({
             class="mb-1"
           />
 
-          <div class="flex items-center mb-2 text-xs">
+          <div class="flex text-xs mb-2 items-center">
             <div class="flex-1 text-0.75rem">
               {raiseState.value.raiseAmount}
-              <span class="text-grey3 ml-1">{buyTokenSymbol.value}</span>
+              <span class="ml-1 text-grey3">{buyTokenSymbol.value}</span>
             </div>
-            <div class="text-right mb-2 u-body3 text-sm">{raiseState.value.raisePercent} %</div>
+            <div class="text-right text-sm mb-2 u-body3">{raiseState.value.raisePercent} %</div>
           </div>
-          <div class="mt-3 u-body2 flex justify-between">
+          <div class="flex mt-3 justify-between u-body2">
             <span class="text-grey2">IBO Rate:</span>
             <span class="text-right">
               1 {buyTokenSymbol.value} = {props.info.buyPrice} {sellTokenSymbol.value}
             </span>
           </div>
-          <div class="mt-2 u-body2 flex justify-between">
+          <div class="flex mt-2 justify-between u-body2">
             <span class="text-grey2">Swap %:</span>
             <span class="text-right">{props.info.swapPercent} %</span>
           </div>
         </div>
-        <div class="w-full h-px bg-purple"></div>
-        <div class="px-6 py-3 border-t-1 border-purple">{Time.value}</div>
+        <div class="bg-purple h-px w-full"></div>
+        <div class="border-purple border-t-1 py-3 px-6">{Time.value}</div>
       </div>
     )
   }

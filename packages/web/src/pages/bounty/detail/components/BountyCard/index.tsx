@@ -65,8 +65,8 @@ export default defineComponent({
               }}
             </UTooltip>
             <div class="flex flex-row mt-5.5">
-              {Array.isArray(this.bountyDetail?.applicantsSkills) &&
-                this.bountyDetail?.applicantsSkills.map(value => (
+              {Array.isArray(this.bountyDetail?.applicantSkills) &&
+                this.bountyDetail?.applicantSkills.map(value => (
                   <p class="border flex border-primary1 rounded-2px h-6 w-auto py-1 px-2 text-primary1 text-12px overflow-hidden items-center justify-center">
                     {value}
                   </p>
