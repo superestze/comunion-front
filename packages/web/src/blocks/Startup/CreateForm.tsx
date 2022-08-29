@@ -203,6 +203,7 @@ const CreateStartupForm = defineComponent({
         placeholder: 'Add overview for introducing your startup',
         required: true,
         type: 'textarea',
+        maxlength: 1000,
         rules: [
           {
             validator: (rule, value) => value.length > 100,
@@ -224,7 +225,7 @@ const CreateStartupForm = defineComponent({
     }
     return () => (
       <UForm ref={formRef} rules={allRules} model={model}>
-        <p class="mb-7 u-card-title1 text-primary1">INFO SETTING</p>
+        <p class="mb-7 text-primary1 u-card-title1">INFO SETTING</p>
         <UFormItemsFactory fields={infoFields} values={model} />
         {/* <div class="bg-purple h-13px my-8"></div> */}
         {/* <p class="mb-7 uppercase u-card-title1">Finance Setting</p> */}
