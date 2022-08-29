@@ -1,14 +1,14 @@
 import { ULogo, UTransactionContainer, UTransactionWaiting } from '@comunion/components'
 import { defineComponent, watchEffect } from 'vue'
 import { RouterLink, RouterView, useRouter, useRoute } from 'vue-router'
-import TheHeader from './blocks/TheHeader'
+import TheHeader from '../default/blocks/TheHeader'
 import styles from './index.module.css'
 import { FOOTER_LINKS } from '@/constants'
 import { useUserStore, useWalletStore } from '@/stores'
 import { useContractStore } from '@/stores/contract'
 
-const DefaultLayout = defineComponent({
-  name: 'DefaultLayout',
+const FluentLayout = defineComponent({
+  name: 'FluentLayout',
   setup() {
     const router = useRouter()
     const route = useRoute()
@@ -26,7 +26,7 @@ const DefaultLayout = defineComponent({
     return () => (
       <div class="bg-purple flex flex-col h-full min-h-screen text-[14px] relative">
         <TheHeader />
-        <div class="flex-1 u-page-container relative">
+        <div class={styles.body}>
           {/* Header */}
           {/* TransactionWaiting */}
           <UTransactionContainer>
@@ -55,7 +55,7 @@ const DefaultLayout = defineComponent({
               <ULogo theme="colorful" height={25} />
               <span class="ml-16px text-24px leading-24px sm:ml-10px sm:text-30px">About us</span>
             </RouterLink>
-            <div class="relative sm:flex sm:flex-1 sm:gap-40">
+            <div class="sm:flex sm:flex-1 sm:gap-40 footer_links">
               {FOOTER_LINKS.map(data => (
                 <div key={data.title} class="mb-40px">
                   <div class="text-white pt-12px pb-12px text-18px leading-18px block sm:pb-16px sm:text-20px">
@@ -74,7 +74,7 @@ const DefaultLayout = defineComponent({
                 </div>
               ))}
               {/* 版本号 */}
-              <span class="text-white footer-links-vertion">V5.7. Aug 2022</span>
+              <span class="footer_links_vertion text-white">V5.7. Aug 2022</span>
             </div>
           </div>
         </div>
@@ -83,4 +83,4 @@ const DefaultLayout = defineComponent({
   }
 })
 
-export default DefaultLayout
+export default FluentLayout

@@ -1,15 +1,26 @@
-import { UDropdownFilter, UPagination, UNoContent } from '@comunion/components'
-import { EmptyFilled } from '@comunion/icons'
-import { defineComponent, ref, reactive, onMounted, watch } from 'vue'
+import { UDropdownFilter } from '@comunion/components'
+import {
+  defineComponent,
+  ref,
+  computed,
+  reactive,
+  onMounted,
+  nextTick,
+  onBeforeUnmount,
+  watch
+} from 'vue'
 import BountyCard from './components/BountyCard'
+import BountySkeleton from './components/BountySkeleton'
 import { BOUNTY_TYPES } from '@/constants'
-import { services, ServiceReturn } from '@/services'
+import { services } from '@/services'
 
-const StartupsPage = defineComponent({
-  name: 'StartupsPage',
+import { BountyItem } from '@/types'
+
+const BountyPage = defineComponent({
+  name: 'BountyPage',
   setup() {
-    const startupType = ref('Created:Recent')
-    const myCreatedStartups = ref<ServiceReturn<'bounty@bounty-list(tab)'>>()
+    const CreatedType = ref('Created:Recent')
+    const DataList = ref<BountyItem[]>([])
     const pagination = reactive<{
       pageSize: number
       total: number | undefined
@@ -21,69 +32,91 @@ const StartupsPage = defineComponent({
       page: 1,
       loading: false
     })
-    const dataService = async (page: number) => {
+
+    const fetchData = async () => {
       const { error, data } = await services['bounty@bounty-list(tab)']({
-        page: page,
-        sort: startupType.value
+        page: pagination.page,
+        sort: CreatedType.value
       })
       if (!error) {
+        DataList.value.push(...(data!.rows as unknown as BountyItem[]))
         pagination.total = data?.totalRows
-        myCreatedStartups.value = data
       }
     }
+    const onLoadMore = async (p: number) => {
+      pagination.loading = true
+      pagination.page = p
+      await fetchData()
+      pagination.loading = false
+    }
+    // filter
     watch(
-      () => startupType.value,
+      () => CreatedType.value,
       () => {
-        dataService(1)
+        setTimeout(() => {
+          onLoadMore(1)
+        }, 0)
       }
     )
-    const updatePages = (page: number) => {
-      pagination.page = page
-      if (dataService instanceof Function) dataService(page)
-    }
-    onMounted(() => {
-      dataService(pagination.page)
+
+    const isLastPage = computed(() => {
+      return (pagination.page || 0) * (pagination.pageSize || 0) >= (pagination.total || 0)
     })
+
+    let winHeight = 0
+    let body = document.body
+    const scrollHandler = () => {
+      if (!pagination.loading) {
+        const bodyRect = body?.getBoundingClientRect()
+
+        if (bodyRect.height + bodyRect.top - winHeight < 240) {
+          if (isLastPage.value) {
+            document.removeEventListener('scroll', scrollHandler)
+          } else {
+            pagination.page++
+            onLoadMore(pagination.page)
+          }
+        }
+      }
+    }
+
+    onMounted(() => {
+      nextTick(() => {
+        winHeight = window.innerHeight
+        body = document.body
+        document.addEventListener('scroll', scrollHandler)
+        onLoadMore(pagination.page)
+      })
+    })
+
+    onBeforeUnmount(() => {
+      document.removeEventListener('scroll', scrollHandler)
+    })
+
     return () => (
       <div class="mt-10 mb-16">
         <div class="flex mb-8">
-          <h3 class="text-grey1 u-h3">{pagination.total?.toLocaleString()} Bounties available</h3>
+          {/* <h3 class="text-grey1 u-h3">{pagination.total?.toLocaleString()} Bounties available</h3> */}
           <div class="flex ml-auto self-end items-center u-title2 ">
-            Sort by:
+            Filter by:
             <UDropdownFilter
               options={BOUNTY_TYPES.map(item => ({ label: item, value: item }))}
               placeholder="Startup Type"
               class="rounded border-1 h-10 ml-6 w-50"
               clearable
-              v-model:value={startupType.value}
+              v-model:value={CreatedType.value}
             />
           </div>
         </div>
-        {myCreatedStartups.value?.rows ? (
-          <>
-            <div class="p-10 bg-white rounded ">
-              {myCreatedStartups.value?.rows.map((startup, i) => (
-                <BountyCard key={i} startup={startup} />
-              ))}
-            </div>
-            <div class="flex justify-end mt-10">
-              <UPagination
-                class="item-center"
-                v-model:page={pagination.page}
-                itemCount={pagination.total}
-                v-model:pageSize={pagination.pageSize}
-                on-update:page={updatePages}
-              />
-            </div>
-          </>
-        ) : (
-          <UNoContent textTip="NO BOUNTY YET" class="mb-80">
-            <EmptyFilled class="mt-34" />
-          </UNoContent>
-        )}
+
+        {DataList.value.map(item => (
+          <BountyCard key={item.bountyId} startup={item} />
+        ))}
+        {pagination.loading &&
+          new Array(pagination.pageSize).fill('').map(item => <BountySkeleton />)}
       </div>
     )
   }
 })
 
-export default StartupsPage
+export default BountyPage

@@ -1,3 +1,12 @@
+.body {
+  @apply flex-1 relative;
+
+  width: 100%;
+  max-width: 120rem;
+  margin: auto;
+  padding: 0 3rem;
+}
+
 .footer {
   @apply bg-primary2;
 
@@ -12,7 +21,11 @@
       @apply font-normal mt-4 text-white;
     }
 
-    .footer-links-vertion {
+    .footer_links {
+      position: relative;
+    }
+
+    .footer_links_vertion {
       position: absolute;
       right: 1rem;
       bottom: 1rem;

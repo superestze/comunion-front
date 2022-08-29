@@ -26,6 +26,7 @@ export const allNetworks: ChainNetworkType[] = [
     logo: ethereum,
     chainId: 1,
     name: 'Ethereum',
+    shortName: 'Ethereum',
     currencySymbol: 'ETH',
     rpcUrl: 'https://mainnet.infura.io/v3/',
     explorerUrl: 'https://etherscan.io'
@@ -34,6 +35,7 @@ export const allNetworks: ChainNetworkType[] = [
     logo: ethereum,
     chainId: 5,
     name: 'Goerli Testnet',
+    shortName: 'Goerli Testnet',
     currencySymbol: 'ETH',
     rpcUrl: 'https://goerli.infura.io/v3/',
     explorerUrl: 'https://goerli.etherscan.io'
@@ -69,6 +71,7 @@ export const allNetworks: ChainNetworkType[] = [
     logo: fantom,
     chainId: 4002,
     name: 'Fantom Testnet',
+    shortName: 'Fantom',
     currencySymbol: 'FTM',
     rpcUrl: 'https://rpc.testnet.fantom.network',
     explorerUrl: 'https://testnet.ftmscan.com'
@@ -101,6 +104,27 @@ export const allNetworks: ChainNetworkType[] = [
     explorerUrl: 'https://polygonscan.com'
   }
 ]
+interface NETWORKS_COLOR_MAP_TYPE {
+  [key: string]: string
+}
+
+export const NETWORKS_COLOR_MAP: NETWORKS_COLOR_MAP_TYPE = {
+  Polygon: '#8247E5',
+  Avalanche: '#E84142',
+  AvalancheTestnet: '#E84142',
+  Fantom: '#4DACDD',
+  BSCTestnet: '#EBBA4E',
+  Ethereum: '#627EEA'
+} as const
+
+export const NETWORKS_SUBCOLOR_MAP: NETWORKS_COLOR_MAP_TYPE = {
+  Polygon: '#8247E50F',
+  Avalanche: '#E841420F',
+  AvalancheTestnet: '#E841420F',
+  Fantom: '#4DACDD0F',
+  BSCTestnet: '#F3BA2F0F',
+  Ethereum: '#607AE30F'
+} as const
 
 export const supportedChainIds = import.meta.env.VITE_SUPPORTED_CHAIN_ID?.split(',').map(id =>
   Number(id)

@@ -17,15 +17,15 @@ export const BOUNTY_TYPES_COLOR_MAP = [
   },
   {
     label: 'Ready to work',
-    value: '#00BFA5'
-  },
-  {
-    label: 'Work started',
     value: '#5331F4'
   },
   {
+    label: 'Work started',
+    value: '#00BFA5'
+  },
+  {
     label: 'Completed',
-    value: '#DF4F51'
+    value: '#F29F39'
   },
   {
     label: 'Expired',
