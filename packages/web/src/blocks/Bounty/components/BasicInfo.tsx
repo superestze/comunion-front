@@ -254,10 +254,20 @@ const BountyBasicInfo = defineComponent({
         title: 'Description',
         name: 'description',
         required: true,
+        rules: [
+          { required: true, message: 'Description cannot be blank', trigger: 'blur' },
+          {
+            validator: (rule, value) => {
+              return value && value.replace(/<.>|<\/.>/g, '').length > 30
+            },
+            message: 'Description must be 30 characters or more',
+            trigger: 'blur'
+          }
+        ],
         render() {
           return (
             <RichEditor
-              placeholder="Describe the details of the bounty"
+              placeholder="Describe what you offering is about"
               class="w-full"
               v-model:value={props.bountyInfo.description}
             />
