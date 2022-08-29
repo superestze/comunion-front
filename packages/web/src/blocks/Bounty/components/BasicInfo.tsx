@@ -70,7 +70,7 @@ const BountyBasicInfo = defineComponent({
         t: 'string',
         title: 'Title',
         name: 'title',
-        placeholder: 'Title',
+        placeholder: 'Bounty title',
         maxlength: 200,
         rules: [
           { required: true, message: 'Title cannot be blank', type: 'string', trigger: 'blur' },
@@ -85,8 +85,9 @@ const BountyBasicInfo = defineComponent({
         t: 'date',
         class: 'w-full',
         type: 'datetime',
-        title: 'Expires In',
+        title: 'Apply Cutoff Date',
         name: 'expiresIn',
+        placeholder: 'Select date',
         actions: ['clear', 'confirm'],
         required: true,
         rules: [
@@ -106,7 +107,6 @@ const BountyBasicInfo = defineComponent({
             trigger: 'blur'
           }
         ],
-        placeholder: 'Apply Cutoff Date (UTC)',
         isDateDisabled: (current: number) => {
           return dayjs(current) < dayjs()
         }
