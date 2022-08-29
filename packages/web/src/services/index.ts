@@ -149,11 +149,11 @@ export const services = {
     return requestAdapter<
       {
         /**
-   * @description
-  ModuleStartup - 1
-  ModuleBounty - 2
-  ModuleCrowdfunding - 3
-  ModuleProposal - 4
+   * @description 
+	ModuleStartup - 1
+	ModuleBounty - 2
+	ModuleCrowdfunding - 3
+	ModuleProposal - 4
 
 
      */
@@ -870,7 +870,7 @@ export const services = {
     return requestAdapter<{
       image?: string
       name?: string
-      applicantSkills?: string[]
+      applicantsSkills?: string[]
       comerID: number
     }>({
       url: replacePath('/bounty/{bountyID}/approved', args),
@@ -905,7 +905,7 @@ export const services = {
         contactAddress?: string
       }[]
       discussionLink?: string
-      applicantSkills?: string[]
+      applicantsSkills?: string[]
       applicantsDeposit?: number
       description?: string
     }
@@ -990,7 +990,7 @@ export const services = {
       email: string
       comerID: number
       name?: string
-      applicantSkills?: string[]
+      applicantsSkills?: string[]
       timeZone?: string
     }>({
       url: replacePath('/bounty/{bountyID}/founder', args),
@@ -2126,14 +2126,14 @@ export const services = {
   'startup@social-add-or-update'(args: { startupID: any }) {
     return requestAdapter<{
       /**
-   * @description 	1-SocialEmail
-  2-SocialWebsite
-  3-SocialTwitter
-  4-SocialDiscord
-  5-SocialTelegram
-  6-SocialMedium
-  7-SocialFacebook
-  8-SocialLinktre
+   * @description 	1-SocialEmail 
+	2-SocialWebsite
+	3-SocialTwitter
+	4-SocialDiscord
+	5-SocialTelegram
+	6-SocialMedium
+	7-SocialFacebook
+	8-SocialLinktre
      */
       socialType: number
       /**
@@ -2149,14 +2149,14 @@ export const services = {
   'startup@social-delete'(args: { startupID: any }) {
     return requestAdapter<{
       /**
-   * @description 	1-SocialEmail
-  2-SocialWebsite
-  3-SocialTwitter
-  4-SocialDiscord
-  5-SocialTelegram
-  6-SocialMedium
-  7-SocialFacebook
-  8-SocialLinktre
+   * @description 	1-SocialEmail 
+	2-SocialWebsite
+	3-SocialTwitter
+	4-SocialDiscord
+	5-SocialTelegram
+	6-SocialMedium
+	7-SocialFacebook
+	8-SocialLinktre
      */
       socialType: number
     }>({
@@ -2174,9 +2174,9 @@ export const services = {
       cover: string
       /**
    * @description 	ModeESG Mode = 1
-  ModeNGO Mode = 2
-  ModeDAO Mode = 3
-  ModeCOM Mode = 4
+	ModeNGO Mode = 2
+	ModeDAO Mode = 3
+	ModeCOM Mode = 4
 
      */
       mode: number
@@ -3012,7 +3012,7 @@ export const services = {
 
   'misc@file-upload'(
     args: // file : File
-      FormData
+    FormData
   ) {
     return requestAdapter<{
       url: string

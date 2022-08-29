@@ -201,7 +201,7 @@ const BountyBasicInfo = defineComponent({
       {
         t: 'skillTags',
         title: 'Applicant skills',
-        name: 'applicantSkills',
+        name: 'applicantsSkills',
         placeholder: 'Applicant skills',
         required: true
       },

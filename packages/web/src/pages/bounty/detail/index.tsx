@@ -46,17 +46,17 @@ export default defineComponent({
   render() {
     return (
       <USpin show={this.loading}>
-        <UBreadcrumb class="mb-10 mt-10">
+        <UBreadcrumb class="mt-10 mb-10">
           <UBreadcrumbItem v-slots={{ separator: () => <ArrowLeftOutlined /> }} />
           <UBreadcrumbItem>
-            <span class="u-label2 cursor-pointer uppercase text-primary" onClick={router.back}>
+            <span class="cursor-pointer text-primary uppercase u-label2" onClick={router.back}>
               BACK
             </span>
           </UBreadcrumbItem>
         </UBreadcrumb>
-        <div class="flex gap-6 mb-20">
+        <div class="flex mb-20 gap-6">
           <div class="basis-2/3">
-            <div class="bg-white p-10 rounded-lg border mb-6">
+            <div class="bg-white border rounded-lg mb-6 p-10">
               {this.bountySection.detail && <BountyCard bountyDetail={this.bountySection.detail} />}
             </div>
             <UCard
@@ -70,19 +70,19 @@ export default defineComponent({
                       {this.bountySection.bountyPayment?.bountyPaymentInfo?.paymentMode === 1 ? (
                         <>
                           <StageOutlined class="ml-26px" />
-                          <p class="text-14px ml-14px flex items-center">PERIOD: STAGE</p>
+                          <p class="flex ml-14px text-14px items-center">PERIOD: STAGE</p>
                         </>
                       ) : (
                         <>
                           <PeriodOutlined class="ml-26px" />
-                          <p class="text-14px ml-14px flex items-center">PERIOD: WEEK</p>
+                          <p class="flex ml-14px text-14px items-center">PERIOD: WEEK</p>
                         </>
                       )}
                     </p>
-                    <div class="flex bg-[rgba(83,49,244,0.06)] h-34px items-center rounded-35px justify-center font-opensans">
-                      <span class="flex items-center px-4 py-1 rounded-4xl leading-snug text-primary1 ml-8px text-16px">
-                        <img src={this.chainInfo?.logo} class="w-5 h-5" />{' '}
-                        <span class="ml-2 font-opensans">{this.chainInfo?.name}</span>
+                    <div class="flex font-opensans bg-[rgba(83,49,244,0.06)] rounded-35px h-34px items-center justify-center">
+                      <span class="flex rounded-4xl leading-snug ml-8px py-1 px-4 text-primary1 text-16px items-center">
+                        <img src={this.chainInfo?.logo} class="h-5 w-5" />{' '}
+                        <span class="font-opensans ml-2">{this.chainInfo?.name}</span>
                       </span>
                     </div>
                   </div>
@@ -127,12 +127,12 @@ export default defineComponent({
                               }}
                             </UTooltip>
                             {this.gap >= 0 ? (
-                              <p class="u-body3 text-grey3 flex items-center mr-4">
+                              <p class="flex mr-4 text-grey3 items-center u-body3">
                                 Founder can unlock after{' '}
-                                <span class="text-parimary mx-1">{this.gap}</span> days
+                                <span class="mx-1 text-parimary">{this.gap}</span> days
                               </p>
                             ) : (
-                              <p class="u-body3 text-error flex items-center mr-4">
+                              <p class="flex text-error mr-4 items-center u-body3">
                                 Founder can already unlock deposits
                               </p>
                             )}
@@ -165,7 +165,7 @@ export default defineComponent({
             </UCard>
           </div>
           <div class="basis-1/3">
-            <div class="bg-white p-10 rounded-lg border mb-6">
+            <div class="bg-white border rounded-lg mb-6 p-10">
               {this.bountySection.startup && <StartupCard startup={this.bountySection.startup} />}
             </div>
             <UCard title="FOUNDER" class="mb-6">
@@ -174,7 +174,7 @@ export default defineComponent({
                   profile={this.bountySection.founder}
                   class="mt-20px"
                   keyMap={{
-                    skills: 'applicantSkills',
+                    skills: 'applicantsSkills',
                     comerId: 'comerID',
                     name: 'name',
                     avatar: 'image',
@@ -202,7 +202,7 @@ export default defineComponent({
                   profile={this.bountySection.approvedPeople}
                   class="mt-20px"
                   keyMap={{
-                    skills: 'applicantSkills',
+                    skills: 'applicantsSkills',
                     comerId: 'comerID',
                     name: 'name',
                     avatar: 'image',
