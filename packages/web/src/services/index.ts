@@ -1041,6 +1041,7 @@ export const services = {
       expiresIn?: string
       applicantsDeposit?: number
       description?: string
+      chainID?: number
       /**
        * @description 1:Email 2:Discord 3:Telegram
        */

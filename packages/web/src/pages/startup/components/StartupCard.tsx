@@ -10,8 +10,8 @@ import {
   NETWORKS_COLOR_MAP,
   NETWORKS_SUBCOLOR_MAP
 } from '@/constants'
-import { getChainInfoByChainId } from '@/pages/crowdfunding/utils'
 import { StartupItem } from '@/types'
+import { getChainInfoByChainId } from '@/utils/etherscan'
 
 const StartupCard = defineComponent({
   name: 'StartupCard',

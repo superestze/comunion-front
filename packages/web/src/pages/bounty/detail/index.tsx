@@ -11,10 +11,10 @@ import StartupCard from './components/StartupCard'
 import Unapprove from './components/Unapprove'
 import { useBountyContractWrapper } from './hooks/useBountyContractWrapper'
 import { BOUNTY_STATUS, USER_ROLE } from '@/constants'
-import { getChainInfoByChainId } from '@/pages/crowdfunding/utils'
 import router from '@/router'
 import { useBountyStore } from '@/stores'
 import { useBountyContractStore } from '@/stores/bountyContract'
+import { getChainInfoByChainId } from '@/utils/etherscan'
 
 export default defineComponent({
   name: 'BountyDetail',
@@ -28,7 +28,6 @@ export default defineComponent({
       loading.value = false
     })
     const bountySection = computed(() => bountyStore.bountySection)
-
     const bountyContractStore = useBountyContractStore()
     const { bountyContract, gap, chainId } = useBountyContractWrapper()
     bountyContractStore.initialize(bountyContract, route.query.bountyId as string, true)
@@ -91,6 +90,7 @@ export default defineComponent({
             >
               {this.bountySection.bountyPayment && (
                 <Payment
+                  chainId={this.bountySection.detail?.chainID || 0}
                   bountyContractInfo={this.bountyContractInfo}
                   paymentInfo={this.bountySection.bountyPayment}
                 />

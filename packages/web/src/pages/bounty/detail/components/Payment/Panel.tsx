@@ -17,6 +17,10 @@ import { BountyContractInfoType } from '@/stores/bountyContract'
 
 export default defineComponent({
   props: {
+    chainId: {
+      type: Number,
+      required: true
+    },
     bountyContractInfo: {
       type: Object as PropType<BountyContractInfoType>,
       required: true
@@ -30,7 +34,7 @@ export default defineComponent({
     const payMode = computed<'stage' | 'period'>(() => {
       return props.paymentInfo?.bountyPaymentInfo?.paymentMode === 1 ? 'stage' : 'period'
     })
-
+    const chainId = props.chainId
     const stageTerms = computed(() => {
       if (props.paymentInfo?.stageTerms && Array.isArray(props.paymentInfo.stageTerms)) {
         return props.paymentInfo.stageTerms
@@ -59,6 +63,7 @@ export default defineComponent({
 
     return {
       payMode,
+      chainId,
       stageTerms,
       periodTerms,
       bountyApplicantAmount
@@ -80,6 +85,7 @@ export default defineComponent({
                         this.bountyContractInfo.status === APPLICANT_STATUS.APPLIED ||
                         this.bountyContractInfo.bountyStatus >= BOUNTY_STATUS.WORKSTARTED
                       }
+                      chainId={this.chainId}
                       applicantApplyStatus={this.bountyContractInfo.status}
                       applicantDepositMinAmount={this.bountyContractInfo.applicantDepositMinAmount}
                     />
