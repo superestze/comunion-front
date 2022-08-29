@@ -1,5 +1,6 @@
 import { UStartupLogo, UTag } from '@comunion/components'
 // import dayjs from 'dayjs'
+import { CalendarOutlined, StageOutlined } from '@comunion/icons'
 import { format } from 'timeago.js'
 import { defineComponent, PropType, reactive, onMounted, ref } from 'vue'
 import { useRouter } from 'vue-router'
@@ -46,110 +47,84 @@ const StartupCard = defineComponent({
 
     return () => (
       <div
-        class="flex h-40 w-full items-center cursor-pointer border-b-1"
+        class="h-36 cursor-pointer border-1 bg-white rounded-md px-10 mb-1.5rem pt-2rem hover:shadow-md"
+        style="transition:all ease .3s"
         onClick={handleCard(props.startup.bountyId)}
       >
-        <div class="flex h-full w-20 items-center">
+        <div class="flex mb-3">
           <UStartupLogo
             src={props.startup.logo}
             width="10"
             height="10"
-            class="h-20 w-20 rounded-md -mt-1"
+            class="h-3.75rem w-3.75rem rounded-md mr-3"
           />
-        </div>
-        <div class="flex-1 flex h-full ml-6 w-full items-center">
-          <div class="content">
-            <div class="u-title1 mb-2.5 max-w-200 truncate">{props.startup.title}</div>
-            <div class="flex items-center flex-row">
-              <div class="mb-4 mr-2">
-                <UTag
-                  class="px-2"
-                  style={{
-                    'border-color': color ? color.value : BOUNTY_TYPES_COLOR_MAP[0].value,
-                    color: color ? color.value : BOUNTY_TYPES_COLOR_MAP[0].value
-                  }}
-                >
-                  {color ? color.label : BOUNTY_TYPES_COLOR_MAP[0].label}
-                </UTag>
-              </div>
-              <div class="mb-4 mr-2">
-                <UTag
-                  class="px-2"
-                  style={{
-                    'border-color': 'var(--u-success-color)',
-                    color: 'var(--u-success-color)'
-                  }}
-                >
-                  {props.startup.paymentType}
-                </UTag>
-              </div>
-              <div class="mb-4 mr-2">
-                <UTag
-                  class="px-2"
-                  style={{
-                    'border-color': 'var(--u-primary-1-color)',
-                    color: 'var(--u-primary-1-color)'
-                  }}
-                >
-                  Created {date.value}
-                </UTag>
-              </div>
-              <div class="divide-x mb-4">
-                {props.startup.applicationSkills.length &&
-                  props.startup.applicationSkills.map((tag: string, i: number) => {
-                    return i + 1 < 4 ? (
-                      <span class={[i === 0 ? '' : 'pl-2', 'u-body1 text-grey1 pr-2']} key={i}>
-                        {tag}
-                      </span>
-                    ) : null
-                  })}
-              </div>
-            </div>
 
-            <div class="u-body2 truncate text-grey3">
-              {props.startup.applicantCount ?? 0} Applicant
+          <div class="flex-1 ">
+            <div class="flex items-center mb-2">
+              <div class="max-w-50rem text-[#333] font-700 text-1rem truncate leading-7">
+                {props.startup.title}
+              </div>
+              <span
+                class="inline-block px-2 h-1.25rem leading-1.25rem text-0.75rem rounded-sm ml-2"
+                style={{
+                  'background-color': color ? color.value : BOUNTY_TYPES_COLOR_MAP[0].value,
+                  color: '#fff'
+                }}
+              >
+                {color ? color.label : BOUNTY_TYPES_COLOR_MAP[0].label}
+              </span>
             </div>
-          </div>
-        </div>
-        <div class="flex h-full  items-center">
-          <div class="flex h-full ml-6 w-full items-center">
-            <div class="content">
-              <div class="flex justify-end">
-                {props.startup.rewards?.map((item: { tokenSymbol: string; amount: string }, i) => {
+            <div class="flex items-center flex-row">
+              {props.startup.applicationSkills.length &&
+                props.startup.applicationSkills.map((tag: string, i: number) => {
                   return (
-                    <div
-                      key={i}
-                      class={[
-                        i === 0 ? 'border-warning text-warning' : '0px border-primary text-primary',
-                        'ml-5 px-4 h-9 flex items-center justify-center rounded-md border-1'
-                      ]}
-                      style={{
-                        background:
-                          i === 0
-                            ? 'rgba(var( --u-warning2-value), 0.1)'
-                            : 'rgba(var(--u-primary-value), 0.1)'
-                      }}
-                    >
-                      <span
-                        class={[i === 0 ? 'text-warning' : 'text-primary', 'u-title1 truncate']}
-                      >
-                        {item.amount}
-                      </span>{' '}
-                      <span class={[i === 0 ? 'text-warning' : 'text-primary', 'pl-1 u-title2']}>
-                        {item.tokenSymbol}
-                      </span>
-                    </div>
+                    <UTag class="px-2 mr-2 !h-1.25rem !leading-1.25rem !text-[#3F2D99] !border-[#3F2D99]">
+                      {tag}
+                    </UTag>
                   )
                 })}
-              </div>
-              <div class="flex justify-end mt-10">
-                <span class="u-body2 text-grey2">Deposit requirements：</span>
-                <span class="u-card-title2 text-warning">
-                  {props.startup.depositRequirements} USDC
-                </span>
-              </div>
             </div>
           </div>
+
+          {props.startup.rewards?.map((item: { tokenSymbol: string; amount: string }, i) => {
+            return (
+              <div
+                key={i}
+                class={[
+                  i === 0 ? 'border-warning text-warning' : 'border-primary text-primary',
+                  'inline-block ml-2 px-2 h-6 leading-6 rounded border-1 '
+                ]}
+                style={{
+                  background:
+                    i === 0
+                      ? 'rgba(var( --u-warning2-value), 0.1)'
+                      : 'rgba(var(--u-primary-value), 0.1)'
+                }}
+              >
+                <strong>{item.amount}</strong> {item.tokenSymbol}
+              </div>
+            )
+          })}
+        </div>
+        <div class="flex items-center text-0.75rem ml-4.5rem">
+          <div class="flex-1 flex items-center">
+            <span class="text-[#5331F4] mr-1">
+              {props.startup.paymentType === 'Stage' ? (
+                <StageOutlined class="w-1rem h-1rem" />
+              ) : (
+                <CalendarOutlined class="w-1rem h-1rem" />
+              )}
+            </span>
+            <span class="text-[#5331F4]">{props.startup.paymentType}</span>
+            <span class="font-700 text-[#D9D9D9] mx-2">·</span>
+            <span class="text-[#9F9F9F]">{props.startup.applicantCount ?? 0} Applicant</span>
+            <span class="font-700 text-[#D9D9D9] mx-2">·</span>
+            <span class="text-[#9F9F9F] ">Created {date.value}</span>
+          </div>
+          <span class="text-grey2">Deposit：</span>
+          <em class="text-0.875rem font-700 text-[#F29F39]">
+            {props.startup.depositRequirements} USDC
+          </em>
         </div>
       </div>
     )
