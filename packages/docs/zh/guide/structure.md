@@ -19,7 +19,7 @@ sidebar: true
 
 ## 项目用到的主要技术栈
 
-- lerna workspace
+- pnpm workspace
 - vue3 + vite
 - typescript
 - tsx
