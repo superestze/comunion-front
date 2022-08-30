@@ -90,7 +90,7 @@ export default defineComponent({
             >
               {this.bountySection.bountyPayment && (
                 <Payment
-                  chainId={this.bountySection.detail?.chainID || 0}
+                  detailChainId={this.bountySection.detail?.chainID || 0}
                   bountyContractInfo={this.bountyContractInfo}
                   paymentInfo={this.bountySection.bountyPayment}
                 />
