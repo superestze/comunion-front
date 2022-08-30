@@ -59,19 +59,28 @@ export default defineComponent({
         .finally(() => (this.loading = false))
     }
     return (
-      <div class="bg-white rounded-lg border mb-6 relative overflow-hidden">
-        <div class="h-75">
-          <img src={test} alt="bg" />
+      <div class="bg-white border rounded-lg mb-6  overflow-hidden">
+        <div class="h-13.125rem overflow-hidden">
+          <img src={test} alt="bg" class="h-full object-cover w-full" />
         </div>
-        <div class="absolute w-30 h-30 rounded-8px left-10 top-60">
-          <UStartupLogo src={''} width="30" height="30" class="rounded !object-contain bg-white" />
-        </div>
-        <div class="flex justify-between mt-6">
+
+        <div class="flex mt-4 justify-between relative">
+          <div
+            class="rounded-8px h-30 bottom-2 left-10 w-30 absolute overflow-hidden"
+            style="box-shadow: 2px 6px 12px rgba(69, 68, 132, 0.25);"
+          >
+            <UStartupLogo
+              src={''}
+              width="30"
+              height="30"
+              class="bg-white rounded-md !object-contain"
+            />
+          </div>
           <div class="flex items-center">
             <p class="ml-46 u-h1">{this.name}</p>
             {this.mode > 0 && (
               <UTag
-                class="ml-5 !u-body3-pure h-5"
+                class="h-5 ml-5 !u-body3-pure"
                 type="filled"
                 bgColor={STARTUP_TYPES_COLOR_MAP[this.modeName]}
               >
@@ -84,34 +93,34 @@ export default defineComponent({
               type="primary"
               loading={this.loading}
               ghost
-              class="w-30 mr-10"
+              class="mr-10 w-30"
               size="small"
               onClick={() => handleFollowStartup('unfollow')}
             >
-              <HookFilled class="w-4.5 mr-1" />
+              <HookFilled class="mr-1 w-4.5" />
               Unconnect
             </UButton>
           ) : (
             <UButton
               type="primary"
               loading={this.loading}
-              class="w-30 mr-10"
+              class="mr-10 w-30"
               size="small"
               onClick={() => handleFollowStartup('follow')}
             >
-              <PlusOutlined class="w-4.5 mt-1 mb-3px" />
+              <PlusOutlined class="mt-1 mb-3px w-4.5" />
               Connect
             </UButton>
           )}
         </div>
-        <div class="flex justify-between mt-9 ml-10 mr-10 mb-10">
+        <div class="flex mt-9 mr-10 mb-10 ml-10 justify-between">
           <div class="flex flex-col">
             <div class="flex gap-2">
-              <p class="flex rounded-2px overflow-hidden h-6 px-2 py-1 text-primary1 border border-primary1 text-12px items-center justify-center">
+              <p class="border flex border-primary1 rounded-2px h-6 py-1 px-2 text-primary1 text-12px overflow-hidden items-center justify-center">
                 123123
               </p>
             </div>
-            <p class="u-body2 mt-5 w-180 ">{this.mission}</p>
+            <p class="mt-5 w-180 u-body2 ">{this.mission}</p>
           </div>
           <div class="flex flex-wrap gap-4 items-end">
             {SocialTypeList.map(item => (
@@ -119,7 +128,7 @@ export default defineComponent({
                 placement="top"
                 v-slots={{
                   trigger: () => <SocialIcon icon={item.value} outWrapper="w-10 h-10" />,
-                  default: () => <div class="flex m-3 cursor-pointer">{item.value}</div>
+                  default: () => <div class="cursor-pointer flex m-3">{item.value}</div>
                 }}
               />
             ))}
