@@ -56,14 +56,12 @@ const StartupCard = defineComponent({
             src={props.startup.logo}
             width="10"
             height="10"
-            class="rounded-md h-3.75rem mr-3 w-3.75rem"
+            class="rounded-md h-15 mr-3 w-15"
           />
 
           <div class="flex-1 overflow-hidden">
-            <div class="flex mb-2 items-center">
-              <div class="font-700 max-w-50rem text-[#333] text-1rem leading-7 truncate">
-                {props.startup.title}
-              </div>
+            <div class="flex mb-4 items-center">
+              <div class="max-w-50rem text-[#333] truncate u-title3">{props.startup.title}</div>
               <span
                 class="rounded-sm h-1.25rem ml-2 px-2 text-0.75rem leading-1.25rem inline-block"
                 style={{
@@ -115,18 +113,14 @@ const StartupCard = defineComponent({
                 <CalendarOutlined class="h-1rem w-1rem" />
               )}
             </span>
-            <span class="text-[#5331F4] truncate">{props.startup.paymentType}</span>
+            <span class="text-[#5331F4] ">{props.startup.paymentType}</span>
             <span class="font-700 mx-2 text-[#D9D9D9]">·</span>
-            <span class="text-[#9F9F9F] truncate">
-              {props.startup.applicantCount ?? 0} Applicant
-            </span>
+            <span class="text-[#9F9F9F] ">{props.startup.applicantCount ?? 0} Applicant</span>
             <span class="font-700 mx-2 text-[#D9D9D9]">·</span>
-            <span class="text-[#9F9F9F] truncate">Created {date.value}</span>
+            <span class="text-[#9F9F9F] ">Created {date.value}</span>
           </div>
           <span class="text-grey2">Deposit：</span>
-          <em class="font-700 text-0.875rem text-[#F29F39] truncate">
-            {props.startup.depositRequirements} USDC
-          </em>
+          <em class="text-[#F29F39] truncate u-body3">{props.startup.depositRequirements} USDC</em>
         </div>
       </div>
     )
