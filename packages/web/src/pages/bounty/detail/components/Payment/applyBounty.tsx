@@ -10,7 +10,7 @@ export default defineComponent({
       type: Boolean,
       default: () => false
     },
-    chainId: {
+    detailChainId: {
       type: Number,
       default: () => 0
     },
@@ -31,7 +31,7 @@ export default defineComponent({
   },
   render() {
     const applyBounty = async () => {
-      const isSupport = await checkSupportNetwork(this.chainId)
+      const isSupport = await checkSupportNetwork(this.detailChainId)
       if (isSupport) {
         this.applyBountyDialogVisible = !this.applyBountyDialogVisible
       }
@@ -40,6 +40,7 @@ export default defineComponent({
       <>
         <ApplyDialog
           title="Apply"
+          detailChainId={this.detailChainId}
           visible={this.applyBountyDialogVisible}
           onTriggerDialog={applyBounty}
           deposit={this.applicantDepositMinAmount}
