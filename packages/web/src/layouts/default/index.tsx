@@ -58,8 +58,8 @@ const DefaultLayout = defineComponent({
             <div class="relative sm:flex sm:flex-1 sm:gap-40">
               {FOOTER_LINKS.map(data => (
                 <div key={data.title} class="mb-40px">
-                  <div class="text-white pt-12px pb-12px block u-card-title1 sm:pb-16px ">
-                    {data.title.toUpperCase()}
+                  <div class="text-white pt-12px pb-12px text-18px leading-18px block sm:pb-16px sm:text-20px">
+                    {data.title}
                   </div>
                   {data.links.map(item => (
                     <a
