@@ -19,7 +19,7 @@ const AuthLayout = defineComponent({
           replace('/welcome')
         } else {
           if (!path.startsWith('/auth')) {
-            replace('/auth/register/intro')
+            replace('/auth/register/simple')
           }
         }
       } else {

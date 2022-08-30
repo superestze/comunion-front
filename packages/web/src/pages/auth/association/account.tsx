@@ -18,7 +18,7 @@ export default defineComponent({
         go(-1)
         return
       }
-      push('/auth/register/intro')
+      push('/auth/register/simple')
     }
 
     return () => (

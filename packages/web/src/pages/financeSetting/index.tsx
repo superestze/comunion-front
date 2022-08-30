@@ -24,7 +24,7 @@ const financeSetPage = defineComponent({
       }
     }
     const onCancel = () => {
-      router.push({ path: '/dashboard' })
+      router.push({ path: '/comer' })
     }
 
     onMounted(() => {

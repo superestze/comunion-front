@@ -14,7 +14,7 @@ const UserAvatar = defineComponent({
       if (v === 'logout') {
         userStore.logout()
       } else {
-        router.push('/dashboard')
+        router.push('/comer')
       }
     }
     return () =>

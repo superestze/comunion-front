@@ -19,18 +19,65 @@ export function useProfile(id?: string) {
     }
   }
 
-  const profile = computed<ServiceReturn<'account@comer-profile-get'>>(() => {
+  const profile = computed<NonNullable<ServiceReturn<'account@comer-profile-get'>>>(() => {
     if (view.value) {
-      return profileStore.someone
-        ?.comerProfile as unknown as ServiceReturn<'account@comer-profile-get'>
+      return profileStore.someone?.comerProfile as unknown as NonNullable<
+        ServiceReturn<'account@comer-profile-get'>
+      >
     }
-    return profileStore.value
+    return profileStore.detail as unknown as NonNullable<ServiceReturn<'account@comer-profile-get'>>
+  })
+
+  const socials = computed(() => {
+    const result = []
+    if (profile.value) {
+      if (profile.value.website) {
+        result.push(profile.value.website)
+      }
+      if (profile.value.discord) {
+        result.push(profile.value.discord)
+      }
+      if (profile.value.facebook) {
+        result.push(profile.value.facebook)
+      }
+      if (profile.value.linktree) {
+        result.push(profile.value.linktree)
+      }
+      if (profile.value.telegram) {
+        result.push(profile.value.telegram)
+      }
+      if (profile.value.twitter) {
+        result.push(profile.value.twitter)
+      }
+      if (profile.value.email) {
+        result.push(profile.value.email)
+      }
+      if (profile.value.medium) {
+        result.push(profile.value.medium)
+      }
+    }
+    return result
+  })
+
+  const socialsObj = computed(() => {
+    return {
+      website: profile.value?.website,
+      discord: profile.value?.discord,
+      facebook: profile.value?.facebook,
+      linktree: profile.value?.linktree,
+      telegram: profile.value?.telegram,
+      twitter: profile.value?.twitter,
+      email: profile.value?.email,
+      medium: profile.value?.medium
+    }
   })
 
   return {
     getProfileData,
     profile,
     view,
-    loading
+    loading,
+    socials,
+    socialsObj
   }
 }

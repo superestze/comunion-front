@@ -21,12 +21,12 @@ export default defineComponent({
           replace('/welcome')
           return
         }
-        replace('/auth/register/intro')
+        replace('/auth/register/simple')
       })
     }
 
     const cancelAssociation = () => {
-      push('/auth/register/intro')
+      push('/auth/register/simple')
     }
 
     return () => (

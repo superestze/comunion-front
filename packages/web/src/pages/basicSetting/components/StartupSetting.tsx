@@ -15,7 +15,7 @@ const StartupSetting = defineComponent({
     const router = useRouter()
 
     const onCancel = () => {
-      router.push({ path: '/dashboard' })
+      router.push({ path: '/comer' })
     }
 
     return () => (
