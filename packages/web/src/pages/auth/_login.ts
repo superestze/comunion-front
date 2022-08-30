@@ -10,7 +10,7 @@ export default function useOnLoggedIn() {
     if (user.isProfiled) {
       replace('/welcome')
     } else {
-      replace('/auth/register/intro')
+      replace('/auth/register/simple')
     }
   }
 }

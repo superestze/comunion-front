@@ -150,7 +150,14 @@ const CreateStartupForm = defineComponent({
         name: 'name',
         required: true,
         placeholder: 'Input startup name',
-        maxlength: 24
+        maxlength: 24,
+        rules: [
+          {
+            validator: (rule, value) => value.length > 3,
+            message: 'Name must be 3 characters or more',
+            trigger: 'blur'
+          }
+        ]
       },
       {
         t: 'select',
@@ -159,6 +166,12 @@ const CreateStartupForm = defineComponent({
         required: true,
         placeholder: 'Startup type',
         options: STARTUP_TYPES.map(item => ({ label: item, value: item }))
+      },
+      {
+        t: 'startupTags',
+        required: true,
+        title: 'Tag',
+        name: 'tags'
       },
       // {
       //   t: 'hashInput',
@@ -174,21 +187,28 @@ const CreateStartupForm = defineComponent({
         name: 'mission',
         placeholder: 'Input startup mission',
         maxlength: 100,
-        required: true
+        required: true,
+        rules: [
+          {
+            validator: (rule, value) => value.length > 12,
+            message: 'Mission must be 12 characters or more',
+            trigger: 'blur'
+          }
+        ]
       },
       {
         t: 'string',
         title: 'Overview',
         name: 'overview',
         placeholder: 'Add overview for introducing your startup',
-        minlength: 100,
         required: true,
         type: 'textarea',
+        maxlength: 1000,
         rules: [
           {
-            min: 100,
-            required: true,
-            message: 'Please enter a description of at least 100 letters'
+            validator: (rule, value) => value.length > 100,
+            message: 'Overview must be 100 characters or more',
+            trigger: 'blur'
           }
         ],
         autosize: {
@@ -205,7 +225,7 @@ const CreateStartupForm = defineComponent({
     }
     return () => (
       <UForm ref={formRef} rules={allRules} model={model}>
-        <p class="mb-7 u-card-title1 text-primary1">INFO SETTING</p>
+        <p class="mb-7 text-primary1 u-card-title1">INFO SETTING</p>
         <UFormItemsFactory fields={infoFields} values={model} />
         {/* <div class="bg-purple h-13px my-8"></div> */}
         {/* <p class="mb-7 uppercase u-card-title1">Finance Setting</p> */}

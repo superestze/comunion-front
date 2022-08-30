@@ -71,21 +71,25 @@ export default defineComponent({
       {
         title: 'Name',
         name: 'name',
-        required: true,
         placeholder: 'Input your name',
-        maxlength: 24
+        maxlength: 24,
+        rules: [
+          {
+            required: true,
+            message: 'Name can not be blank',
+            trigger: 'blur'
+          }
+        ]
       },
       {
         title: 'Location',
         name: 'location',
-        placeholder: 'Add your location',
-        required: true
+        placeholder: 'Add your location'
       },
       {
         t: 'select',
         title: 'Time Zone',
         name: 'timeZone',
-        required: true,
         options: UTC_OPTIONS.map(item => ({ label: item.label, value: item.label }))
       }
     ]
@@ -242,6 +246,7 @@ export default defineComponent({
                       {this.follow ? (
                         <UButton
                           type="primary"
+                          ghost
                           class="w-40 mr-6"
                           size="small"
                           onClick={() => this.toggleFollow()}

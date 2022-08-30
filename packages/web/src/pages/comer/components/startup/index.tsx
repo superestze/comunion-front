@@ -19,7 +19,7 @@ export default defineComponent({
       page: number
       loading: boolean
     }>({
-      pageSize: 4,
+      pageSize: 999,
       total: 0,
       page: 1,
       loading: false
@@ -47,7 +47,7 @@ export default defineComponent({
       () => {
         pagination.loading = true
         pagination.page = 1
-        pagination.pageSize = 4
+        pagination.pageSize = 999
         pagination.total = 0
         startups.value = []
         getStartups()

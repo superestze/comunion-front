@@ -1,6 +1,6 @@
 # Comunion 前端项目
 
-这是 Comunion 的 v5 版本的前端代码，项目使用 `lerna` 进行多包管理，主要是用 `Vue3` 和相关技术栈进行开发。
+这是 Comunion 的前端代码，项目使用 `pnpm` 进行多包管理，主要是用 `Vue3` 和相关技术栈进行开发。
 
 ## 代码结构
 
@@ -26,7 +26,7 @@ git clone git@github.com:comunion-io/v5-front.git
 2. 安装依赖
 
 ```sh
-pnpm
+pnpm i
 ```
 
 3. 运行 web 项目
@@ -47,7 +47,7 @@ pnpm docs
 5. 打包
 
 ```sh
-pnpm build
+pnpm build:prod
 ```
 
 ## 如何贡献代码

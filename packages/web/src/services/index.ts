@@ -1383,6 +1383,11 @@ export const services = {
        * @example 1
        */
       page: any
+      /**
+       * @description 每页记录数
+       * @example 10
+       */
+      limit?: any
     } & {
       /**
        * @description 第几页，默认1
@@ -1463,7 +1468,7 @@ export const services = {
     }>({
       url: replacePath('/cores/bounties/me/participated', args),
       method: 'GET',
-      ...extract('GET', args, ['page'], [])
+      ...extract('GET', args, ['page', 'limit'], [])
     })
   },
   'bounty@my-posted-bounty-list'(
@@ -1473,6 +1478,11 @@ export const services = {
        * @example 1
        */
       page: any
+      /**
+       * @description 每页记录数
+       * @example 10
+       */
+      limit?: any
     } & {
       /**
        * @description 第几页，默认1
@@ -1553,7 +1563,7 @@ export const services = {
     }>({
       url: replacePath('/cores/bounties/me/posted', args),
       method: 'GET',
-      ...extract('GET', args, ['page'], [])
+      ...extract('GET', args, ['page', 'limit'], [])
     })
   },
   'bounty@startup-bounty-list'(

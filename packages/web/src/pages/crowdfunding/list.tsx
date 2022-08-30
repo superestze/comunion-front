@@ -8,6 +8,7 @@ import {
 import { defineComponent, ref, computed } from 'vue'
 import { useRouter } from 'vue-router'
 import { CrowdfundingCard } from './components/CrowdfundingCard'
+import CrowdfundingSkeleton from './components/CrowdfundingSkeleton'
 import { CrowdfundingType, CROWDFUNDING_TYPES } from '@/constants'
 import { ServiceReturn, services } from '@/services'
 import { checkSupportNetwork } from '@/utils/wallet'
@@ -18,9 +19,12 @@ const CrowdfundingList = defineComponent({
     const startupType = ref<string | undefined>(undefined)
     const inputMember = ref<string>('')
     const total = ref(0)
+    const loading = ref(false)
+    const defaultPageSize = ref(24)
     const router = useRouter()
     const dataService = computed<UPaginatedListPropsType['service']>(
       () => async (page, pageSize) => {
+        loading.value = true
         const { error, data } = await services['crowdfunding@public-crowdfunding-list']({
           limit: pageSize,
           page,
@@ -32,6 +36,7 @@ const CrowdfundingList = defineComponent({
         })
         const _total = error ? 0 : data!.totalRows
         total.value = _total
+        loading.value = false
         return { items: error ? [] : data!.rows ?? [], total: _total }
       }
     )
@@ -67,6 +72,7 @@ const CrowdfundingList = defineComponent({
         </div>
         <UPaginatedList
           service={dataService.value}
+          defaultPageSize={defaultPageSize.value}
           children={({
             dataSource: crowdfundingList
           }: {
@@ -74,14 +80,15 @@ const CrowdfundingList = defineComponent({
           }) => {
             return (
               <div class="grid pb-6 gap-8 grid-cols-1 md:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4">
-                {crowdfundingList.map(crowdfunding => (
-                  <div
-                    class="cursor-pointer"
-                    onClick={() => toDetail(crowdfunding.crowdfundingId, crowdfunding.chainId)}
-                  >
-                    <CrowdfundingCard key={crowdfunding.crowdfundingId} info={crowdfunding} />
-                  </div>
-                ))}
+                {loading.value
+                  ? new Array(defaultPageSize.value).fill('').map(item => <CrowdfundingSkeleton />)
+                  : crowdfundingList.map(crowdfunding => (
+                      <CrowdfundingCard
+                        key={crowdfunding.crowdfundingId}
+                        info={crowdfunding}
+                        onClick={() => toDetail(crowdfunding.crowdfundingId, crowdfunding.chainId)}
+                      />
+                    ))}
               </div>
             )
           }}

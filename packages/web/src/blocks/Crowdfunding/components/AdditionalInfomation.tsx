@@ -130,7 +130,7 @@ export const AdditionalInformation = defineComponent({
           return (
             <RichEditor
               limit={512}
-              placeholder="EX:Comunion is a new era of digital economy"
+              placeholder="Describe what you offering is about"
               class="w-full"
               v-model:value={props.crowdfundingInfo.description}
             />

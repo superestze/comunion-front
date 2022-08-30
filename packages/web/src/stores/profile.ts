@@ -19,7 +19,7 @@ export const useProfileStore = defineStore('profile', {
       if (comerId) {
         const { error, data } = await services['account@comer-info-get']({ comerId })
         if (!error) {
-          this.someone = data
+          this.someone = { ...data }
         }
         cb && cb()
         return
