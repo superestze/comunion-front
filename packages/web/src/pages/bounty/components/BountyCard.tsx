@@ -59,7 +59,7 @@ const StartupCard = defineComponent({
             class="rounded-md h-3.75rem mr-3 w-3.75rem"
           />
 
-          <div class="flex-1 overflow-hidden">
+          <div class="flex-1  overflow-hidden">
             <div class="flex mb-2 items-center">
               <div class="font-700 max-w-4/5 text-[#333] text-1rem leading-7 truncate">
                 {props.startup.title}
