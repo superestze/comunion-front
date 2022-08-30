@@ -148,12 +148,17 @@ const CreateStartupForm = defineComponent({
         t: 'string',
         title: 'Name',
         name: 'name',
-        required: true,
         placeholder: 'Input startup name',
         maxlength: 24,
         rules: [
           {
-            validator: (rule, value) => value.length > 3,
+            required: true,
+            validator: (rule, value) => !!value,
+            message: 'Name cannot be blank',
+            trigger: 'blur'
+          },
+          {
+            validator: (rule, value) => !value || value.length > 3,
             message: 'Name must be 3 characters or more',
             trigger: 'blur'
           }
@@ -187,10 +192,15 @@ const CreateStartupForm = defineComponent({
         name: 'mission',
         placeholder: 'Input startup mission',
         maxlength: 100,
-        required: true,
         rules: [
           {
-            validator: (rule, value) => value.length > 12,
+            required: true,
+            validator: (rule, value) => !!value,
+            message: 'Mission cannot be blank',
+            trigger: 'blur'
+          },
+          {
+            validator: (rule, value) => !value || value.length > 12,
             message: 'Mission must be 12 characters or more',
             trigger: 'blur'
           }
@@ -201,12 +211,17 @@ const CreateStartupForm = defineComponent({
         title: 'Overview',
         name: 'overview',
         placeholder: 'Add overview for introducing your startup',
-        required: true,
         type: 'textarea',
         maxlength: 1000,
         rules: [
           {
-            validator: (rule, value) => value.length > 100,
+            required: true,
+            validator: (rule, value) => !!value,
+            message: 'Overview cannot be blank',
+            trigger: 'blur'
+          },
+          {
+            validator: (rule, value) => !value || value.length > 100,
             message: 'Overview must be 100 characters or more',
             trigger: 'blur'
           }
