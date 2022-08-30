@@ -52,12 +52,12 @@ const CrowdfundingList = defineComponent({
       <div class="mt-10 mb-16">
         <div class="flex mb-8">
           {/* <h3 class="text-grey1 u-h3">{total.value.toLocaleString()} Available</h3> */}
-          <div class="flex ml-auto self-end items-center u-title2 ">
+          <div class="flex ml-auto self-end items-center u-body4">
             Filter by:
             <UDropdownFilter
               options={CROWDFUNDING_TYPES.map(item => ({ label: item, value: item }))}
               placeholder="ALL status"
-              class="uppercase rounded border-1 h-10 ml-6 w-37"
+              class="rounded border-1 h-10 ml-6 w-37 uppercase"
               clearable
               v-model:value={startupType.value}
             />
