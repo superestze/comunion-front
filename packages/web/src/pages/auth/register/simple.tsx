@@ -48,16 +48,16 @@ export default defineComponent({
         if (!err) {
           const { error } = await services['account@update-basic-info']({
             name: this.formData.name,
-            cover: 'https://comunion-avatars.s3.ap-northeast-1.amazonaws.com/avatar1.svg',
-            avatar: '',
+            avatar: 'https://comunion-avatars.s3.ap-northeast-1.amazonaws.com/avatar1.svg',
+            cover: '',
             timeZone: '',
             location: ''
           })
           if (!error) {
             userStore.mergeProfile({
               name: this.formData.name,
-              cover: 'https://comunion-avatars.s3.ap-northeast-1.amazonaws.com/avatar1.svg',
-              avatar: '',
+              avatar: 'https://comunion-avatars.s3.ap-northeast-1.amazonaws.com/avatar1.svg',
+              cover: '',
               timeZone: '',
               location: '',
               email: '',
