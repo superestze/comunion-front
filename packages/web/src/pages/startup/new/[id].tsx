@@ -1,5 +1,4 @@
-import { UBreadcrumb, UBreadcrumbItem, USpin } from '@comunion/components'
-import { ArrowLeftOutlined } from '@comunion/icons'
+import { UBreadcrumb, USpin } from '@comunion/components'
 import { defineComponent, ref } from 'vue'
 import { useRoute } from 'vue-router'
 import Bounties from './components/bounties'
@@ -31,7 +30,7 @@ export default defineComponent({
     return (
       <USpin show={this.loading}>
         <UBreadcrumb class="mt-10 mb-10">
-          <UBreadcrumbItem v-slots={{ separator: () => <ArrowLeftOutlined /> }}></UBreadcrumbItem>
+          {/* <UBreadcrumbItem v-slots={{ separator: () => <ArrowLeftOutlined /> }}></UBreadcrumbItem>
           <UBreadcrumbItem v-slots={{ separator: () => <ArrowLeftOutlined /> }}>
             <span
               class="cursor-pointer text-primary uppercase u-label2"
@@ -41,7 +40,7 @@ export default defineComponent({
             >
               BACK
             </span>
-          </UBreadcrumbItem>
+          </UBreadcrumbItem> */}
         </UBreadcrumb>
         <div class="w-full">
           <Profile
@@ -51,7 +50,7 @@ export default defineComponent({
             mission={this.startup?.mission || ''}
           />
         </div>
-        <div class="flex gap-6 mb-20">
+        <div class="flex mb-20 gap-6">
           <div class="basis-1/3">
             <Overview content={this.startup?.overview || ''} />
             <Security />
