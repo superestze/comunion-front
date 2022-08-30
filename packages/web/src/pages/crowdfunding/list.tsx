@@ -1,45 +1,75 @@
 import {
-  UDropdownFilter,
-  UPaginatedList,
-  UPaginatedListPropsType,
-  UInputGroup,
-  USearch
-} from '@comunion/components'
-import { defineComponent, ref, computed } from 'vue'
+  defineComponent,
+  ref,
+  computed,
+  reactive,
+  onMounted,
+  nextTick,
+  onBeforeUnmount,
+  watch
+} from 'vue'
 import { useRouter } from 'vue-router'
 import { CrowdfundingCard } from './components/CrowdfundingCard'
 import CrowdfundingSkeleton from './components/CrowdfundingSkeleton'
 import { CrowdfundingType, CROWDFUNDING_TYPES } from '@/constants'
 import { ServiceReturn, services } from '@/services'
-import { checkSupportNetwork } from '@/utils/wallet'
+import { useWalletStore } from '@/stores'
 
 const CrowdfundingList = defineComponent({
   name: 'CrowdfundingList',
   setup() {
     const startupType = ref<string | undefined>(undefined)
     const inputMember = ref<string>('')
-    const total = ref(0)
-    const loading = ref(false)
-    const defaultPageSize = ref(24)
-    const router = useRouter()
-    const dataService = computed<UPaginatedListPropsType['service']>(
-      () => async (page, pageSize) => {
-        loading.value = true
-        const { error, data } = await services['crowdfunding@public-crowdfunding-list']({
-          limit: pageSize,
-          page,
-          mode:
-            startupType.value !== undefined
-              ? CROWDFUNDING_TYPES.indexOf(startupType.value as CrowdfundingType) + 1
-              : undefined,
-          keyword: inputMember.value
-        })
-        const _total = error ? 0 : data!.totalRows
-        total.value = _total
-        loading.value = false
-        return { items: error ? [] : data!.rows ?? [], total: _total }
+    const pagination = reactive<{
+      pageSize: number
+      total: number
+      page: number
+      loading: boolean
+    }>({
+      pageSize: 24,
+      total: 0,
+      page: 1,
+      loading: false
+    })
+
+    const DataList = ref<CrowdfundingItem[]>([])
+    const fetchData = async () => {
+      const { error, data } = await services['crowdfunding@public-crowdfunding-list']({
+        limit: pagination.pageSize,
+        page: pagination.page,
+        mode:
+          startupType.value !== undefined
+            ? CROWDFUNDING_TYPES.indexOf(startupType.value as CrowdfundingType) + 1
+            : undefined,
+        keyword: inputMember.value
+      })
+      if (!error) {
+        DataList.value.push(...data!.rows)
+        pagination.total = data!.totalRows
       }
     )
+
+    const checkSupportNetwork = async (chainId: number) => {
+      const chainInfo = getChainInfoByChainId(chainId)
+      if (chainId && walletStore.chainId !== chainId) {
+        walletStore.wallet?.switchNetwork(chainId)
+        message.warning(`Please switch to ${chainInfo?.name}`)
+        // not supported network, try to switch
+        walletStore.openNetworkSwitcher()
+        return false
+      } else {
+        return true
+      }
+      // await walletStore.ensureWalletConnected()
+      // if (!walletStore.isNetworkSupported) {
+      //   message.warning('Please switch to the ')
+      //   // not supported network, try to switch
+      //   walletStore.openNetworkSwitcher()
+      //   return false
+      // } else {
+      //   return true
+      // }
+    }
 
     const toDetail = async (crowdfundingId: number, chainId: number) => {
       const isSupport = await checkSupportNetwork(chainId)
@@ -47,6 +77,57 @@ const CrowdfundingList = defineComponent({
         router.push('/crowdfunding/' + crowdfundingId)
       }
     }
+    // filter
+    watch(
+      () => startupType.value,
+      () => {
+        setTimeout(() => {
+          onLoadMore(1)
+        }, 0)
+      }
+    )
+
+    const debounceLoad = debounce(onLoadMore)
+    watch(
+      () => inputMember.value,
+      () => {
+        debounceLoad(1)
+      }
+    )
+
+    const isLastPage = computed(() => {
+      return (pagination.page || 0) * (pagination.pageSize || 0) >= (pagination.total || 0)
+    })
+
+    let winHeight = 0
+    let body = document.body
+    const scrollHandler = () => {
+      if (!pagination.loading) {
+        const bodyRect = body?.getBoundingClientRect()
+
+        if (bodyRect.height + bodyRect.top - winHeight < 240) {
+          if (isLastPage.value) {
+            document.removeEventListener('scroll', scrollHandler)
+          } else {
+            pagination.page++
+            onLoadMore(pagination.page)
+          }
+        }
+      }
+    }
+
+    onMounted(() => {
+      nextTick(() => {
+        winHeight = window.innerHeight
+        body = document.body
+        document.addEventListener('scroll', scrollHandler)
+        onLoadMore(pagination.page)
+      })
+    })
+
+    onBeforeUnmount(() => {
+      document.removeEventListener('scroll', scrollHandler)
+    })
 
     return () => (
       <div class="mt-10 mb-16">
@@ -70,29 +151,17 @@ const CrowdfundingList = defineComponent({
             </UInputGroup>
           </div>
         </div>
-        <UPaginatedList
-          service={dataService.value}
-          defaultPageSize={defaultPageSize.value}
-          children={({
-            dataSource: crowdfundingList
-          }: {
-            dataSource: NonNullable<ServiceReturn<'crowdfunding@public-crowdfunding-list'>>['rows']
-          }) => {
-            return (
-              <div class="grid pb-6 gap-8 grid-cols-1 md:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4">
-                {loading.value
-                  ? new Array(defaultPageSize.value).fill('').map(item => <CrowdfundingSkeleton />)
-                  : crowdfundingList.map(crowdfunding => (
-                      <CrowdfundingCard
-                        key={crowdfunding.crowdfundingId}
-                        info={crowdfunding}
-                        onClick={() => toDetail(crowdfunding.crowdfundingId, crowdfunding.chainId)}
-                      />
-                    ))}
-              </div>
-            )
-          }}
-        />
+        <div class="grid pb-6 gap-8 grid-cols-1 md:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4">
+          {DataList.value.map(crowdfunding => (
+            <CrowdfundingCard
+              key={crowdfunding.crowdfundingId}
+              info={crowdfunding}
+              onClick={() => toDetail(crowdfunding.crowdfundingId, crowdfunding.chainId)}
+            />
+          ))}
+          {pagination.loading &&
+            new Array(pagination.pageSize).fill('').map(item => <CrowdfundingSkeleton />)}
+        </div>
       </div>
     )
   }
