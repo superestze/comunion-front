@@ -1,8 +1,6 @@
 .footer {
   @apply bg-primary2;
 
-  font-family: Orbitron, sans-serif;
-
   :global {
     .u-card-title1 {
       @apply font-normal text-white text-[18px] leading-4;
