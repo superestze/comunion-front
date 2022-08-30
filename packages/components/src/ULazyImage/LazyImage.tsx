@@ -45,13 +45,7 @@ const ULazyImage = defineComponent({
 
     return () =>
       loaded.value ? (
-        <img
-          class="u-lazy-image-img"
-          src={props.src}
-          alt={props.alt}
-          {...{ loading: 'lazy' }}
-          {...ctx.attrs}
-        />
+        <img class="u-lazy-image-img" src={props.src} alt={props.alt} {...{ loading: 'lazy' }} />
       ) : (
         <span class={['u-lazy-image-placeholder', { failed: errored.value }]} {...ctx.attrs}>
           {errored.value ? (

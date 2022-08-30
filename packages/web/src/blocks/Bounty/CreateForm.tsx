@@ -71,7 +71,7 @@ const CreateBountyForm = defineComponent({
     }
 
     const renderUnit = (name: string) => (
-      <div class="flex justify-center items-center border rounded-r-lg px-10 bg-white w-30">
+      <div class="bg-white border rounded-r-lg flex px-10 w-30 justify-center items-center">
         {name}
       </div>
     )
@@ -125,7 +125,7 @@ const CreateBountyForm = defineComponent({
           applicantsDepositAmount,
           dayjs(bountyInfo.expiresIn).utc().valueOf() / 1000,
           'Waiting to submit all contents to blockchain for creating bounty',
-          `<div class="flex items-center">Bounty "<span class="truncate max-w-20">${bountyInfo.title}</span>" is Creating</div>`
+          `<div class="flex items-center">Bounty "<span class="max-w-20 truncate">${bountyInfo.title}</span>" is Creating</div>`
         )
         return contractRes
       } catch (e: any) {
@@ -292,7 +292,7 @@ const CreateBountyForm = defineComponent({
   render() {
     return (
       <div>
-        <div class="mb-15 mx-35">
+        <div class="mx-35 mb-15">
           <Steps
             steps={this.stepOptions}
             current={this.bountyInfo.current}
@@ -356,18 +356,18 @@ const CreateBountyForm = defineComponent({
             class="!p-7"
             onClose={() => (this.modalVisibleState = false)}
           >
-            <div class="relative -top-3 flex items-center">
-              <WarningFilled /> <span class="u-title1 ml-4">Discard changes?</span>
+            <div class="flex -top-3 relative items-center">
+              <WarningFilled /> <span class="ml-4 u-title1">Discard changes?</span>
             </div>
             <div class="mt-3 ml-12 u-body2">
               This can’t be undone and you’ll lose your changes.{' '}
             </div>
-            <div class="flex justify-end mt-20">
+            <div class="flex mt-20 justify-end">
               <UButton
                 size="large"
                 type="primary"
                 ghost
-                class="w-41 mr-4"
+                class="mr-4 w-41"
                 onClick={() => (this.modalVisibleState = false)}
               >
                 Cancel

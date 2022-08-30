@@ -40,7 +40,7 @@ const StartupCard = defineComponent({
 
     return () => (
       <div
-        class="bg-white rounded cursor-pointer h-80 top-0 relative hover:shadow-md hover:-top-0.5rem"
+        class="bg-white rounded cursor-pointer h-96 top-0 relative hover:shadow-md hover:-top-0.5rem"
         style="transition:all ease .3s"
         onClick={() => toStartDetail(props.startup)}
       >
@@ -85,7 +85,7 @@ const StartupCard = defineComponent({
             </div>
           </div>
 
-          <div class="my-2 truncate u-h3" title={props.startup.name}>
+          <div class="mt-6 mb-4 truncate u-h3" title={props.startup.name}>
             {props.startup.name}
           </div>
           <p class="h-14 mb-6 break-all u-body1 line-clamp-3">{props.startup.mission}</p>
