@@ -16,7 +16,7 @@ const StartupSkeleton = defineComponent({
               <USkeleton height="1.25rem" width="3.75rem" />
             </div>
             <USkeleton class="mb-2" height="1.25rem" width="60%" />
-            <USkeleton height="2.6rem" width="90%m" />
+            <USkeleton height="2.6rem" width="90%" />
           </div>
         </div>
       </div>
