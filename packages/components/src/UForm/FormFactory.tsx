@@ -207,7 +207,7 @@ export function getFieldsRules(fields: FormFactoryField[]) {
     if (field.required) {
       acc[field.name].push({
         required: true,
-        message: `${field.title} is required`,
+        message: `${field.title} cannot be blank`,
         trigger: 'blur',
         type: ['date'].includes(field.t ?? '')
           ? 'number'

@@ -45,8 +45,6 @@ export default defineComponent({
 
     const languages = ref<Language[]>(props.list)
 
-    console.log(languages)
-
     watch(
       () => props.list,
       value => {

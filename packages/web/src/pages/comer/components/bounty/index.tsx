@@ -22,7 +22,7 @@ export default defineComponent({
   },
   setup(props) {
     const pagination = reactive({
-      pageSize: 4,
+      pageSize: 999,
       total: 0,
       page: 1,
       loading: false
@@ -32,6 +32,7 @@ export default defineComponent({
       const { error, data } = await services[
         props.createdByMe ? 'bounty@my-posted-bounty-list' : 'bounty@my-participated-bounty-list'
       ]({
+        limit: pagination.pageSize,
         page: pagination.page
       })
       if (!error) {

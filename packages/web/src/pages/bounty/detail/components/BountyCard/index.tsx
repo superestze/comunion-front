@@ -57,7 +57,7 @@ export default defineComponent({
             <UTooltip trigger="hover">
               {{
                 trigger: () => (
-                  <span class="u-h2 whitespace-pre-wrap break-all overflow-hidden overflow-ellipsis line-clamp-2">
+                  <span class="whitespace-pre-wrap break-all overflow-hidden overflow-ellipsis u-h2 line-clamp-2">
                     {this.bountyDetail?.title}
                   </span>
                 ),
@@ -80,7 +80,7 @@ export default defineComponent({
           </div>
           {this.bountyStatus && (
             <UTag
-              class="ml-5 text-12px w-110px flex justify-center flex-shrink-0"
+              class="flex flex-shrink-0 ml-5 text-12px w-110px justify-center"
               type="outlined"
               style={{
                 color: this.bountyStatus.value
@@ -130,7 +130,7 @@ export default defineComponent({
           ref={(ref: any) => (this.pRef = ref)}
         />
         {this.showMoreBtn && (
-          <div class="flex justify-end mt-20px">
+          <div class="flex mt-20px justify-end">
             <More onMore={this.handleMore} fold={this.fold} />
           </div>
         )}
