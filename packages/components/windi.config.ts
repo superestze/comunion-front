@@ -56,8 +56,7 @@ export default defineConfig({
     'u-body5': 'font-opensans font-bold tracking-normal text-[12px] text-grey1 leading-3.5 italic',
     'u-caption': 'font-opensans font-normal tracking-normal text-[14px] text-grey1 leading-5',
     'u-tag': 'font-opensans font-normal tracking-normal text-[12px] text-grey1 leading-4',
-    'u-tag2': 'font-opensans font-semibold tracking-normal text-[12px] text-grey1 leading-4',
-    'u-comeup-card': 'font-orbitron font-bold tracking-normal text-[20px] text-grey1 leading-5'
+    'u-tag2': 'font-opensans font-semibold tracking-normal text-[12px] text-grey1 leading-4'
   },
   extend: {
     lineClamp: {
