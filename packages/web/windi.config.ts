@@ -22,6 +22,7 @@ export default defineConfig({
   },
   shortcuts: {
     ...ComponentConfig.shortcuts,
-    'u-page-container': 'mx-auto w-full md:w-188 lg:w-248 xl:w-300 2xl:w-345'
+    'u-page-container': 'mx-auto w-full md:w-188 lg:w-248 xl:w-300 2xl:w-345',
+    'u-comeup-card': 'font-orbitron font-bold tracking-normal text-[20px] text-grey1 leading-5'
   }
 })
