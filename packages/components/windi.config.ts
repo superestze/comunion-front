@@ -53,7 +53,8 @@ export default defineConfig({
     'u-body3': 'font-opensans font-bold tracking-normal text-[16px] text-grey1 leading-5 italic',
     'u-body3-pure': 'font-opensans font-bold tracking-normal text-[16px] leading-5 italic',
     'u-body4': 'font-opensans font-semibold tracking-normal text-[14px] text-grey1 leading-5',
-    'u-body5': 'font-opensans font-bold tracking-normal text-[12px] text-grey1 leading-3.5 italic',
+    'u-body5':
+      'font-opensans font-bold tracking-normal text-[12px] text-grey1 leading-0.875rem italic',
     'u-caption': 'font-opensans font-normal tracking-normal text-[14px] text-grey1 leading-5',
     'u-tag': 'font-opensans font-normal tracking-normal text-[12px] text-grey1 leading-4',
     'u-tag2': 'font-opensans font-semibold tracking-normal text-[12px] text-grey1 leading-4'
