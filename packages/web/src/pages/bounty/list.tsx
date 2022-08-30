@@ -108,7 +108,6 @@ const BountyPage = defineComponent({
             />
           </div>
         </div>
-
         {DataList.value.map(item => (
           <BountyCard key={item.bountyId} startup={item} />
         ))}

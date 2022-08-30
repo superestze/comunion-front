@@ -88,7 +88,7 @@ const StartupCard = defineComponent({
           <div class="mt-6 mb-0.875rem truncate u-h3" title={props.startup.name}>
             {props.startup.name}
           </div>
-          <p class="h-14 mb-6 break-all u-body1 line-clamp-3">{props.startup.mission}</p>
+          <p class=" mb-6 break-all u-body1 line-clamp-3">{props.startup.mission}</p>
           <div class="flex flex-wrap text-0.75rem gap-2">
             {hashtagsArray.map((key, value) => {
               return (
@@ -104,7 +104,7 @@ const StartupCard = defineComponent({
               <span class={STARTUP_TAG_CLASS}>+ {hashtagsArray.length - 4}</span>
             ) : null}
           </div>
-          {/* 底部 */}
+          {/* footer */}
           <div class="right-6 bottom-6 left-6 text-0.75rem absolute">
             <div class="flex items-center">
               <span class="rounded-bl-md rounded-tr-md bg-[#F4F4F4] h-1.625rem px-0.5rem text-[#636366] leading-1.625rem inline-block">
