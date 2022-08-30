@@ -60,7 +60,7 @@ export default defineComponent({
       }
       return props.bountyContractInfo.applicantDepositAmount
     })
-
+    console.log('role====', USER_ROLE, props.bountyContractInfo)
     return {
       payMode,
       chainId,
@@ -75,7 +75,7 @@ export default defineComponent({
         <div class="flex justify-between mt-26px">
           <PaymentCard
             title="Rewards"
-            class="w-100"
+            class="w-100 mr-2"
             v-slots={{
               btn: () => (
                 <>
