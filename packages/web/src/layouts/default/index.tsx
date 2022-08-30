@@ -53,13 +53,15 @@ const DefaultLayout = defineComponent({
               to="/"
             >
               <ULogo theme="colorful" height={25} />
-              <span class="ml-16px text-24px leading-24px sm:ml-10px sm:text-30px">About us</span>
+              <span class="font-orbitron ml-16px text-24px leading-24px sm:ml-10px sm:text-30px">
+                ABOUT US
+              </span>
             </RouterLink>
             <div class="relative sm:flex sm:flex-1 sm:gap-40">
               {FOOTER_LINKS.map(data => (
                 <div key={data.title} class="mb-40px">
-                  <div class="text-white pt-12px pb-12px text-18px leading-18px block sm:pb-16px sm:text-20px">
-                    {data.title}
+                  <div class="font-orbitron text-white pt-12px pb-12px text-18px leading-18px block sm:pb-16px sm:text-20px">
+                    {data.title.toUpperCase()}
                   </div>
                   {data.links.map(item => (
                     <a
