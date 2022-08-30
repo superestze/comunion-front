@@ -102,7 +102,7 @@ export default defineComponent({
       }
       return this.selectedTasks.findIndex((task: string) => task === key) > -1
     }
-
+    console.log('profile', this.profile)
     return (
       <USpin show={this.loading}>
         <div class="mt-50px text-primary mb-10 u-h2">My Dashboard</div>
@@ -120,7 +120,7 @@ export default defineComponent({
                   onDone={this.get}
                 />
                 <Bio content={this.profile?.bio} view={this.view} onDone={this.get} />
-                <Social view={this.view} />
+                <Social view={this.view} profile={this.profile} onDone={this.get} />
                 <Skill
                   skills={(this.profile?.skills || []).map(item => item.name) as string[]}
                   view={this.view}

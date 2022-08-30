@@ -8,24 +8,27 @@ import {
   UPopover
 } from '@comunion/components'
 import { PenOutlined, DeleteFilled, PlusOutlined } from '@comunion/icons'
-import { defineComponent, ref, reactive, computed } from 'vue'
-import { useProfile } from '../../hooks/useProfile'
+import { defineComponent, ref, reactive, computed, PropType, watch } from 'vue'
 import { btnGroup } from '../btnGroup'
 import Edit from '../edit'
 import SocialIcon from '@/components/SocialIcon'
 import { SocialTypeList, soureType } from '@/constants'
-import { services } from '@/services'
+import { ServiceReturn, services } from '@/services'
 
 type FnParam = (type: string, value?: string) => void
 
 function socialIconComponent(
   socialObj: { [key: string]: string | undefined },
+  view: boolean,
   edit: FnParam,
   del: FnParam
 ) {
   return SocialTypeList.map(item => {
     const social = socialObj[item.serviceKey]
     if (social) {
+      if (view) {
+        return <SocialIcon icon={item.value} link={view} address={social} />
+      }
       return (
         <UPopover
           trigger="click"
@@ -54,11 +57,13 @@ export default defineComponent({
     view: {
       type: Boolean,
       default: () => false
+    },
+    profile: {
+      type: Object as PropType<NonNullable<ServiceReturn<'account@comer-profile-get'>>>,
+      required: true
     }
   },
-  setup() {
-    const instance = useProfile()
-
+  setup(props) {
     const editMode = ref<boolean>(false)
     const info = reactive({
       type: '',
@@ -99,32 +104,44 @@ export default defineComponent({
       return fields
     })
 
+    watch(
+      () => props.profile,
+      value => {
+        console.log(value, 123123123)
+      },
+      {
+        deep: true,
+        immediate: true,
+        flush: 'sync'
+      }
+    )
+
     const socials = computed(() => {
       const result = []
-      if (instance.profile.value) {
-        if (instance.profile.value.website) {
-          result.push(instance.profile.value.website)
+      if (props.profile) {
+        if (props.profile.website) {
+          result.push(props.profile.website)
         }
-        if (instance.profile.value.discord) {
-          result.push(instance.profile.value.discord)
+        if (props.profile.discord) {
+          result.push(props.profile.discord)
         }
-        if (instance.profile.value.facebook) {
-          result.push(instance.profile.value.facebook)
+        if (props.profile.facebook) {
+          result.push(props.profile.facebook)
         }
-        if (instance.profile.value.linktree) {
-          result.push(instance.profile.value.linktree)
+        if (props.profile.linktree) {
+          result.push(props.profile.linktree)
         }
-        if (instance.profile.value.telegram) {
-          result.push(instance.profile.value.telegram)
+        if (props.profile.telegram) {
+          result.push(props.profile.telegram)
         }
-        if (instance.profile.value.twitter) {
-          result.push(instance.profile.value.twitter)
+        if (props.profile.twitter) {
+          result.push(props.profile.twitter)
         }
-        if (instance.profile.value.email) {
-          result.push(instance.profile.value.email)
+        if (props.profile.email) {
+          result.push(props.profile.email)
         }
-        if (instance.profile.value.medium) {
-          result.push(instance.profile.value.medium)
+        if (props.profile.medium) {
+          result.push(props.profile.medium)
         }
       }
       return result
@@ -132,14 +149,14 @@ export default defineComponent({
 
     const socialsObj = computed(() => {
       return {
-        website: instance.profile.value?.website,
-        discord: instance.profile.value?.discord,
-        facebook: instance.profile.value?.facebook,
-        linktree: instance.profile.value?.linktree,
-        telegram: instance.profile.value?.telegram,
-        twitter: instance.profile.value?.twitter,
-        email: instance.profile.value?.email,
-        medium: instance.profile.value?.medium
+        website: props.profile.website,
+        discord: props.profile.discord,
+        facebook: props.profile.facebook,
+        linktree: props.profile.linktree,
+        telegram: props.profile.telegram,
+        twitter: props.profile.twitter,
+        email: props.profile.email,
+        medium: props.profile.medium
       }
     })
 
@@ -149,10 +166,10 @@ export default defineComponent({
       form,
       info,
       socials,
-      socialsObj,
-      get: instance.getProfileData
+      socialsObj
     }
   },
+  emits: ['Done'],
   render() {
     const handleEditMode =
       (create = false) =>
@@ -171,7 +188,7 @@ export default defineComponent({
             socialType: soureType[this.info.type],
             socialLink: this.info.value
           })
-          this.get()
+          this.$emit('Done')
           handleEditMode()()
         }
       })
@@ -187,7 +204,7 @@ export default defineComponent({
       await services['account@social-delete']({
         socialType: soureType[type]
       })
-      this.get()
+      this.$emit('Done')
     }
 
     const rules = getFieldsRules(this.fields)
@@ -226,7 +243,7 @@ export default defineComponent({
                 {this.socials.length === 0 ? (
                   <p class="text-14px font-[400] text-grey4">Add your social</p>
                 ) : (
-                  <>{socialIconComponent(this.socialsObj, editIcon, delIcon)}</>
+                  <>{socialIconComponent(this.socialsObj, this.view, editIcon, delIcon)}</>
                 )}
               </div>
             )}

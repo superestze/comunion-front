@@ -44,12 +44,26 @@ export default defineComponent({
     innerWrapper: {
       type: String,
       default: () => 'w-5 h-5'
+    },
+    link: {
+      type: Boolean,
+      default: () => false
+    },
+    address: {
+      type: String,
+      default: () => ''
     }
   },
   render() {
     return (
       <div class={`flex bg-purple ${this.outWrapper} justify-center items-center rounded-4px`}>
-        {asyncComponent(this.icon, this.innerWrapper)}
+        {this.link ? (
+          <a href={`${this.icon === 'Email' ? 'mailto:' : ''}${this.address}`} target="_blank">
+            {asyncComponent(this.icon, this.innerWrapper)}
+          </a>
+        ) : (
+          <>{asyncComponent(this.icon, this.innerWrapper)}</>
+        )}
       </div>
     )
   }

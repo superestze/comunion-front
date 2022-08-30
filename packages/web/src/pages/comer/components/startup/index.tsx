@@ -19,7 +19,7 @@ export default defineComponent({
       page: number
       loading: boolean
     }>({
-      pageSize: 4,
+      pageSize: 999,
       total: 0,
       page: 1,
       loading: false

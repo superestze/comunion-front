@@ -121,7 +121,7 @@ const RegisterProfilePage = defineComponent({
     }
 
     const toMyDashboard = () => {
-      router.replace('/dashboard')
+      router.replace('/comer')
     }
 
     return () => (
