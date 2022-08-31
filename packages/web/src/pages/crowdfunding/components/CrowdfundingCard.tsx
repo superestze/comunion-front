@@ -141,7 +141,7 @@ export const CrowdfundingCard = defineComponent({
           </div>
           <div class="flex mb-2">
             <div class="flex-1 text-0.75rem">
-              <div class="text-grey3  leading-6">Raise Goal : </div>
+              <div class="text-grey3  leading-6">Raise Goal </div>
               <div class="text-primary ">
                 <strong class="mr-1 text-1.25rem" style="font-family: Orbitron,sans-serif;">
                   {raiseState.value.raiseGoal}
