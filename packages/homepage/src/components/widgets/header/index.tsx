@@ -15,12 +15,13 @@ export default defineComponent({
     const headerClass = ref<string>('flex justify-between')
     const scrollFn = () => {
       if (document.scrollingElement && document.scrollingElement.scrollTop > 1200) {
-        headerClass.value = 'flex justify-between transform translate-y-1200px w-full bg-[#ededf2]'
+        headerClass.value = 'transform translate-y-1200px w-full bg-[#ededf2]'
       } else {
-        headerClass.value = 'flex justify-between sticky top-0px bg-[#ededf2] z-1'
+        headerClass.value = 'sticky top-0px bg-[#ededf2] z-1'
       }
     }
     onMounted(() => {
+      scrollFn()
       document.addEventListener('scroll', scrollFn)
     })
 
@@ -43,16 +44,16 @@ export default defineComponent({
     }
     return (
       <>
-        <div class={`${this.headerClass} <md:hidden`}>
+        <div class={`${this.headerClass} flex justify-between <md:hidden`}>
           <div class="w-136px <sm:w-119px flex items-center ml-40px">
             <img src={logo} class="w-full" />
           </div>
-          <div class="flex h-60px text-[#B3B3B3] w-514px justify-between items-center text-16px">
-            <span>Home</span>
-            <span>GCI</span>
-            <span>Dapps</span>
-            <span>Enterprise</span>
-            <span>API</span>
+          <div class="flex h-60px text-primary1 w-514px justify-between items-center text-16px">
+            <span class="hover:text-primary cursor-pointer text-primary">Home</span>
+            <span class="hover:text-primary">GCI</span>
+            <span class="hover:text-primary">Dapps</span>
+            <span class="hover:text-primary">Enterprise</span>
+            <span class="hover:text-primary">API</span>
           </div>
           <div class="flex items-center">
             <UButton
