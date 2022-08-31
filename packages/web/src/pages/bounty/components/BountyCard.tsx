@@ -60,8 +60,10 @@ const StartupCard = defineComponent({
           />
 
           <div class="flex-1 overflow-hidden">
-            <div class="flex mb-4 items-center">
-              <div class="max-w-4/5 text-[#333] truncate u-title3">{props.startup.title}</div>
+            <div class="flex mb-2 items-center">
+              <div class="font-700 max-w-4/5 text-[#333] text-1rem leading-7 truncate">
+                {props.startup.title}
+              </div>
               <span
                 class="rounded-sm h-1.25rem ml-2 px-2 text-0.75rem leading-1.25rem inline-block"
                 style={{
@@ -78,7 +80,7 @@ const StartupCard = defineComponent({
                   return (
                     <UTag
                       key={i}
-                      class="px-2 mr-2 !h-1.25rem !leading-1.25rem !text-[#3F2D99] !border-[#3F2D99]"
+                      class="mr-2 px-2 !border-[#3F2D99] !h-1.25rem !text-[#3F2D99] !leading-1.25rem"
                     >
                       {tag}
                     </UTag>

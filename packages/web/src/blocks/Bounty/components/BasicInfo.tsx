@@ -75,7 +75,7 @@ const BountyBasicInfo = defineComponent({
         rules: [
           { required: true, message: 'Title cannot be blank', type: 'string', trigger: 'blur' },
           {
-            validator: (rule, value) => value.length > 12,
+            validator: (rule, value) => !value || value.length > 12,
             message: 'Bounty title must be 12 characters or more',
             trigger: 'blur'
           }
@@ -89,7 +89,6 @@ const BountyBasicInfo = defineComponent({
         name: 'expiresIn',
         placeholder: 'Select date',
         actions: ['clear', 'confirm'],
-        required: true,
         rules: [
           {
             required: true,
@@ -253,12 +252,11 @@ const BountyBasicInfo = defineComponent({
         t: 'custom',
         title: 'Description',
         name: 'description',
-        required: true,
         rules: [
           { required: true, message: 'Description cannot be blank', trigger: 'blur' },
           {
             validator: (rule, value) => {
-              return value && value.replace(/<.>|<\/.>/g, '').length > 30
+              return !value || (value && value.replace(/<.>|<\/.>/g, '').length > 30)
             },
             message: 'Description must be 30 characters or more',
             trigger: 'blur'

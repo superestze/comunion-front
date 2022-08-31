@@ -88,7 +88,7 @@ const StartupCard = defineComponent({
           <div class="mt-6 mb-0.875rem truncate u-h3" title={props.startup.name}>
             {props.startup.name}
           </div>
-          <p class="h-14 mb-6 break-all u-body1 line-clamp-3">{props.startup.mission}</p>
+          <p class=" mb-6 break-all u-body1 line-clamp-3">{props.startup.mission}</p>
           <div class="flex flex-wrap text-0.75rem gap-2">
             {hashtagsArray.map((key, value) => {
               return (
