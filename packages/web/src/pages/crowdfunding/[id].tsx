@@ -8,10 +8,10 @@ import { IBORateHistory } from './components/IBORateHistory'
 import { Invest } from './components/Invest'
 import { InvestmentRecords, InvestmentsRecordsExpose } from './components/InvestmentRecords'
 import StartupCard from './components/StartupCard'
-import { getChainInfoByChainId } from './utils'
 import { useErc20Contract } from '@/contracts'
 import { ServiceReturn, services } from '@/services'
 import { useWalletStore } from '@/stores'
+import { getChainInfoByChainId } from '@/utils/etherscan'
 
 export type CoinType = {
   name?: string
