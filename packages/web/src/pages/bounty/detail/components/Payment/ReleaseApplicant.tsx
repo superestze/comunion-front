@@ -42,7 +42,7 @@ export default defineComponent({
         <BasicDialog
           visible={this.visible}
           title="Release your deposits ？"
-          content="All deposits will be returned to your wallet after releaseing, and your application will be canceled."
+          content="All deposits will be released to your wallet, meanwhile your application will be canceled."
           onTriggerDialog={triggerDialog}
           v-slots={{
             btns: () => (
