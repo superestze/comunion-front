@@ -162,8 +162,9 @@ const PayDetailStage = defineComponent({
               class={[
                 'flex items-center cursor-pointer',
                 {
-                  invisible: stageIndex + 1 < this.bountyInfo.stages.length,
-                  'cursor-pointer': stageIndex + 1 === this.bountyInfo.stages.length
+                  invisible:
+                    this.bountyInfo.stages.length > 4 ||
+                    stageIndex + 1 < this.bountyInfo.stages.length
                 }
               ]}
               onClick={stageIndex + 1 === this.bountyInfo.stages.length ? this.addStage : undefined}
