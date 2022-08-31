@@ -3,17 +3,15 @@ import {
   UPaginatedList,
   UPaginatedListPropsType,
   UInputGroup,
-  USearch,
-  message
+  USearch
 } from '@comunion/components'
 import { defineComponent, ref, computed } from 'vue'
 import { useRouter } from 'vue-router'
 import { CrowdfundingCard } from './components/CrowdfundingCard'
 import CrowdfundingSkeleton from './components/CrowdfundingSkeleton'
-import { getChainInfoByChainId } from './utils'
 import { CrowdfundingType, CROWDFUNDING_TYPES } from '@/constants'
 import { ServiceReturn, services } from '@/services'
-import { useWalletStore } from '@/stores'
+import { checkSupportNetwork } from '@/utils/wallet'
 
 const CrowdfundingList = defineComponent({
   name: 'CrowdfundingList',
@@ -24,7 +22,6 @@ const CrowdfundingList = defineComponent({
     const loading = ref(false)
     const defaultPageSize = ref(24)
     const router = useRouter()
-    const walletStore = useWalletStore()
     const dataService = computed<UPaginatedListPropsType['service']>(
       () => async (page, pageSize) => {
         loading.value = true
@@ -43,28 +40,6 @@ const CrowdfundingList = defineComponent({
         return { items: error ? [] : data!.rows ?? [], total: _total }
       }
     )
-
-    const checkSupportNetwork = async (chainId: number) => {
-      const chainInfo = getChainInfoByChainId(chainId)
-      if (chainId && walletStore.chainId !== chainId) {
-        walletStore.wallet?.switchNetwork(chainId)
-        message.warning(`Please switch to ${chainInfo?.name}`)
-        // not supported network, try to switch
-        walletStore.openNetworkSwitcher()
-        return false
-      } else {
-        return true
-      }
-      // await walletStore.ensureWalletConnected()
-      // if (!walletStore.isNetworkSupported) {
-      //   message.warning('Please switch to the ')
-      //   // not supported network, try to switch
-      //   walletStore.openNetworkSwitcher()
-      //   return false
-      // } else {
-      //   return true
-      // }
-    }
 
     const toDetail = async (crowdfundingId: number, chainId: number) => {
       const isSupport = await checkSupportNetwork(chainId)

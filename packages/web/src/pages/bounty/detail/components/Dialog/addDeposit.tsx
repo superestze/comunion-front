@@ -17,12 +17,17 @@ import {
 } from '../../hooks/useBountyContractWrapper'
 import { MAX_AMOUNT, renderUnit } from '@/blocks/Bounty/components/BasicInfo'
 import { services } from '@/services'
+import { checkSupportNetwork } from '@/utils/wallet'
 
 export default defineComponent({
   props: {
     visible: {
       type: Boolean,
       require: true
+    },
+    detailChainId: {
+      type: Number,
+      default: () => 0
     }
   },
   emits: ['triggerDialog'],
@@ -104,9 +109,13 @@ export default defineComponent({
       this.$emit('triggerDialog')
     }
 
-    const userBehavier = (type: 'submit' | 'cancel') => () => {
+    const userBehavier = (type: 'submit' | 'cancel') => async () => {
       if (type === 'cancel') {
         triggerDialog()
+        return
+      }
+      const isSupport = await checkSupportNetwork(this.detailChainId)
+      if (!isSupport) {
         return
       }
       this.form?.validate(async err => {

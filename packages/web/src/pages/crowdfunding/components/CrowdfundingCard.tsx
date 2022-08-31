@@ -2,10 +2,11 @@ import { ULazyImage, UTag, UProgress } from '@comunion/components'
 import dayjs from 'dayjs'
 import { ethers } from 'ethers'
 import { defineComponent, PropType, computed, ref, onMounted } from 'vue'
-import { CrowdfundingStatus, getChainInfoByChainId } from '../utils'
+import { CrowdfundingStatus } from '../utils'
 import { CROWDFUNDING_TYPES } from '@/constants'
 import { useErc20Contract, useCrowdfundingContract } from '@/contracts'
 import { ServiceReturn } from '@/services'
+import { getChainInfoByChainId } from '@/utils/etherscan'
 import { formatToFloor } from '@/utils/numberFormat'
 
 export const CrowdfundingCard = defineComponent({
@@ -35,7 +36,7 @@ export const CrowdfundingCard = defineComponent({
     const logo = computed(() => {
       return getChainInfoByChainId(props.info.chainId)?.logo
     })
-    console.log(props.info.chainId, props.info.crowdfundingContract)
+    // console.log(props.info.chainId, props.info.crowdfundingContract)
     const fundingContract = useCrowdfundingContract({
       chainId: props.info.chainId!,
       addresses: { [props.info.chainId!]: props.info.crowdfundingContract }

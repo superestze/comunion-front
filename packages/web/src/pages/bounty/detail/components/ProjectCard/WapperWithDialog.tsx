@@ -11,6 +11,10 @@ export default defineComponent({
     payMode: {
       type: String as PropType<'stage' | 'period'>,
       require: true
+    },
+    detailChainId: {
+      type: Number,
+      default: () => 0
     }
   },
   setup() {
@@ -25,7 +29,12 @@ export default defineComponent({
     }
     return (
       <>
-        <PayDailog onTriggerDialog={triggerDialog} visible={this.visible} paymentInfo={this.info} />
+        <PayDailog
+          detailChainId={this.detailChainId}
+          onTriggerDialog={triggerDialog}
+          visible={this.visible}
+          paymentInfo={this.info}
+        />
         <ProjectCard info={this.info} onPay={triggerDialog} payMode={this.payMode} />
       </>
     )

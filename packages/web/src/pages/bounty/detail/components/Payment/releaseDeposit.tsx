@@ -8,9 +8,16 @@ import { BasicDialog } from '../Dialog'
 import { BOUNTY_STATUS } from '@/constants'
 import { services } from '@/services'
 import { useBountyContractStore } from '@/stores/bountyContract'
+import { checkSupportNetwork } from '@/utils/wallet'
 
 export default defineComponent({
-  setup() {
+  props: {
+    detailChainId: {
+      type: Number,
+      default: () => 0
+    }
+  },
+  async setup() {
     const visible = ref<boolean>(false)
     const { bountyContract, chainId } = useBountyContractWrapper()
     const { release } = bountyContract
@@ -31,10 +38,18 @@ export default defineComponent({
     }
   },
   render() {
-    const triggerDialog = () => {
+    const triggerDialog = async () => {
+      const isSupport = await checkSupportNetwork(this.detailChainId)
+      if (!isSupport) {
+        return
+      }
       this.visible = !this.visible
     }
     const handleReleaseDeposit = async () => {
+      const isSupport = await checkSupportNetwork(this.detailChainId)
+      if (!isSupport) {
+        return
+      }
       const response = (await this.release('', '')) as unknown as BountyContractReturnType
       const { error } = await services['bounty@bounty-release']({
         bountyID: parseInt(this.$route.query.bountyId as string),
