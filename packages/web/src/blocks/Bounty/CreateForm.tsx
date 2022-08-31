@@ -139,30 +139,68 @@ const CreateBountyForm = defineComponent({
       try {
         const contractRes = await contractSubmit()
         if (!contractRes) return
-        const payDetail =
-          bountyInfo.payDetailType === 'stage'
-            ? {
-                stages: bountyInfo.stages.map((stage, stageIndex) => ({
+        const payDetail = (() => {
+          if (bountyInfo.payDetailType === 'stage') {
+            return {
+              stages: bountyInfo.stages.map((stage, stageIndex) => {
+                const token1Amount = Number(stage.token1Amount)
+                const token2Amount = Number(bountyInfo.token2Symbol ? stage.token2Amount : 0)
+                return {
                   seqNum: stageIndex + 1,
-                  token1Amount: Number(stage.token1Amount), // usdc amount
+                  token1Amount: token1Amount || 0, // usdc amount
                   token1Symbol: bountyInfo.token1Symbol, // usdc symbol
-                  token2Amount: Number(bountyInfo.token2Symbol ? stage.token2Amount : 0), // finance setting token amount
+                  token2Amount: token2Amount || 0, // finance setting token amount
                   token2Symbol: bountyInfo.token2Symbol, // finance setting token symbol
                   terms: stage.terms
-                }))
-              }
-            : {
-                period: {
-                  periodAmount: Number(bountyInfo.period.periodAmount),
-                  periodType: bountyInfo.period.periodType,
-                  hoursPerDay: bountyInfo.period.hoursPerDay,
-                  token1Amount: Number(bountyInfo.period.token1Amount), // usdc amount
-                  token1Symbol: bountyInfo.token1Symbol, // usdc symbol
-                  token2Amount: Number(bountyInfo.period.token2Amount), // finance setting token amount
-                  token2Symbol: bountyInfo.token2Symbol, // finance setting token symbol
-                  target: bountyInfo.period.target
                 }
+              })
+            }
+          } else {
+            const periodAmount = Number(bountyInfo.period.periodAmount)
+            const token1Amount = Number(bountyInfo.period.token1Amount)
+            const token2Amount = Number(bountyInfo.period.token2Amount)
+            const hoursPerDay = Number(bountyInfo.period.hoursPerDay)
+            return {
+              period: {
+                periodAmount: periodAmount || 0,
+                periodType: bountyInfo.period.periodType,
+                hoursPerDay: hoursPerDay || 0,
+                token1Amount: token1Amount || 0, // usdc amount
+                token1Symbol: bountyInfo.token1Symbol, // usdc symbol
+                token2Amount: token2Amount || 0, // finance setting token amount
+                token2Symbol: bountyInfo.token2Symbol, // finance setting token symbol
+                target: bountyInfo.period.target
               }
+            }
+          }
+        })()
+        // bountyInfo.payDetailType === 'stage'
+        //   ? {
+        //       stages: bountyInfo.stages.map((stage, stageIndex) => {
+        //         const token1Amount = Number(stage.token1Amount)
+        //         const token2Amount = Number(bountyInfo.token2Symbol ? stage.token2Amount : 0)
+        //         return {
+        //           seqNum: stageIndex + 1,
+        //           token1Amount: token1Amount || 0, // usdc amount
+        //           token1Symbol: bountyInfo.token1Symbol, // usdc symbol
+        //           token2Amount: token2Amount || 0, // finance setting token amount
+        //           token2Symbol: bountyInfo.token2Symbol, // finance setting token symbol
+        //           terms: stage.terms
+        //         }
+        //       })
+        //     }
+        //   : {
+        //       period: {
+        //         periodAmount: Number(bountyInfo.period.periodAmount),
+        //         periodType: bountyInfo.period.periodType,
+        //         hoursPerDay: bountyInfo.period.hoursPerDay,
+        //         token1Amount: Number(bountyInfo.period.token1Amount), // usdc amount
+        //         token1Symbol: bountyInfo.token1Symbol, // usdc symbol
+        //         token2Amount: Number(bountyInfo.period.token2Amount), // finance setting token amount
+        //         token2Symbol: bountyInfo.token2Symbol, // finance setting token symbol
+        //         target: bountyInfo.period.target
+        //       }
+        //     }
         await services['bounty@bounty-create']({
           bountyDetail: {
             startupID: bountyInfo.startupID as number,
