@@ -52,7 +52,7 @@ export default defineComponent({
 
   render() {
     const toComerDetail = () => {
-      this.router.push({ path: `/startup/detail/comer/${this.normalize?.comerId}` })
+      this.router.push({ path: `/comer?id=${this.normalize?.comerId}` })
     }
     return (
       <div class="flex">
