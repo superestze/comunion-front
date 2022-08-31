@@ -24,7 +24,7 @@ export default defineComponent({
       if (this.tag1) this.tag1.selectedList = ['All']
       if (this.tag2) this.tag2.selectedList = ['All']
       this.$emit('selectedTagChange', ['All'])
-      this.$emit('tabChange', value === 'CREATED BY ME')
+      this.$emit('tabChange', value === 'CREATED')
     }
 
     const handleSelectedChange = (selectedList: string[]) => {
@@ -42,7 +42,7 @@ export default defineComponent({
               ref={(ref: any) => (this.tag1 = ref)}
             />
           </UTabPane>
-          <UTabPane name="CREATED BY ME" tab="CREATED BY ME" class="h-10">
+          <UTabPane name="CREATED" tab="CREATED" class="h-10">
             <ModuleTags
               class="mt-4"
               tasks={this.tasks}

@@ -193,7 +193,11 @@ export default defineComponent({
                               </p>
                             </div>
                           </div>
-                          <div class={`hidden mr-4 ${listHover['hidden']} cursor-pointer`}>
+                          <div
+                            class={`hidden mr-4 ${
+                              !this.view ? listHover['hidden'] : ''
+                            } cursor-pointer`}
+                          >
                             <PenOutlined
                               class="text-primary w-4 h-4 mr-4.5"
                               onClick={() => handleCurrentRecord('edit', item.id)}
