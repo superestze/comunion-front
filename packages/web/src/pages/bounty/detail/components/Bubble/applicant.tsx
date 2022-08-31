@@ -9,12 +9,17 @@ import { BOUNTY_STATUS, USER_ROLE } from '@/constants'
 import { ServiceReturn, services } from '@/services'
 import { useBountyStore, useUserStore } from '@/stores'
 import { useBountyContractStore } from '@/stores/bountyContract'
+import { checkSupportNetwork } from '@/utils/wallet'
 
 export default defineComponent({
   props: {
     applicant: {
       type: Object as PropType<ItemType<ServiceReturn<'bounty@bounty-list-applicants'>>>,
       required: true
+    },
+    detailChainId: {
+      type: Number,
+      default: () => 0
     }
   },
   setup(props) {
@@ -40,8 +45,9 @@ export default defineComponent({
     })
 
     const stageNum = computed(() => bountyContractStore.bountyContractInfo.bountyStatus)
-
+    const bountyRole = computed(() => bountyContractStore.bountyContractInfo.role)
     return {
+      bountyRole,
       visible,
       profile: userStore.profile,
       formatDate,
@@ -60,6 +66,11 @@ export default defineComponent({
     const userBehavier = (type: 'submit' | 'cancel') => async () => {
       if (type === 'cancel') {
         triggerDialog()
+        return
+      }
+
+      const isSupport = await checkSupportNetwork(this.detailChainId)
+      if (!isSupport) {
         return
       }
       await this.approveApplicant(this.applicant?.address || '', '', '')
@@ -105,15 +116,19 @@ export default defineComponent({
                   <p class="mb-2 u-title1">{this.applicant?.name}</p>
                   <div class="flex items-center">
                     <p class="text-14px text-grey3 mr-16px">{this.formatDate}</p>
-                    <UButton
-                      disabled={this.approveDisabled || this.stageNum >= BOUNTY_STATUS.WORKSTARTED}
-                      class="w-120px"
-                      type="primary"
-                      size="small"
-                      onClick={triggerDialog}
-                    >
-                      Approve
-                    </UButton>
+                    {this.bountyRole === USER_ROLE.FOUNDER && (
+                      <UButton
+                        disabled={
+                          this.approveDisabled || this.stageNum >= BOUNTY_STATUS.WORKSTARTED
+                        }
+                        class="w-120px"
+                        type="primary"
+                        size="small"
+                        onClick={triggerDialog}
+                      >
+                        Approve
+                      </UButton>
+                    )}
                   </div>
                 </div>
                 <UScrollbar

@@ -158,7 +158,10 @@ export default defineComponent({
               {this.bountySection.applicantsList && this.bountySection.applicantsList.length > 0 && (
                 <>
                   {this.bountySection.applicantsList.map(applicant => (
-                    <ApplicantBubble applicant={applicant} />
+                    <ApplicantBubble
+                      detailChainId={this.bountySection.detail?.chainID || 0}
+                      applicant={applicant}
+                    />
                   ))}
                 </>
               )}
@@ -192,12 +195,12 @@ export default defineComponent({
                 'header-extra': () => (
                   <>
                     {this.bountyContractInfo.role === USER_ROLE.FOUNDER &&
-                      this.bountySection.approvedPeople && <Unapprove />}
+                      (this.bountySection.approvedPeople?.comerID || 0) > 0 && <Unapprove />}
                   </>
                 )
               }}
             >
-              {this.bountySection.approvedPeople && (
+              {(this.bountySection.approvedPeople?.comerID || 0) > 0 && (
                 <PersonalCard
                   profile={this.bountySection.approvedPeople}
                   class="mt-20px"
