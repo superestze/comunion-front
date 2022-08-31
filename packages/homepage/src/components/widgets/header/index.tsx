@@ -50,10 +50,10 @@ export default defineComponent({
           </div>
           <div class="flex h-60px text-primary1 w-514px justify-between items-center text-16px">
             <span class="hover:text-primary cursor-pointer text-primary">Home</span>
-            <span class="hover:text-primary">GCI</span>
-            <span class="hover:text-primary">Dapps</span>
-            <span class="hover:text-primary">Enterprise</span>
-            <span class="hover:text-primary">API</span>
+            <span class="text-grey4">GCI</span>
+            <span class="text-grey4">Dapps</span>
+            <span class="text-grey4">Enterprise</span>
+            <span class="text-grey4">API</span>
           </div>
           <div class="flex items-center">
             <UButton
