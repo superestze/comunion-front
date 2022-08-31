@@ -1,8 +1,9 @@
-import type { SelectProps } from 'naive-ui'
+import type { SelectProps, SelectOption } from 'naive-ui'
 import { NSelect } from 'naive-ui'
 import { defineComponent } from 'vue'
 
 export type USelectPropsType = SelectProps
+export type USelectOption = SelectOption
 
 const USelect = defineComponent({
   name: 'USelect',

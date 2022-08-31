@@ -235,6 +235,16 @@ export const useWalletStore = defineStore('wallet', {
         }
       }
       return '0'
+    },
+    getRpcProvider(chainId: number, key: string) {
+      const networkInfo = allNetworks.find(network => network.chainId === chainId)
+      if (!networkInfo) return
+      let rpc = networkInfo.rpcUrl
+      if ([1, 5].includes(chainId)) {
+        rpc += key
+      }
+      const provider = new ethers.providers.JsonRpcProvider(rpc)
+      return provider
     }
   }
 })
