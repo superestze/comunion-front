@@ -69,9 +69,9 @@ const TheHeader = defineComponent({
 
     return () => (
       <div class={headerClass.value} style={styles.value}>
-        <RouterLink to="/welcome" class="mr-15">
+        <div class="mr-15">
           <ULogo height={20} withText theme="colorful" />
-        </RouterLink>
+        </div>
         <div class="text-grey1 gap-x-6 inline-flex item-center">
           {navigations.map(nav => (
             <RouterLink

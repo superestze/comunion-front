@@ -245,8 +245,8 @@ export default defineComponent({
                     <>
                       {this.follow ? (
                         <UButton
-                          type="primary"
-                          ghost
+                          secondary
+                          type="tertiary"
                           class="w-40 mr-6"
                           size="small"
                           onClick={() => this.toggleFollow()}
