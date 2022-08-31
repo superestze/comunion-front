@@ -56,14 +56,12 @@ const StartupCard = defineComponent({
             src={props.startup.logo}
             width="10"
             height="10"
-            class="rounded-md h-3.75rem mr-3 w-3.75rem"
+            class="rounded-md h-15 mr-3 w-15"
           />
 
           <div class="flex-1 overflow-hidden">
-            <div class="flex mb-2 items-center">
-              <div class="font-700 max-w-4/5 text-[#333] text-1rem leading-7 truncate">
-                {props.startup.title}
-              </div>
+            <div class="flex mb-4 items-center">
+              <div class="max-w-4/5 text-[#333] truncate u-title3">{props.startup.title}</div>
               <span
                 class="rounded-sm h-1.25rem ml-2 px-2 text-0.75rem leading-1.25rem inline-block"
                 style={{
@@ -78,7 +76,7 @@ const StartupCard = defineComponent({
               {props.startup.applicationSkills.length &&
                 props.startup.applicationSkills.map((tag: string, i: number) => {
                   return (
-                    <UTag class="mr-2 px-2 !border-[#3F2D99] !h-1.25rem !text-[#3F2D99] !leading-1.25rem">
+                    <UTag class="mr-2 px-2 truncate !border-[#3F2D99] !h-1.25rem !text-[#3F2D99] !leading-1.25rem">
                       {tag}
                     </UTag>
                   )
@@ -92,7 +90,7 @@ const StartupCard = defineComponent({
                 key={i}
                 class={[
                   i === 0 ? 'border-warning text-warning' : 'border-primary text-primary',
-                  'inline-block ml-2 px-2 h-6 leading-6 rounded border-1 '
+                  'inline-block ml-2 px-2 h-6 leading-1.375rem rounded border-1 truncate'
                 ]}
                 style={{
                   background:
@@ -122,9 +120,7 @@ const StartupCard = defineComponent({
             <span class="text-[#9F9F9F] ">Created {date.value}</span>
           </div>
           <span class="text-grey2">Deposit：</span>
-          <em class="font-700 text-0.875rem text-[#F29F39]">
-            {props.startup.depositRequirements} USDC
-          </em>
+          <em class="text-[#F29F39] truncate u-body3">{props.startup.depositRequirements} USDC</em>
         </div>
       </div>
     )

@@ -104,7 +104,7 @@ const StartupCard = defineComponent({
               <span class={STARTUP_TAG_CLASS}>+ {hashtagsArray.length - 4}</span>
             ) : null}
           </div>
-          {/* 底部 */}
+          {/* footer */}
           <div class="right-6 bottom-6 left-6 text-0.75rem absolute">
             <div class="flex items-center">
               <span class="rounded-bl-md rounded-tr-md bg-[#F4F4F4] h-1.625rem px-0.5rem text-[#636366] leading-1.625rem inline-block">
