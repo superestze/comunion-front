@@ -76,7 +76,10 @@ const StartupCard = defineComponent({
               {props.startup.applicationSkills.length &&
                 props.startup.applicationSkills.map((tag: string, i: number) => {
                   return (
-                    <UTag class="mr-2 px-2 truncate !border-[#3F2D99] !h-1.25rem !text-[#3F2D99] !leading-1.25rem">
+                    <UTag
+                      key={i}
+                      class="px-2 mr-2 !h-1.25rem !leading-1.25rem !text-[#3F2D99] !border-[#3F2D99]"
+                    >
                       {tag}
                     </UTag>
                   )
