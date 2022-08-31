@@ -35,7 +35,7 @@ const CrowdfundingList = defineComponent({
       loading: false
     })
 
-    const DataList = ref<CrowdfundingItem[]>([])
+    const dataList = ref<CrowdfundingItem[]>([])
     const fetchData = async () => {
       const { error, data } = await services['crowdfunding@public-crowdfunding-list']({
         limit: pagination.pageSize,
@@ -47,7 +47,7 @@ const CrowdfundingList = defineComponent({
         keyword: inputMember.value
       })
       if (!error) {
-        DataList.value.push(...data!.rows)
+        dataList.value.push(...data!.rows)
         pagination.total = data!.totalRows
       }
     }
@@ -141,7 +141,7 @@ const CrowdfundingList = defineComponent({
           </div>
         </div>
         <div class="grid pb-6 gap-8 grid-cols-1 md:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4">
-          {DataList.value.map(crowdfunding => (
+          {dataList.value.map(crowdfunding => (
             <CrowdfundingCard
               key={crowdfunding.crowdfundingId}
               info={crowdfunding}
