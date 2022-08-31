@@ -1,3 +1,5 @@
+import { UDropdownFilter, UInputGroup, USearch } from '@comunion/components'
+import { debounce } from '@comunion/utils'
 import {
   defineComponent,
   ref,
@@ -12,8 +14,9 @@ import { useRouter } from 'vue-router'
 import { CrowdfundingCard } from './components/CrowdfundingCard'
 import CrowdfundingSkeleton from './components/CrowdfundingSkeleton'
 import { CrowdfundingType, CROWDFUNDING_TYPES } from '@/constants'
-import { ServiceReturn, services } from '@/services'
-import { useWalletStore } from '@/stores'
+import { services } from '@/services'
+import { CrowdfundingItem } from '@/types'
+import { checkSupportNetwork } from '@/utils/wallet'
 
 const CrowdfundingList = defineComponent({
   name: 'CrowdfundingList',
@@ -47,35 +50,21 @@ const CrowdfundingList = defineComponent({
         DataList.value.push(...data!.rows)
         pagination.total = data!.totalRows
       }
-    )
-
-    const checkSupportNetwork = async (chainId: number) => {
-      const chainInfo = getChainInfoByChainId(chainId)
-      if (chainId && walletStore.chainId !== chainId) {
-        walletStore.wallet?.switchNetwork(chainId)
-        message.warning(`Please switch to ${chainInfo?.name}`)
-        // not supported network, try to switch
-        walletStore.openNetworkSwitcher()
-        return false
-      } else {
-        return true
-      }
-      // await walletStore.ensureWalletConnected()
-      // if (!walletStore.isNetworkSupported) {
-      //   message.warning('Please switch to the ')
-      //   // not supported network, try to switch
-      //   walletStore.openNetworkSwitcher()
-      //   return false
-      // } else {
-      //   return true
-      // }
     }
+
+    const router = useRouter()
 
     const toDetail = async (crowdfundingId: number, chainId: number) => {
       const isSupport = await checkSupportNetwork(chainId)
       if (isSupport) {
         router.push('/crowdfunding/' + crowdfundingId)
       }
+    }
+    const onLoadMore = async (p: number) => {
+      pagination.loading = true
+      pagination.page = p
+      await fetchData()
+      pagination.loading = false
     }
     // filter
     watch(
