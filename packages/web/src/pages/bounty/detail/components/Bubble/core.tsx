@@ -14,7 +14,7 @@ export default defineComponent({
   },
   render() {
     const toComerDetail = (id: string) => () => {
-      this.$router.push({ path: `/comer?id=${id}` })
+      this.$router.push({ path: '/comer', query: { id } })
     }
     return (
       <div class="flex">

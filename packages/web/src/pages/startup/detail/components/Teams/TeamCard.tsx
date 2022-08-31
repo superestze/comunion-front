@@ -9,7 +9,7 @@ export const StartupTeamCard = defineComponent({
     const { teamMember } = props
     const router = useRouter()
     const toComerDetail = () => {
-      router.push({ path: `/comer?id=${teamMember.comerID}` })
+      router.push({ path: '/comer', query: { id: teamMember.comerID } })
     }
     return () => (
       <div class="flex items-center leading-20 h-16 mb-6 cursor-pointer" onClick={toComerDetail}>

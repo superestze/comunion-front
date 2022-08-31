@@ -103,10 +103,9 @@ export const ComerInfo = defineComponent({
       ctx.emit('followComer', toStatus)
     }
     const toComerDetail = (comerId: number) => {
-      // console.log('router.', router.getRoutes())
-      // router
       router.push({
-        path: `/comer?id=${comerId}`
+        path: '/comer',
+        query: { id: comerId }
       })
     }
 

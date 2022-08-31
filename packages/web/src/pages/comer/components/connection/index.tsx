@@ -168,7 +168,9 @@ export default defineComponent({
                             avatar: () => (
                               <div
                                 class="flex items-center w-9 h-9 overflow-hidden cursor-pointer"
-                                onClick={() => this.$router.push(`/comer?id=${item.comerId}`)}
+                                onClick={() =>
+                                  this.$router.push({ path: '/comer', query: { id: item.comerId } })
+                                }
                               >
                                 <UStartupLogo src={item.comerAvatar} width="9" height="9" />
                               </div>
@@ -211,7 +213,9 @@ export default defineComponent({
                             avatar: () => (
                               <div
                                 class="flex items-center w-9 h-9 overflow-hidden cursor-pointer"
-                                onClick={() => this.$router.push(`/comer?id=${item.comerId}`)}
+                                onClick={() =>
+                                  this.$router.push({ path: '/comer', query: { id: item.comerId } })
+                                }
                               >
                                 <UStartupLogo src={item.comerAvatar} width="9" height="9" />
                               </div>
