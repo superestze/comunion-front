@@ -17,6 +17,10 @@ import { BountyContractInfoType } from '@/stores/bountyContract'
 
 export default defineComponent({
   props: {
+    detailChainId: {
+      type: Number,
+      default: () => 0
+    },
     bountyContractInfo: {
       type: Object as PropType<BountyContractInfoType>,
       required: true
@@ -30,7 +34,6 @@ export default defineComponent({
     const payMode = computed<'stage' | 'period'>(() => {
       return props.paymentInfo?.bountyPaymentInfo?.paymentMode === 1 ? 'stage' : 'period'
     })
-
     const stageTerms = computed(() => {
       if (props.paymentInfo?.stageTerms && Array.isArray(props.paymentInfo.stageTerms)) {
         return props.paymentInfo.stageTerms
@@ -56,7 +59,7 @@ export default defineComponent({
       }
       return props.bountyContractInfo.applicantDepositAmount
     })
-
+    console.log('role====', USER_ROLE, props.bountyContractInfo)
     return {
       payMode,
       stageTerms,
@@ -70,7 +73,7 @@ export default defineComponent({
         <div class="flex justify-between mt-26px">
           <PaymentCard
             title="Rewards"
-            class="w-100"
+            class="w-100 mr-2"
             v-slots={{
               btn: () => (
                 <>
@@ -80,11 +83,14 @@ export default defineComponent({
                         this.bountyContractInfo.status === APPLICANT_STATUS.APPLIED ||
                         this.bountyContractInfo.bountyStatus >= BOUNTY_STATUS.WORKSTARTED
                       }
+                      detailChainId={this.detailChainId}
                       applicantApplyStatus={this.bountyContractInfo.status}
                       applicantDepositMinAmount={this.bountyContractInfo.applicantDepositMinAmount}
                     />
                   )}
-                  {this.bountyContractInfo.role === USER_ROLE.FOUNDER && <CloseBounty />}
+                  {this.bountyContractInfo.role === USER_ROLE.FOUNDER && (
+                    <CloseBounty detailChainId={this.detailChainId} />
+                  )}
                 </>
               ),
               text: () => (
@@ -152,8 +158,8 @@ export default defineComponent({
                         <Lock />
                       ) : (
                         <div class="flex w-322px mt-60px mb-48px mx-auto">
-                          <AddDeposit />
-                          <ReleaseDeposit />
+                          <AddDeposit detailChainId={this.detailChainId} />
+                          <ReleaseDeposit detailChainId={this.detailChainId} />
                         </div>
                       )}
                     </>
@@ -225,7 +231,11 @@ export default defineComponent({
           {this.payMode === 'stage' ? (
             <>
               {this.stageTerms.map(term => (
-                <ProjectCardWithDialog info={term} payMode={this.payMode} />
+                <ProjectCardWithDialog
+                  detailChainId={this.detailChainId}
+                  info={term}
+                  payMode={this.payMode}
+                />
               ))}
             </>
           ) : (

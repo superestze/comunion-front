@@ -2,7 +2,7 @@ import { reactive } from 'vue'
 import { services } from '@/services'
 
 export function useModuleTag() {
-  const tagCount = reactive({
+  const tagCount = reactive<Record<string, number>>({
     startupCnt: 0,
     bountyCnt: 0,
     crowdfundingCnt: 0,

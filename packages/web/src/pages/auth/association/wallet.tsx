@@ -18,15 +18,15 @@ export default defineComponent({
           userStore.refreshMe()
         }
         if (data?.isProfiled) {
-          replace('/welcome')
+          replace('/startup/list')
           return
         }
-        replace('/auth/register/intro')
+        replace('/auth/register/simple')
       })
     }
 
     const cancelAssociation = () => {
-      push('/auth/register/intro')
+      push('/auth/register/simple')
     }
 
     return () => (

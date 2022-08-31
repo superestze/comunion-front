@@ -16,10 +16,10 @@ const AuthLayout = defineComponent({
       if (userStore.logged) {
         // when logged and profiled, you need not stay in auth page
         if (userStore.isProfiled) {
-          replace('/welcome')
+          replace('/startup/list')
         } else {
           if (!path.startsWith('/auth')) {
-            replace('/auth/register/intro')
+            replace('/auth/register/simple')
           }
         }
       } else {

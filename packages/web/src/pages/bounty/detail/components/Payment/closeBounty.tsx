@@ -5,8 +5,15 @@ import { BasicDialog } from '../Dialog'
 import { BOUNTY_STATUS } from '@/constants'
 import { services } from '@/services'
 import { useBountyContractStore } from '@/stores/bountyContract'
+import { checkSupportNetwork } from '@/utils/wallet'
 
 export default defineComponent({
+  props: {
+    detailChainId: {
+      type: Number,
+      default: () => 0
+    }
+  },
   setup() {
     const visibleFailCloseBounty = ref<boolean>(false)
     const { bountyContract } = useBountyContractWrapper()
@@ -23,6 +30,10 @@ export default defineComponent({
   },
   render() {
     const closeBounty = async () => {
+      const isSupport = await checkSupportNetwork(this.detailChainId)
+      if (!isSupport) {
+        return
+      }
       await this.close('', '')
       const { error } = await services['bounty@bounty-close']({
         bountyID: this.$route.query.bountyId as string

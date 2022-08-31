@@ -4,6 +4,7 @@ import { useBountyContractWrapper } from '../../hooks/useBountyContractWrapper'
 import Basic from './basic'
 import { services } from '@/services'
 import { useUserStore, useWalletStore } from '@/stores'
+import { checkSupportNetwork } from '@/utils/wallet'
 
 export type VisibleMap = {
   visibleUnapproveConfirm: boolean
@@ -15,6 +16,10 @@ export const UnapprovePromptSet = defineComponent({
     visibleMap: {
       type: Object as PropType<VisibleMap>,
       require: true
+    },
+    detailChainId: {
+      type: Number,
+      default: () => 0
     }
   },
   setup() {
@@ -39,6 +44,11 @@ export const UnapprovePromptSet = defineComponent({
     const userBehavier = (type: 'submit' | 'cancel') => async () => {
       if (type === 'cancel') {
         closeUnapproveConfirm()
+        return
+      }
+
+      const isSupport = await checkSupportNetwork(this.detailChainId)
+      if (!isSupport) {
         return
       }
       if (!this.address) {

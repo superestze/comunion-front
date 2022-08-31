@@ -117,11 +117,11 @@ const RegisterProfilePage = defineComponent({
     }
 
     const toHomePage = () => {
-      router.replace('/welcome')
+      router.replace('/startup/list')
     }
 
     const toMyDashboard = () => {
-      router.replace('/dashboard')
+      router.replace('/comer')
     }
 
     return () => (

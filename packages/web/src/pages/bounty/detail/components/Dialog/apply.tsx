@@ -19,6 +19,7 @@ import {
 import { MAX_AMOUNT, renderUnit } from '@/blocks/Bounty/components/BasicInfo'
 import { services } from '@/services'
 import { useBountyStore } from '@/stores'
+import { checkSupportNetwork } from '@/utils/wallet'
 
 type checkboxItem = {
   value: boolean
@@ -38,6 +39,10 @@ const ApplyDialog = defineComponent({
     deposit: {
       type: Number,
       required: true
+    },
+    detailChainId: {
+      type: Number,
+      default: () => 0
     }
   },
   emits: ['triggerDialog'],
@@ -169,14 +174,18 @@ const ApplyDialog = defineComponent({
       this.$emit('triggerDialog', done)
     }
 
-    const userBehavier = (type: 'submit' | 'cancel') => () => {
+    const userBehavier = (type: 'submit' | 'cancel') => async () => {
       if (type === 'cancel') {
         triggerDialog(false)
         return
       }
+      const isSupport = await checkSupportNetwork(this.detailChainId)
+      if (!isSupport) {
+        return
+      }
       this.form?.validate(async err => {
         if (typeof err === 'undefined' && this.terms.value && this.accept.value) {
-          console.log(ethers.utils.parseUnits(this.formData.deposit.toString(), 18))
+          // console.log(ethers.utils.parseUnits(this.formData.deposit.toString(), 18))
           let response!: BountyContractReturnType
           if (this.formData.deposit >= this.deposit) {
             await this.approve(

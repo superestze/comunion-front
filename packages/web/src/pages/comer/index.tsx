@@ -17,6 +17,13 @@ import Startup from './components/startup'
 import { useModuleTag } from './hooks/useModuleTag'
 import { useProfile } from './hooks/useProfile'
 
+const keyValue: Record<string, string> = {
+  Startup: 'startupCnt',
+  Bounty: 'bountyCnt',
+  Crowdfunding: 'crowdfundingCnt',
+  Proposal: 'proposalCnt'
+}
+
 export default defineComponent({
   setup() {
     const route = useRoute()
@@ -34,12 +41,27 @@ export default defineComponent({
     const moduleTag = useModuleTag()
 
     const nothingToShow = computed(() => {
-      return (
-        moduleTag.tagCount.bountyCnt === 0 &&
-        moduleTag.tagCount.crowdfundingCnt === 0 &&
-        moduleTag.tagCount.proposalCnt === 0 &&
-        moduleTag.tagCount.startupCnt === 0
-      )
+      const all = selectedTasks.value.find(value => value === 'All')
+      if (all) {
+        return (
+          moduleTag.tagCount.bountyCnt === 0 &&
+          moduleTag.tagCount.crowdfundingCnt === 0 &&
+          moduleTag.tagCount.proposalCnt === 0 &&
+          moduleTag.tagCount.startupCnt === 0
+        )
+      }
+      console.log(selectedTasks.value)
+      const result = selectedTasks.value
+        .map(value => {
+          return moduleTag.tagCount[keyValue[value]]
+        })
+        .reduce((pre: any, next) => {
+          if (typeof pre === 'number') {
+            return pre === 0 && next === 0
+          }
+          return pre && next === 0
+        })
+      return typeof result === 'number' ? result === 0 : result
     })
 
     watch(
@@ -80,10 +102,10 @@ export default defineComponent({
       }
       return this.selectedTasks.findIndex((task: string) => task === key) > -1
     }
-
+    console.log('profile', this.profile)
     return (
       <USpin show={this.loading}>
-        <div class="mt-50px text-primary mb-10 u-h2">My Dashboard</div>
+        <div class="mt-50px text-primary mb-10 u-h2"></div>
         <div class="flex gap-6 mb-20">
           <div class="basis-1/3">
             {this.profile && (
@@ -98,7 +120,7 @@ export default defineComponent({
                   onDone={this.get}
                 />
                 <Bio content={this.profile?.bio} view={this.view} onDone={this.get} />
-                <Social view={this.view} />
+                <Social view={this.view} profile={this.profile} onDone={this.get} />
                 <Skill
                   skills={(this.profile?.skills || []).map(item => item.name) as string[]}
                   view={this.view}
@@ -132,13 +154,24 @@ export default defineComponent({
                   <>
                     {this.systemTasks.map(task => {
                       if (task === 'Startup' && rowDisplay('Startup') && this.tagCount.startupCnt) {
-                        return <Startup createdByMe={this.createdByMe} />
+                        return (
+                          <Startup
+                            createdByMe={this.createdByMe}
+                            comerId={this.profile.comerID as number}
+                            view={this.view}
+                          />
+                        )
                       } else if (
                         task === 'Bounty' &&
                         rowDisplay('Bounty') &&
                         this.tagCount.bountyCnt
                       ) {
-                        return <Bounty createdByMe={this.createdByMe} />
+                        return (
+                          <Bounty
+                            createdByMe={this.createdByMe}
+                            comerId={this.profile.comerID as number}
+                          />
+                        )
                       } else if (
                         task === 'Crowdfunding' &&
                         rowDisplay('Crowdfunding') &&

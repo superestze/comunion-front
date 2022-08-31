@@ -10,6 +10,10 @@ const StartupCard = defineComponent({
     startup: {
       type: Object as PropType<StartupItem>,
       required: true
+    },
+    view: {
+      type: Boolean,
+      default: () => false
     }
   },
   setup(props, context) {
@@ -45,14 +49,18 @@ const StartupCard = defineComponent({
             </div>
           </div>
           <div class="ml-auto mr-1 justify-end">
-            <BasicSettingFilled
-              class="cursor-pointer rounded-2 h-12 mr-3 w-12"
-              onClick={basicSetting}
-            />
-            <FinanceSettingFilled
-              class="cursor-pointer rounded-2 h-12 w-12"
-              onClick={financeSetting}
-            />
+            {props.view ? null : (
+              <>
+                <BasicSettingFilled
+                  class="cursor-pointer rounded-2 h-12 mr-3 w-12"
+                  onClick={basicSetting}
+                />
+                <FinanceSettingFilled
+                  class="cursor-pointer rounded-2 h-12 w-12"
+                  onClick={financeSetting}
+                />
+              </>
+            )}
           </div>
         </div>
       </div>

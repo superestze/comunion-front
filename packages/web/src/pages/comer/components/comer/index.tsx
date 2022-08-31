@@ -9,7 +9,7 @@ import {
   useUpload,
   UUpload
 } from '@comunion/components'
-import { PenOutlined, UploadFilled } from '@comunion/icons'
+import { CheckFilled, PenOutlined, PlusOutlined, UploadFilled } from '@comunion/icons'
 import { CustomRequest } from 'naive-ui/lib/upload/src/interface'
 import { defineComponent, computed, ref, reactive, watchEffect } from 'vue'
 import { useRoute } from 'vue-router'
@@ -71,21 +71,25 @@ export default defineComponent({
       {
         title: 'Name',
         name: 'name',
-        required: true,
         placeholder: 'Input your name',
-        maxlength: 24
+        maxlength: 24,
+        rules: [
+          {
+            required: true,
+            message: 'Name can not be blank',
+            trigger: 'blur'
+          }
+        ]
       },
       {
         title: 'Location',
         name: 'location',
-        placeholder: 'Add your location',
-        required: true
+        placeholder: 'Add your location'
       },
       {
         t: 'select',
         title: 'Time Zone',
         name: 'timeZone',
-        required: true,
         options: UTC_OPTIONS.map(item => ({ label: item.label, value: item.label }))
       }
     ]
@@ -237,15 +241,17 @@ export default defineComponent({
             <div class="w-full flex justify-end mt-20px">
               {this.view ? (
                 <>
-                  {!self ? (
+                  {!this.self ? (
                     <>
                       {this.follow ? (
                         <UButton
-                          type="primary"
+                          secondary
+                          type="tertiary"
                           class="w-40 mr-6"
                           size="small"
                           onClick={() => this.toggleFollow()}
                         >
+                          <CheckFilled class="mr-2" />
                           Unconnect
                         </UButton>
                       ) : (
@@ -255,6 +261,7 @@ export default defineComponent({
                           size="small"
                           onClick={() => this.toggleFollow()}
                         >
+                          <PlusOutlined class="mr-2 w-4 h-4" />
                           Connect
                         </UButton>
                       )}
@@ -271,7 +278,7 @@ export default defineComponent({
             </div>
             <div class="flex mt-30px flex-col ml-50px mb-24px mr-50px">
               <p class="text-16px font-600 text-primary2">{this.name}</p>
-              <p class="text-14px text-grey3 mt-2">{this.subTitle}</p>
+              <p class="text-14px text-grey3 mt-2 leading-normal">{this.subTitle}</p>
             </div>
           </>
         )}

@@ -1,5 +1,4 @@
-import { UCard, UDeveloping, UNoContent, UScrollList } from '@comunion/components'
-import { EmptyFilled } from '@comunion/icons'
+import { UCard } from '@comunion/components'
 import { defineComponent, reactive, ref, watch } from 'vue'
 import BountiesCard from '@/pages/startup/detail/components/Bounties'
 import { ServiceReturn, services } from '@/services'
@@ -12,18 +11,18 @@ export default defineComponent({
       type: Boolean,
       default: () => true
     },
-    userHasStartup: {
-      type: Boolean,
-      default: false
-    },
     view: {
       type: Boolean,
       default: () => false
+    },
+    comerId: {
+      type: Number,
+      required: true
     }
   },
   setup(props) {
     const pagination = reactive({
-      pageSize: 4,
+      pageSize: 999,
       total: 0,
       page: 1,
       loading: false
@@ -31,9 +30,13 @@ export default defineComponent({
     const bounties = ref<BountyType>([])
     const getBounties = async () => {
       const { error, data } = await services[
-        props.createdByMe ? 'bounty@my-posted-bounty-list' : 'bounty@my-participated-bounty-list'
+        props.createdByMe
+          ? 'bounty@comer-posted-bounty-list'
+          : 'bounty@comer-participated-bounty-list'
       ]({
-        page: pagination.page
+        limit: pagination.pageSize,
+        page: pagination.page,
+        comerID: props.comerId
       })
       if (!error) {
         bounties.value.push(...(data!.rows ?? []))
@@ -64,23 +67,12 @@ export default defineComponent({
     }
   },
   render() {
-    const onLoadMore = async (p: number) => {
-      this.pagination.loading = true
-      this.pagination.page = p
-      await this.getBounties()
-      this.pagination.loading = false
-    }
     return (
       <UCard title="BOUNTIES" class="mb-6">
         {this.createdByMe ? (
-          <UScrollList
-            triggered={this.pagination.loading}
-            page={this.pagination.page}
-            pageSize={this.pagination.pageSize}
-            total={this.pagination.total}
-            onLoadMore={() => onLoadMore(this.pagination.page)}
-          >
-            {Array.isArray(this.bounties) && this.bounties.length > 0 ? (
+          <>
+            {Array.isArray(this.bounties) &&
+              this.bounties.length > 0 &&
               this.bounties.map((bounty, i) => (
                 <BountiesCard
                   startup={bounty}
@@ -88,22 +80,12 @@ export default defineComponent({
                   name="dashboard"
                   status={bounty.onChainStatus as string}
                 />
-              ))
-            ) : (
-              <UNoContent textTip="TO BE EMPTY">
-                <EmptyFilled />
-              </UNoContent>
-            )}
-          </UScrollList>
+              ))}
+          </>
         ) : (
-          <UScrollList
-            triggered={this.pagination.loading}
-            page={this.pagination.page}
-            pageSize={this.pagination.pageSize}
-            total={this.pagination.total}
-            onLoadMore={() => onLoadMore(this.pagination.page)}
-          >
-            {Array.isArray(this.bounties) && this.bounties.length > 0 ? (
+          <>
+            {Array.isArray(this.bounties) &&
+              this.bounties.length > 0 &&
               this.bounties.map((bounty, i) => (
                 <BountiesCard
                   startup={bounty}
@@ -111,13 +93,8 @@ export default defineComponent({
                   name="dashboard"
                   status={bounty.onChainStatus as string}
                 />
-              ))
-            ) : (
-              <UDeveloping>
-                <EmptyFilled />
-              </UDeveloping>
-            )}
-          </UScrollList>
+              ))}
+          </>
         )}
       </UCard>
     )

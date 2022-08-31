@@ -1,12 +1,17 @@
+import { UDropdownFilter, UInputGroup, USearch } from '@comunion/components'
+import { debounce } from '@comunion/utils'
 import {
-  UDropdownFilter,
-  UPaginatedList,
-  UPaginatedListPropsType,
-  UInputGroup,
-  USearch
-} from '@comunion/components'
-import { defineComponent, ref, computed } from 'vue'
+  defineComponent,
+  ref,
+  computed,
+  reactive,
+  onMounted,
+  nextTick,
+  onBeforeUnmount,
+  watch
+} from 'vue'
 import StartupCard from './components/StartupCard'
+import StartupSkeleton from './components/StartupSkeleton'
 import { StartupTypesType, STARTUP_TYPES } from '@/constants'
 import { services } from '@/services'
 import { StartupItem } from '@/types'
@@ -16,29 +21,97 @@ const StartupsPage = defineComponent({
   setup() {
     const startupType = ref<string | undefined>(undefined)
     const inputMember = ref<string>('')
-    const total = ref(0)
-    const dataService = computed<UPaginatedListPropsType['service']>(
-      () => async (page, pageSize) => {
-        const { error, data } = await services['startup@startup-list']({
-          limit: pageSize,
-          offset: pageSize * (page - 1),
-          mode:
-            startupType.value !== undefined
-              ? STARTUP_TYPES.indexOf(startupType.value as StartupTypesType) + 1
-              : undefined,
-          keyword: inputMember.value
-        })
-        const _total = error ? 0 : data!.total
-        total.value = _total
-        return { items: error ? [] : data!.list!, total: _total }
+    const pagination = reactive<{
+      pageSize: number
+      total: number
+      page: number
+      loading: boolean
+    }>({
+      pageSize: 24,
+      total: 0,
+      page: 1,
+      loading: false
+    })
+
+    const DataList = ref<StartupItem[]>([])
+    const fetchData = async () => {
+      const { error, data } = await services['startup@startup-list']({
+        limit: pagination.pageSize,
+        offset: pagination.pageSize * (pagination.page - 1),
+        mode:
+          startupType.value !== undefined
+            ? STARTUP_TYPES.indexOf(startupType.value as StartupTypesType) + 1
+            : undefined,
+        keyword: inputMember.value
+      })
+      if (!error) {
+        DataList.value.push(...(data!.list as unknown as StartupItem[]))
+        pagination.total = data!.total
+      }
+    }
+    const onLoadMore = async (p: number) => {
+      pagination.loading = true
+      pagination.page = p
+      await fetchData()
+      pagination.loading = false
+    }
+    // filter
+    watch(
+      () => startupType.value,
+      () => {
+        setTimeout(() => {
+          onLoadMore(1)
+        }, 0)
       }
     )
 
+    const debounceLoad = debounce(onLoadMore)
+    watch(
+      () => inputMember.value,
+      () => {
+        debounceLoad(1)
+      }
+    )
+
+    const isLastPage = computed(() => {
+      return (pagination.page || 0) * (pagination.pageSize || 0) >= (pagination.total || 0)
+    })
+
+    let winHeight = 0
+    let body = document.body
+    const scrollHandler = () => {
+      if (!pagination.loading) {
+        const bodyRect = body?.getBoundingClientRect()
+
+        if (bodyRect.height + bodyRect.top - winHeight < 240) {
+          if (isLastPage.value) {
+            document.removeEventListener('scroll', scrollHandler)
+          } else {
+            pagination.page++
+            onLoadMore(pagination.page)
+          }
+        }
+      }
+    }
+
+    onMounted(() => {
+      nextTick(() => {
+        winHeight = window.innerHeight
+        body = document.body
+        document.addEventListener('scroll', scrollHandler)
+        onLoadMore(pagination.page)
+      })
+    })
+
+    onBeforeUnmount(() => {
+      document.removeEventListener('scroll', scrollHandler)
+    })
+
     return () => (
       <div class="mt-10 mb-16">
-        <div class="flex mb-8">
-          <h3 class="text-grey1 u-h3">{total.value.toLocaleString()} Startups</h3>
-          <div class="flex ml-auto self-end items-center u-title2 ">
+        <div class=" flex mb-8 ">
+          {/* <h3 class="text-grey1 u-h3">{pagination.total.toLocaleString()} Startups</h3> */}
+          <div class="flex ml-auto self-end items-center u-body4 ">
             Filter by:
             <UDropdownFilter
               options={STARTUP_TYPES.map(item => ({ label: item, value: item }))}
@@ -56,18 +129,14 @@ const StartupsPage = defineComponent({
             </UInputGroup>
           </div>
         </div>
-        <UPaginatedList
-          service={dataService.value}
-          children={({ dataSource: startups }: { dataSource: NonNullable<StartupItem>[] }) => {
-            return (
-              <div class="grid pb-6 gap-8 grid-cols-1 md:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4">
-                {startups.map(startup => (
-                  <StartupCard key={startup.id} startup={startup} />
-                ))}
-              </div>
-            )
-          }}
-        />
+
+        <div class="grid pb-6 gap-8 grid-cols-1 md:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4">
+          {DataList.value.map(startup => (
+            <StartupCard startup={startup} key={startup.id} />
+          ))}
+          {pagination.loading &&
+            new Array(pagination.pageSize).fill('').map(item => <StartupSkeleton />)}
+        </div>
       </div>
     )
   }

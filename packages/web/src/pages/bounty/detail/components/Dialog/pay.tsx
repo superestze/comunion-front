@@ -14,6 +14,7 @@ import { BountyProjectCardType } from '../ProjectCard'
 import { MAX_AMOUNT, renderUnit } from '@/blocks/Bounty/components/BasicInfo'
 import { services } from '@/services'
 import { useBountyStore } from '@/stores'
+import { checkSupportNetwork } from '@/utils/wallet'
 
 import './pay.css'
 
@@ -32,6 +33,10 @@ export default defineComponent({
     paymentInfo: {
       type: Object as PropType<BountyProjectCardType>,
       require: true
+    },
+    detailChainId: {
+      type: Number,
+      default: () => 0
     }
   },
   emits: ['triggerDialog'],
@@ -221,9 +226,13 @@ export default defineComponent({
       this.$emit('triggerDialog')
     }
 
-    const userBehavier = (type: 'submit' | 'cancel') => () => {
+    const userBehavier = (type: 'submit' | 'cancel') => async () => {
       if (type === 'cancel') {
         triggerDialog()
+        return
+      }
+      const isSupport = await checkSupportNetwork(this.detailChainId)
+      if (!isSupport) {
         return
       }
       this.form?.validate(async err => {

@@ -8,9 +8,9 @@ export default function useOnLoggedIn() {
   return (user: UserResponse) => {
     userStore.setProfile(user)
     if (user.isProfiled) {
-      replace('/welcome')
+      replace('/startup/list')
     } else {
-      replace('/auth/register/intro')
+      replace('/auth/register/simple')
     }
   }
 }

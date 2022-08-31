@@ -15,7 +15,7 @@ export const FansItem = defineComponent({
     const router = useRouter()
     const toComerDetail = () => {
       props.fansItem?.comerID &&
-        router.push({ path: `/startup/detail/comer/${props.fansItem?.comerID}` })
+        router.push({ path: '/comer', query: { id: props.fansItem?.comerID } })
     }
     const comerID = ref({
       comerProfile: {

@@ -67,7 +67,7 @@ const PayDetailStage = defineComponent({
       >
         {/* <UFormItemsFactory fields={this.payDetailStageFields} values={this.bountyInfo} /> */}
         {this.bountyInfo.stages.map((stage: any, stageIndex: number) => (
-          <div class="mb-6 flex items-center">
+          <div class="flex mb-6 items-center">
             <div class="bg-purple rounded-lg px-4 pt-4">
               <div class="text-grey1">Rewards</div>
               {/* <div class="flex items-center"> */}
@@ -88,7 +88,7 @@ const PayDetailStage = defineComponent({
                   v-model:value={stage.token1Amount}
                   renderUnit={() => renderUnit(this.bountyInfo.token1Symbol)}
                 ></UInputNumberGroup>
-                <div class="text-grey2 text-3xl px-5">+</div>
+                <div class="px-5 text-grey2 text-3xl">+</div>
                 <UInputNumberGroup
                   class="flex-1"
                   type="withUnit"
@@ -108,10 +108,10 @@ const PayDetailStage = defineComponent({
               </div>
               <div class="grid grid-cols-[1fr,56px,1fr]">
                 {!this.bountyInfo.token2Symbol && (
-                  <div class="text-grey4 text-xs col-start-3 mt-2">
+                  <div class="mt-2 text-xs text-grey4 col-start-3">
                     Not setup token yet, go to{' '}
                     <span
-                      class="text-primary cursor-pointer"
+                      class="cursor-pointer text-primary"
                       onClick={() => this.showLeaveTipModal()}
                     >
                       Finance Setting
@@ -121,14 +121,21 @@ const PayDetailStage = defineComponent({
               </div>
               <UFormItem
                 path={`${stageIndex}.terms`}
-                rule={{
-                  required: true,
-                  message: 'please input the payment term',
-                  trigger: 'blur'
-                }}
+                rule={[
+                  {
+                    required: true,
+                    message: 'Stage decription cannot be blank',
+                    trigger: 'blur'
+                  },
+                  {
+                    validator: (rule, value) => !value || value.length > 12,
+                    message: 'Stage decription must be 12 characters or more',
+                    trigger: 'blur'
+                  }
+                ]}
               >
                 <UInput
-                  placeholder="The payment after applicant complete some tasks"
+                  placeholder="Will pay after applicant complete this stage"
                   type="textarea"
                   rows={1}
                   class="-mt-1"
@@ -148,24 +155,25 @@ const PayDetailStage = defineComponent({
               ]}
               onClick={() => (this.bountyInfo.stages.length > 1 ? this.delStage(stageIndex) : null)}
             >
-              <MinusCircleOutlined class="w-5 h-5 ml-5" />
+              <MinusCircleOutlined class="h-5 ml-5 w-5" />
             </div>
 
             <div
               class={[
                 'flex items-center cursor-pointer',
                 {
-                  invisible: stageIndex + 1 < this.bountyInfo.stages.length,
-                  'cursor-pointer': stageIndex + 1 === this.bountyInfo.stages.length
+                  invisible:
+                    this.bountyInfo.stages.length > 4 ||
+                    stageIndex + 1 < this.bountyInfo.stages.length
                 }
               ]}
               onClick={stageIndex + 1 === this.bountyInfo.stages.length ? this.addStage : undefined}
             >
-              <AddCircleOutlined class="w-5 h-5 ml-5" />
+              <AddCircleOutlined class="h-5 ml-5 w-5" />
             </div>
           </div>
         ))}
-        <div class="bg-purple py-5.5 px-6 mr-20 rounded-lg">
+        <div class="bg-purple rounded-lg mr-20 py-5.5 px-6">
           The current total rewards as{' '}
           <span class="text-primary">
             <span class={[{ 'text-error': this.payStagesTotal.usdcTotal > MAX_AMOUNT }]}>

@@ -63,7 +63,10 @@ export default defineComponent({
           {typeof this.$slots.content === 'function' ? (
             this.$slots.content()
           ) : (
-            <div class="w-full text-16px font-600 text-grey1 items-center">
+            <div
+              title={this.item[this.keyMap.name]}
+              class="h-18px items-center max-w-45 text-16px font-600 text-grey1 items-center overflow-ellipsis overflow-hidden whitespace-nowrap"
+            >
               {this.item[this.keyMap.name]}
             </div>
           )}

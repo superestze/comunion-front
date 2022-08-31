@@ -13,23 +13,23 @@ export function useOnLoggedIn() {
     }
     const result = storage('session').get('link:btn')
     if (result && (result === 'google' || result === 'github')) {
-      replace('/dashboard')
+      replace('/comer')
       storage('session').remove('link:btn')
       userStore.refreshMe()
       return
     }
-    if (user?.firstLogin) {
-      replace('/auth/association?type=account')
-      return
-    }
-    if (!user?.address) {
-      replace('/auth/association?type=wallet')
-      return
-    }
+    // if (user?.firstLogin) {
+    //   replace('/auth/association?type=account')
+    //   return
+    // }
+    // if (!user?.address) {
+    //   replace('/auth/association?type=wallet')
+    //   return
+    // }
     if (user?.isProfiled || userStore.isProfiled || user?.oauthLinked) {
-      replace('/welcome')
+      replace('/startup/list')
     } else {
-      replace('/auth/register/intro')
+      replace('/auth/register/simple')
     }
   }
 }

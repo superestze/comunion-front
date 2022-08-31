@@ -52,14 +52,14 @@ const DefaultLayout = defineComponent({
               class="flex mt-30px text-white mb-16px items-center block sm:mt-0 sm:mr-126px sm:items-baseline"
               to="/"
             >
-              <ULogo theme="colorful" height={25} />
-              <span class="ml-16px text-24px leading-24px sm:ml-10px sm:text-30px">About us</span>
+              <ULogo theme="colorful" height={32} />
+              <span class="text-white ml-5 u-h3 ">ABOUT US</span>
             </RouterLink>
-            <div class="sm:flex sm:flex-1 sm:gap-40">
+            <div class="relative sm:flex sm:flex-1 sm:gap-40">
               {FOOTER_LINKS.map(data => (
                 <div key={data.title} class="mb-40px">
-                  <div class="text-white pt-12px pb-12px text-18px leading-18px block sm:pb-16px sm:text-20px">
-                    {data.title}
+                  <div class="text-white pt-12px pb-12px block u-card-title1 sm:pb-16px ">
+                    {data.title.toUpperCase()}
                   </div>
                   {data.links.map(item => (
                     <a
@@ -73,6 +73,8 @@ const DefaultLayout = defineComponent({
                   ))}
                 </div>
               ))}
+              {/* 版本号 */}
+              <span class="text-white footer-links-vertion">V5.7. Aug 2022</span>
             </div>
           </div>
         </div>

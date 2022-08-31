@@ -183,7 +183,7 @@ export default defineComponent({
                           class={`flex w-full justify-between items-center h-17 rounded-6px ${listHover['list-hover']}`}
                         >
                           <div class="flex flex-col ml-4">
-                            <p class="text-grey1 text-14px font-600">{item.school}</p>
+                            <p class="text-grey1 text-14px font-600 p-1px">{item.school}</p>
 
                             <div class="flex mt-2">
                               <p class="text-grey3 text-12px font-400">{item.major} Graduated</p>
@@ -193,7 +193,11 @@ export default defineComponent({
                               </p>
                             </div>
                           </div>
-                          <div class={`hidden mr-4 ${listHover['hidden']} cursor-pointer`}>
+                          <div
+                            class={`hidden mr-4 ${
+                              !this.view ? listHover['hidden'] : ''
+                            } cursor-pointer`}
+                          >
                             <PenOutlined
                               class="text-primary w-4 h-4 mr-4.5"
                               onClick={() => handleCurrentRecord('edit', item.id)}

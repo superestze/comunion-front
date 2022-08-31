@@ -53,6 +53,10 @@ const RichEditor = defineComponent({
       ]
     })
 
+    ctx.expose({
+      editor
+    })
+
     return () => (
       <div class="rich-editor">
         <div class="bg-purple py-1 px-4 flex items-center">

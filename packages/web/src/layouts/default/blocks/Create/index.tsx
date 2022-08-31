@@ -113,9 +113,9 @@ const CreateBlock = defineComponent({
                   </div>
                   <div>
                     <div class="text-primary1 u-title2">Startup</div>
-                    <div class="mt-1 text-grey2 text-xs font-semibold">
+                    {/* <div class="mt-1 text-grey2 text-xs font-semibold">
                       Create your Startup, initial your dream
-                    </div>
+                    </div> */}
                   </div>
                 </div>
               )
@@ -129,9 +129,9 @@ const CreateBlock = defineComponent({
                   </div>
                   <div>
                     <div class="text-primary1 u-title2">Bounty</div>
-                    <div class="mt-1 text-grey2 text-xs font-semibold">
+                    {/* <div class="mt-1 text-grey2 text-xs font-semibold">
                       Post your bounty to expand your startup
-                    </div>
+                    </div> */}
                   </div>
                 </div>
               )
@@ -145,9 +145,9 @@ const CreateBlock = defineComponent({
                   </div>
                   <div>
                     <div class="text-primary1 u-title2">Crowdfunding</div>
-                    <div class="mt-1 text-grey2 text-xs font-semibold">
+                    {/* <div class="mt-1 text-grey2 text-xs font-semibold">
                       Post your crowdfunding for start-up capital
-                    </div>
+                    </div> */}
                   </div>
                 </div>
               )

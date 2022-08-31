@@ -45,8 +45,6 @@ export default defineComponent({
 
     const languages = ref<Language[]>(props.list)
 
-    console.log(languages)
-
     watch(
       () => props.list,
       value => {
@@ -178,14 +176,18 @@ export default defineComponent({
                         <div class="flex items-center ml-4">
                           <p
                             title={LanguageList.find(l => l.value === item.language)?.label}
-                            class="text-grey1 text-14px font-600 max-w-40 overflow-hidden whitespace-nowrap overflow-ellipsis"
+                            class="text-grey1 text-14px font-600 max-w-40 overflow-hidden whitespace-nowrap overflow-ellipsis p-1px h-18px"
                           >
                             {LanguageList.find(l => l.value === item.language)?.label}
                           </p>
                           <p class="bg-grey5 w-1px h-3 mx-2"></p>
                           <p class="text-grey3 text-12px font-400">{item.level}</p>
                         </div>
-                        <div class={`hidden mr-4 ${listHover['hidden']} cursor-pointer`}>
+                        <div
+                          class={`hidden mr-4 ${
+                            !this.view ? listHover['hidden'] : ''
+                          } cursor-pointer`}
+                        >
                           <PenOutlined
                             class="text-primary w-4 h-4 mr-4.5"
                             onClick={() => handleCurrentRecord('edit', item.id)}
