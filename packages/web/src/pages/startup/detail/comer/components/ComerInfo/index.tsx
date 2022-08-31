@@ -106,7 +106,7 @@ export const ComerInfo = defineComponent({
       // console.log('router.', router.getRoutes())
       // router
       router.push({
-        path: `/startup/detail/comer/${comerId}`
+        path: `/comer?id=${comerId}`
       })
     }
 

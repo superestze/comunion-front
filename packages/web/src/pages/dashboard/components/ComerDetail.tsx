@@ -52,8 +52,7 @@ const ComerDetail = defineComponent({
       }
     }
     const toStartDetail = (val: number) => {
-      // router.push({ path: '/startup/detail', query: { startupId: val } })
-      router.push(`/startup/detail/comer/${val}`)
+      router.push(`/comer?id=${val}`)
     }
     return () => (
       <>
