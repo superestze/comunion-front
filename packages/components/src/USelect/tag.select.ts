@@ -40,9 +40,7 @@ export default function useLimitTags(props: TagLimitedProps, defaultOptions: Sel
     const charCount = countChars(searchText.value)
     return {
       maxlength:
-        charCount >= props.charLimit - 1
-          ? 0
-          : props.charLimit - charCount + searchText.value.length - 1,
+        charCount >= props.charLimit ? 0 : props.charLimit - charCount + searchText.value.length,
       readonly: props.value ? props.value.length >= props.tagLimit : false
     }
   })
