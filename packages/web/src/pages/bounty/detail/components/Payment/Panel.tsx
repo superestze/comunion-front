@@ -59,7 +59,7 @@ export default defineComponent({
       }
       return props.bountyContractInfo.applicantDepositAmount
     })
-    console.log('role====', USER_ROLE, props.bountyContractInfo)
+
     return {
       payMode,
       stageTerms,
