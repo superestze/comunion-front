@@ -65,11 +65,11 @@ const StartupsPage = defineComponent({
       }
     )
 
-    const debounceLoad = debounce(onLoadMore, 1)
+    const debounceLoad = debounce(onLoadMore)
     watch(
       () => inputMember.value,
       () => {
-        debounceLoad(300)
+        debounceLoad(1)
       }
     )
 
