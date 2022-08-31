@@ -14,6 +14,10 @@ export default defineComponent({
     comerId: {
       type: Number,
       required: true
+    },
+    view: {
+      type: Boolean,
+      default: () => false
     }
   },
   setup(props) {
@@ -74,7 +78,9 @@ export default defineComponent({
         {this.createdByMe ? (
           <>
             {this.startups.length
-              ? this.startups.map((startup, i) => <StartupCard startup={startup} key={i} />)
+              ? this.startups.map((startup, i) => (
+                  <StartupCard startup={startup} key={i} view={this.view} />
+                ))
               : null}
           </>
         ) : (

@@ -158,6 +158,7 @@ export default defineComponent({
                           <Startup
                             createdByMe={this.createdByMe}
                             comerId={this.profile.comerID as number}
+                            view={this.view}
                           />
                         )
                       } else if (
