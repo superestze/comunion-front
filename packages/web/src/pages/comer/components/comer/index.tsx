@@ -9,7 +9,7 @@ import {
   useUpload,
   UUpload
 } from '@comunion/components'
-import { PenOutlined, UploadFilled } from '@comunion/icons'
+import { CheckFilled, PenOutlined, PlusOutlined, UploadFilled } from '@comunion/icons'
 import { CustomRequest } from 'naive-ui/lib/upload/src/interface'
 import { defineComponent, computed, ref, reactive, watchEffect } from 'vue'
 import { useRoute } from 'vue-router'
@@ -251,6 +251,7 @@ export default defineComponent({
                           size="small"
                           onClick={() => this.toggleFollow()}
                         >
+                          <CheckFilled class="mr-2" />
                           Unconnect
                         </UButton>
                       ) : (
@@ -260,6 +261,7 @@ export default defineComponent({
                           size="small"
                           onClick={() => this.toggleFollow()}
                         >
+                          <PlusOutlined class="mr-2 w-4 h-4" />
                           Connect
                         </UButton>
                       )}
