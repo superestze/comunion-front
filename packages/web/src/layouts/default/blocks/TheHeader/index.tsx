@@ -25,8 +25,7 @@ const TheHeader = defineComponent({
       },
       {
         name: 'governance',
-        url: '/governance/list',
-        disabled: true
+        url: '/governance/list'
       }
     ]
 
