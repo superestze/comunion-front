@@ -59,9 +59,11 @@ const StartupCard = defineComponent({
             class="rounded-md h-15 mr-3 w-15"
           />
 
-          <div class="flex-1  overflow-hidden">
-            <div class="flex mb-4 items-center">
-              <div class="max-w-4/5 text-[#333] truncate u-title3">{props.startup.title}</div>
+          <div class="flex-1 overflow-hidden">
+            <div class="flex mb-2 items-center">
+              <div class="font-700 max-w-4/5 text-[#333] text-1rem leading-7 truncate">
+                {props.startup.title}
+              </div>
               <span
                 class="rounded-sm h-1.25rem ml-2 px-2 text-0.75rem leading-1.25rem inline-block"
                 style={{
