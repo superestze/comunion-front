@@ -871,6 +871,7 @@ export const services = {
       image?: string
       name?: string
       applicantsSkills?: string[]
+      address: string
       comerID: number
       address: string
     }>({
@@ -2434,24 +2435,18 @@ export const services = {
       ...extract('DELETE', args, [], ['groupID'])
     })
   },
-  'startup@social-add-or-update'(args: { startupID: any }) {
-    return requestAdapter<{
-      /**
-   * @description 	1-SocialEmail 
-	2-SocialWebsite
-	3-SocialTwitter
-	4-SocialDiscord
-	5-SocialTelegram
-	6-SocialMedium
-	7-SocialFacebook
-	8-SocialLinktre
-     */
-      socialType: number
-      /**
-       * @description 为空表示删除值
-       */
-      socialLink?: string
-    }>({
+  'startup@social-add-or-update'(
+    args: {
+      startupID: any
+    } & {
+      hashTags?: string[]
+      socials?: {
+        socialLink: string
+        socialType: number
+      }[]
+    }
+  ) {
+    return requestAdapter<{}>({
       url: replacePath('/cores/startups/:startupID/social', args),
       method: 'POST',
       ...extract('POST', args, [], ['startupID'])
@@ -2589,6 +2584,7 @@ export const services = {
   },
   'startup@startup-group-member-list'(
     args: {
+      startupId: any
       groupID: any
     } & {}
   ) {
@@ -2603,9 +2599,9 @@ export const services = {
         joinedTime: string
       }[]
     >({
-      url: replacePath('/cores/startups/group/:groupID/members', args),
+      url: replacePath('/cores/startups/:startupId/group/:groupID/members', args),
       method: 'GET',
-      ...extract('GET', args, [], ['groupID'])
+      ...extract('GET', args, [], ['startupId', 'groupID'])
     })
   },
   'startup@startup-list-createdBy-comer'(args: { comerID: any }) {

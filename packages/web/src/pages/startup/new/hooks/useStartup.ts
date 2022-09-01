@@ -1,9 +1,9 @@
 import { ref } from 'vue'
 import { services } from '@/services'
-import { StartupItem } from '@/types'
+import { StartupDetail } from '@/types'
 
 export function useStartup() {
-  const startup = ref<StartupItem>()
+  const startup = ref<StartupDetail>()
 
   const get = async (startupId: string) => {
     if (startupId) {

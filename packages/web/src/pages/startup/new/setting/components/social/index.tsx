@@ -1,4 +1,5 @@
 import {
+  USpin,
   FormFactoryField,
   FormInst,
   getFieldsRules,
@@ -11,42 +12,37 @@ import {
 } from '@comunion/components'
 import { AddCircleOutlined, MinusCircleOutlined } from '@comunion/icons'
 import { defineComponent, ref, reactive, PropType } from 'vue'
-import { ContactType } from '@/blocks/Bounty/typing'
+import { contactList } from './util'
+import { services } from '@/services'
 import { validateEmail } from '@/utils/type'
 
 type SocialType = {
+  socialType: number
+  socialLink: string
+}
+
+type DataType = {
   tags: string[]
-  contacts: ContactType[]
+  socials: SocialType[]
 }
 
 export default defineComponent({
   props: {
     data: {
-      type: Object as PropType<SocialType>,
+      type: Object as PropType<DataType>,
       required: true
+    },
+    startupId: {
+      type: String
     }
   },
   setup(props) {
-    const info = reactive<SocialType>({
-      tags: [],
-      contacts: [
-        {
-          value: '123123',
-          type: 1
-        }
-      ]
-    })
-    const contactOptions = ref([
-      { label: 'Email', value: 1 },
-      { label: 'Discord', value: 2 },
-      { label: 'Telegram', value: 3 },
-      { label: 'Website', value: 4 },
-      { label: 'Twitter', value: 5 },
-      { label: 'Docs', value: 6 },
-      { label: 'Facebook', value: 7 },
-      { label: 'Medium', value: 8 },
-      { label: 'Linktree', value: 9 }
-    ])
+    const loading = ref(false)
+
+    const info = reactive<DataType>(props.data)
+
+    // 1-SocialEmail  	2-SocialWebsite 	3-SocialTwitter 	4-SocialDiscord 	5-SocialTelegram 	6-SocialMedium 	7-SocialFacebook 	8-SocialLinktre
+    const contactOptions = ref(contactList)
     const fields: FormFactoryField[] = [
       {
         t: 'startupTags',
@@ -61,74 +57,76 @@ export default defineComponent({
         rules: [
           {
             required: true,
-            validator: (rule, value: ContactType[]) => {
-              const hasValue = value.find(item => !!item.value)
-              return !!hasValue
+            validator: (rule, value: SocialType[]) => {
+              return value && !!value.find(item => !!item.socialLink)
             },
             message: 'Please enter at least one contact information',
             trigger: 'blur'
           },
           {
-            validator: (rule, value: ContactType[]) => {
-              for (const item of value) {
-                if (item.type === 1 && !validateEmail(item.value)) {
-                  return false
-                } else {
-                  return true
+            validator: (rule, value: SocialType[]) => {
+              if (Array.isArray(value)) {
+                for (const item of value) {
+                  if (item.socialType === 1 && !validateEmail(item.socialLink)) {
+                    return false
+                  } else {
+                    return true
+                  }
                 }
               }
+
               return true
             },
             message: '',
             trigger: 'blur'
           }
         ],
-        render(value) {
+        render() {
           return (
             <div class="w-full">
-              {info.contacts.map((item: ContactType, itemIndex: number) => (
+              {info.socials.map((item: SocialType, itemIndex: number) => (
                 <div class="mb-4">
                   <div class="flex items-center">
                     <UInputGroup>
                       <USelect
                         options={contactOptions.value}
-                        v-model:value={item.type}
+                        v-model:value={item.socialType}
                         class="w-50"
                       ></USelect>
                       <UInput
-                        class="flex-1 rounded-r-lg"
-                        v-model:value={item.value}
-                        inputProps={{ type: item.type === 1 ? 'email' : 'text' }}
+                        class="rounded-r-lg flex-1"
+                        v-model:value={item.socialLink}
+                        inputProps={{ type: item.socialType === 1 ? 'email' : 'text' }}
                         status={
-                          item.type === 1 && item.value && !validateEmail(item.value)
+                          item.socialType === 1 &&
+                          item.socialLink &&
+                          !validateEmail(item.socialLink)
                             ? 'error'
                             : undefined
                         }
                       ></UInput>
                     </UInputGroup>
-                    {info.contacts.length > 1 && (
+                    {info.socials.length > 1 && (
                       <div
-                        class="flex items-center cursor-pointer"
+                        class="cursor-pointer flex items-center"
                         onClick={() => {
-                          info.contacts.splice(itemIndex, 1)
-                          // todo
+                          info.socials.splice(itemIndex, 1)
                         }}
                       >
-                        <MinusCircleOutlined class="w-5 h-5 ml-4.5" />
+                        <MinusCircleOutlined class="h-5 ml-4.5 w-5" />
                       </div>
                     )}
                     <div
-                      class="flex items-center cursor-pointer"
+                      class="cursor-pointer flex items-center"
                       onClick={() => {
-                        info.contacts.push({ type: 2, value: '123' })
-                        // todo
+                        info.socials.push({ socialType: 2, socialLink: '' })
                       }}
                     >
-                      <AddCircleOutlined class="w-5 h-5 ml-4.5" />
+                      <AddCircleOutlined class="h-5 ml-4.5 w-5" />
                     </div>
                   </div>
-                  {item.type === 1 && item.value && !validateEmail(item.value) && (
-                    <div class="ml-50 text-error">Please enter the correct email address</div>
+                  {item.socialType === 1 && item.socialLink && !validateEmail(item.socialLink) && (
+                    <div class="text-error ml-50">Please enter the correct email address</div>
                   )}
                 </div>
               ))}
@@ -138,7 +136,9 @@ export default defineComponent({
       }
     ]
     const form = ref<FormInst>()
+
     return {
+      loading,
       form,
       fields,
       info
@@ -146,25 +146,35 @@ export default defineComponent({
   },
   render() {
     const handleSubmit = () => {
-      this.form?.validate(err => {
-        console.log(err)
+      this.form?.validate(async err => {
+        if (!err) {
+          this.loading = true
+          await services['startup@social-add-or-update']({
+            startupID: this.startupId,
+            hashTags: this.info.tags,
+            socials: this.info.socials
+          })
+          this.loading = false
+        }
       })
     }
 
     const rules = getFieldsRules(this.fields)
     return (
-      <div class="bg-white rounded-lg border mb-6 relative overflow-hidden">
-        <div class="mx-10 my-9.5">
-          <UForm rules={rules} model={this.info} ref={(ref: any) => (this.form = ref)}>
-            <UFormItemsFactory fields={this.fields} values={this.info} />
-          </UForm>
-          <div class="flex mt-10 items-center justify-end">
-            <UButton class="w-30" type="primary" size="small" onClick={handleSubmit}>
-              Save
-            </UButton>
+      <USpin show={this.loading}>
+        <div class="bg-white border rounded-lg mb-6 relative overflow-hidden">
+          <div class="my-9.5 mx-10">
+            <UForm rules={rules} model={this.info} ref={(ref: any) => (this.form = ref)}>
+              <UFormItemsFactory fields={this.fields} values={this.info} />
+            </UForm>
+            <div class="flex mt-10 items-center justify-end">
+              <UButton class="w-30" type="primary" size="small" onClick={handleSubmit}>
+                Save
+              </UButton>
+            </div>
           </div>
         </div>
-      </div>
+      </USpin>
     )
   }
 })
