@@ -8,9 +8,8 @@ import { Payment } from './components/Payment'
 import PersonalCard from './components/PersonalCard'
 import PostUpdate from './components/PostUpdate'
 import StartupCard from './components/StartupCard'
-import Unapprove from './components/Unapprove'
 import { useBountyContractWrapper } from './hooks/useBountyContractWrapper'
-import { BOUNTY_STATUS, USER_ROLE } from '@/constants'
+import { BOUNTY_STATUS } from '@/constants'
 import router from '@/router'
 import { useBountyStore } from '@/stores'
 import { useBountyContractStore } from '@/stores/bountyContract'
@@ -33,7 +32,6 @@ export default defineComponent({
     bountyContractStore.initialize(bountyContract, route.query.bountyId as string, true)
 
     const chainInfo = getChainInfoByChainId(chainId as number)
-
     return {
       bountySection,
       loading,
@@ -191,14 +189,14 @@ export default defineComponent({
             <UCard
               title="APPROVED"
               class="mb-6"
-              v-slots={{
-                'header-extra': () => (
-                  <>
-                    {this.bountyContractInfo.role === USER_ROLE.FOUNDER &&
-                      (this.bountySection.approvedPeople?.comerID || 0) > 0 && <Unapprove />}
-                  </>
-                )
-              }}
+              // v-slots={{
+              //   'header-extra': () => (
+              //     <>
+              //       {this.bountyContractInfo.role === USER_ROLE.FOUNDER &&
+              //         (this.bountySection.approvedPeople?.comerID || 0) > 0 && <Unapprove />}
+              //     </>
+              //   )
+              // }}
             >
               {(this.bountySection.approvedPeople?.comerID || 0) > 0 && (
                 <PersonalCard

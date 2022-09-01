@@ -11,6 +11,7 @@ export type BountyContractInfoType = {
   founderDepositAmount: number
   applicantDepositAmount: number
   applicantDepositMinAmount: number
+  approvedStatus: number
   depositLock: boolean
   timeLock: number
   role: number
@@ -35,6 +36,7 @@ export const useBountyContractStore = defineStore('bountyContract', {
       founderDepositAmount: 0,
       applicantDepositAmount: 0,
       applicantDepositMinAmount: 0,
+      approvedStatus: 0,
       depositLock: false,
       timeLock: 0,
       role: 0,
@@ -65,6 +67,7 @@ export const useBountyContractStore = defineStore('bountyContract', {
               if (!error) {
                 this.bountyContractInfo.applicantCount = data.applicantCount || 0
                 this.bountyContractInfo.applicantDepositAmount = data.applicantDepositAmount || 0
+                this.bountyContractInfo.approvedStatus = data.approvedStatus || 0
                 this.bountyContractInfo.applicantDepositMinAmount =
                   data.applicantDepositMinAmount || 0
                 this.bountyContractInfo.bountyStatus = data.bountyStatus || 0
@@ -116,6 +119,7 @@ export const useBountyContractStore = defineStore('bountyContract', {
                 ethers.utils.formatEther(response[9])
               )
               this.bountyContractInfo.status = Number(response[10])
+
               resolve(response)
               console.log(this.bountyContractInfo, Number(ethers.utils.formatUnits(response[7], 0)))
             })

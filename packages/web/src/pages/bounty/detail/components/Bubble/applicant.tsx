@@ -40,11 +40,12 @@ export default defineComponent({
     const approveDisabled = computed(() => {
       return (
         bountyContractStore.bountyContractInfo.role !== USER_ROLE.FOUNDER ||
-        bountyContractStore.bountyContractInfo.bountyStatus >= BOUNTY_STATUS.WORKSTARTED
+        bountyContractStore.bountyContractInfo.bountyStatus >= BOUNTY_STATUS.WORKSTARTED ||
+        props.applicant?.status !== 1
       )
     })
 
-    const stageNum = computed(() => bountyContractStore.bountyContractInfo.bountyStatus)
+    const bountyStatus = computed(() => bountyContractStore.bountyContractInfo.bountyStatus)
     const bountyRole = computed(() => bountyContractStore.bountyContractInfo.role)
     return {
       bountyRole,
@@ -55,7 +56,7 @@ export default defineComponent({
       approveDisabled,
       get,
       approveApplicant,
-      stageNum
+      bountyStatus
     }
   },
   render() {
@@ -119,7 +120,7 @@ export default defineComponent({
                     {this.bountyRole === USER_ROLE.FOUNDER && (
                       <UButton
                         disabled={
-                          this.approveDisabled || this.stageNum >= BOUNTY_STATUS.WORKSTARTED
+                          this.approveDisabled || this.bountyStatus >= BOUNTY_STATUS.WORKSTARTED
                         }
                         class="w-120px"
                         type="primary"

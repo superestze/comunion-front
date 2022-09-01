@@ -8,7 +8,8 @@ import {
   UForm,
   UFormItemsFactory,
   UInputNumberGroup,
-  UModal
+  UModal,
+  message
 } from '@comunion/components'
 import { ethers } from 'ethers'
 import { defineComponent, Ref, computed, h, ref, reactive, watch } from 'vue'
@@ -51,16 +52,17 @@ const ApplyDialog = defineComponent({
       deposit: 0,
       description: ''
     })
+    let deposit = 0
     watch(
       () => props.visible,
       value => {
         if (value) {
           formData.deposit = props.deposit || 0
           formData.description = ''
+          if (!deposit) deposit = props.deposit || 0
         }
       }
     )
-
     const { bountyContract, approve, chainId } = useBountyContractWrapper()
     const fields: Ref<FormFactoryField[]> = computed(() => [
       {
@@ -72,9 +74,9 @@ const ApplyDialog = defineComponent({
           {
             required: true,
             validator: (rule, value: number) => {
-              return value >= formData.deposit
+              return value >= deposit
             },
-            message: `Minimum deposit ${formData.deposit} USDC for applying bounty`,
+            message: `Minimum deposit ${deposit} USDC for applying bounty`,
             trigger: 'blur'
           }
         ],
@@ -83,8 +85,7 @@ const ApplyDialog = defineComponent({
           feedback: () => [
             h(
               <span class="text-12px text-grey4">
-                Minimum deposit <span class="text-primary">{formData.deposit}</span> USDC for
-                applying bounty
+                Minimum deposit <span class="text-primary">{deposit}</span> USDC for applying bounty
               </span>
             )
           ]
@@ -198,6 +199,9 @@ const ApplyDialog = defineComponent({
               '',
               ''
             )) as unknown as BountyContractReturnType
+          } else {
+            message.error('Input deposit must be greater than applicant deposit!')
+            return
           }
           const tokenAmount = Number(this.formData.deposit)
           await services['bounty@bounty-applicants-apply']({
