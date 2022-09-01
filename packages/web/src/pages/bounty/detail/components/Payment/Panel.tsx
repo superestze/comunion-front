@@ -59,6 +59,7 @@ export default defineComponent({
       }
       return props.bountyContractInfo.applicantDepositAmount
     })
+
     return {
       payMode,
       stageTerms,
