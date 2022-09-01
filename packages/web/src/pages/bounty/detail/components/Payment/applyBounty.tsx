@@ -1,5 +1,5 @@
 import { UButton } from '@comunion/components'
-import { defineComponent, ref } from 'vue'
+import { defineComponent, ref, computed } from 'vue'
 import { ApplyDialog } from '../Dialog'
 import { APPLICANT_STATUS } from '@/constants'
 import { checkSupportNetwork } from '@/utils/wallet'
@@ -25,8 +25,23 @@ export default defineComponent({
   },
   setup(props) {
     const applyBountyDialogVisible = ref<boolean>(false)
+
+    // const bountyContractStore = useBountyContractStore()
+
+    const ApplicantApplyDesc = computed(() => {
+      switch (true) {
+        case props.applicantApplyStatus === APPLICANT_STATUS.APPLIED:
+          return 'Awaiting approval'
+
+        case props.applicantApplyStatus === APPLICANT_STATUS.APPROVED:
+          return 'Started working'
+        default:
+          return 'Apply'
+      }
+    })
     return {
-      applyBountyDialogVisible
+      applyBountyDialogVisible,
+      ApplicantApplyDesc
     }
   },
   render() {
@@ -51,7 +66,7 @@ export default defineComponent({
           onClick={applyBounty}
           disabled={this.disabled}
         >
-          {this.applicantApplyStatus === APPLICANT_STATUS.APPLIED ? 'Awaiting approval' : 'Apply'}
+          {this.ApplicantApplyDesc}
         </UButton>
       </>
     )

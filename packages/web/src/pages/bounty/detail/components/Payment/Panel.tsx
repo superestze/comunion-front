@@ -1,6 +1,6 @@
 import { UScrollbar } from '@comunion/components'
 import { LockKeyOutlined, UnlockKeyOutlined } from '@comunion/icons'
-import { defineComponent, PropType, computed } from 'vue'
+import { defineComponent, PropType, computed, ref } from 'vue'
 import { ProjectCardWithDialog } from '../ProjectCard'
 import ProjectCarousel from '../ProjectCarousel'
 import Text from '../Text'
@@ -59,12 +59,19 @@ export default defineComponent({
       }
       return props.bountyContractInfo.applicantDepositAmount
     })
+    const time = ref(0)
 
+    const timer = () => {
+      time.value = Date.now() / 1000
+      setTimeout(timer, 1000)
+    }
+    timer()
     return {
       payMode,
       stageTerms,
       periodTerms,
-      bountyApplicantAmount
+      bountyApplicantAmount,
+      time
     }
   },
   render() {
@@ -158,7 +165,9 @@ export default defineComponent({
                   )}
                   {this.bountyContractInfo.role === USER_ROLE.FOUNDER && (
                     <>
-                      {this.bountyContractInfo.timeLock === 0 &&
+                      {this.bountyContractInfo.approvedStatus === APPLICANT_STATUS.APPROVED &&
+                      this.bountyContractInfo.timeLock > 0 &&
+                      this.time - this.bountyContractInfo.timeLock >= 0 &&
                       this.bountyContractInfo.depositLock ? (
                         <Lock detailChainId={this.detailChainId} />
                       ) : (

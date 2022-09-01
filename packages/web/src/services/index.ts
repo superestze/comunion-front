@@ -1171,6 +1171,7 @@ export const services = {
         description?: string
         applyAt?: string
         address: string
+        status: number
       }[]
     >({
       url: replacePath('/bounty/{bountyID}/applicants', args),
@@ -1347,6 +1348,10 @@ export const services = {
        * @description 申请者存入金额
        */
       applicantDepositAmount?: number
+      /**
+       * @description 被批准申请者当前申请状态
+       */
+      approvedStatus?: number
       /**
        * @description 最小存入金额
        */
