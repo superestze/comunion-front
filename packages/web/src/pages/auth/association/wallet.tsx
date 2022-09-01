@@ -18,7 +18,7 @@ export default defineComponent({
           userStore.refreshMe()
         }
         if (data?.isProfiled) {
-          replace('/welcome')
+          replace('/startup/list')
           return
         }
         replace('/auth/register/simple')

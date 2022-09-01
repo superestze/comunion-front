@@ -17,6 +17,7 @@ import {
 } from '../../hooks/useBountyContractWrapper'
 import { MAX_AMOUNT, renderUnit } from '@/blocks/Bounty/components/BasicInfo'
 import { services } from '@/services'
+import { useBountyStore } from '@/stores'
 import { checkSupportNetwork } from '@/utils/wallet'
 
 export default defineComponent({
@@ -93,6 +94,10 @@ export default defineComponent({
     const form = ref<FormInst>()
 
     const { bountyContract, approve, chainId } = useBountyContractWrapper()
+
+    const bountyStore = useBountyStore()
+
+    const { detail } = bountyStore
     const { deposit } = bountyContract
     return {
       addDepositFields,
@@ -101,7 +106,8 @@ export default defineComponent({
       formData,
       deposit,
       approve,
-      chainId
+      chainId,
+      detail
     }
   },
   render() {
@@ -121,7 +127,7 @@ export default defineComponent({
       this.form?.validate(async err => {
         if (typeof err === 'undefined') {
           await this.approve(
-            '0x11FF42b0cBAC4E5DE2bC0C9B973F40790a40A17a',
+            this.detail?.depositContract || '',
             ethers.utils.parseUnits((this.formData.increaseDeposit || '').toString(), 18)
           )
           const response = (await this.deposit(
@@ -129,12 +135,13 @@ export default defineComponent({
             '',
             ''
           )) as unknown as BountyContractReturnType
+          const tokenAmount = Number(this.formData.increaseDeposit)
           const { error } = await services['bounty@bounty-add-deposit']({
             bountyID: this.$route.query.bountyId as string,
             chainID: this.chainId,
             txHash: response.hash,
             tokenSymbol: 'USDC',
-            tokenAmount: this.formData.increaseDeposit as unknown as number
+            tokenAmount: tokenAmount || 0
           })
           if (!error) {
             triggerDialog()

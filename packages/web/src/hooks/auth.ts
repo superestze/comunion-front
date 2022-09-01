@@ -27,7 +27,7 @@ export function useOnLoggedIn() {
     //   return
     // }
     if (user?.isProfiled || userStore.isProfiled || user?.oauthLinked) {
-      replace('/welcome')
+      replace('/startup/list')
     } else {
       replace('/auth/register/simple')
     }

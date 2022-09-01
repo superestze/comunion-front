@@ -15,7 +15,7 @@ const LandingPage = defineComponent({
           router.replace('/auth/login')
         } else {
           // when logged, go to home page
-          router.replace('/welcome')
+          router.replace('/startup/list')
         }
       }
     })

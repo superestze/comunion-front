@@ -147,7 +147,7 @@ const ApplyDialog = defineComponent({
 
     const bountyStore = useBountyStore()
 
-    const { getApplicants } = bountyStore
+    const { getApplicants, detail } = bountyStore
 
     return {
       fields,
@@ -161,7 +161,8 @@ const ApplyDialog = defineComponent({
       getApplicants,
       bountyContract,
       approve,
-      chainId
+      chainId,
+      detail
     }
   },
   render() {
@@ -189,7 +190,7 @@ const ApplyDialog = defineComponent({
           let response!: BountyContractReturnType
           if (this.formData.deposit >= this.deposit) {
             await this.approve(
-              '0x11FF42b0cBAC4E5DE2bC0C9B973F40790a40A17a',
+              this.detail?.depositContract || '',
               ethers.utils.parseUnits(this.formData.deposit.toString(), 18)
             )
             response = (await this.bountyContract.applyFor(

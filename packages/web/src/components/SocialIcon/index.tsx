@@ -58,7 +58,11 @@ export default defineComponent({
     return (
       <div class={`flex bg-purple ${this.outWrapper} justify-center items-center rounded-4px`}>
         {this.link ? (
-          <a href={`${this.icon === 'Email' ? 'mailto:' : ''}${this.address}`} target="_blank">
+          <a
+            class={this.innerWrapper}
+            href={`${this.icon === 'Email' ? 'mailto:' : ''}${this.address}`}
+            target="_blank"
+          >
             {asyncComponent(this.icon, this.innerWrapper)}
           </a>
         ) : (

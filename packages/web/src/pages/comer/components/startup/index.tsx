@@ -10,6 +10,14 @@ export default defineComponent({
     createdByMe: {
       type: Boolean,
       default: () => true
+    },
+    comerId: {
+      type: Number,
+      required: true
+    },
+    view: {
+      type: Boolean,
+      default: () => false
     }
   },
   setup(props) {
@@ -29,12 +37,15 @@ export default defineComponent({
 
     const getStartups = async () => {
       const { error, data } = await services[
-        props.createdByMe ? 'startup@startup-list-me' : 'startup@startup-list-participated'
+        props.createdByMe
+          ? 'startup@comer-posted-startup-list'
+          : 'startup@comer-participated-startup-list'
       ]({
         limit: pagination.pageSize,
         offset: pagination.pageSize * (pagination.page - 1),
         keyword: undefined,
-        mode: undefined
+        mode: undefined,
+        comerID: props.comerId
       })
       if (!error) {
         startups.value.push(...(data!.list as unknown as StartupItem[]))
@@ -67,7 +78,9 @@ export default defineComponent({
         {this.createdByMe ? (
           <>
             {this.startups.length
-              ? this.startups.map((startup, i) => <StartupCard startup={startup} key={i} />)
+              ? this.startups.map((startup, i) => (
+                  <StartupCard startup={startup} key={i} view={this.view} />
+                ))
               : null}
           </>
         ) : (

@@ -11,13 +11,13 @@ export default defineComponent({
       type: Boolean,
       default: () => true
     },
-    userHasStartup: {
-      type: Boolean,
-      default: false
-    },
     view: {
       type: Boolean,
       default: () => false
+    },
+    comerId: {
+      type: Number,
+      required: true
     }
   },
   setup(props) {
@@ -30,10 +30,13 @@ export default defineComponent({
     const bounties = ref<BountyType>([])
     const getBounties = async () => {
       const { error, data } = await services[
-        props.createdByMe ? 'bounty@my-posted-bounty-list' : 'bounty@my-participated-bounty-list'
+        props.createdByMe
+          ? 'bounty@comer-posted-bounty-list'
+          : 'bounty@comer-participated-bounty-list'
       ]({
         limit: pagination.pageSize,
-        page: pagination.page
+        page: pagination.page,
+        comerID: props.comerId
       })
       if (!error) {
         bounties.value.push(...(data!.rows ?? []))

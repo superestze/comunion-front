@@ -105,7 +105,7 @@ export default defineComponent({
     console.log('profile', this.profile)
     return (
       <USpin show={this.loading}>
-        <div class="mt-50px text-primary mb-10 u-h2">My Dashboard</div>
+        <div class="mt-50px text-primary mb-10 u-h2"></div>
         <div class="flex gap-6 mb-20">
           <div class="basis-1/3">
             {this.profile && (
@@ -154,13 +154,24 @@ export default defineComponent({
                   <>
                     {this.systemTasks.map(task => {
                       if (task === 'Startup' && rowDisplay('Startup') && this.tagCount.startupCnt) {
-                        return <Startup createdByMe={this.createdByMe} />
+                        return (
+                          <Startup
+                            createdByMe={this.createdByMe}
+                            comerId={this.profile.comerID as number}
+                            view={this.view}
+                          />
+                        )
                       } else if (
                         task === 'Bounty' &&
                         rowDisplay('Bounty') &&
                         this.tagCount.bountyCnt
                       ) {
-                        return <Bounty createdByMe={this.createdByMe} />
+                        return (
+                          <Bounty
+                            createdByMe={this.createdByMe}
+                            comerId={this.profile.comerID as number}
+                          />
+                        )
                       } else if (
                         task === 'Crowdfunding' &&
                         rowDisplay('Crowdfunding') &&

@@ -59,7 +59,7 @@ export default defineComponent({
       }
       return props.bountyContractInfo.applicantDepositAmount
     })
-
+    
     return {
       payMode,
       stageTerms,
@@ -141,21 +141,26 @@ export default defineComponent({
                     <>
                       {this.bountyContractInfo.bountyStatus < BOUNTY_STATUS.WORKSTARTED && (
                         <ReleaseApplicant
+                          detailChainId={this.detailChainId}
                           disabled={this.bountyContractInfo.status !== APPLICANT_STATUS.APPLIED}
                         />
                       )}
                       {this.bountyContractInfo.bountyStatus >= BOUNTY_STATUS.WORKSTARTED &&
-                        this.bountyContractInfo.status !== APPLICANT_STATUS.APPROVED && (
-                          <ReleaseApplicant disabled={true} />
+                        this.bountyContractInfo.status !== APPLICANT_STATUS.APPROVED &&
+                        this.bountyContractInfo.status !== APPLICANT_STATUS.UNAPPROVED && (
+                          <ReleaseApplicant detailChainId={this.detailChainId} disabled={true} />
                         )}
-                      {this.bountyContractInfo.status === APPLICANT_STATUS.APPROVED && <Lock />}
+                      {(this.bountyContractInfo.status === APPLICANT_STATUS.APPROVED ||
+                        this.bountyContractInfo.status === APPLICANT_STATUS.UNAPPROVED) && (
+                        <Lock detailChainId={this.detailChainId} />
+                      )}
                     </>
                   )}
                   {this.bountyContractInfo.role === USER_ROLE.FOUNDER && (
                     <>
                       {this.bountyContractInfo.timeLock === 0 &&
                       this.bountyContractInfo.depositLock ? (
-                        <Lock />
+                        <Lock detailChainId={this.detailChainId} />
                       ) : (
                         <div class="flex w-322px mt-60px mb-48px mx-auto">
                           <AddDeposit detailChainId={this.detailChainId} />

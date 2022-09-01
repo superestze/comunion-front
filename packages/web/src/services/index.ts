@@ -872,6 +872,7 @@ export const services = {
       name?: string
       applicantsSkills?: string[]
       comerID: number
+      address: string
     }>({
       url: replacePath('/bounty/{bountyID}/approved', args),
       method: 'GET',
@@ -1374,6 +1375,200 @@ export const services = {
       url: replacePath('/bounty/{bountyID}/state', args),
       method: 'GET',
       ...extract('GET', args, [], ['bountyID'])
+    })
+  },
+  'bounty@comer-participated-bounty-list'(
+    args: {
+      comerID: any
+    } & {
+      /**
+       * @description 当前页
+       * @example 1
+       */
+      page: any
+      /**
+       * @description 每页记录数
+       * @example 10
+       */
+      limit?: any
+    } & {
+      /**
+       * @description 第几页，默认1
+       */
+      page: number
+    }
+  ) {
+    return requestAdapter<{
+      /**
+       * @description 每页记录数
+       */
+      limit: number
+      /**
+       * @description 当前页
+       */
+      page: number
+      /**
+       * @description 总记录数
+       */
+      totalRows: number
+      /**
+       * @description 总页数
+       */
+      totalPages: number
+      /**
+       * @description 记录列表
+       */
+      rows: {
+        /**
+         * @description logo
+         */
+        bountyId: number
+        /**
+         * @description 上链状态
+         */
+        onChainStatus: string
+        startupId: number
+        logo: string
+        /**
+         * @description 标题
+         */
+        title: string
+        /**
+         * @description 状态
+         */
+        status: string
+        /**
+         * @description 支付方式
+         */
+        paymentType: string
+        /**
+         * @description 创建时间
+         */
+        createdTime: number
+        /**
+         * @description 报酬
+         */
+        rewards: {
+          /**
+           * @description 币类型:uvu,其他
+           */
+          tokenSymbol: string
+          /**
+           * @description 总额
+           */
+          amount: string
+        }[]
+        /**
+         * @description 申请人数
+         */
+        applicantCount: number
+        depositRequirements: number
+        /**
+         * @description 技能要求
+         */
+        applicationSkills: string[]
+      }[]
+    }>({
+      url: replacePath('/cores/bounties/comer/:comerID/participated', args),
+      method: 'GET',
+      ...extract('GET', args, ['page', 'limit'], ['comerID'])
+    })
+  },
+  'bounty@comer-posted-bounty-list'(
+    args: {
+      comerID: any
+    } & {
+      /**
+       * @description 当前页
+       * @example 1
+       */
+      page: any
+      /**
+       * @description 每页记录数
+       * @example 10
+       */
+      limit?: any
+    } & {
+      /**
+       * @description 第几页，默认1
+       */
+      page: number
+    }
+  ) {
+    return requestAdapter<{
+      /**
+       * @description 每页记录数
+       */
+      limit: number
+      /**
+       * @description 当前页
+       */
+      page: number
+      /**
+       * @description 总记录数
+       */
+      totalRows: number
+      /**
+       * @description 总页数
+       */
+      totalPages: number
+      /**
+       * @description 记录列表
+       */
+      rows: {
+        /**
+         * @description logo
+         */
+        bountyId: number
+        startupId: number
+        logo: string
+        /**
+         * @description 标题
+         */
+        title: string
+        /**
+         * @description 状态
+         */
+        status: string
+        /**
+         * @description 支付方式
+         */
+        paymentType: string
+        /**
+         * @description 创建时间
+         */
+        createdTime: number
+        /**
+         * @description 报酬
+         */
+        rewards: {
+          /**
+           * @description 币类型:uvu,其他
+           */
+          tokenSymbol: string
+          /**
+           * @description 总额
+           */
+          amount: string
+        }[]
+        /**
+         * @description 申请人数
+         */
+        applicantCount: number
+        depositRequirements: number
+        /**
+         * @description 技能要求
+         */
+        applicationSkills: string[]
+        /**
+         * @description 上链状态
+         */
+        onChainStatus: string
+      }[]
+    }>({
+      url: replacePath('/cores/bounties/comer/:comerID/posted', args),
+      method: 'GET',
+      ...extract('GET', args, ['page', 'limit'], ['comerID'])
     })
   },
   'bounty@my-participated-bounty-list'(
@@ -2110,6 +2305,106 @@ export const services = {
       ...extract('POST', args, [], ['startupID', 'groupID', 'comerID'])
     })
   },
+  'startup@comer-participated-startup-list'(
+    args: {
+      comerID: any
+    } & {
+      limit: any
+      offset: any
+      keyword: any
+      /**
+       * @description NONE,ESG,NGO,DAO,COM
+       */
+      mode: any
+    }
+  ) {
+    return requestAdapter<{
+      list: {
+        id: number
+        createdAt: string
+        updatedAt: string
+        isDeleted: boolean
+        comerID: number
+        name: string
+        /**
+         * @description NONE,ESG,NGO,DAO,COM
+         */
+        mode: string
+        logo: string
+        mission: string
+        chainID: number
+        blockChainAddress: string
+        tokenContractAddress: string
+        isSet: boolean
+        wallets: {
+          id: number
+          createdAt: string
+          updatedAt: string
+          isDeleted: boolean
+          comerID: number
+          startupID: number
+          walletName: string
+          walletAddress: string
+        }[]
+      }[]
+      total: number
+    }>({
+      url: replacePath('/cores/startups/comer/:comerID/participate', args),
+      method: 'GET',
+      ...extract('GET', args, ['limit', 'offset', 'keyword', 'mode'], ['comerID'])
+    })
+  },
+  'startup@comer-posted-startup-list'(
+    args: {
+      comerID: any
+    } & {
+      limit: any
+      offset?: any
+      keyword?: any
+      /**
+       * @description NONE,ESG,NGO,DAO,COM
+       */
+      mode?: any
+    }
+  ) {
+    return requestAdapter<{
+      list: {
+        id: number
+        createdAt: string
+        updatedAt: string
+        isDeleted: boolean
+        comerID: number
+        name: string
+        /**
+         * @description NONE,ESG,NGO,DAO,COM
+         */
+        mode: string
+        logo: string
+        mission: string
+        chainID: number
+        blockChainAddress: string
+        tokenContractAddress: string
+        isSet: boolean
+        wallets: {
+          id: number
+          createdAt: string
+          updatedAt: string
+          isDeleted: boolean
+          comerID: number
+          startupID: number
+          walletName: string
+          walletAddress: string
+        }[]
+        memberCount: number
+        followCount: number
+      }[]
+      total: number
+    }>({
+      url: replacePath('/cores/startups/comer/:comerID/posted', args),
+      method: 'GET',
+      ...extract('GET', args, ['limit', 'offset', 'keyword', 'mode'], ['comerID'])
+    })
+  },
   'startup@create-group'(
     args: {
       startupID: any
@@ -2248,7 +2543,7 @@ export const services = {
       presaleEnd: string
       launchDate: string
       /**
-       * @description 标签展示顺序
+       * @description 标签展示顺序：2-Bounty,3-Crowdfunding,4-Governace,5-DAPP
        */
       tabSequence: number[]
       wallets: {

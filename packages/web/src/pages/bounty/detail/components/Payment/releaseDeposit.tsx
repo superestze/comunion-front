@@ -17,7 +17,7 @@ export default defineComponent({
       default: () => 0
     }
   },
-  async setup() {
+  setup() {
     const visible = ref<boolean>(false)
     const { bountyContract, chainId } = useBountyContractWrapper()
     const { release } = bountyContract

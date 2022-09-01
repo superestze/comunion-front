@@ -75,7 +75,7 @@ const BountyBasicInfo = defineComponent({
         rules: [
           { required: true, message: 'Title cannot be blank', type: 'string', trigger: 'blur' },
           {
-            validator: (rule, value) => !value || value.length > 12,
+            validator: (rule, value) => !value.length || value.length > 11,
             message: 'Bounty title must be 12 characters or more',
             trigger: 'blur'
           }
