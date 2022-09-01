@@ -41,7 +41,9 @@ export default defineComponent({
               ctx.attrs['text-color'] || 'text-primary'
             } leading-none text-50px font-orbitron`}
           >
-            {props.value}.<span class="text-grey5">{remainingStr}</span>
+            {props.value}
+            {remainingStr.length > 0 ? '.' : ''}
+            <span class="text-grey5">{remainingStr}</span>
           </span>
         )
       }

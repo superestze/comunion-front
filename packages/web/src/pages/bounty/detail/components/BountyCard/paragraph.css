@@ -1,0 +1,10 @@
+.bounty-info-label {
+  font-weight: 700;
+  line-height: 20px;
+  letter-spacing: 2px;
+  text-transform: uppercase;
+}
+
+.bounty-info-content {
+  line-height: 22px;
+}

@@ -47,7 +47,7 @@ const StartupCard = defineComponent({
 
     return () => (
       <div
-        class="bg-white rounded-md cursor-pointer border-1 h-36 mb-1.5rem px-10 pt-2rem hover:shadow-md"
+        class="bg-white rounded-md cursor-pointer border-1 h-40 mb-1.5rem px-10 pt-2rem hover:shadow-md"
         style="transition:all ease .3s"
         onClick={handleCard(props.startup.bountyId)}
       >
@@ -74,13 +74,13 @@ const StartupCard = defineComponent({
                 {color ? color.label : BOUNTY_TYPES_COLOR_MAP[0].label}
               </span>
             </div>
-            <div class="flex flex-row items-center">
+            <div class="flex flex-row flex-wrap items-center">
               {props.startup.applicationSkills.length &&
                 props.startup.applicationSkills.map((tag: string, i: number) => {
                   return (
                     <UTag
                       key={i}
-                      class="mr-2 px-2 !border-[#3F2D99] !h-1.25rem !text-[#3F2D99] !leading-1.25rem"
+                      class="mr-2 mb-1 px-2 !border-[#3F2D99] !h-1.25rem !text-[#3F2D99] !leading-1.25rem"
                     >
                       {tag}
                     </UTag>
