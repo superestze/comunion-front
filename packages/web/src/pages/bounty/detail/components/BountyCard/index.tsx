@@ -64,13 +64,13 @@ export default defineComponent({
                 default: () => this.bountyDetail?.title
               }}
             </UTooltip>
-            <div class="flex flex-row mt-5.5">
+            <div class="flex flex-wrap flex-row mt-5.5">
               {Array.isArray(this.bountyDetail?.applicantSkills) &&
                 this.bountyDetail?.applicantSkills.map((tag: string, i: number) => {
                   return (
                     <UTag
                       key={i}
-                      class="px-2 mr-2 !h-1.25rem !leading-1.25rem !text-[#3F2D99] !border-[#3F2D99]"
+                      class="px-2 mr-2 mt-2 !h-1.25rem !leading-1.25rem !text-[#3F2D99] !border-[#3F2D99]"
                     >
                       {tag}
                     </UTag>
