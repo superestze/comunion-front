@@ -872,6 +872,7 @@ export const services = {
       name?: string
       applicantsSkills?: string[]
       comerID: number
+      address: string
     }>({
       url: replacePath('/bounty/{bountyID}/approved', args),
       method: 'GET',

@@ -23,7 +23,7 @@ export default defineComponent({
       required: true
     }
   },
-  setup() {
+  setup(props) {
     const applyBountyDialogVisible = ref<boolean>(false)
     return {
       applyBountyDialogVisible
@@ -51,7 +51,7 @@ export default defineComponent({
           onClick={applyBounty}
           disabled={this.disabled}
         >
-          {this.applicantApplyStatus === APPLICANT_STATUS.APPLIED ? 'Pending' : 'Apply'}
+          {this.applicantApplyStatus === APPLICANT_STATUS.APPLIED ? 'Awaiting approval' : 'Apply'}
         </UButton>
       </>
     )
