@@ -76,7 +76,7 @@ export default defineComponent({
       await this.approveApplicant(this.applicant?.address || '', '', '')
       const { error } = await services['bounty@bounty-founder-approve']({
         bountyID: parseInt(this.$route.query.bountyId as string),
-        applicantComerID: this.profile?.comerID
+        applicantComerID: this.applicant?.comerID
       })
       if (!error) {
         this.get(this.$route.query.bountyId as string)
