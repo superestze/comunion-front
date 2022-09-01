@@ -43,15 +43,17 @@ export default defineComponent({
             <div class="flex items-center mb-12px">
               <span class="u-h2">{this.startup?.title}</span>
             </div>
-            {(this.startup?.mode || 0) > 0 && (
-              <UTag
-                class="!u-body3-pure"
-                type="filled"
-                bgColor={STARTUP_TYPES_COLOR_MAP[this.modeName]}
-              >
-                {this.modeName}
-              </UTag>
-            )}
+            <div class="flex flex-wrap">
+              {(this.startup?.mode || 0) > 0 && (
+                <UTag
+                  class="!u-body3-pure"
+                  type="filled"
+                  bgColor={STARTUP_TYPES_COLOR_MAP[this.modeName]}
+                >
+                  {this.modeName}
+                </UTag>
+              )}
+            </div>
           </div>
         </div>
         <div class={['flex flex-wrap gap-2 mt-20px']}>

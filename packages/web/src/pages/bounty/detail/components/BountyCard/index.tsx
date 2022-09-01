@@ -92,7 +92,7 @@ export default defineComponent({
         </div>
         <Paragraph
           class="mt-40px"
-          label="Created :"
+          label={'Created :'.toUpperCase()}
           content={this.createdAt}
           contentClass="text-primary2"
         />
@@ -100,7 +100,7 @@ export default defineComponent({
           return (
             <Paragraph
               class="mt-18px"
-              label={`${this.contactLabel[(item.contactType || 0) - 1]} :`}
+              label={`${this.contactLabel[(item.contactType || 0) - 1]} :`.toUpperCase()}
               content={item.contactAddress}
               contentClass="text-primary"
               pasteboard={true}
@@ -109,19 +109,19 @@ export default defineComponent({
         })}
         <Paragraph
           class="mt-18px"
-          label="Apply Cutoff Date :"
+          label={'Apply Cutoff Date :'.toUpperCase()}
           content={dayjs.utc(this.bountyDetail?.expiresIn).format('YYYY-MM-DD UTC')}
           contentClass="text-primary2"
         />
         <Paragraph
           class="mt-18px"
-          label="Applicants deposit :"
+          label={'Applicants deposit :'.toUpperCase()}
           content={`${this.bountyDetail?.applicantsDeposit} USDC`}
           contentClass="text-primary2"
         />
         <Paragraph
           class="mt-18px"
-          label="Description :"
+          label={'Description :'.toUpperCase()}
           content={this.bountyDetail?.description}
           foldAble={true}
           fold={this.fold}
