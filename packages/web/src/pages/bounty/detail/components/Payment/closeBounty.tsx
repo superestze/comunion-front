@@ -22,10 +22,19 @@ export default defineComponent({
     const disabled = computed(() => {
       return bountyContractStore.bountyContractInfo.bountyStatus === BOUNTY_STATUS.COMPLETED
     })
+
+    const closeDesc = computed(() => {
+      if (bountyContractStore.bountyContractInfo.bountyStatus === BOUNTY_STATUS.COMPLETED) {
+        return 'Completed'
+      } else {
+        return 'Close bounty'
+      }
+    })
     return {
       visibleFailCloseBounty,
       close: bountyContract.close,
-      disabled
+      disabled,
+      closeDesc
     }
   },
   render() {
@@ -69,7 +78,7 @@ export default defineComponent({
           onClick={closeBounty}
           size="small"
         >
-          Close bounty
+          {this.closeDesc}
         </UButton>
       </>
     )
