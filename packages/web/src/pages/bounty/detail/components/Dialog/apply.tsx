@@ -199,7 +199,7 @@ const ApplyDialog = defineComponent({
               ''
             )) as unknown as BountyContractReturnType
           }
-
+          const tokenAmount = Number(this.formData.deposit)
           await services['bounty@bounty-applicants-apply']({
             bountyID: parseInt(this.$route.query.bountyId as string),
             applicants: {
@@ -209,7 +209,7 @@ const ApplyDialog = defineComponent({
               chainID: this.chainId as number,
               txHash: response ? response.hash : '',
               tokenSymbol: 'USDC',
-              tokenAmount: this.formData.deposit
+              tokenAmount: tokenAmount || 0
             }
           })
           this.getApplicants(this.$route.query.bountyId as string)
