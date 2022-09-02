@@ -105,7 +105,7 @@ export default defineComponent({
           onEnd={this.emitChange}
           v-slots={{
             item: (data: SortItemType) => {
-              const { element, index } = data
+              const { element } = data
               // console.log(element, index)
               return (
                 <li

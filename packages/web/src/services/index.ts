@@ -873,7 +873,6 @@ export const services = {
       applicantsSkills?: string[]
       address: string
       comerID: number
-      address: string
     }>({
       url: replacePath('/bounty/{bountyID}/approved', args),
       method: 'GET',
@@ -1173,7 +1172,6 @@ export const services = {
         status?: number
         applyAt?: string
         address: string
-        status: number
       }[]
     >({
       url: replacePath('/bounty/{bountyID}/applicants', args),
@@ -1350,10 +1348,6 @@ export const services = {
        * @description 申请者存入金额
        */
       applicantDepositAmount?: number
-      /**
-       * @description 被批准申请者当前申请状态
-       */
-      approvedStatus?: number
       /**
        * @description 最小存入金额
        */
@@ -2352,13 +2346,13 @@ export const services = {
     })
   },
 
-  'startup@change-comer-group-and-location'(
+  'startup@change-comer-group-and-position'(
     args: {
       startupID: any
       groupID: any
       comerID: any
     } & {
-      location: string
+      position: string
     }
   ) {
     return requestAdapter<
@@ -2677,6 +2671,7 @@ export const services = {
         groupName: string
         joinedTime: string
         startupId: number
+        position: string
       }[]
     }>({
       url: replacePath('/cores/startups/:startupId/group/:groupID/members', args),
@@ -3017,6 +3012,7 @@ export const services = {
       comerId: any
     } & {
       position: string
+      groupId: number
     }
   ) {
     return requestAdapter<{}>({
