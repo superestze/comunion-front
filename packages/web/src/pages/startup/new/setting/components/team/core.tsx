@@ -6,6 +6,7 @@ import { useGroup } from '../../../hooks/useGroup'
 import AddGroup from './addGroup'
 import AddTeamMember from './addTeamMember'
 import AddTeamMemberDialog, { editComerData } from './addTeamMemberDialog'
+import defaultAvatar from './assets/avatar.png?url'
 import module from './hover.module.css'
 import { ModuleTags } from '@/components/Tags'
 import { ServiceReturn, services } from '@/services'
@@ -121,6 +122,7 @@ export default defineComponent({
     }
 
     return {
+      startupId: props.startupId,
       group: groupList,
       dataService,
       addGroupVisible,
@@ -147,12 +149,12 @@ export default defineComponent({
       <div class="bg-white border rounded-lg mb-6 min-h-205.5 relative overflow-hidden">
         <div class="flex flex-col my-9.5 mx-10">
           <AddTeamMember
-            startupId={this.startupId}
+            startupId={String(this.startupId)}
             group={this.group}
             onTriggerNewComer={this.handleCreateComer}
           />
           <AddTeamMemberDialog
-            startupId={this.startupId}
+            startupId={String(this.startupId)}
             comer={this.editMemberProfile}
             visible={this.editMemberVisible}
             onTriggerDialog={() => (this.editMemberVisible = false)}
@@ -189,7 +191,7 @@ export default defineComponent({
                     >
                       <div class="flex m-4 w-3/5 items-center">
                         <div class="bg-light-700 rounded-1/2 h-15 w-15">
-                          <ULazyImage class="w-full" src={item.comerAvatar || ''} />
+                          <ULazyImage class="w-full" src={item.comerAvatar || defaultAvatar} />
                         </div>
                         <div class="flex flex-col ml-6">
                           <p class="font-orbitron u-title2">{item.comerName}</p>
