@@ -70,7 +70,7 @@ export default defineComponent({
         avatar: string
         comerID: number
         name: string
-        location: string
+        position: string
       }
       createdAt: string
     }
@@ -97,7 +97,7 @@ export default defineComponent({
         comerId: newProfile.comerProfile.comerID,
         comerName: newProfile.comerProfile.name,
         joinedTime: newProfile.createdAt,
-        location: newProfile.comerProfile.location,
+        position: newProfile.comerProfile.position,
         isNew: true
       }
       editMemberVisible.value = true
@@ -197,7 +197,7 @@ export default defineComponent({
                           <p class="font-orbitron u-title2">{item.comerName}</p>
                           <p class="font-400 mt-1 text-12px text-grey1 truncate ">
                             {item.groupName}
-                            {/* {item.location || ''} */}
+                            {/* {item.position || ''} */}
                           </p>
                         </div>
                       </div>

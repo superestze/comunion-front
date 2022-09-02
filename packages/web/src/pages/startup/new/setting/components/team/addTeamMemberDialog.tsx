@@ -19,7 +19,7 @@ export type editComerData = {
   comerId: number
   comerName: string
   joinedTime: string
-  location?: string
+  position?: string
   isNew?: boolean
   groupId?: number
   groupName?: string
@@ -52,7 +52,7 @@ export default defineComponent({
     watch(
       () => props.comer,
       propsComer => {
-        info.Roles = propsComer?.location || ''
+        info.Roles = propsComer?.position || ''
         info.Group = propsComer?.groupId || 0
       },
       {
@@ -113,7 +113,6 @@ export default defineComponent({
       this.form?.validate(async err => {
         if (!err) {
           this.loading = true
-          // startup@change-comer-group-and-location
           if (!this.comer) {
             return console.warn('this.comer is missing!')
           }
@@ -122,18 +121,19 @@ export default defineComponent({
             const { error } = await services['startup@start-team-meabers-create']({
               startupId: this.startupId,
               comerId: this.comer.comerId,
-              position: this.info.Roles
+              position: this.info.Roles,
+              groupId: this.comer.groupId || 0
             })
             if (!error) {
               console.warn('create success!')
             }
           } else {
             // edit
-            const { error } = await services['startup@change-comer-group-and-location']({
+            const { error } = await services['startup@change-comer-group-and-position']({
               startupID: this.startupId,
               groupID: this.info.Group,
               comerID: this.comer.comerId,
-              location: this.info.Roles
+              position: this.info.Roles
             })
             if (!error) {
               console.warn('edit success!')
