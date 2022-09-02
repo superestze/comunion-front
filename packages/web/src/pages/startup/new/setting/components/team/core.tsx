@@ -170,7 +170,7 @@ export default defineComponent({
               class="cursor-pointer flex h-4 ml-2 w-4"
               onClick={() => (this.addGroupVisible = !this.addGroupVisible)}
             >
-              <SettingOutlined class="w-full text-grey3" />
+              <SettingOutlined class="w-full text-grey3 hover:text-[#5331F4]" />
             </div>
             <AddGroup
               group={this.group}
@@ -189,14 +189,15 @@ export default defineComponent({
                     <div
                       class={`rounded-6px flex justify-between items-center cursor-pointer ${module['list-hover']}`}
                     >
-                      <div class="flex m-4 w-3/5 items-center">
+                      <div class="flex m-4 w-1/2 items-center">
                         <div class="bg-light-700 rounded-1/2 h-15 w-15">
                           <ULazyImage class="w-full" src={item.comerAvatar || defaultAvatar} />
                         </div>
                         <div class="flex flex-col ml-6">
                           <p class="font-orbitron u-title2">{item.comerName}</p>
                           <p class="font-400 mt-1 text-12px text-grey1 truncate ">
-                            {/* {item.location || ''} */} location
+                            {item.groupName}
+                            {/* {item.location || ''} */}
                           </p>
                         </div>
                       </div>
@@ -206,11 +207,11 @@ export default defineComponent({
                       </div>
                       <p class="flex mr-9 text-grey3 change">
                         <PenOutlined
-                          class=" h-4 mr-4.5 w-4"
+                          class=" h-4 mr-4.5 w-4 hover:text-[#5331F4]"
                           onClick={() => this.handleMemberAction('edit', item)}
                         />
                         <DeleteFilled
-                          class=" h-4 w-4"
+                          class=" h-4 w-4 hover:text-[#5331F4]"
                           onClick={() => this.handleMemberAction('del', item)}
                         />
                       </p>
