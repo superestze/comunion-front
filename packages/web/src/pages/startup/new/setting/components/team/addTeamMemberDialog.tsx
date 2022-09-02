@@ -11,6 +11,7 @@ import {
   UModal
 } from '@comunion/components'
 import { defineComponent, reactive, ref, computed, inject, PropType, watch } from 'vue'
+import defaultAvatar from './assets/avatar.png?url'
 import { services } from '@/services'
 
 export type editComerData = {
@@ -163,7 +164,7 @@ export default defineComponent({
             <>
               <div class="flex bg-[#f6f6f6] rounded-8px h-21 mt-7.5 mb-6 items-center">
                 <div class="h-15 mx-4 w-15">
-                  <ULazyImage class="w-full" src={this.comer?.comerAvatar || ''} />
+                  <ULazyImage class="w-full" src={this.comer?.comerAvatar || defaultAvatar} />
                 </div>
                 <p class="u-title1">{this.comer?.comerName}</p>
               </div>
