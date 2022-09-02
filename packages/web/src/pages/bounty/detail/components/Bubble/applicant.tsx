@@ -1,7 +1,10 @@
 import { UButton, UScrollbar } from '@comunion/components'
 import { format } from 'timeago.js'
 import { defineComponent, PropType, ref, computed } from 'vue'
-import { useBountyContractWrapper } from '../../hooks/useBountyContractWrapper'
+import {
+  useBountyContractWrapper,
+  BountyContractReturnType
+} from '../../hooks/useBountyContractWrapper'
 import Basic from '../Dialog/basic'
 import Bubble from './core'
 import { ItemType } from './getItemType'
@@ -74,10 +77,15 @@ export default defineComponent({
       if (!isSupport) {
         return
       }
-      await this.approveApplicant(this.applicant?.address || '', '', '')
+      const response = (await this.approveApplicant(
+        this.applicant?.address || '',
+        'Waiting to submit all contents to blockchain for approve applicant',
+        `Approve ${this.applicant?.name || 'applicant'} succeedes`
+      )) as unknown as BountyContractReturnType
       const { error } = await services['bounty@bounty-founder-approve']({
         bountyID: parseInt(this.$route.query.bountyId as string),
-        applicantComerID: this.applicant?.comerID
+        applicantComerID: this.applicant?.comerID,
+        txHash: response?.hash || ''
       })
       if (!error) {
         this.get(this.$route.query.bountyId as string)
@@ -97,10 +105,10 @@ export default defineComponent({
             btns: () => (
               <div class="flex justify-end">
                 <UButton class="mr-16px w-164px" type="default" onClick={userBehavier('cancel')}>
-                  cancel
+                  Cancel
                 </UButton>
                 <UButton class="w-164px" type="primary" onClick={userBehavier('submit')}>
-                  submit
+                  Yes
                 </UButton>
               </div>
             )

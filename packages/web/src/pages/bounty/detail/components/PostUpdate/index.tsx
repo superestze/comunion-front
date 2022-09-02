@@ -10,6 +10,11 @@ export default defineComponent({
       type: Boolean,
       require: true,
       default: () => false
+    },
+    postUpdate: {
+      type: Function,
+      require: true,
+      default: () => false
     }
   },
   setup() {
@@ -35,7 +40,11 @@ export default defineComponent({
     }
     return (
       <>
-        <PostUpdateDialog visible={this.visible} onTriggerDialog={triggerDialog} />
+        <PostUpdateDialog
+          postUpdate={this.postUpdate}
+          visible={this.visible}
+          onTriggerDialog={triggerDialog}
+        />
         <UButton
           type="primary"
           size="small"

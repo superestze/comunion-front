@@ -20,6 +20,7 @@ import {
 import { MAX_AMOUNT, renderUnit } from '@/blocks/Bounty/components/BasicInfo'
 import { services } from '@/services'
 import { useBountyStore } from '@/stores'
+import { useContractStore } from '@/stores/contract'
 import { checkSupportNetwork } from '@/utils/wallet'
 
 type checkboxItem = {
@@ -189,15 +190,20 @@ const ApplyDialog = defineComponent({
         if (typeof err === 'undefined' && this.terms.value && this.accept.value) {
           // console.log(ethers.utils.parseUnits(this.formData.deposit.toString(), 18))
           let response!: BountyContractReturnType
+          const tokenSymbol = 'USDC'
           if (this.formData.deposit >= this.deposit) {
+            const approvePendingText =
+              'Waiting to submit all contents to blockchain for approval deposit'
+            const contractStore = useContractStore()
+            contractStore.startContract(approvePendingText)
             await this.approve(
               this.detail?.depositContract || '',
               ethers.utils.parseUnits(this.formData.deposit.toString(), 18)
             )
             response = (await this.bountyContract.applyFor(
               ethers.utils.parseUnits(this.formData.deposit.toString(), 18),
-              '',
-              ''
+              'Waiting to submit all contents to blockchain for apply',
+              `Apply by ${this.formData.deposit} ${tokenSymbol}`
             )) as unknown as BountyContractReturnType
           } else {
             message.error('Input deposit must be greater than applicant deposit!')
@@ -212,7 +218,7 @@ const ApplyDialog = defineComponent({
             applicantsDeposit: {
               chainID: this.chainId as number,
               txHash: response ? response.hash : '',
-              tokenSymbol: 'USDC',
+              tokenSymbol: tokenSymbol,
               tokenAmount: tokenAmount || 0
             }
           })

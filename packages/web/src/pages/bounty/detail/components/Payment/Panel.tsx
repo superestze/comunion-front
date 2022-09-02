@@ -52,11 +52,12 @@ export default defineComponent({
     })
 
     const bountyApplicantAmount = computed(() => {
-      if (props.bountyContractInfo.role === USER_ROLE.APPLICANT) {
-        if (props.bountyContractInfo.bountyStatus >= 2) {
-          return props.bountyContractInfo.myDepositAmount
-        }
-      }
+      // console.log(props.bountyContractInfo)
+      // if (props.bountyContractInfo.role === USER_ROLE.APPLICANT) {
+      //   if (props.bountyContractInfo.bountyStatus >= 2) {
+      //     return props.bountyContractInfo.applicantDepositAmount
+      //   }
+      // }
       return props.bountyContractInfo.applicantDepositAmount
     })
     const time = ref(0)

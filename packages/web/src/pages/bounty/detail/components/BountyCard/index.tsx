@@ -54,7 +54,7 @@ export default defineComponent({
       <div>
         <div class="flex justify-between items-center">
           <div class="flex flex-col flex-grow">
-            <UTooltip trigger="hover">
+            <UTooltip width={400} placement="top-start" trigger="hover">
               {{
                 trigger: () => (
                   <span class="whitespace-pre-wrap break-all overflow-hidden overflow-ellipsis u-h2 line-clamp-2">
@@ -80,7 +80,7 @@ export default defineComponent({
           </div>
           {this.bountyStatus && (
             <UTag
-              class="flex flex-shrink-0 ml-5 text-12px w-110px justify-center"
+              class="flex flex-shrink-0 ml-5 text-12px w-120px justify-center"
               type="outlined"
               style={{
                 color: this.bountyStatus.value
