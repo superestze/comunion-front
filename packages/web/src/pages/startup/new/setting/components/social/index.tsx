@@ -19,6 +19,7 @@ import { validateEmail } from '@/utils/type'
 type SocialType = {
   socialType: number
   socialLink: string
+  delete?: boolean
 }
 
 type DataType = {
@@ -84,52 +85,56 @@ export default defineComponent({
         render() {
           return (
             <div class="w-full">
-              {info.socials.map((item: SocialType, itemIndex: number) => (
-                <div class="mb-4">
-                  <div class="flex items-center">
-                    <UInputGroup>
-                      <USelect
-                        options={contactOptions.value}
-                        v-model:value={item.socialType}
-                        class="w-50"
-                      ></USelect>
-                      <UInput
-                        class="rounded-r-lg flex-1"
-                        v-model:value={item.socialLink}
-                        inputProps={{ type: item.socialType === 1 ? 'email' : 'text' }}
-                        status={
-                          item.socialType === 1 &&
-                          item.socialLink &&
-                          !validateEmail(item.socialLink)
-                            ? 'error'
-                            : undefined
-                        }
-                      ></UInput>
-                    </UInputGroup>
-                    {info.socials.length > 1 && (
+              {info.socials
+                .filter(e => !e.delete)
+                .map((item: SocialType, itemIndex: number) => (
+                  <div class="mb-4">
+                    <div class="flex items-center">
+                      <UInputGroup>
+                        <USelect
+                          options={contactOptions.value}
+                          v-model:value={item.socialType}
+                          class="w-50"
+                        ></USelect>
+                        <UInput
+                          class="rounded-r-lg flex-1"
+                          v-model:value={item.socialLink}
+                          inputProps={{ type: item.socialType === 1 ? 'email' : 'text' }}
+                          status={
+                            item.socialType === 1 &&
+                            item.socialLink &&
+                            !validateEmail(item.socialLink)
+                              ? 'error'
+                              : undefined
+                          }
+                        ></UInput>
+                      </UInputGroup>
+                      {info.socials.length > 1 && (
+                        <div
+                          class="cursor-pointer flex items-center"
+                          onClick={() => {
+                            info.socials[itemIndex]['delete'] = true
+                          }}
+                        >
+                          <MinusCircleOutlined class="h-5 ml-4.5 w-5" />
+                        </div>
+                      )}
                       <div
                         class="cursor-pointer flex items-center"
                         onClick={() => {
-                          info.socials.splice(itemIndex, 1)
+                          info.socials.push({ socialType: 2, socialLink: '' })
                         }}
                       >
-                        <MinusCircleOutlined class="h-5 ml-4.5 w-5" />
+                        <AddCircleOutlined class="h-5 ml-4.5 w-5" />
                       </div>
-                    )}
-                    <div
-                      class="cursor-pointer flex items-center"
-                      onClick={() => {
-                        info.socials.push({ socialType: 2, socialLink: '' })
-                      }}
-                    >
-                      <AddCircleOutlined class="h-5 ml-4.5 w-5" />
                     </div>
+                    {item.socialType === 1 &&
+                      item.socialLink &&
+                      !validateEmail(item.socialLink) && (
+                        <div class="text-error ml-50">Please enter the correct email address</div>
+                      )}
                   </div>
-                  {item.socialType === 1 && item.socialLink && !validateEmail(item.socialLink) && (
-                    <div class="text-error ml-50">Please enter the correct email address</div>
-                  )}
-                </div>
-              ))}
+                ))}
             </div>
           )
         }
@@ -152,7 +157,8 @@ export default defineComponent({
           await services['startup@social-add-or-update']({
             startupID: this.startupId,
             hashTags: this.info.tags,
-            socials: this.info.socials
+            socials: this.info.socials.filter(e => !e.delete),
+            deletedSocials: this.info.socials.filter(e => e.delete).map(e => e.socialType)
           })
           this.loading = false
         }

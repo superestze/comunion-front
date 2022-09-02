@@ -178,15 +178,6 @@ export default defineComponent({
      */
     const handleSubmit = () => {
       this.form?.validate(async err => {
-        console.log({
-          startupId: this.startupId,
-          logo: this.info.logo,
-          cover: this.info.cover,
-          name: this.info.name,
-          mode: this.data.mode,
-          mission: this.info.mission,
-          overview: this.info.overview
-        })
         if (!err) {
           this.loading = true
           await services['startup@startup-basic-setting-update-new']({
@@ -227,7 +218,7 @@ export default defineComponent({
                 text="Startup Banner"
                 tip={() => (
                   <p class="text-white text-center u-body2">
-                    <p>Recommended：1380px*300px</p>
+                    <p>Recommended：1380px*210px</p>
                     <p>Max size：10MB</p>
                   </p>
                 )}

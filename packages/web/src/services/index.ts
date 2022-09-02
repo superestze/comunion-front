@@ -1170,6 +1170,7 @@ export const services = {
         name?: string
         image?: string
         description?: string
+        status?: number
         applyAt?: string
         address: string
         status: number
@@ -1357,6 +1358,10 @@ export const services = {
        * @description 最小存入金额
        */
       applicantDepositMinAmount?: number
+      /**
+       * @description 被批准申请者当前申请状态
+       */
+      approvedStatus?: number
       /**
        * @description 锁定
        */
@@ -2288,12 +2293,73 @@ export const services = {
     })
   },
 
-  'startup@change-comer-group'(
+  'governance@create-governace-setting'(args: {
+    startupId?: number
+    comerId?: number
+    title?: string
+    voteSymbol?: string
+    allowMember?: boolean
+    proposalThreshold?: number
+    proposalValidity?: number
+    strategies?: {
+      dictValue?: string
+      strategName?: string
+      chainId?: number
+      tokenContractAddress?: string
+      voteDecimals?: number
+      tokenMinBalance?: number
+    }[]
+    admins?: {
+      walletAddress?: string
+    }[]
+  }) {
+    return requestAdapter<{}>({
+      url: replacePath('/cores/governaces', args),
+      method: 'POST',
+      ...extract('POST', args, [], [])
+    })
+  },
+  'governance@create-proposal'(args: {
+    authorComerId: number
+    authorWalletAddress: string
+    chainId: number
+    blockNumber: number
+    releaseTimestamp: number
+    ipfsHash: string
+    title: string
+    startupId?: number
+    description?: string
+    discussionLink?: string
+    voteSystem: string
+    startTime: number
+    endTime: number
+    choices: {
+      itemName: string
+      seqNum: number
+    }[]
+  }) {
+    return requestAdapter<any>({
+      url: replacePath('/cores/proposals', args),
+      method: 'POST',
+      ...extract('POST', args, [], [])
+    })
+  },
+  'governance@delete-proposal'(args: { proposalID: any }) {
+    return requestAdapter<any>({
+      url: replacePath('/cores/proposals/:proposalID', args),
+      method: 'DELETE',
+      ...extract('DELETE', args, [], ['proposalID'])
+    })
+  },
+
+  'startup@change-comer-group-and-location'(
     args: {
       startupID: any
       groupID: any
       comerID: any
-    } & {}
+    } & {
+      location: string
+    }
   ) {
     return requestAdapter<
       {
@@ -2444,6 +2510,7 @@ export const services = {
         socialLink: string
         socialType: number
       }[]
+      deletedSocials?: number[]
     }
   ) {
     return requestAdapter<{}>({
@@ -2577,7 +2644,7 @@ export const services = {
         comerId: number
       }[]
     >({
-      url: replacePath('/cores/startups/group/:startupID/groups', args),
+      url: replacePath('/cores/startups/:startupID/groups', args),
       method: 'GET',
       ...extract('GET', args, [], ['startupID'])
     })
@@ -2586,22 +2653,35 @@ export const services = {
     args: {
       startupId: any
       groupID: any
+    } & {
+      /**
+       * @example 1
+       */
+      page: any
+      /**
+       * @example 10
+       */
+      limit: any
     } & {}
   ) {
-    return requestAdapter<
-      {
-        id: number
-        name: number
-        comerName: string
+    return requestAdapter<{
+      limit: number
+      page: number
+      totalPages: number
+      totalRows: number
+      rows: {
         comerAvatar: string
+        comerId: number
+        comerName: string
         groupId: number
         groupName: string
         joinedTime: string
+        startupId: number
       }[]
-    >({
+    }>({
       url: replacePath('/cores/startups/:startupId/group/:groupID/members', args),
       method: 'GET',
-      ...extract('GET', args, [], ['startupId', 'groupID'])
+      ...extract('GET', args, ['page', 'limit'], ['startupId', 'groupID'])
     })
   },
   'startup@startup-list-createdBy-comer'(args: { comerID: any }) {
@@ -3229,6 +3309,27 @@ export const services = {
     })
   },
 
+  'meta@dict-list-by-type'(args: {
+    /**
+     * @description governanceStrategy, voteSystem
+     * @example governanceStrategy
+     */
+    type: any
+  }) {
+    return requestAdapter<
+      {
+        dictType?: string
+        dictLabel?: string
+        dictValue?: string
+        seqNum?: number
+        remark?: string
+      }[]
+    >({
+      url: replacePath('/meta/dicts', args),
+      method: 'GET',
+      ...extract('GET', args, ['type'], [])
+    })
+  },
   'meta@image-list'(args: {
     /**
      * @description 0～100
