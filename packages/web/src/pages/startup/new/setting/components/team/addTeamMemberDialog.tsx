@@ -11,7 +11,6 @@ import {
   UModal
 } from '@comunion/components'
 import { defineComponent, reactive, ref, computed, inject, PropType, watch } from 'vue'
-import { GroupItem } from '../../../hooks/useGroup'
 import { services } from '@/services'
 
 export type editComerData = {
@@ -60,7 +59,8 @@ export default defineComponent({
       }
     )
 
-    const groups = inject<GroupItem[]>('group', [])
+    const groups = inject<any>('group')
+
     const groupsOption = computed(() => {
       return groups.value.map((item: { name: string; id: number }) => {
         return {
@@ -69,6 +69,7 @@ export default defineComponent({
         }
       })
     })
+
     const form = ref<FormInst>()
 
     const fields = computed<FormFactoryField[]>(() => [
