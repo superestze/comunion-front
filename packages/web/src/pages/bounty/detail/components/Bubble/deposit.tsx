@@ -16,13 +16,13 @@ export default defineComponent({
       if (props.depositInfo?.access === 1) {
         return () => (
           <div class="text-success u-card-title2 flex items-center">
-            +{props.depositInfo?.tokenAmount} UVU
+            +{props.depositInfo?.tokenAmount} USDC
           </div>
         )
       } else if (props.depositInfo?.access === 2) {
         return () => (
           <div class="text-warning u-card-title2 flex items-center">
-            -{props.depositInfo?.tokenAmount} UVU
+            -{props.depositInfo?.tokenAmount} USDC
           </div>
         )
       }
