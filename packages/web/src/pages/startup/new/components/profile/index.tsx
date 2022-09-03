@@ -77,7 +77,7 @@ export default defineComponent({
             />
           </div>
           <div class="flex items-center">
-            <p class="ml-46 u-h1">{this.name}</p>
+            <p class="ml-46 u-h2">{this.name}</p>
             {this.mode > 0 && (
               <UTag
                 class="h-5 ml-5 !u-body3-pure"

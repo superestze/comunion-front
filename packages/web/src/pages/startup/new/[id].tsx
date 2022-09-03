@@ -12,12 +12,14 @@ import { useStartup } from './hooks/useStartup'
 import Empty from '@/pages/comer/components/empty'
 
 export default defineComponent({
+  name: 'startupDetail',
   setup() {
     const loading = ref<boolean>(false)
     const systemTasks = ref<string[]>(['All', 'Bounty', 'Crowdfunding', 'Governance', 'Other dapp'])
     const startup = useStartup()
     const route = useRoute()
     startup.get(route.params.id as string)
+
     return {
       loading,
       systemTasks,
