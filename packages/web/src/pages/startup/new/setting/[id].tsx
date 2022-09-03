@@ -107,7 +107,10 @@ export default defineComponent({
               />
             )}
             {this.currentEditComponent === 'TEAM' && (
-              <Team startupId={this.startup?.id as unknown as string} />
+              <Team
+                startupId={this.startup?.id as unknown as string}
+                founderId={this.startup?.comerID}
+              />
             )}
             {this.currentEditComponent === 'SOCIAL' && (
               <Social
