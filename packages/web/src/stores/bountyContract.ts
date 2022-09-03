@@ -26,7 +26,7 @@ type BountyContract = GetFnReturnType<typeof useBountyContract>
 type BountyContractType = {
   bountyContractInfo: BountyContractInfoType
 }
-
+let cancel: () => void
 export const useBountyContractStore = defineStore('bountyContract', {
   state: (): BountyContractType => ({
     bountyContractInfo: {
@@ -57,10 +57,27 @@ export const useBountyContractStore = defineStore('bountyContract', {
       contract: BountyContract,
       bountyId: string,
       pollingInterval = false,
-      interval = 10000
+      interval = 5000,
+      reset = false
     ) {
       const getState = () => {
         return new Promise((resolve, reject) => {
+          if (reset) {
+            this.bountyContractInfo = {
+              bountyStatus: 0,
+              applicantCount: 0,
+              depositBalance: 0,
+              founderDepositAmount: 0,
+              applicantDepositAmount: 0,
+              applicantDepositMinAmount: 0,
+              approvedStatus: 0,
+              depositLock: false,
+              timeLock: 0,
+              role: 0,
+              myDepositAmount: 0,
+              status: 0
+            }
+          }
           if (this.dontContract) {
             services['bounty@bounty-state']({ bountyID: bountyId }).then(response => {
               const { error, data } = response
@@ -133,16 +150,20 @@ export const useBountyContractStore = defineStore('bountyContract', {
               this.bountyContractInfo.status = Number(response[10])
 
               resolve(response)
-              // console.log(this.bountyContractInfo, Number(ethers.utils.formatUnits(response[7], 0)))
+              console.log(this.bountyContractInfo, Number(ethers.utils.formatUnits(response[7], 0)))
             })
             .catch(err => reject(err))
         })
       }
       if (pollingInterval) {
-        useRequest(getState, {
+        if (cancel) {
+          cancel()
+        }
+        const res = useRequest(getState, {
           pollingInterval: interval,
           pollingWhenHidden: true
         })
+        cancel = res.cancel
       }
     }
   }
