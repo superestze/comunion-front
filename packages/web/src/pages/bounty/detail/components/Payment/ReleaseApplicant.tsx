@@ -35,7 +35,10 @@ export default defineComponent({
       if (!isSupport) {
         return
       }
-      const response = (await this.releaseMyDeposit('', '')) as unknown as BountyContractReturnType
+      const response = (await this.releaseMyDeposit(
+        'Waiting to submit all contents to blockchain for release my deposit',
+        'Release my deposit succeedes'
+      )) as unknown as BountyContractReturnType
       await services['bounty@bounty-release-my-deposit']({
         bountyID: this.$route.query.bountyId as string,
         chainID: this.chainId,

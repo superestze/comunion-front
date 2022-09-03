@@ -153,10 +153,10 @@ export default defineComponent({
       }
       if (formData.token1Symbol) {
         result.push({
-          title: 'Transaction hash',
+          title: 'Transaction Hash',
           name: 'transactionHash1',
           required: true,
-          placeholder: 'Transaction hash',
+          placeholder: 'Transaction Hash',
           rules: [
             {
               required: true,
@@ -170,10 +170,10 @@ export default defineComponent({
       }
       if (formData.token2Symbol) {
         result.push({
-          title: '',
+          title: `${formData.token2Symbol} Transaction Hash`,
           name: 'transactionHash2',
           required: true,
-          placeholder: 'Transaction hash',
+          placeholder: 'Transaction Hash',
           rules: [
             {
               required: true,
@@ -259,14 +259,13 @@ export default defineComponent({
       <UModal show={this.visible}>
         <UCard
           style="width: 600px"
-          title="Pay"
+          title="Payment"
           bordered={false}
           size="huge"
           role="dialog"
           aria-modal="true"
           closable
           onClose={triggerDialog}
-          class="pay-bounty-panel"
         >
           <>
             <UForm
@@ -278,10 +277,10 @@ export default defineComponent({
             </UForm>
             <div class="flex justify-end">
               <UButton class="mr-16px w-164px" type="default" onClick={userBehavier('cancel')}>
-                cancel
+                Cancel
               </UButton>
               <UButton class="w-164px" type="primary" onClick={userBehavier('submit')}>
-                submit
+                Submit
               </UButton>
             </div>
           </>

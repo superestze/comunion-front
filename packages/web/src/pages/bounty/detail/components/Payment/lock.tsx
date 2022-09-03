@@ -41,7 +41,10 @@ export default defineComponent({
       if (!isSupport) {
         return
       }
-      await this.unlock('', '')
+      await this.unlock(
+        'Waiting to submit all contents to blockchain for unlock',
+        'Unlock succeedes'
+      )
       const { error } = await services['bounty@bounty-applicants-unlock']({
         bountyID: parseInt(this.$route.query.bountyId as string)
       })
@@ -58,7 +61,7 @@ export default defineComponent({
       // if (this.gap < 0) {
       //   return
       // }
-      await this.lock('', '')
+      await this.lock('Waiting to submit all contents to blockchain for lock', 'Lock succeedes')
       services['bounty@bounty-applicant-lock']({
         bountyID: parseInt(this.$route.query.bountyId as string)
       })
@@ -82,7 +85,7 @@ export default defineComponent({
                   Cancel
                 </UButton>
                 <UButton type="primary" class="w-164px" size="small" onClick={handleUnLockDeposit}>
-                  Submit
+                  {this.depositLock ? 'Yes' : 'Submit'}
                 </UButton>
               </div>
             )

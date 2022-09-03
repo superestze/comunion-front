@@ -43,6 +43,10 @@ export default defineComponent({
       if (!isSupport) {
         return
       }
+      // await this.close(
+      //   'Waiting to submit all contents to blockchain for close bounty',
+      //   'Close bounty succeedes'
+      // )
       await this.close('', '')
       const { error } = await services['bounty@bounty-close']({
         bountyID: this.$route.query.bountyId as string

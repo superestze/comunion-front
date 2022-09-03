@@ -20,7 +20,7 @@ export const BOUNTY_TYPES_COLOR_MAP = [
     value: '#5331F4'
   },
   {
-    label: 'Work started',
+    label: 'Started working',
     value: '#00BFA5'
   },
   {

@@ -1034,7 +1034,7 @@ export const services = {
     return requestAdapter<{
       title?: string
       /**
-       * @description 1:Ready to work 2:Work started 3:Completed 4:Expired
+       * @description 1:Ready to work 2:Started working 3:Completed 4:Expired
        */
       status?: number
       applicantSkills?: string[]

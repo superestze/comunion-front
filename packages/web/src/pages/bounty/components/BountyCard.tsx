@@ -37,9 +37,10 @@ const StartupCard = defineComponent({
       getStartup(props.startup?.startupId)
       date.value = format(props.startup.createdTime, 'comunionTimeAgo')
     })
-    const color = BOUNTY_TYPES_COLOR_MAP.find(
-      (item: { label: string }) => item.label === props.startup.status
-    )
+    const color = BOUNTY_TYPES_COLOR_MAP.find((item: { label: string }) => {
+      const label = item.label == 'Started working' ? 'Work started' : item.label
+      return label === props.startup.status
+    })
 
     const handleCard = (bountyId: number) => () => {
       router.push(`/bounty/detail?bountyId=${bountyId}&from=0`)
