@@ -15,7 +15,7 @@ const TheHeader = defineComponent({
         url: '/startup/list'
       },
       {
-        name: 'opportunity',
+        name: 'marketplace',
         url: '/bounty/list',
         disabled: false
       },
