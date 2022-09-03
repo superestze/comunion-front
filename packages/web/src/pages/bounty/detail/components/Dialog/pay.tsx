@@ -70,6 +70,7 @@ export default defineComponent({
           t: 'custom',
           name: 'token1Amount',
           title: 'Pay amount',
+          required: true,
           formItemProps: {
             feedback: 'At least greater than 0 for new desposit',
             themeOverrides: {
