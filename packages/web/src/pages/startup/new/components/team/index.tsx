@@ -1,9 +1,9 @@
 import { UCard, ULazyImage } from '@comunion/components'
 import { defineComponent, computed, watch, ref, PropType } from 'vue'
-import { editComerData } from '../../setting/components/team/addTeamMemberDialog'
-import defaultAvatar from '../../setting/components/team/assets/avatar.png?url'
 import { BasicItem } from '@/components/ListItem'
 import LoadingBtn from '@/components/More/loading'
+import { editComerData } from '@/pages/startup/setting/components/team/addTeamMemberDialog'
+import defaultAvatar from '@/pages/startup/setting/components/team/assets/avatar.png?url'
 
 export default defineComponent({
   props: {
