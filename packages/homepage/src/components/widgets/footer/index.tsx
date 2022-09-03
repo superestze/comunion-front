@@ -64,6 +64,12 @@ export default defineComponent({
           title: 'Governance'
         },
         {
+          title: 'Combinator'
+        },
+        {
+          title: 'Capital'
+        },
+        {
           title: 'dAppstore'
         }
       ],
