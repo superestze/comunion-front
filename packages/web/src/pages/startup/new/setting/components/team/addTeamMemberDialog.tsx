@@ -122,7 +122,7 @@ export default defineComponent({
               startupId: this.startupId,
               comerId: this.comer.comerId,
               position: this.info.Roles,
-              groupId: this.comer.groupId || 0
+              groupId: this.info.Group || 0
             })
             if (!error) {
               console.warn('create success!')
