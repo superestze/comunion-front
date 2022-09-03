@@ -87,6 +87,14 @@ export default defineComponent({
                 {this.modeName}
               </UTag>
             )}
+            <div class="bg-[#EC53A4] rounded-2px text-white py-1 px-2.5">
+              <a href="https://google.com" target="_blank">
+                KYC
+              </a>
+            </div>
+            <div class="bg-primary rounded-2px text-white py-1 px-2.5">
+              <a>AUDIT</a>
+            </div>
           </div>
           {this.userIsFollow ? (
             <UButton

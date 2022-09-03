@@ -7,7 +7,6 @@ import Filter from './components/filter'
 import Finance from './components/finance'
 import Overview from './components/overview'
 import Profile from './components/profile'
-import Security from './components/security'
 import Team from './components/team'
 import { useStartup } from './hooks/useStartup'
 import Empty from '@/pages/comer/components/empty'
@@ -53,7 +52,6 @@ export default defineComponent({
         <div class="flex mb-20 gap-6">
           <div class="basis-1/3">
             <Overview content={this.startup?.overview || ''} />
-            <Security />
             <Finance />
             <Team />
             <Connection />
