@@ -1,3 +1,11 @@
 .rect-upload .n-upload-file-list {
   display: none;
 }
+
+.rect-upload-mask {
+  transition: opacity ease 0.3s;
+}
+
+.rect-upload:hover .rect-upload-mask {
+  opacity: 1;
+}

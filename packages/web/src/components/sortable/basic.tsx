@@ -5,7 +5,7 @@ import {
   SortIcon3Outlined,
   SortIcon4Outlined
 } from '@comunion/icons'
-import { defineComponent, ref } from 'vue'
+import { defineComponent, ref, watch, PropType } from 'vue'
 import draggable from 'vuedraggable'
 
 type SortItemType = {
@@ -20,39 +20,77 @@ type ListItemType = {
   icon: () => any
 }
 
+const initialData = [
+  {
+    name: 'Bounty',
+    text: '',
+    id: 2,
+    icon: () => <SortIcon1Outlined class="text-primary w-full" />
+  },
+  {
+    name: 'Crowdfunding',
+    text: '',
+    id: 3,
+    icon: () => <SortIcon2Outlined class="text-primary w-full" />
+  },
+  {
+    name: 'Governance',
+    text: '',
+    id: 4,
+    icon: () => <SortIcon3Outlined class="text-primary w-full" />
+  },
+  {
+    name: 'Other dapp',
+    text: '',
+    id: 5,
+    icon: () => <SortIcon4Outlined class="text-primary w-full" />
+  }
+]
+
 export default defineComponent({
+  name: 'Sortable',
+  props: {
+    modelValue: {
+      type: Object as PropType<number[]>
+    }
+  },
   components: {
     draggable
   },
-  setup() {
-    const list = ref<ListItemType[]>([
-      {
-        name: 'Bounty',
-        text: '',
-        id: 0,
-        icon: () => <SortIcon1Outlined class="w-full text-primary" />
+  emits: ['update:modelValue'],
+  setup(props, ctx) {
+    const list = ref<ListItemType[]>([...initialData])
+
+    const emitChange = () => {
+      ctx.emit(
+        'update:modelValue',
+        list.value.map(e => e.id)
+      )
+    }
+
+    watch(
+      () => props.modelValue,
+      propData => {
+        if (
+          Array.isArray(propData) &&
+          !propData.filter(e => [2, 3, 4, 5].indexOf(e) === -1).length
+        ) {
+          list.value = propData.map(index => {
+            return initialData[initialData.findIndex(e => e.id === index)]
+          })
+        } else {
+          console.warn(`init value is ignore`)
+        }
+        emitChange()
       },
       {
-        name: 'Crowdfunding',
-        text: '',
-        id: 1,
-        icon: () => <SortIcon2Outlined class="w-full text-primary" />
-      },
-      {
-        name: 'Governance',
-        text: '',
-        id: 2,
-        icon: () => <SortIcon3Outlined class="w-full text-primary" />
-      },
-      {
-        name: 'Other dapp',
-        text: '',
-        id: 3,
-        icon: () => <SortIcon4Outlined class="w-full text-primary" />
+        immediate: true
       }
-    ])
+    )
+
     return {
-      list
+      list,
+      emitChange
     }
   },
   render() {
@@ -64,27 +102,28 @@ export default defineComponent({
           class="w-full"
           handle=".handle"
           itemKey="name"
+          onEnd={this.emitChange}
           v-slots={{
             item: (data: SortItemType) => {
-              const { element, index } = data
-              console.log(element, index)
+              const { element } = data
+              // console.log(element, index)
               return (
                 <li
-                  class="w-full h-20 items-center flex justify-between rounded-6px bg-white mb-6"
+                  class="bg-white flex rounded-6px h-20 mb-6 w-full items-center justify-between"
                   style={{
                     boxShadow: '0px 2px 8px rgba(128, 145, 207, 0.1)'
                   }}
                 >
                   <div class="flex items-center">
                     <div
-                      class="w-12 h-12 flex items-center justify-center rounded-full mr-6 ml-4"
+                      class="rounded-full flex h-12 mr-6 ml-4 w-12 items-center justify-center"
                       style={{ backgroundColor: 'rgba(83, 49, 244, 0.1)' }}
                     >
                       {element.icon()}
                     </div>
                     <p class="u-title2">{element.name}</p>
                   </div>
-                  <div class="handle w-5 mr-8.5 cursor-pointer">
+                  <div class="cursor-pointer mr-8.5 w-5 handle">
                     <DragFilled class="w-full text-grey3" />
                   </div>
                 </li>

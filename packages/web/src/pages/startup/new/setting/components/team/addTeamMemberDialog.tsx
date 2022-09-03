@@ -1,4 +1,5 @@
 import {
+  USpin,
   FormFactoryField,
   FormInst,
   getFieldsRules,
@@ -9,51 +10,96 @@ import {
   ULazyImage,
   UModal
 } from '@comunion/components'
-import { defineComponent, reactive, ref, computed, PropType } from 'vue'
-import { SocialTypeList } from '@/constants'
-import { StartupItem } from '@/types'
+import { defineComponent, reactive, ref, computed, inject, PropType, watch } from 'vue'
+import defaultAvatar from './assets/avatar.png?url'
+import { services } from '@/services'
+
+export type editComerData = {
+  comerAvatar: string
+  comerId: number
+  comerName: string
+  joinedTime: string
+  position?: string
+  isNew?: boolean
+  groupId?: number
+  groupName?: string
+  startupId?: number
+}
 
 export default defineComponent({
+  name: 'addTeamMemberDialog',
   props: {
     visible: {
       type: Boolean,
       required: true
     },
     comer: {
-      type: Object as PropType<StartupItem>,
+      type: Object as PropType<editComerData>
+    },
+    startupId: {
+      type: [Number, String],
       required: true
     }
   },
-  setup() {
-    const info = reactive({})
+  setup(props) {
+    const loading = ref(false)
+
+    const info = reactive({
+      Roles: '',
+      Group: 0
+    })
+
+    watch(
+      () => props.comer,
+      propsComer => {
+        info.Roles = propsComer?.position || ''
+        info.Group = propsComer?.groupId || 0
+      },
+      {
+        immediate: true
+      }
+    )
+
+    const groups = inject<any>('group')
+
+    const groupsOption = computed(() => {
+      return groups.value.map((item: { name: string; id: number }) => {
+        return {
+          label: item.name,
+          value: item.id
+        }
+      })
+    })
 
     const form = ref<FormInst>()
 
     const fields = computed<FormFactoryField[]>(() => [
       {
-        t: 'select',
+        t: 'string',
         title: 'Roles',
-        name: 'type',
+        name: 'Roles',
         required: true,
-        placeholder: 'Select a social tool',
-        options: SocialTypeList
+        placeholder: 'Input a role',
+        maxlength: 50
       },
       {
         t: 'select',
         title: 'Group',
-        name: 'type',
-        placeholder: 'Select a social tool',
-        options: SocialTypeList
+        name: 'Group',
+        placeholder: 'Select a group',
+        options: groupsOption.value
       }
     ])
 
     return {
+      loading,
       info,
       form,
-      fields
+      fields,
+      startupId: props.startupId
     }
   },
-  emits: ['triggerDialog'],
+  emits: ['triggerDialog', 'triggerActionDone'],
   render() {
     const triggerDialog = () => {
       this.$emit('triggerDialog')
@@ -61,48 +107,86 @@ export default defineComponent({
 
     const userBehavier = (type: string) => () => {
       if (type === 'cancel') {
-        triggerDialog()
-        return
+        return triggerDialog()
       }
+
+      this.form?.validate(async err => {
+        if (!err) {
+          this.loading = true
+          if (!this.comer) {
+            return console.warn('this.comer is missing!')
+          }
+          if (this.comer.isNew) {
+            // create
+            const { error } = await services['startup@start-team-meabers-create']({
+              startupId: this.startupId,
+              comerId: this.comer.comerId,
+              position: this.info.Roles,
+              groupId: this.comer.groupId || 0
+            })
+            if (!error) {
+              console.warn('create success!')
+            }
+          } else {
+            // edit
+            const { error } = await services['startup@change-comer-group-and-position']({
+              startupID: this.startupId,
+              groupID: this.info.Group,
+              comerID: this.comer.comerId,
+              position: this.info.Roles
+            })
+            if (!error) {
+              console.warn('edit success!')
+            }
+          }
+
+          this.loading = false
+          this.$emit('triggerActionDone')
+          triggerDialog()
+        }
+      })
     }
     const rules = getFieldsRules(this.fields)
+
     return (
       <UModal show={this.visible}>
-        <UCard
-          style="width: 600px"
-          title="Team Setting"
-          bordered={false}
-          size="huge"
-          role="dialog"
-          aria-modal="true"
-          closable
-          onClose={userBehavier('cancel')}
-        >
-          <>
-            <div class="flex h-21 items-center bg-[#f6f6f6] rounded-8px mb-6 mt-7.5">
-              <div class="w-15 h-15 mx-4">
-                <ULazyImage class="w-full" src={this.comer.logo} />
+        <USpin show={this.loading}>
+          <UCard
+            style="width: 600px"
+            title="Team Setting"
+            bordered={false}
+            size="huge"
+            role="dialog"
+            aria-modal="true"
+            closable
+            onClose={userBehavier('cancel')}
+          >
+            <>
+              <div class="flex bg-[#f6f6f6] rounded-8px h-21 mt-7.5 mb-6 items-center">
+                <div class="h-15 mx-4 w-15">
+                  <ULazyImage class="w-full" src={this.comer?.comerAvatar || defaultAvatar} />
+                </div>
+                <p class="u-title1">{this.comer?.comerName}</p>
               </div>
-              <p class="u-title1">{this.comer.name}</p>
-            </div>
-            <UForm rules={rules} model={this.info} ref={(ref: any) => (this.form = ref)}>
-              <UFormItemsFactory fields={this.fields} values={this.info} />
-            </UForm>
-            <div class="flex justify-end mt-40px">
-              <UButton
-                class="w-40 mr-4"
-                type="default"
-                onClick={userBehavier('cancel')}
-                size="small"
-              >
-                Cancel
-              </UButton>
-              <UButton class="w-40" type="primary" onClick={userBehavier('submit')} size="small">
-                Submit
-              </UButton>
-            </div>
-          </>
-        </UCard>
+              <UForm rules={rules} model={this.info} ref={(ref: any) => (this.form = ref)}>
+                <UFormItemsFactory fields={this.fields} values={this.info} />
+              </UForm>
+              <div class="flex mt-40px justify-end">
+                <UButton
+                  class="mr-4 w-40"
+                  type="default"
+                  onClick={userBehavier('cancel')}
+                  size="small"
+                >
+                  Cancel
+                </UButton>
+                <UButton class="w-40" type="primary" onClick={userBehavier('submit')} size="small">
+                  Submit
+                </UButton>
+              </div>
+            </>
+          </UCard>
+        </USpin>
       </UModal>
     )
   }

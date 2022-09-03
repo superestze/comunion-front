@@ -871,8 +871,8 @@ export const services = {
       image?: string
       name?: string
       applicantsSkills?: string[]
-      comerID: number
       address: string
+      comerID: number
     }>({
       url: replacePath('/bounty/{bountyID}/approved', args),
       method: 'GET',
@@ -1169,9 +1169,9 @@ export const services = {
         name?: string
         image?: string
         description?: string
+        status?: number
         applyAt?: string
         address: string
-        status: number
       }[]
     >({
       url: replacePath('/bounty/{bountyID}/applicants', args),
@@ -1349,13 +1349,13 @@ export const services = {
        */
       applicantDepositAmount?: number
       /**
-       * @description 被批准申请者当前申请状态
-       */
-      approvedStatus?: number
-      /**
        * @description 最小存入金额
        */
       applicantDepositMinAmount?: number
+      /**
+       * @description 被批准申请者当前申请状态
+       */
+      approvedStatus?: number
       /**
        * @description 锁定
        */
@@ -2287,12 +2287,73 @@ export const services = {
     })
   },
 
-  'startup@change-comer-group'(
+  'governance@create-governace-setting'(args: {
+    startupId?: number
+    comerId?: number
+    title?: string
+    voteSymbol?: string
+    allowMember?: boolean
+    proposalThreshold?: number
+    proposalValidity?: number
+    strategies?: {
+      dictValue?: string
+      strategName?: string
+      chainId?: number
+      tokenContractAddress?: string
+      voteDecimals?: number
+      tokenMinBalance?: number
+    }[]
+    admins?: {
+      walletAddress?: string
+    }[]
+  }) {
+    return requestAdapter<{}>({
+      url: replacePath('/cores/governaces', args),
+      method: 'POST',
+      ...extract('POST', args, [], [])
+    })
+  },
+  'governance@create-proposal'(args: {
+    authorComerId: number
+    authorWalletAddress: string
+    chainId: number
+    blockNumber: number
+    releaseTimestamp: number
+    ipfsHash: string
+    title: string
+    startupId?: number
+    description?: string
+    discussionLink?: string
+    voteSystem: string
+    startTime: number
+    endTime: number
+    choices: {
+      itemName: string
+      seqNum: number
+    }[]
+  }) {
+    return requestAdapter<any>({
+      url: replacePath('/cores/proposals', args),
+      method: 'POST',
+      ...extract('POST', args, [], [])
+    })
+  },
+  'governance@delete-proposal'(args: { proposalID: any }) {
+    return requestAdapter<any>({
+      url: replacePath('/cores/proposals/:proposalID', args),
+      method: 'DELETE',
+      ...extract('DELETE', args, [], ['proposalID'])
+    })
+  },
+
+  'startup@change-comer-group-and-position'(
     args: {
       startupID: any
       groupID: any
       comerID: any
-    } & {}
+    } & {
+      position: string
+    }
   ) {
     return requestAdapter<
       {
@@ -2434,24 +2495,19 @@ export const services = {
       ...extract('DELETE', args, [], ['groupID'])
     })
   },
-  'startup@social-add-or-update'(args: { startupID: any }) {
-    return requestAdapter<{
-      /**
-   * @description 	1-SocialEmail 
-	2-SocialWebsite
-	3-SocialTwitter
-	4-SocialDiscord
-	5-SocialTelegram
-	6-SocialMedium
-	7-SocialFacebook
-	8-SocialLinktre
-     */
-      socialType: number
-      /**
-       * @description 为空表示删除值
-       */
-      socialLink?: string
-    }>({
+  'startup@social-add-or-update'(
+    args: {
+      startupID: any
+    } & {
+      hashTags?: string[]
+      socials?: {
+        socialLink: string
+        socialType: number
+      }[]
+      deletedSocials?: number[]
+    }
+  ) {
+    return requestAdapter<{}>({
       url: replacePath('/cores/startups/:startupID/social', args),
       method: 'POST',
       ...extract('POST', args, [], ['startupID'])
@@ -2582,30 +2638,45 @@ export const services = {
         comerId: number
       }[]
     >({
-      url: replacePath('/cores/startups/group/:startupID/groups', args),
+      url: replacePath('/cores/startups/:startupID/groups', args),
       method: 'GET',
       ...extract('GET', args, [], ['startupID'])
     })
   },
   'startup@startup-group-member-list'(
     args: {
+      startupId: any
       groupID: any
+    } & {
+      /**
+       * @example 1
+       */
+      page: any
+      /**
+       * @example 10
+       */
+      limit: any
     } & {}
   ) {
-    return requestAdapter<
-      {
-        id: number
-        name: number
-        comerName: string
+    return requestAdapter<{
+      limit: number
+      page: number
+      totalPages: number
+      totalRows: number
+      rows: {
         comerAvatar: string
+        comerId: number
+        comerName: string
         groupId: number
         groupName: string
         joinedTime: string
+        startupId: number
+        position: string
       }[]
-    >({
-      url: replacePath('/cores/startups/group/:groupID/members', args),
+    }>({
+      url: replacePath('/cores/startups/:startupId/group/:groupID/members', args),
       method: 'GET',
-      ...extract('GET', args, [], ['groupID'])
+      ...extract('GET', args, ['page', 'limit'], ['startupId', 'groupID'])
     })
   },
   'startup@startup-list-createdBy-comer'(args: { comerID: any }) {
@@ -2941,6 +3012,7 @@ export const services = {
       comerId: any
     } & {
       position: string
+      groupId: number
     }
   ) {
     return requestAdapter<{}>({
@@ -3233,6 +3305,27 @@ export const services = {
     })
   },
 
+  'meta@dict-list-by-type'(args: {
+    /**
+     * @description governanceStrategy, voteSystem
+     * @example governanceStrategy
+     */
+    type: any
+  }) {
+    return requestAdapter<
+      {
+        dictType?: string
+        dictLabel?: string
+        dictValue?: string
+        seqNum?: number
+        remark?: string
+      }[]
+    >({
+      url: replacePath('/meta/dicts', args),
+      method: 'GET',
+      ...extract('GET', args, ['type'], [])
+    })
+  },
   'meta@image-list'(args: {
     /**
      * @description 0～100

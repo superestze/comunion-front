@@ -1,26 +1,74 @@
-import { UButton } from '@comunion/components'
-import { defineComponent } from 'vue'
+import { UButton, USpin } from '@comunion/components'
+import { PropType, defineComponent, ref, watch } from 'vue'
 import { BasicSortable } from '@/components/sortable'
+import { services } from '@/services'
+
+type DataType = {
+  tabSequence: number[]
+}
 
 export default defineComponent({
+  props: {
+    data: {
+      type: Object as PropType<DataType>,
+      required: true
+    },
+    startupId: {
+      type: String,
+      required: true
+    }
+  },
+  setup(props) {
+    const loading = ref(false)
+
+    const list = ref<number[]>(props.data.tabSequence)
+    watch(
+      () => props.data,
+      data => {
+        list.value = data.tabSequence
+      }
+    )
+
+    const handleSort = (items: number[]) => {
+      console.warn(items)
+      list.value = items
+    }
+
+    return {
+      loading,
+      list,
+      handleSort
+    }
+  },
   render() {
-    const handleSubmit = () => {
-      // todo
+    const handleSubmit = async () => {
+      if (!this.startupId) {
+        return console.warn(`this.startupId is missing!`)
+      }
+      // loading
+      this.loading = true
+      await services['startup@update-sequnce']({
+        startupID: this.startupId,
+        tabs: this.list
+      })
+      this.loading = false
     }
     return (
-      <div class="bg-white rounded-lg border mb-6 relative overflow-hidden min-h-205.5">
-        <div class="mx-10 my-9.5">
-          <h3 class="u-h3 mb-10">
-            Show each activities in startup detail according to the following sequence
-          </h3>
-          <BasicSortable />
-          <div class="flex mt-10 items-center justify-end">
-            <UButton class="w-30" type="primary" size="small" onClick={handleSubmit}>
-              Save
-            </UButton>
+      <USpin show={this.loading}>
+        <div class="bg-white border rounded-lg mb-6 min-h-205.5 relative overflow-hidden">
+          <div class="my-9.5 mx-10">
+            <h3 class="mb-10 u-h3">
+              Show each activities in startup detail according to the following sequence
+            </h3>
+            <BasicSortable v-model={this.list} />
+            <div class="flex mt-10 items-center justify-end">
+              <UButton class="w-30" type="primary" size="small" onClick={handleSubmit}>
+                Save
+              </UButton>
+            </div>
           </div>
         </div>
-      </div>
+      </USpin>
     )
   }
 })
