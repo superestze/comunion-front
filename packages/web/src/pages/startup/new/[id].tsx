@@ -74,7 +74,7 @@ export default defineComponent({
                 contractAudit={this.startup?.contractAudit || ''}
               />
             )}
-            <Finance />
+            <Finance startup={this.startup} />
             <Team
               members={
                 this.startup?.members.map(member => {

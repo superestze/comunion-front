@@ -15,10 +15,11 @@ export default defineComponent({
 
     onMounted(() => {
       setTimeout(() => {
-        if (pRef.value.scrollHeight > 164) {
+        console.log(pRef.value.scrollHeight)
+        if (pRef.value.scrollHeight > 162) {
           showMoreBtn.value = true
         }
-      }, 1000)
+      }, 500)
     })
 
     const fold = ref<boolean>(true)
@@ -37,13 +38,13 @@ export default defineComponent({
         {this.content.trim() === '' ? null : (
           <UCard title="OVERVIEW" class="mb-6">
             <div
-              class="overflow-hidden transition-all duration-1000 ease-linear"
-              style={{ height: this.fold ? '164px' : 'auto' }}
+              class="transition-all ease-linear duration-1000 overflow-hidden"
+              style={{ height: this.fold ? '162px' : 'auto' }}
             >
-              <p ref={(ref: any) => (this.pRef = ref)} v-html={this.content} />
+              <p class="u-body2" ref={(ref: any) => (this.pRef = ref)} v-html={this.content} />
             </div>
             {this.showMoreBtn && (
-              <div class="flex justify-center mt-5">
+              <div class="flex mt-5 justify-center">
                 <More onMore={handleMore} fold={this.fold} />
               </div>
             )}
