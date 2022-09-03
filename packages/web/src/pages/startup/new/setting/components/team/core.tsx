@@ -78,15 +78,11 @@ export default defineComponent({
     // member edit
     const editMemberProfile = ref<editComerData>()
     const editMemberVisible = ref(false)
+    const refreshMark = ref(true)
     const updateMemberList = () => {
-      const backup = currentGroup.value
-      if (backup === 0) {
-        currentGroup.value = 1
-      } else {
-        currentGroup.value = 0
-      }
+      refreshMark.value = false
       setTimeout(() => {
-        currentGroup.value = backup
+        refreshMark.value = true
       })
     }
 
@@ -132,7 +128,8 @@ export default defineComponent({
       editMemberVisible,
       updateMemberList,
       handleCreateComer,
-      handleMemberAction
+      handleMemberAction,
+      refreshMark
     }
   },
   render() {
@@ -180,47 +177,49 @@ export default defineComponent({
               onTriggerUpdate={this.updateGroupList}
             />
           </div>
-          <UPaginatedList
-            service={this.dataService}
-            children={({ dataSource: list }: { dataSource: ListType }) => {
-              return (
-                <div class="flex flex-col">
-                  {list.map(item => (
-                    <div
-                      class={`rounded-6px flex justify-between items-center cursor-pointer ${module['list-hover']}`}
-                    >
-                      <div class="flex m-4 w-1/2 items-center">
-                        <div class="bg-light-700 rounded-1/2 h-15 w-15">
-                          <ULazyImage class="w-full" src={item.comerAvatar || defaultAvatar} />
+          {this.refreshMark && (
+            <UPaginatedList
+              service={this.dataService}
+              children={({ dataSource: list }: { dataSource: ListType }) => {
+                return (
+                  <div class="flex flex-col">
+                    {list.map(item => (
+                      <div
+                        class={`rounded-6px flex justify-between items-center cursor-pointer ${module['list-hover']}`}
+                      >
+                        <div class="flex m-4 w-1/2 items-center">
+                          <div class="bg-light-700 rounded-1/2 h-15 w-15">
+                            <ULazyImage class="w-full" src={item.comerAvatar || defaultAvatar} />
+                          </div>
+                          <div class="flex flex-col ml-6">
+                            <p class="font-orbitron u-title2">{item.comerName}</p>
+                            <p class="font-400 mt-1 text-12px text-grey1 truncate ">
+                              {/* {item.groupName && <span class="mr-2">{item.groupName}</span>} */}
+                              <span>{item.position || ''}</span>
+                            </p>
+                          </div>
                         </div>
-                        <div class="flex flex-col ml-6">
-                          <p class="font-orbitron u-title2">{item.comerName}</p>
-                          <p class="font-400 mt-1 text-12px text-grey1 truncate ">
-                            {item.groupName && <span class="mr-2">{item.groupName}</span>}
-                            <span>{item.position || ''}</span>
-                          </p>
-                        </div>
-                      </div>
 
-                      <div class="text-grey3 u-body2">
-                        Join {dayjs(item.joinedTime).format('MMMM D, YYYY')}
+                        <div class="text-grey3 u-body2">
+                          Join {dayjs(item.joinedTime).format('MMMM D, YYYY')}
+                        </div>
+                        <p class="flex mr-9 text-grey3 change">
+                          <PenOutlined
+                            class=" h-4 mr-4.5 w-4 hover:text-[#5331F4]"
+                            onClick={() => this.handleMemberAction('edit', item)}
+                          />
+                          <DeleteFilled
+                            class=" h-4 w-4 hover:text-[#5331F4]"
+                            onClick={() => this.handleMemberAction('del', item)}
+                          />
+                        </p>
                       </div>
-                      <p class="flex mr-9 text-grey3 change">
-                        <PenOutlined
-                          class=" h-4 mr-4.5 w-4 hover:text-[#5331F4]"
-                          onClick={() => this.handleMemberAction('edit', item)}
-                        />
-                        <DeleteFilled
-                          class=" h-4 w-4 hover:text-[#5331F4]"
-                          onClick={() => this.handleMemberAction('del', item)}
-                        />
-                      </p>
-                    </div>
-                  ))}
-                </div>
-              )
-            }}
-          />
+                    ))}
+                  </div>
+                )
+              }}
+            />
+          )}
         </div>
       </div>
     )
