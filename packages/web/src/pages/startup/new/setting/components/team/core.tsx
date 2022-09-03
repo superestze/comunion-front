@@ -19,6 +19,9 @@ export default defineComponent({
     startupId: {
       type: [String, Number],
       required: true
+    },
+    founderId: {
+      type: Number
     }
   },
   setup(props) {
@@ -119,6 +122,7 @@ export default defineComponent({
 
     return {
       startupId: props.startupId,
+      founderId: props.founderId,
       group: groupList,
       dataService,
       addGroupVisible,
@@ -203,15 +207,17 @@ export default defineComponent({
                         <div class="text-grey3 u-body2">
                           Join {dayjs(item.joinedTime).format('MMMM D, YYYY')}
                         </div>
-                        <p class="flex mr-9 text-grey3 change">
+                        <p class="mr-9 text-grey3 w-15 change">
                           <PenOutlined
                             class=" h-4 mr-4.5 w-4 hover:text-[#5331F4]"
                             onClick={() => this.handleMemberAction('edit', item)}
                           />
-                          <DeleteFilled
-                            class=" h-4 w-4 hover:text-[#5331F4]"
-                            onClick={() => this.handleMemberAction('del', item)}
-                          />
+                          {this.founderId !== item.comerId && (
+                            <DeleteFilled
+                              class=" h-4 w-4 hover:text-[#5331F4]"
+                              onClick={() => this.handleMemberAction('del', item)}
+                            />
+                          )}
                         </p>
                       </div>
                     ))}
