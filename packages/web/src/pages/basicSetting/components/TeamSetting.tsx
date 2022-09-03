@@ -86,7 +86,8 @@ const TeamSetting = defineComponent({
       const { data } = await services['startup@start-team-meabers-update']({
         startupId: paramsList.value.id,
         comerId: val.comerId,
-        position: val.roles
+        position: val.roles,
+        groupId: val.groupId
       })
       if (!data) {
         message.success('Role modified successfully!')
