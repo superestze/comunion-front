@@ -2308,7 +2308,7 @@ export const services = {
     }[]
   }) {
     return requestAdapter<{}>({
-      url: replacePath('/cores/governaces', args),
+      url: replacePath('/cores/governace-setting', args),
       method: 'POST',
       ...extract('POST', args, [], [])
     })
@@ -2343,6 +2343,251 @@ export const services = {
       url: replacePath('/cores/proposals/:proposalID', args),
       method: 'DELETE',
       ...extract('DELETE', args, [], ['proposalID'])
+    })
+  },
+  'governance@get-proposal-detail'(
+    args: {
+      proposalID: any
+    } & {
+      authorComerId: number
+      authorWalletAddress: string
+      chainId: number
+      blockNumber: number
+      releaseTimestamp: number
+      ipfsHash: string
+      title: string
+      startupId?: number
+      description?: string
+      discussionLink?: string
+      voteSystem: string
+      startTime: number
+      endTime: number
+      choices: {
+        itemName: string
+        seqNum: number
+      }[]
+    }
+  ) {
+    return requestAdapter<{
+      proposalId: number
+      startupId: number
+      startupLogo: string
+      startupName: string
+      authorComerId: number
+      authorWalletAddress: string
+      title: string
+      description: string
+      status: number
+      startTime: string
+      endTime: string
+      choices: {
+        choiceId: number
+        itemName: string
+        seqNum: number
+      }[]
+      choiceVoteInfos: {
+        choiceId: number
+        itemName: string
+        votes: number
+        percent: number
+      }[]
+      totalVotes: number
+      strategies: {
+        strategyId: number
+        strategyName: string
+        dictValue: string
+        chainId: number
+        tokenContractAddress: string
+        voteSymbol: string
+        voteDecimals: number
+        tokenMinBalance: number
+      }[]
+    }>({
+      url: replacePath('/cores/proposals/:proposalID', args),
+      method: 'GET',
+      ...extract('GET', args, [], ['proposalID'])
+    })
+  },
+  'governance@proposal-list-by-startup'(
+    args: {
+      startupId: any
+    } & {
+      page: number
+      limit: string
+    }
+  ) {
+    return requestAdapter<{
+      limit: number
+      page: number
+      totalPages: number
+      totalRows: number
+      rows: {
+        proposalId: number
+        startupId: number
+        startupLogo: string
+        startupName: string
+        authorComerId: number
+        authorWalletAddress: string
+        title: string
+        description: string
+        /**
+         * @description 0-pending,1-upcoming,2-active,3-ended,4-invalid
+         */
+        status: number
+        startTime: string
+        endTime: string
+        maximumVotesChoice?: string
+        maximumVotesChoiceId?: number
+        votes?: number
+        invalidResult?: string
+      }[]
+    }>({
+      url: replacePath('/cores/proposals/startup/:startupId', args),
+      method: 'POST',
+      ...extract('POST', args, [], ['startupId'])
+    })
+  },
+  'governance@proposal-list-of-comer-participated'(
+    args: {
+      comerID: any
+    } & {
+      page: number
+      limit: string
+    }
+  ) {
+    return requestAdapter<{
+      limit: number
+      page: number
+      totalPages: number
+      totalRows: number
+      rows: {
+        proposalId: number
+        startupId: number
+        startupLogo: string
+        startupName: string
+        authorComerId: number
+        authorWalletAddress: string
+        title: string
+        description: string
+        /**
+         * @description 0-pending,1-upcoming,2-active,3-ended,4-invalid
+         */
+        status: number
+        startTime: string
+        endTime: string
+        maximumVotesChoice?: string
+        maximumVotesChoiceId?: number
+        votes?: number
+        invalidResult?: string
+      }[]
+    }>({
+      url: replacePath('/cores/proposals/comer/:comerID/participate', args),
+      method: 'POST',
+      ...extract('POST', args, [], ['comerID'])
+    })
+  },
+  'governance@proposal-list-of-comer-posted'(
+    args: {
+      comerID: any
+    } & {
+      page: number
+      limit: string
+    }
+  ) {
+    return requestAdapter<{
+      limit: number
+      page: number
+      totalPages: number
+      totalRows: number
+      rows: {
+        proposalId: number
+        startupId: number
+        startupLogo: string
+        startupName: string
+        authorComerId: number
+        authorWalletAddress: string
+        title: string
+        description: string
+        /**
+         * @description 0-pending,1-upcoming,2-active,3-ended,4-invalid
+         */
+        status: number
+        startTime: string
+        endTime: string
+        maximumVotesChoice?: string
+        maximumVotesChoiceId?: number
+        votes?: number
+        invalidResult?: string
+      }[]
+    }>({
+      url: replacePath('/cores/proposals/comer/:comerID/post', args),
+      method: 'POST',
+      ...extract('POST', args, [], ['comerID'])
+    })
+  },
+  'governance@proposal-vote-record-list'(args: { limit: number; page: number }) {
+    return requestAdapter<{
+      limit: number
+      page: number
+      totalPages: number
+      totalRows: number
+      rows: {
+        proposalId: number
+        voterComerId: number
+        voterWalletAddress: string
+        choiceItemId: number
+        itemName: string
+        vote: number
+        ipfsHash: string
+      }[]
+    }>({
+      url: replacePath('/cores/proposals/vote-records', args),
+      method: 'POST',
+      ...extract('POST', args, [], [])
+    })
+  },
+  'governance@public-list'(args: { page: number; limit: string; states?: number[] }) {
+    return requestAdapter<{
+      limit: number
+      page: number
+      totalPages: number
+      totalRows: number
+      rows: {
+        proposalId: number
+        startupId: number
+        startupLogo: string
+        startupName: string
+        authorComerId: number
+        authorWalletAddress: string
+        title: string
+        description: string
+        /**
+         * @description 0-pending,1-upcoming,2-active,3-ended,4-invalid
+         */
+        status: number
+        startTime: string
+        endTime: string
+        maximumVotesChoice?: string
+        maximumVotesChoiceId?: number
+        votes?: number
+        invalidResult?: string
+      }[]
+    }>({
+      url: replacePath('/cores/proposals/public-list', args),
+      method: 'POST',
+      ...extract('POST', args, [], [])
+    })
+  },
+  'governance@vote-proposal'(args: { proposalID: any }) {
+    return requestAdapter<{
+      choiceItemId: number
+      voterWalletAddress: string
+      vote: number
+      ipfsHash: string
+    }>({
+      url: replacePath('/cores/proposal/:proposalID/vote', args),
+      method: 'POST',
+      ...extract('POST', args, [], ['proposalID'])
     })
   },
 
@@ -3027,6 +3272,7 @@ export const services = {
       comerId: any
     } & {
       position: string
+      groupId: number
     }
   ) {
     return requestAdapter<{}>({
