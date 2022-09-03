@@ -11,7 +11,7 @@ import {
   USelect
 } from '@comunion/components'
 import { AddCircleOutlined, MinusCircleOutlined } from '@comunion/icons'
-import { defineComponent, ref, reactive, PropType } from 'vue'
+import { defineComponent, ref, reactive, PropType, watch } from 'vue'
 import { contactList } from './util'
 import { services } from '@/services'
 import { validateEmail } from '@/utils/type'
@@ -28,6 +28,7 @@ type DataType = {
 }
 
 export default defineComponent({
+  name: 'socialSetting',
   props: {
     data: {
       type: Object as PropType<DataType>,
@@ -42,6 +43,18 @@ export default defineComponent({
 
     const info = reactive<DataType>(props.data)
 
+    watch(
+      () => info,
+      () => {
+        if (!info.socials.filter(e => !e.delete).length) {
+          info.socials.push({ socialType: 1, socialLink: '' })
+        }
+      },
+      {
+        immediate: true
+      }
+    )
+
     // 1-SocialEmail  	2-SocialWebsite 	3-SocialTwitter 	4-SocialDiscord 	5-SocialTelegram 	6-SocialMedium 	7-SocialFacebook 	8-SocialLinktre
     const contactOptions = ref(contactList)
     const fields: FormFactoryField[] = [
@@ -54,31 +67,32 @@ export default defineComponent({
       {
         t: 'custom',
         title: 'Social',
-        name: 'social',
+        name: 'socials',
         rules: [
           {
             required: true,
             validator: (rule, value: SocialType[]) => {
-              return value && !!value.find(item => !!item.socialLink)
+              return !!value.find(item => !!item.socialLink && !item.delete)
             },
             message: 'Please enter at least one contact information',
             trigger: 'blur'
           },
           {
             validator: (rule, value: SocialType[]) => {
-              if (Array.isArray(value)) {
-                for (const item of value) {
+              const items = value.filter(item => !item.delete && !!item.socialLink)
+              if (items.length) {
+                for (const item of items) {
                   if (item.socialType === 1 && !validateEmail(item.socialLink)) {
                     return false
                   } else {
-                    return true
+                    return !!item.socialLink.trim()
                   }
                 }
               }
 
               return true
             },
-            message: '',
+            message: 'Please enter contact information',
             trigger: 'blur'
           }
         ],

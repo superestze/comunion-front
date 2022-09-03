@@ -113,7 +113,7 @@ export default defineComponent({
               <Social
                 data={{
                   tags: this.startup?.hashTags.map(e => e.name) || [],
-                  socials: this.getContactList(this.startup || { socialType: 1, socialLink: '' })
+                  socials: this.getContactList(this.startup || {})
                 }}
                 startupId={this.route.params.id as string}
               />
