@@ -11,6 +11,7 @@ import Menu from './components/menu'
 import Security from './components/security'
 import Sequence from './components/sequence'
 import Social from './components/social'
+import { contactList } from './components/social/util'
 import { Team } from './components/team'
 
 export default defineComponent({
@@ -20,10 +21,25 @@ export default defineComponent({
     const startup = useStartup()
     const route = useRoute()
     startup.get(route.params.id as string)
+
+    const getContactList = (startupInfo: { [x: string]: any }) => {
+      return contactList
+        .map(item => {
+          const value = startupInfo[item.name]
+          return {
+            socialType: value ? item.value : 0,
+            socialLink: value
+          }
+        })
+        .filter(e => e.socialType !== 0)
+    }
+
     return {
       loading,
       currentEditComponent,
-      startup: startup.detail
+      startup: startup.detail,
+      route,
+      getContactList
     }
   },
   render() {
@@ -46,7 +62,7 @@ export default defineComponent({
             </span>
           </UBreadcrumbItem>
         </UBreadcrumb>
-        <div class="flex gap-6 mb-20">
+        <div class="flex mb-20 gap-6">
           <div class="basis-1/4">
             <Menu onRouterChange={handleRouterChange} />
           </div>
@@ -55,12 +71,14 @@ export default defineComponent({
               <Info
                 data={{
                   logo: this.startup?.logo || '',
+                  cover: this.startup?.cover || '',
                   name: this.startup?.name || '',
                   mode: this.startup?.mode || 0,
                   mission: this.startup?.mission || '',
                   overview: this.startup?.overview || '',
                   blockChainAddress: this.startup?.blockChainAddress || ''
                 }}
+                startupId={this.route.params.id as string}
               />
             )}
             {this.currentEditComponent === 'SECURITY' && (
@@ -69,6 +87,7 @@ export default defineComponent({
                   kyc: this.startup?.kyc || '',
                   contractAudit: this.startup?.contractAudit || ''
                 }}
+                startupId={this.route.params.id as string}
               />
             )}
             {this.currentEditComponent === 'FINANCE' && (
@@ -84,6 +103,7 @@ export default defineComponent({
                   totalSupply: this.startup?.totalSupply || 0,
                   wallets: this.startup?.wallets || []
                 }}
+                startupId={this.route.params.id as string}
               />
             )}
             {this.currentEditComponent === 'TEAM' && (
@@ -92,14 +112,24 @@ export default defineComponent({
             {this.currentEditComponent === 'SOCIAL' && (
               <Social
                 data={{
-                  tags: ['123'],
-                  contacts: [{ type: 1, value: '123' }]
+                  tags: this.startup?.hashTags.map(e => e.name) || [],
+                  socials: this.getContactList(this.startup || {})
                 }}
+                startupId={this.route.params.id as string}
               />
             )}
-            {this.currentEditComponent === 'GOVERNANCE' && <Governance />}
-            {this.currentEditComponent === 'SEQUENCE' && <Sequence />}
-            {this.currentEditComponent === 'DAPP' && <Dapp />}
+            {this.currentEditComponent === 'GOVERNANCE' && (
+              <Governance startupId={this.route.params.id as string} />
+            )}
+            {this.currentEditComponent === 'SEQUENCE' && (
+              <Sequence
+                data={{ tabSequence: this.startup?.tabSequence || [] }}
+                startupId={this.route.params.id as string}
+              />
+            )}
+            {this.currentEditComponent === 'DAPP' && (
+              <Dapp startupId={this.route.params.id as string} />
+            )}
           </div>
         </div>
       </USpin>

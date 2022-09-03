@@ -17,7 +17,7 @@ export default defineComponent({
       default: () => 0
     }
   },
-  async setup() {
+  setup() {
     const visible = ref<boolean>(false)
     const { bountyContract, chainId } = useBountyContractWrapper()
     const { release } = bountyContract
@@ -50,7 +50,10 @@ export default defineComponent({
       if (!isSupport) {
         return
       }
-      const response = (await this.release('', '')) as unknown as BountyContractReturnType
+      const response = (await this.release(
+        'Waiting to submit all contents to blockchain for release',
+        'Release succeedes'
+      )) as unknown as BountyContractReturnType
       const { error } = await services['bounty@bounty-release']({
         bountyID: parseInt(this.$route.query.bountyId as string),
         chainID: this.chainId,

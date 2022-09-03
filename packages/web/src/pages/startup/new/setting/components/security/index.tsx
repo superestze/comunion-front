@@ -1,4 +1,5 @@
 import {
+  USpin,
   FormFactoryField,
   FormInst,
   getFieldsRules,
@@ -7,6 +8,7 @@ import {
   UFormItemsFactory
 } from '@comunion/components'
 import { defineComponent, ref, reactive, PropType, watch } from 'vue'
+import { services } from '@/services'
 
 type SecurityType = {
   kyc: string
@@ -18,9 +20,15 @@ export default defineComponent({
     data: {
       type: Object as PropType<SecurityType>,
       required: true
+    },
+    startupId: {
+      type: String,
+      required: true
     }
   },
   setup(props) {
+    const loading = ref(false)
+
     const info = reactive({
       kyc: props.data.kyc || '',
       contractAudit: props.data.contractAudit || ''
@@ -79,7 +87,9 @@ export default defineComponent({
       }
     ]
     const form = ref<FormInst>()
+
     return {
+      loading,
       fields,
       form,
       info
@@ -87,25 +97,36 @@ export default defineComponent({
   },
   render() {
     const handleSubmit = () => {
-      this.form?.validate(err => {
-        console.log(err)
+      this.form?.validate(async err => {
+        if (!err) {
+          // loadding
+          this.loading = true
+          await services['startup@update-security']({
+            startupID: this.startupId,
+            kyc: this.info.kyc,
+            contractAudit: this.info.contractAudit
+          })
+          this.loading = false
+        }
       })
     }
 
     const rules = getFieldsRules(this.fields)
     return (
-      <div class="bg-white rounded-lg border mb-6 relative overflow-hidden min-h-205.5">
-        <div class="mx-10 my-9.5">
-          <UForm rules={rules} model={this.info} ref={(ref: any) => (this.form = ref)}>
-            <UFormItemsFactory fields={this.fields} values={this.info} />
-          </UForm>
-          <div class="flex mt-10 items-center justify-end">
-            <UButton class="w-30" type="primary" size="small" onClick={handleSubmit}>
-              Save
-            </UButton>
+      <USpin show={this.loading}>
+        <div class="bg-white border rounded-lg mb-6 min-h-205.5 relative overflow-hidden">
+          <div class="my-9.5 mx-10">
+            <UForm rules={rules} model={this.info} ref={(ref: any) => (this.form = ref)}>
+              <UFormItemsFactory fields={this.fields} values={this.info} />
+            </UForm>
+            <div class="flex mt-10 items-center justify-end">
+              <UButton class="w-30" type="primary" size="small" onClick={handleSubmit}>
+                Save
+              </UButton>
+            </div>
           </div>
         </div>
-      </div>
+      </USpin>
     )
   }
 })

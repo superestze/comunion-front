@@ -45,7 +45,7 @@ export type BountyContractReturnType = {
   chainId: number
 }
 
-export function useBountyContractWrapper() {
+export function useBountyContractWrapper(bountyId?: string) {
   const walletStore = useWalletStore()
   const bountyStore = useBountyStore()
   const bountyContractStore = useBountyContractStore()
@@ -54,6 +54,9 @@ export function useBountyContractWrapper() {
     addresses: { [walletStore.chainId!]: bountyStore.bountySection?.detail?.depositContract || '' }
   })
 
+  if (!bountyContractStore.bountyContractInfo.bountyStatus && bountyId) {
+    bountyContractStore.initialize(bountyContract, bountyId as string, true)
+  }
   const usdcTokenContract = useErc20Contract()
   const usdc = usdcTokenContract(AVAX_USDC_ADDR[43113])
 
@@ -61,7 +64,6 @@ export function useBountyContractWrapper() {
     const usdcRes = await usdc.approve(contractAddress, amount)
     await usdcRes.wait()
   }
-
   const gap = computed(() => {
     return dayjs(new Date(bountyContractStore.bountyContractInfo.timeLock * 1000)).diff(
       dayjs(new Date()),
@@ -74,6 +76,7 @@ export function useBountyContractWrapper() {
     usdc,
     approve,
     gap,
+    bountyContractStore,
     chainId: walletStore.chainId
   }
 }

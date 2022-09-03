@@ -871,6 +871,7 @@ export const services = {
       image?: string
       name?: string
       applicantsSkills?: string[]
+      address: string
       comerID: number
     }>({
       url: replacePath('/bounty/{bountyID}/approved', args),
@@ -1033,7 +1034,7 @@ export const services = {
     return requestAdapter<{
       title?: string
       /**
-       * @description 1:Ready to work 2:Work started 3:Completed 4:Expired
+       * @description 1:Ready to work 2:Started working 3:Completed 4:Expired
        */
       status?: number
       applicantSkills?: string[]
@@ -1168,6 +1169,7 @@ export const services = {
         name?: string
         image?: string
         description?: string
+        status?: number
         applyAt?: string
         address: string
       }[]
@@ -1350,6 +1352,10 @@ export const services = {
        * @description 最小存入金额
        */
       applicantDepositMinAmount?: number
+      /**
+       * @description 被批准申请者当前申请状态
+       */
+      approvedStatus?: number
       /**
        * @description 锁定
        */
@@ -2281,12 +2287,318 @@ export const services = {
     })
   },
 
-  'startup@change-comer-group'(
+  'governance@create-governace-setting'(args: {
+    startupId?: number
+    comerId?: number
+    title?: string
+    voteSymbol?: string
+    allowMember?: boolean
+    proposalThreshold?: number
+    proposalValidity?: number
+    strategies?: {
+      dictValue?: string
+      strategName?: string
+      chainId?: number
+      tokenContractAddress?: string
+      voteDecimals?: number
+      tokenMinBalance?: number
+    }[]
+    admins?: {
+      walletAddress?: string
+    }[]
+  }) {
+    return requestAdapter<{}>({
+      url: replacePath('/cores/governace-setting', args),
+      method: 'POST',
+      ...extract('POST', args, [], [])
+    })
+  },
+  'governance@create-proposal'(args: {
+    authorComerId: number
+    authorWalletAddress: string
+    chainId: number
+    blockNumber: number
+    releaseTimestamp: number
+    ipfsHash: string
+    title: string
+    startupId?: number
+    description?: string
+    discussionLink?: string
+    voteSystem: string
+    startTime: number
+    endTime: number
+    choices: {
+      itemName: string
+      seqNum: number
+    }[]
+  }) {
+    return requestAdapter<any>({
+      url: replacePath('/cores/proposals', args),
+      method: 'POST',
+      ...extract('POST', args, [], [])
+    })
+  },
+  'governance@delete-proposal'(args: { proposalID: any }) {
+    return requestAdapter<any>({
+      url: replacePath('/cores/proposals/:proposalID', args),
+      method: 'DELETE',
+      ...extract('DELETE', args, [], ['proposalID'])
+    })
+  },
+  'governance@get-proposal-detail'(
+    args: {
+      proposalID: any
+    } & {
+      authorComerId: number
+      authorWalletAddress: string
+      chainId: number
+      blockNumber: number
+      releaseTimestamp: number
+      ipfsHash: string
+      title: string
+      startupId?: number
+      description?: string
+      discussionLink?: string
+      voteSystem: string
+      startTime: number
+      endTime: number
+      choices: {
+        itemName: string
+        seqNum: number
+      }[]
+    }
+  ) {
+    return requestAdapter<{
+      proposalId: number
+      startupId: number
+      startupLogo: string
+      startupName: string
+      authorComerId: number
+      authorWalletAddress: string
+      title: string
+      description: string
+      status: number
+      startTime: string
+      endTime: string
+      choices: {
+        choiceId: number
+        itemName: string
+        seqNum: number
+      }[]
+      choiceVoteInfos: {
+        choiceId: number
+        itemName: string
+        votes: number
+        percent: number
+      }[]
+      totalVotes: number
+      strategies: {
+        strategyId: number
+        strategyName: string
+        dictValue: string
+        chainId: number
+        tokenContractAddress: string
+        voteSymbol: string
+        voteDecimals: number
+        tokenMinBalance: number
+      }[]
+    }>({
+      url: replacePath('/cores/proposals/:proposalID', args),
+      method: 'GET',
+      ...extract('GET', args, [], ['proposalID'])
+    })
+  },
+  'governance@proposal-list-by-startup'(
+    args: {
+      startupId: any
+    } & {
+      page: number
+      limit: string
+    }
+  ) {
+    return requestAdapter<{
+      limit: number
+      page: number
+      totalPages: number
+      totalRows: number
+      rows: {
+        proposalId: number
+        startupId: number
+        startupLogo: string
+        startupName: string
+        authorComerId: number
+        authorWalletAddress: string
+        title: string
+        description: string
+        /**
+         * @description 0-pending,1-upcoming,2-active,3-ended,4-invalid
+         */
+        status: number
+        startTime: string
+        endTime: string
+        maximumVotesChoice?: string
+        maximumVotesChoiceId?: number
+        votes?: number
+        invalidResult?: string
+      }[]
+    }>({
+      url: replacePath('/cores/proposals/startup/:startupId', args),
+      method: 'POST',
+      ...extract('POST', args, [], ['startupId'])
+    })
+  },
+  'governance@proposal-list-of-comer-participated'(
+    args: {
+      comerID: any
+    } & {
+      page: number
+      limit: string
+    }
+  ) {
+    return requestAdapter<{
+      limit: number
+      page: number
+      totalPages: number
+      totalRows: number
+      rows: {
+        proposalId: number
+        startupId: number
+        startupLogo: string
+        startupName: string
+        authorComerId: number
+        authorWalletAddress: string
+        title: string
+        description: string
+        /**
+         * @description 0-pending,1-upcoming,2-active,3-ended,4-invalid
+         */
+        status: number
+        startTime: string
+        endTime: string
+        maximumVotesChoice?: string
+        maximumVotesChoiceId?: number
+        votes?: number
+        invalidResult?: string
+      }[]
+    }>({
+      url: replacePath('/cores/proposals/comer/:comerID/participate', args),
+      method: 'POST',
+      ...extract('POST', args, [], ['comerID'])
+    })
+  },
+  'governance@proposal-list-of-comer-posted'(
+    args: {
+      comerID: any
+    } & {
+      page: number
+      limit: string
+    }
+  ) {
+    return requestAdapter<{
+      limit: number
+      page: number
+      totalPages: number
+      totalRows: number
+      rows: {
+        proposalId: number
+        startupId: number
+        startupLogo: string
+        startupName: string
+        authorComerId: number
+        authorWalletAddress: string
+        title: string
+        description: string
+        /**
+         * @description 0-pending,1-upcoming,2-active,3-ended,4-invalid
+         */
+        status: number
+        startTime: string
+        endTime: string
+        maximumVotesChoice?: string
+        maximumVotesChoiceId?: number
+        votes?: number
+        invalidResult?: string
+      }[]
+    }>({
+      url: replacePath('/cores/proposals/comer/:comerID/post', args),
+      method: 'POST',
+      ...extract('POST', args, [], ['comerID'])
+    })
+  },
+  'governance@proposal-vote-record-list'(args: { limit: number; page: number }) {
+    return requestAdapter<{
+      limit: number
+      page: number
+      totalPages: number
+      totalRows: number
+      rows: {
+        proposalId: number
+        voterComerId: number
+        voterWalletAddress: string
+        choiceItemId: number
+        itemName: string
+        vote: number
+        ipfsHash: string
+      }[]
+    }>({
+      url: replacePath('/cores/proposals/vote-records', args),
+      method: 'POST',
+      ...extract('POST', args, [], [])
+    })
+  },
+  'governance@public-list'(args: { page: number; limit: string; states?: number[] }) {
+    return requestAdapter<{
+      limit: number
+      page: number
+      totalPages: number
+      totalRows: number
+      rows: {
+        proposalId: number
+        startupId: number
+        startupLogo: string
+        startupName: string
+        authorComerId: number
+        authorWalletAddress: string
+        title: string
+        description: string
+        /**
+         * @description 0-pending,1-upcoming,2-active,3-ended,4-invalid
+         */
+        status: number
+        startTime: string
+        endTime: string
+        maximumVotesChoice?: string
+        maximumVotesChoiceId?: number
+        votes?: number
+        invalidResult?: string
+      }[]
+    }>({
+      url: replacePath('/cores/proposals/public-list', args),
+      method: 'POST',
+      ...extract('POST', args, [], [])
+    })
+  },
+  'governance@vote-proposal'(args: { proposalID: any }) {
+    return requestAdapter<{
+      choiceItemId: number
+      voterWalletAddress: string
+      vote: number
+      ipfsHash: string
+    }>({
+      url: replacePath('/cores/proposal/:proposalID/vote', args),
+      method: 'POST',
+      ...extract('POST', args, [], ['proposalID'])
+    })
+  },
+
+  'startup@change-comer-group-and-position'(
     args: {
       startupID: any
       groupID: any
       comerID: any
-    } & {}
+    } & {
+      position: string
+    }
   ) {
     return requestAdapter<
       {
@@ -2428,24 +2740,19 @@ export const services = {
       ...extract('DELETE', args, [], ['groupID'])
     })
   },
-  'startup@social-add-or-update'(args: { startupID: any }) {
-    return requestAdapter<{
-      /**
-   * @description 	1-SocialEmail 
-	2-SocialWebsite
-	3-SocialTwitter
-	4-SocialDiscord
-	5-SocialTelegram
-	6-SocialMedium
-	7-SocialFacebook
-	8-SocialLinktre
-     */
-      socialType: number
-      /**
-       * @description 为空表示删除值
-       */
-      socialLink?: string
-    }>({
+  'startup@social-add-or-update'(
+    args: {
+      startupID: any
+    } & {
+      hashTags?: string[]
+      socials?: {
+        socialLink: string
+        socialType: number
+      }[]
+      deletedSocials?: number[]
+    }
+  ) {
+    return requestAdapter<{}>({
       url: replacePath('/cores/startups/:startupID/social', args),
       method: 'POST',
       ...extract('POST', args, [], ['startupID'])
@@ -2576,30 +2883,45 @@ export const services = {
         comerId: number
       }[]
     >({
-      url: replacePath('/cores/startups/group/:startupID/groups', args),
+      url: replacePath('/cores/startups/:startupID/groups', args),
       method: 'GET',
       ...extract('GET', args, [], ['startupID'])
     })
   },
   'startup@startup-group-member-list'(
     args: {
+      startupId: any
       groupID: any
+    } & {
+      /**
+       * @example 1
+       */
+      page: any
+      /**
+       * @example 10
+       */
+      limit: any
     } & {}
   ) {
-    return requestAdapter<
-      {
-        id: number
-        name: number
-        comerName: string
+    return requestAdapter<{
+      limit: number
+      page: number
+      totalPages: number
+      totalRows: number
+      rows: {
         comerAvatar: string
+        comerId: number
+        comerName: string
         groupId: number
         groupName: string
         joinedTime: string
+        startupId: number
+        position: string
       }[]
-    >({
-      url: replacePath('/cores/startups/group/:groupID/members', args),
+    }>({
+      url: replacePath('/cores/startups/:startupId/group/:groupID/members', args),
       method: 'GET',
-      ...extract('GET', args, [], ['groupID'])
+      ...extract('GET', args, ['page', 'limit'], ['startupId', 'groupID'])
     })
   },
   'startup@startup-list-createdBy-comer'(args: { comerID: any }) {
@@ -2935,6 +3257,7 @@ export const services = {
       comerId: any
     } & {
       position: string
+      groupId: number
     }
   ) {
     return requestAdapter<{}>({
@@ -2949,6 +3272,7 @@ export const services = {
       comerId: any
     } & {
       position: string
+      groupId: number
     }
   ) {
     return requestAdapter<{}>({
@@ -3227,6 +3551,27 @@ export const services = {
     })
   },
 
+  'meta@dict-list-by-type'(args: {
+    /**
+     * @description governanceStrategy, voteSystem
+     * @example governanceStrategy
+     */
+    type: any
+  }) {
+    return requestAdapter<
+      {
+        dictType?: string
+        dictLabel?: string
+        dictValue?: string
+        seqNum?: number
+        remark?: string
+      }[]
+    >({
+      url: replacePath('/meta/dicts', args),
+      method: 'GET',
+      ...extract('GET', args, ['type'], [])
+    })
+  },
   'meta@image-list'(args: {
     /**
      * @description 0～100

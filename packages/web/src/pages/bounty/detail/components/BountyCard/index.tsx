@@ -54,7 +54,7 @@ export default defineComponent({
       <div>
         <div class="flex justify-between items-center">
           <div class="flex flex-col flex-grow">
-            <UTooltip trigger="hover">
+            <UTooltip width={400} placement="top-start" trigger="hover">
               {{
                 trigger: () => (
                   <span class="whitespace-pre-wrap break-all overflow-hidden overflow-ellipsis u-h2 line-clamp-2">
@@ -64,13 +64,13 @@ export default defineComponent({
                 default: () => this.bountyDetail?.title
               }}
             </UTooltip>
-            <div class="flex flex-row mt-5.5">
+            <div class="flex flex-wrap flex-row mt-5.5">
               {Array.isArray(this.bountyDetail?.applicantSkills) &&
                 this.bountyDetail?.applicantSkills.map((tag: string, i: number) => {
                   return (
                     <UTag
                       key={i}
-                      class="px-2 mr-2 !h-1.25rem !leading-1.25rem !text-[#3F2D99] !border-[#3F2D99]"
+                      class="px-2 mr-2 mt-2 !h-1.25rem !leading-1.25rem !text-[#3F2D99] !border-[#3F2D99]"
                     >
                       {tag}
                     </UTag>
@@ -80,7 +80,7 @@ export default defineComponent({
           </div>
           {this.bountyStatus && (
             <UTag
-              class="flex flex-shrink-0 ml-5 text-12px w-110px justify-center"
+              class="flex flex-shrink-0 ml-5 text-12px w-120px justify-center"
               type="outlined"
               style={{
                 color: this.bountyStatus.value
@@ -92,7 +92,7 @@ export default defineComponent({
         </div>
         <Paragraph
           class="mt-40px"
-          label="Created :"
+          label={'Created :'.toUpperCase()}
           content={this.createdAt}
           contentClass="text-primary2"
         />
@@ -100,7 +100,7 @@ export default defineComponent({
           return (
             <Paragraph
               class="mt-18px"
-              label={`${this.contactLabel[(item.contactType || 0) - 1]} :`}
+              label={`${this.contactLabel[(item.contactType || 0) - 1]} :`.toUpperCase()}
               content={item.contactAddress}
               contentClass="text-primary"
               pasteboard={true}
@@ -109,19 +109,19 @@ export default defineComponent({
         })}
         <Paragraph
           class="mt-18px"
-          label="Apply Cutoff Date :"
+          label={'Apply Cutoff Date :'.toUpperCase()}
           content={dayjs.utc(this.bountyDetail?.expiresIn).format('YYYY-MM-DD UTC')}
           contentClass="text-primary2"
         />
         <Paragraph
           class="mt-18px"
-          label="Applicants deposit :"
+          label={'Applicants deposit :'.toUpperCase()}
           content={`${this.bountyDetail?.applicantsDeposit} USDC`}
           contentClass="text-primary2"
         />
         <Paragraph
           class="mt-18px"
-          label="Description :"
+          label={'Description :'.toUpperCase()}
           content={this.bountyDetail?.description}
           foldAble={true}
           fold={this.fold}

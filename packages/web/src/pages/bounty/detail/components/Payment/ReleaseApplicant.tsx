@@ -6,12 +6,17 @@ import {
 } from '../../hooks/useBountyContractWrapper'
 import { BasicDialog } from '../Dialog'
 import { services } from '@/services'
+import { checkSupportNetwork } from '@/utils/wallet'
 
 export default defineComponent({
   props: {
     disabled: {
       type: Boolean,
       require: true
+    },
+    detailChainId: {
+      type: Number,
+      default: () => 0
     }
   },
   setup() {
@@ -26,7 +31,14 @@ export default defineComponent({
   },
   render() {
     const releaseMyDeposit = async () => {
-      const response = (await this.releaseMyDeposit('', '')) as unknown as BountyContractReturnType
+      const isSupport = await checkSupportNetwork(this.detailChainId)
+      if (!isSupport) {
+        return
+      }
+      const response = (await this.releaseMyDeposit(
+        'Waiting to submit all contents to blockchain for release my deposit',
+        'Release my deposit succeedes'
+      )) as unknown as BountyContractReturnType
       await services['bounty@bounty-release-my-deposit']({
         bountyID: this.$route.query.bountyId as string,
         chainID: this.chainId,
@@ -34,7 +46,11 @@ export default defineComponent({
       })
       triggerDialog()
     }
-    const triggerDialog = () => {
+    const triggerDialog = async () => {
+      const isSupport = await checkSupportNetwork(this.detailChainId)
+      if (!isSupport) {
+        return
+      }
       this.visible = !this.visible
     }
     return (

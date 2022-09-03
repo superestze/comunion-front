@@ -1,19 +1,23 @@
 import { message, UButton, UInput, UInputGroup } from '@comunion/components'
 import { defineComponent, ref, reactive } from 'vue'
-import AddTeamMemberDialog from './addTeamMemberDialog'
 import { services } from '@/services'
 import { StartupItem } from '@/types'
 
 export default defineComponent({
+  name: 'addTeamMember',
   props: {
     startupId: {
-      type: String,
+      type: [Number, String],
+      required: true
+    },
+    group: {
+      type: Array,
       required: true
     }
   },
   setup(props) {
     const addTeamMemberVisible = ref<boolean>(false)
-    const walletAddress = ref<string>('')
+    const inputWalletAddress = ref<string>('')
     const teamMembers = ref<StartupItem[]>([])
     const comerProfile = reactive<any>(null)
     const teamList = async () => {
@@ -28,20 +32,20 @@ export default defineComponent({
     }
     return {
       addTeamMemberVisible,
-      walletAddress,
+      inputWalletAddress,
       teamList,
       teamMembers,
-      comerProfile
+      comerProfile,
+      propGroup: props.group,
+      startupId: props.startupId
     }
   },
+  emits: ['triggerNewComer'],
   render() {
-    const handleSettingDialog = () => {
-      this.addTeamMemberVisible = !this.addTeamMemberVisible
-    }
     const searchMember = async () => {
-      if (this.walletAddress.trim()) {
+      if (this.inputWalletAddress.trim()) {
         const { data } = await services['account@comer-info-get-by-address']({
-          address: this.walletAddress
+          address: this.inputWalletAddress
         })
         if (!data) {
           message.error('Search no results!')
@@ -56,36 +60,31 @@ export default defineComponent({
           return
         }
 
-        this.comerProfile = data
-        handleSettingDialog()
-        return
+        this.inputWalletAddress = ''
+        this.$emit('triggerNewComer', data)
       }
       message.info('Please enter the content!')
     }
+
     return (
       <>
-        <div class="search mb-6 h-10">
+        <div class="h-10 mb-6 search">
           <UInputGroup>
             <UInput
               class="h-12 leading-12"
-              v-model:value={this.walletAddress}
+              v-model:value={this.inputWalletAddress}
               size="small"
               placeholder="Search comer by wallet address"
             />
             <UButton
               onClick={searchMember}
               size="small"
-              class="w-34 h-12 bg-primary1 font-opensans font-600 text-[16px] text-white"
+              class="font-opensans bg-primary1 font-600 h-12 text-white text-[16px] w-34"
             >
               Add
             </UButton>
           </UInputGroup>
         </div>
-        <AddTeamMemberDialog
-          comer={this.comerProfile}
-          visible={this.addTeamMemberVisible}
-          onTriggerDialog={handleSettingDialog}
-        />
       </>
     )
   }

@@ -1,6 +1,6 @@
 import { UScrollbar } from '@comunion/components'
 import { LockKeyOutlined, UnlockKeyOutlined } from '@comunion/icons'
-import { defineComponent, PropType, computed } from 'vue'
+import { defineComponent, PropType, computed, ref } from 'vue'
 import { ProjectCardWithDialog } from '../ProjectCard'
 import ProjectCarousel from '../ProjectCarousel'
 import Text from '../Text'
@@ -52,19 +52,27 @@ export default defineComponent({
     })
 
     const bountyApplicantAmount = computed(() => {
-      if (props.bountyContractInfo.role === USER_ROLE.APPLICANT) {
-        if (props.bountyContractInfo.bountyStatus >= 2) {
-          return props.bountyContractInfo.myDepositAmount
-        }
-      }
+      // console.log(props.bountyContractInfo)
+      // if (props.bountyContractInfo.role === USER_ROLE.APPLICANT) {
+      //   if (props.bountyContractInfo.bountyStatus >= 2) {
+      //     return props.bountyContractInfo.applicantDepositAmount
+      //   }
+      // }
       return props.bountyContractInfo.applicantDepositAmount
     })
-    console.log('role====', USER_ROLE, props.bountyContractInfo)
+    const time = ref(0)
+
+    const timer = () => {
+      time.value = Date.now() / 1000
+      setTimeout(timer, 1000)
+    }
+    timer()
     return {
       payMode,
       stageTerms,
       periodTerms,
-      bountyApplicantAmount
+      bountyApplicantAmount,
+      time
     }
   },
   render() {
@@ -141,21 +149,28 @@ export default defineComponent({
                     <>
                       {this.bountyContractInfo.bountyStatus < BOUNTY_STATUS.WORKSTARTED && (
                         <ReleaseApplicant
+                          detailChainId={this.detailChainId}
                           disabled={this.bountyContractInfo.status !== APPLICANT_STATUS.APPLIED}
                         />
                       )}
                       {this.bountyContractInfo.bountyStatus >= BOUNTY_STATUS.WORKSTARTED &&
-                        this.bountyContractInfo.status !== APPLICANT_STATUS.APPROVED && (
-                          <ReleaseApplicant disabled={true} />
+                        this.bountyContractInfo.status !== APPLICANT_STATUS.APPROVED &&
+                        this.bountyContractInfo.status !== APPLICANT_STATUS.UNAPPROVED && (
+                          <ReleaseApplicant detailChainId={this.detailChainId} disabled={true} />
                         )}
-                      {this.bountyContractInfo.status === APPLICANT_STATUS.APPROVED && <Lock />}
+                      {(this.bountyContractInfo.status === APPLICANT_STATUS.APPROVED ||
+                        this.bountyContractInfo.status === APPLICANT_STATUS.UNAPPROVED) && (
+                        <Lock detailChainId={this.detailChainId} />
+                      )}
                     </>
                   )}
                   {this.bountyContractInfo.role === USER_ROLE.FOUNDER && (
                     <>
-                      {this.bountyContractInfo.timeLock === 0 &&
+                      {this.bountyContractInfo.approvedStatus === APPLICANT_STATUS.APPROVED &&
+                      this.bountyContractInfo.timeLock > 0 &&
+                      this.time - this.bountyContractInfo.timeLock >= 0 &&
                       this.bountyContractInfo.depositLock ? (
-                        <Lock />
+                        <Lock detailChainId={this.detailChainId} />
                       ) : (
                         <div class="flex w-322px mt-60px mb-48px mx-auto">
                           <AddDeposit detailChainId={this.detailChainId} />

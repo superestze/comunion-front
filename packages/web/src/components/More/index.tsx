@@ -1,4 +1,4 @@
-import { ArrowRightOutlined } from '@comunion/icons'
+import { ArrowRightOutlined, ArrowUpOutlined } from '@comunion/icons'
 import { defineComponent, computed } from 'vue'
 
 export default defineComponent({
@@ -11,7 +11,7 @@ export default defineComponent({
   emits: ['more'],
   setup(props) {
     const btnText = computed(() => {
-      return props.fold ? 'View All' : 'Pack Up'
+      return props.fold ? 'View all' : 'Pack up'
     })
     return {
       btnText
@@ -23,11 +23,11 @@ export default defineComponent({
     }
     return (
       <div
-        class="w-100px flex justify-end items-center text-primary cursor-pointer"
+        class="w-110px flex justify-end items-center text-primary cursor-pointer"
         onClick={handleMore}
       >
-        <span class="u-title2 mr-4 text-primary">{this.btnText}</span>
-        <ArrowRightOutlined />
+        <span class="u-title2 mr-2 text-primary">{this.btnText}</span>
+        {this.fold ? <ArrowRightOutlined /> : <ArrowUpOutlined />}
       </div>
     )
   }

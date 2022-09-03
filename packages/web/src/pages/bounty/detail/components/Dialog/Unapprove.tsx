@@ -3,7 +3,7 @@ import { defineComponent, PropType, computed } from 'vue'
 import { useBountyContractWrapper } from '../../hooks/useBountyContractWrapper'
 import Basic from './basic'
 import { services } from '@/services'
-import { useUserStore, useWalletStore } from '@/stores'
+import { useUserStore, useBountyStore } from '@/stores'
 import { checkSupportNetwork } from '@/utils/wallet'
 
 export type VisibleMap = {
@@ -23,18 +23,20 @@ export const UnapprovePromptSet = defineComponent({
     }
   },
   setup() {
+    console.log('====')
     const userStore = useUserStore()
-    const walletStore = useWalletStore()
+    const bountyStore = useBountyStore()
     const { bountyContract } = useBountyContractWrapper()
     const { unapproveApplicant } = bountyContract
 
     const profile = computed(() => {
       return userStore.profile
     })
+    const address = computed(() => bountyStore.bountySection.approvedPeople?.address)
     return {
       profile,
       unapproveApplicant,
-      address: walletStore.address
+      address
     }
   },
   render() {
@@ -81,10 +83,10 @@ export const UnapprovePromptSet = defineComponent({
             btns: () => (
               <div class="flex justify-end">
                 <UButton class="mr-16px w-164px" type="default" onClick={userBehavier('cancel')}>
-                  cancel
+                  Cancel
                 </UButton>
                 <UButton class="w-164px" type="primary" onClick={userBehavier('submit')}>
-                  submit
+                  Submit
                 </UButton>
               </div>
             )

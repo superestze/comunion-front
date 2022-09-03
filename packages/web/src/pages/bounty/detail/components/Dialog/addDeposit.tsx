@@ -17,6 +17,8 @@ import {
 } from '../../hooks/useBountyContractWrapper'
 import { MAX_AMOUNT, renderUnit } from '@/blocks/Bounty/components/BasicInfo'
 import { services } from '@/services'
+import { useBountyStore } from '@/stores'
+import { useContractStore } from '@/stores/contract'
 import { checkSupportNetwork } from '@/utils/wallet'
 
 export default defineComponent({
@@ -61,7 +63,7 @@ export default defineComponent({
           {
             required: true,
             validator: (rule, value: number) => {
-              console.log(formData.increaseDeposit)
+              // console.log(formData.increaseDeposit)
               return value > 0
             },
             trigger: 'change'
@@ -93,6 +95,10 @@ export default defineComponent({
     const form = ref<FormInst>()
 
     const { bountyContract, approve, chainId } = useBountyContractWrapper()
+
+    const bountyStore = useBountyStore()
+
+    const { detail } = bountyStore
     const { deposit } = bountyContract
     return {
       addDepositFields,
@@ -101,14 +107,14 @@ export default defineComponent({
       formData,
       deposit,
       approve,
-      chainId
+      chainId,
+      detail
     }
   },
   render() {
     const triggerDialog = () => {
       this.$emit('triggerDialog')
     }
-
     const userBehavier = (type: 'submit' | 'cancel') => async () => {
       if (type === 'cancel') {
         triggerDialog()
@@ -120,21 +126,27 @@ export default defineComponent({
       }
       this.form?.validate(async err => {
         if (typeof err === 'undefined') {
+          const approvePendingText =
+            'Waiting to submit all contents to blockchain for approval deposit'
+          const contractStore = useContractStore()
+          contractStore.startContract(approvePendingText)
+          const tokenSymbol = 'USDC'
           await this.approve(
-            '0x11FF42b0cBAC4E5DE2bC0C9B973F40790a40A17a',
+            this.detail?.depositContract || '',
             ethers.utils.parseUnits((this.formData.increaseDeposit || '').toString(), 18)
           )
           const response = (await this.deposit(
             ethers.utils.parseUnits(this.formData.increaseDeposit || '', 18),
-            '',
-            ''
+            'Waiting to submit all contents to blockchain for increase deposit',
+            `Deposit increased by ${this.formData.increaseDeposit} ${tokenSymbol}`
           )) as unknown as BountyContractReturnType
+          const tokenAmount = Number(this.formData.increaseDeposit)
           const { error } = await services['bounty@bounty-add-deposit']({
             bountyID: this.$route.query.bountyId as string,
             chainID: this.chainId,
             txHash: response.hash,
-            tokenSymbol: 'USDC',
-            tokenAmount: this.formData.increaseDeposit as unknown as number
+            tokenSymbol: tokenSymbol,
+            tokenAmount: tokenAmount || 0
           })
           if (!error) {
             triggerDialog()
@@ -165,10 +177,10 @@ export default defineComponent({
             </UForm>
             <div class="flex justify-end">
               <UButton class="mr-16px w-164px" type="default" onClick={userBehavier('cancel')}>
-                cancel
+                Cancel
               </UButton>
               <UButton class="w-164px" type="primary" onClick={userBehavier('submit')}>
-                submit
+                Submit
               </UButton>
             </div>
           </>

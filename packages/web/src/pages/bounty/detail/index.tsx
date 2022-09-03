@@ -1,6 +1,7 @@
 import { UBreadcrumb, UBreadcrumbItem, UCard, USpin, UTooltip } from '@comunion/components'
 import { ArrowLeftOutlined, PeriodOutlined, StageOutlined, ClockOutlined } from '@comunion/icons'
-import { defineComponent, computed, ref } from 'vue'
+import dayjs from 'dayjs'
+import { defineComponent, computed, ref, watch } from 'vue'
 import { useRoute } from 'vue-router'
 import BountyCard from './components/BountyCard'
 import { ActivityBubble, ApplicantBubble, DepositBubble } from './components/Bubble'
@@ -8,9 +9,8 @@ import { Payment } from './components/Payment'
 import PersonalCard from './components/PersonalCard'
 import PostUpdate from './components/PostUpdate'
 import StartupCard from './components/StartupCard'
-import Unapprove from './components/Unapprove'
 import { useBountyContractWrapper } from './hooks/useBountyContractWrapper'
-import { BOUNTY_STATUS, USER_ROLE } from '@/constants'
+import { BOUNTY_STATUS } from '@/constants'
 import router from '@/router'
 import { useBountyStore } from '@/stores'
 import { useBountyContractStore } from '@/stores/bountyContract'
@@ -24,17 +24,44 @@ export default defineComponent({
 
     const loading = ref<boolean>(true)
 
-    bountyStore.initialize(route.query.bountyId as string).finally(() => {
-      loading.value = false
-    })
+    bountyStore.initialize(route.query.bountyId as string)
     const bountySection = computed(() => bountyStore.bountySection)
     const bountyContractStore = useBountyContractStore()
-    const { bountyContract, gap, chainId } = useBountyContractWrapper()
-    bountyContractStore.initialize(bountyContract, route.query.bountyId as string, true)
+    const bountyContract = ref()
+    const postUpdate = ref<any>()
+    const gap = ref<number>(0)
+    // computed(() => {
+    //   return dayjs(new Date(bountyContractStore.bountyContractInfo.timeLock * 1000)).diff(
+    //     dayjs(new Date()),
+    //     'day'
+    //   )
+    // })
+    const chainInfo = computed(() =>
+      getChainInfoByChainId(bountySection.value.detail?.chainID as number)
+    )
 
-    const chainInfo = getChainInfoByChainId(chainId as number)
-
+    watch(
+      [() => bountySection.value.detail, bountyContractStore.bountyContractInfo],
+      ([detail, bountyContractInfo]) => {
+        if (detail?.depositContract) {
+          const BountyContractWrapper = useBountyContractWrapper(route.query.bountyId as string)
+          postUpdate.value = BountyContractWrapper.bountyContract.postUpdate
+        }
+        if (bountyContractInfo.timeLock) {
+          gap.value = dayjs(new Date((bountyContractInfo.timeLock || 0) * 1000)).diff(
+            dayjs(new Date()),
+            'day'
+          )
+          loading.value = false
+        }
+      }
+    )
+    // const postUpdate = computed(() => {
+    //   return bountyContract.postUpdate
+    // })
     return {
+      bountyContract,
+      postUpdate,
       bountySection,
       loading,
       bountyContractInfo: bountyContractStore.bountyContractInfo,
@@ -101,48 +128,42 @@ export default defineComponent({
               class="mb-6"
               v-slots={{
                 'header-extra': () => {
-                  if (
-                    this.bountySection.activitiesList &&
-                    this.bountySection.activitiesList.length > 0
-                  ) {
-                    return (
-                      <div class="flex items-center">
-                        {this.bountyContractInfo.bountyStatus >= BOUNTY_STATUS.WORKSTARTED && (
-                          <>
-                            <UTooltip placement="bottom">
-                              {{
-                                trigger: () => (
-                                  <ClockOutlined
-                                    class={`${
-                                      this.gap >= 0 ? 'text-grey4' : 'text-error'
-                                    } w-4 h-4 mr-2.5`}
-                                  />
-                                ),
-                                default: () => (
-                                  <div class="text-white w-84">
-                                    Post an update at least every 5 days, otherwise you will lose
-                                    the permission to lock the deposit, and the founder can unlock.
-                                  </div>
-                                )
-                              }}
-                            </UTooltip>
-                            {this.gap >= 0 ? (
-                              <p class="flex mr-4 text-grey3 items-center u-body3">
-                                Founder can unlock after{' '}
-                                <span class="mx-1 text-parimary">{this.gap}</span> days
-                              </p>
-                            ) : (
-                              <p class="flex text-error mr-4 items-center u-body3">
-                                Founder can already unlock deposits
-                              </p>
-                            )}
-                          </>
-                        )}
-                        <PostUpdate />
-                      </div>
-                    )
-                  }
-                  return
+                  return (
+                    <div class="flex items-center">
+                      {this.bountyContractInfo.bountyStatus >= BOUNTY_STATUS.WORKSTARTED && (
+                        <>
+                          <UTooltip placement="bottom">
+                            {{
+                              trigger: () => (
+                                <ClockOutlined
+                                  class={`${
+                                    this.gap >= 0 ? 'text-grey4' : 'text-error'
+                                  } w-4 h-4 mr-2.5`}
+                                />
+                              ),
+                              default: () => (
+                                <div class="text-white w-84">
+                                  Post an update at least every 5 days, otherwise you will lose the
+                                  permission to lock the deposit, and the founder can unlock.
+                                </div>
+                              )
+                            }}
+                          </UTooltip>
+                          {this.gap >= 0 ? (
+                            <p class="flex mr-4 text-grey3 items-center u-body3">
+                              Founder can unlock after{' '}
+                              <span class="mx-1 text-parimary">{this.gap}</span> days
+                            </p>
+                          ) : (
+                            <p class="flex text-error mr-4 items-center u-body3">
+                              Founder can already unlock deposits
+                            </p>
+                          )}
+                        </>
+                      )}
+                      <PostUpdate postUpdate={this.postUpdate} />
+                    </div>
+                  )
                 }
               }}
             >
@@ -158,7 +179,10 @@ export default defineComponent({
               {this.bountySection.applicantsList && this.bountySection.applicantsList.length > 0 && (
                 <>
                   {this.bountySection.applicantsList.map(applicant => (
-                    <ApplicantBubble applicant={applicant} />
+                    <ApplicantBubble
+                      detailChainId={this.bountySection.detail?.chainID || 0}
+                      applicant={applicant}
+                    />
                   ))}
                 </>
               )}
@@ -188,16 +212,16 @@ export default defineComponent({
             <UCard
               title="APPROVED"
               class="mb-6"
-              v-slots={{
-                'header-extra': () => (
-                  <>
-                    {this.bountyContractInfo.role === USER_ROLE.FOUNDER &&
-                      this.bountySection.approvedPeople && <Unapprove />}
-                  </>
-                )
-              }}
+              // v-slots={{
+              //   'header-extra': () => (
+              //     <>
+              //       {this.bountyContractInfo.role === USER_ROLE.FOUNDER &&
+              //         (this.bountySection.approvedPeople?.comerID || 0) > 0 && <Unapprove />}
+              //     </>
+              //   )
+              // }}
             >
-              {this.bountySection.approvedPeople && (
+              {(this.bountySection.approvedPeople?.comerID || 0) > 0 && (
                 <PersonalCard
                   profile={this.bountySection.approvedPeople}
                   class="mt-20px"

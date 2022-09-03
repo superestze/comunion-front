@@ -11,6 +11,7 @@ export type BountyContractInfoType = {
   founderDepositAmount: number
   applicantDepositAmount: number
   applicantDepositMinAmount: number
+  approvedStatus: number
   depositLock: boolean
   timeLock: number
   role: number
@@ -35,6 +36,7 @@ export const useBountyContractStore = defineStore('bountyContract', {
       founderDepositAmount: 0,
       applicantDepositAmount: 0,
       applicantDepositMinAmount: 0,
+      approvedStatus: 0,
       depositLock: false,
       timeLock: 0,
       role: 0,
@@ -63,23 +65,36 @@ export const useBountyContractStore = defineStore('bountyContract', {
             services['bounty@bounty-state']({ bountyID: bountyId }).then(response => {
               const { error, data } = response
               if (!error) {
-                this.bountyContractInfo.applicantCount = data.applicantCount || 0
-                this.bountyContractInfo.applicantDepositAmount = data.applicantDepositAmount || 0
+                this.bountyContractInfo.applicantCount =
+                  this.bountyContractInfo.applicantCount || data.applicantCount || 0
+                this.bountyContractInfo.applicantDepositAmount =
+                  this.bountyContractInfo.applicantDepositAmount || data.applicantDepositAmount || 0
+                this.bountyContractInfo.approvedStatus =
+                  this.bountyContractInfo.approvedStatus || data.approvedStatus || 0
                 this.bountyContractInfo.applicantDepositMinAmount =
-                  data.applicantDepositMinAmount || 0
-                this.bountyContractInfo.bountyStatus = data.bountyStatus || 0
-                this.bountyContractInfo.depositBalance = data.depositBalance || 0
-                this.bountyContractInfo.depositLock = data.depositLock as boolean
-                this.bountyContractInfo.founderDepositAmount = data.founderDepositAmount || 0
-                this.bountyContractInfo.myDepositAmount = data.myDepositAmount || 0
-                this.bountyContractInfo.role = data.myRole || 0
-                this.bountyContractInfo.status = data.myStatus || 0
-                this.bountyContractInfo.timeLock = data.timeLock || 0
-                resolve(data)
+                  this.bountyContractInfo.applicantDepositMinAmount ||
+                  data.applicantDepositMinAmount ||
+                  0
+                this.bountyContractInfo.bountyStatus =
+                  this.bountyContractInfo.bountyStatus || data.bountyStatus || 0
+                this.bountyContractInfo.depositBalance =
+                  this.bountyContractInfo.depositBalance || data.depositBalance || 0
+                this.bountyContractInfo.depositLock =
+                  this.bountyContractInfo.depositLock || (data.depositLock as boolean)
+                this.bountyContractInfo.founderDepositAmount =
+                  this.bountyContractInfo.founderDepositAmount || data.founderDepositAmount || 0
+                this.bountyContractInfo.myDepositAmount =
+                  this.bountyContractInfo.myDepositAmount || data.myDepositAmount || 0
+                this.bountyContractInfo.role = this.bountyContractInfo.role || data.myRole || 0
+                this.bountyContractInfo.status =
+                  this.bountyContractInfo.status || data.myStatus || 0
+                this.bountyContractInfo.timeLock =
+                  this.bountyContractInfo.timeLock || data.timeLock || 0
+                // resolve(data)
               }
-              reject(error)
+              // reject(error)
             })
-            return
+            // return
           }
           // [
           //   /** _bountyStatus */ number,
@@ -116,8 +131,9 @@ export const useBountyContractStore = defineStore('bountyContract', {
                 ethers.utils.formatEther(response[9])
               )
               this.bountyContractInfo.status = Number(response[10])
+
               resolve(response)
-              console.log(this.bountyContractInfo, Number(ethers.utils.formatUnits(response[7], 0)))
+              // console.log(this.bountyContractInfo, Number(ethers.utils.formatUnits(response[7], 0)))
             })
             .catch(err => reject(err))
         })
