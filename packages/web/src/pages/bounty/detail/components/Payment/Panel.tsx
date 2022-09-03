@@ -69,7 +69,6 @@ export default defineComponent({
       setTimeout(timer, 1000)
     }
     timer()
-    console.log('props.bountyContractInfo', new Date(bountyStore.detail?.expiresIn || '').getTime())
     const expiresIn = computed(() => new Date(bountyStore.detail?.expiresIn || '').getTime() / 1000)
     return {
       payMode,
