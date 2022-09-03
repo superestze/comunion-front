@@ -8,13 +8,14 @@ type DataType = {
 }
 
 export default defineComponent({
+  name: 'sequenceSetting',
   props: {
     data: {
       type: Object as PropType<DataType>,
       required: true
     },
     startupId: {
-      type: String,
+      type: [String, Number],
       required: true
     }
   },
@@ -29,15 +30,9 @@ export default defineComponent({
       }
     )
 
-    const handleSort = (items: number[]) => {
-      console.warn(items)
-      list.value = items
-    }
-
     return {
       loading,
-      list,
-      handleSort
+      list
     }
   },
   render() {
@@ -48,7 +43,7 @@ export default defineComponent({
       // loading
       this.loading = true
       await services['startup@update-sequnce']({
-        startupID: this.startupId,
+        startupID: String(this.startupId),
         tabs: this.list
       })
       this.loading = false

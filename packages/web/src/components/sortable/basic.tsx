@@ -81,7 +81,6 @@ export default defineComponent({
         } else {
           console.warn(`init value is ignore`)
         }
-        emitChange()
       },
       {
         immediate: true
