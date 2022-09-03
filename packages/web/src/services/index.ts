@@ -2326,9 +2326,67 @@ export const services = {
     }
   ) {
     return requestAdapter<{}>({
+<<<<<<< HEAD
       url: replacePath('/cores/governace-setting/:startupID', args),
+=======
+      url: replacePath('/cores/governace-setting', args),
+>>>>>>> 61c29b3 (feat(style): ✨ 🎨 starup detial interface)
       method: 'POST',
       ...extract('POST', args, [], ['startupID'])
+    })
+  },
+  'governance@create-governace-setting_copy'(
+    args: {
+      startupID: any
+    } & {
+      startupId?: number
+      comerId?: number
+      title?: string
+      voteSymbol?: string
+      allowMember?: boolean
+      proposalThreshold?: number
+      proposalValidity?: number
+      strategies?: {
+        dictValue?: string
+        strategName?: string
+        chainId?: number
+        tokenContractAddress?: string
+        voteDecimals?: number
+        tokenMinBalance?: number
+      }[]
+      admins?: {
+        walletAddress?: string
+      }[]
+    }
+  ) {
+    return requestAdapter<{
+      id: number
+      startupId: number
+      comerId: number
+      voteSymbol: string
+      allowMember: boolean
+      proposalThreshold: string
+      proposalValidity: string
+      strategies: {
+        id: number
+        settingId: number
+        dictValue: string
+        strategyName: string
+        chainId: number
+        tokenContractAddress: string
+        voteSymbol: string
+        voteDecimals: number
+        tokenMinBalance: string
+      }[]
+      admins: {
+        id: number
+        settingId: number
+        walletAddress: string
+      }[]
+    }>({
+      url: replacePath('/cores/startups/:startupID/governance-setting', args),
+      method: 'GET',
+      ...extract('GET', args, [], ['startupID'])
     })
   },
   'governance@create-governace-setting_copy'(

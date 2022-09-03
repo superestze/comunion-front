@@ -1,28 +1,36 @@
 import { UCard, ULazyImage } from '@comunion/components'
-import { defineComponent, computed } from 'vue'
+import { defineComponent, computed, watch, ref, PropType } from 'vue'
+import { editComerData } from '../../setting/components/team/addTeamMemberDialog'
+import defaultAvatar from '../../setting/components/team/assets/avatar.png?url'
 import { BasicItem } from '@/components/ListItem'
 import LoadingBtn from '@/components/More/loading'
 
 export default defineComponent({
-  setup() {
-    const title = computed(() => {
-      return `TEAM（18）`
-    })
-    const test = [
-      {
-        avatar: 'https://comunion-avatars.s3.ap-northeast-1.amazonaws.com/avatar1.svg',
-        name: '123123',
-        subName: '123123'
+  props: {
+    members: {
+      type: Object as PropType<editComerData[]>
+    }
+  },
+  setup(props) {
+    const list = ref<any[]>([])
+
+    watch(
+      () => props.members,
+      () => {
+        list.value = props.members || []
       },
       {
-        avatar: 'https://comunion-avatars.s3.ap-northeast-1.amazonaws.com/avatar1.svg',
-        name: '123123',
-        subName: '123123'
+        immediate: true
       }
-    ]
+    )
+
+    const title = computed(() => {
+      return `TEAM（${list.value.length}）`
+    })
+
     return {
       title,
-      test
+      list
     }
   },
   render() {
@@ -40,27 +48,27 @@ export default defineComponent({
 
     return (
       <UCard title={this.title} class="mb-6">
-        {this.test.map(item => (
+        {this.list.map(item => (
           <BasicItem
             item={item}
             onConnect={handleConnect}
             onUnconnect={handleUnConnect}
             v-slots={{
               avatar: () => (
-                <div class="flex items-center w-9 h-9 overflow-hidden">
-                  <ULazyImage src={item.avatar} />
+                <div class="flex h-9 w-9 items-center overflow-hidden">
+                  <ULazyImage src={item.comerAvatar || defaultAvatar} />
                 </div>
               ),
               content: () => (
                 <div class="flex flex-col">
-                  <p class="w-full text-16px font-600 text-grey1">{item.name}</p>
-                  <p class="w-full text-12px font-400 text-grey3 mt-1">{item.subName}</p>
+                  <p class="font-600 w-full text-16px text-grey1">{item.comerName}</p>
+                  <p class="font-400 mt-1 w-full text-12px text-grey3">{item.position}</p>
                 </div>
               )
             }}
           />
         ))}
-        <div class="flex justify-center mt-5">
+        <div class="flex mt-5 justify-center">
           <LoadingBtn onMore={handleMore} end={false} />
         </div>
       </UCard>

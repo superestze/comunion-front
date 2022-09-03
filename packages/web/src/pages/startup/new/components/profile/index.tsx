@@ -1,6 +1,6 @@
 import { UButton, UPopover, UStartupLogo, UTag } from '@comunion/components'
 import { HookFilled, PlusOutlined } from '@comunion/icons'
-import { defineComponent, computed, ref } from 'vue'
+import { defineComponent, computed, ref, watch, PropType } from 'vue'
 
 import { useStartupProfile } from '../../hooks/useStartupProfile'
 import test from './test.png'
@@ -11,6 +11,7 @@ import {
   StartupTypesType,
   STARTUP_TYPES_COLOR_MAP
 } from '@/constants'
+import { StartupDetail } from '@/types'
 
 export default defineComponent({
   props: {
@@ -18,35 +19,42 @@ export default defineComponent({
       type: String,
       required: true
     },
-    name: {
-      type: String,
-      required: true
-    },
-    mode: {
-      type: Number,
-      required: true
-    },
-    mission: {
-      type: String,
+    startup: {
+      type: Object as PropType<StartupDetail>,
       required: true
     }
   },
   setup(props) {
     const modeName = computed(() => {
-      return getStartupTypeFromNumber(props.mode) as StartupTypesType
+      return getStartupTypeFromNumber(props.startup.mode) as StartupTypesType
     })
     const userIsFollow = ref<boolean>(false)
     const loading = ref<boolean>(false)
     const profile = useStartupProfile()
     const { toggleFollowStartup, getUserIsFollow } = profile
+
     getUserIsFollow(props.startupId)
       .then(() => (userIsFollow.value = true))
       .catch(() => (userIsFollow.value = false))
+
+    const startupInfo = ref<StartupDetail>()
+
+    watch(
+      () => props.startup,
+      () => {
+        startupInfo.value = props.startup
+      },
+      {
+        immediate: true
+      }
+    )
+
     return {
       modeName,
       toggleFollowStartup,
       userIsFollow,
-      loading
+      loading,
+      startupInfo
     }
   },
   render() {
@@ -77,8 +85,8 @@ export default defineComponent({
             />
           </div>
           <div class="flex items-center">
-            <p class="ml-46 u-h2">{this.name}</p>
-            {this.mode > 0 && (
+            <p class="ml-46 u-h2">{this.startupInfo?.name}</p>
+            {this.startupInfo && this.startupInfo.mode > 0 && (
               <UTag
                 class="h-5 ml-5 !u-body3-pure"
                 type="filled"
@@ -87,14 +95,6 @@ export default defineComponent({
                 {this.modeName}
               </UTag>
             )}
-            <div class="bg-[#EC53A4] rounded-2px text-white py-1 px-2.5">
-              <a href="https://google.com" target="_blank">
-                KYC
-              </a>
-            </div>
-            <div class="bg-primary rounded-2px text-white py-1 px-2.5">
-              <a>AUDIT</a>
-            </div>
           </div>
           {this.userIsFollow ? (
             <UButton
@@ -124,11 +124,12 @@ export default defineComponent({
         <div class="flex mt-9 mr-10 mb-10 ml-10 justify-between">
           <div class="flex flex-col">
             <div class="flex gap-2">
-              <p class="border flex border-primary1 rounded-2px h-6 py-1 px-2 text-primary1 text-12px overflow-hidden items-center justify-center">
-                123123
-              </p>
+              {Array.isArray(this.startupInfo?.hashTags) &&
+                this.startupInfo?.hashTags.forEach((item: { name: string }, i: number) => {
+                  return <UTag key={i}>{item.name}</UTag>
+                })}
             </div>
-            <p class="mt-5 w-180 u-body2 ">{this.mission}</p>
+            <p class="mt-5 w-180 u-body2 ">{this.startupInfo?.mission}</p>
           </div>
           <div class="flex flex-wrap gap-4 items-end">
             {SocialTypeList.map(item => (

@@ -1,13 +1,38 @@
 import { UCard, ULazyImage } from '@comunion/components'
-import { defineComponent, computed } from 'vue'
+import { defineComponent, computed, watch, ref, PropType } from 'vue'
 import { BasicItem } from '@/components/ListItem'
 import LoadingBtn from '@/components/More/loading'
 
+type followItem = {
+  comerID: number
+  startupID: number
+  name?: string
+  avatar?: string
+}
+
 export default defineComponent({
-  setup() {
+  props: {
+    follows: {
+      type: Object as PropType<followItem[]>
+    }
+  },
+  setup(props) {
+    const list = ref<followItem[]>([])
+
+    watch(
+      () => props.follows,
+      () => {
+        list.value = props.follows || []
+      },
+      {
+        immediate: true
+      }
+    )
+
     const title = computed(() => {
-      return `CONNECTIONS（203）`
+      return `CONNECTIONS（${list.value.length}）`
     })
+
     const test = [
       {
         avatar: 'https://comunion-avatars.s3.ap-northeast-1.amazonaws.com/avatar1.svg',
@@ -45,14 +70,14 @@ export default defineComponent({
             onUnconnect={handleUnConnect}
             v-slots={{
               avatar: () => (
-                <div class="flex items-center w-9 h-9 overflow-hidden">
+                <div class="flex h-9 w-9 items-center overflow-hidden">
                   <ULazyImage src={item.avatar} />
                 </div>
               )
             }}
           />
         ))}
-        <div class="flex justify-center mt-5">
+        <div class="flex mt-5 justify-center">
           <LoadingBtn onMore={handleMore} end={false} />
         </div>
       </UCard>
