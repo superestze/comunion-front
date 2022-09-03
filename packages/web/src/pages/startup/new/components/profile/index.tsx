@@ -7,12 +7,7 @@ import { getContactList } from '../../setting/[id]'
 import { contactList } from '../../setting/components/social/util'
 import defaultCover from './assets/cover.png'
 import SocialIcon from '@/components/SocialIcon'
-import {
-  getStartupTypeFromNumber,
-  SocialTypeList,
-  StartupTypesType,
-  STARTUP_TYPES_COLOR_MAP
-} from '@/constants'
+import { getStartupTypeFromNumber, StartupTypesType, STARTUP_TYPES_COLOR_MAP } from '@/constants'
 import { StartupDetail } from '@/types'
 
 export default defineComponent({
@@ -54,7 +49,13 @@ export default defineComponent({
     // contactList
     console.log(contactList)
     const socialList = computed(() => {
-      return startupInfo.value ? getContactList(startupInfo.value) : []
+      return (startupInfo.value ? getContactList(startupInfo.value) : []).map(item => {
+        const targetIndex = contactList.findIndex(type => type.value === item.socialType)
+        return {
+          ...item,
+          label: targetIndex === -1 ? '' : contactList[targetIndex].label
+        }
+      })
     })
 
     return {
@@ -148,12 +149,16 @@ export default defineComponent({
             </div>
             <p class="mt-5 mb-10 w-180 u-body2">{this.startupInfo?.mission}</p>
             <div class="flex flex-wrap gap-4">
-              {SocialTypeList.map(item => (
+              {this.socialList.map(item => (
                 <UPopover
-                  placement="top"
+                  placement="bottom"
                   v-slots={{
-                    trigger: () => <SocialIcon icon={item.value} outWrapper="w-10 h-10" />,
-                    default: () => <div class="cursor-pointer flex m-3">{item.value}</div>
+                    trigger: () => (
+                      <a href={item.socialLink} target="_blank">
+                        <SocialIcon icon={item.label} outWrapper="w-10 h-10" />
+                      </a>
+                    ),
+                    default: () => <div class="cursor-pointer flex m-3">{item.label}</div>
                   }}
                 />
               ))}
