@@ -19,7 +19,6 @@ import { getChainInfoByChainId } from '@/utils/etherscan'
 export default defineComponent({
   name: 'BountyDetail',
   setup() {
-    console.log('===================================>>>')
     const route = useRoute()
     const bountyStore = useBountyStore()
 
@@ -55,9 +54,6 @@ export default defineComponent({
         }
       }
     )
-    // const postUpdate = computed(() => {
-    //   return bountyContract.postUpdate
-    // })
     return {
       initBountyStore,
       bountyContract,

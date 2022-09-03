@@ -148,6 +148,9 @@ export default defineComponent({
             tokenSymbol: tokenSymbol,
             tokenAmount: tokenAmount || 0
           })
+
+          const bountyStore = useBountyStore()
+          bountyStore.initialize(this.$route.query.bountyId as string)
           if (!error) {
             triggerDialog()
           }

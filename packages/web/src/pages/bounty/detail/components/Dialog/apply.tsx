@@ -149,7 +149,7 @@ const ApplyDialog = defineComponent({
 
     const bountyStore = useBountyStore()
 
-    const { getApplicants, detail } = bountyStore
+    const { detail } = bountyStore
 
     return {
       fields,
@@ -160,7 +160,6 @@ const ApplyDialog = defineComponent({
       termsClass,
       acceptClass,
       formData,
-      getApplicants,
       bountyContract,
       approve,
       chainId,
@@ -222,7 +221,9 @@ const ApplyDialog = defineComponent({
               tokenAmount: tokenAmount || 0
             }
           })
-          this.getApplicants(this.$route.query.bountyId as string)
+
+          const bountyStore = useBountyStore()
+          bountyStore.initialize(this.$route.query.bountyId as string)
           triggerDialog(true)
         }
         if (!this.terms.value) {
