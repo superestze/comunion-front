@@ -7,6 +7,7 @@ import {
 import { BasicDialog } from '../Dialog'
 import { BOUNTY_STATUS } from '@/constants'
 import { services } from '@/services'
+import { useBountyStore } from '@/stores'
 import { useBountyContractStore } from '@/stores/bountyContract'
 import { checkSupportNetwork } from '@/utils/wallet'
 
@@ -59,6 +60,9 @@ export default defineComponent({
         chainID: this.chainId,
         TxHash: response.hash
       })
+
+      const bountyStore = useBountyStore()
+      bountyStore.initialize(this.$route.query.bountyId as string)
       if (!error) {
         triggerDialog()
       }

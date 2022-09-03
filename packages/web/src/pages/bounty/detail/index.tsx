@@ -24,42 +24,38 @@ export default defineComponent({
 
     const loading = ref<boolean>(true)
 
-    bountyStore.initialize(route.query.bountyId as string)
+    const initBountyStore = () => {
+      bountyStore.initialize(route.query.bountyId as string)
+    }
+    initBountyStore()
     const bountySection = computed(() => bountyStore.bountySection)
     const bountyContractStore = useBountyContractStore()
     const bountyContract = ref()
     const postUpdate = ref<any>()
     const gap = ref<number>(0)
-    // computed(() => {
-    //   return dayjs(new Date(bountyContractStore.bountyContractInfo.timeLock * 1000)).diff(
-    //     dayjs(new Date()),
-    //     'day'
-    //   )
-    // })
     const chainInfo = computed(() =>
       getChainInfoByChainId(bountySection.value.detail?.chainID as number)
     )
-
+    let isInit = false
     watch(
       [() => bountySection.value.detail, bountyContractStore.bountyContractInfo],
       ([detail, bountyContractInfo]) => {
-        if (detail?.depositContract) {
+        if (detail?.depositContract && !isInit) {
           const BountyContractWrapper = useBountyContractWrapper(route.query.bountyId as string)
           postUpdate.value = BountyContractWrapper.bountyContract.postUpdate
+          loading.value = false
+          isInit = true
         }
         if (bountyContractInfo.timeLock) {
           gap.value = dayjs(new Date((bountyContractInfo.timeLock || 0) * 1000)).diff(
             dayjs(new Date()),
             'day'
           )
-          loading.value = false
         }
       }
     )
-    // const postUpdate = computed(() => {
-    //   return bountyContract.postUpdate
-    // })
     return {
+      initBountyStore,
       bountyContract,
       postUpdate,
       bountySection,

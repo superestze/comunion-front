@@ -28,9 +28,9 @@ export default defineComponent({
   setup(props) {
     const visible = ref<boolean>(false)
     const userStore = useUserStore()
-    const bountyStore = useBountyStore()
+    // const bountyStore = useBountyStore()
 
-    const { getApprovedPeople, get } = bountyStore
+    // const { getApprovedPeople, get } = bountyStore
 
     const bountyContractStore = useBountyContractStore()
     const { bountyContract } = useBountyContractWrapper()
@@ -55,9 +55,9 @@ export default defineComponent({
       visible,
       profile: userStore.profile,
       formatDate,
-      getApprovedPeople,
+      // getApprovedPeople,
       approveDisabled,
-      get,
+      // get,
       approveApplicant,
       bountyStatus
     }
@@ -87,9 +87,12 @@ export default defineComponent({
         applicantComerID: this.applicant?.comerID,
         txHash: response?.hash || ''
       })
+
+      const bountyStore = useBountyStore()
+      bountyStore.initialize(this.$route.query.bountyId as string)
       if (!error) {
-        this.get(this.$route.query.bountyId as string)
-        this.getApprovedPeople(this.$route.query.bountyId as string)
+        // this.get(this.$route.query.bountyId as string)
+        // this.getApprovedPeople(this.$route.query.bountyId as string)
         triggerDialog()
         return
       }
