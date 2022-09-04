@@ -2958,9 +2958,13 @@ export const services = {
       rows?: {
         comerId: number
 <<<<<<< HEAD
+<<<<<<< HEAD
         comerName: string
 =======
 >>>>>>> 2130f8d (feat(web): ✨ update api)
+=======
+        comerName: string
+>>>>>>> 1f9653b (feat(web): ✨ update api)
         comerAvatar: string
         followedByMe: boolean
       }[]
