@@ -2934,7 +2934,11 @@ export const services = {
   },
   'startup@startup-fans'(
     args: {
+<<<<<<< HEAD
       startupID: any
+=======
+      startupId: any
+>>>>>>> 2130f8d (feat(web): ✨ update api)
     } & {
       /**
        * @example 10
@@ -2953,14 +2957,23 @@ export const services = {
       totalRows?: number
       rows?: {
         comerId: number
+<<<<<<< HEAD
         comerName: string
+=======
+>>>>>>> 2130f8d (feat(web): ✨ update api)
         comerAvatar: string
         followedByMe: boolean
       }[]
     }>({
+<<<<<<< HEAD
       url: replacePath('/cores/startups/:startupID/fans', args),
       method: 'GET',
       ...extract('GET', args, ['limit', 'page'], ['startupID'])
+=======
+      url: replacePath('/cores/startups/{startupId}_1662218307068', args),
+      method: 'GET',
+      ...extract('GET', args, ['limit', 'page'], ['startupId'])
+>>>>>>> 2130f8d (feat(web): ✨ update api)
     })
   },
   'startup@startup-get'(args: { startupId: any }) {
