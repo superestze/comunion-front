@@ -1,9 +1,9 @@
 import { UCard, ULazyImage } from '@comunion/components'
 import { defineComponent, computed, ref } from 'vue'
-import defaultAvatar from '../../setting/components/team/assets/avatar.png?url'
 import { BasicItem } from '@/components/ListItem'
 import LoadingBtn from '@/components/More/loading'
 import { useComer } from '@/pages/comer/hooks/comer'
+import defaultAvatar from '@/pages/startup/setting/components/team/assets/avatar.png?url'
 import { services, ServiceReturn } from '@/services'
 type MemberType = NonNullable<ServiceReturn<'startup@start-team-meabers-list'>>['list']
 

@@ -2326,73 +2326,9 @@ export const services = {
     }
   ) {
     return requestAdapter<{}>({
-<<<<<<< HEAD
-<<<<<<< HEAD
-      url: replacePath('/cores/governace-setting/:startupID', args),
-=======
-      url: replacePath('/cores/governace-setting', args),
->>>>>>> 61c29b3 (feat(style): ✨ 🎨 starup detial interface)
-      method: 'POST',
-      ...extract('POST', args, [], ['startupID'])
-    })
-  },
-  'governance@create-governace-setting_copy'(
-    args: {
-      startupID: any
-    } & {
-      startupId?: number
-      comerId?: number
-      title?: string
-      voteSymbol?: string
-      allowMember?: boolean
-      proposalThreshold?: number
-      proposalValidity?: number
-      strategies?: {
-        dictValue?: string
-        strategName?: string
-        chainId?: number
-        tokenContractAddress?: string
-        voteDecimals?: number
-        tokenMinBalance?: number
-      }[]
-      admins?: {
-        walletAddress?: string
-      }[]
-    }
-  ) {
-    return requestAdapter<{
-      id: number
-      startupId: number
-      comerId: number
-      voteSymbol: string
-      allowMember: boolean
-      proposalThreshold: string
-      proposalValidity: string
-      strategies: {
-        id: number
-        settingId: number
-        dictValue: string
-        strategyName: string
-        chainId: number
-        tokenContractAddress: string
-        voteSymbol: string
-        voteDecimals: number
-        tokenMinBalance: string
-      }[]
-      admins: {
-        id: number
-        settingId: number
-        walletAddress: string
-      }[]
-    }>({
-      url: replacePath('/cores/startups/:startupID/governance-setting', args),
-      method: 'GET',
-      ...extract('GET', args, [], ['startupID'])
-=======
       url: replacePath('/cores/governace-setting/:startupID', args),
       method: 'POST',
       ...extract('POST', args, [], ['startupID'])
->>>>>>> 46f72b3 (feat(web): ✨ team and connections)
     })
   },
   'governance@create-governace-setting_copy'(
@@ -2940,15 +2876,7 @@ export const services = {
   },
   'startup@startup-fans'(
     args: {
-<<<<<<< HEAD
-<<<<<<< HEAD
       startupID: any
-=======
-      startupId: any
->>>>>>> 2130f8d (feat(web): ✨ update api)
-=======
-      startupID: any
->>>>>>> 46f72b3 (feat(web): ✨ team and connections)
     } & {
       /**
        * @example 10
@@ -2967,33 +2895,14 @@ export const services = {
       totalRows?: number
       rows?: {
         comerId: number
-<<<<<<< HEAD
-<<<<<<< HEAD
         comerName: string
-=======
->>>>>>> 2130f8d (feat(web): ✨ update api)
-=======
-        comerName: string
->>>>>>> 1f9653b (feat(web): ✨ update api)
         comerAvatar: string
         followedByMe: boolean
       }[]
     }>({
-<<<<<<< HEAD
-<<<<<<< HEAD
       url: replacePath('/cores/startups/:startupID/fans', args),
       method: 'GET',
       ...extract('GET', args, ['limit', 'page'], ['startupID'])
-=======
-      url: replacePath('/cores/startups/{startupId}_1662218307068', args),
-      method: 'GET',
-      ...extract('GET', args, ['limit', 'page'], ['startupId'])
->>>>>>> 2130f8d (feat(web): ✨ update api)
-=======
-      url: replacePath('/cores/startups/:startupID/fans', args),
-      method: 'GET',
-      ...extract('GET', args, ['limit', 'page'], ['startupID'])
->>>>>>> 46f72b3 (feat(web): ✨ team and connections)
     })
   },
   'startup@startup-get'(args: { startupId: any }) {

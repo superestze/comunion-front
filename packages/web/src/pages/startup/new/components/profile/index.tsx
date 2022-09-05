@@ -3,11 +3,11 @@ import { HookFilled, PlusOutlined } from '@comunion/icons'
 import { defineComponent, computed, ref, watch, PropType } from 'vue'
 
 import { useStartupProfile } from '../../hooks/useStartupProfile'
-import { getContactList } from '../../setting/[id]'
-import { contactList } from '../../setting/components/social/util'
 import defaultCover from './assets/cover.png'
 import SocialIcon from '@/components/SocialIcon'
 import { getStartupTypeFromNumber, StartupTypesType, STARTUP_TYPES_COLOR_MAP } from '@/constants'
+import { getContactList } from '@/pages/startup/setting/[id]'
+import { contactList } from '@/pages/startup/setting/components/social/util'
 import { StartupDetail } from '@/types'
 
 export default defineComponent({
