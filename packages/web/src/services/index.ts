@@ -166,6 +166,19 @@ export const services = {
       ...extract('GET', args, [], ['comerID'])
     })
   },
+  'account@related-statups'(args?: any) {
+    return requestAdapter<
+      {
+        startupId: number
+        startupName: string
+        startupLogo: string
+      }[]
+    >({
+      url: replacePath('/account/related-startups', args),
+      method: 'GET',
+      ...extract('GET', args, [], [])
+    })
+  },
   'account@social-add-or-update'(args: {
     /**
      * @description 	1-SocialEmail 	2-SocialWebsite	3-SocialTwitter	4-SocialDiscord	5-SocialTelegram	6-SocialMedium	7-SocialFacebook	8-SocialLinktre
@@ -1034,7 +1047,7 @@ export const services = {
     return requestAdapter<{
       title?: string
       /**
-       * @description 1:Ready to work 2:Started working 3:Completed 4:Expired
+       * @description 1:Ready to work 2:Work started 3:Completed 4:Expired
        */
       status?: number
       applicantSkills?: string[]
@@ -2287,30 +2300,85 @@ export const services = {
     })
   },
 
-  'governance@create-governace-setting'(args: {
-    startupId?: number
-    comerId?: number
-    title?: string
-    voteSymbol?: string
-    allowMember?: boolean
-    proposalThreshold?: number
-    proposalValidity?: number
-    strategies?: {
-      dictValue?: string
-      strategName?: string
-      chainId?: number
-      tokenContractAddress?: string
-      voteDecimals?: number
-      tokenMinBalance?: number
-    }[]
-    admins?: {
-      walletAddress?: string
-    }[]
-  }) {
+  'governance@create-governace-setting'(
+    args: {
+      startupID: any
+    } & {
+      voteSymbol?: string
+      allowMember?: boolean
+      proposalThreshold?: number
+      proposalValidity?: number
+      strategies?: {
+        dictValue?: string
+        strategyName?: string
+        chainId?: number
+        tokenContractAddress?: string
+        voteDecimals?: number
+        tokenMinBalance?: number
+      }[]
+      admins?: {
+        walletAddress?: string
+      }[]
+    }
+  ) {
     return requestAdapter<{}>({
-      url: replacePath('/cores/governace-setting', args),
+      url: replacePath('/cores/governace-setting/:startupID', args),
       method: 'POST',
-      ...extract('POST', args, [], [])
+      ...extract('POST', args, [], ['startupID'])
+    })
+  },
+  'governance@create-governace-setting_copy'(
+    args: {
+      startupID: any
+    } & {
+      startupId?: number
+      comerId?: number
+      title?: string
+      voteSymbol?: string
+      allowMember?: boolean
+      proposalThreshold?: number
+      proposalValidity?: number
+      strategies?: {
+        dictValue?: string
+        strategName?: string
+        chainId?: number
+        tokenContractAddress?: string
+        voteDecimals?: number
+        tokenMinBalance?: number
+      }[]
+      admins?: {
+        walletAddress?: string
+      }[]
+    }
+  ) {
+    return requestAdapter<{
+      id: number
+      startupId: number
+      comerId: number
+      voteSymbol: string
+      allowMember: boolean
+      proposalThreshold: string
+      proposalValidity: string
+      strategies: {
+        id: number
+        settingId: number
+        dictValue: string
+        strategyName: string
+        chainId: number
+        tokenContractAddress: string
+        voteSymbol: string
+        voteDecimals: number
+        tokenMinBalance: string
+      }[]
+      admins: {
+        id: number
+        settingId: number
+        walletAddress: string
+      }[]
+    }>({
+      url: replacePath('/cores/startups/:startupID/governance-setting', args),
+      method: 'GET',
+      ...extract('GET', args, [], ['startupID'])
     })
   },
   'governance@create-proposal'(args: {
@@ -2802,6 +2870,37 @@ export const services = {
       ...extract('PUT', args, [], ['startupId'])
     })
   },
+  'startup@startup-fans'(
+    args: {
+      startupID: any
+    } & {
+      /**
+       * @example 10
+       */
+      limit: any
+      /**
+       * @example 1
+       */
+      page: any
+    }
+  ) {
+    return requestAdapter<{
+      limit?: number
+      page?: number
+      totalPages?: number
+      totalRows?: number
+      rows?: {
+        comerId: number
+        comerName: string
+        comerAvatar: string
+        followedByMe: boolean
+      }[]
+    }>({
+      url: replacePath('/cores/startups/:startupID/fans', args),
+      method: 'GET',
+      ...extract('GET', args, ['limit', 'page'], ['startupID'])
+    })
+  },
   'startup@startup-get'(args: { startupId: any }) {
     return requestAdapter<{
       id: number
@@ -2863,7 +2962,24 @@ export const services = {
         walletAddress: string
       }[]
       memberCount: number
+      members: {
+        comerProfile?: {
+          avatar: string
+          name: string
+        }
+        comerID: number
+        position: string
+        groupName: string
+        createdAt: string
+      }[]
       followCount: number
+      follows: {
+        comerID: number
+        id: number
+        createdAt: string
+        startupID: number
+        updatedAt: string
+      }[]
     }>({
       url: replacePath('/cores/startups/{startupId}', args),
       method: 'GET',
@@ -2937,6 +3053,18 @@ export const services = {
       url: replacePath('/cores//startups/comer/:comerID', args),
       method: 'GET',
       ...extract('GET', args, [], ['comerID'])
+    })
+  },
+  'startup@tartup-businness-data-count'(args: { startupID: any }) {
+    return requestAdapter<{
+      bountyCnt: number
+      crowdfundingCnt: number
+      proposalCnt: number
+      otherDappCnt: number
+    }>({
+      url: replacePath('/cores/startups/:startupID/data-count', args),
+      method: 'GET',
+      ...extract('GET', args, [], ['startupID'])
     })
   },
   'startup@update-cover'(
@@ -3243,6 +3371,7 @@ export const services = {
           bio: string
           skills?: any
         }
+        followedByMe?: boolean
       }[]
       total: number
     }>({
