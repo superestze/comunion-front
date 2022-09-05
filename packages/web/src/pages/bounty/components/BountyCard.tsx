@@ -14,6 +14,10 @@ const StartupCard = defineComponent({
     startup: {
       type: Object as PropType<BountyType[number]>,
       required: true
+    },
+    noBorder: {
+      // noBorder style
+      type: Boolean
     }
   },
   setup(props, ctx) {
@@ -47,9 +51,13 @@ const StartupCard = defineComponent({
       router.push(`/bounty/detail?bountyId=${bountyId}&from=0`)
     }
 
+    const wrapClass = props.noBorder
+      ? 'bg-white cursor-pointer py-2 mb-1.5rem '
+      : 'bg-white rounded-md cursor-pointer border-1 h-40 mb-1.5rem px-10 pt-2rem hover:shadow-md'
+
     return () => (
       <div
-        class="bg-white rounded-md cursor-pointer border-1 h-40 mb-1.5rem px-10 pt-2rem hover:shadow-md"
+        class={wrapClass}
         style="transition:all ease .3s"
         onClick={handleCard(props.startup.bountyId)}
       >
@@ -111,7 +119,12 @@ const StartupCard = defineComponent({
             )
           })}
         </div>
-        <div class="flex ml-4.5rem text-0.75rem items-center">
+        <div
+          class={
+            'flex ml-4.5rem text-0.75rem items-center' +
+            (props.noBorder ? ' pb-6 border-b border-grey5' : '')
+          }
+        >
           <div class="flex flex-1 items-center">
             <span class="mr-1 text-[#5331F4]">
               {props.startup.paymentType === 'Stage' ? (

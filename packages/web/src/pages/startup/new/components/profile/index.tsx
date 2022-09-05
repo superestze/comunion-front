@@ -45,9 +45,7 @@ export default defineComponent({
         immediate: true
       }
     )
-    // TODO
-    // contactList
-    console.log(contactList)
+
     const socialList = computed(() => {
       return (startupInfo.value ? getContactList(startupInfo.value) : []).map(item => {
         const targetIndex = contactList.findIndex(type => type.value === item.socialType)

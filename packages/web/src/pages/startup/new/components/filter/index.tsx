@@ -1,7 +1,5 @@
 import { defineComponent, ref } from 'vue'
 import { ModuleTags } from '@/components/Tags'
-import { services, ServiceReturn } from '@/services'
-type DataType = NonNullable<ServiceReturn<'startup@tartup-businness-data-count'>>
 
 export default defineComponent({
   props: {
@@ -11,21 +9,10 @@ export default defineComponent({
     }
   },
   setup(props) {
-    const tag = ref<any>()
-    const dataCount = ref<DataType>()
-    const tasks = ref([])
-
-    services['startup@tartup-businness-data-count']({
-      startupID: props.startupId
-    }).then(res => {
-      if (!res.error) {
-        dataCount.value = res.data
-      }
-    })
+    const tasks = ref(['All', 'Bounty', 'Crowdfunding', 'Governance', 'Other dapp'])
 
     return {
-      tasks,
-      tag
+      tasks
     }
   },
   emits: ['selectedTagChange'],
@@ -35,11 +22,7 @@ export default defineComponent({
     }
     return (
       <div class="bg-white border rounded-lg mb-6 p-6 relative overflow-hidden">
-        <ModuleTags
-          tasks={this.tasks}
-          onSelectedChange={handleSelectedChange}
-          ref={(ref: any) => (this.tag = ref)}
-        />
+        <ModuleTags tasks={this.tasks} onSelectedChange={handleSelectedChange} />
       </div>
     )
   }

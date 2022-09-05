@@ -1792,6 +1792,7 @@ export const services = {
        * @example 1
        */
       page: any
+      limit?: any
     } & {
       /**
        * @description 第几页，默认1
@@ -1865,7 +1866,7 @@ export const services = {
     }>({
       url: replacePath('/cores/bounties/startup/:startupId', args),
       method: 'GET',
-      ...extract('GET', args, ['page'], ['startupId'])
+      ...extract('GET', args, ['page', 'limit'], ['startupId'])
     })
   },
 
