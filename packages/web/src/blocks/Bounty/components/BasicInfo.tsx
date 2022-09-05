@@ -96,7 +96,6 @@ const BountyBasicInfo = defineComponent({
             type: 'date',
             trigger: 'blur'
           },
-
           {
             validator: (rule, value) => {
               if (!value) return true

@@ -70,8 +70,9 @@ export default defineComponent({
           t: 'custom',
           name: 'token1Amount',
           title: 'Pay amount',
+          required: true,
           formItemProps: {
-            feedback: 'At least greater than 0 for new desposit',
+            feedback: 'At least greater than 0 for pay amount',
             themeOverrides: {
               feedbackTextColor: 'var(--u-grey-4-color)',
               feedbackFontSizeMedium: '12px'
@@ -79,11 +80,11 @@ export default defineComponent({
           },
           rules: [
             {
-              required: true,
-              validator: (rule, value: number) => {
+              validator: (rule, value) => {
                 return value > 0 || (formData.token2Amount > 0 && value >= 0)
               },
-              trigger: 'change'
+              message: 'At least greater than 0 for pay amount',
+              trigger: 'blur'
             }
           ],
           render() {
@@ -122,10 +123,10 @@ export default defineComponent({
           },
           rules: [
             {
-              required: true,
-              validator: (rule, value: number) => {
+              validator: (rule, value) => {
                 return value > 0 || (formData.token1Amount > 0 && value >= 0)
               },
+              message: 'Please set pay amount',
               trigger: 'change'
             }
           ],
@@ -153,16 +154,16 @@ export default defineComponent({
       }
       if (formData.token1Symbol) {
         result.push({
-          title: 'Transaction hash',
+          title: 'Transaction Hash',
           name: 'transactionHash1',
           required: true,
-          placeholder: 'Transaction hash',
+          placeholder: 'Transaction Hash',
           rules: [
             {
-              required: true,
               validator: (rule, value: string) => {
-                return /^0x([A-Fa-f0-9]{64})$/.test(value)
+                return !value || /^0x([A-Fa-f0-9]{64})$/.test(value)
               },
+              message: 'Transaction Hash incorrect',
               trigger: 'blur'
             }
           ]
@@ -170,16 +171,16 @@ export default defineComponent({
       }
       if (formData.token2Symbol) {
         result.push({
-          title: '',
+          title: `${formData.token2Symbol} Transaction Hash`,
           name: 'transactionHash2',
           required: true,
-          placeholder: 'Transaction hash',
+          placeholder: 'Transaction Hash',
           rules: [
             {
-              required: true,
               validator: (rule, value: string) => {
-                return /^0x([A-Fa-f0-9]{64})$/.test(value)
+                return !value || /^0x([A-Fa-f0-9]{64})$/.test(value)
               },
+              message: 'Transaction Hash incorrect',
               trigger: 'blur'
             }
           ]
@@ -188,7 +189,12 @@ export default defineComponent({
 
       return result
     })
-    const payFields = getFieldsRules(fields.value)
+    const payFields = computed(() => {
+      const p = getFieldsRules(fields.value)
+      console.log(p)
+      // return p
+      return p
+    })
     const form = ref<FormInst>()
     const bountyStore = useBountyStore()
     const { getActivities, getBountyPayment } = bountyStore
@@ -196,16 +202,18 @@ export default defineComponent({
     const paidInfo = computed(() => {
       const result: paidInfoType[] = []
       if (formData.token1Symbol) {
+        const tokenAmount = Number(formData.token1Amount) || 0
         result.push({
           tokenSymbol: formData.token1Symbol,
-          tokenAmount: formData.token1Amount,
+          tokenAmount: tokenAmount,
           txHash: formData.transactionHash1
         })
       }
       if (formData.token2Symbol) {
+        const tokenAmount = Number(formData.token2Amount) || 0
         result.push({
           tokenSymbol: formData.token2Symbol,
-          tokenAmount: formData.token2Amount,
+          tokenAmount: tokenAmount,
           txHash: formData.transactionHash2
         })
       }
@@ -239,7 +247,7 @@ export default defineComponent({
         if (typeof err === 'undefined') {
           const { error: errorPaid } = await services['bounty@bounty-paid']({
             bountyID: parseInt(this.$route.query.bountyId as string),
-            seqNum: this.paymentInfo?.seqNum || 1,
+            seqNum: this.paymentInfo?.seqNum || 0,
             paidInfo: this.paidInfo
           })
           const { error } = await services['bounty@bounty-activities']({
@@ -259,14 +267,13 @@ export default defineComponent({
       <UModal show={this.visible}>
         <UCard
           style="width: 600px"
-          title="Pay"
+          title="Payment"
           bordered={false}
           size="huge"
           role="dialog"
           aria-modal="true"
           closable
           onClose={triggerDialog}
-          class="pay-bounty-panel"
         >
           <>
             <UForm
@@ -278,10 +285,10 @@ export default defineComponent({
             </UForm>
             <div class="flex justify-end">
               <UButton class="mr-16px w-164px" type="default" onClick={userBehavier('cancel')}>
-                cancel
+                Cancel
               </UButton>
               <UButton class="w-164px" type="primary" onClick={userBehavier('submit')}>
-                submit
+                Submit
               </UButton>
             </div>
           </>

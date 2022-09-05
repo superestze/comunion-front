@@ -8,7 +8,8 @@ import {
   UForm,
   UFormItemsFactory,
   UInputNumberGroup,
-  UModal
+  UModal,
+  message
 } from '@comunion/components'
 import { ethers } from 'ethers'
 import { defineComponent, Ref, computed, h, ref, reactive, watch } from 'vue'
@@ -19,6 +20,7 @@ import {
 import { MAX_AMOUNT, renderUnit } from '@/blocks/Bounty/components/BasicInfo'
 import { services } from '@/services'
 import { useBountyStore } from '@/stores'
+import { useContractStore } from '@/stores/contract'
 import { checkSupportNetwork } from '@/utils/wallet'
 
 type checkboxItem = {
@@ -51,16 +53,17 @@ const ApplyDialog = defineComponent({
       deposit: 0,
       description: ''
     })
+    let deposit = 0
     watch(
       () => props.visible,
       value => {
         if (value) {
           formData.deposit = props.deposit || 0
           formData.description = ''
+          if (!deposit) deposit = props.deposit || 0
         }
       }
     )
-
     const { bountyContract, approve, chainId } = useBountyContractWrapper()
     const fields: Ref<FormFactoryField[]> = computed(() => [
       {
@@ -72,9 +75,9 @@ const ApplyDialog = defineComponent({
           {
             required: true,
             validator: (rule, value: number) => {
-              return value >= formData.deposit
+              return value >= deposit
             },
-            message: `Minimum deposit ${formData.deposit} USDC for applying bounty`,
+            message: `Minimum deposit ${deposit} USDC for applying bounty`,
             trigger: 'blur'
           }
         ],
@@ -83,8 +86,7 @@ const ApplyDialog = defineComponent({
           feedback: () => [
             h(
               <span class="text-12px text-grey4">
-                Minimum deposit <span class="text-primary">{formData.deposit}</span> USDC for
-                applying bounty
+                Minimum deposit <span class="text-primary">{deposit}</span> USDC for applying bounty
               </span>
             )
           ]
@@ -147,7 +149,7 @@ const ApplyDialog = defineComponent({
 
     const bountyStore = useBountyStore()
 
-    const { getApplicants, detail } = bountyStore
+    const { detail } = bountyStore
 
     return {
       fields,
@@ -158,7 +160,6 @@ const ApplyDialog = defineComponent({
       termsClass,
       acceptClass,
       formData,
-      getApplicants,
       bountyContract,
       approve,
       chainId,
@@ -188,18 +189,26 @@ const ApplyDialog = defineComponent({
         if (typeof err === 'undefined' && this.terms.value && this.accept.value) {
           // console.log(ethers.utils.parseUnits(this.formData.deposit.toString(), 18))
           let response!: BountyContractReturnType
+          const tokenSymbol = 'USDC'
           if (this.formData.deposit >= this.deposit) {
+            const approvePendingText =
+              'Waiting to submit all contents to blockchain for approval deposit'
+            const contractStore = useContractStore()
+            contractStore.startContract(approvePendingText)
             await this.approve(
               this.detail?.depositContract || '',
               ethers.utils.parseUnits(this.formData.deposit.toString(), 18)
             )
             response = (await this.bountyContract.applyFor(
               ethers.utils.parseUnits(this.formData.deposit.toString(), 18),
-              '',
-              ''
+              'Waiting to submit all contents to blockchain for apply',
+              `Apply by ${this.formData.deposit} ${tokenSymbol}`
             )) as unknown as BountyContractReturnType
+          } else {
+            message.error('Input deposit must be greater than applicant deposit!')
+            return
           }
-
+          const tokenAmount = Number(this.formData.deposit)
           await services['bounty@bounty-applicants-apply']({
             bountyID: parseInt(this.$route.query.bountyId as string),
             applicants: {
@@ -208,11 +217,13 @@ const ApplyDialog = defineComponent({
             applicantsDeposit: {
               chainID: this.chainId as number,
               txHash: response ? response.hash : '',
-              tokenSymbol: 'USDC',
-              tokenAmount: this.formData.deposit
+              tokenSymbol: tokenSymbol,
+              tokenAmount: tokenAmount || 0
             }
           })
-          this.getApplicants(this.$route.query.bountyId as string)
+
+          const bountyStore = useBountyStore()
+          bountyStore.initialize(this.$route.query.bountyId as string)
           triggerDialog(true)
         }
         if (!this.terms.value) {

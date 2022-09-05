@@ -52,14 +52,17 @@ export const useBountyStore = defineStore('bounty', {
       return Promise.all(list)
     },
     async get(id: string) {
+      this.detail = null
       const { error, data } = await services['bounty@bounty-get-detail']({ bountyID: id })
       if (!error) {
         this.detail = data
+        console.log(data)
         return data
       }
       return
     },
     async getStartup(bountyId: string) {
+      this.startup = null
       const { error, data } = await services['bounty@bounty-startup-list']({ bountyID: bountyId })
       if (!error) {
         this.startup = data
@@ -68,6 +71,7 @@ export const useBountyStore = defineStore('bounty', {
       return
     },
     async getFounder(bountyId: string) {
+      this.founder = null
       const { error, data } = await services['bounty@bounty-founder']({ bountyID: bountyId })
       if (!error) {
         this.founder = data
@@ -76,6 +80,7 @@ export const useBountyStore = defineStore('bounty', {
       return
     },
     async getApprovedPeople(bountyId: string) {
+      this.approvedPeople = null
       const { error, data } = await services['bounty@bounty-approved']({ bountyID: bountyId })
       if (!error) {
         this.approvedPeople = data
@@ -84,6 +89,7 @@ export const useBountyStore = defineStore('bounty', {
       return
     },
     async getActivities(bountyId: string) {
+      this.activitiesList = []
       const { error, data } = await services['bounty@bounty-activities-list']({
         bountyID: bountyId
       })
@@ -94,6 +100,7 @@ export const useBountyStore = defineStore('bounty', {
       return
     },
     async getApplicants(bountyId: string) {
+      this.applicantsList = []
       const { error, data } = await services['bounty@bounty-list-applicants']({
         bountyID: bountyId
       })
@@ -104,6 +111,7 @@ export const useBountyStore = defineStore('bounty', {
       return
     },
     async getDepositRecords(bountyId: string) {
+      this.depositRecords = []
       const { error, data } = await services['bounty@bounty-deposit-records']({
         bountyID: bountyId
       })
@@ -114,6 +122,7 @@ export const useBountyStore = defineStore('bounty', {
       return
     },
     async getBountyPayment(bountyId: string) {
+      this.bountyPayment = null
       const { error, data } = await services['bounty@bounty-payment']({
         bountyID: bountyId
       })

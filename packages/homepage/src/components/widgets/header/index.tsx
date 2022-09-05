@@ -45,15 +45,17 @@ export default defineComponent({
     return (
       <>
         <div class={`${this.headerClass} flex justify-between <md:hidden`}>
-          <div class="w-136px <sm:w-119px flex items-center ml-40px">
+          <div class="flex ml-40px w-136px items-center <sm:w-119px">
             <img src={logo} class="w-full" />
           </div>
-          <div class="flex h-60px text-primary1 w-514px justify-between items-center text-16px">
-            <span class="hover:text-primary cursor-pointer text-primary">Home</span>
-            <span class="text-grey4">GCI</span>
-            <span class="text-grey4">Dapps</span>
-            <span class="text-grey4">Enterprise</span>
-            <span class="text-grey4">API</span>
+          <div class="flex h-60px text-primary1 text-16px gap-x-10 justify-between items-center">
+            <span class="cursor-pointer text-primary hover:text-primary">Home</span>
+            <span class="text-grey4">Governance</span>
+            <span class="text-grey4">Combinator</span>
+            <span class="text-grey4">Innovation</span>
+            <span class="text-grey4">Capital</span>
+            <span class="text-grey4">dAppstore</span>
+            <span class="text-grey4">Developer</span>
           </div>
           <div class="flex items-center">
             <UButton
@@ -68,38 +70,50 @@ export default defineComponent({
             </UButton>
           </div>
         </div>
-        <div class="<md:flex md:hidden relative justify-between h-24.25 pl-14 pt-8.4 pr-9.5 overflow-hidden items-center w-full">
+        <div class="h-24.25 w-full pt-8.4 pr-9.5 pl-14 relative justify-between overflow-hidden items-center md:hidden <md:flex">
           <div class="flex items-center">
             <img
               src={colurfulLogo}
               srcset={`${colurfulLogo}, ${colurfulLogo2} 2x, ${colurfulLogo3} 3x`}
               alt="logo"
-              class="w-9 h-9"
+              class="h-9 w-9"
             />
-            <p class="text-primary font-bold text-[1.75rem] ml-1">COMUNION</p>
+            <p class="font-bold text-primary ml-1 text-[1.75rem]">COMUNION</p>
           </div>
-          <div class="w-6.5 h-5.5" onClick={triggerMenu}>
+          <div class="h-5.5 w-6.5" onClick={triggerMenu}>
             <img src={openMenu} />
           </div>
           {this.show && (
-            <div class="fixed left-0 right-0 top-0 bottom-0 bg-white z-999">
+            <div class="bg-white top-0 right-0 bottom-0 left-0 z-999 fixed">
               <div class="flex justify-end">
-                <div class="w-6 h-6 text-[#0C0C0C] mr-16 mt-9" onClick={triggerMenu}>
+                <div class="h-6 mt-9 mr-16 text-[#0C0C0C] w-6" onClick={triggerMenu}>
                   <img src={closeMenu} alt="close" class="w-full" />
                 </div>
               </div>
-              <ul style={{ listStyle: 'none', padding: 0 }} class="text-4xl font-bold mt-9 ml-16">
-                <li class="h-12 flex items-center mb-15 w-155.5 mx- auto text-grey1">Home</li>
-                <li class="h-12 flex items-center mb-15 w-155.5 mx- auto text-[#B3B3B3]">GCI</li>
-                <li class="h-12 flex items-center mb-15 w-155.5 mx- auto text-[#B3B3B3]">Dapps</li>
-                <li class="h-12 flex items-center mb-15 w-155.5 mx- auto text-[#B3B3B3]">
-                  Enterprise
+              <ul style={{ listStyle: 'none', padding: 0 }} class="font-bold mt-9 ml-16 text-4xl">
+                <li class="flex mx- h-12 mb-15 auto text-grey1 w-155.5 items-center">Home</li>
+                <li class="flex mx- h-12 mb-15 auto text-[#B3B3B3] w-155.5 items-center">
+                  Governance
                 </li>
-                <li class="h-12 flex items-center mb-15 w-155.5 mx- auto text-[#B3B3B3]">API</li>
+                <li class="flex mx- h-12 mb-15 auto text-[#B3B3B3] w-155.5 items-center">
+                  Combinator
+                </li>
+                <li class="flex mx- h-12 mb-15 auto text-[#B3B3B3] w-155.5 items-center">
+                  Innovation
+                </li>
+                <li class="flex mx- h-12 mb-15 auto text-[#B3B3B3] w-155.5 items-center">
+                  Capital
+                </li>
+                <li class="flex mx- h-12 mb-15 auto text-[#B3B3B3] w-155.5 items-center">
+                  dAppstore
+                </li>
+                <li class="flex mx- h-12 mb-15 auto text-[#B3B3B3] w-155.5 items-center">
+                  Developer
+                </li>
               </ul>
-              <div class="flex items-center justify-center w-full">
-                <UButton type="primary" class="w-155.5 h-24" onClick={mobileJoinComunion}>
-                  <span class="text-3xl font-bold">Connect Account</span>
+              <div class="flex w-full items-center justify-center">
+                <UButton type="primary" class="h-24 w-155.5" onClick={mobileJoinComunion}>
+                  <span class="font-bold text-3xl">Connect Account</span>
                 </UButton>
               </div>
             </div>

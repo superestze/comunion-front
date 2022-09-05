@@ -73,7 +73,8 @@ const TeamSetting = defineComponent({
       const { data } = await services['startup@start-team-meabers-create']({
         startupId: paramsList.value.id,
         comerId: val.comerId,
-        position: val.roles
+        position: val.roles,
+        groupId: val.groupId
       })
       if (!data) {
         message.success('Role created successfully!')
@@ -85,7 +86,8 @@ const TeamSetting = defineComponent({
       const { data } = await services['startup@start-team-meabers-update']({
         startupId: paramsList.value.id,
         comerId: val.comerId,
-        position: val.roles
+        position: val.roles,
+        groupId: val.groupId
       })
       if (!data) {
         message.success('Role modified successfully!')
@@ -111,26 +113,26 @@ const TeamSetting = defineComponent({
     return () => (
       <div class="team-setting">
         {/*  title */}
-        <span class="font-orbitron font-700 text-[18px] leading-6 tracking-2px text-primary1">
+        <span class="font-orbitron font-700 text-[18px] text-primary1 leading-6 tracking-2px">
           TEAM SETTING
         </span>
         {/* search input */}
-        <div class="search mt-10">
+        <div class="mt-10 search">
           <UInputGroup>
             <UInput class="h-12 leading-12" v-model:value={inputMember.value} />
             <UButton
               onClick={searchMember}
-              class="w-34 h-12 bg-primary1 font-opensans font-600 text-[16px] text-white"
+              class="font-opensans bg-primary1 font-600 h-12 text-white text-[16px] w-34"
             >
               Add
             </UButton>
           </UInputGroup>
-          <span class="font-opensans inline-block mt-2 text-grey3 font-400 text-[12px]">
+          <span class="font-opensans font-400 mt-2 text-grey3 text-[12px] inline-block">
             Search for comer with wallet address
           </span>
         </div>
         {/* startup team */}
-        <div class="team-list mt-10">
+        <div class="mt-10 team-list">
           {teamMembers.value.length
             ? teamMembers.value.map(teamMember => (
                 <TeamCard

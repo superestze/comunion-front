@@ -8,8 +8,8 @@ import {
   UFormItemsFactory,
   UModal
 } from '@comunion/components'
-import { defineComponent, reactive, ref, watch } from 'vue'
-import { useBountyContractWrapper } from '../../hooks/useBountyContractWrapper'
+import dayjs from 'dayjs'
+import { defineComponent, reactive, ref, watch, computed } from 'vue'
 import { services } from '@/services'
 import { useBountyStore } from '@/stores'
 import { useBountyContractStore } from '@/stores/bountyContract'
@@ -19,6 +19,11 @@ export default defineComponent({
     visible: {
       type: Boolean,
       require: true
+    },
+    postUpdate: {
+      type: Function,
+      require: true,
+      default: () => false
     }
   },
   emits: ['triggerDialog'],
@@ -62,15 +67,19 @@ export default defineComponent({
     const bountyStore = useBountyStore()
     const bountyContractStore = useBountyContractStore()
     const { getActivities } = bountyStore
-    const { bountyContract, gap } = useBountyContractWrapper()
-    const { postUpdate } = bountyContract
+
+    const gap = computed(() => {
+      return dayjs(new Date(bountyContractStore.bountyContractInfo.timeLock * 1000)).diff(
+        dayjs(new Date()),
+        'day'
+      )
+    })
     return {
       postUpdateFields,
       fields,
       info,
       form,
       getActivities,
-      postUpdate,
       bountyContractInfo: bountyContractStore.bountyContractInfo,
       gap
     }
@@ -88,7 +97,10 @@ export default defineComponent({
       this.form?.validate(async err => {
         if (typeof err === 'undefined') {
           if (this.gap >= 0) {
-            await this.postUpdate('', '')
+            await this.postUpdate(
+              'Waiting to submit all contents to blockchain for post update',
+              'Post update succeedes'
+            )
           }
           const { error } = await services['bounty@bounty-activities']({
             sourceType: 1,
@@ -130,10 +142,10 @@ export default defineComponent({
                 onClick={userBehavier('cancel')}
                 size="small"
               >
-                cancel
+                Cancel
               </UButton>
               <UButton class="w-164px" type="primary" onClick={userBehavier('submit')} size="small">
-                submit
+                Submit
               </UButton>
             </div>
           </>

@@ -22,10 +22,19 @@ export default defineComponent({
     const disabled = computed(() => {
       return bountyContractStore.bountyContractInfo.bountyStatus === BOUNTY_STATUS.COMPLETED
     })
+
+    const closeDesc = computed(() => {
+      if (bountyContractStore.bountyContractInfo.bountyStatus === BOUNTY_STATUS.COMPLETED) {
+        return 'Completed'
+      } else {
+        return 'Close bounty'
+      }
+    })
     return {
       visibleFailCloseBounty,
       close: bountyContract.close,
-      disabled
+      disabled,
+      closeDesc
     }
   },
   render() {
@@ -34,6 +43,10 @@ export default defineComponent({
       if (!isSupport) {
         return
       }
+      // await this.close(
+      //   'Waiting to submit all contents to blockchain for close bounty',
+      //   'Close bounty succeedes'
+      // )
       await this.close('', '')
       const { error } = await services['bounty@bounty-close']({
         bountyID: this.$route.query.bountyId as string
@@ -69,7 +82,7 @@ export default defineComponent({
           onClick={closeBounty}
           size="small"
         >
-          Close bounty
+          {this.closeDesc}
         </UButton>
       </>
     )

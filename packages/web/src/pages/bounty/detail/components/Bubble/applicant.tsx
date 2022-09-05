@@ -1,7 +1,10 @@
 import { UButton, UScrollbar } from '@comunion/components'
 import { format } from 'timeago.js'
 import { defineComponent, PropType, ref, computed } from 'vue'
-import { useBountyContractWrapper } from '../../hooks/useBountyContractWrapper'
+import {
+  useBountyContractWrapper,
+  BountyContractReturnType
+} from '../../hooks/useBountyContractWrapper'
 import Basic from '../Dialog/basic'
 import Bubble from './core'
 import { ItemType } from './getItemType'
@@ -25,9 +28,9 @@ export default defineComponent({
   setup(props) {
     const visible = ref<boolean>(false)
     const userStore = useUserStore()
-    const bountyStore = useBountyStore()
+    // const bountyStore = useBountyStore()
 
-    const { getApprovedPeople, get } = bountyStore
+    // const { getApprovedPeople, get } = bountyStore
 
     const bountyContractStore = useBountyContractStore()
     const { bountyContract } = useBountyContractWrapper()
@@ -40,22 +43,23 @@ export default defineComponent({
     const approveDisabled = computed(() => {
       return (
         bountyContractStore.bountyContractInfo.role !== USER_ROLE.FOUNDER ||
-        bountyContractStore.bountyContractInfo.bountyStatus >= BOUNTY_STATUS.WORKSTARTED
+        bountyContractStore.bountyContractInfo.bountyStatus >= BOUNTY_STATUS.WORKSTARTED ||
+        props.applicant?.status !== 1
       )
     })
 
-    const stageNum = computed(() => bountyContractStore.bountyContractInfo.bountyStatus)
+    const bountyStatus = computed(() => bountyContractStore.bountyContractInfo.bountyStatus)
     const bountyRole = computed(() => bountyContractStore.bountyContractInfo.role)
     return {
       bountyRole,
       visible,
       profile: userStore.profile,
       formatDate,
-      getApprovedPeople,
+      // getApprovedPeople,
       approveDisabled,
-      get,
+      // get,
       approveApplicant,
-      stageNum
+      bountyStatus
     }
   },
   render() {
@@ -73,14 +77,22 @@ export default defineComponent({
       if (!isSupport) {
         return
       }
-      await this.approveApplicant(this.applicant?.address || '', '', '')
+      const response = (await this.approveApplicant(
+        this.applicant?.address || '',
+        'Waiting to submit all contents to blockchain for approve applicant',
+        `Approve ${this.applicant?.name || 'applicant'} succeedes`
+      )) as unknown as BountyContractReturnType
       const { error } = await services['bounty@bounty-founder-approve']({
         bountyID: parseInt(this.$route.query.bountyId as string),
-        applicantComerID: this.profile?.comerID
+        applicantComerID: this.applicant?.comerID,
+        txHash: response?.hash || ''
       })
+
+      const bountyStore = useBountyStore()
+      bountyStore.initialize(this.$route.query.bountyId as string)
       if (!error) {
-        this.get(this.$route.query.bountyId as string)
-        this.getApprovedPeople(this.$route.query.bountyId as string)
+        // this.get(this.$route.query.bountyId as string)
+        // this.getApprovedPeople(this.$route.query.bountyId as string)
         triggerDialog()
         return
       }
@@ -96,10 +108,10 @@ export default defineComponent({
             btns: () => (
               <div class="flex justify-end">
                 <UButton class="mr-16px w-164px" type="default" onClick={userBehavier('cancel')}>
-                  cancel
+                  Cancel
                 </UButton>
                 <UButton class="w-164px" type="primary" onClick={userBehavier('submit')}>
-                  submit
+                  Yes
                 </UButton>
               </div>
             )
@@ -119,7 +131,7 @@ export default defineComponent({
                     {this.bountyRole === USER_ROLE.FOUNDER && (
                       <UButton
                         disabled={
-                          this.approveDisabled || this.stageNum >= BOUNTY_STATUS.WORKSTARTED
+                          this.approveDisabled || this.bountyStatus >= BOUNTY_STATUS.WORKSTARTED
                         }
                         class="w-120px"
                         type="primary"

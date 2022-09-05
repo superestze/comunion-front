@@ -1,6 +1,6 @@
 import { UScrollbar } from '@comunion/components'
 import { LockKeyOutlined, UnlockKeyOutlined } from '@comunion/icons'
-import { defineComponent, PropType, computed } from 'vue'
+import { defineComponent, PropType, computed, ref } from 'vue'
 import { ProjectCardWithDialog } from '../ProjectCard'
 import ProjectCarousel from '../ProjectCarousel'
 import Text from '../Text'
@@ -13,6 +13,7 @@ import Lock from './lock'
 import ReleaseDeposit from './releaseDeposit'
 import { APPLICANT_STATUS, BOUNTY_STATUS, USER_ROLE } from '@/constants'
 import { ServiceReturn } from '@/services'
+import { useBountyStore } from '@/stores'
 import { BountyContractInfoType } from '@/stores/bountyContract'
 
 export default defineComponent({
@@ -31,6 +32,7 @@ export default defineComponent({
     }
   },
   setup(props) {
+    const bountyStore = useBountyStore()
     const payMode = computed<'stage' | 'period'>(() => {
       return props.paymentInfo?.bountyPaymentInfo?.paymentMode === 1 ? 'stage' : 'period'
     })
@@ -52,18 +54,29 @@ export default defineComponent({
     })
 
     const bountyApplicantAmount = computed(() => {
-      if (props.bountyContractInfo.role === USER_ROLE.APPLICANT) {
-        if (props.bountyContractInfo.bountyStatus >= 2) {
-          return props.bountyContractInfo.myDepositAmount
-        }
-      }
+      // console.log(props.bountyContractInfo)
+      // if (props.bountyContractInfo.role === USER_ROLE.APPLICANT) {
+      //   if (props.bountyContractInfo.bountyStatus >= 2) {
+      //     return props.bountyContractInfo.applicantDepositAmount
+      //   }
+      // }
       return props.bountyContractInfo.applicantDepositAmount
     })
+    const time = ref(0)
+
+    const timer = () => {
+      time.value = Date.now() / 1000
+      setTimeout(timer, 1000)
+    }
+    timer()
+    const expiresIn = computed(() => new Date(bountyStore.detail?.expiresIn || '').getTime() / 1000)
     return {
       payMode,
       stageTerms,
       periodTerms,
-      bountyApplicantAmount
+      bountyApplicantAmount,
+      time,
+      expiresIn
     }
   },
   render() {
@@ -80,7 +93,8 @@ export default defineComponent({
                     <ApplyBounty
                       disabled={
                         this.bountyContractInfo.status === APPLICANT_STATUS.APPLIED ||
-                        this.bountyContractInfo.bountyStatus >= BOUNTY_STATUS.WORKSTARTED
+                        this.bountyContractInfo.bountyStatus >= BOUNTY_STATUS.WORKSTARTED ||
+                        this.expiresIn <= this.time
                       }
                       detailChainId={this.detailChainId}
                       applicantApplyStatus={this.bountyContractInfo.status}
@@ -157,7 +171,9 @@ export default defineComponent({
                   )}
                   {this.bountyContractInfo.role === USER_ROLE.FOUNDER && (
                     <>
-                      {this.bountyContractInfo.timeLock === 0 &&
+                      {this.bountyContractInfo.approvedStatus === APPLICANT_STATUS.APPROVED &&
+                      this.bountyContractInfo.timeLock > 0 &&
+                      this.time - this.bountyContractInfo.timeLock >= 0 &&
                       this.bountyContractInfo.depositLock ? (
                         <Lock detailChainId={this.detailChainId} />
                       ) : (

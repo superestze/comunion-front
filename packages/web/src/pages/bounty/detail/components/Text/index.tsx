@@ -42,6 +42,7 @@ export default defineComponent({
             } leading-none text-50px font-orbitron`}
           >
             {props.value}
+            {remainingStr.length > 0 ? '.' : ''}
             <span class="text-grey5">{remainingStr}</span>
           </span>
         )

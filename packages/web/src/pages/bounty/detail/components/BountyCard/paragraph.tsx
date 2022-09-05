@@ -1,6 +1,7 @@
 import { UScrollbar } from '@comunion/components'
 import { defineComponent, computed, ref } from 'vue'
 import Copy from '@/components/Copy'
+import './paragraph.css'
 
 export default defineComponent({
   props: {
@@ -38,7 +39,7 @@ export default defineComponent({
   },
   setup(props, ctx) {
     const contentClass = computed(() => {
-      return `flex-grow-1 u-title2 flex items-center ${props.contentClass}`
+      return `flex-grow-1 u-title3 flex items-center ${props.contentClass}`
     })
 
     const foldClass = computed(() => {
@@ -64,7 +65,7 @@ export default defineComponent({
   render() {
     return (
       <div class="flex">
-        <div class="w-28 flex-shrink-0 text-grey3 u-title2 flex items-start mr-11.5">
+        <div class="w-42 flex-shrink-0 text-grey3 flex items-start bounty-info-label">
           {this.label}
         </div>
         {this.foldAble ? (
@@ -72,7 +73,7 @@ export default defineComponent({
             <p class={this.foldClass} ref={(ref: any) => (this.ele = ref)} v-html={this.content} />
           </UScrollbar>
         ) : (
-          <p class={`${this.contentClass} h-20px`}>
+          <p class={`${this.contentClass} bounty-info-content h-20px`}>
             {this.content}
             {this.pasteboard ? <Copy content={this.content || ''} /> : null}
           </p>

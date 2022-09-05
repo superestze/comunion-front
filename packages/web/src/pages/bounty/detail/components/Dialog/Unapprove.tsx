@@ -83,10 +83,10 @@ export const UnapprovePromptSet = defineComponent({
             btns: () => (
               <div class="flex justify-end">
                 <UButton class="mr-16px w-164px" type="default" onClick={userBehavier('cancel')}>
-                  cancel
+                  Cancel
                 </UButton>
                 <UButton class="w-164px" type="primary" onClick={userBehavier('submit')}>
-                  submit
+                  Submit
                 </UButton>
               </div>
             )

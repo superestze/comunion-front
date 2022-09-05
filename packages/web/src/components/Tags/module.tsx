@@ -6,6 +6,10 @@ export default defineComponent({
       type: Array as PropType<string[]>,
       default: () => [],
       required: true
+    },
+    radio: {
+      type: Boolean,
+      default: false
     }
   },
   setup(props) {
@@ -31,7 +35,8 @@ export default defineComponent({
     })
     return {
       selectedList,
-      taskList
+      taskList,
+      radio: props.radio
     }
   },
   emits: ['selectedChange'],
@@ -57,7 +62,14 @@ export default defineComponent({
       if (allIndex > -1) {
         this.selectedList.splice(allIndex, 1)
       }
-      this.selectedList.push(key)
+      if (this.radio) {
+        // single mode
+        this.selectedList = [key]
+      } else {
+        // multi mode
+        this.selectedList.push(key)
+      }
+
       this.$emit('selectedChange', this.selectedList)
     }
     return (
