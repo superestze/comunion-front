@@ -15,11 +15,11 @@ export default defineComponent({
 
     onMounted(() => {
       setTimeout(() => {
-        console.log(pRef.value.scrollHeight)
+        // console.log(pRef.value.scrollHeight)
         if (pRef.value.scrollHeight > 162) {
           showMoreBtn.value = true
         }
-      }, 500)
+      }, 600)
     })
 
     const fold = ref<boolean>(true)
