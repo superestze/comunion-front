@@ -1,7 +1,7 @@
 import { UButton, UCard, UInput, UModal } from '@comunion/components'
 import { DeleteFilled, PlusOutlined } from '@comunion/icons'
 import { defineComponent, ref, watch, PropType } from 'vue'
-import { GroupItem } from '../../../hooks/useGroup'
+import { GroupItem } from '../../../new/hooks/useGroup'
 import { services } from '@/services'
 
 export default defineComponent({
