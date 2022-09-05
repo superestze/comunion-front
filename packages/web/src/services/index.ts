@@ -2327,6 +2327,7 @@ export const services = {
   ) {
     return requestAdapter<{}>({
 <<<<<<< HEAD
+<<<<<<< HEAD
       url: replacePath('/cores/governace-setting/:startupID', args),
 =======
       url: replacePath('/cores/governace-setting', args),
@@ -2387,6 +2388,11 @@ export const services = {
       url: replacePath('/cores/startups/:startupID/governance-setting', args),
       method: 'GET',
       ...extract('GET', args, [], ['startupID'])
+=======
+      url: replacePath('/cores/governace-setting/:startupID', args),
+      method: 'POST',
+      ...extract('POST', args, [], ['startupID'])
+>>>>>>> 46f72b3 (feat(web): ✨ team and connections)
     })
   },
   'governance@create-governace-setting_copy'(
@@ -2935,10 +2941,14 @@ export const services = {
   'startup@startup-fans'(
     args: {
 <<<<<<< HEAD
+<<<<<<< HEAD
       startupID: any
 =======
       startupId: any
 >>>>>>> 2130f8d (feat(web): ✨ update api)
+=======
+      startupID: any
+>>>>>>> 46f72b3 (feat(web): ✨ team and connections)
     } & {
       /**
        * @example 10
@@ -2970,6 +2980,7 @@ export const services = {
       }[]
     }>({
 <<<<<<< HEAD
+<<<<<<< HEAD
       url: replacePath('/cores/startups/:startupID/fans', args),
       method: 'GET',
       ...extract('GET', args, ['limit', 'page'], ['startupID'])
@@ -2978,6 +2989,11 @@ export const services = {
       method: 'GET',
       ...extract('GET', args, ['limit', 'page'], ['startupId'])
 >>>>>>> 2130f8d (feat(web): ✨ update api)
+=======
+      url: replacePath('/cores/startups/:startupID/fans', args),
+      method: 'GET',
+      ...extract('GET', args, ['limit', 'page'], ['startupID'])
+>>>>>>> 46f72b3 (feat(web): ✨ team and connections)
     })
   },
   'startup@startup-get'(args: { startupId: any }) {

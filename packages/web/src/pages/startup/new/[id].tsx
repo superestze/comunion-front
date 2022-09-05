@@ -75,20 +75,8 @@ export default defineComponent({
               />
             )}
             <Finance startup={this.startup} />
-            <Team
-              members={
-                this.startup?.members.map(member => {
-                  return {
-                    comerAvatar: member.comerProfile?.avatar || '',
-                    comerId: member.comerID,
-                    comerName: member.comerProfile?.name || '',
-                    joinedTime: member.createdAt,
-                    position: member.position
-                  }
-                }) || []
-              }
-            />
-            <Connection follows={this.startup?.follows} />
+            <Team startupId={this.startupId} />
+            <Connection startupId={this.startupId} />
           </div>
           <div class="basis-2/3">
             <Filter tasks={this.systemTasks} />
