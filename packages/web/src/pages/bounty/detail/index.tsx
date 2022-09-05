@@ -36,6 +36,20 @@ export default defineComponent({
     const chainInfo = computed(() =>
       getChainInfoByChainId(bountySection.value.detail?.chainID as number)
     )
+
+    const bountyExpired = computed(() => {
+      const time = dayjs().utcOffset(0).unix()
+      const expiresIn = dayjs.utc(bountyStore.bountySection.detail?.expiresIn || '').unix()
+      const notApplicant =
+        !bountyStore.bountySection.applicantsList ||
+        bountyStore.bountySection.applicantsList.length == 0
+      const isExpires = expiresIn > 0 && time > 0 && time >= expiresIn
+      if (isExpires && notApplicant) {
+        return true
+      }
+      return false
+    })
+
     let isInit = false
     watch(
       [() => bountySection.value.detail, bountyContractStore.bountyContractInfo],
@@ -62,7 +76,8 @@ export default defineComponent({
       loading,
       bountyContractInfo: bountyContractStore.bountyContractInfo,
       gap,
-      chainInfo
+      chainInfo,
+      bountyExpired
     }
   },
   render() {
@@ -79,7 +94,12 @@ export default defineComponent({
         <div class="flex mb-20 gap-6">
           <div class="basis-2/3">
             <div class="bg-white border rounded-lg mb-6 p-10">
-              {this.bountySection.detail && <BountyCard bountyDetail={this.bountySection.detail} />}
+              {this.bountySection.detail && (
+                <BountyCard
+                  bountyExpired={this.bountyExpired}
+                  bountyDetail={this.bountySection.detail}
+                />
+              )}
             </div>
             <UCard
               title="PAYMENT"

@@ -13,6 +13,10 @@ export default defineComponent({
     bountyDetail: {
       type: Object as PropType<ServiceReturn<'bounty@bounty-get-detail'>>,
       required: true
+    },
+    bountyExpired: {
+      type: Boolean,
+      default: false
     }
   },
   setup(props) {
@@ -22,7 +26,11 @@ export default defineComponent({
     }
     const bountyContractStore = useBountyContractStore()
     const bountyStatus = computed(() => {
-      return BOUNTY_TYPES_COLOR_MAP[bountyContractStore.bountyContractInfo.bountyStatus]
+      let status = bountyContractStore.bountyContractInfo.bountyStatus
+      if (props.bountyExpired) {
+        status = 4
+      }
+      return BOUNTY_TYPES_COLOR_MAP[status]
     })
     const createdAt = computed(() => {
       if (props.bountyDetail?.createdAt) {
@@ -110,7 +118,7 @@ export default defineComponent({
         <Paragraph
           class="mt-18px"
           label={'Apply Cutoff Date :'.toUpperCase()}
-          content={dayjs.utc(this.bountyDetail?.expiresIn).format('YYYY-MM-DD UTC')}
+          content={dayjs.utc(this.bountyDetail?.expiresIn).format('YYYY-MM-DD HH:mm UTC')}
           contentClass="text-primary2"
         />
         <Paragraph

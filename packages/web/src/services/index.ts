@@ -1131,6 +1131,10 @@ export const services = {
          */
         createdTime: number
         /**
+         * @description 申请截止日期
+         */
+        applyCutoffDate: string
+        /**
          * @description 报酬
          */
         rewards?: {
