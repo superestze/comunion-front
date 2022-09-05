@@ -18,7 +18,6 @@ export default defineComponent({
   name: 'startupDetail',
   setup() {
     const loading = ref<boolean>(false)
-    const systemTasks = ref<string[]>(['All', 'Bounty', 'Crowdfunding', 'Governance', 'Other dapp'])
     const startup = useStartup()
     const route = useRoute()
     startup.get(route.params.id as string)
@@ -40,7 +39,6 @@ export default defineComponent({
 
     return {
       loading,
-      systemTasks,
       startup: startup.detail,
       startupId: route.params.id as string,
       dataCount
@@ -79,7 +77,7 @@ export default defineComponent({
             <Connection startupId={this.startupId} />
           </div>
           <div class="basis-2/3">
-            <Filter tasks={this.systemTasks} />
+            <Filter startupId={this.startupId} />
             <Bounties startupId={this.startupId} />
             <Empty />
           </div>
