@@ -1,3 +1,4 @@
+import type { ExternalProvider } from '@ethersproject/providers'
 import { hexlify } from 'ethers/lib/utils'
 import AbstractWallet from './AbstractWallet'
 import { MetamaskProvider } from './provider/MetamaskProvider'
@@ -24,12 +25,12 @@ export default class MetamaskWallet extends AbstractWallet {
     return !!window.ethereum
   }
   prepare() {
-    return (<any>globalThis).ethereum.request?.({ method: 'eth_requestAccounts' })
+    return (window.ethereum as ExternalProvider).request?.({ method: 'eth_requestAccounts' })
   }
   async addNetwork(network: ChainNetworkType): Promise<boolean> {
     if (!window.ethereum) return Promise.resolve(false)
     try {
-      await (<any>globalThis).ethereum.request!({
+      await (window.ethereum as ExternalProvider).request!({
         method: 'wallet_addEthereumChain',
         params: [
           {
@@ -54,7 +55,7 @@ export default class MetamaskWallet extends AbstractWallet {
   }
   async switchNetwork(chainId: number): Promise<boolean> {
     try {
-      await (<any>globalThis).ethereum.request!({
+      await (window.ethereum as ExternalProvider).request!({
         method: 'wallet_switchEthereumChain',
         params: [{ chainId: hexlify(chainId) }]
       })

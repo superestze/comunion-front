@@ -9,17 +9,14 @@ export class MetamaskProvider extends ethers.providers.Web3Provider {
   _account: string | undefined
 
   constructor(ethereum?: ethers.providers.ExternalProvider | unknown) {
-    if (!ethereum) {
-      ethereum = (<any>globalThis).ethereum
-      if (!ethereum) {
-        logger.throwError(
-          'could not auto-detect global.ethereum',
-          ethers.errors.UNSUPPORTED_OPERATION,
-          {
-            operation: 'window.ethereum'
-          }
-        )
-      }
+    if (!window.ethereum) {
+      logger.throwError(
+        'could not auto-detect global.ethereum',
+        ethers.errors.UNSUPPORTED_OPERATION,
+        {
+          operation: 'window.ethereum'
+        }
+      )
     }
 
     // any is needed because of ethers.js
