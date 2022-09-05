@@ -8,20 +8,23 @@ export class MetamaskProvider extends ethers.providers.Web3Provider {
   _polling: number | undefined
   _account: string | undefined
 
-  constructor(ethereum?: ethers.providers.ExternalProvider | unknown) {
-    if (!window.ethereum) {
-      logger.throwError(
-        'could not auto-detect global.ethereum',
-        ethers.errors.UNSUPPORTED_OPERATION,
-        {
-          operation: 'window.ethereum'
-        }
-      )
+  constructor(ethereum?: ethers.providers.ExternalProvider) {
+    if (!ethereum) {
+      ethereum = (<any>globalThis).ethereum
+      if (!ethereum) {
+        logger.throwError(
+          'could not auto-detect global.ethereum',
+          ethers.errors.UNSUPPORTED_OPERATION,
+          {
+            operation: 'window.ethereum'
+          }
+        )
+      }
     }
 
     // any is needed because of ethers.js
     // https://github.com/ethers-io/ethers.js/issues/899#issuecomment-646945824
-    super((ethereum as ethers.providers.ExternalProvider)!, 'any')
+    super(ethereum!, 'any')
   }
 
   _startPollingAccount() {
