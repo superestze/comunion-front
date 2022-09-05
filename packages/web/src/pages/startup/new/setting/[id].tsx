@@ -119,7 +119,7 @@ export default defineComponent({
               />
             )}
             {this.currentEditComponent === 'GOVERNANCE' && (
-              <Governance startupId={this.route.params.id as string} />
+              <Governance startupId={this.route.params.id as string} startup={this.startup} />
             )}
             {this.currentEditComponent === 'SEQUENCE' && (
               <Sequence

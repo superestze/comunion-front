@@ -7,7 +7,7 @@ export interface ProposalInfo {
   vote?: number
   startTime?: string
   endTime?: string
-  voteChoices: string[]
+  voteChoices: { value: string; disabled?: boolean }[]
 }
 
 export interface CreateProposalFormRef {

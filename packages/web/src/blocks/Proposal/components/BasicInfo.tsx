@@ -21,7 +21,8 @@ export const BasicInfo = defineComponent({
       required: true
     }
   },
-  setup(props) {
+  setup(props, ctx) {
+    const startupOptions = ref()
     const descriptionField = ref()
     const proposalBasicInfoForm = ref<FormInst | null>(null)
     watch(
@@ -30,6 +31,7 @@ export const BasicInfo = defineComponent({
         descriptionField.value?.validate()
       }
     )
+
     const formFields: Ref<FormFactoryField[]> = computed(() => [
       {
         t: 'select',
@@ -37,7 +39,7 @@ export const BasicInfo = defineComponent({
         name: 'startup',
         required: true,
         placeholder: 'Please select a startup',
-        options: []
+        options: startupOptions.value
       },
       {
         t: 'string',
@@ -68,8 +70,8 @@ export const BasicInfo = defineComponent({
           return (
             <RichEditor
               limit={6400}
-              placeholder="Describe what you Proposal is about"
-              class="w-full"
+              placeholder="Describe what you proposal is about"
+              class="w-full h-70"
               v-model:value={props.proposalInfo.description}
             />
           )
@@ -85,13 +87,9 @@ export const BasicInfo = defineComponent({
     ])
     const proposalBasicInfoRules = getFieldsRules(formFields.value)
 
-    const getStartups = async () => {
-      try {
-        // const { error, data } = await services['']
-      } catch (error) {
-        console.error('error===>', error)
-      }
-    }
+    ctx.expose({
+      proposalBasicInfoForm
+    })
     return {
       formFields,
       proposalBasicInfoForm,

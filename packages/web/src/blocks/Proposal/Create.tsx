@@ -82,13 +82,15 @@ const CreateProposalBlock = defineComponent({
           whiteBoard: this.footer
         }}
       >
-        {this.visible && (
-          <CreateProposalForm
-            ref={(ref: any) => (this.createCreateProposalInfo = ref)}
-            stepOptions={this.stepOptions}
-            onCancel={this.close}
-          />
-        )}
+        <div class="-mt-5">
+          {this.visible && (
+            <CreateProposalForm
+              ref={(ref: any) => (this.createCreateProposalInfo = ref)}
+              stepOptions={this.stepOptions}
+              onCancel={this.close}
+            />
+          )}
+        </div>
       </UDrawer>
     )
   }

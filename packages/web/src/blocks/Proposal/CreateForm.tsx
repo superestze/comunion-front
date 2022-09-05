@@ -1,10 +1,14 @@
 import { UButton, UCard, UModal } from '@comunion/components'
 import { WarningFilled } from '@comunion/icons'
-import { defineComponent, PropType, reactive, ref } from 'vue'
+import dayjs from 'dayjs'
+import { defineComponent, onMounted, PropType, reactive, ref } from 'vue'
+import { BasicInfo } from './components/BasicInfo'
 import { Vote } from './components/Vote'
-import { BasicInfo } from './components/basicInfo'
 import { ProposalInfo } from './typing'
 import { StepProps } from '@/components/Step'
+import { services } from '@/services'
+import { useWalletStore } from '@/stores'
+import { getClient } from '@/utils/ipfs'
 
 const CreateProposalFrom = defineComponent({
   name: 'CreateCrowdfundingForm',
@@ -16,11 +20,18 @@ const CreateProposalFrom = defineComponent({
     }
   },
   setup(props, ctx) {
+    const startupOptions = ref()
+    const walletStore = useWalletStore()
+    const basicInfoRef = ref()
+    const voteRef = ref()
     const modalVisibleState = ref(false)
+    const ipfsClient = getClient()
     const proposalInfo = reactive<ProposalInfo>({
       current: 1,
       vote: 1,
-      voteChoices: ['']
+      voteChoices: [{ value: '' }, { value: '' }],
+      startTime: undefined,
+      endTime: undefined
     })
     const showLeaveTipModal = () => {
       modalVisibleState.value = true
@@ -34,9 +45,65 @@ const CreateProposalFrom = defineComponent({
     }
     const toNext = () => {
       proposalInfo.current += 1
+      if (proposalInfo.current === 1) {
+        // basicInfoRef.value?.proposalBasicInfoForm?.validate((error: any) => {
+        //   if (!error) {
+        //     proposalInfo.current += 1
+        //   }
+        // })
+      }
     }
-    const onSubmit = () => {
-      //
+    const getStartupsOptions = async () => {
+      try {
+        const { error, data } = await services['account@related-statups']()
+        console.log('data==>', data)
+
+        if (!error) {
+          startupOptions.value = data.map(item => ({
+            value: item.startupId,
+            label: item.startupName
+          }))
+        }
+      } catch (error) {
+        console.error('error===>', error)
+      }
+    }
+    onMounted(() => {
+      getStartupsOptions()
+    })
+    const onSubmit = async () => {
+      // validate
+      voteRef.value?.proposalVoteFormRef?.validate(async (error: any) => {
+        console.log('error==>', error)
+
+        if (!error) {
+          //
+          const startupInfo = startupOptions.value.find(
+            (startup: { value: number | undefined }) => startup.value === proposalInfo.startupId
+          )
+          const signature = await walletStore.wallet?.sign(
+            JSON.stringify({
+              From: walletStore.address,
+              Startup: startupInfo?.value,
+              Timestamp: dayjs().valueOf(),
+              Type: proposalInfo.vote,
+              Title: proposalInfo.title,
+              Descraption: proposalInfo.description,
+              Discussion: proposalInfo.discussion,
+              Choice: proposalInfo.voteChoices.map(choice => choice.value),
+              Start: dayjs(proposalInfo.startTime).utc().valueOf(),
+              End: dayjs(proposalInfo.endTime).utc().valueOf(),
+              'Block Height': walletStore.wallet.getProvider().blockNumber
+            })
+          )
+          console.log('signature===>', signature)
+          if (signature) {
+            const { cid, path } = await ipfsClient.add(signature)
+            console.log('cid==>', cid)
+            console.log('path==>', path)
+          }
+        }
+      })
     }
     ctx.expose({
       proposalInfo,
@@ -49,6 +116,8 @@ const CreateProposalFrom = defineComponent({
     return {
       proposalInfo,
       modalVisibleState,
+      basicInfoRef,
+      voteRef,
       closeDrawer
     }
   },
@@ -56,8 +125,15 @@ const CreateProposalFrom = defineComponent({
     return (
       <div>
         <div>
-          {this.proposalInfo.current === 1 && <BasicInfo proposalInfo={this.proposalInfo} />}
-          {this.proposalInfo.current === 2 && <Vote proposalInfo={this.proposalInfo} />}
+          {this.proposalInfo.current === 1 && (
+            <BasicInfo
+              proposalInfo={this.proposalInfo}
+              ref={(ref: any) => (this.basicInfoRef = ref)}
+            />
+          )}
+          {this.proposalInfo.current === 2 && (
+            <Vote proposalInfo={this.proposalInfo} ref={(ref: any) => (this.voteRef = ref)} />
+          )}
         </div>
         <UModal v-model:show={this.modalVisibleState} maskClosable={false}>
           <UCard

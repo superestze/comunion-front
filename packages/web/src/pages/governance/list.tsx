@@ -3,6 +3,7 @@ import { defineComponent, ref, computed } from 'vue'
 import { useRouter } from 'vue-router'
 import { ProposalCard } from './components/ProposalCard'
 import { CrowdfundingType, CROWDFUNDING_TYPES } from '@/constants'
+import { GOVERNANCE_TYPES } from '@/constants/governance'
 import { ServiceReturn, services } from '@/services'
 
 const GovernanceListPage = defineComponent({
@@ -41,7 +42,7 @@ const GovernanceListPage = defineComponent({
         <div class="flex mb-8 self-end items-center u-title2 ">
           Filter by:
           <UDropdownFilter
-            options={CROWDFUNDING_TYPES.map(item => ({ label: item, value: item }))}
+            options={GOVERNANCE_TYPES.map(item => ({ label: item, value: item }))}
             placeholder="ALL status"
             class="uppercase rounded border-1 h-10 ml-6 w-37"
             clearable
@@ -51,15 +52,15 @@ const GovernanceListPage = defineComponent({
         <UPaginatedList
           service={this.dataService}
           children={({
-            dataSource: crowdfundingList
+            dataSource: governanceList
           }: {
-            dataSource: NonNullable<ServiceReturn<'crowdfunding@public-crowdfunding-list'>>['rows']
+            dataSource: NonNullable<ServiceReturn<'governance@public-list'>>['rows']
           }) => {
             return (
               <div class="">
-                {crowdfundingList.map(crowdfunding => (
+                {governanceList.map(governance => (
                   <div class="cursor-pointer mb-6" onClick={() => this.toDetail()}>
-                    <ProposalCard key={crowdfunding.crowdfundingId} />
+                    <ProposalCard key={governance.proposalId} proposalData={governance} />
                   </div>
                 ))}
               </div>

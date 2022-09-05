@@ -1,5 +1,11 @@
 import { UDatePicker, UForm, UFormItem, UInput } from '@comunion/components'
-import { ArrowDownOutlined, ConfirmOutlined } from '@comunion/icons'
+import {
+  ArrowDownOutlined,
+  ConfirmOutlined,
+  AddCircleOutlined,
+  MinusCircleOutlined
+} from '@comunion/icons'
+import dayjs from 'dayjs'
 import { defineComponent, PropType, ref, watch, computed } from 'vue'
 import { ProposalInfo } from '../typing'
 
@@ -11,7 +17,8 @@ export const Vote = defineComponent({
       required: true
     }
   },
-  setup(props) {
+  setup(props, ctx) {
+    const proposalVoteFormRef = ref()
     const showOptionsPanel = ref(false)
 
     const clickEventListener = (e: Event) => {
@@ -56,21 +63,46 @@ export const Vote = defineComponent({
       showOptionsPanel.value = !showOptionsPanel.value
     }
     const choiceOption = (value: number) => {
+      if (value === 2) {
+        props.proposalInfo.voteChoices = [
+          { value: 'Yes', disabled: true },
+          { value: 'No', disabled: true },
+          { value: 'Abstain', disabled: true }
+        ]
+      } else {
+        props.proposalInfo.voteChoices = [{ value: '' }, { value: '' }]
+      }
       props.proposalInfo.vote = value
       showOptionsPanel.value = false
     }
+    const addVoteChoices = () => {
+      props.proposalInfo.voteChoices.push({ value: '' })
+    }
+
+    const delVoteChoices = (index: number) => {
+      const newChoices = props.proposalInfo.voteChoices.filter(
+        (vote, voteIndex) => voteIndex !== index
+      )
+      props.proposalInfo.voteChoices = newChoices
+    }
+    ctx.expose({
+      proposalVoteFormRef
+    })
     return {
       votingOptions,
       showOptionsPanel,
+      selectedVotingInfo,
+      proposalVoteFormRef,
       triggerVoteField,
       choiceOption,
-      selectedVotingInfo
+      addVoteChoices,
+      delVoteChoices
     }
   },
   render() {
     return (
       <div>
-        <UForm>
+        <UForm ref={(ref: any) => (this.proposalVoteFormRef = ref)} model={this.proposalInfo}>
           <UFormItem
             showFeedback={false}
             label="Voting"
@@ -123,14 +155,56 @@ export const Vote = defineComponent({
           </UFormItem>
           <div class="mb-6">
             {this.proposalInfo.voteChoices.map((voteChoice, choiceIndex) => (
-              <UInput
-                v-slots={{
-                  prefix: <div class="u-body2 text-grey3">Choice {choiceIndex + 1}</div>,
-                  suffix: <div class="u-body2 text-grey3">{voteChoice.length}/32</div>
-                }}
-                v-model:value={voteChoice}
-                maxlength={32}
-              ></UInput>
+              <div class="flex items-center mb-3">
+                <UFormItem
+                  showFeedback={false}
+                  showLabel={false}
+                  class="w-full"
+                  path="voteChoices"
+                  rule={[
+                    {
+                      validator: () => {
+                        if (choiceIndex === 0 && !voteChoice.value) {
+                          return false
+                        }
+                        return true
+                      }
+                    }
+                  ]}
+                >
+                  <UInput
+                    v-slots={{
+                      prefix: (
+                        <div class="u-body2 text-grey3 w-20">
+                          Choice {choiceIndex + 1}
+                          {choiceIndex === 0 && (
+                            <span class="n-form-item-label__asterisk text-error">&nbsp;*</span>
+                          )}
+                        </div>
+                      ),
+                      suffix: (
+                        <div class="u-body2 text-grey3 pl-4">{voteChoice.value.length}/32</div>
+                      )
+                    }}
+                    v-model:value={voteChoice.value}
+                    maxlength={32}
+                    disabled={voteChoice.disabled}
+                    class={[{ 'max-w-184': this.selectedVotingInfo?.key !== 'basic' }]}
+                  ></UInput>
+                </UFormItem>
+                {choiceIndex !== 0 && this.selectedVotingInfo?.key !== 'basic' && (
+                  <div class="flex items-center">
+                    <MinusCircleOutlined
+                      class="mr-3 text-error cursor-pointer"
+                      onClick={() => this.delVoteChoices(choiceIndex)}
+                    />
+                    {this.proposalInfo.voteChoices?.length === choiceIndex + 1 &&
+                      this.proposalInfo.voteChoices?.length < 20 && (
+                        <AddCircleOutlined class="cursor-pointer" onClick={this.addVoteChoices} />
+                      )}
+                  </div>
+                )}
+              </div>
             ))}
           </div>
           <div class="u-body4 mb-3">Voting period</div>
@@ -138,18 +212,56 @@ export const Vote = defineComponent({
             <UFormItem
               label="Start Date(UTC)"
               labelStyle={{ fontSize: '12px' }}
-              required
               class="w-full"
+              path="startTime"
+              rule={[
+                { required: true, message: 'Please set the start Time' },
+                {
+                  validator: (rule, value) => {
+                    if (!value || !this.proposalInfo.endTime) return true
+                    return dayjs(value).isBefore(dayjs(this.proposalInfo.endTime))
+                  },
+                  message: 'Start time needs to be before End time',
+                  trigger: ['blur']
+                }
+              ]}
             >
-              <UDatePicker v-model:value={this.proposalInfo.startTime} class="w-full"></UDatePicker>
+              <UDatePicker
+                type="datetime"
+                v-model:value={this.proposalInfo.startTime}
+                format="yyyy-MM-dd HH:mm"
+                class="w-full"
+                isDateDisabled={(current: number) => {
+                  return dayjs(current) < dayjs()
+                }}
+              ></UDatePicker>
             </UFormItem>
             <UFormItem
               label="End Date(UTC)"
               labelStyle={{ fontSize: '12px' }}
-              required
               class="w-full"
+              path="endTime"
+              rule={[
+                { required: true, message: 'Please set the end time' },
+                {
+                  validator: (rule, value) => {
+                    if (!value || !this.proposalInfo.startTime) return true
+                    return dayjs(value).isAfter(dayjs(this.proposalInfo.startTime))
+                  },
+                  message: 'End time needs to be after Start time',
+                  trigger: ['blur']
+                }
+              ]}
             >
-              <UDatePicker v-model:value={this.proposalInfo.endTime} class="w-full"></UDatePicker>
+              <UDatePicker
+                type="datetime"
+                v-model:value={this.proposalInfo.endTime}
+                format="yyyy-MM-dd HH:mm"
+                class="w-full"
+                isDateDisabled={(current: number) => {
+                  return dayjs(current) < dayjs()
+                }}
+              ></UDatePicker>
             </UFormItem>
           </div>
         </UForm>
