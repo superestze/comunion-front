@@ -35,5 +35,6 @@ export async function getWallet(
     return wallet as AbstractWallet
   } catch (error) {
     console.error('Error when auto init', error)
+    return undefined
   }
 }

@@ -5,7 +5,7 @@ const logger = new ethers.utils.Logger('0.1.0')
 // and MetamaskProvider is experimental ant not support network event
 // so we need to poll for account change
 export class CoinbaseWalletProvider extends ethers.providers.Web3Provider {
-  ethereum: any
+  ethereum: ethers.providers.ExternalProvider
   constructor() {
     const APP_NAME = 'comunion'
     const APP_LOGO_URL = ''
