@@ -1,5 +1,6 @@
-import CoinbaseWalletSDK from '@coinbase/wallet-sdk'
+import { CoinbaseWalletSDK } from '@coinbase/wallet-sdk'
 import { ethers } from 'ethers'
+import { WALLET_INFURA_ID } from '@/constants'
 const logger = new ethers.utils.Logger('0.1.0')
 // currently Web3Provider not support account event
 // and MetamaskProvider is experimental ant not support network event
@@ -9,7 +10,8 @@ export class CoinbaseWalletProvider extends ethers.providers.Web3Provider {
   constructor() {
     const APP_NAME = 'comunion'
     const APP_LOGO_URL = ''
-    const DEFAULT_ETH_JSONRPC_URL = 'https://d.app.comunion.io/7092762b512b4153bb32ddeea134bfb8'
+    // url and infuraId (https://infura.io/zh)
+    const DEFAULT_ETH_JSONRPC_URL = `https://d.app.comunion.io/${WALLET_INFURA_ID}`
     const DEFAULT_CHAIN_ID = 1
     // Initialize Coinbase Wallet SDK
     const coinbaseWallet = new CoinbaseWalletSDK({

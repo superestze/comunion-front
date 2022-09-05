@@ -2,12 +2,11 @@ import { hexlify } from 'ethers/lib/utils'
 import AbstractWallet from './AbstractWallet'
 import { MetamaskProvider } from './provider/MetamaskProvider'
 import { allNetworks, ChainNetworkType } from '@/constants'
-
 let _instance: MetamaskWallet | undefined
 
 export default class MetamaskWallet extends AbstractWallet {
   constructor() {
-    super('Metamask', new MetamaskProvider((<any>globalThis).ethereum))
+    super('Metamask', new MetamaskProvider(window.ethereum))
   }
 
   static getInstance(): AbstractWallet | undefined {

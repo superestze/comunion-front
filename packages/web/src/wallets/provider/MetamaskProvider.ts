@@ -8,7 +8,7 @@ export class MetamaskProvider extends ethers.providers.Web3Provider {
   _polling: number | undefined
   _account: string | undefined
 
-  constructor(ethereum?: ethers.providers.ExternalProvider) {
+  constructor(ethereum?: ethers.providers.ExternalProvider | unknown) {
     if (!ethereum) {
       ethereum = (<any>globalThis).ethereum
       if (!ethereum) {
@@ -24,7 +24,7 @@ export class MetamaskProvider extends ethers.providers.Web3Provider {
 
     // any is needed because of ethers.js
     // https://github.com/ethers-io/ethers.js/issues/899#issuecomment-646945824
-    super(ethereum!, 'any')
+    super((ethereum as ethers.providers.ExternalProvider)!, 'any')
   }
 
   _startPollingAccount() {
