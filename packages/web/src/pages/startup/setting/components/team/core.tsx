@@ -191,7 +191,12 @@ export default defineComponent({
                       <div
                         class={`rounded-6px flex justify-between items-center cursor-pointer ${module['list-hover']}`}
                       >
-                        <div class="flex m-4 w-1/2 items-center">
+                        <div
+                          class="flex m-4 w-1/2 items-center"
+                          onClick={() => {
+                            this.$router.push({ path: '/comer', query: { id: item.comerId } })
+                          }}
+                        >
                           <div class="bg-light-700 rounded-1/2 h-15 w-15">
                             <ULazyImage class="w-full" src={item.comerAvatar || defaultAvatar} />
                           </div>
