@@ -1,22 +1,28 @@
-import type { ExternalProvider } from '@ethersproject/providers'
 import { hexlify } from 'ethers/lib/utils'
 import AbstractWallet from './AbstractWallet'
-import { MetamaskProvider } from './provider/MetamaskProvider'
+import { CoinbaseWalletProvider } from './provider/CoinbaseWalletProvider'
 import { allNetworks, ChainNetworkType } from '@/constants'
-let _instance: MetamaskWallet | undefined
 
-export default class MetamaskWallet extends AbstractWallet {
+let _instance: CoinbaseWallet | undefined
+
+export default class CoinbaseWallet extends AbstractWallet {
+  _coinbaseWalletProvider: any = new CoinbaseWalletProvider()
   constructor() {
-    super('Metamask', new MetamaskProvider(window.ethereum))
+    const _coinbaseWalletProvider = new CoinbaseWalletProvider()
+    super('CoinbaseWallet', _coinbaseWalletProvider)
+    this._coinbaseWalletProvider = _coinbaseWalletProvider
   }
 
   static getInstance(): AbstractWallet | undefined {
     if (!_instance) {
-      if (!MetamaskWallet.checkAvaliable()) {
-        window.open('https://metamask.io/', 'metamask')
+      if (!CoinbaseWallet.checkAvaliable()) {
+        window.open(
+          'https://chrome.google.com/webstore/detail/coinbase-wallet-extension/hnfanknocfeofbddgcijnmhnfnkdnaad',
+          'CoinbaseWallet'
+        )
         return undefined
       }
-      _instance = new MetamaskWallet()
+      _instance = new CoinbaseWallet()
     }
     return _instance
   }
@@ -25,12 +31,14 @@ export default class MetamaskWallet extends AbstractWallet {
     return !!window.ethereum
   }
   prepare() {
-    return (window.ethereum as ExternalProvider).request?.({ method: 'eth_requestAccounts' })
+    return this._coinbaseWalletProvider.ethereum.request?.({
+      method: 'eth_requestAccounts'
+    })
   }
   async addNetwork(network: ChainNetworkType): Promise<boolean> {
-    if (!window.ethereum) return Promise.resolve(false)
+    if (!this._coinbaseWalletProvider.ethereum) return Promise.resolve(false)
     try {
-      await (window.ethereum as ExternalProvider).request!({
+      await this._coinbaseWalletProvider.ethereum.request!({
         method: 'wallet_addEthereumChain',
         params: [
           {
@@ -55,7 +63,7 @@ export default class MetamaskWallet extends AbstractWallet {
   }
   async switchNetwork(chainId: number): Promise<boolean> {
     try {
-      await (window.ethereum as ExternalProvider).request!({
+      await this._coinbaseWalletProvider.ethereum.request!({
         method: 'wallet_switchEthereumChain',
         params: [{ chainId: hexlify(chainId) }]
       })
