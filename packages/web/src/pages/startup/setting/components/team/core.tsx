@@ -2,7 +2,7 @@ import { ULazyImage, UPaginatedList, UPaginatedListPropsType, message } from '@c
 import { DeleteFilled, PenOutlined, SettingOutlined } from '@comunion/icons'
 import dayjs from 'dayjs'
 import { defineComponent, ref, computed, toRaw, provide } from 'vue'
-import { useGroup } from '../../../hooks/useGroup'
+import { useGroup } from '../../../new/hooks/useGroup'
 import AddGroup from './addGroup'
 import AddTeamMember from './addTeamMember'
 import AddTeamMemberDialog, { editComerData } from './addTeamMemberDialog'

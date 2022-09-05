@@ -2,7 +2,7 @@ import { MenuOption, UBreadcrumb, UBreadcrumbItem, USpin } from '@comunion/compo
 import { ArrowLeftOutlined } from '@comunion/icons'
 import { defineComponent, ref } from 'vue'
 import { useRoute } from 'vue-router'
-import { useStartup } from '../hooks/useStartup'
+import { useStartup } from '../new/hooks/useStartup'
 import Dapp from './components/dapp'
 import Finance from './components/finance'
 import Governance from './components/governance'
