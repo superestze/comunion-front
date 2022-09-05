@@ -11,20 +11,20 @@ const TheHeader = defineComponent({
   setup() {
     const navigations = [
       {
-        name: 'startup',
+        name: 'Startup',
         url: '/startup/list'
       },
       {
-        name: 'marketplace',
+        name: 'Marketplace',
         url: '/bounty/list',
         disabled: false
       },
       {
-        name: 'finance',
+        name: 'dCrowdfunding',
         url: '/crowdfunding/list'
       },
       {
-        name: 'governance',
+        name: 'Governance',
         url: '/governance/list',
         disabled: true
       }
@@ -77,7 +77,7 @@ const TheHeader = defineComponent({
             <RouterLink
               key={nav.name}
               class={[
-                'transition u-body2 font-bold capitalize',
+                'transition u-body2 font-bold ',
                 nav.disabled ? '!text-grey4 cursor-default' : 'text-primary1 hover:text-primary'
               ]}
               activeClass={[nav.disabled ? '' : '!text-primary'].join(' ')}
