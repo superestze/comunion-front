@@ -27,8 +27,7 @@ export default defineConfig({
     }
   },
   define: {
-    'process.env.NODE_DEBUG': false,
-    global: {}
+    'process.env.NODE_DEBUG': false
   },
   // optimizeDeps: {
   //   include: ['bn.js', 'hash.js']

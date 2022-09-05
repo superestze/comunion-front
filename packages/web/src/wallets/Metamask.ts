@@ -7,7 +7,7 @@ let _instance: MetamaskWallet | undefined
 
 export default class MetamaskWallet extends AbstractWallet {
   constructor() {
-    super('Metamask', new MetamaskProvider((<any>globalThis).ethereum))
+    super('Metamask', new MetamaskProvider(window.ethereum))
   }
 
   static getInstance(): AbstractWallet | undefined {
@@ -22,15 +22,15 @@ export default class MetamaskWallet extends AbstractWallet {
   }
 
   static checkAvaliable(): boolean {
-    return !!(<any>globalThis).ethereum
+    return !!window.ethereum
   }
   prepare() {
-    return (<any>globalThis).ethereum.request?.({ method: 'eth_requestAccounts' })
+    return window.ethereum.request?.({ method: 'eth_requestAccounts' })
   }
   async addNetwork(network: ChainNetworkType): Promise<boolean> {
     if (!window.ethereum) return Promise.resolve(false)
     try {
-      await (<any>globalThis).ethereum.request!({
+      await window.ethereum.request!({
         method: 'wallet_addEthereumChain',
         params: [
           {
@@ -55,7 +55,7 @@ export default class MetamaskWallet extends AbstractWallet {
   }
   async switchNetwork(chainId: number): Promise<boolean> {
     try {
-      await (<any>globalThis).ethereum.request!({
+      await window.ethereum.request!({
         method: 'wallet_switchEthereumChain',
         params: [{ chainId: hexlify(chainId) }]
       })
