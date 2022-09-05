@@ -21,7 +21,7 @@ export default class MetamaskWallet extends AbstractWallet {
   }
 
   static checkAvaliable(): boolean {
-    return !!(<any>globalThis).ethereum
+    return !!window.ethereum
   }
   prepare() {
     return (<any>globalThis).ethereum.request?.({ method: 'eth_requestAccounts' })
