@@ -6,11 +6,11 @@ import { allNetworks, ChainNetworkType } from '@/constants'
 let _instance: CoinbaseWallet | undefined
 
 export default class CoinbaseWallet extends AbstractWallet {
-  _CoinbaseWalletProvider: any = new CoinbaseWalletProvider()
+  _coinbaseWalletProvider: any = new CoinbaseWalletProvider()
   constructor() {
-    const _CoinbaseWalletProvider = new CoinbaseWalletProvider()
-    super('CoinbaseWallet', _CoinbaseWalletProvider)
-    this._CoinbaseWalletProvider = _CoinbaseWalletProvider
+    const _coinbaseWalletProvider = new CoinbaseWalletProvider()
+    super('CoinbaseWallet', _coinbaseWalletProvider)
+    this._coinbaseWalletProvider = _coinbaseWalletProvider
   }
 
   static getInstance(): AbstractWallet | undefined {
@@ -31,14 +31,14 @@ export default class CoinbaseWallet extends AbstractWallet {
     return !!window.ethereum
   }
   prepare() {
-    return this._CoinbaseWalletProvider.ethereum.request?.({
+    return this._coinbaseWalletProvider.ethereum.request?.({
       method: 'eth_requestAccounts'
     })
   }
   async addNetwork(network: ChainNetworkType): Promise<boolean> {
-    if (!this._CoinbaseWalletProvider.ethereum) return Promise.resolve(false)
+    if (!this._coinbaseWalletProvider.ethereum) return Promise.resolve(false)
     try {
-      await this._CoinbaseWalletProvider.ethereum.request!({
+      await this._coinbaseWalletProvider.ethereum.request!({
         method: 'wallet_addEthereumChain',
         params: [
           {
@@ -63,7 +63,7 @@ export default class CoinbaseWallet extends AbstractWallet {
   }
   async switchNetwork(chainId: number): Promise<boolean> {
     try {
-      await this._CoinbaseWalletProvider.ethereum.request!({
+      await this._coinbaseWalletProvider.ethereum.request!({
         method: 'wallet_switchEthereumChain',
         params: [{ chainId: hexlify(chainId) }]
       })
