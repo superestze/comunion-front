@@ -1,6 +1,6 @@
 import { UStartupLogo, UTag } from '@comunion/components'
-// import dayjs from 'dayjs'
 import { CalendarOutlined, StageOutlined } from '@comunion/icons'
+import dayjs from 'dayjs'
 import { format } from 'timeago.js'
 import { defineComponent, PropType, reactive, onMounted, ref } from 'vue'
 import { useRouter } from 'vue-router'
@@ -37,9 +37,10 @@ const StartupCard = defineComponent({
       getStartup(props.startup?.startupId)
       date.value = format(props.startup.createdTime, 'comunionTimeAgo')
     })
+    const isExpired = dayjs.utc(props.startup.applyCutoffDate).unix() <= dayjs().utcOffset(0).unix()
+    const status = props.startup.applicantCount <= 0 && isExpired ? 'Expired' : props.startup.status
     const color = BOUNTY_TYPES_COLOR_MAP.find((item: { label: string }) => {
-      const label = item.label == 'Started working' ? 'Work started' : item.label
-      return label === props.startup.status
+      return item.label === status
     })
 
     const handleCard = (bountyId: number) => () => {

@@ -219,7 +219,7 @@ const BountyBasicInfo = defineComponent({
             h(
               <div>
                 Applicants deposit
-                <span class="text-xs ml-4 text-grey4">
+                <span class="font-normal text-xs ml-4 text-grey4">
                   Applicant must deposit usdc for applying the bounty
                 </span>
               </div>
