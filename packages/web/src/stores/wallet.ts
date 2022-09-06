@@ -158,7 +158,7 @@ export const useWalletStore = defineStore('wallet', {
         WALLET_CONSTAST_TYPE !== walletType &&
         window.location.pathname !== '/auth/login'
       ) {
-        const providers = (window.ethereum as coinbaseWindowType).providers
+        const providers = (window.ethereum as coinbaseWindowType)?.providers || []
         providers.map(item => {
           item.close && item.close()
         })
