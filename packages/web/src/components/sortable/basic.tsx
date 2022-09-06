@@ -73,13 +73,16 @@ export default defineComponent({
       propData => {
         if (
           Array.isArray(propData) &&
+          propData.length &&
           !propData.filter(e => [2, 3, 4, 5].indexOf(e) === -1).length
         ) {
           list.value = propData.map(index => {
             return initialData[initialData.findIndex(e => e.id === index)]
           })
         } else {
-          console.warn(`init value is ignore`)
+          list.value = [2, 3, 4, 5].map(index => {
+            return initialData[initialData.findIndex(e => e.id === index)]
+          })
         }
       },
       {
