@@ -93,7 +93,7 @@ export default defineComponent({
               src={this.startupInfo?.logo || ''}
               width="30"
               height="30"
-              class="bg-white rounded-md !object-contain"
+              class="bg-white rounded-md h-full w-full !object-cover"
             />
           </div>
           <div class="flex items-center">
