@@ -1445,6 +1445,7 @@ export const services = {
          * @description logo
          */
         bountyId: number
+        applyCutoffDate: string
         /**
          * @description 上链状态
          */
@@ -1542,6 +1543,7 @@ export const services = {
          * @description logo
          */
         bountyId: number
+        applyCutoffDate: string
         startupId: number
         logo: string
         /**
@@ -1637,6 +1639,7 @@ export const services = {
          * @description logo
          */
         bountyId: number
+        applyCutoffDate: string
         /**
          * @description 上链状态
          */
@@ -1732,6 +1735,7 @@ export const services = {
          * @description logo
          */
         bountyId: number
+        applyCutoffDate: string
         startupId: number
         logo: string
         /**
