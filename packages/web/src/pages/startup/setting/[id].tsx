@@ -14,6 +14,18 @@ import Social from './components/social'
 import { contactList } from './components/social/util'
 import { Team } from './components/team'
 
+export const getContactList = (startupInfo: { [x: string]: any }) => {
+  return contactList
+    .map(item => {
+      const value = startupInfo[item.name]
+      return {
+        socialType: value ? item.value : 0,
+        socialLink: value
+      }
+    })
+    .filter(e => e.socialType !== 0)
+}
+
 export default defineComponent({
   setup() {
     const loading = ref<boolean>(false)
@@ -22,24 +34,11 @@ export default defineComponent({
     const route = useRoute()
     startup.get(route.params.id as string)
 
-    const getContactList = (startupInfo: { [x: string]: any }) => {
-      return contactList
-        .map(item => {
-          const value = startupInfo[item.name]
-          return {
-            socialType: value ? item.value : 0,
-            socialLink: value
-          }
-        })
-        .filter(e => e.socialType !== 0)
-    }
-
     return {
       loading,
       currentEditComponent,
       startup: startup.detail,
-      route,
-      getContactList
+      route
     }
   },
   render() {
@@ -116,7 +115,7 @@ export default defineComponent({
               <Social
                 data={{
                   tags: this.startup?.hashTags.map(e => e.name) || [],
-                  socials: this.getContactList(this.startup || {})
+                  socials: getContactList(this.startup || { socialType: 1, socialLink: '' })
                 }}
                 startupId={this.route.params.id as string}
               />

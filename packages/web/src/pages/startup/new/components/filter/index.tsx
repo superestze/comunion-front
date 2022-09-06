@@ -1,18 +1,18 @@
-import { defineComponent, PropType, ref } from 'vue'
+import { defineComponent, ref } from 'vue'
 import { ModuleTags } from '@/components/Tags'
 
 export default defineComponent({
   props: {
-    tasks: {
-      type: Array as PropType<string[]>,
-      default: () => [],
+    startupId: {
+      type: String,
       required: true
     }
   },
-  setup() {
-    const tag = ref<any>()
+  setup(props) {
+    const tasks = ref(['All', 'Bounty', 'Crowdfunding', 'Governance', 'Other dapp'])
+
     return {
-      tag
+      tasks
     }
   },
   emits: ['selectedTagChange'],
@@ -21,12 +21,8 @@ export default defineComponent({
       this.$emit('selectedTagChange', selectedList)
     }
     return (
-      <div class="bg-white rounded-lg border mb-6 relative overflow-hidden p-6">
-        <ModuleTags
-          tasks={this.tasks}
-          onSelectedChange={handleSelectedChange}
-          ref={(ref: any) => (this.tag = ref)}
-        />
+      <div class="bg-white border rounded-lg mb-6 p-6 relative overflow-hidden">
+        <ModuleTags tasks={this.tasks} onSelectedChange={handleSelectedChange} />
       </div>
     )
   }

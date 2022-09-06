@@ -1,11 +1,10 @@
 import { UCard, UNoContent } from '@comunion/components'
 import { EmptyFilled } from '@comunion/icons'
 import { defineComponent, ref } from 'vue'
-import BountiesCard from '@/pages/bounty/components/BountyCard'
+import CrowdfundingMiniCard from './CrowdfundingMiniCard'
 import { ServiceReturn, services } from '@/services'
 
-type BountyType = NonNullable<ServiceReturn<'bounty@startup-bounty-list'>>['rows']
-
+type DataType = NonNullable<ServiceReturn<'crowdfunding@crowdfunding-list-of-startup'>>
 export default defineComponent({
   props: {
     startupId: {
@@ -14,33 +13,36 @@ export default defineComponent({
     }
   },
   setup(props) {
-    const bounties = ref<BountyType>([])
+    const list = ref<DataType>([])
     const getBounties = async () => {
-      const { error, data } = await services['bounty@startup-bounty-list']({
-        page: 1,
-        limit: 99,
+      const { error, data } = await services['crowdfunding@crowdfunding-list-of-startup']({
         startupId: props.startupId
       })
       if (!error) {
-        bounties.value.push(...(data!.rows ?? []))
+        list.value = data || []
       }
     }
     getBounties()
     return {
-      bounties,
+      list,
       getBounties
     }
   },
   render() {
     return (
-      <UCard title="BOUNTIES" class="mb-6">
-        {Array.isArray(this.bounties) && this.bounties.length > 0 ? (
-          this.bounties.map(item => <BountiesCard startup={item} key={item.bountyId} noBorder />)
+      <UCard title="CROWDFUNDING" class="mb-6">
+        {Array.isArray(this.list) && this.list.length > 0 ? (
+          this.list
+            .filter(item => item.status !== 5)
+            .map(item => <CrowdfundingMiniCard info={item} key={item.crowdfundingId} />)
         ) : (
           <UNoContent textTip="TO BE EMPTY">
             <EmptyFilled />
           </UNoContent>
         )}
+        {/* <UNoContent textTip="TO BE DEV">
+          <EmptyFilled />
+        </UNoContent> */}
       </UCard>
     )
   }

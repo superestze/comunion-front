@@ -1,16 +1,14 @@
 import { UButton, UPopover, UStartupLogo, UTag } from '@comunion/components'
 import { HookFilled, PlusOutlined } from '@comunion/icons'
-import { defineComponent, computed, ref } from 'vue'
+import { defineComponent, computed, ref, watch, PropType } from 'vue'
 
 import { useStartupProfile } from '../../hooks/useStartupProfile'
-import test from './test.png'
+import defaultCover from './assets/cover.png'
 import SocialIcon from '@/components/SocialIcon'
-import {
-  getStartupTypeFromNumber,
-  SocialTypeList,
-  StartupTypesType,
-  STARTUP_TYPES_COLOR_MAP
-} from '@/constants'
+import { getStartupTypeFromNumber, StartupTypesType, STARTUP_TYPES_COLOR_MAP } from '@/constants'
+import { getContactList } from '@/pages/startup/setting/[id]'
+import { contactList } from '@/pages/startup/setting/components/social/util'
+import { StartupDetail } from '@/types'
 
 export default defineComponent({
   props: {
@@ -18,35 +16,53 @@ export default defineComponent({
       type: String,
       required: true
     },
-    name: {
-      type: String,
-      required: true
-    },
-    mode: {
-      type: Number,
-      required: true
-    },
-    mission: {
-      type: String,
+    startup: {
+      type: Object as PropType<StartupDetail>,
       required: true
     }
   },
   setup(props) {
     const modeName = computed(() => {
-      return getStartupTypeFromNumber(props.mode) as StartupTypesType
+      return getStartupTypeFromNumber(props.startup.mode) as StartupTypesType
     })
     const userIsFollow = ref<boolean>(false)
     const loading = ref<boolean>(false)
     const profile = useStartupProfile()
     const { toggleFollowStartup, getUserIsFollow } = profile
+
     getUserIsFollow(props.startupId)
       .then(() => (userIsFollow.value = true))
       .catch(() => (userIsFollow.value = false))
+
+    const startupInfo = ref<StartupDetail>()
+
+    watch(
+      () => props.startup,
+      () => {
+        startupInfo.value = props.startup
+      },
+      {
+        immediate: true
+      }
+    )
+
+    const socialList = computed(() => {
+      return (startupInfo.value ? getContactList(startupInfo.value) : []).map(item => {
+        const targetIndex = contactList.findIndex(type => type.value === item.socialType)
+        return {
+          ...item,
+          label: targetIndex === -1 ? '' : contactList[targetIndex].label
+        }
+      })
+    })
+
     return {
       modeName,
       toggleFollowStartup,
       userIsFollow,
-      loading
+      loading,
+      startupInfo,
+      socialList
     }
   },
   render() {
@@ -59,19 +75,32 @@ export default defineComponent({
         .finally(() => (this.loading = false))
     }
     return (
-      <div class="bg-white rounded-lg border mb-6 relative overflow-hidden">
-        <div class="h-75">
-          <img src={test} alt="bg" />
+      <div class="bg-white border rounded-lg mb-6  overflow-hidden">
+        <div class="h-13.125rem overflow-hidden">
+          <img
+            src={this.startupInfo?.cover || defaultCover}
+            alt="bg"
+            class="h-full object-cover w-full"
+          />
         </div>
-        <div class="absolute w-30 h-30 rounded-8px left-10 top-60">
-          <UStartupLogo src={''} width="30" height="30" class="rounded !object-contain bg-white" />
-        </div>
-        <div class="flex justify-between mt-6">
+
+        <div class="flex mt-4 justify-between relative">
+          <div
+            class="rounded-8px h-30 bottom-2 left-10 w-30 absolute overflow-hidden"
+            style="box-shadow: 2px 6px 12px rgba(69, 68, 132, 0.25);"
+          >
+            <UStartupLogo
+              src={''}
+              width="30"
+              height="30"
+              class="bg-white rounded-md !object-contain"
+            />
+          </div>
           <div class="flex items-center">
-            <p class="ml-46 u-h1">{this.name}</p>
-            {this.mode > 0 && (
+            <p class="ml-46 u-h2">{this.startupInfo?.name}</p>
+            {this.startupInfo && this.startupInfo.mode > 0 && (
               <UTag
-                class="ml-5 !u-body3-pure h-5"
+                class="h-5 ml-5 u-tag2"
                 type="filled"
                 bgColor={STARTUP_TYPES_COLOR_MAP[this.modeName]}
               >
@@ -84,45 +113,54 @@ export default defineComponent({
               type="primary"
               loading={this.loading}
               ghost
-              class="w-30 mr-10"
+              class="mr-10 w-30"
               size="small"
               onClick={() => handleFollowStartup('unfollow')}
             >
-              <HookFilled class="w-4.5 mr-1" />
+              <HookFilled class="mr-1 w-4.5" />
               Unconnect
             </UButton>
           ) : (
             <UButton
               type="primary"
               loading={this.loading}
-              class="w-30 mr-10"
+              class="mr-10 w-30"
               size="small"
               onClick={() => handleFollowStartup('follow')}
             >
-              <PlusOutlined class="w-4.5 mt-1 mb-3px" />
+              <PlusOutlined class="mt-1 mb-3px w-4.5" />
               Connect
             </UButton>
           )}
         </div>
-        <div class="flex justify-between mt-9 ml-10 mr-10 mb-10">
+        <div class="flex mt-9 mr-10 mb-10 ml-10 justify-between">
           <div class="flex flex-col">
             <div class="flex gap-2">
-              <p class="flex rounded-2px overflow-hidden h-6 px-2 py-1 text-primary1 border border-primary1 text-12px items-center justify-center">
-                123123
-              </p>
+              {Array.isArray(this.startupInfo?.hashTags) &&
+                this.startupInfo?.hashTags.map((item: { name: string }, i: number) => {
+                  return (
+                    <UTag key={i} class="!border-1 !border-[#3F2D99] !text-[#3F2D99]">
+                      {item.name}
+                    </UTag>
+                  )
+                })}
             </div>
-            <p class="u-body2 mt-5 w-180 ">{this.mission}</p>
-          </div>
-          <div class="flex flex-wrap gap-4 items-end">
-            {SocialTypeList.map(item => (
-              <UPopover
-                placement="top"
-                v-slots={{
-                  trigger: () => <SocialIcon icon={item.value} outWrapper="w-10 h-10" />,
-                  default: () => <div class="flex m-3 cursor-pointer">{item.value}</div>
-                }}
-              />
-            ))}
+            <p class="mt-5 mb-10 w-180 u-body2">{this.startupInfo?.mission}</p>
+            <div class="flex flex-wrap gap-4">
+              {this.socialList.map(item => (
+                <UPopover
+                  placement="bottom"
+                  v-slots={{
+                    trigger: () => (
+                      <a href={item.socialLink} target="_blank">
+                        <SocialIcon icon={item.label} outWrapper="w-10 h-10" />
+                      </a>
+                    ),
+                    default: () => <div class="cursor-pointer flex m-3">{item.label}</div>
+                  }}
+                />
+              ))}
+            </div>
           </div>
         </div>
       </div>
