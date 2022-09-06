@@ -38,7 +38,7 @@ export const StartupInfo = defineComponent({
       getStartupByComerId()
     })
     const toStartupDetail = (startupId: number) => {
-      router.push(`/startup/detail?startupId=${startupId}`)
+      router.push(`/startup/${startupId}`)
     }
     return {
       startups,
@@ -53,7 +53,7 @@ export const StartupInfo = defineComponent({
         <div class="flex flex-wrap pt-10">
           {this.startups?.list.slice(0, 8).map(startup => (
             <div
-              class="basis-1/2 mb-10 truncate cursor-pointer"
+              class="cursor-pointer mb-10 truncate basis-1/2"
               onClick={() => this.toStartupDetail(startup.id)}
             >
               <StartupInfoItem key={startup.id} startupInfo={startup} />
@@ -62,10 +62,10 @@ export const StartupInfo = defineComponent({
         </div>
         {(this.startups?.total || 0) > MAX_SHOW_COUNT && (
           <div
-            class="flex justify-end items-center text-primary cursor-pointer"
+            class="cursor-pointer flex text-primary justify-end items-center"
             onClick={this.showAllStartups}
           >
-            <span class="u-title2 mr-2 text-primary">View all</span>
+            <span class="mr-2 text-primary u-title2">View all</span>
             <ArrowRightOutlined class="text-xs" />
           </div>
         )}
@@ -79,7 +79,7 @@ export const StartupInfo = defineComponent({
                 {this.startups?.list.length
                   ? this.startups?.list.map(startup => (
                       <div
-                        class="mb-10 cursor-pointer"
+                        class="cursor-pointer mb-10"
                         onClick={() => this.toStartupDetail(startup.id)}
                       >
                         <StartupInfoItem startupInfo={startup} />

@@ -90,7 +90,7 @@ export default defineComponent({
             style="box-shadow: 2px 6px 12px rgba(69, 68, 132, 0.25);"
           >
             <UStartupLogo
-              src={''}
+              src={this.startupInfo?.logo || ''}
               width="30"
               height="30"
               class="bg-white rounded-md !object-contain"

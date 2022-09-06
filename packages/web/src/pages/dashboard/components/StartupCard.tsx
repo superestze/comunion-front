@@ -25,7 +25,7 @@ const StartupCard = defineComponent({
     }
 
     const toStartDetail = () => {
-      router.push({ path: '/startup/detail', query: { startupId: props.startup.id } })
+      router.push({ path: `/startup/${props.startup.id}` })
     }
     return () => (
       <div class="cursor-pointer flex h-28 w-full items-center" onClick={toStartDetail}>
