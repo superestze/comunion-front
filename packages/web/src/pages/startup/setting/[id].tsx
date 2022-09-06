@@ -2,7 +2,6 @@ import { MenuOption, UBreadcrumb, UBreadcrumbItem, USpin } from '@comunion/compo
 import { ArrowLeftOutlined } from '@comunion/icons'
 import { defineComponent, ref } from 'vue'
 import { useRoute } from 'vue-router'
-import { useStartup } from '../new/hooks/useStartup'
 import Dapp from './components/dapp'
 import Finance from './components/finance'
 import Governance from './components/governance'
@@ -13,6 +12,7 @@ import Sequence from './components/sequence'
 import Social from './components/social'
 import { contactList } from './components/social/util'
 import { Team } from './components/team'
+import { useStartup } from '@/pages/startup/hooks/useStartup'
 
 export const getContactList = (startupInfo: { [x: string]: any }) => {
   return contactList

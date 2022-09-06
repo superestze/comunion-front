@@ -2,13 +2,13 @@ import { ULazyImage, UPaginatedList, UPaginatedListPropsType, message } from '@c
 import { DeleteFilled, PenOutlined, SettingOutlined } from '@comunion/icons'
 import dayjs from 'dayjs'
 import { defineComponent, ref, computed, toRaw, provide } from 'vue'
-import { useGroup } from '../../../new/hooks/useGroup'
 import AddGroup from './addGroup'
 import AddTeamMember from './addTeamMember'
 import AddTeamMemberDialog, { editComerData } from './addTeamMemberDialog'
 import defaultAvatar from './assets/avatar.png?url'
 import module from './hover.module.css'
 import { ModuleTags } from '@/components/Tags'
+import { useGroup } from '@/pages/startup/hooks/useGroup'
 import { ServiceReturn, services } from '@/services'
 
 type ListType = NonNullable<ServiceReturn<'startup@startup-group-member-list'>>['rows']

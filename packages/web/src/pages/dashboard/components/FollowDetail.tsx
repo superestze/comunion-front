@@ -2,8 +2,8 @@ import { UDrawer, UStartupLogo, UPopover } from '@comunion/components'
 import { PlusOutlined, ConfirmOutlined, ArrowRightOutlined } from '@comunion/icons'
 import { defineComponent, ref } from 'vue'
 import { useRouter } from 'vue-router'
-import { TeamHoverCard } from '../../startup/detail/components/Teams/TeamHoverCard'
 import AvatarSelect from '@/components/Profile/AvatarSelect'
+import { TeamHoverCard } from '@/pages/startup/detail/components/Teams/TeamHoverCard'
 import { services } from '@/services'
 
 const FollowDetail = defineComponent({
@@ -76,19 +76,19 @@ const FollowDetail = defineComponent({
       }
     }
     const toStartDetail = (val: number) => {
-      router.push({ path: '/startup/detail', query: { startupId: val } })
+      router.push({ path: `/startup/${val}` })
     }
     return () => (
       <>
-        <div class="w-40 h-25 rounded-lg bg-violet-50 mr-4 cursor-pointer" onClick={funFollow}>
-          <div class="u-headline2 text-32px font-700 text-primary mt-4 ml-4">
+        <div class="rounded-lg cursor-pointer bg-violet-50 h-25 mr-4 w-40" onClick={funFollow}>
+          <div class="font-700 mt-4 text-primary ml-4 text-32px u-headline2">
             {startupDates?.length}
           </div>
-          <div class="flex align-center ml-4 mt-4">
+          <div class="flex mt-4 ml-4 align-center">
             <div class="flex w-full">
-              <div class="u-body2  text-primary">Startup</div>
+              <div class="text-primary  u-body2">Startup</div>
               <div class="flex-1"></div>
-              <ArrowRightOutlined class="mt-1 mr-3 w-4 h-4 text-primary" />
+              <ArrowRightOutlined class="h-4 mt-1 mr-3 text-primary w-4" />
             </div>
           </div>
         </div>
@@ -111,15 +111,15 @@ const FollowDetail = defineComponent({
                     ) => {
                       return (
                         <div
-                          class="h-28 w-full flex items-center mb-5 cursor-pointer"
+                          class="cursor-pointer flex h-28 mb-5 w-full items-center"
                           onClick={() => {
                             toStartDetail(item.id)
                           }}
                           key={index}
                         >
-                          <div class="border-b-1 h-full w-full flex items-center pb-5">
-                            <div class="content flex items-center">
-                              <div class="h-full w-22 mr-5">
+                          <div class="flex h-full border-b-1 w-full pb-5 items-center">
+                            <div class="flex content items-center">
+                              <div class="h-full mr-5 w-22">
                                 <UPopover
                                   placement="left-start"
                                   v-slots={{
@@ -128,7 +128,7 @@ const FollowDetail = defineComponent({
                                         src={item!.logo}
                                         width="8"
                                         height="8"
-                                        class="w-20 h-20"
+                                        class="h-20 w-20"
                                       />
                                     ),
                                     default: () => <TeamHoverCard teamMember={item} />
@@ -136,7 +136,7 @@ const FollowDetail = defineComponent({
                                 />
                               </div>
                               <div>
-                                <div class="u-title1 mb-2 ">{item.name}</div>
+                                <div class="mb-2 u-title1 ">{item.name}</div>
                                 <div class="divide-x w-80 truncate">
                                   {item.hashTags
                                     ? item?.hashTags.map((tag: { name?: string }, i: number) => {
@@ -153,15 +153,15 @@ const FollowDetail = defineComponent({
                                 </div>
                               </div>
                             </div>
-                            <div class="justify-end ml-auto mr-1">
+                            <div class="ml-auto mr-1 justify-end">
                               {item.isDeleted && (
                                 <div
-                                  class="border-1 rounded-lg border-primary bg-primary text-primary w-30 h-10 flex cursor-pointer"
+                                  class="bg-primary border-primary rounded-lg cursor-pointer flex border-1 h-10 text-primary w-30"
                                   onClick={(e: Event) => plusStatusClick(item, e)}
                                 >
-                                  <div class="m-auto flex align-center">
-                                    <PlusOutlined class="mr-2 text-white w-6 h-6 align-center" />
-                                    <span class="u-title2 align-center text-white mt-2px">
+                                  <div class="flex m-auto align-center">
+                                    <PlusOutlined class="h-6 mr-2 text-white w-6 align-center" />
+                                    <span class="mt-2px text-white align-center u-title2">
                                       Follow
                                     </span>
                                   </div>
@@ -169,12 +169,12 @@ const FollowDetail = defineComponent({
                               )}
                               {!item.isDeleted && (
                                 <div
-                                  class="border-1 rounded-lg border-primary text-white w-30 h-10 flex cursor-pointer"
+                                  class="border-primary rounded-lg cursor-pointer flex border-1 h-10 text-white w-30"
                                   onClick={(e: Event) => checkedStatusClick(item, e)}
                                 >
-                                  <div class="m-auto flex align-center">
-                                    <ConfirmOutlined class="mr-2 text-primary bg-white h-6 items-center align-center" />
-                                    <span class="u-title2 align-center text-primary mt-2px">
+                                  <div class="flex m-auto align-center">
+                                    <ConfirmOutlined class="bg-white h-6 mr-2 text-primary items-center align-center" />
+                                    <span class="mt-2px text-primary align-center u-title2">
                                       Unfollow
                                     </span>
                                   </div>
