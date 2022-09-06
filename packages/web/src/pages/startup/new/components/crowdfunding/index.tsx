@@ -1,6 +1,7 @@
 import { UCard, UNoContent } from '@comunion/components'
 import { EmptyFilled } from '@comunion/icons'
 import { defineComponent, ref } from 'vue'
+import CrowdfundingMiniCard from './CrowdfundingMiniCard'
 import { ServiceReturn, services } from '@/services'
 
 type DataType = NonNullable<ServiceReturn<'crowdfunding@crowdfunding-list-of-startup'>>
@@ -29,17 +30,19 @@ export default defineComponent({
   },
   render() {
     return (
-      <UCard title="Crowdfunding" class="mb-6">
-        {/* {Array.isArray(this.list) && this.list.length > 0 ? (
-          this.list.map(item => <DataItem info={item} key={item.crowdfundingId} />)
+      <UCard title="CROWDFUNDING" class="mb-6">
+        {Array.isArray(this.list) && this.list.length > 0 ? (
+          this.list
+            .filter(item => item.status !== 5)
+            .map(item => <CrowdfundingMiniCard info={item} key={item.crowdfundingId} />)
         ) : (
           <UNoContent textTip="TO BE EMPTY">
             <EmptyFilled />
           </UNoContent>
-        )} */}
-        <UNoContent textTip="TO BE DEV">
+        )}
+        {/* <UNoContent textTip="TO BE DEV">
           <EmptyFilled />
-        </UNoContent>
+        </UNoContent> */}
       </UCard>
     )
   }

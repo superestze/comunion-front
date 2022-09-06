@@ -1822,6 +1822,7 @@ export const services = {
        */
       rows: {
         bountyId: number
+        applyCutoffDate: string
         startupId: number
         logo: string
         /**
