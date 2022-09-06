@@ -61,6 +61,11 @@ const UWalletConnect = defineComponent({
         allowed: true
       },
       {
+        name: 'Coinbase Wallet',
+        icon: IconCoinbaseWallet,
+        allowed: true
+      },
+      {
         name: 'WalletConnect',
         icon: IconWalletConnect,
         allowed: true
@@ -68,11 +73,6 @@ const UWalletConnect = defineComponent({
       {
         name: 'TrustWallet',
         icon: IconTrustWallet,
-        allowed: true
-      },
-      {
-        name: 'Coinbase Wallet',
-        icon: IconCoinbaseWallet,
         allowed: true
       },
       {

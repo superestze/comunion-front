@@ -8,7 +8,8 @@ import {
   STORE_KEY_WALLET_CONNECTED,
   STORE_KEY_WALLET_TYPE,
   allNetworks,
-  supportedChainIds
+  supportedChainIds,
+  STORE_KEY_WALLET_CONSTAST_TYPE
 } from '@/constants'
 import router from '@/router'
 import { ServiceReturn, services } from '@/services'
@@ -36,7 +37,11 @@ export type WalletState = {
   // bind wallet modal opened
   bindModalOpened: boolean
 }
-
+export type coinbaseWindowType = {
+  providers: Array<{
+    close: () => void
+  }>
+}
 // promise resolve
 let _resolve: (() => void) | undefined
 let _reject: (() => void) | undefined
@@ -142,11 +147,34 @@ export const useWalletStore = defineStore('wallet', {
       this.resolveWalletConnect(false)
     },
     async onSelectWallet(walletType: SupportedWalletTypes) {
+      /**
+       * when change wallet You need to close coinbase wallet connect
+       */
       const wallet = await getWallet(walletType)
+      const WALLET_CONSTAST_TYPE = storage('local').get<string>(STORE_KEY_WALLET_CONSTAST_TYPE)
+      const userStore = useUserStore()
+      if (
+        WALLET_CONSTAST_TYPE &&
+        WALLET_CONSTAST_TYPE !== walletType &&
+        window.location.pathname !== '/auth/login'
+      ) {
+        const providers = (window.ethereum as coinbaseWindowType).providers
+        providers.map(item => {
+          item.close && item.close()
+        })
+        this.disconnectWallet()
+        storage('local').remove(STORE_KEY_WALLET_CONSTAST_TYPE)
+        message.info('Account switched, please re-login')
+        userStore.onLogout()
+        router.replace('/auth/login')
+        return undefined
+      }
       if (wallet) {
         this._onWallectConnect(wallet)
         storage('local').set(STORE_KEY_WALLET_TYPE, walletType)
         storage('local').set(STORE_KEY_WALLET_CONNECTED, 1)
+        // STORE_KEY_WALLET_CONSTAST_TYPE need to compare your wallet choices
+        storage('local').set(STORE_KEY_WALLET_CONSTAST_TYPE, walletType)
       }
       this.connectModalOpened = false
       return wallet

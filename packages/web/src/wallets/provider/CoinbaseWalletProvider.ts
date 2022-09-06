@@ -7,12 +7,14 @@ const logger = new ethers.utils.Logger('0.1.0')
 // so we need to poll for account change
 export class CoinbaseWalletProvider extends ethers.providers.Web3Provider {
   ethereum: ethers.providers.ExternalProvider
+  _polling: number | undefined
+  _account: string | undefined
   constructor() {
     const APP_NAME = 'comunion'
     const APP_LOGO_URL = ''
     // url and infuraId (https://infura.io/zh)
     // const DEFAULT_ETH_JSONRPC_URL = `https://d.app.comunion.io/${WALLET_INFURA_ID}`
-    const DEFAULT_ETH_JSONRPC_URL = `http://localhost:9001/${WALLET_INFURA_ID}`
+    const DEFAULT_ETH_JSONRPC_URL = `https://d.app.comunion.io/${WALLET_INFURA_ID}`
     const DEFAULT_CHAIN_ID = 1
     // Initialize Coinbase Wallet SDK
     const coinbaseWallet = new CoinbaseWalletSDK({
@@ -28,5 +30,42 @@ export class CoinbaseWalletProvider extends ethers.providers.Web3Provider {
   }
   getEthereum() {
     return this.ethereum
+  }
+  _startPollingAccount() {
+    this._polling = window.setTimeout(async () => {
+      try {
+        const account = await this.getSigner().getAddress()
+        if (account !== this._account) {
+          this.emit('account', account, this._account)
+          this._account = account
+        }
+        this._startPollingAccount()
+      } catch (error) {
+        // account disconnected
+        this.emit('account', undefined, this._account)
+        this._account = undefined
+      }
+    }, 1000)
+  }
+  _stopPollingAccount() {
+    if (this._polling) {
+      window.clearTimeout(this._polling)
+    }
+  }
+
+  on(eventName: ethers.providers.EventType, listener: ethers.providers.Listener): this {
+    super.on(eventName, listener)
+    if (this.listenerCount('account') > 0) {
+      this._startPollingAccount()
+    }
+    return this
+  }
+
+  off(eventName: ethers.providers.EventType, listener?: ethers.providers.Listener): this {
+    super.off(eventName, listener)
+    if (this.listenerCount('account') === 0) {
+      this._stopPollingAccount()
+    }
+    return this
   }
 }
