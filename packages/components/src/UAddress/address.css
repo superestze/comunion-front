@@ -1,12 +1,12 @@
 .u-address {
-  @apply flex items-center text-primary;
+  @apply flex text-primary items-center;
 
   &__link {
-    @apply u-title2 flex-1 mr-10 text-primary;
+    @apply flex-1 mr-4 text-primary truncate u-title2;
   }
 
   &__copy {
-    @apply ml-8px text-[16px] cursor-pointer;
+    @apply cursor-pointer ml-8px text-[16px];
   }
 
   &__icon {
