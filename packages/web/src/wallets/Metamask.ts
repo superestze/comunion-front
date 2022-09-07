@@ -4,7 +4,13 @@ import AbstractWallet from './AbstractWallet'
 import { MetamaskProvider } from './provider/MetamaskProvider'
 import { allNetworks, ChainNetworkType } from '@/constants'
 let _instance: MetamaskWallet | undefined
-
+type metaMaskType = {
+  providers: Array<{
+    _metamask?: () => void | undefined
+    request?: (request: { method: string }) => Promise<any>
+  }>
+  request?: (request: { method: string }) => Promise<any>
+}
 export default class MetamaskWallet extends AbstractWallet {
   constructor() {
     super('Metamask', new MetamaskProvider(window.ethereum))
@@ -25,7 +31,12 @@ export default class MetamaskWallet extends AbstractWallet {
     return !!window.ethereum
   }
   prepare() {
-    return (window.ethereum as ExternalProvider).request?.({ method: 'eth_requestAccounts' })
+    const ethereum = window.ethereum as metaMaskType
+    const prepareFn = ethereum?.providers?.find(item => item._metamask) || ethereum
+    if (prepareFn) {
+      return prepareFn?.request?.({ method: 'eth_requestAccounts' })
+    }
+    return undefined
   }
   async addNetwork(network: ChainNetworkType): Promise<boolean> {
     if (!window.ethereum) return Promise.resolve(false)
