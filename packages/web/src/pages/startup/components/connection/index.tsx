@@ -75,7 +75,10 @@ export default defineComponent({
             }}
             v-slots={{
               avatar: () => (
-                <div class="flex h-9 w-9 items-center overflow-hidden">
+                <div
+                  class="cursor-pointer flex h-9 w-9 items-center overflow-hidden"
+                  onClick={() => this.$router.push({ path: '/comer', query: { id: item.comerId } })}
+                >
                   <ULazyImage src={item.comerAvatar || defaultAvatar} />
                 </div>
               )
