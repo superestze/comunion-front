@@ -88,7 +88,7 @@ export const CrowdfundingInfo = defineComponent({
         )}
         {props.info.detail && (
           <div class="mb-6">
-            <div class="u-title2 mb-1">Crowdfunding detail：</div>
+            <div class="u-title2 mb-1">dCrowdfunding detail：</div>
             <a class="u-body2 text-primary" target="__blank" href={props.info.detail}>
               {props.info.detail}
             </a>
@@ -96,7 +96,7 @@ export const CrowdfundingInfo = defineComponent({
         )}
         <div class="u-body2 break-all mt-6 mb-10" v-html={props.info.description}></div>
         <div class="grid grid-cols-[220px,1fr] gap-y-6 u-body2">
-          <div class="text-grey3">Crowdfunding Address :</div>
+          <div class="text-grey3">dCrowdfunding Address :</div>
           <div class="text-primary">
             <a
               target="_blank"
@@ -145,7 +145,7 @@ export const CrowdfundingInfo = defineComponent({
           <div>
             {sellCoinInfo.value.supply} {sellCoinInfo.value.symbol}
           </div>
-          <div class="u-body2 text-grey3">Token For Crowdfunding :</div>
+          <div class="u-body2 text-grey3">Token For dCrowdfunding :</div>
           <div>
             {props.info.raiseGoal * props.info.buyPrice} {sellCoinInfo.value.symbol}
           </div>
@@ -159,9 +159,9 @@ export const CrowdfundingInfo = defineComponent({
           <div>{props.info.sellTax} %</div>
           <div class="u-body2 text-grey3">Maximum Sell :</div>
           <div>{props.info.maxSellPercent} % of the bought token amount</div>
-          <div class="u-body2 text-grey3">Crowdfunding Start Time (UTC) :</div>
+          <div class="u-body2 text-grey3">dCrowdfunding Start Time (UTC) :</div>
           <div>{dayjs.utc(props.info.startTime).format('YYYY-MM-DD HH:mm')}</div>
-          <div class="u-body2 text-grey3">Crowdfunding End Time (UTC) :</div>
+          <div class="u-body2 text-grey3">dCrowdfunding End Time (UTC) :</div>
           <div>{dayjs.utc(props.info.endTime).format('YYYY-MM-DD HH:mm')}</div>
         </div>
       </UCard>

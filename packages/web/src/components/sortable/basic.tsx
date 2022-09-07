@@ -28,7 +28,7 @@ const initialData = [
     icon: () => <SortIcon1Outlined class="text-primary w-full" />
   },
   {
-    name: 'Crowdfunding',
+    name: 'dCrowdfunding',
     text: '',
     id: 3,
     icon: () => <SortIcon2Outlined class="text-primary w-full" />

@@ -82,7 +82,7 @@ const CreateBlock = defineComponent({
                   </div>
                   <div>
                     <div class="text-primary1 u-title2">Startup</div>
-                    {/* <div class="mt-1 text-grey2 text-xs font-semibold">
+                    {/* <div class="font-semibold mt-1 text-xs text-grey2">
                       Create your Startup, initial your dream
                     </div> */}
                   </div>
@@ -98,7 +98,7 @@ const CreateBlock = defineComponent({
                   </div>
                   <div>
                     <div class="text-primary1 u-title2">Bounty</div>
-                    {/* <div class="mt-1 text-grey2 text-xs font-semibold">
+                    {/* <div class="font-semibold mt-1 text-xs text-grey2">
                       Post your bounty to expand your startup
                     </div> */}
                   </div>
@@ -113,8 +113,8 @@ const CreateBlock = defineComponent({
                     <CreateOfferingFilled class="text-primary" />
                   </div>
                   <div>
-                    <div class="text-primary1 u-title2">Crowdfunding</div>
-                    {/* <div class="mt-1 text-grey2 text-xs font-semibold">
+                    <div class="text-primary1 u-title2">dCrowdfunding</div>
+                    {/* <div class="font-semibold mt-1 text-xs text-grey2">
                       Post your crowdfunding for start-up capital
                     </div> */}
                   </div>
@@ -123,7 +123,7 @@ const CreateBlock = defineComponent({
             }
           ]}
         >
-          <UButton type="primary" size="small" class="w-19.25 text-white u-body2 h-8">
+          <UButton type="primary" size="small" class="h-8 text-white w-19.25 u-body2">
             Create
           </UButton>
           {/* <button class={[styles.btn, ctx.attrs.class]}></button> */}

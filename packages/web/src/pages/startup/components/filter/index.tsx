@@ -9,7 +9,7 @@ export default defineComponent({
     }
   },
   setup(props) {
-    const tasks = ref(['All', 'Bounty', 'Crowdfunding', 'Governance', 'Other dapp'])
+    const tasks = ref(['All', 'Bounty', 'dCrowdfunding', 'Governance', 'Other dapp'])
 
     return {
       tasks
