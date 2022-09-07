@@ -86,11 +86,9 @@ export default defineComponent({
                 </div>
               ),
               content: () => (
-                <div class="flex flex-col">
-                  <p class="font-600 w-full text-16px text-grey1">{item.comerProfile?.name}</p>
-                  <p class="font-400 mt-1 w-full text-12px text-grey3">
-                    {item.comerProfile?.location}
-                  </p>
+                <div class="flex-1 overflow-hidden">
+                  <p class="text-grey1 truncate u-title3">{item.comerProfile?.name}</p>
+                  <p class="u-tag truncate !px-0 !text-grey3">{item.comerProfile?.location}</p>
                 </div>
               )
             }}

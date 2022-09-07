@@ -55,7 +55,7 @@ const StartupCard = defineComponent({
       ? 'bg-white cursor-pointer py-2 mt-1.5rem '
       : 'bg-white rounded-md cursor-pointer border-1 h-40 mb-1.5rem px-10 pt-2rem hover:shadow-md'
 
-    const skillTagShowLength = 4
+    const skillTagShowLength = 3
     const skillTagsList = props.miniCard
       ? props.startup.applicationSkills.slice(0, skillTagShowLength)
       : props.startup.applicationSkills
@@ -76,7 +76,12 @@ const StartupCard = defineComponent({
 
           <div class="flex-1 overflow-hidden">
             <div class="flex mb-2 items-center">
-              <div class="font-700 max-w-4/5 text-[#333] text-1rem leading-7 truncate">
+              <div
+                class={[
+                  'font-700 text-[#333] text-1rem leading-7 truncate',
+                  props.miniCard ? 'max-w-3/5' : 'max-w-4/5'
+                ]}
+              >
                 {props.startup.title}
               </div>
               <span
