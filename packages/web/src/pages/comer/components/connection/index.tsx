@@ -120,10 +120,8 @@ export default defineComponent({
                           v-slots={{
                             avatar: () => (
                               <div
-                                class="flex items-center w-9 h-9 overflow-hidden cursor-pointer"
-                                onClick={() =>
-                                  this.$router.push(`/startup/detail?startupId=${item.startupId}`)
-                                }
+                                class="cursor-pointer flex h-9 w-9 items-center overflow-hidden"
+                                onClick={() => this.$router.push(`/startup/${item.startupId}`)}
                               >
                                 <UStartupLogo src={item.startupLogo} width="9" height="9" />
                               </div>
@@ -139,7 +137,7 @@ export default defineComponent({
                   </UNoContent>
                 )}
                 {this.followedStartups.total.value > 5 && (
-                  <div class="flex justify-center mt-5">
+                  <div class="flex mt-5 justify-center">
                     <LoadingBtn
                       onMore={handleMore}
                       end={
@@ -167,7 +165,7 @@ export default defineComponent({
                           v-slots={{
                             avatar: () => (
                               <div
-                                class="flex items-center w-9 h-9 overflow-hidden cursor-pointer"
+                                class="cursor-pointer flex h-9 w-9 items-center overflow-hidden"
                                 onClick={() =>
                                   this.$router.push({ path: '/comer', query: { id: item.comerId } })
                                 }
@@ -186,7 +184,7 @@ export default defineComponent({
                   </UNoContent>
                 )}
                 {this.followComer.total.value > 5 && (
-                  <div class="flex justify-center mt-5">
+                  <div class="flex mt-5 justify-center">
                     <LoadingBtn
                       onMore={handleMore}
                       end={this.followComer.list.value.length >= this.followComer.total.value}
@@ -212,7 +210,7 @@ export default defineComponent({
                           v-slots={{
                             avatar: () => (
                               <div
-                                class="flex items-center w-9 h-9 overflow-hidden cursor-pointer"
+                                class="cursor-pointer flex h-9 w-9 items-center overflow-hidden"
                                 onClick={() =>
                                   this.$router.push({ path: '/comer', query: { id: item.comerId } })
                                 }
@@ -231,7 +229,7 @@ export default defineComponent({
                   </UNoContent>
                 )}
                 {this.connector.total.value > 5 && (
-                  <div class="flex justify-center mt-5">
+                  <div class="flex mt-5 justify-center">
                     <LoadingBtn
                       onMore={handleMore}
                       end={this.connector.list.value.length >= this.connector.total.value}

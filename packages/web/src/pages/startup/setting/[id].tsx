@@ -2,7 +2,6 @@ import { MenuOption, UBreadcrumb, UBreadcrumbItem, USpin } from '@comunion/compo
 import { ArrowLeftOutlined } from '@comunion/icons'
 import { defineComponent, ref } from 'vue'
 import { useRoute } from 'vue-router'
-import { useStartup } from '../hooks/useStartup'
 import Dapp from './components/dapp'
 import Finance from './components/finance'
 import Governance from './components/governance'
@@ -13,6 +12,19 @@ import Sequence from './components/sequence'
 import Social from './components/social'
 import { contactList } from './components/social/util'
 import { Team } from './components/team'
+import { useStartup } from '@/pages/startup/hooks/useStartup'
+
+export const getContactList = (startupInfo: { [x: string]: any }) => {
+  return contactList
+    .map(item => {
+      const value = startupInfo[item.name]
+      return {
+        socialType: value ? item.value : 0,
+        socialLink: value
+      }
+    })
+    .filter(e => e.socialType !== 0)
+}
 
 export default defineComponent({
   setup() {
@@ -22,24 +34,11 @@ export default defineComponent({
     const route = useRoute()
     startup.get(route.params.id as string)
 
-    const getContactList = (startupInfo: { [x: string]: any }) => {
-      return contactList
-        .map(item => {
-          const value = startupInfo[item.name]
-          return {
-            socialType: value ? item.value : 0,
-            socialLink: value
-          }
-        })
-        .filter(e => e.socialType !== 0)
-    }
-
     return {
       loading,
       currentEditComponent,
       startup: startup.detail,
-      route,
-      getContactList
+      route
     }
   },
   render() {
@@ -50,15 +49,15 @@ export default defineComponent({
     return (
       <USpin show={this.loading}>
         <UBreadcrumb class="mt-10 mb-10">
-          <UBreadcrumbItem v-slots={{ separator: () => <ArrowLeftOutlined /> }}></UBreadcrumbItem>
-          <UBreadcrumbItem v-slots={{ separator: () => <ArrowLeftOutlined /> }}>
+          <UBreadcrumbItem>
             <span
-              class="cursor-pointer text-primary uppercase u-label2"
+              class="cursor-pointer flex text-primary items-center u-label2"
               onClick={() => {
                 this.$router.go(-1)
               }}
             >
-              BACK
+              <ArrowLeftOutlined />
+              <span class="ml-1">BACK</span>
             </span>
           </UBreadcrumbItem>
         </UBreadcrumb>
@@ -107,13 +106,16 @@ export default defineComponent({
               />
             )}
             {this.currentEditComponent === 'TEAM' && (
-              <Team startupId={this.startup?.id as unknown as string} />
+              <Team
+                startupId={this.startup?.id as unknown as string}
+                founderId={this.startup?.comerID}
+              />
             )}
             {this.currentEditComponent === 'SOCIAL' && (
               <Social
                 data={{
                   tags: this.startup?.hashTags.map(e => e.name) || [],
-                  socials: this.getContactList(this.startup || {})
+                  socials: getContactList(this.startup || { socialType: 1, socialLink: '' })
                 }}
                 startupId={this.route.params.id as string}
               />

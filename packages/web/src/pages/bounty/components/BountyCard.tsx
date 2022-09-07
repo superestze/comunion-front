@@ -1,6 +1,6 @@
 import { UStartupLogo, UTag } from '@comunion/components'
-// import dayjs from 'dayjs'
 import { CalendarOutlined, StageOutlined } from '@comunion/icons'
+import dayjs from 'dayjs'
 import { format } from 'timeago.js'
 import { defineComponent, PropType, reactive, onMounted, ref } from 'vue'
 import { useRouter } from 'vue-router'
@@ -14,6 +14,10 @@ const StartupCard = defineComponent({
     startup: {
       type: Object as PropType<BountyType[number]>,
       required: true
+    },
+    miniCard: {
+      // miniCard style
+      type: Boolean
     }
   },
   setup(props, ctx) {
@@ -37,18 +41,28 @@ const StartupCard = defineComponent({
       getStartup(props.startup?.startupId)
       date.value = format(props.startup.createdTime, 'comunionTimeAgo')
     })
+    const isExpired = dayjs.utc(props.startup.applyCutoffDate).unix() <= dayjs().utcOffset(0).unix()
+    const status = props.startup.applicantCount <= 0 && isExpired ? 'Expired' : props.startup.status
     const color = BOUNTY_TYPES_COLOR_MAP.find((item: { label: string }) => {
-      const label = item.label == 'Started working' ? 'Work started' : item.label
-      return label === props.startup.status
+      return item.label === status
     })
 
     const handleCard = (bountyId: number) => () => {
       router.push(`/bounty/detail?bountyId=${bountyId}&from=0`)
     }
 
+    const wrapClass = props.miniCard
+      ? 'bg-white cursor-pointer py-2 mt-1.5rem '
+      : 'bg-white rounded-md cursor-pointer border-1 h-40 mb-1.5rem px-10 pt-2rem hover:shadow-md'
+
+    const skillTagShowLength = 4
+    const skillTagsList = props.miniCard
+      ? props.startup.applicationSkills.slice(0, skillTagShowLength)
+      : props.startup.applicationSkills
+
     return () => (
       <div
-        class="bg-white rounded-md cursor-pointer border-1 h-40 mb-1.5rem px-10 pt-2rem hover:shadow-md"
+        class={wrapClass}
         style="transition:all ease .3s"
         onClick={handleCard(props.startup.bountyId)}
       >
@@ -75,18 +89,23 @@ const StartupCard = defineComponent({
                 {color ? color.label : BOUNTY_TYPES_COLOR_MAP[0].label}
               </span>
             </div>
+            {/* skill tags miniCard */}
             <div class="flex flex-row flex-wrap items-center">
-              {props.startup.applicationSkills.length &&
-                props.startup.applicationSkills.map((tag: string, i: number) => {
-                  return (
-                    <UTag
-                      key={i}
-                      class="mr-2 mb-1 px-2 !border-[#3F2D99] !h-1.25rem !text-[#3F2D99] !leading-1.25rem"
-                    >
-                      {tag}
-                    </UTag>
-                  )
-                })}
+              {skillTagsList.map((tag: string, i: number) => {
+                return (
+                  <UTag
+                    key={i}
+                    class="mr-2 mb-1 px-2 !border-[#3F2D99] !h-1.25rem !text-[#3F2D99] !leading-1.25rem"
+                  >
+                    {tag}
+                  </UTag>
+                )
+              })}
+              {props.miniCard && props.startup.applicationSkills.length > skillTagShowLength && (
+                <UTag class="mr-2 mb-1 px-2 !border-[#3F2D99] !h-1.25rem !text-[#3F2D99] !leading-1.25rem">
+                  +{props.startup.applicationSkills.length - skillTagShowLength}
+                </UTag>
+              )}
             </div>
           </div>
 
@@ -110,7 +129,12 @@ const StartupCard = defineComponent({
             )
           })}
         </div>
-        <div class="flex ml-4.5rem text-0.75rem items-center">
+        <div
+          class={
+            'flex ml-4.5rem text-0.75rem items-center' +
+            (props.miniCard ? ' pb-6 border-b border-grey5' : '')
+          }
+        >
           <div class="flex flex-1 items-center">
             <span class="mr-1 text-[#5331F4]">
               {props.startup.paymentType === 'Stage' ? (

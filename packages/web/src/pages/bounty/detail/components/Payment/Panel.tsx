@@ -13,6 +13,7 @@ import Lock from './lock'
 import ReleaseDeposit from './releaseDeposit'
 import { APPLICANT_STATUS, BOUNTY_STATUS, USER_ROLE } from '@/constants'
 import { ServiceReturn } from '@/services'
+import { useBountyStore } from '@/stores'
 import { BountyContractInfoType } from '@/stores/bountyContract'
 
 export default defineComponent({
@@ -31,6 +32,7 @@ export default defineComponent({
     }
   },
   setup(props) {
+    const bountyStore = useBountyStore()
     const payMode = computed<'stage' | 'period'>(() => {
       return props.paymentInfo?.bountyPaymentInfo?.paymentMode === 1 ? 'stage' : 'period'
     })
@@ -67,12 +69,14 @@ export default defineComponent({
       setTimeout(timer, 1000)
     }
     timer()
+    const expiresIn = computed(() => new Date(bountyStore.detail?.expiresIn || '').getTime() / 1000)
     return {
       payMode,
       stageTerms,
       periodTerms,
       bountyApplicantAmount,
-      time
+      time,
+      expiresIn
     }
   },
   render() {
@@ -89,7 +93,8 @@ export default defineComponent({
                     <ApplyBounty
                       disabled={
                         this.bountyContractInfo.status === APPLICANT_STATUS.APPLIED ||
-                        this.bountyContractInfo.bountyStatus >= BOUNTY_STATUS.WORKSTARTED
+                        this.bountyContractInfo.bountyStatus >= BOUNTY_STATUS.WORKSTARTED ||
+                        this.expiresIn <= this.time
                       }
                       detailChainId={this.detailChainId}
                       applicantApplyStatus={this.bountyContractInfo.status}

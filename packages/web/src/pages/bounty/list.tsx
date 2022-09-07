@@ -34,6 +34,7 @@ const BountyPage = defineComponent({
     })
 
     const fetchData = async () => {
+      console.log('CreatedType', CreatedType.value)
       const { error, data } = await services['bounty@bounty-list(tab)']({
         page: pagination.page,
         sort: CreatedType.value
@@ -54,6 +55,7 @@ const BountyPage = defineComponent({
       () => CreatedType.value,
       () => {
         setTimeout(() => {
+          DataList.value = []
           onLoadMore(1)
         }, 0)
       }

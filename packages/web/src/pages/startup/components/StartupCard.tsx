@@ -30,7 +30,7 @@ const StartupCard = defineComponent({
     const router = useRouter()
 
     const toStartDetail = (startupInfo: StartupItem) => {
-      router.push({ path: '/startup/detail', query: { startupId: startupInfo.id } })
+      router.push({ path: `/startup/${startupInfo.id}` })
     }
     const theChainName = getChainInfoByChainId(props.startup.chainID)?.shortName
     const STARTUP_TAG_CLASS =

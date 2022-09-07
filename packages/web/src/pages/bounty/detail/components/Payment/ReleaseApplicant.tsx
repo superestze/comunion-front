@@ -6,6 +6,7 @@ import {
 } from '../../hooks/useBountyContractWrapper'
 import { BasicDialog } from '../Dialog'
 import { services } from '@/services'
+import { useBountyStore } from '@/stores'
 import { checkSupportNetwork } from '@/utils/wallet'
 
 export default defineComponent({
@@ -44,6 +45,9 @@ export default defineComponent({
         chainID: this.chainId,
         txHash: response.hash
       })
+
+      const bountyStore = useBountyStore()
+      bountyStore.initialize(this.$route.query.bountyId as string)
       triggerDialog()
     }
     const triggerDialog = async () => {

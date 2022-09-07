@@ -1,10 +1,10 @@
 import { UCard, UDeveloping, UTabPane, UTabs, UScrollList, UNoContent } from '@comunion/components'
 import { EmptyFilled, PlusOutlined } from '@comunion/icons'
 import { defineComponent, ref, onMounted, reactive } from 'vue'
-import BountiesCard from '../../startup/detail/components/Bounties'
 import CreateBountyBlock, { CreateBountyRef } from '@/blocks/Bounty/Create'
 import CreateStartupBlock, { CreateStartupRef } from '@/blocks/Startup/Create'
 import NoStartupTip from '@/layouts/default/blocks/Create/components/NoStartupTip'
+import BountiesCard from '@/pages/startup/detail/components/Bounties'
 import { services, ServiceReturn } from '@/services'
 type BountyType = NonNullable<ServiceReturn<'bounty@my-posted-bounty-list'>>['rows']
 

@@ -55,24 +55,24 @@ export default defineComponent({
       })
     }
     return (
-      <div class="flex w-full items-center px-4">
-        <div class="flex flex-shrink-0 items-center justify-center h-full mt-2px">
+      <div class="flex w-full items-center">
+        <div class="flex h-full flex-shrink-0 mt-2px items-center justify-center">
           {typeof this.$slots.avatar === 'function' && this.$slots.avatar()}
         </div>
-        <div class="flex flex-grow border-grey5 border-b h-17 items-center ml-4 justify-between">
+        <div class="border-b flex flex-grow border-grey5 h-17 ml-4 items-center justify-between">
           {typeof this.$slots.content === 'function' ? (
             this.$slots.content()
           ) : (
             <div
               title={this.item[this.keyMap.name]}
-              class="h-18px items-center max-w-45 text-16px font-600 text-grey1 items-center overflow-ellipsis overflow-hidden whitespace-nowrap"
+              class="font-600 h-18px max-w-45 text-16px text-grey1 items-center overflow-ellipsis overflow-hidden whitespace-nowrap "
             >
               {this.item[this.keyMap.name]}
             </div>
           )}
           {this.connect ? (
             <UButton
-              class="w-111px flex-shrink-0 h-7 flex"
+              class="flex flex-shrink-0 h-7 w-111px"
               size="tiny"
               secondary
               type="tertiary"
@@ -84,14 +84,14 @@ export default defineComponent({
             </UButton>
           ) : (
             <UButton
-              class="w-111px flex-shrink-0 h-7 flex"
+              class="flex flex-shrink-0 h-7 w-111px"
               size="tiny"
               ghost
               type="primary"
               disabled={this.disabled}
               onClick={handleConnect}
             >
-              <PlusOutlined class="mr-2 w-4 h-4" />
+              <PlusOutlined class="h-4 mr-2 w-4" />
               Connect
             </UButton>
           )}

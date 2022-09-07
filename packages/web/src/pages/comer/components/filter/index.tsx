@@ -3,6 +3,7 @@ import { defineComponent, PropType, ref } from 'vue'
 import { ModuleTags } from '@/components/Tags'
 
 export default defineComponent({
+  name: 'Filter',
   props: {
     tasks: {
       type: Array as PropType<string[]>,
@@ -32,7 +33,7 @@ export default defineComponent({
     }
 
     return (
-      <div class="bg-white rounded-lg border mb-6 relative overflow-hidden p-10">
+      <div class="bg-white border rounded-lg mb-6 p-10 relative overflow-hidden">
         <UTabs onUpdateValue={tabsChange}>
           <UTabPane name="PARTICIPATED" tab="PARTICIPATED" class="h-10">
             <ModuleTags

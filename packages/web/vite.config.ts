@@ -91,6 +91,7 @@ export default defineConfig({
           const chunkMap = {
             '@walletconnect/web3-provider': 'wallet',
             '@ethersproject': 'ethers',
+            inherits: 'inherits',
             ethers: 'ethers',
             vue: 'vue',
             'vue-router': 'vue',

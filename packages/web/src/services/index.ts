@@ -1144,6 +1144,10 @@ export const services = {
          */
         createdTime: number
         /**
+         * @description 申请截止日期
+         */
+        applyCutoffDate: string
+        /**
          * @description 报酬
          */
         rewards?: {
@@ -1441,6 +1445,7 @@ export const services = {
          * @description logo
          */
         bountyId: number
+        applyCutoffDate: string
         /**
          * @description 上链状态
          */
@@ -1538,6 +1543,7 @@ export const services = {
          * @description logo
          */
         bountyId: number
+        applyCutoffDate: string
         startupId: number
         logo: string
         /**
@@ -1633,6 +1639,7 @@ export const services = {
          * @description logo
          */
         bountyId: number
+        applyCutoffDate: string
         /**
          * @description 上链状态
          */
@@ -1728,6 +1735,7 @@ export const services = {
          * @description logo
          */
         bountyId: number
+        applyCutoffDate: string
         startupId: number
         logo: string
         /**
@@ -1788,6 +1796,7 @@ export const services = {
        * @example 1
        */
       page: any
+      limit?: any
     } & {
       /**
        * @description 第几页，默认1
@@ -1817,6 +1826,7 @@ export const services = {
        */
       rows: {
         bountyId: number
+        applyCutoffDate: string
         startupId: number
         logo: string
         /**
@@ -1861,7 +1871,7 @@ export const services = {
     }>({
       url: replacePath('/cores/bounties/startup/:startupId', args),
       method: 'GET',
-      ...extract('GET', args, ['page'], ['startupId'])
+      ...extract('GET', args, ['page', 'limit'], ['startupId'])
     })
   },
 

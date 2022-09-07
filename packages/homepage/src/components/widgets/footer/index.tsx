@@ -13,13 +13,13 @@ type LiItem = {
 function liRender(item: LiItem) {
   if (item.heading) {
     return (
-      <li class="text-[1.25rem] font-bold mb-8 <md:mb-12 <md:mt-20 <md:text-[2.25rem]">
+      <li class="font-bold mb-8 text-[1.25rem] <md:mt-20 <md:mb-12 <md:text-[2.25rem]">
         {item.title}
       </li>
     )
   }
   return (
-    <li class="text-[1rem] font-400 mb-4 hover:text-white <md:mb-15 <md:text-[1.5rem]">
+    <li class="font-400 mb-4 text-[1rem] <md:mb-15 <md:text-[1.5rem] hover:text-white">
       {item.url ? (
         <a key={item.title} href={item.url} target="_blank">
           {item.title}
@@ -61,10 +61,16 @@ export default defineComponent({
           title: 'Foundation'
         },
         {
-          title: 'GCI (Gross Comunion Income)'
+          title: 'Governance'
         },
         {
-          title: 'Dappstore'
+          title: 'Combinator'
+        },
+        {
+          title: 'Capital'
+        },
+        {
+          title: 'dAppstore'
         }
       ],
       [
@@ -73,7 +79,7 @@ export default defineComponent({
           title: 'Innovation'
         },
         {
-          title: 'Enterprise'
+          title: 'Innovation'
         }
       ]
     ]
@@ -82,12 +88,12 @@ export default defineComponent({
     }
     return (
       <div class="flex bg-[#131415] justify-center">
-        <div class="flex w-1110px h-368px justify-between pt-87px text-white/60  <md:hidden">
-          <div class="flex items-start cursor-pointer" onClick={goHome}>
-            <div class="w-25px h-25px mt-3px mr-10px">
+        <div class="flex h-368px pt-87px text-white/60 w-1110px justify-between  <md:hidden">
+          <div class="cursor-pointer flex items-start" onClick={goHome}>
+            <div class="h-25px mt-3px mr-10px w-25px">
               <img srcset={`${logo}, ${logo2} 2x, ${logo3} 3x`} src={logo} class="w-full" />
             </div>
-            <p class="text-30px font-bold">About Us</p>
+            <p class="font-bold text-30px">About Us</p>
           </div>
           {list.map(items => (
             <ul class="list-none m-0 p-0">
@@ -97,12 +103,12 @@ export default defineComponent({
             </ul>
           ))}
         </div>
-        <div class="flex flex-col w-full justify-between text-white/60 md:hidden pt-45 pl-16.25 pb-45">
-          <div class="flex items-start cursor-pointer mb-20" onClick={goHome}>
-            <div class="w-6.25 h-6.25 mt-1 mr-2.5">
+        <div class="flex flex-col w-full pt-45 pb-45 pl-16.25 text-white/60 justify-between md:hidden">
+          <div class="cursor-pointer flex mb-20 items-start" onClick={goHome}>
+            <div class="h-6.25 mt-1 mr-2.5 w-6.25">
               <img srcset={`${logo}, ${logo2} 2x, ${logo3} 3x`} src={logo} class="w-full" />
             </div>
-            <p class="text-[2.8125rem] font-bold">About Us</p>
+            <p class="font-bold text-[2.8125rem]">About Us</p>
           </div>
           {list.map(items => (
             <ul class="list-none m-0 p-0">

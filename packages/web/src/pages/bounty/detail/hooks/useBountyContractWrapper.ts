@@ -54,7 +54,7 @@ export function useBountyContractWrapper(bountyId?: string) {
     addresses: { [walletStore.chainId!]: bountyStore.bountySection?.detail?.depositContract || '' }
   })
 
-  if (!bountyContractStore.bountyContractInfo.bountyStatus && bountyId) {
+  if (bountyId) {
     bountyContractStore.initialize(bountyContract, bountyId as string, true)
   }
   const usdcTokenContract = useErc20Contract()
