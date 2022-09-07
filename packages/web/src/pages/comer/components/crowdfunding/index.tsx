@@ -11,7 +11,7 @@ export default defineComponent({
   },
   render() {
     return (
-      <UCard title="CROWDFUNDING" class="mb-6">
+      <UCard title="DCROWDFUNDING" class="mb-6">
         <UDeveloping>
           <EmptyFilled />
         </UDeveloping>

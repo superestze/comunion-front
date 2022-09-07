@@ -95,7 +95,7 @@ export const AdditionalInformation = defineComponent({
         ]
       },
       {
-        title: 'Crowdfunding Detail',
+        title: 'dCrowdfunding Detail',
         name: 'detail',
         maxlength: 200,
         placeholder: 'EX：https://...',

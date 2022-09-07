@@ -43,7 +43,7 @@ export default defineComponent({
 
     const TAG_LABEL_MAP: any = {
       Bounty: 'bountyCnt',
-      Crowdfunding: 'crowdfundingCnt',
+      dCrowdfunding: 'crowdfundingCnt',
       Governance: 'proposalCnt',
       'Other dapp': 'otherDappCnt'
     }
@@ -128,7 +128,7 @@ export default defineComponent({
               onSelectedTagChange={tags => (this.selectedTags = tags)}
             />
             {this.canShowByTagName('Bounty') && <Bounties startupId={this.startupId} />}
-            {this.canShowByTagName('Crowdfunding') && <Crowdfunding startupId={this.startupId} />}
+            {this.canShowByTagName('dCrowdfunding') && <Crowdfunding startupId={this.startupId} />}
             {!this.hasDataToShow && <Empty />}
           </div>
         </div>

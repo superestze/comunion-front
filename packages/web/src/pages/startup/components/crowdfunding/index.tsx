@@ -30,7 +30,7 @@ export default defineComponent({
   },
   render() {
     return (
-      <UCard title="CROWDFUNDING" class="mb-6">
+      <UCard title="DCROWDFUNDING" class="mb-6">
         {Array.isArray(this.list) && this.list.length > 0 ? (
           this.list
             .filter(item => item.status !== 5)
