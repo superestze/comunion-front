@@ -9,6 +9,7 @@ type metaMaskType = {
     _metamask?: () => void | undefined
     request?: (request: { method: string }) => Promise<any>
   }>
+  request?: (request: { method: string }) => Promise<any>
 }
 export default class MetamaskWallet extends AbstractWallet {
   constructor() {
@@ -31,7 +32,7 @@ export default class MetamaskWallet extends AbstractWallet {
   }
   prepare() {
     const ethereum = window.ethereum as metaMaskType
-    const prepareFn = ethereum.providers.find(item => item._metamask)
+    const prepareFn = ethereum?.providers?.find(item => item._metamask) || ethereum
     if (prepareFn) {
       return prepareFn?.request?.({ method: 'eth_requestAccounts' })
     }
