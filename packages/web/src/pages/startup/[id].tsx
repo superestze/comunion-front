@@ -110,7 +110,7 @@ export default defineComponent({
           {this.startup && <Profile startupId={this.startupId} startup={this.startup} />}
         </div>
         <div class="flex mb-20 gap-6">
-          <div class="basis-1/3">
+          <div class="overflow-hidden basis-1/3">
             <Overview content={this.startup?.overview || ''} />
             {(this.startup?.kyc || this.startup?.contractAudit) && (
               <Security
@@ -122,7 +122,7 @@ export default defineComponent({
             <Team startupId={this.startupId} />
             <Connection startupId={this.startupId} />
           </div>
-          <div class="basis-2/3">
+          <div class="overflow-hidden basis-2/3">
             <Filter
               startupId={this.startupId}
               onSelectedTagChange={tags => (this.selectedTags = tags)}

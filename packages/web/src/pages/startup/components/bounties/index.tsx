@@ -35,7 +35,7 @@ export default defineComponent({
     return (
       <UCard title="BOUNTIES" class="mb-6">
         {Array.isArray(this.bounties) && this.bounties.length > 0 ? (
-          this.bounties.map(item => <BountiesCard startup={item} key={item.bountyId} noBorder />)
+          this.bounties.map(item => <BountiesCard startup={item} key={item.bountyId} miniCard />)
         ) : (
           <UNoContent textTip="TO BE EMPTY">
             <EmptyFilled />

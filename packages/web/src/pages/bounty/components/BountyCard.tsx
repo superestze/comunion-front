@@ -15,8 +15,8 @@ const StartupCard = defineComponent({
       type: Object as PropType<BountyType[number]>,
       required: true
     },
-    noBorder: {
-      // noBorder style
+    miniCard: {
+      // miniCard style
       type: Boolean
     }
   },
@@ -51,9 +51,14 @@ const StartupCard = defineComponent({
       router.push(`/bounty/detail?bountyId=${bountyId}&from=0`)
     }
 
-    const wrapClass = props.noBorder
+    const wrapClass = props.miniCard
       ? 'bg-white cursor-pointer py-2 mt-1.5rem '
       : 'bg-white rounded-md cursor-pointer border-1 h-40 mb-1.5rem px-10 pt-2rem hover:shadow-md'
+
+    const skillTagShowLength = 4
+    const skillTagsList = props.miniCard
+      ? props.startup.applicationSkills.slice(0, skillTagShowLength)
+      : props.startup.applicationSkills
 
     return () => (
       <div
@@ -84,18 +89,23 @@ const StartupCard = defineComponent({
                 {color ? color.label : BOUNTY_TYPES_COLOR_MAP[0].label}
               </span>
             </div>
+            {/* skill tags miniCard */}
             <div class="flex flex-row flex-wrap items-center">
-              {props.startup.applicationSkills.length &&
-                props.startup.applicationSkills.map((tag: string, i: number) => {
-                  return (
-                    <UTag
-                      key={i}
-                      class="mr-2 mb-1 px-2 !border-[#3F2D99] !h-1.25rem !text-[#3F2D99] !leading-1.25rem"
-                    >
-                      {tag}
-                    </UTag>
-                  )
-                })}
+              {skillTagsList.map((tag: string, i: number) => {
+                return (
+                  <UTag
+                    key={i}
+                    class="mr-2 mb-1 px-2 !border-[#3F2D99] !h-1.25rem !text-[#3F2D99] !leading-1.25rem"
+                  >
+                    {tag}
+                  </UTag>
+                )
+              })}
+              {props.miniCard && props.startup.applicationSkills.length > skillTagShowLength && (
+                <UTag class="mr-2 mb-1 px-2 !border-[#3F2D99] !h-1.25rem !text-[#3F2D99] !leading-1.25rem">
+                  +{props.startup.applicationSkills.length - skillTagShowLength}
+                </UTag>
+              )}
             </div>
           </div>
 
@@ -122,7 +132,7 @@ const StartupCard = defineComponent({
         <div
           class={
             'flex ml-4.5rem text-0.75rem items-center' +
-            (props.noBorder ? ' pb-6 border-b border-grey5' : '')
+            (props.miniCard ? ' pb-6 border-b border-grey5' : '')
           }
         >
           <div class="flex flex-1 items-center">
