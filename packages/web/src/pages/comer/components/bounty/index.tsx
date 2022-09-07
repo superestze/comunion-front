@@ -69,19 +69,8 @@ export default defineComponent({
   render() {
     return (
       <UCard title="BOUNTIES" class="mb-6">
-        {this.createdByMe ? (
-          <>
-            {Array.isArray(this.bounties) &&
-              this.bounties.length > 0 &&
-              this.bounties.map((bounty, i) => <BountiesCard startup={bounty} key={i} miniCard />)}
-          </>
-        ) : (
-          <>
-            {Array.isArray(this.bounties) &&
-              this.bounties.length > 0 &&
-              this.bounties.map((bounty, i) => <BountiesCard startup={bounty} key={i} miniCard />)}
-          </>
-        )}
+        {Array.isArray(this.bounties) &&
+          this.bounties.map((bounty, i) => <BountiesCard startup={bounty} key={i} miniCard />)}
       </UCard>
     )
   }
