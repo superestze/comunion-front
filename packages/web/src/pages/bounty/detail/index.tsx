@@ -92,7 +92,7 @@ export default defineComponent({
           </UBreadcrumbItem>
         </UBreadcrumb>
         <div class="flex mb-20 gap-6">
-          <div class="basis-2/3">
+          <div class="overflow-hidden basis-2/3">
             <div class="bg-white border rounded-lg mb-6 p-10">
               {this.bountySection.detail && (
                 <BountyCard
@@ -204,7 +204,7 @@ export default defineComponent({
               )}
             </UCard>
           </div>
-          <div class="basis-1/3">
+          <div class="overflow-hidden basis-1/3">
             <div class="bg-white border rounded-lg mb-6 p-10">
               {this.bountySection.startup && <StartupCard startup={this.bountySection.startup} />}
             </div>
