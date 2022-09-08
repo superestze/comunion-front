@@ -2,7 +2,7 @@
   @apply flex text-primary items-center;
 
   &__link {
-    @apply flex-1 mr-4 text-primary truncate u-title2;
+    @apply flex-1 mr-2 text-primary truncate u-title2;
   }
 
   &__copy {
