@@ -172,25 +172,23 @@ export default defineComponent({
                 {btnGroup(handleEditMode(), handleSubmit)}
               </div>
             ) : (
-              <div class="flex flex-col mt-6">
+              <div class="mt-2">
                 {this.educations.length === 0 ? (
-                  <p class="text-14px font-[400] text-grey4">Add your Education</p>
+                  <p class="font-[400] text-14px text-grey4">Add your Education</p>
                 ) : (
                   <>
                     {this.educations.map(item => {
                       return (
                         <div
-                          class={`flex w-full justify-between items-center h-17 rounded-6px ${listHover['list-hover']}`}
+                          class={`-mx-3.5 mt-2 cursor-pointer flex items-center h-17 rounded-6px ${listHover['list-hover']}`}
                         >
-                          <div class="flex flex-col ml-4">
-                            <p class="text-grey1 text-14px font-600 p-1px">{item.school}</p>
+                          <div class="flex-1 pt-1 pl-2">
+                            <p class="pl-2.5 text-grey1 u-body4">{item.school}</p>
 
-                            <div class="flex mt-2">
-                              <p class="text-grey3 text-12px font-400">{item.major} Graduated</p>
-                              <p class="bg-grey5 w-1px h-3 mx-2"></p>
-                              <p class="text-grey3 text-12px font-400">
-                                {dayjs(item.graduatedAt).format('YYYY')}
-                              </p>
+                            <div class="flex mt-1 text-grey3 items-center">
+                              <p class="u-tag">{item.major} Graduated</p>
+                              <p class="bg-grey5 h-3 mx-2 w-1px"></p>
+                              <p class="u-tag">{dayjs(item.graduatedAt).format('YYYY')}</p>
                             </div>
                           </div>
                           <div
@@ -199,11 +197,11 @@ export default defineComponent({
                             } cursor-pointer`}
                           >
                             <PenOutlined
-                              class="text-primary w-4 h-4 mr-4.5"
+                              class="h-4 text-primary mr-4.5 w-4"
                               onClick={() => handleCurrentRecord('edit', item.id)}
                             />
                             <DeleteFilled
-                              class="text-primary w-4 h-4"
+                              class="h-4 text-primary w-4"
                               onClick={() => handleCurrentRecord('del', item.id)}
                             />
                           </div>

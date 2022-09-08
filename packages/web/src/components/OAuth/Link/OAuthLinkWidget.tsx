@@ -203,7 +203,7 @@ export default defineComponent({
           onTriggerClick={handleGoogleLink(linked.value?.google.accountId)}
           disabled={false}
         >
-          <GoogleFilled class="h-5 mr-3.5 text-primary w-5" />
+          <GoogleFilled class="h-5 mr-4 text-primary w-5" />
           <span class="text-primary u-title2">
             {linked.value?.google.linked ? 'Linked' : 'Link'}
           </span>
@@ -213,7 +213,7 @@ export default defineComponent({
           onTriggerClick={handleGithubLink(linked.value?.github.accountId)}
           disabled={false}
         >
-          <GithubFilled class="h-5 mr-3.5 text-primary w-5" />
+          <GithubFilled class="h-5 mr-4 text-primary w-5" />
           <span class="text-primary u-title2">
             {linked.value?.github.linked ? 'Linked' : 'Link'}
           </span>

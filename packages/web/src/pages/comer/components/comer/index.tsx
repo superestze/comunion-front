@@ -238,8 +238,8 @@ export default defineComponent({
           </>
         ) : (
           <>
-            <div class="flex h-180px w-full">
-              <img src={this.imageUrl} alt="bg" class="object-fill w-full" />
+            <div class=" h-180px ">
+              <img src={this.imageUrl} alt="bg" class="h-full object-cover w-full" />
             </div>
             <ULazyImage
               class="rounded-1/2 h-20 top-155px left-10 w-20 absolute"
@@ -278,8 +278,8 @@ export default defineComponent({
               )}
             </div>
             <div class="flex flex-col mt-30px mb-24px px-10">
-              <p class="font-600 text-16px text-primary2">{this.name}</p>
-              <p class="mt-2 leading-normal text-14px text-grey3">{this.subTitle}</p>
+              <p class="text-primary2 u-title3">{this.name}</p>
+              <p class="mt-2 text-grey3 u-body2">{this.subTitle}</p>
               {/* oauth */}
               <div class="flex flex-wrap mt-4">
                 <OAuthLinkWidget comerAccounts={this.comerAccounts} />

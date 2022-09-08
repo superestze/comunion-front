@@ -17,7 +17,7 @@ export default defineComponent({
 
     return () => (
       <UButton
-        class="bg-white rounded-lg h-10 px-6"
+        class="bg-white rounded-lg h-9 px-5"
         size="small"
         type="primary"
         ghost

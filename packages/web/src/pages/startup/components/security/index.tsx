@@ -42,14 +42,14 @@ export default defineComponent({
       <UCard title="SECURITY" class="mb-6">
         <div class="flex mt-3 gap-2.5">
           {this.kycInfo && (
-            <div class="bg-[#EC53A4] rounded-2px text-white py-1 px-2.5">
+            <div class="bg-[#EC53A4] rounded-2px h-5 text-white px-2.5 leading-5">
               <a href="https://google.com" target="_blank">
                 KYC
               </a>
             </div>
           )}
           {this.auditInfo && (
-            <div class="bg-primary rounded-2px text-white py-1 px-2.5">
+            <div class="bg-primary rounded-2px h-5  text-white px-2.5 leading-5">
               <a>AUDIT</a>
             </div>
           )}
