@@ -135,7 +135,7 @@ export default defineComponent({
                       style={this.fold ? { maxHeight: '164px' } : { height: 'auto' }}
                     >
                       <p v-html={this.content} />
-                      {this.fold && (
+                      {this.fold && this.showMoreBtn && (
                         <div
                           class="h-16 right-0 bottom-0 left-0 absolute"
                           style={{
