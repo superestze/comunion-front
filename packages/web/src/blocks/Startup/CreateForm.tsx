@@ -8,11 +8,10 @@ import {
   UButton,
   FormFactoryField
 } from '@comunion/components'
-import { defineComponent, PropType, reactive, ref } from 'vue'
+import { defineComponent, PropType, reactive, ref, CSSProperties } from 'vue'
 import { STARTUP_TYPES, StartupTypesType, getStartupNumberFromType } from '@/constants'
 import { useStartupContract } from '@/contracts'
 import { services } from '@/services'
-
 const CreateStartupForm = defineComponent({
   name: 'CreateStartupForm',
   props: {
@@ -22,8 +21,10 @@ const CreateStartupForm = defineComponent({
   },
   setup(props, ctx) {
     const defaultModel = {
-      logo: '',
+      nextwork: '',
+      // logo: '',
       name: '',
+      blockchain: false,
       type: undefined,
       mission: '',
       overview: ''
@@ -104,12 +105,14 @@ const CreateStartupForm = defineComponent({
             try {
               await startupContract.newStartup(
                 [
+                  model.nextwork,
                   model.name,
+                  model.blockchain,
                   model.type === undefined
                     ? 0
                     : getStartupNumberFromType(model.type as StartupTypesType),
                   // model.tags,
-                  model.logo,
+                  // model.logo,
                   model.mission,
                   // model.tokenContract,
                   // model.composes.map(item => [item.name, item.address]),
@@ -137,12 +140,34 @@ const CreateStartupForm = defineComponent({
         }
       })
     }
+
+    const switchChage = (value: boolean) => {
+      console.log(value)
+    }
+
     const infoFields: FormFactoryField[] = [
+      // {
+      //   t: 'singleImageUpload',
+      //   title: '',
+      //   name: 'logo',
+      //   text: 'Update'
+      // },
       {
-        t: 'singleImageUpload',
-        title: '',
-        name: 'logo',
-        text: 'Update'
+        t: 'select',
+        title: 'Blockchain Network',
+        name: 'Blockchain Network',
+        required: true,
+        placeholder: '',
+        options: [
+          {
+            label: 'asdsad',
+            value: '1111',
+            id: '12313'
+          }
+        ],
+        // 5.9功能未完善
+        // 获取startupID判断当下网络和选择网络是否一致
+        onChange: switchChage
       },
       {
         t: 'string',
@@ -165,18 +190,34 @@ const CreateStartupForm = defineComponent({
         ]
       },
       {
+        t: 'switch',
+        title: '',
+        name: 'switch',
+        disabled: false,
+        defaultValue: false,
+        railStyle: ({ focused, checked }: { focused: boolean; checked: boolean }) => {
+          const style: CSSProperties = {}
+          if (checked) {
+            style.background = '#00BFA5'
+          }
+          return style
+        },
+        onChange: switchChage
+      },
+      {
         t: 'select',
         title: 'Type',
         name: 'type',
         required: true,
-        placeholder: 'Startup type',
+        placeholder: 'Select startup type',
         options: STARTUP_TYPES.map(item => ({ label: item, value: item }))
       },
       {
         t: 'startupTags',
         required: true,
         title: 'Tag',
-        name: 'tags'
+        name: 'tags',
+        placeholder: 'Select startup tag'
       },
       // {
       //   t: 'hashInput',
@@ -210,7 +251,7 @@ const CreateStartupForm = defineComponent({
         t: 'string',
         title: 'Overview',
         name: 'overview',
-        placeholder: 'Add overview for introducing your startup',
+        placeholder: 'Input overview for introducing your startup',
         type: 'textarea',
         maxlength: 1000,
         rules: [
@@ -240,7 +281,7 @@ const CreateStartupForm = defineComponent({
     }
     return () => (
       <UForm ref={formRef} rules={allRules} model={model}>
-        <p class="mb-7 text-primary1 u-card-title1">INFO SETTING</p>
+        {/* <p class="mb-7 text-primary1 u-card-title1">INFO SETTING</p> */}
         <UFormItemsFactory fields={infoFields} values={model} />
         {/* <div class="bg-purple h-13px my-8"></div> */}
         {/* <p class="mb-7 uppercase u-card-title1">Finance Setting</p> */}

@@ -9,11 +9,10 @@ import {
   useUpload
 } from '@comunion/components'
 import { CustomRequest } from 'naive-ui/lib/upload/src/interface'
-import { defineComponent, ref, reactive, PropType, watch } from 'vue'
+import { defineComponent, ref, reactive, PropType, watch, CSSProperties } from 'vue'
 import { RectDraggerUpload } from '@/components/Upload'
 import { getStartupTypeFromNumber, STARTUP_TYPES } from '@/constants'
 import { services } from '@/services'
-
 type InfoPropType = {
   logo: string
   cover: string
@@ -82,6 +81,14 @@ export default defineComponent({
       //   }
       // },
       {
+        t: 'select',
+        title: 'Blockchain Network',
+        name: 'Blockchain Network',
+        required: true,
+        placeholder: '',
+        options: []
+      },
+      {
         t: 'string',
         title: 'Name',
         name: 'name',
@@ -91,6 +98,18 @@ export default defineComponent({
         disabled: true
       },
       {
+        t: 'switch',
+        title: '',
+        name: 'switch',
+        railStyle: ({ focused, checked }: { focused: boolean; checked: boolean }) => {
+          const style: CSSProperties = {}
+          if (checked) {
+            style.background = '#00BFA5'
+          }
+          return style
+        }
+      },
+      {
         t: 'select',
         title: 'Type',
         name: 'type',
@@ -98,6 +117,13 @@ export default defineComponent({
         placeholder: 'Startup type',
         options: STARTUP_TYPES.map(item => ({ label: item, value: item })),
         disabled: true
+      },
+      {
+        t: 'startupTags',
+        required: true,
+        title: 'Tag',
+        name: 'tags',
+        placeholder: 'Select startup tag'
       },
       {
         t: 'string',

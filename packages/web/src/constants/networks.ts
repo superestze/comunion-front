@@ -20,6 +20,7 @@ export type ChainNetworkType = {
 
 /**
  * All networks we want to support
+ * (Ethereum、BNB Smart Chain、Avalanche、Fantom Opera) use
  */
 export const allNetworks: ChainNetworkType[] = [
   {
@@ -129,7 +130,6 @@ export const NETWORKS_SUBCOLOR_MAP: NETWORKS_COLOR_MAP_TYPE = {
 export const supportedChainIds = import.meta.env.VITE_SUPPORTED_CHAIN_ID?.split(',').map(id =>
   Number(id)
 ) ?? [43114]
-
 /**
  * Current supported networks
  */

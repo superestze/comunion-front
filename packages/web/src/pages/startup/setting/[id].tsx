@@ -15,15 +15,15 @@ import { Team } from './components/team'
 import { useStartup } from '@/pages/startup/hooks/useStartup'
 
 export const getContactList = (startupInfo: { [x: string]: any }) => {
-  return contactList
-    .map(item => {
-      const value = startupInfo[item.name]
-      return {
-        socialType: value ? item.value : 0,
-        socialLink: value
-      }
-    })
-    .filter(e => e.socialType !== 0)
+  return contactList.map(item => {
+    const value = startupInfo[item.name]
+    return {
+      // socialType: value ? item.value : 0,
+      socialType: item.value,
+      socialLink: value
+    }
+  })
+  // .filter(e => e.socialType !== 0)
 }
 
 export default defineComponent({

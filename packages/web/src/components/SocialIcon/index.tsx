@@ -9,24 +9,27 @@ import {
   MediumFilled
 } from '@comunion/icons'
 import { defineComponent } from 'vue'
-
-function asyncComponent(type: string, wrapper: string) {
+function asyncComponent(type: string, wrapper: string, disable?: boolean) {
+  let textClass = 'text-primary'
+  if (disable) {
+    textClass = 'text-grey'
+  }
   if (type === 'Website') {
-    return <WebsiteFilled class={`${wrapper} text-primary`} />
+    return <WebsiteFilled class={`${wrapper} ${textClass}`} />
   } else if (type === 'Discord') {
-    return <DiscordFilled class={`${wrapper} text-primary`} />
+    return <DiscordFilled class={`${wrapper} ${textClass}`} />
   } else if (type === 'Facebook') {
-    return <FacebookFilled class={`${wrapper} text-primary`} />
+    return <FacebookFilled class={`${wrapper} ${textClass}`} />
   } else if (type === 'Linktree') {
-    return <UnionFilled class={`${wrapper} text-primary`} />
+    return <UnionFilled class={`${wrapper} ${textClass}`} />
   } else if (type === 'Telegram') {
-    return <TelegramFilled class={`${wrapper} text-primary`} />
+    return <TelegramFilled class={`${wrapper} ${textClass}`} />
   } else if (type === 'Twitter') {
-    return <TwitterFilled class={`${wrapper} text-primary`} />
+    return <TwitterFilled class={`${wrapper} ${textClass}`} />
   } else if (type === 'Email') {
-    return <MailFilled class={`${wrapper} text-primary`} />
+    return <MailFilled class={`${wrapper} ${textClass}`} />
   } else if (type === 'Medium') {
-    return <MediumFilled class={`${wrapper} text-primary`} />
+    return <MediumFilled class={`${wrapper} ${textClass}`} />
   }
   return
 }
@@ -52,11 +55,19 @@ export default defineComponent({
     address: {
       type: String,
       default: () => ''
+    },
+    disable: {
+      type: Boolean,
+      default: () => false
     }
   },
   render() {
     return (
-      <div class={`flex bg-purple ${this.outWrapper} justify-center items-center rounded-4px`}>
+      <div
+        class={`flex justify-center items-center rounded-[50%] ${this.outWrapper} ${
+          this.disable ? 'cursor-not-allowed' : ' hover:bg-purple'
+        }`}
+      >
         {this.link ? (
           <a
             class={this.innerWrapper}
@@ -66,7 +77,7 @@ export default defineComponent({
             {asyncComponent(this.icon, this.innerWrapper)}
           </a>
         ) : (
-          <>{asyncComponent(this.icon, this.innerWrapper)}</>
+          <>{asyncComponent(this.icon, this.innerWrapper, this.disable)}</>
         )}
       </div>
     )

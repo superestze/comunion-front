@@ -111,6 +111,7 @@ export default defineComponent({
         </div>
         <div class="flex mb-20 gap-6">
           <div class="basis-1/3">
+            <Team startupId={this.startupId} />
             <Overview content={this.startup?.overview || ''} />
             {(this.startup?.kyc || this.startup?.contractAudit) && (
               <Security
@@ -119,7 +120,6 @@ export default defineComponent({
               />
             )}
             <Finance startup={this.startup} />
-            <Team startupId={this.startupId} />
             <Connection startupId={this.startupId} />
           </div>
           <div class="basis-2/3">
