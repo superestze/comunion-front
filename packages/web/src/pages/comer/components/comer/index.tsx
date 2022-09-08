@@ -11,13 +11,15 @@ import {
 } from '@comunion/components'
 import { CheckFilled, PenOutlined, PlusOutlined, UploadFilled } from '@comunion/icons'
 import { CustomRequest } from 'naive-ui/lib/upload/src/interface'
-import { defineComponent, computed, ref, reactive, watchEffect } from 'vue'
+import { defineComponent, computed, ref, reactive, watchEffect, PropType } from 'vue'
 import { useRoute } from 'vue-router'
 import { useComer } from '../../hooks/comer'
 import { btnGroup } from '../btnGroup'
 import Edit from '../edit'
 
 import defaultImg from './default.png'
+import { OAuthLinkWidget } from '@/components/OAuth'
+import { ComerAccount } from '@/components/OAuth/Link/OAuthLinkWidget'
 import AvatarSelect from '@/components/Profile/AvatarSelect'
 import { UTC_OPTIONS } from '@/constants'
 import { services } from '@/services'
@@ -55,6 +57,10 @@ export default defineComponent({
     view: {
       type: Boolean,
       default: () => false
+    },
+    comerAccounts: {
+      type: Object as PropType<ComerAccount[]>,
+      default: () => []
     }
   },
   emits: ['Done'],
@@ -169,7 +175,8 @@ export default defineComponent({
       toggleFollow,
       follow,
       imageUrl,
-      self
+      self,
+      comerAccounts: props.comerAccounts
     }
   },
   render() {
@@ -199,7 +206,7 @@ export default defineComponent({
     const rules = getFieldsRules(this.fields)
 
     return (
-      <div class="bg-white rounded-lg border mb-6 relative overflow-hidden">
+      <div class="bg-white border rounded-lg mb-6 relative overflow-hidden">
         {this.editMode ? (
           <>
             <AvatarSelect v-model:show={this.showAvatarModal} v-model:avatar={this.info.avatar} />
@@ -208,18 +215,18 @@ export default defineComponent({
               customRequest={this.customRequest}
               accept="image/png, image/jpeg, image/bmp, image/psd, image/svg, image/tiff"
             >
-              <div class="flex w-full h-180px relative">
-                <div class="bg-[rgba(0,0,0,0.5)] absolute left-0 right-0 top-0 bottom-0"></div>
-                <img src={this.imageUrl} alt="bg" class="w-full object-fill" />
-                <PenOutlined class="h-4 mr-3 w-4 text-white absolute left-1/2 top-1/2 -ml-2 -mt-2" />
+              <div class="flex h-180px w-full relative">
+                <div class="bg-[rgba(0,0,0,0.5)] top-0 right-0 bottom-0 left-0 absolute"></div>
+                <img src={this.imageUrl} alt="bg" class="object-fill w-full" />
+                <PenOutlined class="h-4 -mt-2 mr-3 text-white -ml-2 top-1/2 left-1/2 w-4 absolute" />
               </div>
             </UUpload>
             <div
-              class="absolute rounded-1/2 h-20 w-20 left-1/2 top-155px -ml-10 overflow-hidden"
+              class="rounded-1/2 h-20 -ml-10 top-155px left-1/2 w-20 absolute overflow-hidden"
               onClick={showAvatarSelect}
             >
-              <UploadFilled class="absolute top-1/2 left-1/2 w-6 h-6 -ml-3 -mt-3 text-white z-1" />
-              <div class="absolute top-0 right-0 bottom-0 left-0 bg-[rgba(0,0,0,0.5)]"></div>
+              <UploadFilled class="h-6 -mt-3 text-white -ml-3 top-1/2 left-1/2 w-6 z-1 absolute" />
+              <div class="bg-[rgba(0,0,0,0.5)] top-0 right-0 bottom-0 left-0 absolute"></div>
               <ULazyImage class="rounded-1/2 h-80px w-80px" src={this.info.avatar} />
             </div>
             <div class="mt-79px p-6">
@@ -231,14 +238,14 @@ export default defineComponent({
           </>
         ) : (
           <>
-            <div class="flex w-full h-180px">
-              <img src={this.imageUrl} alt="bg" class="w-full object-fill" />
+            <div class="flex h-180px w-full">
+              <img src={this.imageUrl} alt="bg" class="object-fill w-full" />
             </div>
             <ULazyImage
-              class="rounded-1/2 h-80px w-80px absolute left-40px top-155px"
+              class="rounded-1/2 h-20 top-155px left-10 w-20 absolute"
               src={this.avatar}
             />
-            <div class="w-full flex justify-end mt-20px">
+            <div class="flex mt-5 w-full pr-10 justify-end">
               {this.view ? (
                 <>
                   {!this.self ? (
@@ -247,7 +254,6 @@ export default defineComponent({
                         <UButton
                           secondary
                           type="tertiary"
-                          class="w-40 mr-6"
                           size="small"
                           onClick={() => this.toggleFollow()}
                         >
@@ -255,19 +261,14 @@ export default defineComponent({
                           Unconnect
                         </UButton>
                       ) : (
-                        <UButton
-                          type="primary"
-                          class="w-40 mr-6"
-                          size="small"
-                          onClick={() => this.toggleFollow()}
-                        >
-                          <PlusOutlined class="mr-2 w-4 h-4" />
+                        <UButton type="primary" size="small" onClick={() => this.toggleFollow()}>
+                          <PlusOutlined class="h-4 mr-2 w-4" />
                           Connect
                         </UButton>
                       )}
                     </>
                   ) : (
-                    <UButton class="w-40 mr-6 invisible" size="small">
+                    <UButton class="mr-6 w-40 invisible" size="small">
                       Connect
                     </UButton>
                   )}
@@ -276,9 +277,13 @@ export default defineComponent({
                 <Edit class="mr-24px" onHandleClick={handleEditMode} />
               )}
             </div>
-            <div class="flex mt-30px flex-col ml-50px mb-24px mr-50px">
-              <p class="text-16px font-600 text-primary2">{this.name}</p>
-              <p class="text-14px text-grey3 mt-2 leading-normal">{this.subTitle}</p>
+            <div class="flex flex-col mt-30px mb-24px px-10">
+              <p class="font-600 text-16px text-primary2">{this.name}</p>
+              <p class="mt-2 leading-normal text-14px text-grey3">{this.subTitle}</p>
+              {/* oauth */}
+              <div class="flex flex-wrap mt-4">
+                <OAuthLinkWidget comerAccounts={this.comerAccounts} />
+              </div>
             </div>
           </>
         )}

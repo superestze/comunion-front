@@ -155,7 +155,7 @@ export default defineComponent({
                 </p>
               ),
               footer: () => (
-                <div class="flex justify-end mt-40px">
+                <div class="flex mt-40px justify-end">
                   <UButton onClick={triggerUnbindDialog} disabled={loading.value} class="w-160px">
                     Cancel
                   </UButton>
@@ -184,7 +184,7 @@ export default defineComponent({
                 </p>
               ),
               footer: () => (
-                <div class="flex justify-end mt-40px">
+                <div class="flex mt-40px justify-end">
                   <UButton
                     type="primary"
                     class="ml-10px w-160px"
@@ -198,28 +198,26 @@ export default defineComponent({
             }}
           />
         </UModal>
-        <div class="mr-4">
-          <OAuthLinkBtn
-            onTriggerClick={handleGoogleLink(linked.value?.google.accountId)}
-            disabled={false}
-          >
-            <GoogleFilled class="w-5 h-5 mr-3.5 text-primary" />
-            <span class="u-title2 text-primary">
-              {linked.value?.google.linked ? 'Linked' : 'Link'}
-            </span>
-          </OAuthLinkBtn>
-        </div>
-        <div class="mr-4">
-          <OAuthLinkBtn
-            onTriggerClick={handleGithubLink(linked.value?.github.accountId)}
-            disabled={false}
-          >
-            <GithubFilled class="w-5 h-5 mr-3.5 text-primary" />
-            <span class="u-title2 text-primary">
-              {linked.value?.github.linked ? 'Linked' : 'Link'}
-            </span>
-          </OAuthLinkBtn>
-        </div>
+        <OAuthLinkBtn
+          class="mr-4 mb-4"
+          onTriggerClick={handleGoogleLink(linked.value?.google.accountId)}
+          disabled={false}
+        >
+          <GoogleFilled class="h-5 mr-3.5 text-primary w-5" />
+          <span class="text-primary u-title2">
+            {linked.value?.google.linked ? 'Linked' : 'Link'}
+          </span>
+        </OAuthLinkBtn>
+        <OAuthLinkBtn
+          class="mr-4 mb-4"
+          onTriggerClick={handleGithubLink(linked.value?.github.accountId)}
+          disabled={false}
+        >
+          <GithubFilled class="h-5 mr-3.5 text-primary w-5" />
+          <span class="text-primary u-title2">
+            {linked.value?.github.linked ? 'Linked' : 'Link'}
+          </span>
+        </OAuthLinkBtn>
       </>
     )
   }
