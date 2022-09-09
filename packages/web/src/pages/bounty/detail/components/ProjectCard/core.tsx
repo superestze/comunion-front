@@ -72,7 +72,7 @@ export default defineComponent({
       this.$emit('pay', this.info)
     }
     return (
-      <div class="bg-purple border-purple border-solid rounded-md border-1 mt-2 ml-2 px-2 relative  ">
+      <div class="bg-purple border-purple border-solid rounded-md border-1 mt-2 ml-2 relative  ">
         <div class="bg-purple-light flex rounded-4px h-7 text-primary -top-2 -left-2 w-11.5 z-1 absolute justify-center items-center u-title2 ">
           {this.index}
         </div>

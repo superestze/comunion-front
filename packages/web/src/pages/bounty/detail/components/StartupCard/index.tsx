@@ -34,8 +34,8 @@ export default defineComponent({
         <div class="flex ">
           <UStartupLogo
             src={this.startup?.logo || ''}
-            width="20"
-            height="20"
+            width="15"
+            height="15"
             class="rounded-md h-15 mr-4 w-15"
           />
           <div class="flex-1 overflow-hidden">
@@ -53,7 +53,7 @@ export default defineComponent({
             )}
           </div>
         </div>
-        {this.tags.length && (
+        {this.tags.length > 0 && (
           <div class="flex flex-wrap mt-5 gap-2">
             {this.tags.slice(0, 4).map((value, $index) => {
               return <UTag key={`tag_${$index}`}>{value}</UTag>
