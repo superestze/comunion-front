@@ -281,9 +281,11 @@ export default defineComponent({
               <p class="text-primary2 u-title3">{this.name}</p>
               <p class="mt-2 text-grey3 u-body2">{this.subTitle}</p>
               {/* oauth */}
-              <div class="flex flex-wrap mt-4">
-                <OAuthLinkWidget comerAccounts={this.comerAccounts} />
-              </div>
+              {!this.view && (
+                <div class="flex flex-wrap mt-6">
+                  <OAuthLinkWidget comerAccounts={this.comerAccounts} />
+                </div>
+              )}
             </div>
           </>
         )}
