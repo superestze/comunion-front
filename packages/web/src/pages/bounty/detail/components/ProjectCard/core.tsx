@@ -83,7 +83,7 @@ export default defineComponent({
             <div>
               {this.info?.token1Symbol && (
                 <Text
-                  class="mt-8 w-full"
+                  class="my-8 w-full"
                   half={true}
                   unit={this.info.token1Symbol}
                   value={`${this.info.token1Amount || 0}`}
@@ -94,7 +94,7 @@ export default defineComponent({
               )}
               {this.info?.token2Symbol && (
                 <Text
-                  class="mt-3 mb-8 w-full"
+                  class="-mt-5 mb-8 w-full"
                   half={true}
                   unit={this.info.token2Symbol}
                   value={`${this.info.token2Amount || 0}`}

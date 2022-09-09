@@ -10,7 +10,7 @@ import PersonalCard from './components/PersonalCard'
 import PostUpdate from './components/PostUpdate'
 import StartupCard from './components/StartupCard'
 import { useBountyContractWrapper } from './hooks/useBountyContractWrapper'
-import { BOUNTY_STATUS } from '@/constants'
+import { BOUNTY_STATUS, PERIOD_OPTIONS } from '@/constants'
 import { useBountyStore } from '@/stores'
 import { useBountyContractStore } from '@/stores/bountyContract'
 import { getChainInfoByChainId } from '@/utils/etherscan'
@@ -80,6 +80,14 @@ export default defineComponent({
     }
   },
   render() {
+    const getPeriodByType = (type: number) => {
+      const targetIndex = PERIOD_OPTIONS.findIndex(opt => opt.value === type)
+      if (targetIndex !== -1) {
+        return PERIOD_OPTIONS[targetIndex].type.toUpperCase()
+      }
+      return ''
+    }
+
     return (
       <USpin show={this.loading}>
         <UBreadcrumb class="mt-10 mb-10">
@@ -117,12 +125,17 @@ export default defineComponent({
                       {this.bountySection.bountyPayment?.bountyPaymentInfo?.paymentMode === 1 ? (
                         <>
                           <StageOutlined class="h-5 text-primary w-5" />
-                          <p class=" text-primary ml-2 u-label2">PERIOD: STAGE</p>
+                          <p class=" text-primary ml-2 u-label2">STAGE</p>
                         </>
                       ) : (
                         <>
                           <PeriodOutlined class="h-5 text-primary w-5" />
-                          <p class=" text-primary ml-2 u-label2">PERIOD: WEEK</p>
+                          <p class=" text-primary ml-2 u-label2">
+                            PERIOD:{' '}
+                            {getPeriodByType(
+                              this.bountySection.bountyPayment?.periodTerms?.periodType || 1
+                            )}
+                          </p>
                         </>
                       )}
                     </p>
