@@ -273,12 +273,13 @@ export default defineComponent({
           )}
         </div>
 
-        {this.payMode === 'stage' && this.stageTerms.map(item => <StageTerm item={item} />)}
+        {this.payMode === 'stage' &&
+          this.stageTerms.map(item => <StageTerm item={item} detailChainId={this.detailChainId} />)}
 
         {this.payMode === 'period' && (
           <ProjectCarousel width={820} total={this.periodTerms.length}>
             {this.periodTerms.map(term => (
-              <ProjectCardWithDialog info={term} payMode={this.payMode} />
+              <ProjectCardWithDialog info={term} />
             ))}
           </ProjectCarousel>
         )}
