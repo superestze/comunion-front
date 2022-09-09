@@ -1,5 +1,5 @@
-import { UBreadcrumb, UBreadcrumbItem, UCard, USpin, UTooltip } from '@comunion/components'
-import { ArrowLeftOutlined, PeriodOutlined, StageOutlined, ClockOutlined } from '@comunion/icons'
+import { UBreadcrumb, UCard, USpin, UTooltip } from '@comunion/components'
+import { PeriodOutlined, StageOutlined, ClockOutlined } from '@comunion/icons'
 import dayjs from 'dayjs'
 import { defineComponent, computed, ref, watch } from 'vue'
 import { useRoute } from 'vue-router'
@@ -11,7 +11,6 @@ import PostUpdate from './components/PostUpdate'
 import StartupCard from './components/StartupCard'
 import { useBountyContractWrapper } from './hooks/useBountyContractWrapper'
 import { BOUNTY_STATUS } from '@/constants'
-import router from '@/router'
 import { useBountyStore } from '@/stores'
 import { useBountyContractStore } from '@/stores/bountyContract'
 import { getChainInfoByChainId } from '@/utils/etherscan'
@@ -84,13 +83,19 @@ export default defineComponent({
     return (
       <USpin show={this.loading}>
         <UBreadcrumb class="mt-10 mb-10">
-          <UBreadcrumbItem v-slots={{ separator: () => <ArrowLeftOutlined /> }} />
-          <UBreadcrumbItem>
-            <span class="cursor-pointer text-primary uppercase u-label2" onClick={router.back}>
-              BACK
+          {/* <UBreadcrumbItem>
+            <span
+              class="cursor-pointer flex text-primary items-center u-label2"
+              onClick={() => {
+                this.$router.go(-1)
+              }}
+            >
+              <ArrowLeftOutlined />
+              <span class="ml-1">BACK</span>
             </span>
-          </UBreadcrumbItem>
+          </UBreadcrumbItem> */}
         </UBreadcrumb>
+
         <div class="flex mb-20 gap-6">
           <div class="overflow-hidden basis-2/3">
             <div class="bg-white border rounded-lg mb-6 p-10">
@@ -108,16 +113,16 @@ export default defineComponent({
                 header: () => (
                   <div class="flex justify-between">
                     <p class="flex items-center">
-                      <span>PAYMENT</span>
+                      <span class="mr-6 text-[#3F2D99] u-card-title1">PAYMENT</span>
                       {this.bountySection.bountyPayment?.bountyPaymentInfo?.paymentMode === 1 ? (
                         <>
-                          <StageOutlined class="ml-26px" />
-                          <p class="flex ml-14px text-14px items-center">PERIOD: STAGE</p>
+                          <StageOutlined class="h-5 text-primary w-5" />
+                          <p class=" text-primary ml-2 u-label2">PERIOD: STAGE</p>
                         </>
                       ) : (
                         <>
-                          <PeriodOutlined class="ml-26px" />
-                          <p class="flex ml-14px text-14px items-center">PERIOD: WEEK</p>
+                          <PeriodOutlined class="h-5 text-primary w-5" />
+                          <p class=" text-primary ml-2 u-label2">PERIOD: WEEK</p>
                         </>
                       )}
                     </p>

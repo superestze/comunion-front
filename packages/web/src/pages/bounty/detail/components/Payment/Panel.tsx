@@ -6,6 +6,7 @@ import ProjectCarousel from '../ProjectCarousel'
 import Text from '../Text'
 import PaymentCard from './Card'
 import ReleaseApplicant from './ReleaseApplicant'
+import StageTerm from './StageTerm'
 import AddDeposit from './addDeposit'
 import ApplyBounty from './applyBounty'
 import CloseBounty from './closeBounty'
@@ -99,10 +100,35 @@ export default defineComponent({
                   <span class="flex-1 u-title3">Rewards</span>
                 </p>
               ),
+              text: () => (
+                <div class="flex flex-col h-44 items-center">
+                  <div class="flex flex-1 items-end">
+                    <div>
+                      {this.paymentInfo?.rewards?.token1Symbol && (
+                        <Text
+                          value={`${this.paymentInfo.rewards.token1Amount || 0}`}
+                          unit={this.paymentInfo.rewards.token1Symbol}
+                          enhance={40}
+                          digit={4}
+                        />
+                      )}
+                      <Text
+                        value={`${this.paymentInfo?.rewards?.token2Amount || 0}`}
+                        class="mt-9"
+                        unit={this.paymentInfo?.rewards?.token2Symbol || 'TOKEN'}
+                        plus={true}
+                        enhance={40}
+                        digit={4}
+                      />
+                    </div>
+                  </div>
+                </div>
+              ),
               btn: () => (
-                <>
+                <div class="flex my-10 mx-1/9 ">
                   {this.bountyContractInfo.role != USER_ROLE.FOUNDER && (
                     <ApplyBounty
+                      class="flex-1"
                       disabled={
                         this.bountyContractInfo.status === APPLICANT_STATUS.APPLIED ||
                         this.bountyContractInfo.bountyStatus >= BOUNTY_STATUS.WORKSTARTED ||
@@ -114,28 +140,9 @@ export default defineComponent({
                     />
                   )}
                   {this.bountyContractInfo.role === USER_ROLE.FOUNDER && (
-                    <CloseBounty detailChainId={this.detailChainId} />
+                    <CloseBounty class="flex-1" detailChainId={this.detailChainId} />
                   )}
-                </>
-              ),
-              text: () => (
-                <>
-                  {this.paymentInfo?.rewards?.token1Symbol && (
-                    <Text
-                      value={`${this.paymentInfo.rewards.token1Amount || 0}`}
-                      class="mt-60px"
-                      unit={this.paymentInfo.rewards.token1Symbol}
-                      enhance={true}
-                    />
-                  )}
-                  <Text
-                    value={`${this.paymentInfo?.rewards?.token2Amount || 0}`}
-                    class="mt-40px"
-                    unit={this.paymentInfo?.rewards?.token2Symbol || 'TOKEN'}
-                    plus={true}
-                    enhance={true}
-                  />
-                </>
+                </div>
               )
             }}
           />
@@ -160,8 +167,32 @@ export default defineComponent({
                   )}
                 </p>
               ),
+              text: () => (
+                <div class="flex flex-col h-44 items-center">
+                  <div class="flex flex-1 items-end">
+                    <div>
+                      <p class="h-6 px-1 text-grey3 u-body4">Founder </p>
+                      <Text
+                        textColor="text-warning"
+                        value={`${this.bountyContractInfo.founderDepositAmount || 0}`}
+                        unit="USDC"
+                        enhance={40}
+                        digit={4}
+                      />
+                      <p class="h-6 mt-3 px-1 text-grey3 u-body4">Applicant </p>
+                      <Text
+                        textColor="text-warning"
+                        value={`${this.bountyApplicantAmount}`}
+                        enhance={40}
+                        digit={4}
+                        unit="USDC"
+                      />
+                    </div>
+                  </div>
+                </div>
+              ),
               btn: () => (
-                <>
+                <div class="flex my-10 mx-1/9 ">
                   {this.bountyContractInfo.role != USER_ROLE.FOUNDER && (
                     <>
                       {this.bountyContractInfo.bountyStatus < BOUNTY_STATUS.WORKSTARTED && (
@@ -189,86 +220,56 @@ export default defineComponent({
                       this.bountyContractInfo.depositLock ? (
                         <Lock detailChainId={this.detailChainId} />
                       ) : (
-                        <div class="flex mx-auto mt-60px mb-48px w-322px">
-                          <AddDeposit detailChainId={this.detailChainId} />
-                          <ReleaseDeposit detailChainId={this.detailChainId} />
+                        <div class="flex flex-1 gap-4">
+                          <AddDeposit detailChainId={this.detailChainId} class="flex-1" />
+                          <ReleaseDeposit detailChainId={this.detailChainId} class="flex-1" />
                         </div>
                       )}
                     </>
                   )}
-                </>
-              ),
-              text: () => (
-                <>
-                  <Text
-                    class="mt-60px"
-                    text-color="text-warning"
-                    value={`${this.bountyContractInfo.founderDepositAmount || 0}`}
-                    unit="USDC"
-                    enhance={true}
-                  />
-                  <Text
-                    class="mt-40px"
-                    text-color="text-warning"
-                    value={`${this.bountyApplicantAmount}`}
-                    enhance={true}
-                    unit="USDC"
-                  />
-                </>
+                </div>
               )
             }}
           />
         </div>
-        <div class="my-40px n-card-header">
-          <div class="n-card-header__main" role="heading">
-            TERMS
-          </div>
-          <div class="subtitle">
-            {this.payMode === 'stage' ? (
-              <>
-                <span class="text-grey3 text-16px">Total Stage:</span>
-                <span class="text-primary text-16px">{this.stageTerms.length}</span>
-              </>
-            ) : (
-              <>
-                <span class="text-grey3 text-16px">Total Period:</span>
-                <span class="text-primary text-16px">
-                  {' '}
-                  {this.periodTerms.length} {this.periodTerms.length === 1 ? 'week' : 'weeks'}
-                </span>
-                <span class="ml-61px text-grey3 text-16px">Daily working:</span>
-                <span class="text-primary text-16px">{this.paymentInfo?.stageTerms?.length}</span>
-              </>
-            )}
-          </div>
-        </div>
-        <ProjectCarousel
-          width={820}
-          total={this.payMode === 'stage' ? this.stageTerms.length : this.periodTerms.length}
-        >
-          {this.payMode === 'stage' ? (
-            <>
-              {this.stageTerms.map(term => (
-                <ProjectCardWithDialog
-                  detailChainId={this.detailChainId}
-                  info={term}
-                  payMode={this.payMode}
-                />
-              ))}
-            </>
-          ) : (
-            <>
-              {this.periodTerms.map(term => (
-                <ProjectCardWithDialog info={term} payMode={this.payMode} />
-              ))}
-            </>
+        <div class="mt-16 mb-10">
+          <div class="text-primary1 u-card-title1">TERMS</div>
+          {this.payMode === 'stage' && (
+            <div class="mt-2 ">
+              <span class="text-grey3 text-16px">Total Stage: </span>
+              <span class="text-primary text-16px">{this.stageTerms.length}</span>
+            </div>
           )}
-        </ProjectCarousel>
+
+          {this.payMode === 'period' && (
+            <div class="mt-2 ">
+              <span class="text-grey3 text-16px">Total Period: </span>
+              <span class="text-primary text-16px">
+                {`${this.periodTerms.length} ${this.periodTerms.length === 1 ? 'week' : 'weeks'}`}
+              </span>
+              <span class="ml-10 text-grey3 text-16px">Daily working: </span>
+              <span class="text-primary text-16px">
+                {`${this.paymentInfo?.periodTerms?.hoursPerDay} Hours`}
+              </span>
+            </div>
+          )}
+        </div>
+
+        {this.payMode === 'stage' && this.stageTerms.map(item => <StageTerm item={item} />)}
+
+        {this.payMode === 'period' && (
+          <ProjectCarousel width={820} total={this.periodTerms.length}>
+            {this.periodTerms.map(term => (
+              <ProjectCardWithDialog info={term} payMode={this.payMode} />
+            ))}
+          </ProjectCarousel>
+        )}
+
         {this.payMode === 'period' && (
           <div class="border-solid border-grey5 border-width-1px rounded-8px mt-24px max-h-258px p-24px overflow-hidden">
-            <p class="mb-24px text-grey1 text-20px">Target</p>
+            <p class="mb-6 u-title1">Target</p>
             <UScrollbar style={{ maxHeight: `${162}px` }}>
-              <p class="mx-24px text-grey2" innerHTML={this.paymentInfo?.periodTerms?.terms} />
+              <p class="text-grey2 u-body2" innerHTML={this.paymentInfo?.periodTerms?.terms} />
             </UScrollbar>
           </div>
         )}

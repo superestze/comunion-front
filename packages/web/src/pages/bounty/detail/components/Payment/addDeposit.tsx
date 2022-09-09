@@ -42,7 +42,7 @@ export default defineComponent({
           onTriggerDialog={triggerDialog}
         />
         <UButton
-          class="w-37 mr-6"
+          class={`${this.$attrs.class}`}
           ghost
           disabled={this.disabled}
           onClick={triggerDialog}

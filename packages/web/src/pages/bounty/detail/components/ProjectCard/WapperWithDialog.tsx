@@ -3,6 +3,7 @@ import { PayDailog } from '../Dialog'
 import { ProjectCard, BountyProjectCardType } from '.'
 
 export default defineComponent({
+  name: 'ProjectCardWithDialog',
   props: {
     info: {
       type: String as PropType<BountyProjectCardType>,

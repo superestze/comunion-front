@@ -1,5 +1,6 @@
 import { UButton, UScrollbar } from '@comunion/components'
 import { defineComponent, PropType, computed } from 'vue'
+import PayedMask from '../Payment/PayedMask'
 import Text from '../Text'
 import { BOUNTY_STATUS, USER_ROLE } from '@/constants'
 import { useBountyContractStore } from '@/stores/bountyContract'
@@ -15,6 +16,7 @@ export type BountyProjectCardType = {
 }
 
 export default defineComponent({
+  name: 'ProjectCard',
   props: {
     info: {
       type: String as PropType<BountyProjectCardType>
@@ -70,57 +72,62 @@ export default defineComponent({
       this.$emit('pay', this.info)
     }
     return (
-      <div class={this.wrapperClass}>
-        {this.info?.status === 2 && (
-          <>
-            <div
-              class="absolute rounded-8px flex justify-center items-center inset-0 z-9"
-              style={{ backgroundColor: '#5331F4', opacity: 0.4 }}
-            />
-            <div class="u-title2 z-10 absolute top-1/2 left-1/2 -ml-35px -mt-16px text-warning transform -rotate-15 rounded-4px w-18 h-8 bg-white flex justify-center items-center">
-              PAID
-            </div>
-          </>
-        )}
-        <div class="u-title2 text-primary absolute -left-2 -top-2 z-1 text-primary w-11.5 h-7 flex justify-center items-center rounded-4px bg-purple-light">
+      <div class="bg-purple border-purple border-solid rounded-md border-1 mt-2 ml-2 px-2 relative  ">
+        <div class="bg-purple-light flex rounded-4px h-7 text-primary -top-2 -left-2 w-11.5 z-1 absolute justify-center items-center u-title2 ">
           {this.index}
         </div>
-        {this.info?.token1Symbol && (
-          <Text
-            class="mt-8 w-full"
-            half={true}
-            unit={this.info.token1Symbol}
-            value={`${this.info.token1Amount || 0}`}
-          />
-        )}
-        {this.info?.token2Symbol && (
-          <Text
-            class="mt-3 w-full"
-            half={true}
-            unit={this.info.token2Symbol}
-            value={`${this.info.token2Amount || 0}`}
-            plus={true}
-          />
-        )}
-        {this.info?.terms && (
-          <div class="h-25 mt-6 overflow-hidden">
-            <UScrollbar style={{ maxHeight: `${90}px` }} class="flex">
-              <p class="text-primary2 mx-24px">{this.info.terms}</p>
-            </UScrollbar>
+
+        <div class="rounded-md flex flex-col h-full w-full items-center relative overflow-hidden">
+          {this.info?.status === 2 && <PayedMask />}
+          <div class="flex flex-1 items-end">
+            <div>
+              {this.info?.token1Symbol && (
+                <Text
+                  class="mt-8 w-full"
+                  half={true}
+                  unit={this.info.token1Symbol}
+                  value={`${this.info.token1Amount || 0}`}
+                  enhance={36}
+                  digit={3}
+                  unitClass="text-grey1"
+                />
+              )}
+              {this.info?.token2Symbol && (
+                <Text
+                  class="mt-3 mb-8 w-full"
+                  half={true}
+                  unit={this.info.token2Symbol}
+                  value={`${this.info.token2Amount || 0}`}
+                  plus={true}
+                  enhance={36}
+                  digit={3}
+                  unitClass="text-grey1"
+                />
+              )}
+              {this.info?.terms && (
+                <div class=" my-6 overflow-hidden">
+                  <UScrollbar style={{ maxHeight: `${90}px` }} class="flex">
+                    <p class=" text-primary2">{this.info.terms}</p>
+                  </UScrollbar>
+                </div>
+              )}
+              {this.bountyContractStore.bountyContractInfo.role === USER_ROLE.FOUNDER && (
+                <div class="flex my-8 ">
+                  <UButton
+                    secondary={!this.payBtnAbled}
+                    disabled={!this.payBtnAbled}
+                    class="bg-white flex-1"
+                    type="default"
+                    size="small"
+                    onClick={handlePay}
+                  >
+                    Pay
+                  </UButton>
+                </div>
+              )}
+            </div>
           </div>
-        )}
-        {this.bountyContractStore.bountyContractInfo.role === USER_ROLE.FOUNDER && (
-          <UButton
-            secondary={!this.payBtnAbled}
-            disabled={!this.payBtnAbled}
-            class="w-30 mt-8 bg-white"
-            type="default"
-            size="small"
-            onClick={handlePay}
-          >
-            Pay
-          </UButton>
-        )}
+        </div>
       </div>
     )
   }
