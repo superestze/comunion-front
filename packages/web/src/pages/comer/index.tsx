@@ -16,6 +16,7 @@ import Social from './components/social'
 import Startup from './components/startup'
 import { useModuleTag } from './hooks/useModuleTag'
 import { useProfile } from './hooks/useProfile'
+import { ComerAccount } from '@/components/OAuth/Link/OAuthLinkWidget'
 
 const keyValue: Record<string, string> = {
   Startup: 'startupCnt',
@@ -118,6 +119,7 @@ export default defineComponent({
                   cover={this.profile?.cover}
                   view={this.view}
                   onDone={this.get}
+                  comerAccounts={this.profile?.comerAccounts as ComerAccount[]}
                 />
                 <Bio content={this.profile?.bio} view={this.view} onDone={this.get} />
                 <Social view={this.view} profile={this.profile} onDone={this.get} />
@@ -180,7 +182,7 @@ export default defineComponent({
                         return (
                           <Crowdfunding
                             createdByMe={this.createdByMe}
-                            // comerId={this.profile.comerID as number}
+                            comerId={this.profile.comerID as number}
                           />
                         )
                       } else if (
