@@ -12,7 +12,7 @@ import ApplyBounty from './applyBounty'
 import CloseBounty from './closeBounty'
 import Lock from './lock'
 import ReleaseDeposit from './releaseDeposit'
-import { APPLICANT_STATUS, BOUNTY_STATUS, USER_ROLE } from '@/constants'
+import { APPLICANT_STATUS, BOUNTY_STATUS, USER_ROLE, PERIOD_OPTIONS } from '@/constants'
 import { ServiceReturn } from '@/services'
 import { useBountyStore } from '@/stores'
 import { BountyContractInfoType } from '@/stores/bountyContract'
@@ -82,6 +82,15 @@ export default defineComponent({
     }
   },
   render() {
+    const getPeriodByType = (type: number) => {
+      const targetIndex = PERIOD_OPTIONS.findIndex(opt => opt.value === type)
+      if (targetIndex !== -1) {
+        return PERIOD_OPTIONS[targetIndex].type
+      }
+      return ''
+    }
+    const periodType = getPeriodByType(this.paymentInfo?.periodTerms?.periodType || 1)
+
     return (
       <>
         <div class="flex mt-8 ">
@@ -197,6 +206,7 @@ export default defineComponent({
                     <>
                       {this.bountyContractInfo.bountyStatus < BOUNTY_STATUS.WORKSTARTED && (
                         <ReleaseApplicant
+                          class="flex-1"
                           detailChainId={this.detailChainId}
                           disabled={this.bountyContractInfo.status !== APPLICANT_STATUS.APPLIED}
                         />
@@ -204,11 +214,15 @@ export default defineComponent({
                       {this.bountyContractInfo.bountyStatus >= BOUNTY_STATUS.WORKSTARTED &&
                         this.bountyContractInfo.status !== APPLICANT_STATUS.APPROVED &&
                         this.bountyContractInfo.status !== APPLICANT_STATUS.UNAPPROVED && (
-                          <ReleaseApplicant detailChainId={this.detailChainId} disabled={true} />
+                          <ReleaseApplicant
+                            class="flex-1"
+                            detailChainId={this.detailChainId}
+                            disabled={true}
+                          />
                         )}
                       {(this.bountyContractInfo.status === APPLICANT_STATUS.APPROVED ||
                         this.bountyContractInfo.status === APPLICANT_STATUS.UNAPPROVED) && (
-                        <Lock detailChainId={this.detailChainId} />
+                        <Lock detailChainId={this.detailChainId} class="flex-1" />
                       )}
                     </>
                   )}
@@ -218,7 +232,7 @@ export default defineComponent({
                       this.bountyContractInfo.timeLock > 0 &&
                       this.time - this.bountyContractInfo.timeLock >= 0 &&
                       this.bountyContractInfo.depositLock ? (
-                        <Lock detailChainId={this.detailChainId} />
+                        <Lock detailChainId={this.detailChainId} class="flex-1" />
                       ) : (
                         <div class="flex flex-1 gap-4">
                           <AddDeposit detailChainId={this.detailChainId} class="flex-1" />
@@ -245,11 +259,15 @@ export default defineComponent({
             <div class="mt-2 ">
               <span class="text-grey3 text-16px">Total Period: </span>
               <span class="text-primary text-16px">
-                {`${this.periodTerms.length} ${this.periodTerms.length === 1 ? 'week' : 'weeks'}`}
+                {`${this.periodTerms.length} ${periodType}${
+                  this.periodTerms.length > 1 ? 's' : ''
+                }`}
               </span>
               <span class="ml-10 text-grey3 text-16px">Daily working: </span>
               <span class="text-primary text-16px">
-                {`${this.paymentInfo?.periodTerms?.hoursPerDay} Hours`}
+                {`${this.paymentInfo?.periodTerms?.hoursPerDay || 0} ${
+                  (this.paymentInfo?.periodTerms?.hoursPerDay || 0) > 1 ? 'Hours' : 'Hour'
+                }`}
               </span>
             </div>
           )}

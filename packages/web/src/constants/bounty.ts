@@ -62,3 +62,9 @@ export const transcationUrl: { [key: number]: string } = {
   43113: 'https://cchain.explorer.avax-test.network/tx/',
   43114: 'https://etherscan.io/tx/'
 }
+
+export const PERIOD_OPTIONS = [
+  { label: 'Days', value: 1, type: 'Day' },
+  { label: 'Weeks', value: 2, type: 'Week' },
+  { label: 'Months', value: 3, type: 'Month' }
+]

@@ -4,7 +4,7 @@ export default defineComponent({
   props: {
     value: {
       type: String,
-      default: () => '100'
+      default: () => '0'
     },
     enhance: {
       type: Number,
@@ -34,7 +34,7 @@ export default defineComponent({
       type: String
     }
   },
-  setup(props, ctx) {
+  setup(props) {
     const prefix = computed(() => {
       return props.plus ? (
         <span
@@ -46,29 +46,22 @@ export default defineComponent({
       ) : null
     })
 
-    const mainTextClass = 'font-orbitron leading-none text-9 relative px-1'
-
     const formatText = computed(() => {
+      let remainingStr = ''
       if (props.digit > props.value.length) {
         const remaining = props.digit - props.value.length
-        let remainingStr = ''
-        for (let i = 0; i < remaining; i++) {
-          remainingStr += '0'
-        }
-        return (
-          // text-warning
-          <strong class={`${mainTextClass}`} style={{ fontSize: `${props.enhance}px` }}>
-            {prefix.value}
-            {props.value}
-            {remainingStr.length > 0 ? '.' : ''}
-            {remainingStr}
-          </strong>
-        )
+        remainingStr = new Array(remaining).fill('0').join('')
       }
       return (
-        <strong class={mainTextClass}>
+        // text-warning
+        <strong
+          class="font-orbitron leading-none px-1 text-9 truncate relative"
+          style={{ fontSize: `${props.enhance}px` }}
+        >
           {prefix.value}
           {props.value}
+          {remainingStr.length && '.'}
+          {remainingStr}
         </strong>
       )
     })
