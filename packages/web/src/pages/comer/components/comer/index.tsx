@@ -175,8 +175,7 @@ export default defineComponent({
       toggleFollow,
       follow,
       imageUrl,
-      self,
-      comerAccounts: props.comerAccounts
+      self
     }
   },
   render() {
@@ -283,7 +282,10 @@ export default defineComponent({
               {/* oauth */}
               {!this.view && (
                 <div class="flex flex-wrap mt-6">
-                  <OAuthLinkWidget comerAccounts={this.comerAccounts} />
+                  <OAuthLinkWidget
+                    comerAccounts={this.comerAccounts}
+                    onUpdate={() => this.$emit('Done')}
+                  />
                 </div>
               )}
             </div>
