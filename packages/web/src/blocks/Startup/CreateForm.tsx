@@ -8,10 +8,19 @@ import {
   UButton,
   FormFactoryField
 } from '@comunion/components'
-import { defineComponent, PropType, reactive, ref, CSSProperties } from 'vue'
-import { STARTUP_TYPES, StartupTypesType, getStartupNumberFromType } from '@/constants'
+import { defineComponent, PropType, reactive, ref, CSSProperties, h } from 'vue'
+import {
+  STARTUP_TYPES,
+  StartupTypesType,
+  getStartupNumberFromType,
+  supportedNetworks
+} from '@/constants'
 import { useStartupContract } from '@/contracts'
 import { services } from '@/services'
+type chainSelectOption = {
+  label: string
+  logo: string
+}
 const CreateStartupForm = defineComponent({
   name: 'CreateStartupForm',
   props: {
@@ -141,10 +150,12 @@ const CreateStartupForm = defineComponent({
       })
     }
 
-    const switchChage = (value: boolean) => {
+    const switchChange = (value: boolean) => {
       console.log(value)
     }
-
+    const netWorkChange = (value: number) => {
+      console.log(value)
+    }
     const infoFields: FormFactoryField[] = [
       // {
       //   t: 'singleImageUpload',
@@ -156,18 +167,82 @@ const CreateStartupForm = defineComponent({
         t: 'select',
         title: 'Blockchain Network',
         name: 'Blockchain Network',
-        required: true,
-        placeholder: '',
-        options: [
-          {
-            label: 'asdsad',
-            value: '1111',
-            id: '12313'
-          }
-        ],
+        placeholder: 'Select startup Blockchain Network',
+        options: supportedNetworks.map(item => ({
+          value: item.chainId,
+          label: item.name,
+          logo: item.logo
+        })),
         // 5.9功能未完善
         // 获取startupID判断当下网络和选择网络是否一致
-        onChange: switchChage
+        onUpdateValue: (value: number) => netWorkChange(value),
+        renderTag: ({ option }) => {
+          return h(
+            'div',
+            {
+              style: {
+                display: 'flex',
+                alignItems: 'center'
+              }
+            },
+            [
+              h('img', {
+                src: option.logo,
+                round: true,
+                size: 20,
+                style: {
+                  marginRight: '12px'
+                }
+              }),
+              option.label as string
+            ]
+          )
+        },
+        renderLabel: (option: chainSelectOption) => {
+          return h(
+            'div',
+            {
+              style: {
+                display: 'flex',
+                alignItems: 'center'
+              }
+            },
+            [
+              h('img', {
+                src: option.logo,
+                round: true,
+                size: 20
+              }),
+              h(
+                'div',
+                {
+                  style: {
+                    marginLeft: '12px',
+                    padding: '4px 0'
+                  }
+                },
+                [
+                  h('div', null, [option.label as string])
+                  // h(
+                  //   NText,
+                  //   { depth: 3, tag: 'div' },
+                  //   {
+                  //     default: () => 'description'
+                  //   }
+                  // )
+                ]
+              )
+            ]
+          )
+        },
+        rules: [
+          {
+            required: true,
+            validator: (rule, value) => !!value,
+            message: 'Blockchain Network cannot be blank',
+            trigger: 'blur'
+          }
+        ]
       },
       {
         t: 'string',
@@ -202,7 +277,7 @@ const CreateStartupForm = defineComponent({
           }
           return style
         },
-        onChange: switchChage
+        onUpdateValue: (value: boolean) => switchChange(value)
       },
       {
         t: 'select',

@@ -9,9 +9,9 @@ import {
   useUpload
 } from '@comunion/components'
 import { CustomRequest } from 'naive-ui/lib/upload/src/interface'
-import { defineComponent, ref, reactive, PropType, watch, CSSProperties } from 'vue'
+import { defineComponent, ref, reactive, PropType, watch, CSSProperties, h } from 'vue'
 import { RectDraggerUpload } from '@/components/Upload'
-import { getStartupTypeFromNumber, STARTUP_TYPES } from '@/constants'
+import { getStartupTypeFromNumber, STARTUP_TYPES, supportedNetworks } from '@/constants'
 import { services } from '@/services'
 type InfoPropType = {
   logo: string
@@ -21,6 +21,7 @@ type InfoPropType = {
   mission: string
   overview: string
   blockChainAddress: string
+  chainID: number | undefined
 }
 
 type onlyType = {
@@ -28,7 +29,10 @@ type onlyType = {
 }
 
 type InfoType = Omit<InfoPropType, 'mode' | 'blockChainAddress'> & onlyType
-
+type chainSelectOption = {
+  label: string
+  logo: string
+}
 export default defineComponent({
   props: {
     data: {
@@ -41,15 +45,18 @@ export default defineComponent({
   },
   setup(props) {
     const loading = ref(false)
-
     const info = reactive<InfoType>({
       logo: props.data.logo || '',
       cover: props.data.cover || '',
       name: props.data.name || '',
       type: getStartupTypeFromNumber(props.data.mode) || '',
       mission: props.data.mission || '',
-      overview: props.data.overview || ''
+      overview: props.data.overview || '',
+      chainID: props.data.chainID
     })
+    const netWorkChange = (value: number) => {
+      console.log(value)
+    }
     watch(
       () => props.data,
       data => {
@@ -84,9 +91,84 @@ export default defineComponent({
         t: 'select',
         title: 'Blockchain Network',
         name: 'Blockchain Network',
-        required: true,
-        placeholder: '',
-        options: []
+        placeholder: 'Select startup Blockchain Network',
+        options: supportedNetworks.map(item => ({
+          value: item.chainId,
+          label: item.name,
+          logo: item.logo
+        })),
+        // 5.9功能未完善
+        // 获取startupID判断当下网络和选择网络是否一致
+        onUpdateValue: (value: number) => netWorkChange(value),
+        renderTag: ({ option }) => {
+          return h(
+            'div',
+            {
+              style: {
+                display: 'flex',
+                alignItems: 'center'
+              }
+            },
+            [
+              h('img', {
+                src: option.logo,
+                round: true,
+                size: 20,
+                style: {
+                  marginRight: '12px'
+                }
+              }),
+              option.label as string
+            ]
+          )
+        },
+        renderLabel: (option: chainSelectOption) => {
+          return h(
+            'div',
+            {
+              style: {
+                display: 'flex',
+                alignItems: 'center'
+              }
+            },
+            [
+              h('img', {
+                src: option.logo,
+                round: true,
+                size: 20
+              }),
+              h(
+                'div',
+                {
+                  style: {
+                    marginLeft: '12px',
+                    padding: '4px 0'
+                  }
+                },
+                [
+                  h('div', null, [option.label as string])
+                  // h(
+                  //   NText,
+                  //   { depth: 3, tag: 'div' },
+                  //   {
+                  //     default: () => 'description'
+                  //   }
+                  // )
+                ]
+              )
+            ]
+          )
+        },
+        rules: [
+          {
+            required: true,
+            validator: (rule, value) => !!value,
+            message: 'Blockchain Network cannot be blank',
+            trigger: 'blur'
+          }
+        ],
+        defaultValue: info.chainID,
+        disabled: true
       },
       {
         t: 'string',
@@ -107,7 +189,8 @@ export default defineComponent({
             style.background = '#00BFA5'
           }
           return style
-        }
+        },
+        disabled: true
       },
       {
         t: 'select',

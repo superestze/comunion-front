@@ -75,7 +75,8 @@ export default defineComponent({
                   mode: this.startup?.mode || 0,
                   mission: this.startup?.mission || '',
                   overview: this.startup?.overview || '',
-                  blockChainAddress: this.startup?.blockChainAddress || ''
+                  blockChainAddress: this.startup?.blockChainAddress || '',
+                  chainID: this.startup?.chainID
                 }}
                 startupId={this.route.params.id as string}
               />
