@@ -16,6 +16,7 @@ import Social from './components/social'
 import Startup from './components/startup'
 import { useModuleTag } from './hooks/useModuleTag'
 import { useProfile } from './hooks/useProfile'
+import { ComerAccount } from '@/components/OAuth/Link/OAuthLinkWidget'
 
 const keyValue: Record<string, string> = {
   Startup: 'startupCnt',
@@ -35,7 +36,7 @@ export default defineComponent({
     instance.getProfileData()
 
     const createdByMe = ref<boolean>(false)
-    const systemTasks = ref<string[]>(['All', 'Startup', 'Bounty', 'Crowdfunding', 'Proposal'])
+    const systemTasks = ref<string[]>(['All', 'Startup', 'Bounty', 'dCrowdfunding', 'Proposal'])
     const selectedTasks = ref<string[]>(['All'])
 
     const moduleTag = useModuleTag()
@@ -106,8 +107,8 @@ export default defineComponent({
     return (
       <USpin show={this.loading}>
         <div class="mt-50px text-primary mb-10 u-h2"></div>
-        <div class="flex gap-6 mb-20">
-          <div class="basis-1/3">
+        <div class="flex mb-20 gap-6">
+          <div class="overflow-hidden basis-1/3">
             {this.profile && (
               <>
                 <Comer
@@ -118,6 +119,7 @@ export default defineComponent({
                   cover={this.profile?.cover}
                   view={this.view}
                   onDone={this.get}
+                  comerAccounts={this.profile?.comerAccounts as ComerAccount[]}
                 />
                 <Bio content={this.profile?.bio} view={this.view} onDone={this.get} />
                 <Social view={this.view} profile={this.profile} onDone={this.get} />
@@ -140,7 +142,7 @@ export default defineComponent({
               </>
             )}
           </div>
-          <div class="basis-2/3">
+          <div class="overflow-hidden basis-2/3">
             {this.profile && (
               <>
                 <Filter
@@ -173,11 +175,16 @@ export default defineComponent({
                           />
                         )
                       } else if (
-                        task === 'Crowdfunding' &&
-                        rowDisplay('Crowdfunding') &&
+                        task === 'dCrowdfunding' &&
+                        rowDisplay('dCrowdfunding') &&
                         this.tagCount.crowdfundingCnt
                       ) {
-                        return <Crowdfunding createdByMe={this.createdByMe} />
+                        return (
+                          <Crowdfunding
+                            createdByMe={this.createdByMe}
+                            // comerId={this.profile.comerID as number}
+                          />
+                        )
                       } else if (
                         task === 'Proposal' &&
                         rowDisplay('Proposal') &&

@@ -34,7 +34,7 @@ export const ReviewInfo = defineComponent({
           </div>
         </div>
         <div class="review-info-item">
-          <div class="title">Tokens For Crowdfunding :</div>
+          <div class="title">Tokens For dCrowdfunding :</div>
           <div>
             {this.crowdfundingInfo.buyPrice! * this.crowdfundingInfo.raiseGoal!}{' '}
             {this.crowdfundingInfo.sellTokenName}
@@ -66,11 +66,11 @@ export const ReviewInfo = defineComponent({
           <div>{this.crowdfundingInfo.maxSell} % of the bought token amount</div>
         </div>
         <div class="review-info-item">
-          <div class="title">Crowdfunding Start Time :</div>
+          <div class="title">dCrowdfunding Start Time :</div>
           <div>{dayjs(this.crowdfundingInfo.startTime).format('YYYY-MM-DD HH:mm')}</div>
         </div>
         <div class="review-info-item">
-          <div class="title">Crowdfunding End Time :</div>
+          <div class="title">dCrowdfunding End Time :</div>
           <div>{dayjs(this.crowdfundingInfo.endTime).format('YYYY-MM-DD HH:mm')}</div>
         </div>
         {!!this.crowdfundingInfo.youtube && (
@@ -83,7 +83,7 @@ export const ReviewInfo = defineComponent({
         )}
         {!!this.crowdfundingInfo.detail && (
           <div class="review-info-item">
-            <div class="title">Crowdfunding detail :</div>
+            <div class="title">dCrowdfunding detail :</div>
 
             <a href={this.crowdfundingInfo.detail} target="__blank" class="text-primary">
               {this.crowdfundingInfo.detail}

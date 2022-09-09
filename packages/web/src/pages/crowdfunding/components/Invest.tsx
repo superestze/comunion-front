@@ -134,7 +134,7 @@ export const Invest = defineComponent({
       if (props.info.status === CrowdfundingStatus.CANCELED) {
         return {
           status: CrowdfundingStatus.CANCELED,
-          label: 'Crowdfunding Has Cancelled',
+          label: 'dCrowdfunding Has Cancelled',
           value: countDown,
           class: 'bg-[rgba(245,246,250,1)] text-grey5'
         }
@@ -147,7 +147,7 @@ export const Invest = defineComponent({
           .split('-')
         return {
           status: CrowdfundingStatus.UPCOMING,
-          label: 'Crowdfunding Starts In',
+          label: 'dCrowdfunding Starts In',
           value: {
             days,
             hours,
@@ -160,7 +160,7 @@ export const Invest = defineComponent({
       if (dayjs.utc().isAfter(dayjs(props.info.endTime).utc())) {
         return {
           status: CrowdfundingStatus.ENDED,
-          label: 'Crowdfunding Has Ended',
+          label: 'dCrowdfunding Has Ended',
           value: countDown,
           class: 'bg-[rgba(242,159,57,0.06)] text-warning'
         }
@@ -175,7 +175,7 @@ export const Invest = defineComponent({
       const [days, hours, minutes, seconds] = diffDuration
       return {
         status: CrowdfundingStatus.LIVE,
-        label: 'Crowdfunding Ends In',
+        label: 'dCrowdfunding Ends In',
         value: {
           days,
           hours,
@@ -440,7 +440,7 @@ export const Invest = defineComponent({
         <UTooltip>
           {{
             trigger: () => (
-              <div class="text-primary text-xl font-bold font-orbitron leading-8">
+              <div class="font-bold font-orbitron text-primary text-xl leading-8">
                 {Number(data).toFixed(2).replace(/\.00$/, '')}
               </div>
             ),
@@ -458,10 +458,10 @@ export const Invest = defineComponent({
     }
 
     return () => (
-      <div class="flex items-stretch gap-6 p-10 bg-white border-1 border-grey5 mb-6 rounded-lg invest">
+      <div class="bg-white rounded-lg flex border-1 border-grey5 mb-6 p-10 gap-6 items-stretch invest">
         <div class="flex-1">
-          <div class="u-title2 mb-4">{countDownTime.value.label}</div>
-          <div class="flex items-center mb-12">
+          <div class="mb-4 u-title2">{countDownTime.value.label}</div>
+          <div class="flex mb-12 items-center">
             <span
               class={`${countDownTime.value.class} font-semibold text-center leading-10 rounded-lg w-9 h-10 mr-2`}
             >
@@ -492,37 +492,37 @@ export const Invest = defineComponent({
               {countDownTime.value.value.seconds}
             </span>
           </div>
-          <div class="u-title2 mb-4">Crowdfunding Detail</div>
-          <div class="grid grid-cols-2 gap-4 mb-13">
-            <div class="rounded-lg h-22 flex flex-col justify-center pl-4 bg-[rgba(83,49,244,0.06)]">
-              <div class="leading-loose text-primary flex items-end">
+          <div class="mb-4 u-title2">dCrowdfunding Detail</div>
+          <div class="mb-13 grid gap-4 grid-cols-2">
+            <div class="rounded-lg flex flex-col bg-[rgba(83,49,244,0.06)] h-22 pl-4 justify-center">
+              <div class="flex text-primary leading-loose items-end">
                 <span class="mr-1">{numberTip(raiseState.value.raiseAmount)}</span>
                 {props.buyCoinInfo.symbol}
               </div>
               <div class="text-xs text-grey3">Raised</div>
             </div>
-            <div class="rounded-lg h-22 flex flex-col justify-center pl-4 bg-[rgba(83,49,244,0.06)]">
-              <div class="leading-loose text-primary flex items-end">
+            <div class="rounded-lg flex flex-col bg-[rgba(83,49,244,0.06)] h-22 pl-4 justify-center">
+              <div class="flex text-primary leading-loose items-end">
                 <span class="mr-1">{numberTip(raiseState.value.raisePercent)}</span>%
               </div>
               <div class="text-xs text-grey3">Progress</div>
             </div>
-            <div class="rounded-lg h-22 flex flex-col justify-center pl-4 bg-[rgba(28,96,243,0.06)] bg-opacity-6">
-              <div class="leading-loose text-primary flex items-end">
+            <div class="rounded-lg flex flex-col bg-[rgba(28,96,243,0.06)] bg-opacity-6 h-22 pl-4 justify-center">
+              <div class="flex text-primary leading-loose items-end">
                 <span class="mr-1">{numberTip(raiseState.value.raiseGoal)}</span>
                 {props.buyCoinInfo.symbol}
               </div>
               <div class="text-xs text-grey3">Raised Goal</div>
             </div>
-            <div class="rounded-lg h-22 flex flex-col justify-center pl-4 bg-[rgba(28,96,243,0.06)] bg-opacity-6">
-              <div class="leading-loose text-primary flex items-end">
+            <div class="rounded-lg flex flex-col bg-[rgba(28,96,243,0.06)] bg-opacity-6 h-22 pl-4 justify-center">
+              <div class="flex text-primary leading-loose items-end">
                 <span class="mr-1">{numberTip(raiseState.value.swapAmount)}</span>
                 {props.buyCoinInfo.symbol}
               </div>
               <div class="text-xs text-grey3">Available Swap</div>
             </div>
           </div>
-          <div class="u-title2 mb-6">Token Information</div>
+          <div class="mb-6 u-title2">Token Information</div>
           <div class="u-body2">
             <div class="token-info-item">
               <span class="token-info-item-label">Totally Supply：</span>
@@ -538,7 +538,7 @@ export const Invest = defineComponent({
               <span class="token-info-item-label">Token Symbol：</span>
               <span class="text-grey1  whitespace-nowrap">{props.sellCoinInfo.symbol}</span>
             </div>
-            <div class="token-info-item mb-0">
+            <div class="mb-0 token-info-item">
               <div class="token-info-item-label">Token Contract：</div>
               <UAddress
                 class="token-info-item-address"
@@ -548,22 +548,22 @@ export const Invest = defineComponent({
             </div>
           </div>
         </div>
-        <div class="w-px bg-grey5"></div>
+        <div class="bg-grey5 w-px"></div>
         <div class="flex-1">
-          <div class="flex justify-between mb-2">
-            <span class="u-title1 font-orbitron">{mode.value === 'buy' ? 'INVEST' : 'SELL'}</span>
-            <span class="bg-[rgba(83,49,244,0.06)] flex items-center px-4 py-1 text-primary1 rounded-4xl leading-snug">
-              <img src={chainInfo?.logo} class="w-5 h-5" />{' '}
-              <span class="ml-2 font-opensans font-600">{chainInfo?.name}</span>
+          <div class="flex mb-2 justify-between">
+            <span class="font-orbitron u-title1">{mode.value === 'buy' ? 'INVEST' : 'SELL'}</span>
+            <span class="flex bg-[rgba(83,49,244,0.06)] rounded-4xl leading-snug py-1 px-4 text-primary1 items-center">
+              <img src={chainInfo?.logo} class="h-5 w-5" />{' '}
+              <span class="font-opensans font-600 ml-2">{chainInfo?.name}</span>
             </span>
           </div>
-          <div class="u-body2 !text-primary mb-10">
+          <div class="mb-10 u-body2 !text-primary">
             IBO Rate：1 {props.buyCoinInfo.symbol} = {props.info.buyPrice}{' '}
             {props.sellCoinInfo.symbol}
           </div>
-          <div class="flex justify-between mb-2">
-            <span class="u-body2 text-grey3">From</span>
-            <span class="u-body3 text-sm text-primary1 italic">
+          <div class="flex mb-2 justify-between">
+            <span class="text-grey3 u-body2">From</span>
+            <span class="text-sm text-primary1 italic u-body3">
               Balance :{' '}
               {(mode.value === 'buy' ? props.buyCoinInfo.balance : props.sellCoinInfo.balance) || 0}
             </span>
@@ -573,7 +573,7 @@ export const Invest = defineComponent({
               v-model:value={fromValue.value}
               v-slots={{
                 suffix: () => (
-                  <div class="u-label1 text-primary cursor-pointer" onClick={setMaxBalance}>
+                  <div class="cursor-pointer text-primary u-label1" onClick={setMaxBalance}>
                     MAX
                   </div>
                 )
@@ -592,15 +592,15 @@ export const Invest = defineComponent({
           </div>
           <div class="flex justify-center">
             <div
-              class="flex justify-center items-center text-primary h-9 w-9 bg-purple-light my-8 rounded-full cursor-pointer"
+              class="bg-purple-light rounded-full cursor-pointer flex h-9 my-8 text-primary w-9 justify-center items-center"
               onClick={changeMode}
             >
               <ExchangeOutlined />
             </div>
           </div>
-          <div class="flex justify-between mb-2">
-            <span class="u-body2 text-grey3">To</span>
-            <span class="u-body3 text-sm text-primary1 italic">
+          <div class="flex mb-2 justify-between">
+            <span class="text-grey3 u-body2">To</span>
+            <span class="text-sm text-primary1 italic u-body3">
               Balance :{' '}
               {(mode.value === 'buy' ? props.sellCoinInfo.balance : props.buyCoinInfo.balance) || 0}
             </span>
@@ -623,7 +623,7 @@ export const Invest = defineComponent({
               }
             />
           </div>
-          <div class="flex items-center mt-10 mb-6 gap-4">
+          <div class="flex mt-10 mb-6 gap-4 items-center">
             {props.info.comerId === userStore.profile?.comerID && (
               <UButton
                 type="primary"
@@ -655,13 +655,13 @@ export const Invest = defineComponent({
               {mode.value === 'buy' ? 'Buy' : 'Sell'}
             </UButton>
           </div>
-          <div class="border border-grey5 p-4 rounded-lg">
+          <div class="border rounded-lg border-grey5 p-4">
             <div class="flex justify-between u-body2">
-              <span class="flex items-center text-sm mb-4 text-grey3">
+              <span class="flex text-sm mb-4 text-grey3 items-center">
                 Swap %：
                 <UTooltip>
                   {{
-                    trigger: () => <QuestionFilled class="w-4 h-4 text-grey3" />,
+                    trigger: () => <QuestionFilled class="h-4 text-grey3 w-4" />,
                     default: () => (
                       <div class="max-w-90">
                         Part of the funds raised will go into the swap pool as a fixed-price
@@ -674,17 +674,17 @@ export const Invest = defineComponent({
               <span>{props.info.swapPercent} %</span>
             </div>
             <div class="flex justify-between u-body2">
-              <span class="flex items-center text-sm mb-4 text-grey3">Maximum buy：</span>
+              <span class="flex text-sm mb-4 text-grey3 items-center">Maximum buy：</span>
               <span>
                 {props.info.maxBuyAmount} {props.buyCoinInfo.symbol}
               </span>
             </div>
             <div class="flex justify-between u-body2">
-              <span class="flex items-center text-sm mb-4 text-grey3">
+              <span class="flex text-sm mb-4 text-grey3 items-center">
                 Sell tax %：
                 <UTooltip>
                   {{
-                    trigger: () => <QuestionFilled class="w-4 h-4 text-grey3" />,
+                    trigger: () => <QuestionFilled class="h-4 text-grey3 w-4" />,
                     default: () => (
                       <div class="max-w-90">
                         When selling tokens, a {props.info.sellTax} % fee needs to be deducted as
@@ -697,11 +697,11 @@ export const Invest = defineComponent({
               <span>{props.info.sellTax} %</span>
             </div>
             <div class="flex justify-between u-body2">
-              <span class="flex items-center text-sm text-grey3">
+              <span class="flex text-sm text-grey3 items-center">
                 Maximum sell % ：
                 <UTooltip>
                   {{
-                    trigger: () => <QuestionFilled class="w-4 h-4 text-grey3" />,
+                    trigger: () => <QuestionFilled class="h-4 text-grey3 w-4" />,
                     default: () => (
                       <div class="max-w-90">The maximum sellable percentage of tokens you own</div>
                     )
@@ -719,13 +719,13 @@ export const Invest = defineComponent({
             class="!p-7"
             onClose={() => (cancelModal.value = false)}
           >
-            <div class="u-title1 relative -top-3 ">Cancellation of Crowdfunding</div>
-            <div class="u-body2 text-grey3">This can't be undo and you'll lose your changes</div>
-            <div class="flex justify-end mt-20">
+            <div class="-top-3 relative u-title1 ">Cancellation of dCrowdfunding</div>
+            <div class="text-grey3 u-body2">This can't be undo and you'll lose your changes</div>
+            <div class="flex mt-20 justify-end">
               <UButton
                 type="primary"
                 ghost
-                class="w-41 mr-4"
+                class="mr-4 w-41"
                 onClick={() => (cancelModal.value = false)}
               >
                 Cancel
@@ -743,15 +743,15 @@ export const Invest = defineComponent({
             class="!p-7"
             onClose={() => (removeModal.value = false)}
           >
-            <div class="u-title1 relative -top-3 ">Remove Crowdfunding！</div>
-            <div class="u-body2 text-grey3">
+            <div class="-top-3 relative u-title1 ">Remove dCrowdfunding！</div>
+            <div class="text-grey3 u-body2">
               This will transfer all funds raised to the team wallet
             </div>
-            <div class="flex justify-end mt-20">
+            <div class="flex mt-20 justify-end">
               <UButton
                 type="primary"
                 ghost
-                class="w-41 mr-4"
+                class="mr-4 w-41"
                 onClick={() => (removeModal.value = false)}
               >
                 Cancel

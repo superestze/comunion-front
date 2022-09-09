@@ -117,7 +117,7 @@ const CreateCrowdfundingForm = defineComponent({
           crowdfundingInfo.sellTokenDeposit!.toString(),
           crowdfundingInfo.sellTokenDecimals
         )
-        // get crowdfunding factory address
+        // get dcrowdfunding factory address
         const factoryAddress = CrowdfundingFactoryAddresses[walletStore.chainId!]
         contractStore.startContract(approvePendingText)
         // approve sellToken to crowdfund factory contract
@@ -141,8 +141,8 @@ const CreateCrowdfundingForm = defineComponent({
           crowdfundingInfo.teamWallet,
           dayjs(crowdfundingInfo.startTime).valueOf() / 1000,
           dayjs(crowdfundingInfo.endTime).valueOf() / 1000,
-          'Waiting to submit all contents to blockchain for creating crowdfunding',
-          `Crowdfunding is Creating`
+          'Waiting to submit all contents to blockchain for creating dCrowdfunding',
+          `dCrowdfunding is Creating`
         )
         return contractRes
       } catch (e: any) {
@@ -216,7 +216,7 @@ const CreateCrowdfundingForm = defineComponent({
   render() {
     return (
       <div>
-        <div class="mb-20 mx-35">
+        <div class="mx-35 mb-20">
           <Steps
             steps={this.stepOptions}
             current={this.crowdfundingInfo.current}
@@ -252,17 +252,17 @@ const CreateCrowdfundingForm = defineComponent({
             class="!p-7"
             onClose={() => (this.modalVisibleState = false)}
           >
-            <div class="relative -top-3 flex items-center">
-              <WarningFilled /> <span class="u-title1 ml-4">Discard changes?</span>
+            <div class="flex -top-3 relative items-center">
+              <WarningFilled /> <span class="ml-4 u-title1">Discard changes?</span>
             </div>
             <div class="mt-3 ml-12 u-body2">
               This can’t be undone and you’ll lose your changes.{' '}
             </div>
-            <div class="flex justify-end mt-20">
+            <div class="flex mt-20 justify-end">
               <UButton
                 type="primary"
                 ghost
-                class="w-41 mr-4"
+                class="mr-4 w-41"
                 onClick={() => (this.modalVisibleState = false)}
               >
                 Cancel

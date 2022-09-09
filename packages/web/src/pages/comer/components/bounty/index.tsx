@@ -1,6 +1,6 @@
 import { UCard } from '@comunion/components'
 import { defineComponent, reactive, ref, watch } from 'vue'
-import BountiesCard from '@/pages/startup/detail/components/Bounties'
+import BountiesCard from '@/pages/bounty/components/BountyCard'
 import { ServiceReturn, services } from '@/services'
 
 type BountyType = NonNullable<ServiceReturn<'bounty@my-posted-bounty-list'>>['rows']
@@ -69,33 +69,8 @@ export default defineComponent({
   render() {
     return (
       <UCard title="BOUNTIES" class="mb-6">
-        {this.createdByMe ? (
-          <>
-            {Array.isArray(this.bounties) &&
-              this.bounties.length > 0 &&
-              this.bounties.map((bounty, i) => (
-                <BountiesCard
-                  startup={bounty}
-                  key={i}
-                  name="dashboard"
-                  status={bounty.onChainStatus as string}
-                />
-              ))}
-          </>
-        ) : (
-          <>
-            {Array.isArray(this.bounties) &&
-              this.bounties.length > 0 &&
-              this.bounties.map((bounty, i) => (
-                <BountiesCard
-                  startup={bounty}
-                  key={i}
-                  name="dashboard"
-                  status={bounty.onChainStatus as string}
-                />
-              ))}
-          </>
-        )}
+        {Array.isArray(this.bounties) &&
+          this.bounties.map((bounty, i) => <BountiesCard startup={bounty} key={i} miniCard />)}
       </UCard>
     )
   }

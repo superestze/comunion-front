@@ -37,22 +37,22 @@ const CreateCrowdfundingBlock = defineComponent({
 
     const stepOptions = [
       { name: 'Verify Token And Select Startup' },
-      { name: 'The Crowdfunding Information ' },
+      { name: 'The dCrowdfunding Information ' },
       { name: 'Add Additional Information ' },
       { name: 'Review Your Information' }
     ]
 
     const footer = () => {
       return (
-        <div class="text-right pr-16 pb-4 bg-purple">
+        <div class="bg-purple text-right pr-16 pb-4">
           {createCrowdfundingFormRef.value?.crowdfundingInfo?.current === 1 && (
-            <UButton class="w-40 mr-4" type="primary" ghost onClick={closeCrowdfunding}>
+            <UButton class="mr-4 w-40" type="primary" ghost onClick={closeCrowdfunding}>
               Cancel
             </UButton>
           )}
           {(createCrowdfundingFormRef.value?.crowdfundingInfo?.current as number) > 1 && (
             <UButton
-              class="w-40 mr-4"
+              class="mr-4 w-40"
               type="primary"
               ghost
               onClick={createCrowdfundingFormRef.value?.toPreviousStep}
@@ -84,7 +84,7 @@ const CreateCrowdfundingBlock = defineComponent({
   render() {
     return (
       <UDrawer
-        title="Create Crowdfunding"
+        title="Create dCrowdfunding"
         maskClosable={false}
         v-model:show={this.visible}
         v-slots={{

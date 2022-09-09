@@ -49,15 +49,15 @@ export default defineComponent({
     return (
       <USpin show={this.loading}>
         <UBreadcrumb class="mt-10 mb-10">
-          <UBreadcrumbItem v-slots={{ separator: () => <ArrowLeftOutlined /> }}></UBreadcrumbItem>
-          <UBreadcrumbItem v-slots={{ separator: () => <ArrowLeftOutlined /> }}>
+          <UBreadcrumbItem>
             <span
-              class="cursor-pointer text-primary uppercase u-label2"
+              class="cursor-pointer flex text-primary items-center u-label2"
               onClick={() => {
                 this.$router.go(-1)
               }}
             >
-              BACK
+              <ArrowLeftOutlined />
+              <span class="ml-1">BACK</span>
             </span>
           </UBreadcrumbItem>
         </UBreadcrumb>

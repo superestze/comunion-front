@@ -10,7 +10,6 @@ import Overview from './components/overview'
 import Profile from './components/profile'
 import Security from './components/security'
 
-import Team from './components/team'
 import { useStartup } from './hooks/useStartup'
 import Empty from '@/pages/comer/components/empty'
 import { services } from '@/services'
@@ -43,7 +42,7 @@ export default defineComponent({
 
     const TAG_LABEL_MAP: any = {
       Bounty: 'bountyCnt',
-      Crowdfunding: 'crowdfundingCnt',
+      dCrowdfunding: 'crowdfundingCnt',
       Governance: 'proposalCnt',
       'Other dapp': 'otherDappCnt'
     }
@@ -111,7 +110,6 @@ export default defineComponent({
         </div>
         <div class="flex mb-20 gap-6">
           <div class="basis-1/3">
-            <Team startupId={this.startupId} />
             <Overview content={this.startup?.overview || ''} />
             {(this.startup?.kyc || this.startup?.contractAudit) && (
               <Security
@@ -122,13 +120,13 @@ export default defineComponent({
             <Finance startup={this.startup} />
             <Connection startupId={this.startupId} />
           </div>
-          <div class="basis-2/3">
+          <div class="overflow-hidden basis-2/3">
             <Filter
               startupId={this.startupId}
               onSelectedTagChange={tags => (this.selectedTags = tags)}
             />
             {this.canShowByTagName('Bounty') && <Bounties startupId={this.startupId} />}
-            {this.canShowByTagName('Crowdfunding') && <Crowdfunding startupId={this.startupId} />}
+            {this.canShowByTagName('dCrowdfunding') && <Crowdfunding startupId={this.startupId} />}
             {!this.hasDataToShow && <Empty />}
           </div>
         </div>

@@ -57,7 +57,7 @@ export const CrowdfundingInformation = defineComponent({
     })
     const renderSelect = computed(() => (
       <USelect
-        class="w-30 text-center"
+        class="text-center w-30"
         options={raiseGoalOptions.value}
         v-model:value={props.crowdfundingInfo.buyTokenContract}
         onUpdateValue={(value, option: SelectOption) =>
@@ -100,7 +100,7 @@ export const CrowdfundingInformation = defineComponent({
         ],
         render(value) {
           return (
-            <div class="flex-1 flex items-center">
+            <div class="flex flex-1 items-center">
               <UInputNumberGroup
                 inputProps={{
                   placeholder: 'EX：10',
@@ -133,7 +133,7 @@ export const CrowdfundingInformation = defineComponent({
                 <span class="n-form-item-label__asterisk">&nbsp;*</span>
                 <UTooltip placement="right">
                   {{
-                    trigger: () => <QuestionFilled class="text-grey3 w-4 h-4" />,
+                    trigger: () => <QuestionFilled class="h-4 text-grey3 w-4" />,
                     default: () => (
                       <div class="w-60">
                         Part of the funds raised will go into the swap pool as a fixed-price
@@ -221,7 +221,7 @@ export const CrowdfundingInformation = defineComponent({
                 class="flex-1"
               ></UInputBigNumber>
               <div class="my-1 text-xs text-grey4">
-                The price is at when investors buy token during Crowdfunding
+                The price is at when investors buy token during dCrowdfunding
               </div>
             </div>
           )
@@ -355,7 +355,7 @@ export const CrowdfundingInformation = defineComponent({
                 v-model:value={props.crowdfundingInfo.maxSell}
                 class="flex-1"
               ></UInputBigNumber>
-              <div class="my-1 text-grey4 text-xs">
+              <div class="my-1 text-xs text-grey4">
                 Maximum sellable is the percentage of token each investor can sell
               </div>
             </div>
@@ -430,12 +430,12 @@ export const CrowdfundingInformation = defineComponent({
           ref={(ref: any) => (this.crowdfundingInfoForm = ref)}
           rules={this.crowdfundingInfoRules}
           model={this.crowdfundingInfo}
-          class="grid grid-cols-2 gap-x-10"
+          class="grid gap-x-10 grid-cols-2"
         >
           <UFormItemsFactory fields={this.formFields} values={this.crowdfundingInfo} />
         </UForm>
-        <div class="bg-purple px-6 py-5.5 rounded-lg mt-4">
-          Need <span class="text-primary">{this.totalSellToken}</span> UVU to create Crowdfunding.
+        <div class="bg-purple rounded-lg mt-4 py-5.5 px-6">
+          Need <span class="text-primary">{this.totalSellToken}</span> UVU to create dCrowdfunding.
         </div>
       </div>
     )

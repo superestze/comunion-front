@@ -3,6 +3,7 @@ import { defineComponent, PropType, ref } from 'vue'
 import { ModuleTags } from '@/components/Tags'
 
 export default defineComponent({
+  name: 'Filter',
   props: {
     tasks: {
       type: Array as PropType<string[]>,
@@ -32,19 +33,19 @@ export default defineComponent({
     }
 
     return (
-      <div class="bg-white rounded-lg border mb-6 relative overflow-hidden p-10">
+      <div class="bg-white border rounded-lg mb-6 py-6 px-8 relative overflow-hidden">
         <UTabs onUpdateValue={tabsChange}>
-          <UTabPane name="PARTICIPATED" tab="PARTICIPATED" class="h-10">
+          <UTabPane name="PARTICIPATED" tab="PARTICIPATED">
             <ModuleTags
-              class="mt-4"
+              class="mt-2"
               tasks={this.tasks}
               onSelectedChange={handleSelectedChange}
               ref={(ref: any) => (this.tag1 = ref)}
             />
           </UTabPane>
-          <UTabPane name="CREATED" tab="CREATED" class="h-10">
+          <UTabPane name="CREATED" tab="CREATED">
             <ModuleTags
-              class="mt-4"
+              class="mt-2"
               tasks={this.tasks}
               onSelectedChange={handleSelectedChange}
               ref={(ref: any) => (this.tag2 = ref)}

@@ -16,17 +16,6 @@ export type ComerAccount = {
   accountId: number
 }
 
-type Linked = {
-  github: {
-    linked: boolean
-    accountId: number
-  }
-  google: {
-    linked: boolean
-    accountId: number
-  }
-}
-
 // type AccountMap = {
 //   [key: number]: string
 // }
@@ -44,39 +33,13 @@ export default defineComponent({
       required: true
     }
   },
-  setup(props) {
+  emits: ['update'],
+  setup(props, ctx) {
     const loading = ref<boolean>(false)
     const profileStore = useProfileStore()
     const { googleLogin, githubLogin } = useOAuth()
     const cantUnbind = ref<boolean>(false)
     const userStore = useUserStore()
-    const linked = computed(() => {
-      const obj: Linked = {
-        google: {
-          linked: false,
-          accountId: 0
-        },
-        github: {
-          linked: false,
-          accountId: 0
-        }
-      }
-      props.comerAccounts.forEach(item => {
-        if (item.accountType === 1) {
-          obj.github = {
-            linked: item.linked,
-            accountId: item.accountId
-          }
-        }
-        if (item.accountType === 2) {
-          obj.google = {
-            linked: item.linked,
-            accountId: item.accountId
-          }
-        }
-      })
-      return obj
-    })
 
     const onlyOneBound = computed(() => {
       let count = 0
@@ -92,8 +55,18 @@ export default defineComponent({
     const unBindVisible = ref<boolean>(false)
     const currentUnbindAccountId = ref<number>(-1)
 
+    const getLinkedByAccountType = (accountType: number) => {
+      const targetIndex = props.comerAccounts.findIndex(
+        account => account.accountType === accountType
+      )
+      if (targetIndex !== -1) {
+        return props.comerAccounts[targetIndex].linked
+      }
+      return false
+    }
+
     const handleGoogleLink = (accountId: number) => () => {
-      if (linked.value.google.linked) {
+      if (getLinkedByAccountType(2)) {
         if (onlyOneBound.value) {
           cantUnbind.value = true
           return
@@ -107,7 +80,7 @@ export default defineComponent({
     }
 
     const handleGithubLink = (accountId: number) => () => {
-      if (linked.value.github.linked) {
+      if (getLinkedByAccountType(1)) {
         if (onlyOneBound.value) {
           cantUnbind.value = true
           return
@@ -134,6 +107,7 @@ export default defineComponent({
         .then(() => {
           profileStore.get(() => {
             unBindVisible.value = false
+            ctx.emit('update')
           })
         })
         .finally(() => {
@@ -141,9 +115,21 @@ export default defineComponent({
         })
     }
 
-    return () => (
+    return {
+      unBindVisible,
+      triggerUnbindDialog,
+      loading,
+      unBindAccount,
+      cantUnbind,
+      triggerCantUnbindDialog,
+      handleGoogleLink,
+      handleGithubLink
+    }
+  },
+  render() {
+    return (
       <>
-        <UModal show={unBindVisible.value}>
+        <UModal show={this.unBindVisible}>
           <CardContent
             title="Unbind Account"
             config={{ width: 524 }}
@@ -155,15 +141,19 @@ export default defineComponent({
                 </p>
               ),
               footer: () => (
-                <div class="flex justify-end mt-40px">
-                  <UButton onClick={triggerUnbindDialog} disabled={loading.value} class="w-160px">
+                <div class="flex mt-40px justify-end">
+                  <UButton
+                    onClick={this.triggerUnbindDialog}
+                    disabled={this.loading}
+                    class="w-160px"
+                  >
                     Cancel
                   </UButton>
                   <UButton
                     type="primary"
                     class="ml-10px w-160px"
-                    onClick={unBindAccount}
-                    disabled={loading.value}
+                    onClick={this.unBindAccount}
+                    disabled={this.loading}
                   >
                     Sure
                   </UButton>
@@ -172,7 +162,7 @@ export default defineComponent({
             }}
           />
         </UModal>
-        <UModal show={cantUnbind.value}>
+        <UModal show={this.cantUnbind}>
           <CardContent
             title="Tips"
             config={{ width: 524 }}
@@ -184,11 +174,11 @@ export default defineComponent({
                 </p>
               ),
               footer: () => (
-                <div class="flex justify-end mt-40px">
+                <div class="flex mt-40px justify-end">
                   <UButton
                     type="primary"
                     class="ml-10px w-160px"
-                    onClick={triggerCantUnbindDialog}
+                    onClick={this.triggerCantUnbindDialog}
                     disabled={false}
                   >
                     Sure
@@ -198,28 +188,34 @@ export default defineComponent({
             }}
           />
         </UModal>
-        <div class="mr-4">
-          <OAuthLinkBtn
-            onTriggerClick={handleGoogleLink(linked.value?.google.accountId)}
-            disabled={false}
-          >
-            <GoogleFilled class="w-5 h-5 mr-3.5 text-primary" />
-            <span class="u-title2 text-primary">
-              {linked.value?.google.linked ? 'Linked' : 'Link'}
-            </span>
-          </OAuthLinkBtn>
-        </div>
-        <div class="mr-4">
-          <OAuthLinkBtn
-            onTriggerClick={handleGithubLink(linked.value?.github.accountId)}
-            disabled={false}
-          >
-            <GithubFilled class="w-5 h-5 mr-3.5 text-primary" />
-            <span class="u-title2 text-primary">
-              {linked.value?.github.linked ? 'Linked' : 'Link'}
-            </span>
-          </OAuthLinkBtn>
-        </div>
+        {this.comerAccounts.map(account => {
+          if (account.accountType === 1) {
+            // github
+            return (
+              <OAuthLinkBtn
+                class="mr-4 mb-4"
+                onTriggerClick={this.handleGithubLink(account.accountId)}
+                disabled={false}
+              >
+                <GithubFilled class="h-5 mr-4 text-primary w-5" />
+                <span class="text-primary u-title2">{account.linked ? 'Linked' : 'Link'}</span>
+              </OAuthLinkBtn>
+            )
+          } else if (account.accountType === 2) {
+            // google
+            return (
+              <OAuthLinkBtn
+                class="mr-4 mb-4"
+                onTriggerClick={this.handleGoogleLink(account.accountId)}
+                disabled={false}
+              >
+                <GoogleFilled class="h-5 mr-4 text-primary w-5" />
+                <span class="text-primary u-title2">{account.linked ? 'Linked' : 'Link'}</span>
+              </OAuthLinkBtn>
+            )
+          }
+          return null
+        })}
       </>
     )
   }

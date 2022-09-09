@@ -74,26 +74,22 @@ export default defineComponent({
   render() {
     return (
       <UCard title="FINANCE" class="mb-6">
-        <div class="flex flex-col mr-10">
+        <div class="flex flex-col">
           {this.financeBasic.map(item => {
             return (
-              <div class="flex mt-4">
-                <p class="text-grey3 w-38 u-body2">{item.name}</p>
-                <p class="text-primary2 u-body2">{item.value}</p>
+              <div class="flex mt-4  items-center">
+                <p class="max-w-1/2 text-grey3 w-38 u-body2">{item.name}</p>
+                <p class="text-primary2 overflow-hidden u-body2">{item.value}</p>
               </div>
             )
           })}
 
           <div class="bg-grey5 h-1px mt-6.5 w-full"></div>
-          <div class="flex mt-5.5">
-            <p class="text-grey3 w-38 u-body2">Presale wallet：</p>
-            <div class="flex flex-col">
+          <div class="flex mt-5.5  items-center">
+            <p class="max-w-1/2 text-grey3 w-38 u-body2">Presale wallet：</p>
+            <div class="overflow-hidden">
               {(this.wallets || []).map(item => {
-                return (
-                  <p>
-                    <UAddress class="text-primary u-body2" autoSlice address={item.value} />
-                  </p>
-                )
+                return <UAddress class="text-primary u-body2" autoSlice address={item.value} />
               })}
             </div>
           </div>
