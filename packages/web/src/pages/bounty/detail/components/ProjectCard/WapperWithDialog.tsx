@@ -36,7 +36,7 @@ export default defineComponent({
           visible={this.visible}
           paymentInfo={this.info}
         />
-        <ProjectCard info={this.info} onPay={triggerDialog} payMode={this.payMode} />
+        <ProjectCard info={this.info} onPay={triggerDialog} />
       </>
     )
   }

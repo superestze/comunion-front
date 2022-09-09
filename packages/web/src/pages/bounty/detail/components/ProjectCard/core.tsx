@@ -20,10 +20,6 @@ export default defineComponent({
   props: {
     info: {
       type: String as PropType<BountyProjectCardType>
-    },
-    payMode: {
-      type: String as PropType<'stage' | 'period'>,
-      require: true
     }
   },
   emits: ['pay'],
@@ -48,12 +44,7 @@ export default defineComponent({
     const wrapperClass = computed(() => {
       const str =
         'flex flex-col relative items-center w-63 bg-purple border-purple border-1 border-solid rounded-8px mt-10px ml-2 mr-6'
-      if (props.payMode === 'stage') {
-        if (bountyContractStore.bountyContractInfo.role === USER_ROLE.FOUNDER) {
-          return `${str} h-88`
-        }
-        return `${str} h-75`
-      }
+
       return `${str} h-57`
     })
 
