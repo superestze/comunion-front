@@ -17,6 +17,7 @@ import { useBountyStore } from '@/stores'
 import { BountyContractInfoType } from '@/stores/bountyContract'
 
 export default defineComponent({
+  name: 'Payment',
   props: {
     detailChainId: {
       type: Number,
@@ -82,11 +83,22 @@ export default defineComponent({
   render() {
     return (
       <>
-        <div class="flex justify-between mt-26px">
+        <div class="flex mt-8 ">
           <PaymentCard
-            title="Rewards"
-            class="w-100 mr-2"
+            class="flex-1 mr-8"
             v-slots={{
+              title: () => (
+                <p
+                  class="flex h-16 px-6 items-center"
+                  style={{
+                    backgroundColor: this.bountyContractInfo.depositLock
+                      ? 'rgba(223, 79, 81, 0.12)'
+                      : '#F5F6FA'
+                  }}
+                >
+                  <span class="flex-1 u-title3">Rewards</span>
+                </p>
+              ),
               btn: () => (
                 <>
                   {this.bountyContractInfo.role != USER_ROLE.FOUNDER && (
@@ -128,23 +140,23 @@ export default defineComponent({
             }}
           />
           <PaymentCard
-            class="w-100"
+            class="flex-1"
             lock={this.bountyContractInfo.depositLock}
             v-slots={{
               title: () => (
                 <p
-                  class="flex justify-between items-center h-72px"
+                  class="flex h-16 px-6 items-center"
                   style={{
                     backgroundColor: this.bountyContractInfo.depositLock
                       ? 'rgba(223, 79, 81, 0.12)'
                       : '#F5F6FA'
                   }}
                 >
-                  <span class="text-20px ml-24px opacity-100">Deposit</span>
+                  <span class="flex-1 u-title3">Deposit</span>
                   {this.bountyContractInfo.depositLock ? (
-                    <LockKeyOutlined class="mr-6" />
+                    <LockKeyOutlined />
                   ) : (
-                    <UnlockKeyOutlined class="mr-6" />
+                    <UnlockKeyOutlined />
                   )}
                 </p>
               ),
@@ -177,7 +189,7 @@ export default defineComponent({
                       this.bountyContractInfo.depositLock ? (
                         <Lock detailChainId={this.detailChainId} />
                       ) : (
-                        <div class="flex w-322px mt-60px mb-48px mx-auto">
+                        <div class="flex mx-auto mt-60px mb-48px w-322px">
                           <AddDeposit detailChainId={this.detailChainId} />
                           <ReleaseDeposit detailChainId={this.detailChainId} />
                         </div>
@@ -192,36 +204,22 @@ export default defineComponent({
                     class="mt-60px"
                     text-color="text-warning"
                     value={`${this.bountyContractInfo.founderDepositAmount || 0}`}
+                    unit="USDC"
                     enhance={true}
-                    v-slots={{
-                      unit: () => (
-                        <span class="flex flex-col justify-end pb-6px text-grey5">
-                          <span class="text-16px">USDC</span>
-                          <span class="text-16px">Founder</span>
-                        </span>
-                      )
-                    }}
                   />
                   <Text
                     class="mt-40px"
                     text-color="text-warning"
                     value={`${this.bountyApplicantAmount}`}
                     enhance={true}
-                    v-slots={{
-                      unit: () => (
-                        <span class="flex flex-col justify-end pb-6px text-grey5">
-                          <span>USDC</span>
-                          <span>Applicant</span>
-                        </span>
-                      )
-                    }}
+                    unit="USDC"
                   />
                 </>
               )
             }}
           />
         </div>
-        <div class="n-card-header my-40px">
+        <div class="my-40px n-card-header">
           <div class="n-card-header__main" role="heading">
             TERMS
           </div>
@@ -238,7 +236,7 @@ export default defineComponent({
                   {' '}
                   {this.periodTerms.length} {this.periodTerms.length === 1 ? 'week' : 'weeks'}
                 </span>
-                <span class="text-grey3 text-16px ml-61px">Daily working:</span>
+                <span class="ml-61px text-grey3 text-16px">Daily working:</span>
                 <span class="text-primary text-16px">{this.paymentInfo?.stageTerms?.length}</span>
               </>
             )}
@@ -267,10 +265,10 @@ export default defineComponent({
           )}
         </ProjectCarousel>
         {this.payMode === 'period' && (
-          <div class="max-h-258px overflow-hidden mt-24px border-grey5 border-width-1px border-solid rounded-8px p-24px">
-            <p class="text-grey1 text-20px mb-24px">Target</p>
+          <div class="border-solid border-grey5 border-width-1px rounded-8px mt-24px max-h-258px p-24px overflow-hidden">
+            <p class="mb-24px text-grey1 text-20px">Target</p>
             <UScrollbar style={{ maxHeight: `${162}px` }}>
-              <p class="text-grey2 mx-24px" innerHTML={this.paymentInfo?.periodTerms?.terms} />
+              <p class="mx-24px text-grey2" innerHTML={this.paymentInfo?.periodTerms?.terms} />
             </UScrollbar>
           </div>
         )}

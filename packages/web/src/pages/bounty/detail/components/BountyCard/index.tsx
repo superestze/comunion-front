@@ -96,7 +96,7 @@ export default defineComponent({
           )}
         </div>
         <Paragraph
-          class="mt-10"
+          class="mt-8"
           label={'Created :'}
           content={this.createdAt}
           contentClass="text-primary2"

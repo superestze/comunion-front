@@ -121,10 +121,10 @@ export default defineComponent({
                         </>
                       )}
                     </p>
-                    <div class="flex font-opensans bg-[rgba(83,49,244,0.06)] rounded-35px h-34px items-center justify-center">
-                      <span class="flex rounded-4xl leading-snug ml-8px py-1 px-4 text-primary1 text-16px items-center">
-                        <img src={this.chainInfo?.logo} class="h-5 w-5" />{' '}
-                        <span class="font-opensans ml-2">{this.chainInfo?.name}</span>
+                    <div class="flex  bg-[rgba(83,49,244,0.06)] rounded-4xl h-8 px-4 items-center">
+                      <img src={this.chainInfo?.logo} class="h-5 w-5" />{' '}
+                      <span class="font-opensans font-600 ml-2 tracking-normal text-[#3F2D99] text-16px">
+                        {this.chainInfo?.name}
                       </span>
                     </div>
                   </div>
