@@ -3,6 +3,15 @@ import { requestAdapter } from './a2s.adapter'
 import { extract, replacePath } from './a2s.utils'
 
 export const services = {
+  'account@chain-list'(args: {}) {
+    return requestAdapter<{
+      list: Array<any>
+    }>({
+      url: replacePath('/chain/list', args),
+      method: 'GET',
+      ...extract('GET', args, [], [])
+    })
+  },
   'account@connected-count'(args: { comerID: any }) {
     return requestAdapter<{
       startupCnt: number
@@ -150,10 +159,10 @@ export const services = {
       {
         /**
    * @description 
-	ModuleStartup - 1
-	ModuleBounty - 2
-	ModuleCrowdfunding - 3
-	ModuleProposal - 4
+  ModuleStartup - 1
+  ModuleBounty - 2
+  ModuleCrowdfunding - 3
+  ModuleProposal - 4
 
 
      */
@@ -2840,13 +2849,13 @@ export const services = {
     return requestAdapter<{
       /**
    * @description 	1-SocialEmail 
-	2-SocialWebsite
-	3-SocialTwitter
-	4-SocialDiscord
-	5-SocialTelegram
-	6-SocialMedium
-	7-SocialFacebook
-	8-SocialLinktre
+  2-SocialWebsite
+  3-SocialTwitter
+  4-SocialDiscord
+  5-SocialTelegram
+  6-SocialMedium
+  7-SocialFacebook
+  8-SocialLinktre
      */
       socialType: number
     }>({
@@ -2864,9 +2873,9 @@ export const services = {
       cover: string
       /**
    * @description 	ModeESG Mode = 1
-	ModeNGO Mode = 2
-	ModeDAO Mode = 3
-	ModeCOM Mode = 4
+  ModeNGO Mode = 2
+  ModeDAO Mode = 3
+  ModeCOM Mode = 4
 
      */
       mode: number
@@ -3801,7 +3810,7 @@ export const services = {
 
   'misc@file-upload'(
     args: // file : File
-    FormData
+      FormData
   ) {
     return requestAdapter<{
       url: string

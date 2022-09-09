@@ -1,4 +1,5 @@
 export * from './user'
 export * from './wallet'
 export * from './bounty'
+export * from './chain'
 export * from './global.config'
