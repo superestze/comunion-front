@@ -171,7 +171,7 @@ export default defineComponent({
               <UForm rules={rules} model={this.info} ref={(ref: any) => (this.form = ref)}>
                 <UFormItemsFactory fields={this.fields} values={this.info} />
               </UForm>
-              <div class="flex mt-40px justify-end">
+              <div class="flex mt-10 justify-end">
                 <UButton
                   class="mr-4 w-40"
                   type="default"
