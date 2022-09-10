@@ -39,9 +39,10 @@ export const useChainStore = defineStore('chain', {
   actions: {
     async init() {
       try {
-        const { data } = await services['account@chain-list']({})
+        const { data } = await services['chain@chain-list']({})
         const supportNet: Array<ChainNetworkType> = []
-        data?.list.map((item: any) => {
+        console.log(data)
+        data?.list?.map((item: any) => {
           this.allNetworks.map(sn => {
             if (Number(item.chain_id) === Number(sn.chainId)) {
               const obj = { ...item, ...sn }
