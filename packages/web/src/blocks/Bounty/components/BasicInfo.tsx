@@ -13,6 +13,7 @@ import { SelectOption } from '@comunion/components/src/constants'
 import { MinusCircleOutlined, AddCircleOutlined } from '@comunion/icons'
 import dayjs from 'dayjs'
 import { defineComponent, PropType, ref, computed, Ref, h, onMounted } from 'vue'
+import { useRouter } from 'vue-router'
 import { BountyInfo, ContactType } from '../typing'
 import RichEditor from '@/components/Editor'
 import { services } from '@/services'
@@ -44,8 +45,9 @@ const BountyBasicInfo = defineComponent({
       required: true
     }
   },
-  emits: ['delContact', 'addContact'],
+  emits: ['delContact', 'addContact', 'closeDrawer'],
   setup(props, ctx) {
+    const router = useRouter()
     const contactOptions = ref([
       { label: 'Email', value: 1 },
       { label: 'Discord', value: 2 },
@@ -54,7 +56,6 @@ const BountyBasicInfo = defineComponent({
     const startupOptions = ref<SelectOption[]>([])
     const userStore = useUserStore()
     const bountyDetailForm = ref<FormInst | null>(null)
-
     const bountyBasicInfoFields: Ref<FormFactoryField[]> = computed(() => [
       {
         t: 'select',
@@ -62,7 +63,34 @@ const BountyBasicInfo = defineComponent({
         name: 'startupID',
         placeholder: 'Select a startup',
         rules: [
-          { required: true, message: 'Startup cannot be blank', type: 'number', trigger: 'blur' }
+          {
+            required: true,
+            message: 'Startup cannot be blank',
+            type: 'number',
+            trigger: ['change', 'blur']
+          },
+          {
+            validator: (rule, value) => {
+              // 5.9Incomplete function
+              // startupID Determine whether the current network is consistent with the network of choice
+              console.log(value)
+              return false
+            },
+            renderMessage: () => {
+              return (
+                <div>
+                  <span>
+                    The startup cannot create a crowdfunding without being on the blockchain,
+                  </span>
+                  <span onClick={() => goSetting()} class="!text-primary cursor-pointer">
+                    {' '}
+                    Go to setting
+                  </span>
+                </div>
+              )
+            },
+            trigger: 'change'
+          }
         ],
         options: startupOptions.value
       },
@@ -296,7 +324,10 @@ const BountyBasicInfo = defineComponent({
         console.error('error', error)
       }
     }
-
+    const goSetting = async () => {
+      router.push({ path: `/startup/setting/${props.bountyInfo.startupID}` })
+      ctx.emit('closeDrawer')
+    }
     onMounted(() => {
       getStartupByComerId()
     })
@@ -310,7 +341,7 @@ const BountyBasicInfo = defineComponent({
     }
   },
   render() {
-    console.log(this.bountyInfo)
+    console.log(this.bountyInfo, 'this.bountyInfo')
     return (
       <UForm
         ref={(ref: any) => (this.bountyDetailForm = ref)}

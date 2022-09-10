@@ -9,11 +9,11 @@ import {
   useUpload
 } from '@comunion/components'
 import { CustomRequest } from 'naive-ui/lib/upload/src/interface'
-import { defineComponent, ref, reactive, PropType, watch } from 'vue'
+import { defineComponent, ref, reactive, PropType, watch, CSSProperties, h, computed } from 'vue'
 import { RectDraggerUpload } from '@/components/Upload'
 import { getStartupTypeFromNumber, STARTUP_TYPES } from '@/constants'
 import { services } from '@/services'
-
+import { useChainStore } from '@/stores'
 type InfoPropType = {
   logo: string
   cover: string
@@ -22,6 +22,7 @@ type InfoPropType = {
   mission: string
   overview: string
   blockChainAddress: string
+  chainID: number | undefined
 }
 
 type onlyType = {
@@ -29,7 +30,10 @@ type onlyType = {
 }
 
 type InfoType = Omit<InfoPropType, 'mode' | 'blockChainAddress'> & onlyType
-
+type chainSelectOption = {
+  label: string
+  logo: string
+}
 export default defineComponent({
   props: {
     data: {
@@ -41,16 +45,24 @@ export default defineComponent({
     }
   },
   setup(props) {
+    const chainStore = useChainStore()
     const loading = ref(false)
-
     const info = reactive<InfoType>({
       logo: props.data.logo || '',
       cover: props.data.cover || '',
       name: props.data.name || '',
       type: getStartupTypeFromNumber(props.data.mode) || '',
       mission: props.data.mission || '',
-      overview: props.data.overview || ''
+      overview: props.data.overview || '',
+      chainID: props.data.chainID
     })
+    const supportedNetworks = computed(() => {
+      const data = chainStore.supportedNetworks
+      return data
+    })
+    const netWorkChange = (value: number) => {
+      console.log(value)
+    }
     watch(
       () => props.data,
       data => {
@@ -60,11 +72,22 @@ export default defineComponent({
         info.type = getStartupTypeFromNumber(data.mode)
         info.mission = data.mission
         info.overview = data.overview
+        info.chainID = data.chainID
       }
     )
-
+    watch(
+      () => supportedNetworks,
+      data => {
+        ;(fields[0] as any).options = data.value.map(item => ({
+          value: item.chainId,
+          label: item.name,
+          logo: item.logo
+        }))
+      },
+      { deep: true }
+    )
     // const walletStore = useWalletStore()
-    const fields: FormFactoryField[] = [
+    const fields: FormFactoryField[] = reactive([
       // {
       //   t: 'custom',
       //   title: 'BlockChainAddress',
@@ -82,12 +105,108 @@ export default defineComponent({
       //   }
       // },
       {
+        t: 'select',
+        title: 'Blockchain Network',
+        name: 'Blockchain Network',
+        placeholder: 'Select startup Blockchain Network',
+        options: supportedNetworks.value.map(item => ({
+          value: item.chainId,
+          label: item.name,
+          logo: item.logo
+        })),
+        // 5.9Incomplete function
+        // startupID Determine whether the current network is consistent with the network of choice
+        onUpdateValue: (value: number) => netWorkChange(value),
+        renderTag: ({ option }) => {
+          return h(
+            'div',
+            {
+              style: {
+                display: 'flex',
+                alignItems: 'center'
+              }
+            },
+            [
+              h('img', {
+                src: option.logo,
+                round: true,
+                size: 20,
+                style: {
+                  marginRight: '12px'
+                }
+              }),
+              option.label as string
+            ]
+          )
+        },
+        renderLabel: (option: chainSelectOption) => {
+          return h(
+            'div',
+            {
+              style: {
+                display: 'flex',
+                alignItems: 'center'
+              }
+            },
+            [
+              h('img', {
+                src: option.logo,
+                round: true,
+                size: 20
+              }),
+              h(
+                'div',
+                {
+                  style: {
+                    marginLeft: '12px',
+                    padding: '4px 0'
+                  }
+                },
+                [
+                  h('div', null, [option.label as string])
+                  // h(
+                  //   NText,
+                  //   { depth: 3, tag: 'div' },
+                  //   {
+                  //     default: () => 'description'
+                  //   }
+                  // )
+                ]
+              )
+            ]
+          )
+        },
+        rules: [
+          {
+            required: true,
+            validator: (rule, value) => !!value,
+            message: 'Blockchain Network cannot be blank',
+            trigger: 'blur'
+          }
+        ],
+        defaultValue: info.chainID,
+        disabled: false
+      },
+      {
         t: 'string',
         title: 'Name',
         name: 'name',
         required: true,
         placeholder: 'Please enter your startup name',
         maxlength: 24,
+        disabled: true
+      },
+      {
+        t: 'switch',
+        title: '',
+        name: 'switch',
+        railStyle: ({ focused, checked }: { focused: boolean; checked: boolean }) => {
+          const style: CSSProperties = {}
+          if (checked) {
+            style.background = '#00BFA5'
+          }
+          return style
+        },
         disabled: true
       },
       {
@@ -98,6 +217,13 @@ export default defineComponent({
         placeholder: 'Startup type',
         options: STARTUP_TYPES.map(item => ({ label: item, value: item })),
         disabled: true
+      },
+      {
+        t: 'startupTags',
+        required: true,
+        title: 'Tag',
+        name: 'tags',
+        placeholder: 'Select startup tag'
       },
       {
         t: 'string',
@@ -124,7 +250,7 @@ export default defineComponent({
           }
         ]
       }
-    ]
+    ])
     const form = ref<FormInst>()
     const { onUpload } = useUpload()
     const handleUploadLogo: CustomRequest = async ({ file, onProgress, onFinish, onError }) => {

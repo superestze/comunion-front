@@ -2,8 +2,8 @@ import { UButton } from '@comunion/components'
 import { ArrowDownOutlined } from '@comunion/icons'
 import { defineComponent, computed, ref, watchEffect } from 'vue'
 import HeaderDropdown from '../../components/HeaderDropdown'
-import { ChainNetworkType, supportedNetworks } from '@/constants'
-import { useWalletStore } from '@/stores'
+import { ChainNetworkType } from '@/constants'
+import { useWalletStore, useChainStore } from '@/stores'
 
 const NetworkSwitcher = defineComponent({
   name: 'NetworkSwitcher',
@@ -11,17 +11,18 @@ const NetworkSwitcher = defineComponent({
     const btnRef = ref<HTMLButtonElement>()
     const walletStore = useWalletStore()
     const networkCache = ref<ChainNetworkType>()
-
+    const chainStore = useChainStore()
     const currentNetwork = computed(() => {
-      return supportedNetworks.find(network => network.chainId === walletStore.chainId ?? 1)
+      return chainStore.supportedNetworks.find(
+        network => network.chainId === walletStore.chainId ?? 1
+      )
     })
-
     watchEffect(() => {
       if (currentNetwork.value?.chainId) {
         networkCache.value = currentNetwork.value
       }
       if (!networkCache.value) {
-        networkCache.value = supportedNetworks[0]
+        networkCache.value = chainStore.supportedNetworks[0]
       }
     })
 
@@ -38,11 +39,11 @@ const NetworkSwitcher = defineComponent({
       <HeaderDropdown
         value={currentNetwork.value?.chainId}
         title="Select network"
-        options={supportedNetworks.map(network => ({
+        options={chainStore.supportedNetworks.map(network => ({
           key: network.chainId,
           // disabled: network.disabled,
           icon: () => <img src={network.logo} class="rounded-full h-5 w-5" />,
-          label: network.shortName ?? network.name
+          label: (network as ChainNetworkType).shortName ?? network.name
         }))}
         onSelect={onSelectNetwork}
       >

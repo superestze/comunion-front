@@ -8,11 +8,15 @@ import {
   UButton,
   FormFactoryField
 } from '@comunion/components'
-import { defineComponent, PropType, reactive, ref } from 'vue'
+import { defineComponent, PropType, reactive, ref, CSSProperties, h } from 'vue'
 import { STARTUP_TYPES, StartupTypesType, getStartupNumberFromType } from '@/constants'
 import { useStartupContract } from '@/contracts'
 import { services } from '@/services'
-
+import { useChainStore } from '@/stores'
+type chainSelectOption = {
+  label: string
+  logo: string
+}
 const CreateStartupForm = defineComponent({
   name: 'CreateStartupForm',
   props: {
@@ -21,8 +25,12 @@ const CreateStartupForm = defineComponent({
     }
   },
   setup(props, ctx) {
+    const chainStore = useChainStore()
+    const supportedNetworks = reactive(chainStore.supportedNetworks)
     const defaultModel = {
-      logo: '',
+      nextwork: '',
+      // logo: '',
+      switch: false,
       name: '',
       type: undefined,
       mission: '',
@@ -52,7 +60,6 @@ const CreateStartupForm = defineComponent({
       }
     })
     const startupContract = useStartupContract()
-
     // const tokenInfo = reactive({ ...defaultTokenInfo })
 
     // const erc20ContractFactory = useErc20Contract()
@@ -109,7 +116,8 @@ const CreateStartupForm = defineComponent({
                     ? 0
                     : getStartupNumberFromType(model.type as StartupTypesType),
                   // model.tags,
-                  model.logo,
+                  // model.logo,
+                  model.nextwork,
                   model.mission,
                   // model.tokenContract,
                   // model.composes.map(item => [item.name, item.address]),
@@ -137,12 +145,100 @@ const CreateStartupForm = defineComponent({
         }
       })
     }
+
+    const switchChange = (value: boolean) => {
+      console.log(value)
+    }
+    const netWorkChange = (value: number) => {
+      console.log(value)
+    }
     const infoFields: FormFactoryField[] = [
+      // {
+      //   t: 'singleImageUpload',
+      //   title: '',
+      //   name: 'logo',
+      //   text: 'Update'
+      // },
       {
-        t: 'singleImageUpload',
-        title: '',
-        name: 'logo',
-        text: 'Update'
+        t: 'select',
+        title: 'Blockchain Network',
+        name: 'nextwork',
+        placeholder: 'Select startup Blockchain Network',
+        options: supportedNetworks.map(item => ({
+          value: item.chainId,
+          label: item.name,
+          logo: item.logo
+        })),
+        // 5.9Incomplete function
+        // startupID Determine whether the current network is consistent with the network of choice
+        onUpdateValue: (value: number) => netWorkChange(value),
+        renderTag: ({ option }) => {
+          return h(
+            'div',
+            {
+              style: {
+                display: 'flex',
+                alignItems: 'center'
+              }
+            },
+            [
+              h('img', {
+                src: option.logo,
+                round: true,
+                size: 20,
+                style: {
+                  marginRight: '12px'
+                }
+              }),
+              option.label as string
+            ]
+          )
+        },
+        renderLabel: (option: chainSelectOption) => {
+          return h(
+            'div',
+            {
+              style: {
+                display: 'flex',
+                alignItems: 'center'
+              }
+            },
+            [
+              h('img', {
+                src: option.logo,
+                round: true,
+                size: 20
+              }),
+              h(
+                'div',
+                {
+                  style: {
+                    marginLeft: '12px',
+                    padding: '4px 0'
+                  }
+                },
+                [
+                  h('div', null, [option.label as string])
+                  // h(
+                  //   NText,
+                  //   { depth: 3, tag: 'div' },
+                  //   {
+                  //     default: () => 'description'
+                  //   }
+                  // )
+                ]
+              )
+            ]
+          )
+        },
+        rules: [
+          {
+            required: true,
+            validator: (rule, value) => !!value,
+            message: 'Blockchain Network cannot be blank',
+            trigger: 'blur'
+          }
+        ]
       },
       {
         t: 'string',
@@ -165,18 +261,34 @@ const CreateStartupForm = defineComponent({
         ]
       },
       {
+        t: 'switch',
+        title: '',
+        name: 'switch',
+        disabled: false,
+        defaultValue: false,
+        railStyle: ({ focused, checked }: { focused: boolean; checked: boolean }) => {
+          const style: CSSProperties = {}
+          if (checked) {
+            style.background = '#00BFA5'
+          }
+          return style
+        },
+        onUpdateValue: (value: boolean) => switchChange(value)
+      },
+      {
         t: 'select',
         title: 'Type',
         name: 'type',
         required: true,
-        placeholder: 'Startup type',
+        placeholder: 'Select startup type',
         options: STARTUP_TYPES.map(item => ({ label: item, value: item }))
       },
       {
         t: 'startupTags',
         required: true,
         title: 'Tag',
-        name: 'tags'
+        name: 'tags',
+        placeholder: 'Select startup tag'
       },
       // {
       //   t: 'hashInput',
@@ -210,7 +322,7 @@ const CreateStartupForm = defineComponent({
         t: 'string',
         title: 'Overview',
         name: 'overview',
-        placeholder: 'Add overview for introducing your startup',
+        placeholder: 'Input overview for introducing your startup',
         type: 'textarea',
         maxlength: 1000,
         rules: [
@@ -240,7 +352,7 @@ const CreateStartupForm = defineComponent({
     }
     return () => (
       <UForm ref={formRef} rules={allRules} model={model}>
-        <p class="mb-7 text-primary1 u-card-title1">INFO SETTING</p>
+        {/* <p class="mb-7 text-primary1 u-card-title1">INFO SETTING</p> */}
         <UFormItemsFactory fields={infoFields} values={model} />
         {/* <div class="bg-purple h-13px my-8"></div> */}
         {/* <p class="mb-7 uppercase u-card-title1">Finance Setting</p> */}
