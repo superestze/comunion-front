@@ -1,7 +1,7 @@
 import { UCard, UNoContent } from '@comunion/components'
 import { EmptyFilled } from '@comunion/icons'
 import { defineComponent, ref } from 'vue'
-import CrowdfundingMiniCard from './CrowdfundingMiniCard'
+import CrowdfundingMiniCard from '@/pages/crowdfunding/components/CrowdfundingMiniCard'
 import { ServiceReturn, services } from '@/services'
 
 type DataType = NonNullable<ServiceReturn<'crowdfunding@crowdfunding-list-of-startup'>>
