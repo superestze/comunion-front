@@ -90,7 +90,7 @@ export default defineComponent({
                 <WalletOutlined class="h-20px w-20px absolute left-17px top-10px" />
                 Connect to a wallet
               </UButton>
-              <div class="flex mb-24px mt-40px items-center">
+              <div class="flex mb-24px mt-10 items-center">
                 <div class="bg-[#666] h-[1px] w-[140px]" />
                 <div
                   class="text-[14px] leading-5 w-[40px] text-center"

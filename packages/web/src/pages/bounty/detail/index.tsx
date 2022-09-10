@@ -1,5 +1,5 @@
-import { UBreadcrumb, UBreadcrumbItem, UCard, USpin, UTooltip } from '@comunion/components'
-import { ArrowLeftOutlined, PeriodOutlined, StageOutlined, ClockOutlined } from '@comunion/icons'
+import { UBreadcrumb, UCard, USpin, UTooltip } from '@comunion/components'
+import { PeriodOutlined, StageOutlined, ClockOutlined } from '@comunion/icons'
 import dayjs from 'dayjs'
 import { defineComponent, computed, ref, watch } from 'vue'
 import { useRoute } from 'vue-router'
@@ -10,8 +10,7 @@ import PersonalCard from './components/PersonalCard'
 import PostUpdate from './components/PostUpdate'
 import StartupCard from './components/StartupCard'
 import { useBountyContractWrapper } from './hooks/useBountyContractWrapper'
-import { BOUNTY_STATUS } from '@/constants'
-import router from '@/router'
+import { BOUNTY_STATUS, PERIOD_OPTIONS } from '@/constants'
 import { useBountyStore } from '@/stores'
 import { useBountyContractStore } from '@/stores/bountyContract'
 import { getChainInfoByChainId } from '@/utils/etherscan'
@@ -81,18 +80,32 @@ export default defineComponent({
     }
   },
   render() {
+    const getPeriodByType = (type: number) => {
+      const targetIndex = PERIOD_OPTIONS.findIndex(opt => opt.value === type)
+      if (targetIndex !== -1) {
+        return PERIOD_OPTIONS[targetIndex].type.toUpperCase()
+      }
+      return ''
+    }
+
     return (
       <USpin show={this.loading}>
         <UBreadcrumb class="mt-10 mb-10">
-          <UBreadcrumbItem v-slots={{ separator: () => <ArrowLeftOutlined /> }} />
-          <UBreadcrumbItem>
-            <span class="cursor-pointer text-primary uppercase u-label2" onClick={router.back}>
-              BACK
+          {/* <UBreadcrumbItem>
+            <span
+              class="cursor-pointer flex text-primary items-center u-label2"
+              onClick={() => {
+                this.$router.go(-1)
+              }}
+            >
+              <ArrowLeftOutlined />
+              <span class="ml-1">BACK</span>
             </span>
-          </UBreadcrumbItem>
+          </UBreadcrumbItem> */}
         </UBreadcrumb>
+
         <div class="flex mb-20 gap-6">
-          <div class="basis-2/3">
+          <div class="overflow-hidden basis-2/3">
             <div class="bg-white border rounded-lg mb-6 p-10">
               {this.bountySection.detail && (
                 <BountyCard
@@ -108,23 +121,28 @@ export default defineComponent({
                 header: () => (
                   <div class="flex justify-between">
                     <p class="flex items-center">
-                      <span>PAYMENT</span>
+                      <span class="mr-6 text-[#3F2D99] u-card-title1">PAYMENT</span>
                       {this.bountySection.bountyPayment?.bountyPaymentInfo?.paymentMode === 1 ? (
                         <>
-                          <StageOutlined class="ml-26px" />
-                          <p class="flex ml-14px text-14px items-center">PERIOD: STAGE</p>
+                          <StageOutlined class="h-5 text-primary w-5" />
+                          <p class=" text-primary ml-2 u-label2">STAGE</p>
                         </>
                       ) : (
                         <>
-                          <PeriodOutlined class="ml-26px" />
-                          <p class="flex ml-14px text-14px items-center">PERIOD: WEEK</p>
+                          <PeriodOutlined class="h-5 text-primary w-5" />
+                          <p class=" text-primary ml-2 u-label2">
+                            PERIOD:{' '}
+                            {getPeriodByType(
+                              this.bountySection.bountyPayment?.periodTerms?.periodType || 1
+                            )}
+                          </p>
                         </>
                       )}
                     </p>
-                    <div class="flex font-opensans bg-[rgba(83,49,244,0.06)] rounded-35px h-34px items-center justify-center">
-                      <span class="flex rounded-4xl leading-snug ml-8px py-1 px-4 text-primary1 text-16px items-center">
-                        <img src={this.chainInfo?.logo} class="h-5 w-5" />{' '}
-                        <span class="font-opensans ml-2">{this.chainInfo?.name}</span>
+                    <div class="flex  bg-[rgba(83,49,244,0.06)] rounded-4xl h-8 px-4 items-center">
+                      <img src={this.chainInfo?.logo} class="h-5 w-5" />{' '}
+                      <span class="font-opensans font-600 ml-2 tracking-normal text-[#3F2D99] text-16px">
+                        {this.chainInfo?.name}
                       </span>
                     </div>
                   </div>
@@ -204,7 +222,7 @@ export default defineComponent({
               )}
             </UCard>
           </div>
-          <div class="basis-1/3">
+          <div class="overflow-hidden basis-1/3">
             <div class="bg-white border rounded-lg mb-6 p-10">
               {this.bountySection.startup && <StartupCard startup={this.bountySection.startup} />}
             </div>

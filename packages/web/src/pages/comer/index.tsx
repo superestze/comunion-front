@@ -182,7 +182,7 @@ export default defineComponent({
                         return (
                           <Crowdfunding
                             createdByMe={this.createdByMe}
-                            // comerId={this.profile.comerID as number}
+                            comerId={this.profile.comerID as number}
                           />
                         )
                       } else if (

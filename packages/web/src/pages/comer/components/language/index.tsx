@@ -166,22 +166,22 @@ export default defineComponent({
             ) : (
               <div class="flex flex-col mt-6">
                 {this.languages.length === 0 ? (
-                  <p class="text-14px font-[400] text-grey4">Add your Languages</p>
+                  <p class="font-[400] text-14px text-grey4">Add your Languages</p>
                 ) : (
                   <>
                     {this.languages.map(item => (
                       <div
-                        class={`flex w-full justify-between items-center h-11 rounded-6px ${listHover['list-hover']}`}
+                        class={`cursor-pointer -mx-3.5 px-3.5 flex items-center h-11 rounded-6px ${listHover['list-hover']}`}
                       >
-                        <div class="flex items-center ml-4">
+                        <div class="flex flex-1 items-center overflow-hidden">
                           <p
                             title={LanguageList.find(l => l.value === item.language)?.label}
-                            class="text-grey1 text-14px font-600 max-w-40 overflow-hidden whitespace-nowrap overflow-ellipsis p-1px h-18px"
+                            class="h-18px max-w-2/3 p-1px text-grey1 truncate u-body4"
                           >
                             {LanguageList.find(l => l.value === item.language)?.label}
                           </p>
-                          <p class="bg-grey5 w-1px h-3 mx-2"></p>
-                          <p class="text-grey3 text-12px font-400">{item.level}</p>
+                          <p class="bg-grey5 h-3 mx-2 w-1px"></p>
+                          <p class="text-grey3 u-tag truncate">{item.level}</p>
                         </div>
                         <div
                           class={`hidden mr-4 ${
@@ -189,11 +189,11 @@ export default defineComponent({
                           } cursor-pointer`}
                         >
                           <PenOutlined
-                            class="text-primary w-4 h-4 mr-4.5"
+                            class="h-4 text-primary mr-4.5 w-4"
                             onClick={() => handleCurrentRecord('edit', item.id)}
                           />
                           <DeleteFilled
-                            class="text-primary w-4 h-4"
+                            class="h-4 text-primary w-4"
                             onClick={() => handleCurrentRecord('del', item.id)}
                           />
                         </div>

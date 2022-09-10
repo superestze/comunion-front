@@ -13,6 +13,7 @@ type ProfileType = {
 }
 
 export default defineComponent({
+  name: 'PersonalCard',
   props: {
     profile: {
       type: Object as PropType<any>,

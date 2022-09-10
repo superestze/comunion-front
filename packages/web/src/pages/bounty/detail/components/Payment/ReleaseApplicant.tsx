@@ -66,10 +66,10 @@ export default defineComponent({
           onTriggerDialog={triggerDialog}
           v-slots={{
             btns: () => (
-              <div class="flex justify-end mt-80px">
+              <div class="flex mt-80px justify-end">
                 <UButton
                   type="default"
-                  class="w-164px mr-16px"
+                  class="mr-16px w-164px"
                   size="small"
                   onClick={triggerDialog}
                 >
@@ -84,7 +84,7 @@ export default defineComponent({
         />
         <UButton
           type={this.disabled ? 'tertiary' : 'primary'}
-          class="w-321px mt-60px mb-48px mx-auto"
+          class={`${this.$attrs.class}`}
           onClick={triggerDialog}
           disabled={this.disabled}
         >

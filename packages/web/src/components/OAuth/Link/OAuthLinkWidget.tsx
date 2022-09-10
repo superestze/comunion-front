@@ -141,7 +141,7 @@ export default defineComponent({
                 </p>
               ),
               footer: () => (
-                <div class="flex mt-40px justify-end">
+                <div class="flex mt-10 justify-end">
                   <UButton
                     onClick={this.triggerUnbindDialog}
                     disabled={this.loading}
@@ -174,7 +174,7 @@ export default defineComponent({
                 </p>
               ),
               footer: () => (
-                <div class="flex mt-40px justify-end">
+                <div class="flex mt-10 justify-end">
                   <UButton
                     type="primary"
                     class="ml-10px w-160px"

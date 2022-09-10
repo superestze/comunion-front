@@ -39,7 +39,7 @@ export default defineComponent({
   },
   setup(props, ctx) {
     const contentClass = computed(() => {
-      return `flex-grow-1 u-title3 flex items-center ${props.contentClass}`
+      return `flex items-center u-body2 ${props.contentClass}`
     })
 
     const foldClass = computed(() => {
@@ -65,19 +65,23 @@ export default defineComponent({
   render() {
     return (
       <div class="flex">
-        <div class="w-42 flex-shrink-0 text-grey3 flex items-start bounty-info-label">
-          {this.label}
+        <div class="max-w-1/2 text-[#9F9F9F] w-42 u-body2">{this.label}</div>
+        <div class="flex-1 overflow-hidden">
+          {this.foldAble ? (
+            <UScrollbar style={{ maxHeight: `${this.maxHeight}px` }}>
+              <p
+                class={this.foldClass}
+                ref={(ref: any) => (this.ele = ref)}
+                v-html={this.content}
+              />
+            </UScrollbar>
+          ) : (
+            <p class={`${this.contentClass} `}>
+              {this.content}
+              {this.pasteboard ? <Copy content={this.content || ''} /> : null}
+            </p>
+          )}
         </div>
-        {this.foldAble ? (
-          <UScrollbar style={{ maxHeight: `${this.maxHeight}px` }}>
-            <p class={this.foldClass} ref={(ref: any) => (this.ele = ref)} v-html={this.content} />
-          </UScrollbar>
-        ) : (
-          <p class={`${this.contentClass} bounty-info-content h-20px`}>
-            {this.content}
-            {this.pasteboard ? <Copy content={this.content || ''} /> : null}
-          </p>
-        )}
       </div>
     )
   }
