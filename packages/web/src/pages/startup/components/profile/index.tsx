@@ -170,7 +170,7 @@ export default defineComponent({
         </div>
         <div class="flex mt-9 mr-10 mb-10 ml-10 justify-between">
           <div class="flex items-end justify-between w-[100%]">
-            <div>
+            <div class="w-[60%]">
               <div class="flex gap-2">
                 {Array.isArray(this.startupInfo?.hashTags) &&
                   this.startupInfo?.hashTags.map((item: { name: string }, i: number) => {
@@ -181,9 +181,9 @@ export default defineComponent({
                     )
                   })}
               </div>
-              <p class="mt-5 w-180 u-body2">{this.startupInfo?.mission}</p>
+              <p class="mt-5 w-[100%] u-body2">{this.startupInfo?.mission}</p>
             </div>
-            <div class="flex flex-wrap gap-4">
+            <div class="flex flex-wrap gap-4 -mb-[8px]">
               {this.socialList.map(item => (
                 <UPopover
                   placement="bottom"

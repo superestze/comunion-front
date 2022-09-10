@@ -9,6 +9,7 @@ export function wrapTransaction(
 ): () => Promise<any> {
   const contractStore = useContractStore()
   return (...fnArgs: any[]) => {
+    console.log(fnArgs)
     let waitingText = ''
     let overrides = fnArgs.pop()
     if (Object.prototype.toString.call(overrides) === '[object Object]') {
@@ -21,11 +22,8 @@ export function wrapTransaction(
     if (pengdingText) {
       contractStore.startContract(pengdingText)
     }
-
     const contract = getContract(contractArgs)
-
     const fn = contract[functionName]
-
     return fn(...fnArgs, overrides)
       .then((res: any) => {
         if (waitingText) {
@@ -66,9 +64,12 @@ export function getContract(args: GetContractArgs) {
     throw new Error('No network selected')
   }
   const address = args.addresses[args.chainId]
-
   if (!address) {
     throw new Error('Not supported network')
   }
-  return new Contract(address, args.abi, signer)
+  return new Contract(
+    address,
+    args.abi.replace(/\\t/g, '').replace(/\\r/g, '').replace(/\\n/g, '').replace(/\\"/g, '"'),
+    signer
+  )
 }

@@ -15,6 +15,11 @@ export type ChainNetworkType = {
   currencySymbol: string
   rpcUrl: string
   explorerUrl: string
+  chain_contracts?: Array<{
+    project: number
+    address: string
+    abi: string
+  }>
 }
 
 /**
@@ -129,13 +134,10 @@ export const NETWORKS_SUBCOLOR_MAP: NETWORKS_COLOR_MAP_TYPE = {
 export const supportedChainIds = import.meta.env.VITE_SUPPORTED_CHAIN_ID?.split(',').map(id =>
   Number(id)
 ) ?? [43114]
-export const getSupportedNetworks = () => {
-  return allNetworks.filter(network => supportedChainIds.includes(network.chainId))
-}
-export const setSupportedNetworks = (arr = []) => {
-  supportedNetworks = arr
-}
+
 /**
  * Current supported networks
  */
-export let supportedNetworks: ChainNetworkType[] = getSupportedNetworks()
+export const supportedNetworks: ChainNetworkType[] = allNetworks.filter(network =>
+  supportedChainIds.includes(network.chainId)
+)

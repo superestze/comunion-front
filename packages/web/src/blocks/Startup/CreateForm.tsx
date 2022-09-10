@@ -9,14 +9,10 @@ import {
   FormFactoryField
 } from '@comunion/components'
 import { defineComponent, PropType, reactive, ref, CSSProperties, h } from 'vue'
-import {
-  STARTUP_TYPES,
-  StartupTypesType,
-  getStartupNumberFromType,
-  supportedNetworks
-} from '@/constants'
+import { STARTUP_TYPES, StartupTypesType, getStartupNumberFromType } from '@/constants'
 import { useStartupContract } from '@/contracts'
 import { services } from '@/services'
+import { useChainStore } from '@/stores'
 type chainSelectOption = {
   label: string
   logo: string
@@ -29,9 +25,12 @@ const CreateStartupForm = defineComponent({
     }
   },
   setup(props, ctx) {
+    const chainStore = useChainStore()
+    const supportedNetworks = reactive(chainStore.supportedNetworks)
     const defaultModel = {
       nextwork: '',
       // logo: '',
+      switch: false,
       name: '',
       blockchain: false,
       type: undefined,
@@ -62,7 +61,6 @@ const CreateStartupForm = defineComponent({
       }
     })
     const startupContract = useStartupContract()
-
     // const tokenInfo = reactive({ ...defaultTokenInfo })
 
     // const erc20ContractFactory = useErc20Contract()
@@ -166,7 +164,7 @@ const CreateStartupForm = defineComponent({
       {
         t: 'select',
         title: 'Blockchain Network',
-        name: 'Blockchain Network',
+        name: 'nextwork',
         placeholder: 'Select startup Blockchain Network',
         options: supportedNetworks.map(item => ({
           value: item.chainId,

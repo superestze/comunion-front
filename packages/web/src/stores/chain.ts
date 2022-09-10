@@ -1,15 +1,22 @@
 import { defineStore } from 'pinia'
 import { allNetworks } from '@/constants'
+import type { ChainNetworkType } from '@/constants'
 import { services } from '@/services'
-
-export type ChainNetworkType = {
-  logo: string
-  chainId: number
-  name: string
-  shortName?: string
-  currencySymbol: string
-  rpcUrl: string
-  explorerUrl: string
+export type abiType = {
+  [prop: number]: {
+    startup: {
+      abi: string
+      address: string
+    }
+    bounty: {
+      abi: string
+      address: string
+    }
+    crowdfunding: {
+      abi: string
+      address: string
+    }
+  }
 }
 export const useChainStore = defineStore('chain', {
   state: () => ({
@@ -23,9 +30,12 @@ export const useChainStore = defineStore('chain', {
         rpcUrl: '',
         explorerUrl: ''
       }
-    ]
+    ],
+    abiInfo: {}
   }),
-  getters: {},
+  getters: {
+    getSupportedNetworks: state => state.supportedNetworks
+  },
   actions: {
     async init() {
       try {
@@ -39,8 +49,46 @@ export const useChainStore = defineStore('chain', {
             }
           })
         })
+        // abi
+        supportNet.forEach(snet => {
+          const obj = {
+            startup: {
+              abi: '',
+              address: ''
+            },
+            bounty: {
+              abi: '',
+              address: ''
+            },
+            crowdfunding: {
+              abi: '',
+              address: ''
+            }
+          }
+          snet.chain_contracts?.forEach(chain => {
+            switch (chain.project) {
+              case 1:
+                obj.startup.abi = chain.abi
+                obj.startup.address = chain.address
+                break
+              case 2:
+                obj.bounty.abi = chain.abi
+                obj.bounty.address = chain.address
+                break
+              case 3:
+                obj.crowdfunding.abi = chain.abi
+                obj.crowdfunding.address = chain.address
+                break
+              default:
+                break
+            }
+          })
+          ;(this.abiInfo as abiType)[snet.chainId] = obj
+        })
         this.supportedNetworks = supportNet
-        console.log(this.supportedNetworks)
+        // setTimeout(() => {
+        //   this.supportedNetworks = supportNet
+        // }, 2000)
       } catch (error) {
         console.warn(error)
       }

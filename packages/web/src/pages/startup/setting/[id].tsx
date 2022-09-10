@@ -13,7 +13,6 @@ import Social from './components/social'
 import { contactList } from './components/social/util'
 import { Team } from './components/team'
 import { useStartup } from '@/pages/startup/hooks/useStartup'
-
 export const getContactList = (startupInfo: { [x: string]: any }) => {
   return contactList.map(item => {
     const value = startupInfo[item.name]

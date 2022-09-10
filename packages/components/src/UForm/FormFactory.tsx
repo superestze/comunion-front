@@ -91,6 +91,11 @@ export type FormFactoryField = {
   class?: string
   slots?: InternalSlots
   formItemProps?: FormItemProps
+  options?: Array<{
+    label: string
+    value: string
+    logo?: string
+  }>
 } & (
   | FormFactoryInputField
   | FormFactoryAddrssInputField

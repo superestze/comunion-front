@@ -9,10 +9,11 @@ import {
   useUpload
 } from '@comunion/components'
 import { CustomRequest } from 'naive-ui/lib/upload/src/interface'
-import { defineComponent, ref, reactive, PropType, watch, CSSProperties, h } from 'vue'
+import { defineComponent, ref, reactive, PropType, watch, CSSProperties, h, computed } from 'vue'
 import { RectDraggerUpload } from '@/components/Upload'
-import { getStartupTypeFromNumber, STARTUP_TYPES, supportedNetworks } from '@/constants'
+import { getStartupTypeFromNumber, STARTUP_TYPES } from '@/constants'
 import { services } from '@/services'
+import { useChainStore } from '@/stores'
 type InfoPropType = {
   logo: string
   cover: string
@@ -44,6 +45,7 @@ export default defineComponent({
     }
   },
   setup(props) {
+    const chainStore = useChainStore()
     const loading = ref(false)
     const info = reactive<InfoType>({
       logo: props.data.logo || '',
@@ -53,6 +55,10 @@ export default defineComponent({
       mission: props.data.mission || '',
       overview: props.data.overview || '',
       chainID: props.data.chainID
+    })
+    const supportedNetworks = computed(() => {
+      const data = chainStore.supportedNetworks
+      return data
     })
     const netWorkChange = (value: number) => {
       console.log(value)
@@ -66,11 +72,22 @@ export default defineComponent({
         info.type = getStartupTypeFromNumber(data.mode)
         info.mission = data.mission
         info.overview = data.overview
+        info.chainID = data.chainID
       }
     )
-
+    watch(
+      () => supportedNetworks,
+      data => {
+        ;(fields[0] as any).options = data.value.map(item => ({
+          value: item.chainId,
+          label: item.name,
+          logo: item.logo
+        }))
+      },
+      { deep: true }
+    )
     // const walletStore = useWalletStore()
-    const fields: FormFactoryField[] = [
+    const fields: FormFactoryField[] = reactive([
       // {
       //   t: 'custom',
       //   title: 'BlockChainAddress',
@@ -92,7 +109,7 @@ export default defineComponent({
         title: 'Blockchain Network',
         name: 'Blockchain Network',
         placeholder: 'Select startup Blockchain Network',
-        options: supportedNetworks.map(item => ({
+        options: supportedNetworks.value.map(item => ({
           value: item.chainId,
           label: item.name,
           logo: item.logo
@@ -168,7 +185,7 @@ export default defineComponent({
           }
         ],
         defaultValue: info.chainID,
-        disabled: true
+        disabled: false
       },
       {
         t: 'string',
@@ -233,7 +250,7 @@ export default defineComponent({
           }
         ]
       }
-    ]
+    ])
     const form = ref<FormInst>()
     const { onUpload } = useUpload()
     const handleUploadLogo: CustomRequest = async ({ file, onProgress, onFinish, onError }) => {

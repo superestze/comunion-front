@@ -10,9 +10,9 @@ import {
 } from '@comunion/icons'
 import { defineComponent } from 'vue'
 function asyncComponent(type: string, wrapper: string, disable?: boolean) {
-  let textClass = 'text-primary'
+  let textClass = 'text-[#636366]'
   if (disable) {
-    textClass = 'text-grey'
+    textClass = 'text-[#E0E0E0]'
   }
   if (type === 'Website') {
     return <WebsiteFilled class={`${wrapper} ${textClass}`} />
