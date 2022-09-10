@@ -169,8 +169,8 @@ const CreateStartupForm = defineComponent({
           label: item.name,
           logo: item.logo
         })),
-        // 5.9功能未完善
-        // 获取startupID判断当下网络和选择网络是否一致
+        // 5.9Incomplete function
+        // startupID Determine whether the current network is consistent with the network of choice
         onUpdateValue: (value: number) => netWorkChange(value),
         renderTag: ({ option }) => {
           return h(

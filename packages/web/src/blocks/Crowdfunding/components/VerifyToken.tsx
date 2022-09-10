@@ -87,8 +87,8 @@ export const VerifyToken = defineComponent({
           {
             validator: (rule, value) => {
               changeStartup(value)
-              // 5.9功能未完善
-              // 获取startupID判断当下网络和选择网络是否一致
+              // 5.9Incomplete function
+              // startupID Determine whether the current network is consistent with the network of choice
               console.log(value)
               return false
             },
