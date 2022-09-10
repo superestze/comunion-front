@@ -24,10 +24,9 @@ export function useStartupContract(
   getContract: () => Contract
   newStartup: (
     p: [
-      network: string,
       name: string,
-      blockchain: boolean,
       mode: number,
+      network: string,
       mission: string,
       overview: string,
       isValidate: any

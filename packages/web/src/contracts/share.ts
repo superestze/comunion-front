@@ -9,7 +9,6 @@ export function wrapTransaction(
 ): () => Promise<any> {
   const contractStore = useContractStore()
   return (...fnArgs: any[]) => {
-    console.log(fnArgs)
     let waitingText = ''
     let overrides = fnArgs.pop()
     if (Object.prototype.toString.call(overrides) === '[object Object]') {

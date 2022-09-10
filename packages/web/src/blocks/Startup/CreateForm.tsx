@@ -32,7 +32,6 @@ const CreateStartupForm = defineComponent({
       // logo: '',
       switch: false,
       name: '',
-      blockchain: false,
       type: undefined,
       mission: '',
       overview: ''
@@ -112,14 +111,13 @@ const CreateStartupForm = defineComponent({
             try {
               await startupContract.newStartup(
                 [
-                  model.nextwork,
                   model.name,
-                  model.blockchain,
                   model.type === undefined
                     ? 0
                     : getStartupNumberFromType(model.type as StartupTypesType),
                   // model.tags,
                   // model.logo,
+                  model.nextwork,
                   model.mission,
                   // model.tokenContract,
                   // model.composes.map(item => [item.name, item.address]),
