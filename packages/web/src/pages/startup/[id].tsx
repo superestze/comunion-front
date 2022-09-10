@@ -10,6 +10,7 @@ import Overview from './components/overview'
 import Profile from './components/profile'
 import Security from './components/security'
 
+import Team from './components/team'
 import { useStartup } from './hooks/useStartup'
 import Empty from '@/pages/comer/components/empty'
 import { services } from '@/services'
@@ -110,6 +111,7 @@ export default defineComponent({
         </div>
         <div class="flex mb-20 gap-6">
           <div class="basis-1/3">
+            <Team startupId={this.startupId} />
             <Overview content={this.startup?.overview || ''} />
             {(this.startup?.kyc || this.startup?.contractAudit) && (
               <Security
