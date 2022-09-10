@@ -74,7 +74,7 @@ const BountyBasicInfo = defineComponent({
               // 5.9功能未完善
               // 获取startupID判断当下网络和选择网络是否一致
               console.log(value)
-              return true
+              return false
             },
             renderMessage: () => {
               return (
