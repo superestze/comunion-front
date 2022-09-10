@@ -1,5 +1,6 @@
 import { UScrollbar } from '@comunion/components'
 import { LockKeyOutlined, UnlockKeyOutlined } from '@comunion/icons'
+import { pluralize } from 'inflected'
 import { defineComponent, PropType, computed, ref } from 'vue'
 import { ProjectCardWithDialog } from '../ProjectCard'
 import ProjectCarousel from '../ProjectCarousel'
@@ -259,14 +260,14 @@ export default defineComponent({
             <div class="mt-2 ">
               <span class="text-grey3 text-16px">Total Period: </span>
               <span class="text-primary text-16px">
-                {`${this.periodTerms.length} ${periodType}${
-                  this.periodTerms.length > 1 ? 's' : ''
+                {`${this.periodTerms.length} ${
+                  this.periodTerms.length > 1 ? pluralize(periodType) : periodType
                 }`}
               </span>
               <span class="ml-10 text-grey3 text-16px">Daily working: </span>
               <span class="text-primary text-16px">
                 {`${this.paymentInfo?.periodTerms?.hoursPerDay || 0} ${
-                  (this.paymentInfo?.periodTerms?.hoursPerDay || 0) > 1 ? 'Hours' : 'Hour'
+                  (this.paymentInfo?.periodTerms?.hoursPerDay || 0) > 1 ? pluralize('Hour') : 'Hour'
                 }`}
               </span>
             </div>
