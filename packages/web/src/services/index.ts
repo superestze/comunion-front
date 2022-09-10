@@ -3,15 +3,6 @@ import { requestAdapter } from './a2s.adapter'
 import { extract, replacePath } from './a2s.utils'
 
 export const services = {
-  'account@chain-list'(args: {}) {
-    return requestAdapter<{
-      list: Array<any>
-    }>({
-      url: replacePath('/chain/list', args),
-      method: 'GET',
-      ...extract('GET', args, [], [])
-    })
-  },
   'account@connected-count'(args: { comerID: any }) {
     return requestAdapter<{
       startupCnt: number
