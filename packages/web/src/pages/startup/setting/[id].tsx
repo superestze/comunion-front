@@ -120,7 +120,7 @@ export default defineComponent({
                 startupId={this.route.params.id as string}
               />
             )}
-            {this.currentEditComponent === 'GOVERNANCE' && (
+            {this.currentEditComponent === 'GOVERNANCE' && this.startup && (
               <Governance startupId={this.route.params.id as string} startup={this.startup} />
             )}
             {this.currentEditComponent === 'SEQUENCE' && (

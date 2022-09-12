@@ -86,8 +86,8 @@ const CreateProposalFrom = defineComponent({
         console.log('data==>', data)
         if (!error) {
           voteOptions.value = data.map(item => ({
-            label: item.dictLabel,
-            value: item.dictLabel,
+            label: item.dictLabel as string,
+            value: item.dictLabel as string,
             key: item.seqNum,
             remark: item.remark
           }))
@@ -161,8 +161,8 @@ const CreateProposalFrom = defineComponent({
               voteSystem: proposalInfo.vote,
               startTime: dayjs(proposalInfo.startTime!).utc().toISOString(),
               endTime: dayjs(proposalInfo.endTime!).utc().toISOString(),
-              choices: proposalInfo.voteChoices
-                ?.filter((item: { value: string }) => item.value)
+              choices: (proposalInfo.voteChoices || [])
+                .filter((item: { value: string }) => item.value)
                 .map((choice, choiceIndex) => ({
                   itemName: choice.value,
                   seqNum: choiceIndex + 1
