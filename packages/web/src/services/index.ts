@@ -150,10 +150,10 @@ export const services = {
       {
         /**
    * @description 
-	ModuleStartup - 1
-	ModuleBounty - 2
-	ModuleCrowdfunding - 3
-	ModuleProposal - 4
+  ModuleStartup - 1
+  ModuleBounty - 2
+  ModuleCrowdfunding - 3
+  ModuleProposal - 4
 
 
      */
@@ -2995,13 +2995,13 @@ export const services = {
     return requestAdapter<{
       /**
    * @description 	1-SocialEmail 
-	2-SocialWebsite
-	3-SocialTwitter
-	4-SocialDiscord
-	5-SocialTelegram
-	6-SocialMedium
-	7-SocialFacebook
-	8-SocialLinktre
+  2-SocialWebsite
+  3-SocialTwitter
+  4-SocialDiscord
+  5-SocialTelegram
+  6-SocialMedium
+  7-SocialFacebook
+  8-SocialLinktre
      */
       socialType: number
     }>({
