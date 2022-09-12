@@ -7,7 +7,8 @@ import {
   UModal,
   USearch,
   USelect,
-  USwitch
+  USwitch,
+  UTooltip
 } from '@comunion/components'
 import {
   AddCircleOutlined,
@@ -15,7 +16,8 @@ import {
   DeleteFilled,
   MinusCircleOutlined,
   WarningFilled,
-  ErrorTipFilled
+  ErrorTipFilled,
+  QuestionFilled
 } from '@comunion/icons'
 import { defineComponent, reactive, ref, PropType, onMounted, computed } from 'vue'
 import { StrategyType } from './typing.d'
@@ -141,7 +143,7 @@ export default defineComponent({
 
         if (!error) {
           try {
-            const { network, contractAddress } = erc20BalanceStrategy
+            const { network, contractAddress, symbol } = erc20BalanceStrategy
             const provider = await walletStore.getRpcProvider(network, infuraKey)
 
             const code = await provider?.getCode(contractAddress)
@@ -151,7 +153,7 @@ export default defineComponent({
             }
             const erc20Token = tokenContract(contractAddress, provider)
             const decimal = await erc20Token.decimals()
-            govSetting.strategies?.push({ ...strategy, voteDecimals: decimal })
+            govSetting.strategies?.push({ ...strategy, voteDecimals: decimal, symbol })
             strategyModal.value = undefined
           } catch (error) {
             contractAddressExist.value = false
@@ -238,12 +240,32 @@ export default defineComponent({
           class="bg-white border rounded-lg mb-6 min-h-205.5 relative overflow-hidden p-10 governance-setting"
         >
           <div class="w-full mb-6 border border-grey5 rounded-lg">
-            <div class="border-b border-b-grey5 py-3 px-6 u-title3">Strategie(s)</div>
+            <div class="border-b border-b-grey5 py-3 px-6 u-title3 flex items-center">
+              <span class="mr-2">Strategie(s)</span>
+              <UTooltip placement="right">
+                {{
+                  trigger: () => <QuestionFilled class="h-4 text-grey3 w-4" />,
+                  default: () => (
+                    <div class="w-60">
+                      Strategris are used determine voting power or whether a user is eligible to
+                      create a proposal(Voting power is cumulative)
+                    </div>
+                  )
+                }}
+              </UTooltip>
+            </div>
             <div class="p-6">
               {this.govSetting.strategies.length ? (
                 this.govSetting.strategies.map(strategy => (
                   <div class="rounded-lg border border-grey5 px-4 py-3 flex justify-between items-center mb-6">
-                    <span class="u-body4">{strategy.dictLabel}</span>
+                    <span class="u-body4">
+                      {strategy.dictLabel}{' '}
+                      {strategy.symbol && (
+                        <span class="bg-[#8247E50F] py-1 px-4 text-primary text-xs ml-4 rounded-2xl">
+                          {strategy.symbol}
+                        </span>
+                      )}
+                    </span>
                     <div
                       class="transform scale-75 cursor-pointer"
                       onClick={() => this.delStrategy(strategy.dictValue!)}
@@ -307,13 +329,17 @@ export default defineComponent({
                 v-model:value={this.govSetting.proposalThreshold}
                 type="withUnit"
                 renderUnit={() => renderUnit(this.govSetting.voteSymbol)}
+                v-slots={{
+                  suffix: () => null
+                }}
                 inputProps={{
                   maxlength: 20,
                   precision: 18,
                   min: 0,
                   parse: (value: string) => {
-                    if (value === null || value === '') return '0'
-                    return value
+                    const newVal = value.replace('-', '')
+                    if (newVal === null || newVal === '') return 0
+                    return newVal
                   }
                 }}
               />
@@ -326,16 +352,21 @@ export default defineComponent({
             <div class="border-b border-b-grey5 py-3 px-6 u-title3">Proposal validity</div>
             <div class="p-6">
               <UInputNumberGroup
+                class="w-full"
                 v-model:value={this.govSetting.proposalValidity}
                 type="withUnit"
                 renderUnit={() => renderUnit(this.govSetting.voteSymbol)}
+                v-slots={{
+                  suffix: () => null
+                }}
                 inputProps={{
                   maxlength: 20,
                   precision: 18,
                   min: 0,
                   parse: (value: string) => {
-                    if (value === null || value === '') return '0'
-                    return value
+                    const newVal = value.replace('-', '')
+                    if (newVal === null || newVal === '') return 0
+                    return newVal
                   }
                 }}
               />
@@ -348,25 +379,40 @@ export default defineComponent({
             <div class="border-b border-b-grey5 py-3 px-6 u-title3">Admin</div>
             <div class="p-6">
               <div class="flex mb-4">
-                <UInput disabled value={this.govSetting.admins[0]} />
+                <UInput disabled value={this.govSetting.admins[0]} class="flex-1" />
                 <div class="basis-20"></div>
               </div>
-              {this.govSetting.admins.slice(1).map((_, itemIndex) => (
-                <div class="flex items-center mb-4">
-                  <UInput v-model:value={this.govSetting.admins[itemIndex + 1]} />
+              {this.govSetting.admins.slice(1).map((item, itemIndex) => (
+                <UFormItem
+                  showLabel={false}
+                  class="mb-4"
+                  path={`admins[${itemIndex + 1}]`}
+                  rule={[
+                    {
+                      validator: (rule, value) => {
+                        if (!item || (/^0x[a-zA-Z\d]{40}/.test(item) && item.length === 42)) {
+                          return true
+                        }
+                        return false
+                      },
+                      message: 'Invalid wallet address',
+                      trigger: 'blur'
+                    }
+                  ]}
+                >
+                  <UInput v-model:value={this.govSetting.admins[itemIndex + 1]} class="flex-1" />
                   <div class="basis-20 flex items-center">
-                    <div
-                      class={[
-                        'ml-3 cursor-pointer text-error',
-                        { hidden: this.govSetting.admins.length <= 2 }
-                      ]}
-                    >
-                      <MinusCircleOutlined onClick={() => this.delAdmin(itemIndex)} />
-                    </div>
+                    <MinusCircleOutlined
+                      onClick={() => this.delAdmin(itemIndex)}
+                      class={`
+                        ml-3 cursor-pointer text-error
+                        ${this.govSetting.admins?.length <= 2 ? 'hidden' : ''}
+                      `}
+                    />
 
                     <AddCircleOutlined class="ml-3 cursor-pointer" onClick={this.addAdmin} />
                   </div>
-                </div>
+                </UFormItem>
               ))}
             </div>
           </div>
@@ -438,7 +484,13 @@ export default defineComponent({
               <UFormItem
                 label="Contract address"
                 path="contractAddress"
+                first={true}
                 rule={[
+                  {
+                    validator: (rule, value) => !!value,
+                    message: 'Contract address cannot be blank',
+                    trigger: 'blur'
+                  },
                   {
                     validator: (rule, value) => {
                       return /^0x[a-zA-Z\d]{40}/.test(value) && value.length === 42
@@ -452,7 +504,16 @@ export default defineComponent({
               </UFormItem>
               {/* <div class="u-body4 my-2">Symbol</div> */}
               <UFormItem label="Symbol" path="symbol">
-                <UInput v-model:value={this.erc20BalanceStrategy.symbol} />
+                <UInput
+                  value={this.erc20BalanceStrategy.symbol}
+                  maxlength={10}
+                  onUpdateValue={value => {
+                    this.erc20BalanceStrategy.symbol = (value as string).replace(
+                      /[^0-9a-zA-Z]/gi,
+                      ''
+                    )
+                  }}
+                />
               </UFormItem>
               <div class="u-tag text-grey4 mt-2 mb-6">
                 This strategy returns the balances of the voters for a specific ERC20 token.You can
