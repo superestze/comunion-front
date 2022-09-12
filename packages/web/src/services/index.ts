@@ -155,7 +155,6 @@ export const services = {
 	ModuleCrowdfunding - 3
 	ModuleProposal - 4
 
-  
      */
         module: number
         hasCreated: boolean
