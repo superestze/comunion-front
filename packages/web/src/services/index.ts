@@ -148,9 +148,13 @@ export const services = {
   'account@modules-of-comer'(args: { comerID: any }) {
     return requestAdapter<
       {
-      /**
-      * @description  ModuleStartup - 1 ModuleBounty - 2  ModuleCrowdfunding - 3 ModuleProposal - 4
-      */
+        /**
+   * @description 
+	ModuleStartup - 1
+	ModuleBounty - 2
+	ModuleCrowdfunding - 3
+	ModuleProposal - 4
+     */
         module: number
         hasCreated: boolean
       }[]
