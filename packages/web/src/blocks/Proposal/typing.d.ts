@@ -5,8 +5,8 @@ export interface ProposalInfo {
   description?: string
   discussion?: string
   vote?: number
-  startTime?: string
-  endTime?: string
+  startTime?: number
+  endTime?: number
   voteChoices: { value: string; disabled?: boolean }[]
 }
 
@@ -17,4 +17,11 @@ export interface CreateProposalFormRef {
   onSubmit?: () => void
   onCancel?: () => void
   showLeaveTipModal?: () => void
+}
+
+export interface VoteOption {
+  label?: string
+  value?: string
+  remark?: string
+  key?: number
 }

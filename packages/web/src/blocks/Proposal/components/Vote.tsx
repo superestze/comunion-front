@@ -15,6 +15,9 @@ export const Vote = defineComponent({
     proposalInfo: {
       type: Object as PropType<ProposalInfo>,
       required: true
+    },
+    voteOptions: {
+      type: Array as PropType<VoteOption[]>
     }
   },
   setup(props, ctx) {
@@ -40,23 +43,8 @@ export const Vote = defineComponent({
       }
     )
 
-    const votingOptions = [
-      {
-        label: 'Single choice voting',
-        subLabel: 'Each voter can select only one choice.',
-        key: 'single',
-        value: 1
-      },
-      {
-        label: 'Basic voting',
-        subLabel: 'Single choice voting with three choices: Yes, No or Abstain',
-        key: 'basic',
-        value: 2
-      }
-    ]
-
     const selectedVotingInfo = computed(() => {
-      return votingOptions.find(voting => voting.value === props.proposalInfo.vote)
+      return props.voteOptions?.find(voting => voting.value === props.proposalInfo.vote)
     })
 
     const triggerVoteField = () => {
@@ -89,7 +77,6 @@ export const Vote = defineComponent({
       proposalVoteFormRef
     })
     return {
-      votingOptions,
       showOptionsPanel,
       selectedVotingInfo,
       proposalVoteFormRef,
@@ -127,7 +114,7 @@ export const Vote = defineComponent({
                 style={{ boxShadow: '0px 2px 10px rgba(0, 0, 0, 0.097547)' }}
                 onClick={e => e.stopPropagation()}
               >
-                {this.votingOptions.map(voting => (
+                {this.voteOptions?.map(voting => (
                   <div
                     key={voting.key}
                     class={[
@@ -140,7 +127,7 @@ export const Vote = defineComponent({
                     <div>
                       <div class="u-label1 tracking-0px">{voting.label}</div>
                       <div class="u-tag" style={{ padding: 0 }}>
-                        {voting.subLabel}
+                        {voting.remark}
                       </div>
                     </div>
                     {voting.value === this.proposalInfo.vote && (

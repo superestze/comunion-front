@@ -46,7 +46,7 @@ export default defineComponent({
             <div class="flex">
               {(this.startup?.mode || 0) > 0 && (
                 <UTag
-                  class="u-body3-pure text-xs !h-5"
+                  class="u-body3-pure !text-white !text-xs !h-5"
                   type="filled"
                   bgColor={STARTUP_TYPES_COLOR_MAP[this.modeName]}
                 >

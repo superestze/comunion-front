@@ -17,12 +17,12 @@ import {
   WarningFilled,
   ErrorTipFilled
 } from '@comunion/icons'
-import { defineComponent, reactive, ref, PropType } from 'vue'
+import { defineComponent, reactive, ref, PropType, onMounted } from 'vue'
 import { StrategyType } from './typing.d'
-import { allNetworks } from '@/constants'
+import { allNetworks, infuraKey } from '@/constants'
 
 import './style.css'
-import { services } from '@/services'
+import { ServiceReturn, services } from '@/services'
 import { useUserStore, useWalletStore } from '@/stores'
 import { StartupDetail } from '@/types'
 
@@ -38,6 +38,7 @@ export const renderUnit = (name: string) => (
 )
 
 export default defineComponent({
+  name: 'StartupGovernance',
   props: {
     startupId: {
       type: String,
@@ -52,18 +53,22 @@ export default defineComponent({
     const formRef = ref()
     const userStore = useUserStore()
     const walletStore = useWalletStore()
-    const strategies: StrategyType[] = [
-      { name: 'Ticket', key: 'ticketModal' },
-      { name: 'erc20-balance-of', key: 'erc20BalanceModal' }
-    ]
+    const strategies = ref<ServiceReturn<'meta@dict-list-by-type'>>()
 
-    const govSetting = reactive({
-      strategies: [strategies[0]],
+    const govSetting = reactive<{
+      strategies: StrategyType[]
+      voteSymbol: string
+      allowMember: boolean
+      proposalThreshold: number
+      proposalValidity: number
+      admins: string[]
+    }>({
+      strategies: [],
       voteSymbol: '',
       allowMember: true,
       proposalThreshold: 0,
       proposalValidity: 0,
-      admins: [props.startup.blockChainAddress, '']
+      admins: []
     })
     const erc20BalanceStrategy = reactive({
       network: 1,
@@ -74,13 +79,56 @@ export default defineComponent({
     const erc20BalanceForm = ref()
     const contractAddressExist = ref(true)
 
+    onMounted(() => {
+      getStrategies()
+      getGovernanceSetting()
+    })
+
+    const getStrategies = async () => {
+      try {
+        const { error, data } = await services['meta@dict-list-by-type']({
+          type: 'governanceStrategy'
+        })
+        if (!error) {
+          console.log('data===>', data)
+          strategies.value = data
+          govSetting.strategies = [data[0]]
+        }
+      } catch (error) {
+        console.error('error===>', error)
+      }
+    }
+
+    const getGovernanceSetting = async () => {
+      try {
+        const { error, data } = await services['governance@create-governace-setting_copy']({
+          startupID: props.startupId
+        })
+        if (!error) {
+          govSetting.strategies = data.strategies.map(item => ({
+            ...item,
+            dictLabel: item.strategyName
+          }))
+          govSetting.voteSymbol = data.voteSymbol
+          govSetting.allowMember = data.allowMember
+          govSetting.proposalThreshold = Number(data.proposalThreshold)
+          govSetting.proposalValidity = Number(data.proposalValidity)
+          govSetting.admins = data.admins.length
+            ? data.admins.map(item => item.walletAddress).concat([''])
+            : ['', '']
+        }
+      } catch (error) {
+        console.error('error==>', error)
+      }
+    }
+
     const addStrategy = () => {
       strategyModal.value = 'selectModal'
     }
 
-    const delStrategy = (key: string) => {
-      const newStrategies = govSetting.strategies.filter(stra => stra.key !== key)
-      govSetting.strategies = newStrategies
+    const delStrategy = (dictValue: string) => {
+      const newStrategies = govSetting.strategies?.filter(stra => stra.dictValue !== dictValue)
+      govSetting.strategies = newStrategies || []
     }
 
     const addErc20Strategy = async (strategy: StrategyType) => {
@@ -89,16 +137,13 @@ export default defineComponent({
         if (!error) {
           try {
             const { network, contractAddress } = erc20BalanceStrategy
-            const provider = await walletStore.getRpcProvider(
-              network,
-              '65b449dc78314fe583ece8797faccc0a'
-            )
+            const provider = await walletStore.getRpcProvider(network, infuraKey)
             const code = await provider?.getCode(contractAddress)
             if (!code || code.length < 3) {
               contractAddressExist.value = false
               return
             }
-            govSetting.strategies.push(strategy)
+            govSetting.strategies?.push(strategy)
             strategyModal.value = undefined
           } catch (error) {
             contractAddressExist.value = false
@@ -107,24 +152,29 @@ export default defineComponent({
       })
     }
 
+    const addTicketStrategy = async (strategy: StrategyType) => {
+      govSetting.strategies?.push(strategy)
+      strategyModal.value = undefined
+    }
+
     const saveGovSetting = async () => {
       try {
         formRef.value?.validate(async (error: Error) => {
           console.log('error===>', error)
-          if (!govSetting.strategies.length) return
+          if (!govSetting.strategies?.length) return
           if (!error) {
-            const strategies = govSetting.strategies.map(strategy => ({
-              strategName: strategy.name,
+            const strategies = govSetting.strategies?.map(strategy => ({
+              strategyName: strategy.dictLabel,
+              dictValue: strategy.dictValue,
               chainId: strategy.chainId,
               tokenContractAddress: strategy.contractAddress
             }))
             const { error } = await services['governance@create-governace-setting']({
-              startupId: Number(props.startupId),
-              comerId: userStore.profile?.comerID,
+              startupID: Number(props.startupId),
               voteSymbol: govSetting.voteSymbol,
               allowMember: govSetting.allowMember,
-              proposalThreshold: govSetting.proposalThreshold,
-              proposalValidity: govSetting.proposalValidity,
+              proposalThreshold: Number(govSetting.proposalThreshold),
+              proposalValidity: Number(govSetting.proposalValidity),
               strategies,
               admins: govSetting.admins.filter(Boolean).map(admin => ({ walletAddress: admin }))
             })
@@ -157,6 +207,7 @@ export default defineComponent({
       formRef,
       addStrategy,
       delStrategy,
+      addTicketStrategy,
       addErc20Strategy,
       saveGovSetting,
       addAdmin,
@@ -177,10 +228,10 @@ export default defineComponent({
               {this.govSetting.strategies.length ? (
                 this.govSetting.strategies.map(strategy => (
                   <div class="rounded-lg border border-grey5 px-4 py-3 flex justify-between items-center mb-6">
-                    <span class="u-body4">{strategy.name}</span>
+                    <span class="u-body4">{strategy.dictLabel}</span>
                     <div
                       class="transform scale-75 cursor-pointer"
-                      onClick={() => this.delStrategy(strategy.key)}
+                      onClick={() => this.delStrategy(strategy.dictValue!)}
                     >
                       <DeleteFilled class="text-grey3" />
                     </div>
@@ -295,9 +346,7 @@ export default defineComponent({
                         { hidden: this.govSetting.admins.length <= 2 }
                       ]}
                     >
-                      <MinusCircleOutlined
-                        onClick={() => (itemIndex === 0 ? null : this.delAdmin(itemIndex))}
-                      />
+                      <MinusCircleOutlined onClick={() => this.delAdmin(itemIndex)} />
                     </div>
 
                     <AddCircleOutlined class="ml-3 cursor-pointer" onClick={this.addAdmin} />
@@ -334,19 +383,19 @@ export default defineComponent({
             </header>
             <USearch class="my-6" placeholder="Search" />
             <div>
-              {this.strategies.map(strate => (
+              {this.strategies?.map(strate => (
                 <div
                   class="border rounded-lg p-6 mb-6 u-title3 cursor-pointer"
-                  onClick={() => (this.strategyModal = strate.key)}
+                  onClick={() => (this.strategyModal = strate.dictValue)}
                 >
-                  {strate.name}
+                  {strate.dictLabel}
                 </div>
               ))}
             </div>
           </div>
         </UModal>
         <UModal
-          show={this.strategyModal === 'erc20BalanceModal'}
+          show={this.strategyModal === 'erc20-balance-of'}
           class="bg-white py-8 px-10 w-150 rounded-lg"
         >
           <div>
@@ -398,7 +447,7 @@ export default defineComponent({
                 <div class="flex items-center border border-[#F53F3F] rounded-lg  mb-10 px-4 py-1">
                   <ErrorTipFilled class="text-[#F53F3F] transform scale-75" />
                   <span class="ml-4 u-body1 text-[#F53F3F]">
-                    Type Error: Cannot read properties of undefined
+                    The token address was not found, please make sure the network is correct
                   </span>
                 </div>
               )}
@@ -408,8 +457,8 @@ export default defineComponent({
                   onClick={() =>
                     this.addErc20Strategy({
                       ...this.erc20BalanceStrategy,
-                      name: 'erc20-balance-of',
-                      key: 'erc20Balance'
+                      dictLabel: 'erc20-balance-of',
+                      dictValue: 'erc20Balance'
                     })
                   }
                 >
@@ -419,10 +468,7 @@ export default defineComponent({
             </UForm>
           </div>
         </UModal>
-        <UModal
-          show={this.strategyModal === 'ticketModal'}
-          class="bg-white py-8 px-10 w-150 rounded-lg"
-        >
+        <UModal show={this.strategyModal === 'ticket'} class="bg-white py-8 px-10 w-150 rounded-lg">
           <div>
             <header class="flex justify-between items-center mb-6">
               <span class="u-card-title2 text-primary1">Ticket</span>
@@ -439,9 +485,9 @@ export default defineComponent({
               <div
                 class="w-40 bg-primary1 text-white py-2 rounded-lg text-center cursor-pointer"
                 onClick={() =>
-                  this.addErc20Strategy({
-                    name: 'Ticket',
-                    key: 'ticket'
+                  this.addTicketStrategy({
+                    dictLabel: 'Ticket',
+                    dictValue: 'ticket'
                   })
                 }
               >

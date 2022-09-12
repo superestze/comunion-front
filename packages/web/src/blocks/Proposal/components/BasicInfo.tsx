@@ -5,7 +5,8 @@ import {
   UForm,
   UFormItemsFactory
 } from '@comunion/components'
-import { computed, defineComponent, PropType, ref, Ref, watch } from 'vue'
+import { SelectOption } from '@comunion/components/src/constants'
+import { computed, defineComponent, PropType, ref, Ref } from 'vue'
 import { ProposalInfo } from '../typing'
 import RichEditor from '@/components/Editor'
 
@@ -16,30 +17,28 @@ export interface ProposalBasicInformationRef {
 export const BasicInfo = defineComponent({
   name: 'BasicInfo',
   props: {
+    startupOptions: {
+      type: Array as PropType<SelectOption[]>,
+      required: true
+    },
     proposalInfo: {
       type: Object as PropType<ProposalInfo>,
       required: true
     }
   },
   setup(props, ctx) {
-    const startupOptions = ref()
-    const descriptionField = ref()
     const proposalBasicInfoForm = ref<FormInst | null>(null)
-    watch(
-      () => props.proposalInfo.description,
-      () => {
-        descriptionField.value?.validate()
-      }
-    )
 
     const formFields: Ref<FormFactoryField[]> = computed(() => [
       {
         t: 'select',
         title: 'Startup',
-        name: 'startup',
-        required: true,
+        name: 'startupId',
         placeholder: 'Please select a startup',
-        options: startupOptions.value
+        rules: [
+          { required: true, message: ' Please select a startup', type: 'number', trigger: 'blur' }
+        ],
+        options: props.startupOptions
       },
       {
         t: 'string',
@@ -54,18 +53,8 @@ export const BasicInfo = defineComponent({
         title: 'Description',
         name: 'description',
         formItemProps: {
-          ref: (value: any) => (descriptionField.value = value),
           first: true
         },
-        rules: [
-          {
-            validator: (rule, value) => {
-              return value && value.replace(/<.>|<\/.>/g, '').length > 64
-            },
-            message: 'Description must be 64 characters or more',
-            trigger: 'blur'
-          }
-        ],
         render() {
           return (
             <RichEditor

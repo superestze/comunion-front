@@ -1,5 +1,10 @@
 import { UButton } from '@comunion/components'
-import { CreateStartupFilled, CreateBountyFilled, CreateOfferingFilled } from '@comunion/icons'
+import {
+  CreateStartupFilled,
+  CreateBountyFilled,
+  CreateOfferingFilled,
+  ProposalFilled
+} from '@comunion/icons'
 import { defineComponent, ref, watch } from 'vue'
 import { useRouter } from 'vue-router'
 import HeaderDropdown from '../../components/HeaderDropdown'
@@ -157,7 +162,7 @@ const CreateBlock = defineComponent({
               label: () => (
                 <div class="flex items-center" onClick={onCreateProposal}>
                   <div class="rounded flex bg-[#f8f8f8] h-8 mr-4 w-8 items-center justify-center">
-                    <CreateOfferingFilled class="text-primary" />
+                    <ProposalFilled class="text-primary" />
                   </div>
                   <div>
                     <div class="text-primary1 u-title2">Proposal</div>

@@ -1,11 +1,11 @@
 import { message, UButton, UDrawer } from '@comunion/components'
 import { defineComponent, ref } from 'vue'
 import CreateProposalForm from './CreateForm'
-import { CreateProposalFormRef } from './typing.d'
+import { CreateProposalFormRef, ProposalInfo } from './typing.d'
 import { useWalletStore } from '@/stores'
 
 export type CreateProposalRef = {
-  show: () => void
+  show: (proposalInfo?: ProposalInfo) => void
   close: () => void
 }
 
@@ -15,8 +15,10 @@ const CreateProposalBlock = defineComponent({
     const createCreateProposalInfo = ref<CreateProposalFormRef>()
     const visible = ref(false)
     const walletStore = useWalletStore()
+    const defaultProposalInfo = ref()
 
-    const show = async () => {
+    const show = async (proposalInfo?: ProposalInfo) => {
+      defaultProposalInfo.value = proposalInfo
       await walletStore.ensureWalletConnected()
       if (!walletStore.isNetworkSupported) {
         message.warning('Please switch to the supported network to create a proposal')
@@ -70,7 +72,15 @@ const CreateProposalBlock = defineComponent({
       )
     }
 
-    return { show, close, visible, footer, createCreateProposalInfo, stepOptions }
+    return {
+      show,
+      close,
+      visible,
+      footer,
+      createCreateProposalInfo,
+      stepOptions,
+      defaultProposalInfo
+    }
   },
   render() {
     return (
@@ -87,6 +97,7 @@ const CreateProposalBlock = defineComponent({
             <CreateProposalForm
               ref={(ref: any) => (this.createCreateProposalInfo = ref)}
               stepOptions={this.stepOptions}
+              defaultProposalInfo={this.defaultProposalInfo}
               onCancel={this.close}
             />
           )}

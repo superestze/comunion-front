@@ -24,6 +24,7 @@
   },
   "homepage": "https://github.com/comunion-io/front-next#readme",
   "dependencies": {
+    "@coinbase/wallet-sdk": "^3.5.2",
     "@comunion/components": "^0.0.1",
     "@comunion/icons": "^0.0.1",
     "@comunion/utils": "^0.0.1",
@@ -33,7 +34,6 @@
     "@tiptap/starter-kit": "^2.0.0-beta.189",
     "@tiptap/vue-3": "^2.0.0-beta.95",
     "@walletconnect/web3-provider": "^1.7.5",
-    "@coinbase/wallet-sdk": "^3.5.2",
     "axios": "^0.26.1",
     "big.js": "^6.2.1",
     "buffer": "^6.0.3",
@@ -42,6 +42,7 @@
     "events": "^3.3.0",
     "inflected": "^2.1.0",
     "ipfs-http-client": "^57.0.3",
+    "json-url": "^3.0.0",
     "pinia": "^2.0.13",
     "timeago.js": "^4.0.2",
     "util": "^0.12.4",

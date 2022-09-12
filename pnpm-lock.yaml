@@ -249,6 +249,7 @@ importers:
       events: ^3.3.0
       inflected: ^2.1.0
       ipfs-http-client: ^57.0.3
+      json-url: ^3.0.0
       pinia: ^2.0.13
       postcss-nested: ^5.0.6
       timeago.js: ^4.0.2
@@ -283,6 +284,7 @@ importers:
       events: 3.3.0
       inflected: 2.1.0
       ipfs-http-client: 57.0.3
+      json-url: 3.0.0
       pinia: 2.0.13_ifhmkzsxec62ezvqv7qmanm4bq
       timeago.js: 4.0.2
       util: 0.12.4
@@ -1608,6 +1610,14 @@ packages:
     transitivePeerDependencies:
       - supports-color
     dev: true
+
+  /@babel/runtime-corejs2/7.19.0:
+    resolution: {integrity: sha512-lCMc3VAOo0GQ7Iqv8c9YaAd8GCC7GtlI7F7ocFaIppIaP0Oss9zsh5Gw36bF9LgDzQWdt06OcZzvZdzMtGdnGA==}
+    engines: {node: '>=6.9.0'}
+    dependencies:
+      core-js: 2.6.12
+      regenerator-runtime: 0.13.9
+    dev: false
 
   /@babel/runtime/7.17.9:
     resolution: {integrity: sha512-lSiBBvodq29uShpWGNbgFdKYNiFDo5/HIYsaCEY9ff4sb10x9jizo2+pRrSyF4jKZCXqgzuqBOQKbUm90gQwJg==}
@@ -4006,7 +4016,7 @@ packages:
   /base-x/3.0.9:
     resolution: {integrity: sha512-H7JU6iBHTal1gp56aKoaa//YUxEaAOUiydvrV/pILqIHXTtqxSkATOnDA2u+jZ/61sD+L/412+7kzXRtWukhpQ==}
     dependencies:
-      safe-buffer: registry.npmmirror.com/safe-buffer/5.2.1
+      safe-buffer: 5.2.1
     dev: false
 
   /base/0.11.2:
@@ -4065,6 +4075,13 @@ packages:
 
   /bl/1.2.3:
     resolution: {integrity: sha512-pvcNpa0UU69UT341rO6AYy4FVAIkUHuZXRIWbq+zHnsVcRzDDjIAhGuuYoi0d//cwIwtt4pkpKycWEfjdV+vww==}
+    dependencies:
+      readable-stream: 2.3.7
+      safe-buffer: 5.2.1
+    dev: false
+
+  /bl/2.2.1:
+    resolution: {integrity: sha512-6Pesp1w0DEX1N550i/uGV/TqucVL4AM/pgThFSN/Qq9si1/DF9aIHs1BxD8V/QU0HoeHO6cQRTAuYnLPKq1e4g==}
     dependencies:
       readable-stream: 2.3.7
       safe-buffer: 5.2.1
@@ -4179,8 +4196,8 @@ packages:
       cipher-base: 1.0.4
       create-hash: 1.2.0
       evp_bytestokey: 1.0.3
-      inherits: registry.npmmirror.com/inherits/2.0.4
-      safe-buffer: registry.npmmirror.com/safe-buffer/5.2.1
+      inherits: 2.0.4
+      safe-buffer: 5.2.1
     dev: false
 
   /browserslist/4.20.3:
@@ -4205,7 +4222,7 @@ packages:
     dependencies:
       bs58: 4.0.1
       create-hash: 1.2.0
-      safe-buffer: registry.npmmirror.com/safe-buffer/5.2.1
+      safe-buffer: 5.2.1
     dev: false
 
   /bser/2.1.1:
@@ -4269,7 +4286,6 @@ packages:
     dependencies:
       node-gyp-build: 4.4.0
     dev: false
-    optional: true
 
   /builtins/1.0.3:
     resolution: {integrity: sha1-y5T662HIaWRR2zZTThQi+U8K7og=}
@@ -4505,8 +4521,8 @@ packages:
   /cipher-base/1.0.4:
     resolution: {integrity: sha512-Kkht5ye6ZGmwv40uUDZztayT2ThLQGfnj/T71N/XzeZeo3nf8foyW7zGTsPYkEya3m5f3cAypH+qe7YOrM1U2Q==}
     dependencies:
-      inherits: registry.npmmirror.com/inherits/2.0.4
-      safe-buffer: registry.npmmirror.com/safe-buffer/5.2.1
+      inherits: 2.0.4
+      safe-buffer: 5.2.1
     dev: false
 
   /cjs-module-lexer/1.2.2:
@@ -4857,6 +4873,12 @@ packages:
       browserslist: 4.20.3
       semver: 7.0.0
 
+  /core-js/2.6.12:
+    resolution: {integrity: sha512-Kb2wC0fvsWfQrgk8HU5lW6U/Lcs8+9aaYcy4ZFc6DDlo4nZ7n70dEgE5rtR0oG6ufKDUnrwfWL1mXR5ljDatrQ==}
+    deprecated: core-js@<3.23.3 is no longer maintained and not recommended for usage due to the number of issues. Because of the V8 engine whims, feature detection in old core-js versions could cause a slowdown up to 100x even if nothing is polyfilled. Some versions have web compatibility issues. Please, upgrade your dependencies to the actual version of core-js.
+    requiresBuild: true
+    dev: false
+
   /core-util-is/1.0.2:
     resolution: {integrity: sha1-tf1UIgqivFq1eqtxQMlAdUUDwac=}
     dev: false
@@ -4912,7 +4934,7 @@ packages:
     resolution: {integrity: sha512-z00bCGNHDG8mHAkP7CtT1qVu+bFQUPjYq/4Iv3C3kWjTFV10zIjfSoeqXo9Asws8gwSHDGj/hl2u4OGIjapeCg==}
     dependencies:
       cipher-base: 1.0.4
-      inherits: registry.npmmirror.com/inherits/2.0.4
+      inherits: 2.0.4
       md5.js: 1.3.5
       ripemd160: 2.0.2
       sha.js: 2.4.11
@@ -4923,9 +4945,9 @@ packages:
     dependencies:
       cipher-base: 1.0.4
       create-hash: 1.2.0
-      inherits: registry.npmmirror.com/inherits/2.0.4
+      inherits: 2.0.4
       ripemd160: 2.0.2
-      safe-buffer: registry.npmmirror.com/safe-buffer/5.2.1
+      safe-buffer: 5.2.1
       sha.js: 2.4.11
     dev: false
 
@@ -6265,7 +6287,7 @@ packages:
       keccak: 3.0.2
       pbkdf2: 3.1.2
       randombytes: 2.1.0
-      safe-buffer: registry.npmmirror.com/safe-buffer/5.2.1
+      safe-buffer: 5.2.1
       scrypt-js: 3.0.1
       secp256k1: 4.0.3
       setimmediate: 1.0.5
@@ -6276,7 +6298,7 @@ packages:
     dependencies:
       ethereumjs-util: 5.2.1
       rlp: 2.2.7
-      safe-buffer: registry.npmmirror.com/safe-buffer/5.2.1
+      safe-buffer: 5.2.1
     dev: false
 
   /ethereumjs-block/1.7.1:
@@ -6422,7 +6444,7 @@ packages:
     resolution: {integrity: sha512-/f2Go4TognH/KvCISP7OUsHn85hT9nUkxxA9BEWxFn+Oj9o8ZNLm/40hdlgSLyuOimsrTKLUMEorQexp/aPQeA==}
     dependencies:
       md5.js: 1.3.5
-      safe-buffer: registry.npmmirror.com/safe-buffer/5.2.1
+      safe-buffer: 5.2.1
     dev: false
 
   /execa/0.7.0:
@@ -7242,9 +7264,9 @@ packages:
     resolution: {integrity: sha512-1nmYp/rhMDiE7AYkDw+lLwlAzz0AntGIe51F3RfFfEqyQ3feY2eI/NcwC6umIQVOASPMsWJLJScWKSSvzL9IVA==}
     engines: {node: '>=4'}
     dependencies:
-      inherits: registry.npmmirror.com/inherits/2.0.4
-      readable-stream: registry.npmmirror.com/readable-stream/3.6.0
-      safe-buffer: registry.npmmirror.com/safe-buffer/5.2.1
+      inherits: 2.0.4
+      readable-stream: 3.6.0
+      safe-buffer: 5.2.1
     dev: false
 
   /hash-sum/2.0.0:
@@ -8240,6 +8262,29 @@ packages:
       readable-stream: 3.6.0
     dev: false
 
+  /jayson/3.7.0:
+    resolution: {integrity: sha512-tfy39KJMrrXJ+mFcMpxwBvFDetS8LAID93+rycFglIQM4kl3uNR3W4lBLE/FFhsoUCEox5Dt2adVpDm/XtebbQ==}
+    engines: {node: '>=8'}
+    hasBin: true
+    dependencies:
+      '@types/connect': 3.4.35
+      '@types/node': 12.20.55
+      '@types/ws': 7.4.7
+      JSONStream: 1.3.5
+      commander: 2.20.3
+      delay: 5.0.0
+      es6-promisify: 5.0.0
+      eyes: 0.1.8
+      isomorphic-ws: 4.0.1_ws@7.5.7
+      json-stringify-safe: 5.0.1
+      lodash: 4.17.21
+      uuid: 8.3.2
+      ws: 7.5.7
+    transitivePeerDependencies:
+      - bufferutil
+      - utf-8-validate
+    dev: false
+
   /jest-changed-files/27.5.1:
     resolution: {integrity: sha512-buBLMiByfWGCoMsLLzGUUSpAmIAGnbR2KJoMN10ziLhOLvP4e0SlypHnAel8iqQXTrcbmfEY9sSqae5sgUsTvw==}
     engines: {node: ^10.13.0 || ^12.13.0 || ^14.15.0 || >=15.0.0}
@@ -8845,6 +8890,18 @@ packages:
     resolution: {integrity: sha1-Epai1Y/UXxmg9s4B1lcB4sc1tus=}
     dev: false
 
+  /json-url/3.0.0:
+    resolution: {integrity: sha512-c5iQnrKGNJ4/qAV1APNFHBDSgB0qgekmcVTBV3RRa2UUw8liUIrUvI3+Om7qtnM8JwobnEsPuAWMYmtCfxSkcw==}
+    dependencies:
+      '@babel/runtime-corejs2': 7.19.0
+      bluebird: 3.7.2
+      lz-string: 1.4.4
+      lzma: 2.3.2
+      msgpack5: 4.5.1
+      node-lzw: 0.3.1
+      urlsafe-base64: 1.0.0
+    dev: false
+
   /json5/1.0.1:
     resolution: {integrity: sha512-aKS4WQjPenRxiQsC93MNfjx+nbF4PAdYzmd/1JIj8HYzqfbu86beTuNgXDzPknWk0n0uARlyewZo4s++ES36Ow==}
     hasBin: true
@@ -8977,16 +9034,16 @@ packages:
   /level-iterator-stream/1.3.1:
     resolution: {integrity: sha1-5Dt4sagUPm+pek9IXrjqUwNS8u0=}
     dependencies:
-      inherits: registry.npmmirror.com/inherits/2.0.4
+      inherits: 2.0.4
       level-errors: 1.0.5
-      readable-stream: registry.npmmirror.com/readable-stream/1.1.14
+      readable-stream: 1.1.14
       xtend: 4.0.2
     dev: false
 
   /level-ws/0.0.0:
     resolution: {integrity: sha1-Ny5RIXeSSgBCSwtDrvK7QkltIos=}
     dependencies:
-      readable-stream: registry.npmmirror.com/readable-stream/1.0.34
+      readable-stream: 1.0.34
       xtend: 2.1.2
     dev: false
 
@@ -9207,7 +9264,12 @@ packages:
     dev: false
 
   /lz-string/1.4.4:
-    resolution: {integrity: sha1-wNjq82BZ9wV5bh40SBHPTEmNOiY=}
+    resolution: {integrity: sha512-0ckx7ZHRPqb0oUm8zNr+90mtf9DQB60H1wMCjBtfi62Kl3a7JbHob6gA2bC+xRvZoOL+1hzUK8jeuEIQE8svEQ==}
+    hasBin: true
+    dev: false
+
+  /lzma/2.3.2:
+    resolution: {integrity: sha512-DcfiawQ1avYbW+hsILhF38IKAlnguc/fjHrychs9hdxe4qLykvhT5VTGNs5YRWgaNePh7NTxGD4uv4gKsRomCQ==}
     hasBin: true
     dev: false
 
@@ -9318,8 +9380,8 @@ packages:
     resolution: {integrity: sha512-xitP+WxNPcTTOgnTJcrhM0xvdPepipPSf3I8EIpGKeFLjt3PlJLIDG3u8EX53ZIubkb+5U2+3rELYpEhHhzdkg==}
     dependencies:
       hash-base: 3.1.0
-      inherits: registry.npmmirror.com/inherits/2.0.4
-      safe-buffer: registry.npmmirror.com/safe-buffer/5.2.1
+      inherits: 2.0.4
+      safe-buffer: 5.2.1
     dev: false
 
   /mdast-util-compact/1.0.4:
@@ -9338,9 +9400,9 @@ packages:
       abstract-leveldown: 2.7.2
       functional-red-black-tree: 1.0.1
       immediate: 3.3.0
-      inherits: registry.npmmirror.com/inherits/2.0.4
+      inherits: 2.0.4
       ltgt: 2.2.1
-      safe-buffer: registry.npmmirror.com/safe-buffer/5.1.2
+      safe-buffer: 5.1.2
     dev: false
 
   /memorystream/0.3.1:
@@ -9422,7 +9484,7 @@ packages:
       level-ws: 0.0.0
       levelup: 1.3.9
       memdown: 1.4.1
-      readable-stream: registry.npmmirror.com/readable-stream/2.3.7
+      readable-stream: 2.3.7
       rlp: 2.2.7
       semaphore: 1.1.0
     dev: false
@@ -9591,6 +9653,15 @@ packages:
   /ms/2.1.3:
     resolution: {integrity: sha512-6FlzubTLZG3J2a/NVCAleEhjzq5oxgHyaCU9yYXvcLsvoVaHJq/s5xXI6/XXP6tz7R9xAOtHnSO/tXtF3WRTlA==}
 
+  /msgpack5/4.5.1:
+    resolution: {integrity: sha512-zC1vkcliryc4JGlL6OfpHumSYUHWFGimSI+OgfRCjTFLmKA2/foR9rMTOhWiqfOrfxJOctrpWPvrppf8XynJxw==}
+    dependencies:
+      bl: 2.2.1
+      inherits: 2.0.4
+      readable-stream: 2.3.7
+      safe-buffer: 5.2.1
+    dev: false
+
   /multiformats/9.7.1:
     resolution: {integrity: sha512-TaVmGEBt0fhxiNJMGphBfB+oGvUxFs8KgGvgl8d3C+GWtrFcvXdJ2196eg+dYhmSFClmgFfSfJEklo+SZzdNuw==}
     dev: false
@@ -9701,6 +9772,11 @@ packages:
   /node-int64/0.4.0:
     resolution: {integrity: sha1-h6kGXNs1XTGC2PlM4RGIuCXGijs=}
     dev: true
+
+  /node-lzw/0.3.1:
+    resolution: {integrity: sha512-BGjQRR92HJsEsm1Ebp3Qvn2Jq+tlXEGY8zorNdal+FxOWpLMyyZBHoQWeyOc/TxsCzCvGbcCG4mU0u/RBSWxjQ==}
+    hasBin: true
+    dev: false
 
   /node-releases/2.0.3:
     resolution: {integrity: sha512-maHFz6OLqYxz+VQyCAtA3PTX4UP/53pa05fyDNc9CwjvJ0yEh6+xBwKsgCxMNhS8taUKBFYxfuiaD9U/55iFaw==}
@@ -10212,7 +10288,7 @@ packages:
       create-hash: 1.2.0
       create-hmac: 1.1.7
       ripemd160: 2.0.2
-      safe-buffer: registry.npmmirror.com/safe-buffer/5.2.1
+      safe-buffer: 5.2.1
       sha.js: 2.4.11
     dev: false
 
@@ -10742,7 +10818,7 @@ packages:
   /randombytes/2.1.0:
     resolution: {integrity: sha512-vYl3iOX+4CKUWuxGi9Ukhie6fsqXqS9FE2Zaic4tNFD2N2QQaXOMFbuKK4QmDHC0JO6B1Zp41J0LpT0oR68amQ==}
     dependencies:
-      safe-buffer: registry.npmmirror.com/safe-buffer/5.2.1
+      safe-buffer: 5.2.1
     dev: false
 
   /rc/1.2.8:
@@ -10763,6 +10839,14 @@ packages:
     resolution: {integrity: sha512-GOA8tc1EVYLnHvma/TU9VTgLOyralO7eATRuCDchQveXW9Fr9vXygyq9iwqmM7YRZ8qRJfEt9xOS7OYMdJvRFw==}
     dependencies:
       p-defer: 3.0.0
+    dev: false
+
+  /react-native-url-polyfill/1.3.0:
+    resolution: {integrity: sha512-w9JfSkvpqqlix9UjDvJjm1EjSt652zVQ6iwCIj1cVVkwXf4jQhQgTNXY6EVTwuAmUjg6BC6k9RHCBynoLFo3IQ==}
+    peerDependencies:
+      react-native: '*'
+    dependencies:
+      whatwg-url-without-unicode: 8.0.0-3
     dev: false
 
   /read-pkg-up/3.0.0:
@@ -10802,22 +10886,20 @@ packages:
     dev: true
 
   /readable-stream/1.0.34:
-    resolution: {integrity: sha1-Elgg40vIQtLyqq+v5MKRbuMsFXw=}
+    resolution: {integrity: sha512-ok1qVCJuRkNmvebYikljxJA/UEsKwLl2nI1OmaqAu4/UE+h0wKCHok4XkL/gvi39OacXvw59RJUOFUkDib2rHg==}
     dependencies:
       core-util-is: 1.0.3
       inherits: 2.0.4
       isarray: 0.0.1
-      string_decoder: 0.10.31
-    dev: true
+      string_decoder: registry.npmmirror.com/string_decoder/0.10.31
 
   /readable-stream/1.1.14:
-    resolution: {integrity: sha1-fPTFTvZI44EwhMY23SB54WbAgdk=}
+    resolution: {integrity: sha512-+MeVjFf4L44XUkhM1eYbD8fyEsxcV81pqMSR5gblfcLCHfZvbrqy4/qYHE+/R5HoBUT11WV5O08Cr1n3YXkWVQ==}
     dependencies:
       core-util-is: 1.0.3
       inherits: 2.0.4
       isarray: 0.0.1
-      string_decoder: 0.10.31
-    dev: true
+      string_decoder: registry.npmmirror.com/string_decoder/0.10.31
 
   /readable-stream/2.3.7:
     resolution: {integrity: sha512-Ebho8K4jIbHAxnuxi7o42OrZgF/ZTNcsZj6nRKyUmkhLFq8CHItp/fy6hQZuZmP/n3yZ9VBUbp4zz/mX8hmYPw==}
@@ -11189,7 +11271,7 @@ packages:
     resolution: {integrity: sha512-ii4iagi25WusVoiC4B4lq7pbXfAp3D9v5CwfkY33vffw2+pkDjY1D8GaN7spsxvCSx8dkPqOZCEZyfxcmJG2IA==}
     dependencies:
       hash-base: 3.1.0
-      inherits: registry.npmmirror.com/inherits/2.0.4
+      inherits: 2.0.4
     dev: false
 
   /rlp/2.2.7:
@@ -11213,7 +11295,7 @@ packages:
       '@babel/runtime': 7.17.9
       eventemitter3: 4.0.7
       uuid: 8.3.2
-      ws: 8.8.1_d6955b83f926115bf12ffeabab6deaae
+      ws: 8.8.1_22kvxa7zeyivx4jp72v2w3pkvy
     optionalDependencies:
       bufferutil: 4.0.6
       utf-8-validate: 5.0.9
@@ -11252,6 +11334,10 @@ packages:
     dependencies:
       tslib: 2.4.0
     dev: true
+
+  /safe-buffer/5.1.2:
+    resolution: {integrity: sha512-Gd2UZBJDkXlY7GbJxfsE8/nvKkUEU1G38c1siN6QP6a9PT9MmHB8GnpscSmMJSoF8LOIrt8ud/wPtojys4G6+g==}
+    dev: false
 
   /safe-buffer/5.2.1:
     resolution: {integrity: sha512-rp3So07KcdmmKbGvgaNxQSJr7bGVSVk5S9Eq1F+ppbRo70+YeaDxkw5Dd8NPN+GD6bjnYm2VuPuCXmpuYvmCXQ==}
@@ -11760,10 +11846,6 @@ packages:
       call-bind: 1.0.2
       define-properties: 1.1.4
 
-  /string_decoder/0.10.31:
-    resolution: {integrity: sha1-YuIDvEF2bGwoyfyEMB2rHFMQ+pQ=}
-    dev: true
-
   /string_decoder/1.3.0:
     resolution: {integrity: sha512-hkRX8U1WjJFd8LsDJ2yQ/wWWxaopEsABU1XfkM8A+j0+85JAGppt16cr1Whg6KIbb4okU6Mql6BOj+uup/wKeA==}
     dependencies:
@@ -12077,6 +12159,10 @@ packages:
       clone-regexp: 3.0.0
       function-timeout: 0.1.1
       time-span: 5.1.0
+    dev: false
+
+  /superstruct/0.14.2:
+    resolution: {integrity: sha512-nPewA6m9mR3d6k7WkZ8N8zpTWfenFH3q9pA2PkuiZxINr9DKB2+40wEQf0ixn8VaGuJ78AB6iWOtStI+/4FKZQ==}
     dev: false
 
   /supports-color/5.5.0:
@@ -12494,7 +12580,7 @@ packages:
   /tunnel-agent/0.6.0:
     resolution: {integrity: sha1-J6XeoGs2sEoKmWZ3SykIaPD8QP0=}
     dependencies:
-      safe-buffer: registry.npmmirror.com/safe-buffer/5.2.1
+      safe-buffer: 5.2.1
     dev: false
 
   /tweetnacl/0.14.5:
@@ -12751,6 +12837,10 @@ packages:
       prepend-http: 1.0.4
     dev: false
 
+  /urlsafe-base64/1.0.0:
+    resolution: {integrity: sha512-RtuPeMy7c1UrHwproMZN9gN6kiZ0SvJwRaEzwZY0j9MypEkFqyBaKv176jvlPtg58Zh36bOkS0NFABXMHvvGCA==}
+    dev: false
+
   /use/3.1.1:
     resolution: {integrity: sha512-cwESVXlO3url9YWlFW/TA9cshCEhtu7IKJ/p5soJ/gGpj7vbvFrAY/eIioQ6Dw23KjZhYgiIo8HOs1nQ2vr/oQ==}
     engines: {node: '>=0.10.0'}
@@ -12763,7 +12853,6 @@ packages:
     dependencies:
       node-gyp-build: 4.4.0
     dev: false
-    optional: true
 
   /util-deprecate/1.0.2:
     resolution: {integrity: sha1-RQ1Nyfpw3nMnYvvS1KKJgUGaDM8=}
@@ -13344,7 +13433,7 @@ packages:
       utf-8-validate:
         optional: true
 
-  /ws/8.8.1_d6955b83f926115bf12ffeabab6deaae:
+  /ws/8.8.1_22kvxa7zeyivx4jp72v2w3pkvy:
     resolution: {integrity: sha512-bGy2JzvzkPowEJV++hF07hAD6niYSr0JzBNo/J29WsB57A2r7Wlc1UFcTR9IzrPvuNVO4B8LGqF8qcpsVOhJCA==}
     engines: {node: '>=10.0.0'}
     peerDependencies:
@@ -14579,49 +14668,13 @@ packages:
     version: 17.0.2
     dev: false
 
-  registry.npmmirror.com/readable-stream/1.0.34:
-    resolution: {integrity: sha512-ok1qVCJuRkNmvebYikljxJA/UEsKwLl2nI1OmaqAu4/UE+h0wKCHok4XkL/gvi39OacXvw59RJUOFUkDib2rHg==, registry: https://registry.npm.taobao.org/, tarball: https://registry.npmmirror.com/readable-stream/-/readable-stream-1.0.34.tgz}
-    name: readable-stream
-    version: 1.0.34
-    dependencies:
-      core-util-is: 1.0.3
-      inherits: registry.npmmirror.com/inherits/2.0.4
-      isarray: 0.0.1
-      string_decoder: registry.npmmirror.com/string_decoder/0.10.31
-    dev: false
-
-  registry.npmmirror.com/readable-stream/1.1.14:
-    resolution: {integrity: sha512-+MeVjFf4L44XUkhM1eYbD8fyEsxcV81pqMSR5gblfcLCHfZvbrqy4/qYHE+/R5HoBUT11WV5O08Cr1n3YXkWVQ==, registry: https://registry.npm.taobao.org/, tarball: https://registry.npmmirror.com/readable-stream/-/readable-stream-1.1.14.tgz}
-    name: readable-stream
-    version: 1.1.14
-    dependencies:
-      core-util-is: 1.0.3
-      inherits: registry.npmmirror.com/inherits/2.0.4
-      isarray: 0.0.1
-      string_decoder: registry.npmmirror.com/string_decoder/0.10.31
-    dev: false
-
-  registry.npmmirror.com/readable-stream/2.3.7:
-    resolution: {integrity: sha512-Ebho8K4jIbHAxnuxi7o42OrZgF/ZTNcsZj6nRKyUmkhLFq8CHItp/fy6hQZuZmP/n3yZ9VBUbp4zz/mX8hmYPw==, registry: https://registry.npm.taobao.org/, tarball: https://registry.npmmirror.com/readable-stream/-/readable-stream-2.3.7.tgz}
-    name: readable-stream
-    version: 2.3.7
-    dependencies:
-      core-util-is: 1.0.3
-      inherits: registry.npmmirror.com/inherits/2.0.4
-      isarray: 1.0.0
-      process-nextick-args: 2.0.1
-      safe-buffer: registry.npmmirror.com/safe-buffer/5.1.2
-      string_decoder: registry.npmmirror.com/string_decoder/1.1.1
-      util-deprecate: registry.npmmirror.com/util-deprecate/1.0.2
-    dev: false
-
   registry.npmmirror.com/readable-stream/3.6.0:
     resolution: {integrity: sha512-BViHy7LKeTz4oNnkcLJ+lVSL6vpiFeX6/d3oSH8zCW7UxP2onchk+vTGB143xuFjHS3deTgkKoXXymXqymiIdA==, registry: https://registry.npm.taobao.org/, tarball: https://registry.npmmirror.com/readable-stream/-/readable-stream-3.6.0.tgz}
     name: readable-stream
     version: 3.6.0
     engines: {node: '>= 6'}
     dependencies:
-      inherits: registry.npmmirror.com/inherits/2.0.4
+      inherits: 2.0.4
       string_decoder: registry.npmmirror.com/string_decoder/1.3.0
       util-deprecate: registry.npmmirror.com/util-deprecate/1.0.2
 
@@ -14665,6 +14718,7 @@ packages:
     resolution: {integrity: sha512-rp3So07KcdmmKbGvgaNxQSJr7bGVSVk5S9Eq1F+ppbRo70+YeaDxkw5Dd8NPN+GD6bjnYm2VuPuCXmpuYvmCXQ==, registry: https://registry.npm.taobao.org/, tarball: https://registry.npmmirror.com/safe-buffer/-/safe-buffer-5.2.1.tgz}
     name: safe-buffer
     version: 5.2.1
+    dev: false
 
   registry.npmmirror.com/safer-buffer/2.1.2:
     resolution: {integrity: sha512-YZo3K82SD7Riyi0E1EQPojLz7kpepnSQI9IyPbHHg1XXXevb5dJI7tpyN2ADxGcQbHG7vcyRHk0cbwqcQriUtg==, registry: https://registry.npm.taobao.org/, tarball: https://registry.npmmirror.com/safer-buffer/-/safer-buffer-2.1.2.tgz}
@@ -14711,14 +14765,13 @@ packages:
     resolution: {integrity: sha512-ev2QzSzWPYmy9GuqfIVildA4OdcGLeFZQrq5ys6RtiuF+RQQiZWr8TZNyAcuVXyQRYfEO+MsoB/1BuQVhOJuoQ==, registry: https://registry.npm.taobao.org/, tarball: https://registry.npmmirror.com/string_decoder/-/string_decoder-0.10.31.tgz}
     name: string_decoder
     version: 0.10.31
-    dev: false
 
   registry.npmmirror.com/string_decoder/1.1.1:
     resolution: {integrity: sha512-n/ShnvDi6FHbbVfviro+WojiFzv+s8MPMHBczVePfUpDJLwoLT0ht1l4YwBCbi8pJAveEEdnkHyPyTP/mzRfwg==, registry: https://registry.npm.taobao.org/, tarball: https://registry.npmmirror.com/string_decoder/-/string_decoder-1.1.1.tgz}
     name: string_decoder
     version: 1.1.1
     dependencies:
-      safe-buffer: registry.npmmirror.com/safe-buffer/5.1.2
+      safe-buffer: 5.1.2
     dev: false
 
   registry.npmmirror.com/string_decoder/1.3.0:
@@ -14726,7 +14779,7 @@ packages:
     name: string_decoder
     version: 1.3.0
     dependencies:
-      safe-buffer: registry.npmmirror.com/safe-buffer/5.2.1
+      safe-buffer: 5.2.1
 
   registry.npmmirror.com/strip-ansi/5.2.0:
     resolution: {integrity: sha512-DuRs1gKbBqsMKIZlrffwlug8MHkcnpjs5VPmL1PAh+mA30U0DTotfDZ0d2UUsXpPmPmMMJ6W773MaA3J+lbiWA==, registry: https://registry.npm.taobao.org/, tarball: https://registry.npmmirror.com/strip-ansi/-/strip-ansi-5.2.0.tgz}

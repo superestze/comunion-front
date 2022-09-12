@@ -1,7 +1,8 @@
 import { UStartupLogo } from '@comunion/components'
+import { shortenAddress } from '@comunion/utils'
 import dayjs from 'dayjs'
 import { defineComponent, PropType, computed } from 'vue'
-import { GOVERNANCE_KEY } from '../utils'
+import { GOVERNANCE_KEY, GOVERNANCE_STATUS_STYLE } from '../utils'
 import { ServiceReturn } from '@/services'
 
 export const ProposalCard = defineComponent({
@@ -15,14 +16,10 @@ export const ProposalCard = defineComponent({
     }
   },
   setup(props) {
-    const mulStatusStyle = {
-      1: 'px-3 bg-primary',
-      2: 'px-3 bg-[#00BFA5]',
-      3: 'px-3 bg-warning',
-      4: 'px-3 bg-grey5'
-    }
     const statusStyle = computed(() => {
-      return mulStatusStyle[props.proposalData.status as keyof typeof mulStatusStyle]
+      return GOVERNANCE_STATUS_STYLE[
+        props.proposalData.status as keyof typeof GOVERNANCE_STATUS_STYLE
+      ]
     })
 
     const timeTip = computed(() => {
@@ -32,9 +29,16 @@ export const ProposalCard = defineComponent({
           .format('DD-HH-mm')
           .split('-')
         const basePrefix = 'Starts in '
-        if (days) return basePrefix + days + 'days'
-        if (hours) return basePrefix + days + 'hours'
-        if (minutes) return basePrefix + minutes + 'minutes'
+
+        if (Number(days)) {
+          return basePrefix + days + ' days'
+        }
+        if (Number(hours)) {
+          return basePrefix + hours + ' hours'
+        }
+        if (Number(minutes)) {
+          return basePrefix + minutes + ' minutes'
+        }
       } else if (props.proposalData.status === 3) {
         return (
           <div>
@@ -51,23 +55,30 @@ export const ProposalCard = defineComponent({
   },
   render() {
     return (
-      <div class="flex bg-white py-8 px-10 w-full">
-        <div class="w-15 h-15">
-          <UStartupLogo class="mr-2" src="" width="60" height="60" />
+      <div class="flex bg-white py-6 w-full border-grey5 rounded-lg">
+        <div class="w-15 h-15 mr-4">
+          <UStartupLogo src={this.proposalData.startupLogo || ''} width="15" height="15" />
         </div>
-        <div>
-          <div class="flex items-center">
-            <span class="mr-2">Linkedin by</span>
-            <span>{this.proposalData.authorWalletAddress}</span>
+        <div class="flex-1">
+          <div class="flex items-center justify-between">
+            <div>
+              <span class="mr-2 text-grey3 text-xs">Linkedin by</span>
+              <span class="text-primary text-xs">
+                {shortenAddress(this.proposalData.authorWalletAddress)}
+              </span>
+            </div>
             <div class={['status ml-auto', this.statusStyle]}>
               {GOVERNANCE_KEY[this.proposalData.status as keyof typeof GOVERNANCE_KEY]}
             </div>
           </div>
           <div class="u-title3 truncate break-all max-w-200 my-2">{this.proposalData.title}</div>
-          <div class="u-body2 truncate break-all whitespace-pre-line line-clamp-2">
-            {this.proposalData.description}
-          </div>
-          <div class="text-grey3  mt-2">{this.timeTip}</div>
+          {this.proposalData.description && (
+            <div
+              class="u-body2 truncate break-all whitespace-pre-line line-clamp-2"
+              v-html={this.proposalData.description}
+            />
+          )}
+          {this.timeTip && <div class="text-grey3  mt-2">{this.timeTip}</div>}
         </div>
       </div>
     )

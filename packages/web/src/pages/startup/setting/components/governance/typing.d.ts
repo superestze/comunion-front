@@ -1,6 +1,6 @@
 export interface StrategyType {
-  key: string
-  name: string
+  dictValue?: string
+  dictLabel?: string
   chainId?: number
   contractAddress?: string
   symbol?: string

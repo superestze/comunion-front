@@ -2332,12 +2332,119 @@ export const services = {
     }
   ) {
     return requestAdapter<{}>({
-      url: replacePath('/cores/governace-setting/:startupID', args),
+      url: replacePath('/cores/governance-setting/:startupID', args),
       method: 'POST',
       ...extract('POST', args, [], ['startupID'])
     })
   },
-  'governance@create-governace-setting_copy'(
+  'governance@create-proposal'(args: {
+    authorComerId: number
+    authorWalletAddress: string
+    chainId: number
+    blockNumber: number
+    /**
+     * @description 格式： 2021-02-18T21:54:42.123Z
+     */
+    releaseTimestamp: string
+    ipfsHash: string
+    title: string
+    startupId?: number
+    description?: string
+    discussionLink?: string
+    voteSystem: string
+    /**
+     * @description 格式： 2021-02-18T21:54:42.123Z
+     */
+    startTime: string
+    /**
+     * @description 格式： 2021-02-18T21:54:42.123Z
+     */
+    endTime: string
+    choices: {
+      itemName: string
+      seqNum: number
+    }[]
+  }) {
+    return requestAdapter<{}>({
+      url: replacePath('/cores/proposals', args),
+      method: 'POST',
+      ...extract('POST', args, [], [])
+    })
+  },
+  'governance@delete-proposal'(args: { proposalID: any }) {
+    return requestAdapter<any>({
+      url: replacePath('/cores/proposals/:proposalID', args),
+      method: 'DELETE',
+      ...extract('DELETE', args, [], ['proposalID'])
+    })
+  },
+  'governance@get-proposal-detail'(
+    args: {
+      proposalID: any
+    } & {
+      authorComerId: number
+      authorWalletAddress: string
+      chainId: number
+      blockNumber: number
+      releaseTimestamp: number
+      ipfsHash: string
+      title: string
+      startupId?: number
+      description?: string
+      discussionLink?: string
+      voteSystem: string
+      startTime: number
+      endTime: number
+      choices: {
+        itemName: string
+        seqNum: number
+      }[]
+    }
+  ) {
+    return requestAdapter<{
+      proposalId: number
+      startupId: number
+      startupLogo: string
+      startupName: string
+      authorComerId: number
+      authorWalletAddress: string
+      title: string
+      description: string
+      status: number
+      startTime: string
+      endTime: string
+      voteSystem: string
+      blockNumber: number
+      discussionLink: string
+      choices: {
+        id: number
+        itemName: string
+        seqNum: number
+      }[]
+      choiceVoteInfos: {
+        choiceId: number
+        itemName: string
+        votes: number
+        percent: number
+      }[]
+      totalVotes: number
+      strategies: {
+        strategyId: number
+        strategyName: string
+        dictValue: string
+        chainId: number
+        tokenContractAddress: string
+        voteSymbol: string
+        voteDecimals: number
+        tokenMinBalance: number
+      }[]
+    }>({
+      url: replacePath('/cores/proposals/:proposalID', args),
+      method: 'GET',
+      ...extract('GET', args, [], ['proposalID'])
+    })
+  },
+  'governance@get-startup-governace-setting'(
     args: {
       startupID: any
     } & {
@@ -2391,107 +2498,12 @@ export const services = {
       ...extract('GET', args, [], ['startupID'])
     })
   },
-  'governance@create-proposal'(args: {
-    authorComerId: number
-    authorWalletAddress: string
-    chainId: number
-    blockNumber: number
-    releaseTimestamp: number
-    ipfsHash: string
-    title: string
-    startupId?: number
-    description?: string
-    discussionLink?: string
-    voteSystem: string
-    startTime: number
-    endTime: number
-    choices: {
-      itemName: string
-      seqNum: number
-    }[]
-  }) {
-    return requestAdapter<any>({
-      url: replacePath('/cores/proposals', args),
-      method: 'POST',
-      ...extract('POST', args, [], [])
-    })
-  },
-  'governance@delete-proposal'(args: { proposalID: any }) {
-    return requestAdapter<any>({
-      url: replacePath('/cores/proposals/:proposalID', args),
-      method: 'DELETE',
-      ...extract('DELETE', args, [], ['proposalID'])
-    })
-  },
-  'governance@get-proposal-detail'(
-    args: {
-      proposalID: any
-    } & {
-      authorComerId: number
-      authorWalletAddress: string
-      chainId: number
-      blockNumber: number
-      releaseTimestamp: number
-      ipfsHash: string
-      title: string
-      startupId?: number
-      description?: string
-      discussionLink?: string
-      voteSystem: string
-      startTime: number
-      endTime: number
-      choices: {
-        itemName: string
-        seqNum: number
-      }[]
-    }
-  ) {
-    return requestAdapter<{
-      proposalId: number
-      startupId: number
-      startupLogo: string
-      startupName: string
-      authorComerId: number
-      authorWalletAddress: string
-      title: string
-      description: string
-      status: number
-      startTime: string
-      endTime: string
-      choices: {
-        choiceId: number
-        itemName: string
-        seqNum: number
-      }[]
-      choiceVoteInfos: {
-        choiceId: number
-        itemName: string
-        votes: number
-        percent: number
-      }[]
-      totalVotes: number
-      strategies: {
-        strategyId: number
-        strategyName: string
-        dictValue: string
-        chainId: number
-        tokenContractAddress: string
-        voteSymbol: string
-        voteDecimals: number
-        tokenMinBalance: number
-      }[]
-    }>({
-      url: replacePath('/cores/proposals/:proposalID', args),
-      method: 'GET',
-      ...extract('GET', args, [], ['proposalID'])
-    })
-  },
   'governance@proposal-list-by-startup'(
     args: {
       startupId: any
     } & {
       page: number
-      limit: string
+      limit: number
     }
   ) {
     return requestAdapter<{
@@ -2530,7 +2542,7 @@ export const services = {
       comerID: any
     } & {
       page: number
-      limit: string
+      limit: number
     }
   ) {
     return requestAdapter<{
@@ -2569,7 +2581,7 @@ export const services = {
       comerID: any
     } & {
       page: number
-      limit: string
+      limit: number
     }
   ) {
     return requestAdapter<{
@@ -2603,28 +2615,32 @@ export const services = {
       ...extract('POST', args, [], ['comerID'])
     })
   },
-  'governance@proposal-vote-record-list'(args: { limit: number; page: number }) {
-    return requestAdapter<{
+  'governance@proposal-vote-record-list'(
+    args: {
+      proposalID: any
+    } & {
       limit: number
       page: number
-      totalPages: number
-      totalRows: number
-      rows: {
+    }
+  ) {
+    return requestAdapter<
+      {
         proposalId: number
         voterComerId: number
         voterWalletAddress: string
         choiceItemId: number
-        itemName: string
-        vote: number
+        choiceItemName: string
+        votes: string
         ipfsHash: string
+        voterComerAvatar: string
       }[]
-    }>({
-      url: replacePath('/cores/proposals/vote-records', args),
+    >({
+      url: replacePath('/cores/proposals/:proposalID/vote-records', args),
       method: 'POST',
-      ...extract('POST', args, [], [])
+      ...extract('POST', args, [], ['proposalID'])
     })
   },
-  'governance@public-list'(args: { page: number; limit: string; states?: number[] }) {
+  'governance@public-list'(args: { page: number; limit: number; states?: number[] }) {
     return requestAdapter<{
       limit: number
       page: number
@@ -2656,16 +2672,100 @@ export const services = {
       ...extract('POST', args, [], [])
     })
   },
-  'governance@vote-proposal'(args: { proposalID: any }) {
-    return requestAdapter<{
-      choiceItemId: number
+  'governance@vote-proposal'(
+    args: {
+      proposalID: any
+    } & {
       voterWalletAddress: string
-      vote: number
+      /**
+       * @description 选项ID
+       */
+      choiceItemId: number
+      /**
+       * @description 票数
+       */
+      votes: number
       ipfsHash: string
-    }>({
-      url: replacePath('/cores/proposal/:proposalID/vote', args),
+    }
+  ) {
+    return requestAdapter<{}>({
+      url: replacePath('/cores/proposals/:proposalID/vote', args),
       method: 'POST',
       ...extract('POST', args, [], ['proposalID'])
+    })
+  },
+
+  'chain@chain-list'(args?: any) {
+    return requestAdapter<{
+      list?: {
+        id: number
+        /**
+         * @description 创建时间
+         */
+        createdAt: string
+        /**
+         * @description 更新时间
+         */
+        updatedAt: string
+        /**
+         * @description 是否删除
+         */
+        isDeleted: boolean
+        /**
+         * @description 链ID
+         */
+        chain_id: number
+        /**
+         * @description 名称
+         */
+        name: string
+        /**
+         * @description logo
+         */
+        logo: string
+        /**
+         * @description 状态
+         */
+        status: number
+        /**
+         * @description 链内工厂合约列表
+         */
+        chain_contracts: {
+          id: number
+          /**
+           * @description 链ID
+           */
+          chain_id: number
+          /**
+           * @description 项目 1 Startup, 2 Bounty, 3 Crowdfunding, 4 Gover
+           */
+          project: number
+          /**
+           * @description 合约地址
+           */
+          address: string
+          /**
+           * @description 1工厂合约、2子合约
+           */
+          type: number
+          /**
+           * @description 合约版本号
+           */
+          version: string
+          /**
+           * @description 合约ABI json
+           */
+          abi: string
+          /**
+           * @description 创建合约的交易HASH
+           */
+          created_tx_hash: string
+        }[]
+      }[]
+    }>({
+      url: replacePath('/chain/list', args),
+      method: 'GET',
+      ...extract('GET', args, [], [])
     })
   },
 
@@ -3461,8 +3561,17 @@ export const services = {
       tokenName: string
       tokenSymbol: string
       totalSupply: number
+      /**
+       * @description 格式：2006-01-02T15:04:05Z
+       */
       presaleStart: string
+      /**
+       * @description 格式：2006-01-02T15:04:05Z
+       */
       presaleEnd: string
+      /**
+       * @description 格式：2006-01-02T15:04:05Z
+       */
       launchDate: string
       wallets: {
         walletName: string

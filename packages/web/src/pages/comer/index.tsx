@@ -140,7 +140,7 @@ export default defineComponent({
               </>
             )}
           </div>
-          <div class="basis-2/3">
+          <div class="basis-2/3 overflow-hidden">
             {this.profile && (
               <>
                 <Filter
@@ -153,6 +153,8 @@ export default defineComponent({
                 ) : (
                   <>
                     {this.systemTasks.map(task => {
+                      console.log('task===>', task)
+
                       if (task === 'Startup' && rowDisplay('Startup') && this.tagCount.startupCnt) {
                         return (
                           <Startup
@@ -179,9 +181,9 @@ export default defineComponent({
                       ) {
                         return <Crowdfunding createdByMe={this.createdByMe} />
                       } else if (
-                        task === 'Proposal' &&
-                        rowDisplay('Proposal') &&
-                        this.tagCount.proposalCnt
+                        task === 'Proposal'
+                        // rowDisplay('Proposal')
+                        // this.tagCount.proposalCnt
                       ) {
                         return <Proposal createdByMe={this.createdByMe} />
                       } else {

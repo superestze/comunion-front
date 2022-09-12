@@ -1,13 +1,14 @@
-import { UButton, UCard, UModal } from '@comunion/components'
+import { message, UButton, UCard, UModal } from '@comunion/components'
 import { WarningFilled } from '@comunion/icons'
 import dayjs from 'dayjs'
 import { defineComponent, onMounted, PropType, reactive, ref } from 'vue'
 import { BasicInfo } from './components/BasicInfo'
 import { Vote } from './components/Vote'
-import { ProposalInfo } from './typing'
+import { ProposalInfo, VoteOption } from './typing'
 import { StepProps } from '@/components/Step'
+import { signerProposalTypes } from '@/pages/governance/utils'
 import { services } from '@/services'
-import { useWalletStore } from '@/stores'
+import { useUserStore, useWalletStore } from '@/stores'
 import { getClient } from '@/utils/ipfs'
 
 const CreateProposalFrom = defineComponent({
@@ -17,22 +18,29 @@ const CreateProposalFrom = defineComponent({
     stepOptions: {
       type: Array as PropType<StepProps[]>,
       required: true
+    },
+    defaultProposalInfo: {
+      type: Object as PropType<ProposalInfo>,
+      default: {
+        current: 1,
+        startupId: undefined,
+        vote: 'single-choice-voting',
+        voteChoices: [{ value: '' }, { value: '' }],
+        startTime: undefined,
+        endTime: undefined
+      }
     }
   },
   setup(props, ctx) {
-    const startupOptions = ref()
     const walletStore = useWalletStore()
+    const userInfo = useUserStore()
+    const startupOptions = ref()
     const basicInfoRef = ref()
     const voteRef = ref()
+    const voteOptions = ref<VoteOption[] | undefined>()
     const modalVisibleState = ref(false)
     const ipfsClient = getClient()
-    const proposalInfo = reactive<ProposalInfo>({
-      current: 1,
-      vote: 1,
-      voteChoices: [{ value: '' }, { value: '' }],
-      startTime: undefined,
-      endTime: undefined
-    })
+    const proposalInfo = reactive<ProposalInfo>(props.defaultProposalInfo)
     const showLeaveTipModal = () => {
       modalVisibleState.value = true
     }
@@ -44,13 +52,13 @@ const CreateProposalFrom = defineComponent({
       ctx.emit('cancel')
     }
     const toNext = () => {
-      proposalInfo.current += 1
+      // proposalInfo.current += 1
       if (proposalInfo.current === 1) {
-        // basicInfoRef.value?.proposalBasicInfoForm?.validate((error: any) => {
-        //   if (!error) {
-        //     proposalInfo.current += 1
-        //   }
-        // })
+        basicInfoRef.value?.proposalBasicInfoForm?.validate((error: any) => {
+          if (!error) {
+            proposalInfo.current += 1
+          }
+        })
       }
     }
     const getStartupsOptions = async () => {
@@ -69,8 +77,25 @@ const CreateProposalFrom = defineComponent({
       }
     }
     onMounted(() => {
+      getVoteTypeOptions()
       getStartupsOptions()
     })
+    const getVoteTypeOptions = async () => {
+      try {
+        const { error, data } = await services['meta@dict-list-by-type']({ type: 'voteSystem' })
+        console.log('data==>', data)
+        if (!error) {
+          voteOptions.value = data.map(item => ({
+            label: item.dictLabel,
+            value: item.dictValue,
+            key: item.seqNum,
+            remark: item.remark
+          }))
+        }
+      } catch (error) {
+        //
+      }
+    }
     const onSubmit = async () => {
       // validate
       voteRef.value?.proposalVoteFormRef?.validate(async (error: any) => {
@@ -81,26 +106,72 @@ const CreateProposalFrom = defineComponent({
           const startupInfo = startupOptions.value.find(
             (startup: { value: number | undefined }) => startup.value === proposalInfo.startupId
           )
-          const signature = await walletStore.wallet?.sign(
-            JSON.stringify({
-              From: walletStore.address,
-              Startup: startupInfo?.value,
-              Timestamp: dayjs().valueOf(),
-              Type: proposalInfo.vote,
-              Title: proposalInfo.title,
-              Descraption: proposalInfo.description,
-              Discussion: proposalInfo.discussion,
-              Choice: proposalInfo.voteChoices.map(choice => choice.value),
-              Start: dayjs(proposalInfo.startTime).utc().valueOf(),
-              End: dayjs(proposalInfo.endTime).utc().valueOf(),
-              'Block Height': walletStore.wallet.getProvider().blockNumber
-            })
+          const blockNumber = walletStore.wallet?.getProvider().blockNumber
+          const voteType =
+            voteOptions.value?.find(option => option.value === proposalInfo.vote)?.label || 'basic'
+
+          const domain = { name: 'Comunion' }
+
+          const saveContent = {
+            From: walletStore.address,
+            Startup: startupInfo?.label,
+            Timestamp: dayjs().valueOf(),
+            Type: voteType,
+            Title: proposalInfo.title,
+            Choice: proposalInfo.voteChoices.map(choice => choice.value).filter(Boolean),
+            Start: dayjs(proposalInfo.startTime).utc().valueOf(),
+            End: dayjs(proposalInfo.endTime).utc().valueOf(),
+            blockHeight: blockNumber
+          }
+          // const optionalContent = {
+          //   Description: proposalInfo.description || '',
+          //   Discussion: proposalInfo.discussion || ''
+          // }
+
+          const signature = await walletStore.wallet?.signTypedData(
+            domain,
+            signerProposalTypes,
+            saveContent
           )
+
+          // sign(JSON.stringify(saveContent, null, 2))
           console.log('signature===>', signature)
           if (signature) {
-            const { cid, path } = await ipfsClient.add(signature)
+            const { cid } = await ipfsClient.add(
+              JSON.stringify({
+                address: walletStore.address,
+                data: saveContent,
+                sig: signature
+              })
+            )
             console.log('cid==>', cid)
-            console.log('path==>', path)
+            // console.log('path==>', path)
+
+            const { error } = await services['governance@create-proposal']({
+              authorComerId: userInfo.profile!.comerID!,
+              authorWalletAddress: walletStore.address!,
+              chainId: walletStore.chainId!,
+              blockNumber: blockNumber!,
+              releaseTimestamp: dayjs().utc().toISOString(),
+              ipfsHash: cid.toString(),
+              title: proposalInfo.title!,
+              startupId: proposalInfo.startupId,
+              description: proposalInfo.description,
+              discussionLink: proposalInfo.discussion,
+              voteSystem: voteType,
+              startTime: dayjs(proposalInfo.startTime!).utc().toISOString(),
+              endTime: dayjs(proposalInfo.endTime!).utc().toISOString(),
+              choices: proposalInfo.voteChoices
+                .filter((item: { value: string }) => item.value)
+                .map((choice, choiceIndex) => ({
+                  itemName: choice.value,
+                  seqNum: choiceIndex + 1
+                }))
+            })
+            if (!error) {
+              message.success('Create proposal successfully')
+              closeDrawer()
+            }
           }
         }
       })
@@ -118,6 +189,8 @@ const CreateProposalFrom = defineComponent({
       modalVisibleState,
       basicInfoRef,
       voteRef,
+      startupOptions,
+      voteOptions,
       closeDrawer
     }
   },
@@ -127,12 +200,17 @@ const CreateProposalFrom = defineComponent({
         <div>
           {this.proposalInfo.current === 1 && (
             <BasicInfo
+              startupOptions={this.startupOptions}
               proposalInfo={this.proposalInfo}
               ref={(ref: any) => (this.basicInfoRef = ref)}
             />
           )}
           {this.proposalInfo.current === 2 && (
-            <Vote proposalInfo={this.proposalInfo} ref={(ref: any) => (this.voteRef = ref)} />
+            <Vote
+              proposalInfo={this.proposalInfo}
+              ref={(ref: any) => (this.voteRef = ref)}
+              voteOptions={this.voteOptions}
+            />
           )}
         </div>
         <UModal v-model:show={this.modalVisibleState} maskClosable={false}>
