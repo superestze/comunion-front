@@ -141,3 +141,5 @@ export const supportedChainIds = import.meta.env.VITE_SUPPORTED_CHAIN_ID?.split(
 export const supportedNetworks: ChainNetworkType[] = allNetworks.filter(network =>
   supportedChainIds.includes(network.chainId)
 )
+
+export const infuraKey = '65b449dc78314fe583ece8797faccc0a'

@@ -1,3 +1,5 @@
+import { Provider } from '@ethersproject/abstract-provider'
+import { Signer } from '@ethersproject/abstract-signer'
 import { Contract } from 'ethers'
 import { useWalletStore } from '@/stores'
 
@@ -225,11 +227,14 @@ const erc20ABI = `[
 ]
 `
 
-export function useErc20Contract(): (address: string) => Contract {
+export function useErc20Contract(): (address: string, provider?: Signer | Provider) => Contract {
   const walletStore = useWalletStore()
-  return (address: string) => {
+  return (address: string, provider?: Signer | Provider) => {
+    if (provider) {
+      return new Contract(address, erc20ABI, provider)
+    }
     const signer = walletStore.wallet?.getSigner()
-    if (!signer) {
+    if (!signer || !provider) {
       throw new Error('Wallet is not initialized')
     }
     return new Contract(address, erc20ABI, signer)

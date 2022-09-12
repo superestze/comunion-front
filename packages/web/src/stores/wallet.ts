@@ -1,6 +1,6 @@
 import { message } from '@comunion/components'
 import { storage } from '@comunion/utils'
-import { ethers, providers } from 'ethers'
+import { ethers, getDefaultProvider, providers } from 'ethers'
 import { defineStore } from 'pinia'
 import { markRaw } from 'vue'
 import { useUserStore } from './user'
@@ -264,6 +264,17 @@ export const useWalletStore = defineStore('wallet', {
         }
       }
       return '0'
+    },
+    getRpcProvider(chainId: number, key: string) {
+      getDefaultProvider
+      const networkInfo = allNetworks.find(network => network.chainId === chainId)
+      if (!networkInfo) return
+      let rpc = networkInfo.rpcUrl
+      if ([1, 5].includes(chainId)) {
+        rpc += key
+      }
+      const provider = new ethers.providers.JsonRpcProvider(rpc)
+      return provider
     }
   }
 })

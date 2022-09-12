@@ -1,4 +1,4 @@
-.u-tag {
+.u-tag-com {
   @apply inline-flex items-center h-6 text-center px-2.5 u-tag rounded-sm;
 
   &__filled {

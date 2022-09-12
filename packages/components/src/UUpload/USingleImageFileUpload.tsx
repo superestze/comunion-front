@@ -131,6 +131,8 @@ export const USingleImageFileUpload = defineComponent({
       }
       if (file.file && props.aspectRatio) {
         return checkImageWH(file.file)
+          .then(() => Promise.resolve())
+          .catch(() => Promise.reject())
       }
       return Promise.resolve()
     }

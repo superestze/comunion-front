@@ -2395,29 +2395,14 @@ export const services = {
   'governance@get-proposal-detail'(
     args: {
       proposalID: any
-    } & {
-      authorComerId: number
-      authorWalletAddress: string
-      chainId: number
-      blockNumber: number
-      releaseTimestamp: number
-      ipfsHash: string
-      title: string
-      startupId?: number
-      description?: string
-      discussionLink?: string
-      voteSystem: string
-      startTime: number
-      endTime: number
-      choices: {
-        itemName: string
-        seqNum: number
-      }[]
-    }
+    } & {}
   ) {
     return requestAdapter<{
       proposalId: number
       startupId: number
+      voteSystem: string
+      blockNumber: number
+      discussionLink: string
       startupLogo: string
       startupName: string
       authorComerId: number
@@ -2427,30 +2412,34 @@ export const services = {
       status: number
       startTime: string
       endTime: string
-      voteSystem: string
-      blockNumber: number
-      discussionLink: string
-      choices: {
-        id: number
-        itemName: string
-        seqNum: number
-      }[]
-      choiceVoteInfos: {
-        choiceId: number
-        itemName: string
-        votes: number
-        percent: number
-      }[]
-      totalVotes: number
       strategies: {
-        strategyId: number
-        strategyName: string
+        id: number
+        settingId: number
         dictValue: string
+        strategyName: string
         chainId: number
         tokenContractAddress: string
         voteSymbol: string
         voteDecimals: number
-        tokenMinBalance: number
+        tokenMinBalance: string
+      }[]
+      admins: {
+        id: number
+        settingId: number
+        walletAddress: string
+      }[]
+      choiceVoteInfos: {
+        choiceId: number
+        itemName: string
+        votes: string
+        percent: string
+      }[]
+      totalVotes: string
+      choices: {
+        id: number
+        proposalId: number
+        itemName: string
+        seqNum: number
       }[]
     }>({
       url: replacePath('/cores/proposals/:proposalID', args),
@@ -2637,18 +2626,23 @@ export const services = {
       page: number
     }
   ) {
-    return requestAdapter<
-      {
+    return requestAdapter<{
+      limit: number
+      page: number
+      sort: string
+      totalRows: number
+      totalPages: number
+      rows: {
         proposalId: number
         voterComerId: number
         voterWalletAddress: string
         choiceItemId: number
         choiceItemName: string
-        votes: string
+        votes: number
         ipfsHash: string
         voterComerAvatar: string
       }[]
-    >({
+    }>({
       url: replacePath('/cores/proposals/:proposalID/vote-records', args),
       method: 'POST',
       ...extract('POST', args, [], ['proposalID'])
@@ -2977,6 +2971,14 @@ export const services = {
       logo: string
       cover: string
       /**
+       * @description 交易hash
+       */
+      txHash: string
+      /**
+       * @description 上链ID
+       */
+      chainId: number
+      /**
    * @description 	ModeESG Mode = 1
 	ModeNGO Mode = 2
 	ModeDAO Mode = 3
@@ -2992,6 +2994,42 @@ export const services = {
       url: replacePath('/cores/startups/{startupId}/basicSetting1', args),
       method: 'PUT',
       ...extract('PUT', args, [], ['startupId'])
+    })
+  },
+  'startup@startup-create'(args: {
+    /**
+     * @description 0:NONE, 1 &#39;ORG&#39;, 2 &#39;NGO&#39;,  3 &#39;DAO&#39;, 4 &#39;COM&#39;, 5 &#39;DCO&#39;
+     */
+    mode: number
+    /**
+     * @description name
+     */
+    name: string
+    /**
+     * @description mission
+     */
+    mission: string
+    /**
+     * @description overview
+     */
+    overview: string
+    /**
+     * @description 如果上链 则传入交易hash
+     */
+    txHash?: string
+    /**
+     * @description 链ID
+     */
+    chainId: number
+    /**
+     * @description 标签
+     */
+    hashTags: string[]
+  }) {
+    return requestAdapter<{}>({
+      url: replacePath('/cores/startups', args),
+      method: 'POST',
+      ...extract('POST', args, [], [])
     })
   },
   'startup@startup-fans'(
@@ -3047,6 +3085,9 @@ export const services = {
       overview: string
       chainID: number
       blockChainAddress: string
+      /**
+       * @description 暂时未找到在哪里使用过的字段，然后又没有相关数据库文档，暂时作为是否上链使用
+       */
       isSet: boolean
       kyc: string
       contractAudit: string

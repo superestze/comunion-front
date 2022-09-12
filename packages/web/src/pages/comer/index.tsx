@@ -155,6 +155,8 @@ export default defineComponent({
                 ) : (
                   <>
                     {this.systemTasks.map(task => {
+                      console.log('task===>', task)
+
                       if (task === 'Startup' && rowDisplay('Startup') && this.tagCount.startupCnt) {
                         return (
                           <Startup
