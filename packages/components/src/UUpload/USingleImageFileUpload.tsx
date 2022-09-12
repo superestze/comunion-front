@@ -7,7 +7,7 @@ import {
 } from '@comunion/icons'
 import { sizeFormat } from '@comunion/utils'
 import { NUpload, NProgress } from 'naive-ui'
-import { CustomRequest, OnBeforeUpload, FileInfo } from 'naive-ui/lib/upload/src/interface'
+import { CustomRequest, FileInfo, SettledFileInfo } from 'naive-ui/lib/upload/src/interface'
 export type { FileInfo } from 'naive-ui/lib/upload/src/interface'
 import { defineComponent, computed, ref, PropType } from 'vue'
 import { useUpload } from './UUploadProvider'
@@ -121,7 +121,7 @@ export const USingleImageFileUpload = defineComponent({
       ctx.emit('update:value', undefined)
     }
 
-    const onBeforeUpload: OnBeforeUpload = ({ file }) => {
+    const onBeforeUpload = ({ file }: { file: SettledFileInfo }) => {
       if (file.file && props.sizeLimit) {
         if (file.file?.size > props.sizeLimit) {
           return Promise.reject(
