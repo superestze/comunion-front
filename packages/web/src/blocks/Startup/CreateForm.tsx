@@ -134,8 +134,6 @@ const CreateStartupForm = defineComponent({
                   `Startup "${model.name}" is Creating`
                 )
               } else {
-                // console.log(model.type === undefined)
-                // return
                 const res = await contractStore.createStartupSuccessAfter({
                   nextwork: model.nextwork === undefined ? 0 : model.nextwork,
                   switch: false,

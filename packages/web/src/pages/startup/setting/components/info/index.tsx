@@ -19,7 +19,7 @@ import {
   getStartupNumberFromType
 } from '@/constants'
 import { useStartupContract } from '@/contracts'
-import { useChainStore } from '@/stores'
+import { useChainStore, useWalletStore } from '@/stores'
 import { useContractStore } from '@/stores/contract'
 type InfoPropType = {
   logo: string
@@ -62,6 +62,7 @@ export default defineComponent({
     }
   },
   setup(props) {
+    const walletStore = useWalletStore()
     const chainStore = useChainStore()
     const contractStore = useContractStore()
     const loading = ref(false)
@@ -81,8 +82,11 @@ export default defineComponent({
       const data = chainStore.supportedNetworks
       return data
     })
-    const netWorkChange = (value: number) => {
-      console.log(value, '12331223')
+    const netWorkChange = async (value: number) => {
+      if (walletStore.chainId !== value) {
+        await walletStore.ensureWalletConnected()
+        walletStore.wallet?.switchNetwork(value)
+      }
     }
     const getNetWorkList = (supportedNetworks: Array<ChainNetworkType> = []) => {
       return supportedNetworks.map((item: ChainNetworkType) => ({
@@ -123,7 +127,6 @@ export default defineComponent({
         ;(fields[0] as fieldType).options = getNetWorkList(data)
       }
     )
-    // const walletStore = useWalletStore()
     const fields: FormFactoryField[] = reactive([
       // {
       //   t: 'custom',
@@ -323,18 +326,8 @@ export default defineComponent({
     }
   },
   render() {
-    /**
-     * logo: props.data.logo || '',
-      cover: props.data.cover || '',
-      name: props.data.name || '',
-      type: getStartupTypeFromNumber(props.data.mode) || '',
-      mission: props.data.mission || '',
-      overview: props.data.overview || ''
-     *
-     */
     const handleSubmit = () => {
       this.form?.validate(async err => {
-        // return
         if (!err) {
           this.loading = true
           const startupContract = useStartupContract()
