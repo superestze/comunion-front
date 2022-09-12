@@ -2803,17 +2803,15 @@ export const services = {
       ...extract('POST', args, [], ['startupID', 'groupID', 'comerID'])
     })
   },
-  'startup@startup-create'(
-    args: {
-      mode?: number,
-      name: string,
-      mission: string,
-      overview: string,
-      txHash: string,
-      chainId?: number,
-      hashTags: Array<string>
-    }
-  ) {
+  'startup@startup-create'(args: {
+    mode?: number
+    name: string
+    mission: string
+    overview: string
+    txHash: string
+    chainId?: number
+    hashTags: Array<string>
+  }) {
     return requestAdapter<{
       list: {
         id: number
