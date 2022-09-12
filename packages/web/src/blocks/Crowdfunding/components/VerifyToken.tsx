@@ -7,6 +7,7 @@ import {
 } from '@comunion/components'
 import { SelectOption } from '@comunion/components/src/constants'
 import { defineComponent, ref, computed, Ref, PropType, h, onMounted, nextTick } from 'vue'
+import { useRouter } from 'vue-router'
 import { CrowdfundingInfo } from '../typing'
 import { useErc20Contract } from '@/contracts'
 import { services } from '@/services'
@@ -27,7 +28,10 @@ export const VerifyToken = defineComponent({
       required: true
     }
   },
+  emits: ['closeDrawer'],
   setup(props, ctx) {
+    console.log(props.crowdfundingInfo)
+    const router = useRouter()
     const erc20TokenContract = useErc20Contract()
     const verifyTokenForm = ref<FormInst | null>(null)
     const startupOptions = ref<StartupOption[]>([])
@@ -74,9 +78,36 @@ export const VerifyToken = defineComponent({
         name: 'startupId',
         placeholder: 'Select a startup',
         rules: [
-          { required: true, message: ' Please select a startup', type: 'number', trigger: 'blur' }
+          {
+            required: true,
+            message: ' Please select a startup',
+            type: 'number',
+            trigger: ['change', 'blur']
+          },
+          {
+            validator: (rule, value) => {
+              changeStartup(value)
+              // 5.9Incomplete function
+              // startupID Determine whether the current network is consistent with the network of choice
+              console.log(value)
+              return false
+            },
+            renderMessage: () => {
+              return (
+                <div>
+                  <span>
+                    The startup cannot create a crowdfunding without being on the blockchain,
+                  </span>
+                  <span onClick={() => goSetting()} class="!text-primary cursor-pointer">
+                    {' '}
+                    Go to setting
+                  </span>
+                </div>
+              )
+            },
+            trigger: 'change'
+          }
         ],
-        onChange: changeStartup,
         options: startupOptions.value
       },
       {
@@ -196,7 +227,10 @@ export const VerifyToken = defineComponent({
         console.error('error', error)
       }
     }
-
+    const goSetting = async () => {
+      router.push({ path: `/startup/setting/${props.crowdfundingInfo.startupId}` })
+      ctx.emit('closeDrawer')
+    }
     const verifyTokenFieldsRules = getFieldsRules(verifyTokenFields.value)
     ctx.expose({
       verifyTokenForm

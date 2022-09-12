@@ -226,6 +226,7 @@ const CreateCrowdfundingForm = defineComponent({
         {this.crowdfundingInfo.current === 1 && (
           <VerifyToken
             crowdfundingInfo={this.crowdfundingInfo}
+            onCloseDrawer={this.closeDrawer}
             ref={(value: any) => (this.verifyTokenRef = value)}
           />
         )}

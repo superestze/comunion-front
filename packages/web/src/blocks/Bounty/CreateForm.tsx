@@ -342,6 +342,7 @@ const CreateBountyForm = defineComponent({
             bountyInfo={this.bountyInfo}
             onDelContact={this.delContact}
             onAddContact={this.addContact}
+            onCloseDrawer={this.closeDrawer}
             ref={(ref: any) => (this.bountyBasicInfoRef = ref)}
           />
         )}

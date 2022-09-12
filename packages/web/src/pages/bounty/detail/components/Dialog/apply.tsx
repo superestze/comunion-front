@@ -281,7 +281,7 @@ const ApplyDialog = defineComponent({
                 I accept that I will not be able to take the deposit in case of evil.
               </span>
             </UCheckbox>
-            <div class="flex justify-end mt-40px">
+            <div class="flex justify-end mt-10">
               <UButton class="mr-16px w-164px" type="default" onClick={userBehavier('cancel')}>
                 Cancel
               </UButton>

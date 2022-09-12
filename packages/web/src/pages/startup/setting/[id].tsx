@@ -13,17 +13,16 @@ import Social from './components/social'
 import { contactList } from './components/social/util'
 import { Team } from './components/team'
 import { useStartup } from '@/pages/startup/hooks/useStartup'
-
 export const getContactList = (startupInfo: { [x: string]: any }) => {
-  return contactList
-    .map(item => {
-      const value = startupInfo[item.name]
-      return {
-        socialType: value ? item.value : 0,
-        socialLink: value
-      }
-    })
-    .filter(e => e.socialType !== 0)
+  return contactList.map(item => {
+    const value = startupInfo[item.name]
+    return {
+      // socialType: value ? item.value : 0,
+      socialType: item.value,
+      socialLink: value
+    }
+  })
+  // .filter(e => e.socialType !== 0)
 }
 
 export default defineComponent({
@@ -75,7 +74,8 @@ export default defineComponent({
                   mode: this.startup?.mode || 0,
                   mission: this.startup?.mission || '',
                   overview: this.startup?.overview || '',
-                  blockChainAddress: this.startup?.blockChainAddress || ''
+                  blockChainAddress: this.startup?.blockChainAddress || '',
+                  chainID: this.startup?.chainID
                 }}
                 startupId={this.route.params.id as string}
               />

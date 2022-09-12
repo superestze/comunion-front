@@ -3,6 +3,7 @@ import { CheckFilled, PlusOutlined } from '@comunion/icons'
 import { defineComponent, PropType, ref, watch, computed } from 'vue'
 
 export default defineComponent({
+  name: 'BaseMemberItem',
   props: {
     item: {
       type: Object as PropType<any>,
@@ -59,14 +60,11 @@ export default defineComponent({
         <div class="flex h-full flex-shrink-0 mt-2px items-center justify-center">
           {typeof this.$slots.avatar === 'function' && this.$slots.avatar()}
         </div>
-        <div class="border-b flex flex-grow border-grey5 h-17 ml-4 items-center justify-between">
+        <div class="border-b flex border-grey5 flex-1 h-17 ml-4 items-center overflow-hidden">
           {typeof this.$slots.content === 'function' ? (
             this.$slots.content()
           ) : (
-            <div
-              title={this.item[this.keyMap.name]}
-              class="font-600 h-18px max-w-45 text-16px text-grey1 items-center overflow-ellipsis overflow-hidden whitespace-nowrap "
-            >
+            <div title={this.item[this.keyMap.name]} class="flex-1 text-grey1 truncate u-title3 ">
               {this.item[this.keyMap.name]}
             </div>
           )}

@@ -38,10 +38,19 @@ export default defineComponent({
         {this.content.trim() === '' ? null : (
           <UCard title="OVERVIEW" class="mb-6">
             <div
-              class="transition-all ease-linear duration-1000 overflow-hidden"
+              class="transition-all ease-linear duration-1000 overflow-hidden relative"
               style={{ height: this.fold ? '162px' : 'auto' }}
             >
               <p class="u-body2" ref={(ref: any) => (this.pRef = ref)} v-html={this.content} />
+              {this.showMoreBtn && this.fold && (
+                <div
+                  class="h-16 right-0 bottom-0 left-0 absolute"
+                  style={{
+                    background: 'linear-gradient(180deg, #FFFFFF 0%, rgba(255, 255, 255, 0) 100%)',
+                    transform: 'rotate(-180deg)'
+                  }}
+                ></div>
+              )}
             </div>
             {this.showMoreBtn && (
               <div class="flex mt-5 justify-center">

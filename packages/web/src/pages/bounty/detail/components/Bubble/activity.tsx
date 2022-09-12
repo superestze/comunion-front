@@ -133,7 +133,7 @@ export default defineComponent({
     return (
       <>
         <Bubble
-          class="mt-40px"
+          class="mt-10"
           avatar={this.activity?.avatar || ''}
           comerId={this.activity?.comerID as unknown as string}
           v-slots={{

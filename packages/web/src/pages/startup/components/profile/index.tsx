@@ -9,6 +9,7 @@ import { getStartupTypeFromNumber, StartupTypesType, STARTUP_TYPES_COLOR_MAP } f
 import { getContactList } from '@/pages/startup/setting/[id]'
 import { contactList } from '@/pages/startup/setting/components/social/util'
 import { StartupDetail } from '@/types'
+import { getChainInfoByChainId } from '@/utils/etherscan'
 
 export default defineComponent({
   props: {
@@ -29,7 +30,7 @@ export default defineComponent({
     const loading = ref<boolean>(false)
     const profile = useStartupProfile()
     const { toggleFollowStartup, getUserIsFollow } = profile
-
+    const theChainName = getChainInfoByChainId(props.startup.chainID)?.shortName
     getUserIsFollow(props.startupId)
       .then(() => (userIsFollow.value = true))
       .catch(() => (userIsFollow.value = false))
@@ -55,6 +56,21 @@ export default defineComponent({
         }
       })
     })
+    const getLinkTarget = (link: string, label: string) => {
+      if (link) {
+        return (
+          <a href={link} target="_blank">
+            <SocialIcon icon={label} outWrapper="w-10 h-10" />
+          </a>
+        )
+      } else {
+        return (
+          <span>
+            <SocialIcon icon={label} disable outWrapper="w-10 h-10" />
+          </span>
+        )
+      }
+    }
 
     return {
       modeName,
@@ -62,7 +78,10 @@ export default defineComponent({
       userIsFollow,
       loading,
       startupInfo,
-      socialList
+      socialList,
+      theChainName,
+      props,
+      getLinkTarget
     }
   },
   render() {
@@ -96,16 +115,32 @@ export default defineComponent({
               class="bg-white rounded-md h-full w-full !object-cover"
             />
           </div>
-          <div class="flex items-center">
-            <p class="ml-46 u-h2">{this.startupInfo?.name}</p>
-            {this.startupInfo && this.startupInfo.mode > 0 && (
-              <UTag
-                class="h-5 ml-5 u-tag2"
-                type="filled"
-                bgColor={STARTUP_TYPES_COLOR_MAP[this.modeName]}
+          <div>
+            <div class="flex items-center">
+              <p class="ml-46 u-h3">{this.startupInfo?.name}</p>
+              {this.startupInfo && this.startupInfo.mode > 0 && (
+                <UTag
+                  class="h-5 ml-5 u-tag2"
+                  type="filled"
+                  bgColor={STARTUP_TYPES_COLOR_MAP[this.modeName]}
+                >
+                  {this.modeName}
+                </UTag>
+              )}
+            </div>
+            {this.theChainName && (
+              <div
+                class="ml-46 rounded flex py-0.25rem items-center"
+                style={{
+                  color: '#5331F4'
+                }}
               >
-                {this.modeName}
-              </UTag>
+                <img
+                  src={getChainInfoByChainId(this.props.startup.chainID)?.logo}
+                  class="h-1.25rem mr-0.2rem w-1.25rem"
+                />
+                <span class="text-12px truncate">{this.theChainName}</span>
+              </div>
             )}
           </div>
           {this.userIsFollow ? (
@@ -134,28 +169,26 @@ export default defineComponent({
           )}
         </div>
         <div class="flex mt-9 mr-10 mb-10 ml-10 justify-between">
-          <div class="flex flex-col">
-            <div class="flex gap-2">
-              {Array.isArray(this.startupInfo?.hashTags) &&
-                this.startupInfo?.hashTags.map((item: { name: string }, i: number) => {
-                  return (
-                    <UTag key={i} class="!border-1 !border-[#3F2D99] !text-[#3F2D99]">
-                      {item.name}
-                    </UTag>
-                  )
-                })}
+          <div class="flex items-end justify-between w-[100%]">
+            <div class="w-[60%]">
+              <div class="flex gap-2">
+                {Array.isArray(this.startupInfo?.hashTags) &&
+                  this.startupInfo?.hashTags.map((item: { name: string }, i: number) => {
+                    return (
+                      <UTag key={i} class="!border-1 !border-[#3F2D99] !text-[#3F2D99]">
+                        {item.name}
+                      </UTag>
+                    )
+                  })}
+              </div>
+              <p class="mt-5 w-[100%] u-body2">{this.startupInfo?.mission}</p>
             </div>
-            <p class="mt-5 mb-10 w-180 u-body2">{this.startupInfo?.mission}</p>
-            <div class="flex flex-wrap gap-4">
+            <div class="flex flex-wrap gap-4 -mb-[8px]">
               {this.socialList.map(item => (
                 <UPopover
                   placement="bottom"
                   v-slots={{
-                    trigger: () => (
-                      <a href={item.socialLink} target="_blank">
-                        <SocialIcon icon={item.label} outWrapper="w-10 h-10" />
-                      </a>
-                    ),
+                    trigger: () => this.getLinkTarget(item.socialLink, item.label),
                     default: () => <div class="cursor-pointer flex m-3">{item.label}</div>
                   }}
                 />

@@ -1,3 +1,4 @@
+import { QuestionCircleOutlined } from '@comunion/icons'
 import { omitObject, effectiveUrlValidator, isValidAddress } from '@comunion/utils'
 import {
   FormProps,
@@ -19,7 +20,10 @@ import {
   UButton,
   USelectPropsType,
   UDatePickerPropsType,
-  UDatePicker
+  UDatePicker,
+  USwitch,
+  USwitchPropsType,
+  UTooltip
 } from '../index'
 import type { ExtractPropTypes } from '../utils'
 import './FormFactory.css'
@@ -70,6 +74,10 @@ export type FormFactoryDateField = {
   t: 'date'
 } & UDatePickerPropsType
 
+export type FormFactorySwitchField = {
+  t: 'switch'
+} & USwitchPropsType
+
 declare type InternalSlots = {
   [name: string]: Slot | undefined
 }
@@ -93,6 +101,7 @@ export type FormFactoryField = {
   | FormFactorySingleUploadField
   | FormFactoryCustomField
   | FormFactoryDateField
+  | FormFactorySwitchField
 )
 
 export type FormData = Record<string, any>
@@ -179,6 +188,28 @@ function renderField(field: FormFactoryField, values: FormData) {
       )
     case 'date':
       return <UDatePicker {...(props as UDatePickerPropsType)} v-model:value={values[field.name]} />
+    case 'switch':
+      return (
+        <div class="w-full border-b border-[#E0E0E0]" style="margin-top: -24px">
+          <div class="flex items-center" style="padding-bottom: 40px">
+            <USwitch {...(props as USwitchPropsType)} v-model:value={values[field.name]}></USwitch>
+            <span class="text-[14px] " style="margin: 0 0 0 18px;">
+              Post the two fields to blockchain
+            </span>
+            <UTooltip trigger="hover" style={{ backgroundColor: 'rgba(0, 0, 0, 0.6)' }}>
+              {{
+                trigger: () => <QuestionCircleOutlined class="h-4 ml-2 text-grey3 w-4" />,
+                default: () => (
+                  <p class="text-white text-center u-body2">
+                    <p>Recommend strongly to post the two fields to</p>
+                    <p>blockchain for using more functions of Comunion</p>
+                  </p>
+                )
+              }}
+            </UTooltip>
+          </div>
+        </div>
+      )
     case 'custom':
       return field.render(values[field.name])
     default:

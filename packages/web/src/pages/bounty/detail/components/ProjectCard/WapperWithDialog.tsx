@@ -3,6 +3,7 @@ import { PayDailog } from '../Dialog'
 import { ProjectCard, BountyProjectCardType } from '.'
 
 export default defineComponent({
+  name: 'ProjectCardWithDialog',
   props: {
     info: {
       type: String as PropType<BountyProjectCardType>,
@@ -35,7 +36,7 @@ export default defineComponent({
           visible={this.visible}
           paymentInfo={this.info}
         />
-        <ProjectCard info={this.info} onPay={triggerDialog} payMode={this.payMode} />
+        <ProjectCard info={this.info} onPay={triggerDialog} />
       </>
     )
   }

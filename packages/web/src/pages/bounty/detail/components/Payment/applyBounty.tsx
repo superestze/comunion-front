@@ -66,7 +66,7 @@ export default defineComponent({
         />
         <UButton
           type="primary"
-          class={`w-321px mt-60px mb-48px mx-auto ${this.disabled && 'text-white'}`}
+          class={`${this.disabled && 'text-white'} ${this.$attrs.class}`}
           onClick={applyBounty}
           disabled={this.disabled}
         >

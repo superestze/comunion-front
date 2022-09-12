@@ -47,6 +47,7 @@ export default defineComponent({
         showMoreBtn.value = true
       }
     })
+
     return {
       createdAt,
       handleMore,
@@ -60,25 +61,21 @@ export default defineComponent({
   render() {
     return (
       <div>
-        <div class="flex justify-between items-center">
-          <div class="flex flex-col flex-grow">
+        <div class="flex">
+          <div class="flex flex-col flex-grow flex-1">
             <UTooltip width={400} placement="top-start" trigger="hover">
               {{
-                trigger: () => (
-                  <span class="whitespace-pre-wrap break-all overflow-hidden overflow-ellipsis u-h2 line-clamp-2">
-                    {this.bountyDetail?.title}
-                  </span>
-                ),
+                trigger: () => <span class=" u-h4">{this.bountyDetail?.title}</span>,
                 default: () => this.bountyDetail?.title
               }}
             </UTooltip>
-            <div class="flex flex-wrap flex-row mt-5.5">
+            <div class="flex flex-wrap mt-5">
               {Array.isArray(this.bountyDetail?.applicantSkills) &&
                 this.bountyDetail?.applicantSkills.map((tag: string, i: number) => {
                   return (
                     <UTag
                       key={i}
-                      class="px-2 mr-2 mt-2 !h-1.25rem !leading-1.25rem !text-[#3F2D99] !border-[#3F2D99]"
+                      class="mr-2 mb-2 px-2 !border-[#3F2D99] !h-1.25rem !text-[#3F2D99] !leading-1.25rem"
                     >
                       {tag}
                     </UTag>
@@ -87,28 +84,28 @@ export default defineComponent({
             </div>
           </div>
           {this.bountyStatus && (
-            <UTag
-              class="flex flex-shrink-0 ml-5 text-12px w-120px justify-center"
-              type="outlined"
+            <span
+              class="rounded-sm h-1.25rem mt-1 ml-2 px-2 text-0.75rem leading-1.25rem inline-block"
               style={{
-                color: this.bountyStatus.value
+                color: '#fff',
+                'background-color': this.bountyStatus.value
               }}
             >
               {this.bountyStatus.label}
-            </UTag>
+            </span>
           )}
         </div>
         <Paragraph
-          class="mt-40px"
-          label={'Created :'.toUpperCase()}
+          class="mt-8"
+          label={'Created :'}
           content={this.createdAt}
           contentClass="text-primary2"
         />
         {this.bountyDetail?.contact?.map(item => {
           return (
             <Paragraph
-              class="mt-18px"
-              label={`${this.contactLabel[(item.contactType || 0) - 1]} :`.toUpperCase()}
+              class="mt-4"
+              label={`${this.contactLabel[(item.contactType || 0) - 1]} :`}
               content={item.contactAddress}
               contentClass="text-primary"
               pasteboard={true}
@@ -116,20 +113,20 @@ export default defineComponent({
           )
         })}
         <Paragraph
-          class="mt-18px"
-          label={'Apply Cutoff Date :'.toUpperCase()}
+          class="mt-4"
+          label={'Apply Cutoff Date :'}
           content={dayjs.utc(this.bountyDetail?.expiresIn).format('YYYY-MM-DD HH:mm UTC')}
           contentClass="text-primary2"
         />
         <Paragraph
-          class="mt-18px"
-          label={'Applicants deposit :'.toUpperCase()}
+          class="mt-4"
+          label={'Applicants deposit :'}
           content={`${this.bountyDetail?.applicantsDeposit} USDC`}
           contentClass="text-primary2"
         />
         <Paragraph
-          class="mt-18px"
-          label={'Description :'.toUpperCase()}
+          class="mt-4"
+          label={'Description :'}
           content={this.bountyDetail?.description}
           foldAble={true}
           fold={this.fold}

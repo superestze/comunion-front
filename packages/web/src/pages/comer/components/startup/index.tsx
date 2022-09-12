@@ -1,6 +1,5 @@
 import { UCard } from '@comunion/components'
 import { defineComponent, reactive, ref, watch } from 'vue'
-import ParticipatedCard from '@/pages/dashboard/components/ParticipatedCard'
 import StartupCard from '@/pages/dashboard/components/StartupCard'
 import { services } from '@/services'
 import { StartupItem } from '@/types'
@@ -75,21 +74,9 @@ export default defineComponent({
   render() {
     return (
       <UCard title="STARTUPS" class="mb-6">
-        {this.createdByMe ? (
-          <>
-            {this.startups.length
-              ? this.startups.map((startup, i) => (
-                  <StartupCard startup={startup} key={i} view={this.view} />
-                ))
-              : null}
-          </>
-        ) : (
-          <>
-            {this.startups.length
-              ? this.startups.map((startup, i) => <ParticipatedCard startup={startup} key={i} />)
-              : null}
-          </>
-        )}
+        {this.startups.map((startup, i) => (
+          <StartupCard startup={startup} key={i} view={this.view} />
+        ))}
       </UCard>
     )
   }

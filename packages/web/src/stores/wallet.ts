@@ -135,6 +135,7 @@ export const useWalletStore = defineStore('wallet', {
     },
     async _onNetworkChange(newNetwork: string, oldNetwork: string) {
       console.log('You have changed the network', newNetwork, oldNetwork)
+      location.reload()
       const network = await this.wallet!.getProvider().getNetwork()
       this.chainId = network.chainId
       this.chainName = network.name

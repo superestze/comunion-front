@@ -11,6 +11,7 @@ import { defineComponent, PropType, ref, computed } from 'vue'
 import { BountyInfo } from '../typing'
 import { MAX_AMOUNT, renderUnit } from './BasicInfo'
 import RichEditor from '@/components/Editor'
+import { PERIOD_OPTIONS } from '@/constants'
 
 export interface PayDetailPeriodRef {
   payPeriodForm: FormInst | null
@@ -31,15 +32,11 @@ const PayDetailPeriod = defineComponent({
   emits: ['showLeaveTipModal'],
   setup(props, ctx) {
     const payPeriodForm = ref<FormInst | null>(null)
-    const periodOptions = [
-      { label: 'Days', value: 1 },
-      { label: 'Weeks', value: 2 },
-      { label: 'Months', value: 3 }
-    ]
+
     const renderSelect = computed(() => (
       <USelect
-        class="w-30 text-center"
-        options={periodOptions}
+        class="text-center w-30"
+        options={PERIOD_OPTIONS}
         v-model:value={props.bountyInfo.period.periodType}
       />
     ))
@@ -68,7 +65,7 @@ const PayDetailPeriod = defineComponent({
                   type="withSelect"
                   renderSelect={() => renderSelect.value}
                 ></UInputNumberGroup>
-                <div class="text-grey2 text-3xl px-5 invisible">+</div>
+                <div class="px-5 text-grey2 text-3xl invisible">+</div>
                 <UInputNumberGroup
                   inputProps={{
                     precision: 0,
@@ -91,7 +88,7 @@ const PayDetailPeriod = defineComponent({
         name: 'rewards',
         render(value) {
           return (
-            <div class="flex items-start w-full">
+            <div class="flex w-full items-start">
               <UInputNumberGroup
                 class="flex-1"
                 type="withUnit"
@@ -109,7 +106,7 @@ const PayDetailPeriod = defineComponent({
                 }}
                 renderUnit={() => renderUnit(props.bountyInfo.token1Symbol)}
               ></UInputNumberGroup>
-              <div class="text-grey2 text-3xl px-5">+</div>
+              <div class="px-5 text-grey2 text-3xl">+</div>
               <div class="flex-1">
                 <UInputNumberGroup
                   class="flex-1"
@@ -130,10 +127,10 @@ const PayDetailPeriod = defineComponent({
                 ></UInputNumberGroup>
                 <div>
                   {!props.bountyInfo.token2Symbol && (
-                    <div class="text-grey4 text-xs col-start-3 mt-2">
+                    <div class="mt-2 text-xs text-grey4 col-start-3">
                       Not setup token yet, go to{' '}
                       <span
-                        class="text-primary cursor-pointer"
+                        class="cursor-pointer text-primary"
                         onClick={() => ctx.emit('showLeaveTipModal', 'toFinanceSetting')}
                       >
                         Finance Setting
@@ -156,7 +153,7 @@ const PayDetailPeriod = defineComponent({
         name: 'summary',
         render() {
           return (
-            <div class="bg-purple py-5.5 px-6 w-full mt-4">
+            <div class="bg-purple mt-4 w-full py-5.5 px-6">
               The current total rewards as{' '}
               <span class="text-primary">
                 <span class={[{ 'text-error': payPeriodTotal.value.usdcTotal > MAX_AMOUNT }]}>

@@ -128,7 +128,7 @@ export default defineComponent({
                 Add
               </span>
             </UButton>
-            <div class="flex mt-40px justify-end">
+            <div class="flex mt-10 justify-end">
               <UButton class="w-40" type="primary" onClick={userBehavier('submit')} size="small">
                 Save
               </UButton>

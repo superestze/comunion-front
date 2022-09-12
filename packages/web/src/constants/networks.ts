@@ -3,7 +3,6 @@ import binance from '@/assets/networks/binance.svg'
 import ethereum from '@/assets/networks/ethereum.svg'
 import fantom from '@/assets/networks/fantom.svg'
 import polygon from '@/assets/networks/polygon.svg'
-
 /**
  * https://chainlist.org/
  */
@@ -16,10 +15,16 @@ export type ChainNetworkType = {
   currencySymbol: string
   rpcUrl: string
   explorerUrl: string
+  chain_contracts?: Array<{
+    project: number
+    address: string
+    abi: string
+  }>
 }
 
 /**
  * All networks we want to support
+ * (Ethereum、BNB Smart Chain、Avalanche、Fantom Opera) use
  */
 export const allNetworks: ChainNetworkType[] = [
   {

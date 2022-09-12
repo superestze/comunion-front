@@ -69,6 +69,10 @@ export const UStyleProviderProps = {
   purpleGradientBg: {
     type: String,
     default: 'radial-gradient(117.14% 462.2% at 0% 100%, #5331F4 0%, #9783F8 71.69%, #B46AF9 100%)'
+  },
+  skipLinks: {
+    type: String,
+    default: '#1672f3'
   }
 } as const
 
@@ -100,7 +104,8 @@ const UStyleProvider = defineComponent({
         primaryColorPressed: props.primaryColor,
         successColorHover: props.successColor,
         successColorPressed: props.successColor,
-        textColor2: props.grey1Color
+        textColor2: props.grey1Color,
+        skipLinks: props.skipLinks
       },
       Form: {
         asteriskColor: props.errorColor
@@ -169,6 +174,7 @@ const UStyleProvider = defineComponent({
         --u-purple-color: ${props.purpleBg};
         --u-purple-light-color: ${props.purpleLightBg};
         --u-purple-gradient-color: ${props.purpleGradientBg};
+        --u-skip-links-color: ${props.skipLinks}
       }`
     })
 

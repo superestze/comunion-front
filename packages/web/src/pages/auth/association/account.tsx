@@ -33,7 +33,7 @@ export default defineComponent({
             </p>
           ),
           footer: () => (
-            <div class="flex justify-end mt-40px">
+            <div class="flex justify-end mt-10">
               <UButton onClick={cancelAssociation} class="w-124px">
                 Cancel
               </UButton>

@@ -118,7 +118,7 @@ export default defineComponent({
           }}
         />
         <Bubble
-          class="mt-40px"
+          class="mt-10"
           avatar={this.applicant?.image}
           comerId={this.applicant?.comerID as unknown as string}
           v-slots={{

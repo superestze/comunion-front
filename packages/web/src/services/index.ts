@@ -1913,6 +1913,13 @@ export const services = {
         startTime: string
         startupLogo: string
         crowdfundingContract: string
+        raiseGoal: number
+        buyPrice: number
+        swapPercent: number
+        poster: string
+        chainId: number
+        buyTokenAddress: string
+        sellTokenAddress: string
       }[]
     >({
       url: replacePath('/account/comer/:comerID/participated-crowdfundings', args),
@@ -1945,6 +1952,13 @@ export const services = {
         startTime: string
         startupLogo: string
         crowdfundingContract: string
+        raiseGoal: number
+        buyPrice: number
+        swapPercent: number
+        poster: string
+        chainId: number
+        buyTokenAddress: string
+        sellTokenAddress: string
       }[]
     >({
       url: replacePath('/account/comer/:comerID/posted-crowdfundings', args),

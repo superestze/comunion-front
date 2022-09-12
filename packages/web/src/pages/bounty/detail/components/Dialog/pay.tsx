@@ -25,6 +25,7 @@ type paidInfoType = {
 }
 
 export default defineComponent({
+  name: 'PayDailog',
   props: {
     visible: {
       type: Boolean,

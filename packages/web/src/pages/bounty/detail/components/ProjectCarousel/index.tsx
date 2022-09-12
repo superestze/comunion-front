@@ -33,13 +33,13 @@ export default defineComponent({
         {this.total > 3 && (
           <>
             <div
-              class="absolute w-20px h-48px bg-gray-100 -left-30px top-1/2 -mt-24px rounded flex items-center cursor-pointer"
+              class="rounded cursor-pointer flex bg-gray-100 h-48px -mt-24px top-1/2 -left-30px w-20px absolute items-center"
               onClick={prev}
             >
               <LeftArrowFilled />
             </div>
             <div
-              class="absolute w-20px h-48px bg-gray-100 -right-30px top-1/2 -mt-24px rounded flex items-center cursor-pointer"
+              class="rounded cursor-pointer flex bg-gray-100 h-48px -mt-24px top-1/2 -right-30px w-20px absolute items-center"
               onClick={next}
             >
               <RightArrowFilled />
@@ -48,7 +48,7 @@ export default defineComponent({
         )}
         <UCarousel
           ref={(ref: any) => (this.carousel = ref)}
-          slidesPerView={3}
+          slidesPerView={Math.min(3, this.total)}
           spaceBetween={20}
           loop={true}
           draggable={true}

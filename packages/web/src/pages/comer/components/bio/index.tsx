@@ -126,18 +126,28 @@ export default defineComponent({
             ) : (
               <>
                 {this.content.trim() === '' ? (
-                  <p class="text-14px font-[400] text-grey4 mt-6">Edit your Bio</p>
+                  <p class="font-[400] mt-6 text-14px text-grey4">Edit your Bio</p>
                 ) : (
                   <>
                     <div
                       ref={(ref: any) => (this.pRef = ref)}
-                      class="overflow-hidden transition-all duration-1000 ease-linear"
+                      class="transition-all ease-linear duration-1000 overflow-hidden relative"
                       style={this.fold ? { maxHeight: '164px' } : { height: 'auto' }}
                     >
                       <p v-html={this.content} />
+                      {this.fold && this.showMoreBtn && (
+                        <div
+                          class="h-16 right-0 bottom-0 left-0 absolute"
+                          style={{
+                            background:
+                              'linear-gradient(180deg, #FFFFFF 0%, rgba(255, 255, 255, 0) 100%)',
+                            transform: 'rotate(-180deg)'
+                          }}
+                        ></div>
+                      )}
                     </div>
                     {this.showMoreBtn && (
-                      <div class="flex justify-center mt-5">
+                      <div class="flex mt-5 justify-center">
                         <More onMore={handleMore} fold={this.fold} />
                       </div>
                     )}
