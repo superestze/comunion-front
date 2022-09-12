@@ -1,7 +1,8 @@
 export interface StrategyType {
   dictValue?: string
   dictLabel?: string
-  chainId?: number
+  network?: number
+  voteDecimals?: number
   contractAddress?: string
   symbol?: string
 }

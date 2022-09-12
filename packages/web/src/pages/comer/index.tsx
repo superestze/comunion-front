@@ -188,9 +188,9 @@ export default defineComponent({
                           />
                         )
                       } else if (
-                        task === 'Proposal'
-                        // rowDisplay('Proposal')
-                        // this.tagCount.proposalCnt
+                        task === 'Proposal' &&
+                        rowDisplay('Proposal') &&
+                        this.tagCount.proposalCnt
                       ) {
                         return <Proposal createdByMe={this.createdByMe} />
                       } else {

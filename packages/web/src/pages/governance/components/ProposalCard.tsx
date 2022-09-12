@@ -1,4 +1,5 @@
 import { UStartupLogo } from '@comunion/components'
+import { ConfirmOutlined } from '@comunion/icons'
 import { shortenAddress } from '@comunion/utils'
 import dayjs from 'dayjs'
 import { defineComponent, PropType, computed } from 'vue'
@@ -41,7 +42,8 @@ export const ProposalCard = defineComponent({
         }
       } else if (props.proposalData.status === 3) {
         return (
-          <div>
+          <div class="flex items-center">
+            <ConfirmOutlined class="text-primary mr-2 w-4 h-4" />{' '}
             {props.proposalData.maximumVotesChoice} -- {props.proposalData.votes}
           </div>
         )

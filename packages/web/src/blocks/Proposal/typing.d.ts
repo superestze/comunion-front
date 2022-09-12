@@ -4,10 +4,10 @@ export interface ProposalInfo {
   title?: string
   description?: string
   discussion?: string
-  vote?: number
+  vote: string
   startTime?: number
   endTime?: number
-  voteChoices: { value: string; disabled?: boolean }[]
+  voteChoices?: { value: string; disabled?: boolean }[]
 }
 
 export interface CreateProposalFormRef {
@@ -20,8 +20,8 @@ export interface CreateProposalFormRef {
 }
 
 export interface VoteOption {
-  label?: string
-  value?: string
+  label: string
+  value: string
   remark?: string
   key?: number
 }

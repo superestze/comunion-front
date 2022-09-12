@@ -7,7 +7,9 @@ import {
 } from '@comunion/icons'
 import dayjs from 'dayjs'
 import { defineComponent, PropType, ref, watch, computed } from 'vue'
-import { ProposalInfo } from '../typing'
+import { ProposalInfo, VoteOption } from '../typing'
+
+const BASIC_TYPE = 'Basic voting'
 
 export const Vote = defineComponent({
   name: 'Vote',
@@ -44,14 +46,17 @@ export const Vote = defineComponent({
     )
 
     const selectedVotingInfo = computed(() => {
+      console.log('voteOptions==>', props.voteOptions)
+      console.log('props.proposalInfo===>', props.proposalInfo)
+
       return props.voteOptions?.find(voting => voting.value === props.proposalInfo.vote)
     })
 
     const triggerVoteField = () => {
       showOptionsPanel.value = !showOptionsPanel.value
     }
-    const choiceOption = (value: number) => {
-      if (value === 2) {
+    const choiceOption = (value: string) => {
+      if (value === BASIC_TYPE) {
         props.proposalInfo.voteChoices = [
           { value: 'Yes', disabled: true },
           { value: 'No', disabled: true },
@@ -64,11 +69,11 @@ export const Vote = defineComponent({
       showOptionsPanel.value = false
     }
     const addVoteChoices = () => {
-      props.proposalInfo.voteChoices.push({ value: '' })
+      props.proposalInfo.voteChoices?.push({ value: '' })
     }
 
     const delVoteChoices = (index: number) => {
-      const newChoices = props.proposalInfo.voteChoices.filter(
+      const newChoices = props.proposalInfo.voteChoices?.filter(
         (vote, voteIndex) => voteIndex !== index
       )
       props.proposalInfo.voteChoices = newChoices
@@ -141,12 +146,12 @@ export const Vote = defineComponent({
             )}
           </UFormItem>
           <div class="mb-6">
-            {this.proposalInfo.voteChoices.map((voteChoice, choiceIndex) => (
+            {this.proposalInfo.voteChoices?.map((voteChoice, choiceIndex) => (
               <div class="flex items-center mb-3">
                 <UFormItem
                   showFeedback={false}
                   showLabel={false}
-                  class="w-full"
+                  class={[this.selectedVotingInfo?.value === BASIC_TYPE ? 'w-full' : 'w-180']}
                   path="voteChoices"
                   rule={[
                     {
@@ -176,11 +181,11 @@ export const Vote = defineComponent({
                     v-model:value={voteChoice.value}
                     maxlength={32}
                     disabled={voteChoice.disabled}
-                    class={[{ 'max-w-184': this.selectedVotingInfo?.key !== 'basic' }]}
+                    class={[{ 'max-w-184': this.selectedVotingInfo?.value !== BASIC_TYPE }]}
                   ></UInput>
                 </UFormItem>
-                {choiceIndex !== 0 && this.selectedVotingInfo?.key !== 'basic' && (
-                  <div class="flex items-center">
+                {choiceIndex !== 0 && this.selectedVotingInfo?.value !== BASIC_TYPE && (
+                  <div class="flex-1 flex items-center justify-end">
                     <MinusCircleOutlined
                       class="mr-3 text-error cursor-pointer"
                       onClick={() => this.delVoteChoices(choiceIndex)}

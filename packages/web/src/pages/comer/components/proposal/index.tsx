@@ -15,7 +15,7 @@ export default defineComponent({
   setup(props) {
     const userStore = useUserStore()
     const pagination = reactive<IPagination>({
-      pageSize: 10,
+      pageSize: 5,
       total: 0,
       page: 1,
       loading: false
@@ -26,34 +26,31 @@ export default defineComponent({
     >([])
 
     const getProposalList = async (page: number) => {
-      let serviceError = false
-      let serviceData: ServiceReturn<'governance@proposal-list-of-comer-posted'>
-      if (props.createdByMe) {
-        const { error, data } = await services['governance@proposal-list-of-comer-posted']({
-          comerID: userStore.profile?.comerID,
-          page,
-          limit: pagination.pageSize
-        })
-        serviceError = error
-        serviceData = data
-      }
-      const { error, data } = await services['governance@proposal-list-of-comer-participated']({
+      // let serviceError = false
+      // let serviceData: ServiceReturn<'governance@proposal-list-of-comer-posted'>
+      console.log('props.createdByMe===>', props.createdByMe)
+
+      const { error, data } = await services[
+        props.createdByMe
+          ? 'governance@proposal-list-of-comer-posted'
+          : 'governance@proposal-list-of-comer-participated'
+      ]({
         comerID: userStore.profile?.comerID,
         page,
         limit: pagination.pageSize
       })
 
-      serviceError = error
-      serviceData = data
-
-      if (!serviceError && serviceData?.rows) {
-        proposalList.value = proposalList.value.concat(serviceData.rows)
+      if (!error && data?.rows) {
+        proposalList.value = proposalList.value.concat(data.rows)
       }
     }
 
     watch(
       () => props.createdByMe,
       () => {
+        pagination.page = 1
+        pagination.total = 0
+        proposalList.value = []
         getProposalList(pagination.page)
       },
       {

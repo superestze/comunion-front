@@ -17,13 +17,14 @@ import {
   WarningFilled,
   ErrorTipFilled
 } from '@comunion/icons'
-import { defineComponent, reactive, ref, PropType, onMounted } from 'vue'
+import { defineComponent, reactive, ref, PropType, onMounted, computed } from 'vue'
 import { StrategyType } from './typing.d'
 import { allNetworks, infuraKey } from '@/constants'
 
 import './style.css'
+import { useErc20Contract } from '@/contracts'
 import { ServiceReturn, services } from '@/services'
-import { useUserStore, useWalletStore } from '@/stores'
+import { useWalletStore } from '@/stores'
 import { StartupDetail } from '@/types'
 
 export const renderUnit = (name: string) => (
@@ -51,12 +52,13 @@ export default defineComponent({
   },
   setup(props) {
     const formRef = ref()
-    const userStore = useUserStore()
     const walletStore = useWalletStore()
+    const tokenContract = useErc20Contract()
     const strategies = ref<ServiceReturn<'meta@dict-list-by-type'>>()
 
     const govSetting = reactive<{
       strategies: StrategyType[]
+      voteDecimals: number
       voteSymbol: string
       allowMember: boolean
       proposalThreshold: number
@@ -64,6 +66,7 @@ export default defineComponent({
       admins: string[]
     }>({
       strategies: [],
+      voteDecimals: 0,
       voteSymbol: '',
       allowMember: true,
       proposalThreshold: 0,
@@ -101,7 +104,7 @@ export default defineComponent({
 
     const getGovernanceSetting = async () => {
       try {
-        const { error, data } = await services['governance@create-governace-setting_copy']({
+        const { error, data } = await services['governance@get-startup-governace-setting']({
           startupID: props.startupId
         })
         if (!error) {
@@ -134,16 +137,21 @@ export default defineComponent({
     const addErc20Strategy = async (strategy: StrategyType) => {
       erc20BalanceForm.value?.validate(async (error: any) => {
         console.log('error===>', error)
+        console.log('strategy==>', strategy)
+
         if (!error) {
           try {
             const { network, contractAddress } = erc20BalanceStrategy
             const provider = await walletStore.getRpcProvider(network, infuraKey)
+
             const code = await provider?.getCode(contractAddress)
             if (!code || code.length < 3) {
               contractAddressExist.value = false
               return
             }
-            govSetting.strategies?.push(strategy)
+            const erc20Token = tokenContract(contractAddress, provider)
+            const decimal = await erc20Token.decimals()
+            govSetting.strategies?.push({ ...strategy, voteDecimals: decimal })
             strategyModal.value = undefined
           } catch (error) {
             contractAddressExist.value = false
@@ -166,8 +174,9 @@ export default defineComponent({
             const strategies = govSetting.strategies?.map(strategy => ({
               strategyName: strategy.dictLabel,
               dictValue: strategy.dictValue,
-              chainId: strategy.chainId,
-              tokenContractAddress: strategy.contractAddress
+              chainId: strategy.network,
+              tokenContractAddress: strategy.contractAddress,
+              voteDecimals: strategy.voteDecimals
             }))
             const { error } = await services['governance@create-governace-setting']({
               startupID: Number(props.startupId),
@@ -197,6 +206,11 @@ export default defineComponent({
       govSetting.admins = newAdmins
     }
 
+    const networks = computed(() => {
+      // const showChainId = [1, 43114 ]
+      return allNetworks
+    })
+
     return {
       govSetting,
       strategies,
@@ -205,6 +219,7 @@ export default defineComponent({
       erc20BalanceForm,
       contractAddressExist,
       formRef,
+      networks,
       addStrategy,
       delStrategy,
       addTicketStrategy,
@@ -414,7 +429,7 @@ export default defineComponent({
               <UFormItem label="Network" path="network">
                 <USelect
                   v-model:value={this.erc20BalanceStrategy.network}
-                  options={allNetworks}
+                  options={this.networks}
                   labelField="name"
                   valueField="chainId"
                 />

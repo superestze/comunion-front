@@ -9,10 +9,16 @@ import {
   UStartupLogo,
   UTable
 } from '@comunion/components'
-import { CloseOutlined, MoreFilled, SignOutlined, ShareOutlined } from '@comunion/icons'
+import {
+  CloseOutlined,
+  MoreFilled,
+  SignOutlined,
+  ShareOutlined,
+  UrlOutlined
+} from '@comunion/icons'
 import { shortenAddress } from '@comunion/utils'
 import dayjs from 'dayjs'
-import jsonurl from 'json-url'
+import { ethers } from 'ethers'
 import { defineComponent, ref, reactive, watch, onMounted, computed } from 'vue'
 import { useRoute, useRouter } from 'vue-router'
 import { CurrentResult } from './components/CurrentResult'
@@ -20,14 +26,16 @@ import StartupCard from './components/StartupCard'
 import { StrategyInformation } from './components/StrategyInfo'
 import { GOVERNANCE_KEY, GOVERNANCE_STATUS_STYLE, signerVoteTypes } from './utils'
 import CreateProposalBlock, { CreateProposalRef } from '@/blocks/Proposal/Create'
-import { infuraKey } from '@/constants'
+import { allNetworks, infuraKey } from '@/constants'
 import { useErc20Contract } from '@/contracts'
 import { ServiceReturn, services } from '@/services'
 import { useWalletStore } from '@/stores'
 import { StartupDetail } from '@/types'
 import { getClient } from '@/utils/ipfs'
 
-const codec = jsonurl('lzw')
+type SelectChoiceType = NonNullable<
+  NonNullable<ServiceReturn<'governance@get-proposal-detail'>>['choices']
+>[number]
 
 const ProposalDetail = defineComponent({
   name: 'ProposalDetail',
@@ -40,7 +48,8 @@ const ProposalDetail = defineComponent({
     const createProposalRef = ref<CreateProposalRef>()
     const startupInfo = ref<StartupDetail>()
     const proposalInfo = ref<ServiceReturn<'governance@get-proposal-detail'>>()
-    const voteRecords = ref<NonNullable<ServiceReturn<'governance@proposal-vote-record-list'>>>()
+    const voteRecords =
+      ref<NonNullable<ServiceReturn<'governance@proposal-vote-record-list'>>['rows']>()
     const pageLoading = ref(false)
     const pagination = reactive<{
       pageSize: number
@@ -53,9 +62,8 @@ const ProposalDetail = defineComponent({
       page: 1,
       loading: false
     })
-    const selectedChoice =
-      ref<NonNullable<ServiceReturn<'governance@get-proposal-detail'>>['choices'][number]>()
-    const votePower = ref<number>(0)
+    const selectedChoice = ref<SelectChoiceType>()
+    const votePower = ref<number | string>(0)
     const strategyInfo = ref()
     const voteInfoVisible = ref(false)
     const strategyVisible = ref(false)
@@ -78,8 +86,6 @@ const ProposalDetail = defineComponent({
         pageLoading.value = true
         const { error, data } = await services['startup@startup-get']({ startupId })
         if (!error) {
-          console.log('data===>', data)
-
           startupInfo.value = data
         }
         pageLoading.value = false
@@ -90,10 +96,12 @@ const ProposalDetail = defineComponent({
     }
 
     const getVotePower = async (strategy: {
-      dictValue?: string
+      chainId: number
+      strategyName: string
+      voteDecimals: number
       tokenContractAddress?: string
     }) => {
-      switch (strategy?.dictValue) {
+      switch (strategy?.strategyName) {
         case 'ticket': {
           votePower.value = 1
           break
@@ -101,17 +109,18 @@ const ProposalDetail = defineComponent({
         case 'erc20-balance-of': {
           if (strategy.tokenContractAddress) {
             const userAddress = walletStore.address
-            const rpcProvider = walletStore.getRpcProvider(43113, infuraKey)
+
+            const rpcProvider = walletStore.getRpcProvider(strategy.chainId, infuraKey)
             const tokenRes = tokenContract(strategy.tokenContractAddress, rpcProvider)
             const userBalance = await tokenRes.balanceOf(userAddress, {
               blockTag: proposalInfo.value?.blockNumber
             })
-            votePower.value = userBalance
+            votePower.value = ethers.utils.formatUnits(userBalance, strategy.voteDecimals)
           }
           break
         }
         default:
-          votePower.value = 1
+          votePower.value = 0
       }
     }
 
@@ -120,13 +129,15 @@ const ProposalDetail = defineComponent({
       const { error, data } = await services['governance@get-proposal-detail']({
         proposalID: route.params.id
       })
-      if (!error) {
-        console.log('data===>', data)
+      if (!error && data) {
         proposalInfo.value = data
-        const strategy = proposalInfo.value?.strategies[proposalInfo.value?.strategies.length - 1]
+        const strategy =
+          proposalInfo.value?.strategies?.[proposalInfo.value?.strategies?.length - 1]
         strategyInfo.value = strategy
-        getStartupInfo(data.startupId)
-        getVotePower(strategy)
+        getStartupInfo(data.startupId!)
+        if (strategy) {
+          getVotePower(strategy)
+        }
       }
     }
 
@@ -138,16 +149,15 @@ const ProposalDetail = defineComponent({
           proposalID: route.params.id
         })
         if (!error) {
-          voteRecords.value = data
+          pagination.total = data.totalRows
+          voteRecords.value = data.rows
         }
       } catch (error) {
         console.error('error===>', error)
       }
     }
 
-    const choiceVote = async (
-      voteInfo: NonNullable<ServiceReturn<'governance@get-proposal-detail'>>['choices'][number]
-    ) => {
+    const choiceVote = async (voteInfo: SelectChoiceType) => {
       selectedChoice.value = voteInfo
     }
 
@@ -191,15 +201,15 @@ const ProposalDetail = defineComponent({
                 }
               })
             )
-            console.log('cid==>', cid.toString())
             const { error } = await services['governance@vote-proposal']({
               proposalID: route.params.id,
               voterWalletAddress: walletStore.address!,
               choiceItemId: id,
-              votes: votePower.value,
+              votes: Number(votePower.value),
               ipfsHash: cid.toString()
             })
             if (!error) {
+              getProposalDetail()
               getVoteRecords()
               voteInfoVisible.value = false
             }
@@ -219,44 +229,30 @@ const ProposalDetail = defineComponent({
       }
     }
 
-    const toVerify = async ({
-      ipfs,
-      address,
-      choice
-    }: {
-      ipfs: string
-      address: string
-      choice: string
-    }) => {
-      const saveContent = {
-        From: walletStore.address,
-        Startup: proposalInfo.value?.startupName,
-        timestamp: dayjs().valueOf(),
-        proposal: proposalInfo.value?.title,
-        choice
-      }
-      console.log('saveContent===>', saveContent)
-
-      const message = await codec.compress(saveContent)
-      console.log('message===>', message)
-
+    const toVerify = async ({ ipfs }: { ipfs: string }) => {
       window.open(`https://signator.io/view?ipfs=${ipfs}`)
     }
 
     const duplicateProposal = () => {
-      createProposalRef.value?.show({
-        current: 1,
-        startupId: proposalInfo.value?.startupId,
-        vote: proposalInfo.value?.voteSystem,
-        voteChoices: proposalInfo.value?.choices.map(choice => ({ value: choice.itemName })),
-        startTime: dayjs(proposalInfo.value?.startTime).valueOf(),
-        endTime: dayjs(proposalInfo.value?.endTime).valueOf()
-      })
+      if (proposalInfo.value) {
+        createProposalRef.value?.show({
+          current: 1,
+          title: proposalInfo.value.title,
+          discussion: proposalInfo.value.discussionLink,
+          description: proposalInfo.value.description,
+          startupId: proposalInfo.value.startupId,
+          vote: proposalInfo.value.voteSystem,
+          voteChoices: proposalInfo.value.choices?.map(choice => ({ value: choice.itemName })),
+          startTime: dayjs(proposalInfo.value.startTime).valueOf(),
+          endTime: dayjs(proposalInfo.value.endTime).valueOf()
+        })
+      }
     }
 
     const deleteProposal = async () => {
+      const proposalID = route.params.id
       const { error } = await services['governance@delete-proposal']({
-        proposalID: route.params.id
+        proposalID
       })
       if (!error) {
         message.success('delete successfully')
@@ -285,6 +281,22 @@ const ProposalDetail = defineComponent({
       }
     }
 
+    const blockExploreUrl = computed(() => {
+      if (strategyInfo.value.chainId) {
+        const findRes = allNetworks.find(network => network.chainId === strategyInfo.value.chainId)
+        return findRes?.explorerUrl
+      }
+      return undefined
+    })
+
+    const isAdmin = computed(() => {
+      return (
+        proposalInfo.value!.admins?.findIndex(
+          admin => admin.walletAddress === walletStore.address
+        ) > -1
+      )
+    })
+
     onMounted(() => {
       getProposalDetail()
       getVoteRecords()
@@ -304,6 +316,8 @@ const ProposalDetail = defineComponent({
       createProposalRef,
       strategyInfo,
       ipfsDetail,
+      blockExploreUrl,
+      isAdmin,
       showVoteInfo,
       choiceVote,
       confirmVote,
@@ -345,9 +359,11 @@ const ProposalDetail = defineComponent({
                     <UButton size="small" quaternary onClick={this.duplicateProposal}>
                       Duplicate proposal
                     </UButton>
-                    <UButton size="small" quaternary onClick={this.deleteProposal}>
-                      Delete proposal
-                    </UButton>
+                    {this.isAdmin && (
+                      <UButton size="small" quaternary onClick={this.deleteProposal}>
+                        Delete proposal
+                      </UButton>
+                    )}
                   </div>
                 )
               }}
@@ -358,8 +374,8 @@ const ProposalDetail = defineComponent({
           )}
           {this.proposalInfo?.discussionLink && (
             <div class="mt-8">
-              <div class="u-title3">Discussion：</div>
-              <a href={this.proposalInfo.discussionLink} class="text-primary" target="__blank">
+              <div class="u-title3 mb-1">Discussion：</div>
+              <a href={this.proposalInfo.discussionLink} target="__blank" class="text-primary">
                 {this.proposalInfo.discussionLink}
               </a>
             </div>
@@ -381,11 +397,9 @@ const ProposalDetail = defineComponent({
               <div
                 class={[
                   'text-white text-center py-3 rounded-lg ',
-                  // this.selectedChoice ? 'bg-primary1 cursor-pointer' : 'bg-grey5 cursor-not-allowed'
-                  this.selectedChoice ? 'bg-primary1 cursor-pointer' : 'bg-grey5'
+                  this.selectedChoice ? 'bg-primary1 cursor-pointer' : 'bg-grey5 cursor-not-allowed'
                 ]}
-                // onClick={() => (this.selectedChoice ? this.showVoteInfo() : null)}
-                onClick={() => this.showVoteInfo()}
+                onClick={() => (this.selectedChoice ? this.showVoteInfo() : null)}
               >
                 Vote
               </div>
@@ -411,7 +425,7 @@ const ProposalDetail = defineComponent({
                   <td>{record.choiceItemName}</td>
                   <td class="flex justify-end items-center">
                     <span>{record.votes}</span>
-                    <span class="mx-3">{this.proposalInfo?.voteSystem}</span>
+                    <span class="mx-2">{this.strategyInfo?.voteSymbol}</span>
                     <SignOutlined
                       class="cursor-pointer"
                       onClick={() =>
@@ -439,14 +453,24 @@ const ProposalDetail = defineComponent({
         </div>
         <div class="flex-1 min-w-111">
           {this.startupInfo && (
-            <UCard class="mb-6">
+            <UCard contentStyle={{ paddingTop: 0 }} class="mb-6">
               <StartupCard startup={this.startupInfo} />
             </UCard>
           )}
           {this.proposalInfo && (
-            <StrategyInformation class="mb-6" proposalInfo={this.proposalInfo} />
+            <StrategyInformation
+              class="mb-6"
+              proposalInfo={this.proposalInfo}
+              onShowStrategyDetail={() => (this.strategyVisible = true)}
+              blockExploreUrl={this.blockExploreUrl}
+            />
           )}
-          {this.proposalInfo && <CurrentResult proposalInfo={this.proposalInfo} />}
+          {!!this.proposalInfo && !!this.strategyInfo && (
+            <CurrentResult
+              proposalInfo={this.proposalInfo}
+              voteSymbol={this.strategyInfo.voteSymbol}
+            />
+          )}
         </div>
         <UModal show={this.voteInfoVisible} class="bg-white p-10 w-150 rounded-lg">
           <div>
@@ -455,7 +479,17 @@ const ProposalDetail = defineComponent({
               <div class="u-body2 text-grey3">Option(s)</div>
               <div class="u-body2 text-grey1 text-right">{this.selectedChoice?.itemName}</div>
               <div class="u-body2 text-grey3">Block height</div>
-              <div class="u-body2 text-grey1 text-right">{this.proposalInfo?.blockNumber}</div>
+              <div class="u-body2 text-grey1 flex justify-end items-center">
+                {this.proposalInfo?.blockNumber?.toLocaleString()}
+                {this.blockExploreUrl && (
+                  <a
+                    href={`${this.blockExploreUrl}/block/${this.proposalInfo?.blockNumber}`}
+                    class="ml-2 leading-4"
+                  >
+                    <UrlOutlined class="text-primary" />
+                  </a>
+                )}
+              </div>
               <div class="u-body2 text-grey3">Your voting power</div>
               <div class="u-body2 text-grey1 text-right">{this.votePower}</div>
             </div>
@@ -473,19 +507,26 @@ const ProposalDetail = defineComponent({
             </div>
           </div>
         </UModal>
-        <UModal show={this.strategyVisible} class="bg-white p-10 w-150 rounded-lg">
+        <UModal show={this.strategyVisible} class="bg-white p-7 w-150 rounded-lg">
           <div>
             <div class="u-title1 mb-6 flex justify-between">
-              <span>Startegies</span>
-              <CloseOutlined class="text-primary" />
+              <span class="u-card-title2 text-primary">Strategies</span>
+              <CloseOutlined
+                class="text-primary w-6 h-6 cursor-pointer"
+                onClick={() => (this.strategyVisible = false)}
+              />
             </div>
             <div class="border border-grey5 grid grid-cols-2 py-4 px-6 rounded-lg gap-y-4">
               <div class="u-body2 text-grey3">Symbol</div>
-              <div class="u-body2 text-grey1 text-right">{this.strategyInfo}</div>
+              <div class="u-body2 text-grey1 text-right">
+                {this.strategyInfo.voteSymbol || '--'}
+              </div>
               <div class="u-body2 text-grey3">Address</div>
-              <div class="u-body2 text-grey1 text-right">{this.proposalInfo?.blockNumber}</div>
+              <div class="u-body2 text-grey1 text-right">
+                {this.strategyInfo?.tokenContractAddress || '--'}
+              </div>
               <div class="u-body2 text-grey3">Decimals</div>
-              <div class="u-body2 text-grey1 text-right">{this.votePower}</div>
+              <div class="u-body2 text-grey1 text-right">{this.strategyInfo?.voteDecimals}</div>
             </div>
           </div>
         </UModal>
@@ -514,9 +555,7 @@ const ProposalDetail = defineComponent({
               class="border border-grey5 py-4 px-6 rounded-full text-primary flex justify-center items-center mt-5 cursor-pointer"
               onClick={() =>
                 this.toVerify({
-                  ipfs: this.ipfsDetail.hash,
-                  address: this.ipfsDetail.address,
-                  choice: this.ipfsDetail.choice
+                  ipfs: this.ipfsDetail.hash
                 })
               }
             >

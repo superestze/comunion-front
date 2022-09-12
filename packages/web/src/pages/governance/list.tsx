@@ -18,7 +18,7 @@ const GovernanceListPage = defineComponent({
           page,
           states:
             proposalStatus.value !== undefined && proposalStatus.value !== null
-              ? [proposalStatus.value]
+              ? [proposalStatus.value + 1]
               : undefined
         })
         const _total = error ? 0 : data!.totalRows

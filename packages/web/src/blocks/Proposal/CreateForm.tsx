@@ -24,7 +24,7 @@ const CreateProposalFrom = defineComponent({
       default: {
         current: 1,
         startupId: undefined,
-        vote: 'single-choice-voting',
+        vote: 'Single choice voting',
         voteChoices: [{ value: '' }, { value: '' }],
         startTime: undefined,
         endTime: undefined
@@ -40,7 +40,7 @@ const CreateProposalFrom = defineComponent({
     const voteOptions = ref<VoteOption[] | undefined>()
     const modalVisibleState = ref(false)
     const ipfsClient = getClient()
-    const proposalInfo = reactive<ProposalInfo>(props.defaultProposalInfo)
+    const proposalInfo: ProposalInfo = reactive<ProposalInfo>(props.defaultProposalInfo)
     const showLeaveTipModal = () => {
       modalVisibleState.value = true
     }
@@ -87,7 +87,7 @@ const CreateProposalFrom = defineComponent({
         if (!error) {
           voteOptions.value = data.map(item => ({
             label: item.dictLabel,
-            value: item.dictValue,
+            value: item.dictLabel,
             key: item.seqNum,
             remark: item.remark
           }))
@@ -107,8 +107,8 @@ const CreateProposalFrom = defineComponent({
             (startup: { value: number | undefined }) => startup.value === proposalInfo.startupId
           )
           const blockNumber = walletStore.wallet?.getProvider().blockNumber
-          const voteType =
-            voteOptions.value?.find(option => option.value === proposalInfo.vote)?.label || 'basic'
+          // const voteType =
+          //   voteOptions.value?.find(option => option.value === proposalInfo.vote)?.label || 'basic'
 
           const domain = { name: 'Comunion' }
 
@@ -116,9 +116,9 @@ const CreateProposalFrom = defineComponent({
             From: walletStore.address,
             Startup: startupInfo?.label,
             Timestamp: dayjs().valueOf(),
-            Type: voteType,
+            Type: proposalInfo.vote,
             Title: proposalInfo.title,
-            Choice: proposalInfo.voteChoices.map(choice => choice.value).filter(Boolean),
+            Choice: proposalInfo.voteChoices?.map(choice => choice.value).filter(Boolean),
             Start: dayjs(proposalInfo.startTime).utc().valueOf(),
             End: dayjs(proposalInfo.endTime).utc().valueOf(),
             blockHeight: blockNumber
@@ -158,11 +158,11 @@ const CreateProposalFrom = defineComponent({
               startupId: proposalInfo.startupId,
               description: proposalInfo.description,
               discussionLink: proposalInfo.discussion,
-              voteSystem: voteType,
+              voteSystem: proposalInfo.vote,
               startTime: dayjs(proposalInfo.startTime!).utc().toISOString(),
               endTime: dayjs(proposalInfo.endTime!).utc().toISOString(),
               choices: proposalInfo.voteChoices
-                .filter((item: { value: string }) => item.value)
+                ?.filter((item: { value: string }) => item.value)
                 .map((choice, choiceIndex) => ({
                   itemName: choice.value,
                   seqNum: choiceIndex + 1
