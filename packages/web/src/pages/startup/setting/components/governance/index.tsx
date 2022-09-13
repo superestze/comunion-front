@@ -261,9 +261,9 @@ export default defineComponent({
                   <div class="rounded-lg border border-grey5 px-4 py-3 flex justify-between items-center mb-6">
                     <span class="u-body4">
                       {strategy.dictLabel}{' '}
-                      {strategy.symbol && (
+                      {strategy.voteSymbol && (
                         <span class="bg-[#8247E50F] py-1 px-4 text-primary text-xs ml-4 rounded-2xl">
-                          {strategy.symbol}
+                          {strategy.voteSymbol}
                         </span>
                       )}
                     </span>
