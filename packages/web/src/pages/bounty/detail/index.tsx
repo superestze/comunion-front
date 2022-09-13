@@ -197,18 +197,18 @@ export default defineComponent({
                             }}
                           </UTooltip>
                           {/* just applicant show countdown tips */}
-                          {this.bountyContractInfo.role === USER_ROLE.FOUNDER &&
-                          this.gapValue >= 0 ? (
-                            <p class="flex mr-4 text-grey3 items-center u-body3">
-                              Founder can unlock after
-                              <span class="mx-1 text-parimary">{this.gapValue}</span>
-                              {this.gapValue > 1 ? `${pluralize(this.gapUnit)}` : this.gapUnit}
-                            </p>
-                          ) : (
-                            <p class="flex text-error mr-4 items-center u-body3">
-                              Founder can already unlock deposits
-                            </p>
-                          )}
+                          {this.bountyContractInfo.role !== USER_ROLE.FOUNDER &&
+                            (this.gapValue >= 0 ? (
+                              <p class="flex mr-4 text-grey3 items-center u-body3">
+                                Founder can unlock after
+                                <span class="mx-1 text-parimary">{this.gapValue}</span>
+                                {this.gapValue > 1 ? `${pluralize(this.gapUnit)}` : this.gapUnit}
+                              </p>
+                            ) : (
+                              <p class="flex text-error mr-4 items-center u-body3">
+                                Founder can already unlock deposits
+                              </p>
+                            ))}
                         </>
                       )}
                       <PostUpdate postUpdate={this.postUpdate} />
