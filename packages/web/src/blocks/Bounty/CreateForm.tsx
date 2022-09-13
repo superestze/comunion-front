@@ -240,7 +240,7 @@ const CreateBountyForm = defineComponent({
     }
 
     const onSubmit = async () => {
-      // const value = new Big(bountyInfo.deposit).times(Math.pow(10, 18)).toNumber()
+      // const value = new Big(bountyInfo.deposit).times(Math.pow(10, 18)).toNumber
       postSubmit()
     }
 
