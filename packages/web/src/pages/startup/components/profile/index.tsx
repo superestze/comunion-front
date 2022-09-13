@@ -35,12 +35,13 @@ export default defineComponent({
       .then(() => (userIsFollow.value = true))
       .catch(() => (userIsFollow.value = false))
 
-    const startupInfo = ref<StartupDetail>()
+    const startupInfo = ref<StartupDetail & { onChain: boolean }>()
 
     watch(
       () => props.startup,
       () => {
         startupInfo.value = props.startup
+        console.log(startupInfo.value, 213131232133)
       },
       {
         immediate: true
@@ -136,10 +137,18 @@ export default defineComponent({
                 }}
               >
                 <img
-                  src={getChainInfoByChainId(this.props.startup.chainID)?.logo}
+                  src={
+                    this.startupInfo?.onChain
+                      ? getChainInfoByChainId(this.props.startup.chainID)?.logo
+                      : getChainInfoByChainId(this.props.startup.chainID)?.nologo
+                  }
                   class="h-1.25rem mr-0.2rem w-1.25rem"
                 />
-                <span class="text-12px truncate">{this.theChainName}</span>
+                <span
+                  class={`text-12px truncate ${this.startupInfo?.onChain ? '' : 'text-[#E0E0E0]'}`}
+                >
+                  {this.theChainName}
+                </span>
               </div>
             )}
           </div>

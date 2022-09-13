@@ -11,7 +11,7 @@ import {
 } from './components/CrowdfundingInformation'
 import { ReviewInfo } from './components/ReviewInfo'
 import { VerifyTokenRef, VerifyToken } from './components/VerifyToken'
-import { CrowdfundingInfo, chainInfoType } from './typing'
+import { CrowdfundingInfo } from './typing'
 import Steps, { StepProps } from '@/components/Step'
 import {
   CrowdfundingFactoryAddresses,
@@ -41,10 +41,6 @@ const CreateCrowdfundingForm = defineComponent({
     const additionalInfoRef = ref<AdditionalInformationRef>()
     const modalVisibleState = ref(false)
     const toNextProcessing = ref(false)
-    const chainInfo = ref<chainInfoType>({
-      chainID: undefined,
-      onChain: false
-    })
     const crowdfundingInfo = reactive<CrowdfundingInfo>({
       current: 1,
       // first step
@@ -85,13 +81,15 @@ const CreateCrowdfundingForm = defineComponent({
       })
       if (!error) {
         netWorkChange(data.chainID)
-        chainInfo.value = { chainID: data.chainID, onChain: data.onChain }
       }
     }
     const netWorkChange = async (value: number) => {
       if (walletStore.chainId !== value) {
         await walletStore.ensureWalletConnected()
-        walletStore.wallet?.switchNetwork(value)
+        const result = await walletStore.wallet?.switchNetwork(value)
+        if (!result) {
+          closeDrawer()
+        }
       }
     }
     const showLeaveTipModal = () => {
@@ -235,8 +233,7 @@ const CreateCrowdfundingForm = defineComponent({
       verifyTokenRef,
       fundingInfoRef,
       additionalInfoRef,
-      closeDrawer,
-      chainInfo
+      closeDrawer
     }
   },
   render() {
@@ -252,7 +249,6 @@ const CreateCrowdfundingForm = defineComponent({
         {this.crowdfundingInfo.current === 1 && (
           <VerifyToken
             crowdfundingInfo={this.crowdfundingInfo}
-            chainInfo={this.chainInfo}
             onCloseDrawer={this.closeDrawer}
             ref={(value: any) => (this.verifyTokenRef = value)}
           />

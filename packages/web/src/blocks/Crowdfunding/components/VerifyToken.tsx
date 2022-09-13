@@ -6,18 +6,19 @@ import {
   UFormItemsFactory
 } from '@comunion/components'
 import { SelectOption } from '@comunion/components/src/constants'
-import { defineComponent, ref, computed, Ref, PropType, h, onMounted, nextTick, watch } from 'vue'
+import { ArrowLineRightOutlined } from '@comunion/icons'
+import { defineComponent, ref, computed, Ref, PropType, h, onMounted, nextTick } from 'vue'
 import { useRouter } from 'vue-router'
-import { CrowdfundingInfo, chainInfoType } from '../typing'
+import { CrowdfundingInfo } from '../typing'
 import { useErc20Contract } from '@/contracts'
 import { services } from '@/services'
-import { useWalletStore } from '@/stores'
 export interface VerifyTokenRef {
   verifyTokenForm: FormInst | null
 }
 
 interface StartupOption extends SelectOption {
   tokenAddress?: string
+  onChain: boolean
 }
 
 export const VerifyToken = defineComponent({
@@ -26,19 +27,10 @@ export const VerifyToken = defineComponent({
     crowdfundingInfo: {
       type: Object as PropType<CrowdfundingInfo>,
       required: true
-    },
-    chainInfo: {
-      type: Object as PropType<chainInfoType>,
-      required: true,
-      defualt: {
-        onChain: false
-      }
     }
   },
   emits: ['closeDrawer'],
   setup(props, ctx) {
-    console.log(props.crowdfundingInfo)
-    const walletStore = useWalletStore()
     const router = useRouter()
     const erc20TokenContract = useErc20Contract()
     const verifyTokenForm = ref<FormInst | null>(null)
@@ -95,19 +87,28 @@ export const VerifyToken = defineComponent({
           {
             validator: (rule, value) => {
               if (value) {
-                return props.chainInfo.onChain
+                let status = true
+                startupOptions.value.forEach(item => {
+                  if (item.value === value) {
+                    status = item.onChain
+                  }
+                })
+                return status
               }
               return true
             },
             renderMessage: () => {
               return (
-                <div>
+                <div class="flex items-center">
                   <span>
                     The startup cannot create a crowdfunding without being on the blockchain,
                   </span>
-                  <span onClick={() => goSetting()} class="!text-primary cursor-pointer">
-                    {' '}
-                    Go to setting
+                  <span
+                    onClick={() => goSetting()}
+                    class="ml-2 !text-primary cursor-pointer flex items-center"
+                  >
+                    <span>Go to setting</span>
+                    <ArrowLineRightOutlined class="ml-2 w-[16px] h-[16px]" />
                   </span>
                 </div>
               )
@@ -215,22 +216,9 @@ export const VerifyToken = defineComponent({
         maxlength: 64
       }
     ])
-    watch(
-      () => props.chainInfo,
-      data => {
-        if (data.chainID && walletStore.chainId !== data.chainID) {
-          cutNetwork(data.chainID)
-          return
-        }
-      }
-    )
     onMounted(() => {
       getStartups()
     })
-    const cutNetwork = async (value: number) => {
-      await walletStore.ensureWalletConnected()
-      walletStore.wallet?.switchNetwork(value)
-    }
     const getStartups = async () => {
       try {
         const { error, data } = await services['crowdfunding@crowdfundable-startups']()
@@ -239,7 +227,8 @@ export const VerifyToken = defineComponent({
             label: startup.startupName,
             value: startup.startupId,
             disabled: !startup.canRaise,
-            tokenAddress: startup.tokenContract
+            tokenAddress: startup.tokenContract,
+            onChain: startup.onChain
           }))
         }
       } catch (error) {

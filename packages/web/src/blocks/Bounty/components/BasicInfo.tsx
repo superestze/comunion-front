@@ -10,14 +10,14 @@ import {
   UInputNumberGroup
 } from '@comunion/components'
 import { SelectOption } from '@comunion/components/src/constants'
-import { MinusCircleOutlined, AddCircleOutlined } from '@comunion/icons'
+import { MinusCircleOutlined, AddCircleOutlined, ArrowLineRightOutlined } from '@comunion/icons'
 import dayjs from 'dayjs'
 import { defineComponent, PropType, ref, computed, Ref, h, onMounted, watch } from 'vue'
 import { useRouter } from 'vue-router'
 import { BountyInfo, ContactType, chainInfoType } from '../typing'
 import RichEditor from '@/components/Editor'
 import { services } from '@/services'
-import { useUserStore, useWalletStore } from '@/stores'
+import { useUserStore } from '@/stores'
 import { validateEmail } from '@/utils/type'
 
 export const MAX_AMOUNT = 9999
@@ -54,7 +54,6 @@ const BountyBasicInfo = defineComponent({
   },
   emits: ['delContact', 'addContact', 'closeDrawer'],
   setup(props, ctx) {
-    const walletStore = useWalletStore()
     const router = useRouter()
     const contactOptions = ref([
       { label: 'Email', value: 1 },
@@ -86,13 +85,16 @@ const BountyBasicInfo = defineComponent({
             },
             renderMessage: () => {
               return (
-                <div>
+                <div class="flex items-center">
                   <span>
                     The startup cannot create a crowdfunding without being on the blockchain,
                   </span>
-                  <span onClick={() => goSetting()} class="!text-primary cursor-pointer">
-                    {' '}
-                    Go to setting
+                  <span
+                    onClick={() => goSetting()}
+                    class="ml-2 !text-primary cursor-pointer flex items-center"
+                  >
+                    <span>Go to setting</span>
+                    <ArrowLineRightOutlined class="ml-2 w-[16px] h-[16px]" />
                   </span>
                 </div>
               )
@@ -310,18 +312,11 @@ const BountyBasicInfo = defineComponent({
     ])
     const bountyBasicInfoRules = getFieldsRules(bountyBasicInfoFields.value)
     watch(
-      () => props.chainInfo,
+      () => props.bountyInfo,
       data => {
-        if (data.chainID && walletStore.chainId !== data.chainID) {
-          cutNetwork(data.chainID)
-          return
-        }
+        console.log(data)
       }
     )
-    const cutNetwork = async (value: number) => {
-      await walletStore.ensureWalletConnected()
-      walletStore.wallet?.switchNetwork(value)
-    }
     const getStartupByComerId = async () => {
       const comerID = userStore.profile?.comerID
       try {
