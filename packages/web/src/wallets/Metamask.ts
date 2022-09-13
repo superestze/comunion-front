@@ -66,7 +66,7 @@ export default class MetamaskWallet extends AbstractWallet {
   }
   async switchNetwork(chainId: number): Promise<boolean> {
     try {
-      const res = await (window.ethereum as ExternalProvider).request!({
+      await (window.ethereum as ExternalProvider).request!({
         method: 'wallet_switchEthereumChain',
         params: [{ chainId: hexlify(chainId) }]
       })
