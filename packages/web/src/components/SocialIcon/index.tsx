@@ -5,7 +5,7 @@ import {
   UnionFilled,
   TelegramFilled,
   TwitterFilled,
-  MailFilled,
+  EmailFilled,
   MediumFilled
 } from '@comunion/icons'
 import { defineComponent } from 'vue'
@@ -27,7 +27,7 @@ function asyncComponent(type: string, wrapper: string, disable?: boolean) {
   } else if (type === 'Twitter') {
     return <TwitterFilled class={`${wrapper} ${textClass}`} />
   } else if (type === 'Email') {
-    return <MailFilled class={`${wrapper} ${textClass}`} />
+    return <EmailFilled class={`${wrapper} ${textClass}`} />
   } else if (type === 'Medium') {
     return <MediumFilled class={`${wrapper} ${textClass}`} />
   }

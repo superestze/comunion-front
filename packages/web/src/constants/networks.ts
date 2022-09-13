@@ -2,6 +2,11 @@ import avalanche from '@/assets/networks/avalanche.svg'
 import binance from '@/assets/networks/binance.svg'
 import ethereum from '@/assets/networks/ethereum.svg'
 import fantom from '@/assets/networks/fantom.svg'
+import noavalanche from '@/assets/networks/noavalanche.svg'
+import nobinance from '@/assets/networks/nobinance.svg'
+import noethereum from '@/assets/networks/noethereum.svg'
+import nofantom from '@/assets/networks/nofantom.svg'
+import nopolygon from '@/assets/networks/nopolygon.svg'
 import polygon from '@/assets/networks/polygon.svg'
 /**
  * https://chainlist.org/
@@ -9,6 +14,7 @@ import polygon from '@/assets/networks/polygon.svg'
 
 export type ChainNetworkType = {
   logo: string
+  nologo?: string
   chainId: number
   name: string
   shortName?: string
@@ -29,6 +35,7 @@ export type ChainNetworkType = {
 export const allNetworks: ChainNetworkType[] = [
   {
     logo: ethereum,
+    nologo: noethereum,
     chainId: 1,
     name: 'Ethereum',
     shortName: 'Ethereum',
@@ -38,6 +45,7 @@ export const allNetworks: ChainNetworkType[] = [
   },
   {
     logo: ethereum,
+    nologo: noethereum,
     chainId: 5,
     name: 'Goerli Testnet',
     shortName: 'Goerli Testnet',
@@ -47,6 +55,7 @@ export const allNetworks: ChainNetworkType[] = [
   },
   {
     logo: avalanche,
+    nologo: noavalanche,
     chainId: 43114,
     name: 'Avalanche C-Chain',
     shortName: 'Avalanche',
@@ -56,6 +65,7 @@ export const allNetworks: ChainNetworkType[] = [
   },
   {
     logo: avalanche,
+    nologo: noavalanche,
     chainId: 43113,
     name: 'Avalanche Fuji Testnet',
     shortName: 'Avalanche Testnet',
@@ -65,6 +75,7 @@ export const allNetworks: ChainNetworkType[] = [
   },
   {
     logo: fantom,
+    nologo: nofantom,
     chainId: 250,
     name: 'Fantom Opera',
     shortName: 'Fantom',
@@ -74,6 +85,7 @@ export const allNetworks: ChainNetworkType[] = [
   },
   {
     logo: fantom,
+    nologo: nofantom,
     chainId: 4002,
     name: 'Fantom Testnet',
     shortName: 'Fantom',
@@ -83,6 +95,7 @@ export const allNetworks: ChainNetworkType[] = [
   },
   {
     logo: binance,
+    nologo: nobinance,
     chainId: 56,
     name: 'Binance Smart Chain Mainnet',
     shortName: 'BSC',
@@ -92,6 +105,7 @@ export const allNetworks: ChainNetworkType[] = [
   },
   {
     logo: binance,
+    nologo: nobinance,
     chainId: 97,
     name: 'Binance Smart Chain Testnet',
     shortName: 'BSC Testnet',
@@ -101,6 +115,7 @@ export const allNetworks: ChainNetworkType[] = [
   },
   {
     logo: polygon,
+    nologo: nopolygon,
     chainId: 137,
     name: 'Polygon Mainnet',
     shortName: 'Polygon',

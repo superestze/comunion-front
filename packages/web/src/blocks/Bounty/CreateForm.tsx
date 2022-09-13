@@ -4,7 +4,7 @@ import { PeriodOutlined, StageOutlined, WarningFilled } from '@comunion/icons'
 import dayjs from 'dayjs'
 
 import { Contract, ethers } from 'ethers'
-import { defineComponent, ref, reactive, watch } from 'vue'
+import { defineComponent, ref, watch } from 'vue'
 import { useRouter } from 'vue-router'
 import BountyBasicInfo, { BountyBasicInfoRef, MAX_AMOUNT } from './components/BasicInfo'
 import Deposit from './components/Deposit'
@@ -39,7 +39,7 @@ const CreateBountyForm = defineComponent({
       chainID: undefined,
       onChain: false
     })
-    const bountyInfo = reactive<BountyInfo>({
+    const bountyInfoRef = ref<BountyInfo>({
       current: 1,
       startupID: undefined,
       title: '',
@@ -65,6 +65,7 @@ const CreateBountyForm = defineComponent({
       agreement: false,
       onChain: false
     })
+    const bountyInfo = bountyInfoRef.value
     const addContact = () => {
       bountyInfo.contact.push({ type: 1, value: '' })
     }
@@ -260,7 +261,10 @@ const CreateBountyForm = defineComponent({
     const netWorkChange = async (value: number) => {
       if (walletStore.chainId !== value) {
         await walletStore.ensureWalletConnected()
-        walletStore.wallet?.switchNetwork(value)
+        const result = await walletStore.wallet?.switchNetwork(value)
+        if (!result) {
+          closeDrawer()
+        }
       }
     }
     watch(
@@ -269,7 +273,6 @@ const CreateBountyForm = defineComponent({
         getFinanceSymbol(bountyInfo.startupID)
       }
     )
-
     const toNext = () => {
       if (bountyInfo.current === 1) {
         bountyBasicInfoRef.value?.bountyDetailForm?.validate(error => {

@@ -83,9 +83,17 @@ export default defineComponent({
       return data
     })
     const netWorkChange = async (value: number) => {
-      if (walletStore.chainId !== value) {
+      if (walletStore.chainId !== value && info.switchChain) {
         await walletStore.ensureWalletConnected()
-        walletStore.wallet?.switchNetwork(value)
+        const result = await walletStore.wallet?.switchNetwork(value)
+        if (!result) {
+          info.switchChain = false
+        }
+      }
+    }
+    const switchChange = async (value: boolean) => {
+      if (value) {
+        netWorkChange(info.chainID!)
       }
     }
     const getNetWorkList = (supportedNetworks: Array<ChainNetworkType> = []) => {
@@ -241,6 +249,7 @@ export default defineComponent({
           }
           return style
         },
+        onUpdateValue: (value: boolean) => switchChange(value),
         disabled: info.isChain
       },
       {

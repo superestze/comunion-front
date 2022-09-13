@@ -9,7 +9,7 @@ import {
   FormFactoryField
 } from '@comunion/components'
 import { defineComponent, PropType, reactive, ref, CSSProperties, h } from 'vue'
-import { STARTUP_TYPES, StartupTypesType, getStartupNumberFromType } from '@/constants'
+import { STARTUP_TYPES } from '@/constants'
 import { useStartupContract } from '@/contracts'
 import { services } from '@/services'
 import { useWalletStore, useChainStore } from '@/stores'
@@ -17,6 +17,15 @@ import { useContractStore } from '@/stores/contract'
 type chainSelectOption = {
   label: string
   logo: string
+}
+type modelType = {
+  nextwork: number | undefined
+  switch: boolean
+  name: string
+  type: number | undefined
+  mission: string
+  overview: string
+  tags: Array<string>
 }
 const CreateStartupForm = defineComponent({
   name: 'CreateStartupForm',
@@ -57,7 +66,7 @@ const CreateStartupForm = defineComponent({
     // }
     const formRef = ref<FormInst>()
     const loading = ref(false)
-    const model = reactive({
+    const model = reactive<modelType>({
       ...{
         ...defaultModel
         // composes: [...defaultModel.composes]
@@ -117,9 +126,7 @@ const CreateStartupForm = defineComponent({
                 await startupContract.newStartup(
                   [
                     model.name,
-                    model.type === undefined
-                      ? 0
-                      : getStartupNumberFromType(model.type as StartupTypesType),
+                    model.type ? model.type : 0,
                     // model.tags,
                     // model.logo,
                     model.nextwork === undefined ? 0 : model.nextwork,
@@ -169,7 +176,10 @@ const CreateStartupForm = defineComponent({
     const netWorkChange = async (value: number) => {
       if (walletStore.chainId !== value) {
         await walletStore.ensureWalletConnected()
-        walletStore.wallet?.switchNetwork(value)
+        const result = await walletStore.wallet?.switchNetwork(value)
+        if (!result) {
+          model.nextwork = walletStore.chainId
+        }
       }
     }
     const infoFields: FormFactoryField[] = [
