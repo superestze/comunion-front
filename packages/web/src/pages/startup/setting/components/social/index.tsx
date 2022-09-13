@@ -8,7 +8,8 @@ import {
   UFormItemsFactory,
   UInput,
   UInputGroup,
-  USelect
+  USelect,
+  message
 } from '@comunion/components'
 import { AddCircleOutlined, MinusCircleOutlined } from '@comunion/icons'
 import { defineComponent, ref, reactive, PropType, watch } from 'vue'
@@ -175,6 +176,7 @@ export default defineComponent({
             deletedSocials: this.info.socials.filter(e => e.delete).map(e => e.socialType)
           })
           this.loading = false
+          message.success('successfully saved')
         }
       })
     }
