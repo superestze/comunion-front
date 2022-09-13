@@ -56,7 +56,7 @@ const CreateProposalFrom = defineComponent({
       if (proposalInfo.current === 1) {
         basicInfoRef.value?.proposalBasicInfoForm?.validate((error: any) => {
           if (!error) {
-            proposalInfo.current += 1
+            proposalInfo.current = 2
           }
         })
       }
@@ -121,7 +121,9 @@ const CreateProposalFrom = defineComponent({
             Choice: proposalInfo.voteChoices?.map(choice => choice.value).filter(Boolean),
             Start: dayjs(proposalInfo.startTime).utc().valueOf(),
             End: dayjs(proposalInfo.endTime).utc().valueOf(),
-            blockHeight: blockNumber
+            Description: proposalInfo.description || '',
+            Discussion: proposalInfo.discussion || '',
+            BlockHeight: blockNumber
           }
           // const optionalContent = {
           //   Description: proposalInfo.description || '',

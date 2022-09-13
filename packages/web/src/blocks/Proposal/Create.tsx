@@ -64,7 +64,12 @@ const CreateProposalBlock = defineComponent({
             </UButton>
           )}
           {createCreateProposalInfo.value?.proposalInfo.current === stepOptions.length && (
-            <UButton type="primary" class="w-40" onClick={createCreateProposalInfo.value?.onSubmit}>
+            <UButton
+              type="primary"
+              class="w-40"
+              onClick={createCreateProposalInfo.value?.onSubmit}
+              disabled={!createCreateProposalInfo.value?.proposalInfo.voteChoices?.[0].value}
+            >
               Submit
             </UButton>
           )}

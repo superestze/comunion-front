@@ -82,7 +82,7 @@ export const BasicInfo = defineComponent({
                   console.log('votePower===>', votePower)
                   if (votePower < data.proposalThreshold) {
                     callback(
-                      `You need to have a minimum of ${data.proposalThreshold} votes in order to submit a proposal.`
+                      `You need to have a minimum of ${data.proposalThreshold} ${data.voteSymbol} in order to submit a proposal.`
                     )
                     return
                   }
@@ -102,11 +102,14 @@ export const BasicInfo = defineComponent({
         t: 'string',
         title: 'Title',
         name: 'title',
+        formItemProps: {
+          first: true
+        },
         rules: [
           { required: true, message: 'Title cannot be blank', trigger: 'blur' },
           {
             validator: (rule, value) => {
-              return value.length > 12
+              return value.length >= 12
             },
             message: 'Title must be 12 characters or more',
             trigger: 'blur'

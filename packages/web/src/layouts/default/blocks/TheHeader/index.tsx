@@ -24,7 +24,7 @@ const TheHeader = defineComponent({
         url: '/crowdfunding/list'
       },
       {
-        name: 'governance',
+        name: 'Governance',
         url: '/governance/list'
       }
     ]

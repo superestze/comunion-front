@@ -61,7 +61,7 @@ export const ProposalCard = defineComponent({
         <div class="w-15 h-15 mr-4">
           <UStartupLogo src={this.proposalData.startupLogo || ''} width="15" height="15" />
         </div>
-        <div class="flex-1">
+        <div class="flex-1 truncate">
           <div class="flex items-center justify-between">
             <div>
               <span class="mr-2 text-grey3 text-xs">Linkedin by</span>
@@ -73,7 +73,7 @@ export const ProposalCard = defineComponent({
               {GOVERNANCE_KEY[this.proposalData.status as keyof typeof GOVERNANCE_KEY]}
             </div>
           </div>
-          <div class="u-title3 truncate break-all max-w-200 my-2">{this.proposalData.title}</div>
+          <div class="u-title3 truncate break-all max-w-full my-2">{this.proposalData.title}</div>
           {this.proposalData.description && (
             <div
               class="u-body2 truncate break-all whitespace-pre-line line-clamp-2"
