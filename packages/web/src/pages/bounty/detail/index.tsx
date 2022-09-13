@@ -11,7 +11,7 @@ import PersonalCard from './components/PersonalCard'
 import PostUpdate from './components/PostUpdate'
 import StartupCard from './components/StartupCard'
 import { useBountyContractWrapper } from './hooks/useBountyContractWrapper'
-import { BOUNTY_STATUS, PERIOD_OPTIONS } from '@/constants'
+import { BOUNTY_STATUS, PERIOD_OPTIONS, USER_ROLE } from '@/constants'
 import { useBountyStore } from '@/stores'
 import { useBountyContractStore } from '@/stores/bountyContract'
 import { getChainInfoByChainId } from '@/utils/etherscan'
@@ -184,8 +184,8 @@ export default defineComponent({
                               )
                             }}
                           </UTooltip>
-                          {/* just applicant show the following tips */}
-                          {this.gap >= 0 ? (
+                          {/* just applicant show countdown tips */}
+                          {this.bountyContractInfo.role === USER_ROLE.FOUNDER && this.gap >= 0 ? (
                             <p class="flex mr-4 text-grey3 items-center u-body3">
                               Founder can unlock after
                               <span class="mx-1 text-parimary">{this.gap}</span>
