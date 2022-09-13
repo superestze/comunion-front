@@ -339,10 +339,10 @@ const ProposalDetail = defineComponent({
               {GOVERNANCE_KEY[this.proposalInfo?.status as keyof typeof GOVERNANCE_KEY]}
             </span>
           </div>
-          <div class="flex items-center">
+          <div class="flex items-center w-7 h-7">
             <UStartupLogo
-              width="8"
-              height="8"
+              width="7"
+              height="7"
               src={this.proposalInfo?.startupLogo || ''}
               class="rounded-full"
             />
