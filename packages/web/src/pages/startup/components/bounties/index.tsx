@@ -3,7 +3,7 @@ import { EmptyFilled } from '@comunion/icons'
 import { defineComponent, ref } from 'vue'
 import BountiesCard from '@/pages/bounty/components/BountyCard'
 import { ServiceReturn, services } from '@/services'
-import '../../assets/style.css'
+import '@/assets/style/last-item-noborder.css'
 
 type BountyType = NonNullable<ServiceReturn<'bounty@startup-bounty-list'>>['rows']
 

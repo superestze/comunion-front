@@ -3,6 +3,7 @@ import { defineComponent, reactive, ref, watch } from 'vue'
 import StartupCard from '@/pages/dashboard/components/StartupCard'
 import { services } from '@/services'
 import { StartupItem } from '@/types'
+import '@/assets/style/last-item-noborder.css'
 
 export default defineComponent({
   props: {
@@ -73,9 +74,9 @@ export default defineComponent({
   },
   render() {
     return (
-      <UCard title="STARTUPS" class="mb-6">
+      <UCard title="STARTUPS" class="mb-6 last-item-noborder">
         {this.startups.map((startup, i) => (
-          <StartupCard startup={startup} key={i} view={this.view} />
+          <StartupCard class="_item" startup={startup} key={i} view={this.view} />
         ))}
       </UCard>
     )

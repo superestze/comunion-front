@@ -3,7 +3,7 @@ import { EmptyFilled } from '@comunion/icons'
 import { defineComponent, ref } from 'vue'
 import CrowdfundingMiniCard from '@/pages/crowdfunding/components/CrowdfundingMiniCard'
 import { ServiceReturn, services } from '@/services'
-import '../../assets/style.css'
+import '@/assets/style/last-item-noborder.css'
 
 type DataType = NonNullable<ServiceReturn<'crowdfunding@crowdfunding-list-of-startup'>>
 export default defineComponent({

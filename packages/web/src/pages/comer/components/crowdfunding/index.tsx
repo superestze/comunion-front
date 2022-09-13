@@ -2,6 +2,7 @@ import { UCard } from '@comunion/components'
 import { defineComponent, reactive, ref, watch } from 'vue'
 import { default as ItemCard } from '@/pages/crowdfunding/components/CrowdfundingMiniCard'
 import { ServiceReturn, services } from '@/services'
+import '@/assets/style/last-item-noborder.css'
 
 type BountyType = NonNullable<ServiceReturn<'crowdfunding@comer-posted-crowdfunding-list'>>
 
@@ -67,9 +68,9 @@ export default defineComponent({
   },
   render() {
     return (
-      <UCard title="dCROWDFUNDING" class="mb-6">
+      <UCard title="dCROWDFUNDING" class="mb-6 last-item-noborder">
         {Array.isArray(this.list) &&
-          this.list.map(item => <ItemCard info={item} key={item.crowdfundingId} />)}
+          this.list.map(item => <ItemCard class="_item" info={item} key={item.crowdfundingId} />)}
       </UCard>
     )
   }

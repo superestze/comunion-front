@@ -558,8 +558,7 @@ export const Invest = defineComponent({
             </span>
           </div>
           <div class="mb-10 u-body2 !text-primary">
-            IBO Rate：1 {props.buyCoinInfo.symbol} = {props.info.buyPrice}{' '}
-            {props.sellCoinInfo.symbol}
+            Rate：1 {props.buyCoinInfo.symbol} = {props.info.buyPrice} {props.sellCoinInfo.symbol}
           </div>
           <div class="flex mb-2 justify-between">
             <span class="text-grey3 u-body2">From</span>
