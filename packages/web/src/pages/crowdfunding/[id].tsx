@@ -1,7 +1,7 @@
 import { UBreadcrumb, UCard, USpin } from '@comunion/components'
 import { ethers } from 'ethers'
 import { defineComponent, onMounted, ref, computed } from 'vue'
-import { useRoute, useRouter } from 'vue-router'
+import { useRoute } from 'vue-router'
 import { CrowdfundingInfo } from './components/CrowdfundingInfo'
 import { IBORateHistory } from './components/IBORateHistory'
 import { Invest } from './components/Invest'
@@ -24,7 +24,6 @@ export type CoinType = {
 const CrowdfundingDetail = defineComponent({
   name: 'CrowdfundingDetail',
   setup(props) {
-    const router = useRouter()
     const route = useRoute()
     const walletStore = useWalletStore()
 
@@ -130,14 +129,7 @@ const CrowdfundingDetail = defineComponent({
 
     return () => (
       <USpin show={pageLoading.value}>
-        <UBreadcrumb class="mt-10 mb-10">
-          {/* <UBreadcrumbItem v-slots={{ separator: () => <ArrowLeftOutlined /> }} />
-          <UBreadcrumbItem>
-            <span class="cursor-pointer text-primary uppercase u-label2" onClick={router.back}>
-              Back
-            </span>
-          </UBreadcrumbItem> */}
-        </UBreadcrumb>
+        <UBreadcrumb class="mt-10 mb-10"></UBreadcrumb>
         <div class="flex mb-20 gap-6">
           <div class="w-228">
             {crowdfundingInfo.value && (
