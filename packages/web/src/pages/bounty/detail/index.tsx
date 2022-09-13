@@ -1,6 +1,7 @@
 import { UBreadcrumb, UCard, USpin, UTooltip } from '@comunion/components'
 import { PeriodOutlined, StageOutlined, ClockOutlined } from '@comunion/icons'
 import dayjs from 'dayjs'
+import { pluralize } from 'inflected'
 import { defineComponent, computed, ref, watch } from 'vue'
 import { useRoute } from 'vue-router'
 import BountyCard from './components/BountyCard'
@@ -183,10 +184,12 @@ export default defineComponent({
                               )
                             }}
                           </UTooltip>
+                          {/* just applicant show the following tips */}
                           {this.gap >= 0 ? (
                             <p class="flex mr-4 text-grey3 items-center u-body3">
-                              Founder can unlock after{' '}
-                              <span class="mx-1 text-parimary">{this.gap}</span> days
+                              Founder can unlock after
+                              <span class="mx-1 text-parimary">{this.gap}</span>
+                              {this.gap > 1 ? `${pluralize('day')}` : 'day'}
                             </p>
                           ) : (
                             <p class="flex text-error mr-4 items-center u-body3">

@@ -96,12 +96,15 @@ export default defineComponent({
       }
       this.form?.validate(async err => {
         if (typeof err === 'undefined') {
-          if (this.gap >= 0) {
-            await this.postUpdate(
-              'Waiting to submit all contents to blockchain for post update',
-              'Post update succeedes'
-            )
-          }
+          /**
+           * POSTUPDATE does not require contract operation
+           * */
+          // if (this.gap >= 0) {
+          //   await this.postUpdate(
+          //     'Waiting to submit all contents to blockchain for post update',
+          //     'Post update succeedes'
+          //   )
+          // }
           const { error } = await services['bounty@bounty-activities']({
             sourceType: 1,
             content: this.info.update,
@@ -131,7 +134,7 @@ export default defineComponent({
               rules={this.postUpdateFields}
               model={this.info}
               ref={(ref: any) => (this.form = ref)}
-              class="mb-25px mt-8px"
+              class="mt-8px mb-25px"
             >
               <UFormItemsFactory fields={this.fields} values={this.info} />
             </UForm>
