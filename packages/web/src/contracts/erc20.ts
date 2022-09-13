@@ -234,7 +234,7 @@ export function useErc20Contract(): (address: string, provider?: Signer | Provid
       return new Contract(address, erc20ABI, provider)
     }
     const signer = walletStore.wallet?.getSigner()
-    if (!signer || !provider) {
+    if (!signer) {
       throw new Error('Wallet is not initialized')
     }
     return new Contract(address, erc20ABI, signer)
