@@ -12,9 +12,9 @@ import {
 import { SelectOption } from '@comunion/components/src/constants'
 import { MinusCircleOutlined, AddCircleOutlined } from '@comunion/icons'
 import dayjs from 'dayjs'
-import { defineComponent, PropType, ref, computed, Ref, h, onMounted } from 'vue'
+import { defineComponent, PropType, ref, computed, Ref, h, onMounted, watch } from 'vue'
 import { useRouter } from 'vue-router'
-import { BountyInfo, ContactType } from '../typing'
+import { BountyInfo, ContactType, chainInfoType } from '../typing'
 import RichEditor from '@/components/Editor'
 import { services } from '@/services'
 import { useUserStore, useWalletStore } from '@/stores'
@@ -43,6 +43,13 @@ const BountyBasicInfo = defineComponent({
     bountyInfo: {
       type: Object as PropType<BountyInfo>,
       required: true
+    },
+    chainInfo: {
+      type: Object as PropType<chainInfoType>,
+      required: true,
+      defualt: {
+        onChain: false
+      }
     }
   },
   emits: ['delContact', 'addContact', 'closeDrawer'],
@@ -68,15 +75,14 @@ const BountyBasicInfo = defineComponent({
             required: true,
             message: 'Startup cannot be blank',
             type: 'number',
-            trigger: ['change', 'blur']
+            trigger: ['blur']
           },
           {
-            validator: () => {
-              let status = false
-              if (walletStore.chainId === props.bountyInfo.chainInfo.chainID) {
-                status = true
+            validator: (rule, value) => {
+              if (value) {
+                return props.chainInfo.onChain
               }
-              return status
+              return true
             },
             renderMessage: () => {
               return (
@@ -91,7 +97,7 @@ const BountyBasicInfo = defineComponent({
                 </div>
               )
             },
-            trigger: 'change'
+            trigger: ['blur']
           }
         ],
         options: startupOptions.value
@@ -303,6 +309,19 @@ const BountyBasicInfo = defineComponent({
       }
     ])
     const bountyBasicInfoRules = getFieldsRules(bountyBasicInfoFields.value)
+    watch(
+      () => props.chainInfo,
+      data => {
+        if (data.chainID && walletStore.chainId !== data.chainID) {
+          cutNetwork(data.chainID)
+          return
+        }
+      }
+    )
+    const cutNetwork = async (value: number) => {
+      await walletStore.ensureWalletConnected()
+      walletStore.wallet?.switchNetwork(value)
+    }
     const getStartupByComerId = async () => {
       const comerID = userStore.profile?.comerID
       try {
@@ -342,7 +361,6 @@ const BountyBasicInfo = defineComponent({
     }
   },
   render() {
-    console.log(this.bountyInfo, 'this.bountyInfo')
     return (
       <UForm
         ref={(ref: any) => (this.bountyDetailForm = ref)}

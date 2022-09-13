@@ -10,7 +10,7 @@ import BountyBasicInfo, { BountyBasicInfoRef, MAX_AMOUNT } from './components/Ba
 import Deposit from './components/Deposit'
 import PayDetailPeriod, { PayDetailPeriodRef } from './components/PayDetailPeriod'
 import PayDetailStage, { PayDetailStageRef } from './components/PayDetailStage'
-import { BountyInfo } from './typing'
+import { BountyInfo, chainInfoType } from './typing'
 import Steps from '@/components/Step'
 import { useBountyFactoryContract, useErc20Contract } from '@/contracts'
 import { BountyFactoryAddresses as bountyFactoryAddresses } from '@/contracts/bountyFactory'
@@ -18,7 +18,6 @@ import { AVAX_USDC_ADDR } from '@/contracts/utils'
 import { services } from '@/services'
 import { useUserStore, useWalletStore } from '@/stores'
 import { useContractStore } from '@/stores/contract'
-
 const CreateBountyForm = defineComponent({
   name: 'CreateBountyForm',
   emits: ['cancel'],
@@ -36,6 +35,10 @@ const CreateBountyForm = defineComponent({
     const bountyBasicInfoRef = ref<BountyBasicInfoRef>()
     const payPeriodRef = ref<PayDetailPeriodRef>()
     const payStageRef = ref<PayDetailStageRef>()
+    const chainInfo = ref<chainInfoType>({
+      chainID: undefined,
+      onChain: false
+    })
     const bountyInfo = reactive<BountyInfo>({
       current: 1,
       startupID: undefined,
@@ -60,11 +63,8 @@ const CreateBountyForm = defineComponent({
       },
       deposit: 0,
       agreement: false,
-      chainInfo: {
-        chainID: undefined
-      }
+      onChain: false
     })
-
     const addContact = () => {
       bountyInfo.contact.push({ type: 1, value: '' })
     }
@@ -243,7 +243,6 @@ const CreateBountyForm = defineComponent({
       // const value = new Big(bountyInfo.deposit).times(Math.pow(10, 18)).toNumber
       postSubmit()
     }
-
     const getFinanceSymbol = async (startupId?: number) => {
       if (!startupId) {
         bountyInfo.token2Symbol = ''
@@ -255,9 +254,7 @@ const CreateBountyForm = defineComponent({
       if (!error) {
         bountyInfo.token2Symbol = data.tokenSymbol
         netWorkChange(data.chainID)
-        bountyInfo.chainInfo = {
-          chainID: data.chainID
-        }
+        chainInfo.value = { chainID: data.chainID, onChain: data.onChain }
       }
     }
     const netWorkChange = async (value: number) => {
@@ -335,7 +332,8 @@ const CreateBountyForm = defineComponent({
       addStage,
       showLeaveTipModal,
       closeDrawer,
-      modalClickYesToWhere
+      modalClickYesToWhere,
+      chainInfo
     }
   },
 
@@ -352,6 +350,7 @@ const CreateBountyForm = defineComponent({
         {this.bountyInfo.current === 1 && (
           <BountyBasicInfo
             bountyInfo={this.bountyInfo}
+            chainInfo={this.chainInfo}
             onDelContact={this.delContact}
             onAddContact={this.addContact}
             onCloseDrawer={this.closeDrawer}

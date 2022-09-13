@@ -6,12 +6,12 @@ import {
   UFormItemsFactory
 } from '@comunion/components'
 import { SelectOption } from '@comunion/components/src/constants'
-import { defineComponent, ref, computed, Ref, PropType, h, onMounted, nextTick } from 'vue'
+import { defineComponent, ref, computed, Ref, PropType, h, onMounted, nextTick, watch } from 'vue'
 import { useRouter } from 'vue-router'
-import { CrowdfundingInfo } from '../typing'
+import { CrowdfundingInfo, chainInfoType } from '../typing'
 import { useErc20Contract } from '@/contracts'
 import { services } from '@/services'
-
+import { useWalletStore } from '@/stores'
 export interface VerifyTokenRef {
   verifyTokenForm: FormInst | null
 }
@@ -26,11 +26,19 @@ export const VerifyToken = defineComponent({
     crowdfundingInfo: {
       type: Object as PropType<CrowdfundingInfo>,
       required: true
+    },
+    chainInfo: {
+      type: Object as PropType<chainInfoType>,
+      required: true,
+      defualt: {
+        onChain: false
+      }
     }
   },
   emits: ['closeDrawer'],
   setup(props, ctx) {
     console.log(props.crowdfundingInfo)
+    const walletStore = useWalletStore()
     const router = useRouter()
     const erc20TokenContract = useErc20Contract()
     const verifyTokenForm = ref<FormInst | null>(null)
@@ -82,15 +90,14 @@ export const VerifyToken = defineComponent({
             required: true,
             message: ' Please select a startup',
             type: 'number',
-            trigger: ['change', 'blur']
+            trigger: ['blur']
           },
           {
             validator: (rule, value) => {
-              changeStartup(value)
-              // 5.9Incomplete function
-              // startupID Determine whether the current network is consistent with the network of choice
-              console.log(value)
-              return false
+              if (value) {
+                return props.chainInfo.onChain
+              }
+              return true
             },
             renderMessage: () => {
               return (
@@ -105,9 +112,10 @@ export const VerifyToken = defineComponent({
                 </div>
               )
             },
-            trigger: 'change'
+            trigger: 'blur'
           }
         ],
+        onUpdateValue: changeStartup,
         options: startupOptions.value
       },
       {
@@ -207,11 +215,22 @@ export const VerifyToken = defineComponent({
         maxlength: 64
       }
     ])
-
+    watch(
+      () => props.chainInfo,
+      data => {
+        if (data.chainID && walletStore.chainId !== data.chainID) {
+          cutNetwork(data.chainID)
+          return
+        }
+      }
+    )
     onMounted(() => {
       getStartups()
     })
-
+    const cutNetwork = async (value: number) => {
+      await walletStore.ensureWalletConnected()
+      walletStore.wallet?.switchNetwork(value)
+    }
     const getStartups = async () => {
       try {
         const { error, data } = await services['crowdfunding@crowdfundable-startups']()

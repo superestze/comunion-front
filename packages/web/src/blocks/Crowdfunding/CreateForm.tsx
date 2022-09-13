@@ -2,7 +2,7 @@ import { UButton, UCard, UModal } from '@comunion/components'
 import { WarningFilled } from '@comunion/icons'
 import dayjs from 'dayjs'
 import { ethers } from 'ethers'
-import { defineComponent, PropType, reactive, ref } from 'vue'
+import { defineComponent, PropType, reactive, ref, watch } from 'vue'
 import { AdditionalInformation, AdditionalInformationRef } from './components/AdditionalInfomation'
 import {
   CrowdfundingInformation,
@@ -11,7 +11,7 @@ import {
 } from './components/CrowdfundingInformation'
 import { ReviewInfo } from './components/ReviewInfo'
 import { VerifyTokenRef, VerifyToken } from './components/VerifyToken'
-import { CrowdfundingInfo } from './typing'
+import { CrowdfundingInfo, chainInfoType } from './typing'
 import Steps, { StepProps } from '@/components/Step'
 import {
   CrowdfundingFactoryAddresses,
@@ -41,6 +41,10 @@ const CreateCrowdfundingForm = defineComponent({
     const additionalInfoRef = ref<AdditionalInformationRef>()
     const modalVisibleState = ref(false)
     const toNextProcessing = ref(false)
+    const chainInfo = ref<chainInfoType>({
+      chainID: undefined,
+      onChain: false
+    })
     const crowdfundingInfo = reactive<CrowdfundingInfo>({
       current: 1,
       // first step
@@ -69,6 +73,27 @@ const CreateCrowdfundingForm = defineComponent({
       detail: '',
       description: undefined
     })
+    watch(
+      () => crowdfundingInfo.startupId,
+      () => {
+        getFinanceSymbol(crowdfundingInfo.startupId)
+      }
+    )
+    const getFinanceSymbol = async (startupId?: number) => {
+      const { error, data } = await services['startup@startup-get']({
+        startupId
+      })
+      if (!error) {
+        netWorkChange(data.chainID)
+        chainInfo.value = { chainID: data.chainID, onChain: data.onChain }
+      }
+    }
+    const netWorkChange = async (value: number) => {
+      if (walletStore.chainId !== value) {
+        await walletStore.ensureWalletConnected()
+        walletStore.wallet?.switchNetwork(value)
+      }
+    }
     const showLeaveTipModal = () => {
       modalVisibleState.value = true
     }
@@ -210,7 +235,8 @@ const CreateCrowdfundingForm = defineComponent({
       verifyTokenRef,
       fundingInfoRef,
       additionalInfoRef,
-      closeDrawer
+      closeDrawer,
+      chainInfo
     }
   },
   render() {
@@ -226,6 +252,7 @@ const CreateCrowdfundingForm = defineComponent({
         {this.crowdfundingInfo.current === 1 && (
           <VerifyToken
             crowdfundingInfo={this.crowdfundingInfo}
+            chainInfo={this.chainInfo}
             onCloseDrawer={this.closeDrawer}
             ref={(value: any) => (this.verifyTokenRef = value)}
           />
