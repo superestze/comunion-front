@@ -3955,7 +3955,7 @@ export const services = {
 
   'misc@file-upload'(
     args: // file : File
-      FormData
+    FormData
   ) {
     return requestAdapter<{
       url: string
