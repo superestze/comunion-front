@@ -1,4 +1,11 @@
-import { FormInst, UForm, UFormItem, UInput, UInputNumberGroup } from '@comunion/components'
+import {
+  FormInst,
+  UForm,
+  UFormItem,
+  UInput,
+  UInputNumberGroup,
+  USelect
+} from '@comunion/components'
 import { MinusCircleOutlined, AddCircleOutlined } from '@comunion/icons'
 import { defineComponent, PropType, ref, computed } from 'vue'
 import { BountyInfo } from '../typing'
@@ -50,12 +57,31 @@ const PayDetailStage = defineComponent({
       payStageForm,
       payStagesTotal
     })
+
+    const token1SymbolOptions = [
+      ...new Set(['USDC', 'USD', 'RMB']).add(props.bountyInfo.token1Symbol)
+    ].map(label => {
+      return {
+        label,
+        value: label
+      }
+    })
+
+    const renderSelect = computed(() => (
+      <USelect
+        class="text-center w-30"
+        options={token1SymbolOptions}
+        v-model:value={props.bountyInfo.token1Symbol}
+      />
+    ))
+
     return {
       payStageForm,
       payStagesTotal,
       delStage,
       addStage,
-      showLeaveTipModal
+      showLeaveTipModal,
+      renderSelect
     }
   },
   render() {
@@ -74,7 +100,7 @@ const PayDetailStage = defineComponent({
               <div class="grid grid-cols-[1fr,56px,1fr]">
                 <UInputNumberGroup
                   class="flex-1"
-                  type="withUnit"
+                  type="withSelect"
                   inputProps={{
                     precision: 0,
                     min: 0,
@@ -86,7 +112,7 @@ const PayDetailStage = defineComponent({
                     status: this.payStagesTotal.usdcTotal > MAX_AMOUNT ? 'error' : undefined
                   }}
                   v-model:value={stage.token1Amount}
-                  renderUnit={() => renderUnit(this.bountyInfo.token1Symbol)}
+                  renderSelect={() => this.renderSelect}
                 ></UInputNumberGroup>
                 <div class="px-5 text-grey2 text-3xl">+</div>
                 <UInputNumberGroup
@@ -100,7 +126,8 @@ const PayDetailStage = defineComponent({
                       if (value === null) return 0
                       return Number(value)
                     },
-                    status: this.payStagesTotal.tokenTotal > MAX_AMOUNT ? 'error' : undefined
+                    status: this.payStagesTotal.tokenTotal > MAX_AMOUNT ? 'error' : undefined,
+                    disabled: !this.bountyInfo.token2Symbol
                   }}
                   v-model:value={stage.token2Amount}
                   renderUnit={() => renderUnit(this.bountyInfo.token2Symbol)}
@@ -135,7 +162,7 @@ const PayDetailStage = defineComponent({
                 ]}
               >
                 <UInput
-                  placeholder="Will pay after applicant complete this stage"
+                  placeholder="The applicant will get the rewards when do complete this stage"
                   type="textarea"
                   rows={1}
                   class="-mt-1"
