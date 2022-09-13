@@ -51,19 +51,19 @@ export default defineComponent({
     }
     return (
       <>
-        <div class="flex w-100vw h-100vh justify-center items-center bg-[#EDEDF2]">
+        <div class="flex bg-[#EDEDF2] h-100vh w-100vw justify-center items-center">
           <MoreNavigationPage />
-          <div class="flex w-1245px h-542px bg-white relative justify-end rounded-8px">
-            <div class="flex flex-col absolute h-606px w-635px text-white bg-primary left-100px -top-32px pl-64px pt-162px rounded-2px">
+          <div class="bg-white rounded-8px h-542px max-w-1245px relative">
+            <div class="bg-primary flex flex-col rounded-2px h-606px text-white pt-162px pl-64px -top-32px left-100px w-635px absolute">
               <p style={{ color: 'rgba(255,255,255,0.8)' }}>Welcome to Comunion</p>
-              <p class="mt-30px text-30px font-bold">The First</p>
-              <p class="mt-16px text-30px font-bold">Permissionless Economic Network </p>
+              <p class="font-bold mt-30px text-30px">The First</p>
+              <p class="font-bold mt-16px text-30px">Permissionless Economic Network </p>
               <div class="mt-214px">
                 <ULogo height={20} withText theme="white" />
               </div>
             </div>
             <div class="flex flex-col mr-101px w-308px">
-              <div class="mx-auto w-48px h-48px mt-60px mb-20px">
+              <div class="mx-auto h-48px mt-60px mb-20px w-48px">
                 <img
                   src={logo}
                   srcset={`${logo}, ${logo2} 2x, ${logo3} 3x`}
@@ -71,9 +71,9 @@ export default defineComponent({
                   class="w-full"
                 />
               </div>
-              <p class="text-[#111111] text-28px font-bold text-center">Comunion</p>
+              <p class="font-bold text-center text-[#111111] text-28px">Comunion</p>
               <p
-                class="mt-54px mb-20px text-center"
+                class="mt-54px text-center mb-20px"
                 style={{
                   color: 'rgba(17, 17, 17, 0.6)'
                 }}
@@ -81,19 +81,19 @@ export default defineComponent({
                 WALLET
               </p>
               <UButton
-                class="h-40px text-white text-16px w-full text-center relative mx-auto"
+                class="mx-auto h-40px text-white text-center w-full text-16px relative"
                 size="small"
                 type="primary"
                 loading={this.loading}
                 onClick={walletLogin}
               >
-                <WalletOutlined class="h-20px w-20px absolute left-17px top-10px" />
+                <WalletOutlined class="h-20px top-10px left-17px w-20px absolute" />
                 Connect to a wallet
               </UButton>
-              <div class="flex mb-24px mt-10 items-center">
+              <div class="flex mt-10 mb-24px items-center">
                 <div class="bg-[#666] h-[1px] w-[140px]" />
                 <div
-                  class="text-[14px] leading-5 w-[40px] text-center"
+                  class="text-center text-[14px] leading-5 w-[40px]"
                   style={{ color: 'rgba(17,17,17,0.6)' }}
                 >
                   OR
@@ -104,8 +104,8 @@ export default defineComponent({
             </div>
           </div>
         </div>
-        <div class="flex flex-col w-100vw h-100vh bg-[#EDEDF2] hidden">
-          <div class="mx-auto w-17 h-17 mt-25 mb-11.5">
+        {/* <div class="flex flex-col bg-[#EDEDF2] h-100vh w-100vw hidden">
+          <div class="mx-auto h-17 mt-25 mb-11.5 w-17">
             <img
               src={logo}
               srcset={`${logo}, ${logo2} 2x, ${logo3} 3x`}
@@ -113,30 +113,30 @@ export default defineComponent({
               class="w-full"
             />
           </div>
-          <p class="text-[#111111] text-[3rem] font-bold text-center">Comunion</p>
-          <p class="mt-25.5 mb-8 text-center text-[#111111]/6">WALLET</p>
+          <p class="font-bold text-center text-[#111111] text-[3rem]">Comunion</p>
+          <p class="mt-25.5 text-center mb-8 text-[#111111]/6">WALLET</p>
           <UButton
-            class="h-24 text-white text-4 w-146.5 text-center relative mx-auto rounded-3"
+            class="mx-auto rounded-3 h-24 text-white text-center text-4 w-146.5 relative"
             size="small"
             type="primary"
             loading={this.loading}
             onClick={walletLogin}
           >
-            <WalletOutlined class="h-8 w-8 absolute left-9.5 top-8" />
-            <span class="text-8 font-bold">Connect to a wallet</span>
+            <WalletOutlined class="h-8 top-8 left-9.5 w-8 absolute" />
+            <span class="font-bold text-8">Connect to a wallet</span>
           </UButton>
-          <div class="flex my-15 items-center w-146.5 mx-auto">
-            <div class="bg-[#666] h-[1px] flex-grow" />
+          <div class="flex mx-auto my-15 w-146.5 items-center">
+            <div class="flex-grow bg-[#666] h-[1px]" />
             <div
-              class="text-[1.625rem] leading-5 w-20 text-center font-bold"
+              class="font-bold text-center text-[1.625rem] leading-5 w-20"
               style={{ color: 'rgba(17,17,17,0.6)' }}
             >
               OR
             </div>
-            <div class="bg-[#666] h-[1px] flex-grow" />
+            <div class="flex-grow bg-[#666] h-[1px]" />
           </div>
           <OAuthSignWidget />
-        </div>
+        </div> */}
       </>
     )
   }
