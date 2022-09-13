@@ -81,7 +81,6 @@ export const Invest = defineComponent({
         '0'
       )
     })
-
     const changeFromValue = (value: string) => {
       if (mode.value === 'buy') {
         toValue.value = formatToFloor(Number(value) * props.info.buyPrice, 8)
@@ -227,10 +226,21 @@ export const Invest = defineComponent({
         console.error('error===>', error)
       }
     }
-
+    const netWorkChange = async (value: number) => {
+      if (walletStore.chainId !== value) {
+        await walletStore.ensureWalletConnected()
+        const result = await walletStore.wallet?.switchNetwork(value)
+        if (!result) {
+          return false
+        }
+        return true
+      }
+      return true
+    }
     const removeOrCancel = async () => {
-      //
       try {
+        const changeChain = await netWorkChange(props.info.chainId)
+        if (!changeChain) return
         if (founderOperation.value === 'Remove') {
           removeModal.value = true
         } else {
@@ -365,6 +375,8 @@ export const Invest = defineComponent({
     }
 
     const buyOrSell = async () => {
+      const changeChain = await netWorkChange(props.info.chainId)
+      if (!changeChain) return
       if (mode.value === 'buy') {
         const sellAmount = ethers.utils.parseUnits(toValue.value)
         if (buyIsMainCoin.value) {
