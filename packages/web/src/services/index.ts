@@ -2803,51 +2803,6 @@ export const services = {
       ...extract('POST', args, [], ['startupID', 'groupID', 'comerID'])
     })
   },
-  'startup@startup-create'(args: {
-    mode?: number
-    name: string
-    mission: string
-    overview: string
-    txHash: string
-    chainId?: number
-    hashTags: Array<string>
-  }) {
-    return requestAdapter<{
-      list: {
-        id: number
-        createdAt: string
-        updatedAt: string
-        isDeleted: boolean
-        comerID: number
-        name: string
-        /**
-         * @description NONE,ESG,NGO,DAO,COM
-         */
-        mode: string
-        logo: string
-        mission: string
-        chainID: number
-        blockChainAddress: string
-        tokenContractAddress: string
-        isSet: boolean
-        wallets: {
-          id: number
-          createdAt: string
-          updatedAt: string
-          isDeleted: boolean
-          comerID: number
-          startupID: number
-          walletName: string
-          walletAddress: string
-        }[]
-      }[]
-      total: number
-    }>({
-      url: replacePath('cores/startups', args),
-      method: 'POST',
-      ...extract('POST', args, [], [])
-    })
-  },
   'startup@comer-participated-startup-list'(
     args: {
       comerID: any
