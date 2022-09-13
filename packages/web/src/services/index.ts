@@ -149,13 +149,14 @@ export const services = {
     return requestAdapter<
       {
         /**
-   * @description
+   * @description 
 	ModuleStartup - 1
 	ModuleBounty - 2
 	ModuleCrowdfunding - 3
 	ModuleProposal - 4
 
 
+  
      */
         module: number
         hasCreated: boolean
@@ -2947,14 +2948,14 @@ export const services = {
   'startup@social-delete'(args: { startupID: any }) {
     return requestAdapter<{
       /**
-   * @description 	1-SocialEmail
-	2-SocialWebsite
-	3-SocialTwitter
-	4-SocialDiscord
-	5-SocialTelegram
-	6-SocialMedium
-	7-SocialFacebook
-	8-SocialLinktre
+   * @description 	1-SocialEmail 
+  2-SocialWebsite
+  3-SocialTwitter
+  4-SocialDiscord
+  5-SocialTelegram
+  6-SocialMedium
+  7-SocialFacebook
+  8-SocialLinktre
      */
       socialType: number
     }>({
@@ -2970,16 +2971,12 @@ export const services = {
       name: string
       logo: string
       cover: string
-      /**
-   * @description 	ModeESG Mode = 1
-	ModeNGO Mode = 2
-	ModeDAO Mode = 3
-	ModeCOM Mode = 4
-
-     */
+      txHash: string
+      chainId: number
       mode: number
       mission: string
       overview: string
+      hashTags: Array<string>
     }
   ) {
     return requestAdapter<{}>({

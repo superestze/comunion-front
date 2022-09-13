@@ -32,7 +32,6 @@ export default defineComponent({
     const startup = useStartup()
     const route = useRoute()
     startup.get(route.params.id as string)
-
     return {
       loading,
       currentEditComponent,
@@ -75,7 +74,9 @@ export default defineComponent({
                   mission: this.startup?.mission || '',
                   overview: this.startup?.overview || '',
                   blockChainAddress: this.startup?.blockChainAddress || '',
-                  chainID: this.startup?.chainID
+                  chainID: this.startup?.chainID,
+                  hashTags: this.startup?.hashTags.map(e => e.name) || [],
+                  isChain: this.startup?.isSet
                 }}
                 startupId={this.route.params.id as string}
               />

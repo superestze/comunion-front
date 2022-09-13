@@ -59,7 +59,10 @@ const CreateBountyForm = defineComponent({
         token2Amount: 0
       },
       deposit: 0,
-      agreement: false
+      agreement: false,
+      chainInfo: {
+        chainID: undefined
+      }
     })
 
     const addContact = () => {
@@ -237,7 +240,7 @@ const CreateBountyForm = defineComponent({
     }
 
     const onSubmit = async () => {
-      // const value = new Big(bountyInfo.deposit).times(Math.pow(10, 18)).toNumber()
+      // const value = new Big(bountyInfo.deposit).times(Math.pow(10, 18)).toNumber
       postSubmit()
     }
 
@@ -251,9 +254,18 @@ const CreateBountyForm = defineComponent({
       })
       if (!error) {
         bountyInfo.token2Symbol = data.tokenSymbol
+        netWorkChange(data.chainID)
+        bountyInfo.chainInfo = {
+          chainID: data.chainID
+        }
       }
     }
-
+    const netWorkChange = async (value: number) => {
+      if (walletStore.chainId !== value) {
+        await walletStore.ensureWalletConnected()
+        walletStore.wallet?.switchNetwork(value)
+      }
+    }
     watch(
       () => bountyInfo.startupID,
       () => {
