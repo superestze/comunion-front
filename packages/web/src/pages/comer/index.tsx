@@ -29,13 +29,13 @@ export default defineComponent({
   setup() {
     const route = useRoute()
     const { id } = route.query
-    console.log(id)
+    // console.log(id)
     const instance = useProfile(id as string)
     console.log(instance.view)
 
     instance.getProfileData()
 
-    const createdByMe = ref<boolean>(false)
+    const createdByMe = ref<boolean>(true)
     const systemTasks = ref<string[]>(['All', 'Startup', 'Bounty', 'dCrowdfunding', 'Proposal'])
     const selectedTasks = ref<string[]>(['All'])
 
@@ -51,7 +51,7 @@ export default defineComponent({
           moduleTag.tagCount.startupCnt === 0
         )
       }
-      console.log(selectedTasks.value)
+      // console.log(selectedTasks.value)
       const result = selectedTasks.value
         .map(value => {
           return moduleTag.tagCount[keyValue[value]]

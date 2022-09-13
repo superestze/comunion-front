@@ -6,7 +6,7 @@ import {
   UForm,
   UFormItemsFactory
 } from '@comunion/components'
-import { DeleteFilled, PenOutlined, PlusOutlined } from '@comunion/icons'
+import { DeleteFilled, PenOutlined } from '@comunion/icons'
 import { uniqueId } from 'lodash'
 import { defineComponent, ref, reactive, PropType, watch } from 'vue'
 import { btnGroup } from '../btnGroup'
@@ -147,12 +147,7 @@ export default defineComponent({
                 } else if (this.view) {
                   return
                 }
-                return (
-                  <Edit onHandleClick={handleEditMode(true)}>
-                    <PlusOutlined class="h-4 mr-3 w-4" />
-                    ADD NEW
-                  </Edit>
-                )
+                return <Edit onHandleClick={handleEditMode(true)}>Add New</Edit>
               }
             }}
           >
