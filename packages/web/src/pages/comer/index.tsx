@@ -103,7 +103,7 @@ export default defineComponent({
       }
       return this.selectedTasks.findIndex((task: string) => task === key) > -1
     }
-    console.log('profile', this.profile)
+    // console.log('profile', this.profile)
     return (
       <USpin show={this.loading}>
         <div class="mt-50px text-primary mb-10 u-h2"></div>

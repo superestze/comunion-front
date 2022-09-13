@@ -10,7 +10,8 @@ import {
   UImage,
   UInput,
   UInputGroup,
-  USelect
+  USelect,
+  message
 } from '@comunion/components'
 import { CloseOutlined, PlusOutlined } from '@comunion/icons'
 import dayjs from 'dayjs'
@@ -113,9 +114,10 @@ export default defineComponent({
             launchDate: this.info.launchDate ? String(this.info.launchDate) : '',
             wallets: this.info.composes
           }
-          console.log(params)
+          // console.log(params)
           await services['startup@startup-finance-setting-update'](params)
           this.loading = false
+          message.success('successfully saved')
         }
       })
     }

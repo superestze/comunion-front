@@ -2,6 +2,7 @@ import { UStartupLogo } from '@comunion/components'
 import { SettingOutlined } from '@comunion/icons'
 import { defineComponent, PropType } from 'vue'
 import { useRouter } from 'vue-router'
+import { useUserStore } from '@/stores'
 import { StartupItem } from '@/types'
 
 const StartupCard = defineComponent({
@@ -16,7 +17,8 @@ const StartupCard = defineComponent({
       default: () => false
     }
   },
-  setup(props, context) {
+  setup(props) {
+    const userStore = useUserStore()
     const router = useRouter()
 
     const basicSetting = (e: Event) => {
@@ -55,7 +57,7 @@ const StartupCard = defineComponent({
               })}
             </div>
           </div>
-          {props.view ? null : (
+          {userStore.profile?.comerID === props.startup.comerID && (
             <>
               <SettingOutlined
                 class="cursor-pointer rounded-2 h-6 mt-2 text-primary w-6"

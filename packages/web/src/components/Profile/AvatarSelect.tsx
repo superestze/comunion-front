@@ -33,18 +33,19 @@ const AvatarSelect = defineComponent({
     }
 
     const slots = {
-      header: () => <div class="px-2 py-3 u-title1">Choose your avatar</div>,
+      header: () => <div class="py-3 px-2 u-title1">Choose your avatar</div>,
       footer: () => (
-        <div class="text-right pb-3 pr-2">
-          <UButton class="w-41 h-12 mr-4" onClick={cancel}>
-            <span class="u-title2 text-primary">Cancel</span>
+        <div class="text-right pr-2 pb-3">
+          <UButton class="h-12 mr-4 w-41" onClick={cancel}>
+            <span class="text-primary u-title2">Cancel</span>
           </UButton>
-          <UButton class="w-41 h-12" onClick={submit} type="primary">
-            <span class="u-title2 text-white">Submit</span>
+          <UButton class="h-12 w-41" onClick={submit} type="primary">
+            <span class="text-white u-title2">Submit</span>
           </UButton>
         </div>
       )
     }
+
     return () => (
       <>
         <section>
@@ -55,12 +56,12 @@ const AvatarSelect = defineComponent({
             preset="card"
             v-model:show={props.show}
             mask-closable={false}
-            class="w-136 h-128 bg-white overflow-hidden"
+            class="bg-white h-128 w-136 overflow-hidden"
             on-update:show={cancel}
             positive-text={'Submit'}
             v-slots={slots}
           >
-            <div class="px-2 flex flex-wrap mt-6">
+            <div class="flex flex-wrap mt-6 px-2">
               {avatars.map(avatar => (
                 <div key={avatar.src} onClick={() => select(avatar.src)}>
                   <div>
@@ -73,7 +74,7 @@ const AvatarSelect = defineComponent({
                     </div>
                     <ULazyImage
                       src={avatar.src}
-                      class="h-20 w-20 rounded justify-between mb-6 mr-4 cursor-pointer"
+                      class="rounded cursor-pointer h-20 mr-4 mb-6 w-20 justify-between"
                     />
                   </div>
                 </div>

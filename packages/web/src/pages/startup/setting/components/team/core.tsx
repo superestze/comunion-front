@@ -1,4 +1,11 @@
-import { ULazyImage, UPaginatedList, UPaginatedListPropsType, message } from '@comunion/components'
+import {
+  ULazyImage,
+  UPaginatedList,
+  UPaginatedListPropsType,
+  message,
+  UModal,
+  UButton
+} from '@comunion/components'
 import { DeleteFilled, PenOutlined, SettingOutlined } from '@comunion/icons'
 import dayjs from 'dayjs'
 import { defineComponent, ref, computed, toRaw, provide } from 'vue'
@@ -6,7 +13,7 @@ import AddGroup from './addGroup'
 import AddTeamMember from './addTeamMember'
 import AddTeamMemberDialog, { editComerData } from './addTeamMemberDialog'
 import defaultAvatar from './assets/avatar.png?url'
-import module from './hover.module.css'
+import './style.css'
 import { ModuleTags } from '@/components/Tags'
 import { useGroup } from '@/pages/startup/hooks/useGroup'
 import { ServiceReturn, services } from '@/services'
@@ -102,16 +109,25 @@ export default defineComponent({
       editMemberVisible.value = true
     }
 
+    // showDeleteDialog
+    const showDeleteDialog = ref<boolean>(false)
+    const deleteItem = ref<any>(null)
+    const showDeleteLoading = ref<boolean>(false)
+
     const handleMemberAction = (type: string, item: editComerData) => {
       // member act
       if (type === 'del') {
+        showDeleteLoading.value = true
         services['startup@start-team-meabers-delete']({
           startupId: props.startupId,
           comerId: item.comerId
         }).then(res => {
           if (!res.error) {
-            message.success('Deleted successfully!')
+            message.success('successfully deleted')
             updateMemberList()
+            deleteItem.value = null
+            showDeleteDialog.value = false
+            showDeleteLoading.value = false
           }
         })
       } else if (type === 'edit') {
@@ -133,7 +149,10 @@ export default defineComponent({
       updateMemberList,
       handleCreateComer,
       handleMemberAction,
-      refreshMark
+      refreshMark,
+      showDeleteDialog,
+      deleteItem,
+      showDeleteLoading
     }
   },
   render() {
@@ -144,6 +163,25 @@ export default defineComponent({
         this.currentGroup = this.group[selectGroupIndex].id
         console.warn('currentGroup', this.currentGroup)
       }
+    }
+
+    const deleteDialogProps = {
+      header: () => <div class="py-3 px-2 u-title1">Remove team members</div>,
+      footer: () => (
+        <div class="text-right pr-2 pb-3">
+          <UButton class="h-12 mr-4 w-41" onClick={() => (this.showDeleteDialog = false)}>
+            <span class="text-primary u-title2">Cancel</span>
+          </UButton>
+          <UButton
+            class="h-12 w-41"
+            onClick={() => this.handleMemberAction('del', this.deleteItem)}
+            type="primary"
+            loading={this.showDeleteLoading}
+          >
+            <span class="text-white u-title2">Submit</span>
+          </UButton>
+        </div>
+      )
     }
 
     return (
@@ -189,7 +227,7 @@ export default defineComponent({
                   <div class="flex flex-col">
                     {list.map(item => (
                       <div
-                        class={`rounded-6px flex justify-between items-center cursor-pointer ${module['list-hover']}`}
+                        class={`rounded-6px flex justify-between items-center cursor-pointer startup-team-list`}
                       >
                         <div
                           class="flex m-4 w-1/2 items-center"
@@ -212,7 +250,7 @@ export default defineComponent({
                         <div class="text-grey3 u-body2">
                           Join {dayjs(item.joinedTime).format('MMMM D, YYYY')}
                         </div>
-                        <p class="mr-9 text-grey3 w-15 change">
+                        <p class={`mr-9 text-grey3 w-15 change`}>
                           <PenOutlined
                             class=" h-4 mr-4.5 w-4 hover:text-[#5331F4]"
                             onClick={() => this.handleMemberAction('edit', item)}
@@ -220,7 +258,10 @@ export default defineComponent({
                           {this.founderId !== item.comerId && (
                             <DeleteFilled
                               class=" h-4 w-4 hover:text-[#5331F4]"
-                              onClick={() => this.handleMemberAction('del', item)}
+                              onClick={() => {
+                                this.deleteItem = item
+                                this.showDeleteDialog = true
+                              }}
                             />
                           )}
                         </p>
@@ -232,6 +273,19 @@ export default defineComponent({
             />
           )}
         </div>
+        {/* delete confirm */}
+        <UModal
+          class="bg-white w-136 overflow-hidden"
+          v-model:show={this.showDeleteDialog}
+          v-slots={deleteDialogProps}
+          mask-closable={false}
+          size="small"
+          preset="card"
+        >
+          <p class="mb-2 py-4">
+            Are you sure you want to remove "{this.deleteItem?.comerName}" from the team list?
+          </p>
+        </UModal>
       </div>
     )
   }

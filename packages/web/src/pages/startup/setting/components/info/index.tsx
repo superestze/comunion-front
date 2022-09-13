@@ -6,7 +6,8 @@ import {
   UButton,
   UForm,
   UFormItemsFactory,
-  useUpload
+  useUpload,
+  message
 } from '@comunion/components'
 import { CustomRequest } from 'naive-ui/lib/upload/src/interface'
 import { defineComponent, ref, reactive, PropType, watch, CSSProperties, h, computed } from 'vue'
@@ -388,6 +389,7 @@ export default defineComponent({
             console.error(error)
           }
           this.loading = false
+          message.success('successfully saved')
         }
       })
     }
