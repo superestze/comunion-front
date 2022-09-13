@@ -41,7 +41,7 @@ const StartupCard = defineComponent({
         />
         <div class="flex h-full border-b-1 flex-1">
           <div class="flex-1">
-            <div class="mb-2 ml-2.5 u-title3">{props.startup.name}</div>
+            <div class="mb-2 u-title3">{props.startup.name}</div>
             <div class="flex items-center">
               {props.startup.hashTags.map((tag, i) => {
                 return i + 1 < 4 ? (
