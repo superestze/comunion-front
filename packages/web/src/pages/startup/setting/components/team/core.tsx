@@ -4,9 +4,10 @@ import {
   UPaginatedListPropsType,
   message,
   UModal,
+  UCard,
   UButton
 } from '@comunion/components'
-import { DeleteFilled, PenOutlined, SettingOutlined } from '@comunion/icons'
+import { DeleteFilled, PenOutlined, SettingOutlined, WarningFilled } from '@comunion/icons'
 import dayjs from 'dayjs'
 import { defineComponent, ref, computed, toRaw, provide } from 'vue'
 import AddGroup from './addGroup'
@@ -165,25 +166,6 @@ export default defineComponent({
       }
     }
 
-    const deleteDialogProps = {
-      header: () => <div class="py-3 px-2 u-title1">Remove team members</div>,
-      footer: () => (
-        <div class="text-right pr-2 pb-3">
-          <UButton class="h-12 mr-4 w-41" onClick={() => (this.showDeleteDialog = false)}>
-            <span class="text-primary u-title2">Cancel</span>
-          </UButton>
-          <UButton
-            class="h-12 w-41"
-            onClick={() => this.handleMemberAction('del', this.deleteItem)}
-            type="primary"
-            loading={this.showDeleteLoading}
-          >
-            <span class="text-white u-title2">Submit</span>
-          </UButton>
-        </div>
-      )
-    }
-
     return (
       <div class="bg-white border rounded-lg mb-6 min-h-205.5 relative overflow-hidden">
         <div class="flex flex-col my-9.5 mx-10">
@@ -274,17 +256,38 @@ export default defineComponent({
           )}
         </div>
         {/* delete confirm */}
-        <UModal
-          class="bg-white w-136 overflow-hidden"
-          v-model:show={this.showDeleteDialog}
-          v-slots={deleteDialogProps}
-          mask-closable={false}
-          size="small"
-          preset="card"
-        >
-          <p class="mb-2 py-4">
-            Are you sure you want to remove "{this.deleteItem?.comerName}" from the team list?
-          </p>
+        <UModal v-model:show={this.showDeleteDialog} mask-closable={false}>
+          <UCard
+            style={{ width: '540px' }}
+            closable={true}
+            class="!p-7"
+            onClose={() => (this.showDeleteDialog = false)}
+          >
+            <div class="flex -top-3 relative items-center">
+              <WarningFilled /> <span class="ml-4 u-title1">Remove team members</span>
+            </div>
+            <div class="mt-3 ml-12 u-body2">
+              Are you sure you want to remove "{this.deleteItem?.comerName}" from the team list?
+            </div>
+            <div class="flex mt-20 justify-end">
+              <UButton
+                type="primary"
+                ghost
+                class="mr-4 w-41"
+                onClick={() => (this.showDeleteDialog = false)}
+              >
+                Cancel
+              </UButton>
+              <UButton
+                type="primary"
+                class="w-41"
+                loading={this.showDeleteLoading}
+                onClick={() => this.handleMemberAction('del', this.deleteItem)}
+              >
+                Yes
+              </UButton>
+            </div>
+          </UCard>
         </UModal>
       </div>
     )
