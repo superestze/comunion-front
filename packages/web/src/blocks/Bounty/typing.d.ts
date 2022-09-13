@@ -26,6 +26,7 @@ export interface BountyInfo {
   }
   deposit: number
   agreement: boolean
+  chainInfo: { chainID: number | undefined }
 }
 
 export interface CreateBountyFormRef {

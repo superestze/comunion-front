@@ -149,7 +149,7 @@ export const services = {
     return requestAdapter<
       {
         /**
-   * @description
+   * @description 
 	ModuleStartup - 1
 	ModuleBounty - 2
 	ModuleCrowdfunding - 3
@@ -2802,6 +2802,53 @@ export const services = {
       ...extract('POST', args, [], ['startupID', 'groupID', 'comerID'])
     })
   },
+  'startup@startup-create'(
+    args: {
+      mode?: number,
+      name: string,
+      mission: string,
+      overview: string,
+      txHash: string,
+      chainId?: number,
+      hashTags: Array<string>
+    }
+  ) {
+    return requestAdapter<{
+      list: {
+        id: number
+        createdAt: string
+        updatedAt: string
+        isDeleted: boolean
+        comerID: number
+        name: string
+        /**
+         * @description NONE,ESG,NGO,DAO,COM
+         */
+        mode: string
+        logo: string
+        mission: string
+        chainID: number
+        blockChainAddress: string
+        tokenContractAddress: string
+        isSet: boolean
+        wallets: {
+          id: number
+          createdAt: string
+          updatedAt: string
+          isDeleted: boolean
+          comerID: number
+          startupID: number
+          walletName: string
+          walletAddress: string
+        }[]
+      }[]
+      total: number
+    }>({
+      url: replacePath('cores/startups', args),
+      method: 'POST',
+      ...extract('POST', args, [], [])
+    })
+  },
   'startup@comer-participated-startup-list'(
     args: {
       comerID: any
@@ -2947,7 +2994,7 @@ export const services = {
   'startup@social-delete'(args: { startupID: any }) {
     return requestAdapter<{
       /**
-   * @description 	1-SocialEmail
+   * @description 	1-SocialEmail 
 	2-SocialWebsite
 	3-SocialTwitter
 	4-SocialDiscord
@@ -2970,16 +3017,12 @@ export const services = {
       name: string
       logo: string
       cover: string
-      /**
-   * @description 	ModeESG Mode = 1
-	ModeNGO Mode = 2
-	ModeDAO Mode = 3
-	ModeCOM Mode = 4
-
-     */
+      txHash: string
+      chainId: number
       mode: number
       mission: string
       overview: string
+      hashTags: Array<string>
     }
   ) {
     return requestAdapter<{}>({
@@ -3957,7 +4000,7 @@ export const services = {
 
   'misc@file-upload'(
     args: // file : File
-    FormData
+      FormData
   ) {
     return requestAdapter<{
       url: string

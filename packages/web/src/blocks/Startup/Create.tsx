@@ -1,4 +1,4 @@
-import { message, UDrawer } from '@comunion/components'
+import { UDrawer } from '@comunion/components'
 import { defineComponent, ref } from 'vue'
 import CreateStartupForm from './CreateForm'
 import { useWalletStore } from '@/stores'
@@ -16,13 +16,14 @@ const CreateStartupBlock = defineComponent({
 
     const show = async () => {
       await walletStore.ensureWalletConnected()
-      if (!walletStore.isNetworkSupported) {
-        message.warning('Please switch to the supported network to create a startup')
-        // not supported network, try to switch
-        walletStore.openNetworkSwitcher()
-      } else {
-        visible.value = true
-      }
+      // if (!walletStore.isNetworkSupported) {
+      //   message.warning('Please switch to the supported network to create a startup')
+      //   // not supported network, try to switch
+      //   walletStore.openNetworkSwitcher()
+      // } else {
+      //   visible.value = true
+      // }
+      visible.value = true
     }
 
     const close = () => {

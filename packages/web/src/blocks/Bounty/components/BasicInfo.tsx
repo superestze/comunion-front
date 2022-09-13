@@ -17,7 +17,7 @@ import { useRouter } from 'vue-router'
 import { BountyInfo, ContactType } from '../typing'
 import RichEditor from '@/components/Editor'
 import { services } from '@/services'
-import { useUserStore } from '@/stores'
+import { useUserStore, useWalletStore } from '@/stores'
 import { validateEmail } from '@/utils/type'
 
 export const MAX_AMOUNT = 9999
@@ -47,6 +47,7 @@ const BountyBasicInfo = defineComponent({
   },
   emits: ['delContact', 'addContact', 'closeDrawer'],
   setup(props, ctx) {
+    const walletStore = useWalletStore()
     const router = useRouter()
     const contactOptions = ref([
       { label: 'Email', value: 1 },
@@ -70,11 +71,12 @@ const BountyBasicInfo = defineComponent({
             trigger: ['change', 'blur']
           },
           {
-            validator: (rule, value) => {
-              // 5.9Incomplete function
-              // startupID Determine whether the current network is consistent with the network of choice
-              console.log(value)
-              return false
+            validator: () => {
+              let status = false
+              if (walletStore.chainId === props.bountyInfo.chainInfo.chainID) {
+                status = true
+              }
+              return status
             },
             renderMessage: () => {
               return (
@@ -303,7 +305,6 @@ const BountyBasicInfo = defineComponent({
     const bountyBasicInfoRules = getFieldsRules(bountyBasicInfoFields.value)
     const getStartupByComerId = async () => {
       const comerID = userStore.profile?.comerID
-
       try {
         const { error, data } = await services['bounty@bounty-startups']({
           comerID

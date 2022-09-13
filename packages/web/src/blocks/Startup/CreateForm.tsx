@@ -12,7 +12,8 @@ import { defineComponent, PropType, reactive, ref, CSSProperties, h } from 'vue'
 import { STARTUP_TYPES, StartupTypesType, getStartupNumberFromType } from '@/constants'
 import { useStartupContract } from '@/contracts'
 import { services } from '@/services'
-import { useChainStore } from '@/stores'
+import { useWalletStore, useChainStore } from '@/stores'
+import { useContractStore } from '@/stores/contract'
 type chainSelectOption = {
   label: string
   logo: string
@@ -25,16 +26,19 @@ const CreateStartupForm = defineComponent({
     }
   },
   setup(props, ctx) {
+    const walletStore = useWalletStore()
     const chainStore = useChainStore()
+    const contractStore = useContractStore()
     const supportedNetworks = reactive(chainStore.supportedNetworks)
     const defaultModel = {
-      nextwork: '',
+      nextwork: undefined,
       // logo: '',
       switch: false,
       name: '',
       type: undefined,
       mission: '',
-      overview: ''
+      overview: '',
+      tags: []
       // tokenContract: '',
       // composes: [
       //   {
@@ -109,24 +113,43 @@ const CreateStartupForm = defineComponent({
               throw new Error('Startup name already exists')
             }
             try {
-              await startupContract.newStartup(
-                [
-                  model.name,
-                  model.type === undefined
-                    ? 0
-                    : getStartupNumberFromType(model.type as StartupTypesType),
-                  // model.tags,
-                  // model.logo,
-                  model.nextwork,
-                  model.mission,
-                  // model.tokenContract,
-                  // model.composes.map(item => [item.name, item.address]),
-                  model.overview,
-                  true
-                ],
-                'Waiting to submit all contents to blockchain for creating startup',
-                `Startup "${model.name}" is Creating`
-              )
+              if (model.switch) {
+                await startupContract.newStartup(
+                  [
+                    model.name,
+                    model.type === undefined
+                      ? 0
+                      : getStartupNumberFromType(model.type as StartupTypesType),
+                    // model.tags,
+                    // model.logo,
+                    model.nextwork === undefined ? 0 : model.nextwork,
+                    model.mission,
+                    // model.tokenContract,
+                    // model.composes.map(item => [item.name, item.address]),
+                    model.overview,
+                    true
+                  ],
+                  model,
+                  'Waiting to submit all contents to blockchain for creating startup',
+                  `Startup "${model.name}" is Creating`
+                )
+              } else {
+                // console.log(model.type === undefined)
+                // return
+                const res = await contractStore.createStartupSuccessAfter({
+                  nextwork: model.nextwork === undefined ? 0 : model.nextwork,
+                  switch: false,
+                  name: model.name,
+                  type: model.type ? model.type : 0,
+                  mission: model.mission,
+                  overview: model.overview,
+                  tags: model.tags,
+                  txHash: ''
+                })
+                if (!res?.data) {
+                  throw new Error('fail')
+                }
+              }
               ctx.emit('success', model)
               message.success(
                 'Success send transaction to the chain, please wait for the confirmation'
@@ -145,12 +168,11 @@ const CreateStartupForm = defineComponent({
         }
       })
     }
-
-    const switchChange = (value: boolean) => {
-      console.log(value)
-    }
-    const netWorkChange = (value: number) => {
-      console.log(value)
+    const netWorkChange = async (value: number) => {
+      if (walletStore.chainId !== value) {
+        await walletStore.ensureWalletConnected()
+        walletStore.wallet?.switchNetwork(value)
+      }
     }
     const infoFields: FormFactoryField[] = [
       // {
@@ -272,16 +294,24 @@ const CreateStartupForm = defineComponent({
             style.background = '#00BFA5'
           }
           return style
-        },
-        onUpdateValue: (value: boolean) => switchChange(value)
+        }
       },
       {
         t: 'select',
         title: 'Type',
         name: 'type',
-        required: true,
         placeholder: 'Select startup type',
-        options: STARTUP_TYPES.map(item => ({ label: item, value: item }))
+        options: STARTUP_TYPES.map((item, index) => ({ label: item, value: index + 1 })),
+        rules: [
+          {
+            required: true,
+            validator: (rule, value) => {
+              return !!value
+            },
+            message: 'Type cannot be blank',
+            trigger: 'blur'
+          }
+        ]
       },
       {
         t: 'startupTags',
