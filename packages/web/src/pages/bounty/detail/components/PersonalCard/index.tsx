@@ -3,7 +3,7 @@ import { useRouter } from 'vue-router'
 import Avatar from '@/components/Avatar'
 
 type ProfileType = {
-  skills: string
+  skills: string[]
   comerId: string
   name: string
   avatar: string
@@ -36,9 +36,8 @@ export default defineComponent({
     const router = useRouter()
 
     const normalize = computed<ProfileType>(() => {
-      const arr = props.profile[props.keyMap.skills]
       return {
-        skills: Array.isArray(arr) ? arr.map((skill: string) => skill).join(' | ') : '',
+        skills: props.profile[props.keyMap.skills],
         comerId: props.profile[props.keyMap.comerId],
         name: props.profile[props.keyMap.name],
         avatar: props.profile[props.keyMap.avatar],
@@ -57,10 +56,21 @@ export default defineComponent({
     }
     return (
       <div class="flex">
-        <Avatar avatar={this.normalize.avatar} onClickAvatar={toComerDetail} />
-        <div class="flex flex-col ml-5 justify-center">
-          <div class="mb-2 u-title1">{this.normalize.name}</div>
-          <div class="mb-2">{this.normalize.skills}</div>
+        <Avatar avatar={this.normalize.avatar} onClickAvatar={toComerDetail} class="!h-12 !w-12" />
+        <div class="flex-1 ml-4 ">
+          <div class="mb-2 u-title3">{this.normalize.name}</div>
+          <div class="flex mb-2 items-center">
+            {this.normalize.skills.map((tag, i) => {
+              return i + 1 < 4 ? (
+                <>
+                  {i !== 0 && <i class="bg-grey5 h-3 mx-1 w-1px"></i>}
+                  <span class="u-tag" key={i}>
+                    {tag}
+                  </span>
+                </>
+              ) : null
+            })}
+          </div>
           <div class="mb-2 text-grey3 u-body2">
             {this.normalize.email ? `${this.normalize.email} · ` : ''}
             {this.normalize.location ? `${this.normalize.location} · ` : ''}

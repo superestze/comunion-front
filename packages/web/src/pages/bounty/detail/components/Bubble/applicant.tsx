@@ -1,4 +1,4 @@
-import { UButton, UScrollbar } from '@comunion/components'
+import { UButton } from '@comunion/components'
 import { format } from 'timeago.js'
 import { defineComponent, PropType, ref, computed } from 'vue'
 import {
@@ -123,32 +123,29 @@ export default defineComponent({
           comerId={this.applicant?.comerID as unknown as string}
           v-slots={{
             default: () => (
-              <div class="flex flex-col flex-grow ml-5">
-                <div class="flex justify-between">
-                  <p class="mb-2 u-title1">{this.applicant?.name}</p>
-                  <div class="flex items-center">
-                    <p class="text-14px text-grey3 mr-16px">{this.formatDate}</p>
-                    {this.bountyRole === USER_ROLE.FOUNDER && (
-                      <UButton
-                        disabled={
-                          this.approveDisabled || this.bountyStatus >= BOUNTY_STATUS.WORKSTARTED
-                        }
-                        class="w-120px"
-                        type="primary"
-                        size="small"
-                        onClick={triggerDialog}
-                      >
-                        Approve
-                      </UButton>
-                    )}
+              <div class="flex-1 ml-4">
+                <div class="flex items-center">
+                  <p class="flex-1 mb-2 u-title3">{this.applicant?.name}</p>
+                  <p class="mr-16px text-14px text-grey3">{this.formatDate}</p>
+                  {this.bountyRole === USER_ROLE.FOUNDER && (
+                    <UButton
+                      disabled={
+                        this.approveDisabled || this.bountyStatus >= BOUNTY_STATUS.WORKSTARTED
+                      }
+                      class="w-120px"
+                      type="primary"
+                      size="small"
+                      onClick={triggerDialog}
+                    >
+                      Approve
+                    </UButton>
+                  )}
+                </div>
+                <div class="bg-purple rounded-md mt-3 py-4 px-6 ">
+                  <div class="text-black max-h-20 overflow-auto u-body2">
+                    {this.applicant?.description}
                   </div>
                 </div>
-                <UScrollbar
-                  style={{ maxHeight: '120px' }}
-                  class="bg-purple rounded-8px text-black mt-12px py-16px px-24px overflow-hidden"
-                >
-                  <p>{this.applicant?.description}</p>
-                </UScrollbar>
               </div>
             )
           }}

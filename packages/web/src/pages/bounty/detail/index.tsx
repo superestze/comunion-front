@@ -32,7 +32,8 @@ export default defineComponent({
     const bountyContractStore = useBountyContractStore()
     const bountyContract = ref()
     const postUpdate = ref<any>()
-    const gap = ref<number>(0)
+    const gapValue = ref<number>(0)
+    const gapUnit = ref<string>('day')
     const chainInfo = computed(() =>
       getChainInfoByChainId(bountySection.value.detail?.chainID as number)
     )
@@ -61,10 +62,20 @@ export default defineComponent({
           isInit = true
         }
         if (bountyContractInfo.timeLock) {
-          gap.value = dayjs(new Date((bountyContractInfo.timeLock || 0) * 1000)).diff(
+          const days = dayjs(new Date((bountyContractInfo.timeLock || 0) * 1000)).diff(
             dayjs(new Date()),
             'day'
           )
+          if (days > 0) {
+            gapUnit.value = 'day'
+            gapValue.value = days
+          } else {
+            gapUnit.value = 'hour'
+            gapValue.value = dayjs(new Date((bountyContractInfo.timeLock || 0) * 1000)).diff(
+              dayjs(new Date()),
+              'hour'
+            )
+          }
         }
       }
     )
@@ -75,7 +86,8 @@ export default defineComponent({
       bountySection,
       loading,
       bountyContractInfo: bountyContractStore.bountyContractInfo,
-      gap,
+      gapValue,
+      gapUnit,
       chainInfo,
       bountyExpired
     }
@@ -172,7 +184,7 @@ export default defineComponent({
                               trigger: () => (
                                 <ClockOutlined
                                   class={`${
-                                    this.gap >= 0 ? 'text-grey4' : 'text-error'
+                                    this.gapValue >= 0 ? 'text-grey4' : 'text-error'
                                   } w-4 h-4 mr-2.5`}
                                 />
                               ),
@@ -185,11 +197,12 @@ export default defineComponent({
                             }}
                           </UTooltip>
                           {/* just applicant show countdown tips */}
-                          {this.bountyContractInfo.role === USER_ROLE.FOUNDER && this.gap >= 0 ? (
+                          {this.bountyContractInfo.role === USER_ROLE.FOUNDER &&
+                          this.gapValue >= 0 ? (
                             <p class="flex mr-4 text-grey3 items-center u-body3">
                               Founder can unlock after
-                              <span class="mx-1 text-parimary">{this.gap}</span>
-                              {this.gap > 1 ? `${pluralize('day')}` : 'day'}
+                              <span class="mx-1 text-parimary">{this.gapValue}</span>
+                              {this.gapValue > 1 ? `${pluralize(this.gapUnit)}` : this.gapUnit}
                             </p>
                           ) : (
                             <p class="flex text-error mr-4 items-center u-body3">
@@ -233,7 +246,7 @@ export default defineComponent({
               {this.bountySection.founder && (
                 <PersonalCard
                   profile={this.bountySection.founder}
-                  class="mt-20px"
+                  class="mt-5"
                   keyMap={{
                     skills: 'applicantsSkills',
                     comerId: 'comerID',
@@ -261,7 +274,7 @@ export default defineComponent({
               {(this.bountySection.approvedPeople?.comerID || 0) > 0 && (
                 <PersonalCard
                   profile={this.bountySection.approvedPeople}
-                  class="mt-20px"
+                  class="mt-5"
                   keyMap={{
                     skills: 'applicantsSkills',
                     comerId: 'comerID',

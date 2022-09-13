@@ -47,7 +47,6 @@ export default defineComponent({
         name: 'update',
         placeholder: '',
         minlength: 100,
-        required: true,
         type: 'textarea',
         rules: [
           {
