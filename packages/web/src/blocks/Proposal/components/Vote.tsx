@@ -184,12 +184,14 @@ export const Vote = defineComponent({
                     class={[{ 'max-w-184': this.selectedVotingInfo?.value !== BASIC_TYPE }]}
                   ></UInput>
                 </UFormItem>
-                {choiceIndex !== 0 && this.selectedVotingInfo?.value !== BASIC_TYPE && (
-                  <div class="flex-1 flex items-center justify-end">
-                    <MinusCircleOutlined
-                      class="mr-3 text-error cursor-pointer"
-                      onClick={() => this.delVoteChoices(choiceIndex)}
-                    />
+                {this.selectedVotingInfo?.value !== BASIC_TYPE && (
+                  <div class="flex-1 flex items-center justify-start ml-4">
+                    {choiceIndex !== 0 && (
+                      <MinusCircleOutlined
+                        class="mr-3 text-error cursor-pointer"
+                        onClick={() => this.delVoteChoices(choiceIndex)}
+                      />
+                    )}
                     {this.proposalInfo.voteChoices?.length === choiceIndex + 1 &&
                       this.proposalInfo.voteChoices?.length < 20 && (
                         <AddCircleOutlined class="cursor-pointer" onClick={this.addVoteChoices} />
@@ -224,7 +226,7 @@ export const Vote = defineComponent({
                 format="yyyy-MM-dd HH:mm"
                 class="w-full"
                 isDateDisabled={(current: number) => {
-                  return dayjs(current) < dayjs()
+                  return dayjs(current) < dayjs().startOf('day')
                 }}
               ></UDatePicker>
             </UFormItem>
@@ -251,7 +253,7 @@ export const Vote = defineComponent({
                 format="yyyy-MM-dd HH:mm"
                 class="w-full"
                 isDateDisabled={(current: number) => {
-                  return dayjs(current) < dayjs()
+                  return dayjs(current) < dayjs().startOf('day')
                 }}
               ></UDatePicker>
             </UFormItem>

@@ -32,6 +32,8 @@ export const signerProposalTypes = {
     { name: 'Choice', type: 'string[]' },
     { name: 'Start', type: 'uint256' },
     { name: 'End', type: 'uint256' },
-    { name: 'blockHeight', type: 'uint256' }
+    { name: 'BlockHeight', type: 'uint256' },
+    { name: 'Description', type: 'string' },
+    { name: 'Discussion', type: 'string' }
   ]
 }

@@ -12,8 +12,8 @@ import {
 import {
   CloseOutlined,
   MoreFilled,
-  SignOutlined,
   ShareOutlined,
+  SignOutlined,
   UrlOutlined
 } from '@comunion/icons'
 import { shortenAddress } from '@comunion/utils'
@@ -281,6 +281,12 @@ const ProposalDetail = defineComponent({
       }
     }
 
+    const toComerDetail = (startupId?: number) => {
+      if (startupId) {
+        router.push({ path: `/comer/${startupId}` })
+      }
+    }
+
     const blockExploreUrl = computed(() => {
       if (strategyInfo.value.chainId) {
         const findRes = allNetworks.find(network => network.chainId === strategyInfo.value.chainId)
@@ -326,7 +332,8 @@ const ProposalDetail = defineComponent({
       deleteProposal,
       showVerifyModal,
       toIPFSRaw,
-      closeIPFSDetail
+      closeIPFSDetail,
+      toComerDetail
     }
   },
   render() {
@@ -340,20 +347,31 @@ const ProposalDetail = defineComponent({
             </span>
           </div>
           <div class="flex items-center w-7 h-7">
-            <UStartupLogo
-              width="7"
-              height="7"
-              src={this.proposalInfo?.startupLogo || ''}
-              class="rounded-full"
-            />
-            <div class="text-primary mx-4">
-              {shortenAddress(this.proposalInfo?.authorWalletAddress || '')}
+            <div
+              class="flex items-center cursor-pointer"
+              onClick={() => this.toComerDetail(this.proposalInfo?.startupId)}
+            >
+              <div class="w-7 h-7">
+                <UStartupLogo
+                  width="7"
+                  height="7"
+                  src={this.proposalInfo?.startupLogo || ''}
+                  class="rounded-full"
+                />
+              </div>
+              <div class="text-primary mx-4">
+                {shortenAddress(this.proposalInfo?.authorWalletAddress || '')}
+              </div>
             </div>
             <UPopover
               trigger="click"
               placement="bottom"
               v-slots={{
-                trigger: () => <MoreFilled class="cursor-pointer" />,
+                trigger: () => (
+                  <div class="w-7 h-7">
+                    <MoreFilled class="cursor-pointer" />
+                  </div>
+                ),
                 default: () => (
                   <div class="flex flex-col">
                     <UButton size="small" quaternary onClick={this.duplicateProposal}>
@@ -397,9 +415,15 @@ const ProposalDetail = defineComponent({
               <div
                 class={[
                   'text-white text-center py-3 rounded-lg ',
-                  this.selectedChoice ? 'bg-primary1 cursor-pointer' : 'bg-grey5 cursor-not-allowed'
+                  this.selectedChoice && this.proposalInfo?.status === 2 && this.votePower
+                    ? 'bg-primary1 cursor-pointer'
+                    : 'bg-grey5 cursor-not-allowed'
                 ]}
-                onClick={() => (this.selectedChoice ? this.showVoteInfo() : null)}
+                onClick={() =>
+                  this.selectedChoice && this.proposalInfo?.status === 2 && this.votePower
+                    ? this.showVoteInfo()
+                    : null
+                }
               >
                 Vote
               </div>
@@ -408,7 +432,9 @@ const ProposalDetail = defineComponent({
           <UTable>
             <thead>
               <tr>
-                <th>Votes({this.pagination.total})</th>
+                <th>
+                  <div class="u-title3 px-7">Votes({this.pagination.total})</div>
+                </th>
                 <th></th>
                 <th></th>
               </tr>
@@ -416,26 +442,32 @@ const ProposalDetail = defineComponent({
             <tbody>
               {this.voteRecords?.map(record => (
                 <tr>
-                  <td class="flex items-center">
-                    <ULazyImage src={record.voterComerAvatar} class="w-7 h-7 mr-3" />
-                    <span class="u-body4 text-primary">
-                      {shortenAddress(record.voterWalletAddress)}
-                    </span>
+                  <td>
+                    <div class="flex items-center ml-7">
+                      <ULazyImage src={record.voterComerAvatar} class="w-7 h-7 mr-3" />
+                      <span class="u-body4 text-primary">
+                        {shortenAddress(record.voterWalletAddress)}
+                      </span>
+                    </div>
                   </td>
-                  <td>{record.choiceItemName}</td>
-                  <td class="flex justify-end items-center">
-                    <span>{record.votes}</span>
-                    <span class="mx-2">{this.strategyInfo?.voteSymbol}</span>
-                    <SignOutlined
-                      class="cursor-pointer"
-                      onClick={() =>
-                        this.showVerifyModal(
-                          record.ipfsHash,
-                          record.voterWalletAddress,
-                          record.choiceItemName
-                        )
-                      }
-                    />
+                  <td>
+                    <div class="flex items-center">{record.choiceItemName}</div>
+                  </td>
+                  <td>
+                    <div class="flex justify-end items-center">
+                      <span>{record.votes}</span>
+                      <span class="mx-2">{this.strategyInfo?.voteSymbol}</span>
+                      <SignOutlined
+                        class="cursor-pointer mr-5"
+                        onClick={() =>
+                          this.showVerifyModal(
+                            record.ipfsHash,
+                            record.voterWalletAddress,
+                            record.choiceItemName
+                          )
+                        }
+                      />
+                    </div>
                   </td>
                 </tr>
               ))}

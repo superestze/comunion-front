@@ -1,5 +1,6 @@
 import { UCard, UScrollList } from '@comunion/components'
 import { defineComponent, reactive, ref, watch } from 'vue'
+import { useRouter } from 'vue-router'
 import { ProposalCard } from '@/pages/governance/components/ProposalCard'
 import { ServiceReturn, services } from '@/services'
 import { useUserStore } from '@/stores'
@@ -13,6 +14,7 @@ export default defineComponent({
     }
   },
   setup(props) {
+    const router = useRouter()
     const userStore = useUserStore()
     const pagination = reactive<IPagination>({
       pageSize: 5,
@@ -45,6 +47,10 @@ export default defineComponent({
       }
     }
 
+    const toProposalDetail = async (proposalId: number) => {
+      router.push({ path: `/governance/${proposalId}` })
+    }
+
     watch(
       () => props.createdByMe,
       () => {
@@ -61,14 +67,15 @@ export default defineComponent({
     return {
       pagination,
       proposalList,
-      getProposalList
+      getProposalList,
+      toProposalDetail
     }
   },
   render() {
     console.log('proposal render')
 
     return (
-      <UCard title="PROPPOSAL" class="mb-6">
+      <UCard title="PROPOSAL" class="mb-6">
         <UScrollList
           triggered={this.pagination.loading}
           page={this.pagination.page}
@@ -78,7 +85,12 @@ export default defineComponent({
         >
           {this.proposalList.map(proposal => (
             <div>
-              <ProposalCard proposalData={proposal} />
+              <div
+                class="cursor-pointer"
+                onClick={() => this.toProposalDetail(proposal.proposalId)}
+              >
+                <ProposalCard proposalData={proposal} />
+              </div>
               <div class="h-px w-[90%] bg-grey5 ml-auto"></div>
             </div>
           ))}

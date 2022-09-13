@@ -39,9 +39,9 @@ export default defineComponent({
               class="rounded !object-contain"
             />
           </div>
-          <div class="flex flex-col ml-6">
+          <div class="flex-1 flex flex-col ml-6 truncate">
             <div class="flex items-center mb-12px">
-              <span class="u-h2 truncate">{this.startup?.name}</span>
+              <span class="u-h2 w-full truncate">{this.startup?.name}</span>
             </div>
             <div class="flex">
               {(this.startup?.mode || 0) > 0 && (
