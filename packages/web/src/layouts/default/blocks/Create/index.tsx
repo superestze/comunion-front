@@ -47,7 +47,10 @@ const CreateBlock = defineComponent({
 
     const getFollowedStartupByComerId = async (comerID: number | undefined) => {
       try {
-        hasFollowedStartup.value = true
+        const { error, data } = await services['account@related-statups']()
+        if (!error) {
+          hasFollowedStartup.value = !!(data || []).length
+        }
       } catch (error) {
         console.error('error', error)
       }
@@ -81,8 +84,7 @@ const CreateBlock = defineComponent({
       if (hasFollowedStartup.value) {
         createProposalRef.value?.show()
       } else {
-        createProposalRef.value?.show()
-        // NoFollowedStartupTipRef.value?.show()
+        NoFollowedStartupTipRef.value?.show()
       }
     }
 

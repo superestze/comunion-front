@@ -153,7 +153,8 @@ export default defineComponent({
             }
             const erc20Token = tokenContract(contractAddress, provider)
             const decimal = await erc20Token.decimals()
-            govSetting.strategies?.push({ ...strategy, voteDecimals: decimal, symbol })
+            // govSetting.strategies?.push({ ...strategy, voteDecimals: decimal, symbol })
+            govSetting.strategies = [{ ...strategy, voteDecimals: decimal, voteSymbol: symbol }]
             strategyModal.value = undefined
           } catch (error) {
             contractAddressExist.value = false
