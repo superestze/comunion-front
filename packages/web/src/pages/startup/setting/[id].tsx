@@ -76,7 +76,7 @@ export default defineComponent({
                   blockChainAddress: this.startup?.blockChainAddress || '',
                   chainID: this.startup?.chainID,
                   hashTags: this.startup?.hashTags.map(e => e.name) || [],
-                  isChain: this.startup?.isSet
+                  isChain: this.startup?.onChain
                 }}
                 startupId={this.route.params.id as string}
               />

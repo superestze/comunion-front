@@ -150,10 +150,10 @@ export const services = {
       {
         /**
    * @description 
-	ModuleStartup - 1
-	ModuleBounty - 2
-	ModuleCrowdfunding - 3
-	ModuleProposal - 4
+  ModuleStartup - 1
+  ModuleBounty - 2
+  ModuleCrowdfunding - 3
+  ModuleProposal - 4
 
 
   
@@ -3078,6 +3078,7 @@ export const services = {
        * @description 暂时未找到在哪里使用过的字段，然后又没有相关数据库文档，暂时作为是否上链使用
        */
       isSet: boolean
+      onChain: boolean
       kyc: string
       contractAudit: string
       hashTags: {
@@ -3954,7 +3955,7 @@ export const services = {
 
   'misc@file-upload'(
     args: // file : File
-    FormData
+      FormData
   ) {
     return requestAdapter<{
       url: string

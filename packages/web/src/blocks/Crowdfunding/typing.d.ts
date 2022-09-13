@@ -1,6 +1,6 @@
 export interface CrowdfundingInfo {
   current: number
-  startupId?: number
+  startupId: number | undefined
   startupName?: string
   sellTokenContract?: string
   sellTokenName: string
@@ -24,7 +24,10 @@ export interface CrowdfundingInfo {
   detail: string
   description?: string
 }
-
+export type chainInfoType = {
+  chainID: number | undefined
+  onChain: boolean
+}
 export interface CrowdfundingFormRef {
   crowdfundingInfo: CrowdfundingInfo
   toPreviousStep?: () => void
