@@ -3,6 +3,7 @@ import { EmptyFilled } from '@comunion/icons'
 import { defineComponent, ref } from 'vue'
 import BountiesCard from '@/pages/bounty/components/BountyCard'
 import { ServiceReturn, services } from '@/services'
+import '../../assets/style.css'
 
 type BountyType = NonNullable<ServiceReturn<'bounty@startup-bounty-list'>>['rows']
 
@@ -33,9 +34,11 @@ export default defineComponent({
   },
   render() {
     return (
-      <UCard title="BOUNTIES" class="mb-6">
+      <UCard title="BOUNTIES" class="mb-6 last-item-noborder">
         {Array.isArray(this.bounties) && this.bounties.length > 0 ? (
-          this.bounties.map(item => <BountiesCard startup={item} key={item.bountyId} miniCard />)
+          this.bounties.map(item => (
+            <BountiesCard class="_item" startup={item} key={item.bountyId} miniCard />
+          ))
         ) : (
           <UNoContent textTip="TO BE EMPTY">
             <EmptyFilled />
