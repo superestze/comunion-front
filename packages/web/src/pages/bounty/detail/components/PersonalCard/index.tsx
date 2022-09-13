@@ -60,16 +60,17 @@ export default defineComponent({
         <div class="flex-1 ml-4 ">
           <div class="mb-2 u-title3">{this.normalize.name}</div>
           <div class="flex mb-2 items-center">
-            {this.normalize.skills.map((tag, i) => {
-              return i + 1 < 4 ? (
-                <>
-                  {i !== 0 && <i class="bg-grey5 h-3 mx-1 w-1px"></i>}
-                  <span class="u-tag" key={i}>
-                    {tag}
-                  </span>
-                </>
-              ) : null
-            })}
+            {Array.isArray(this.normalize.skills) &&
+              this.normalize.skills.map((tag, i) => {
+                return i + 1 < 4 ? (
+                  <>
+                    {i !== 0 && <i class="bg-grey5 h-3 mx-1 w-1px"></i>}
+                    <span class="u-tag" key={i}>
+                      {tag}
+                    </span>
+                  </>
+                ) : null
+              })}
           </div>
           <div class="mb-2 text-grey3 u-body2">
             {this.normalize.email ? `${this.normalize.email} · ` : ''}
