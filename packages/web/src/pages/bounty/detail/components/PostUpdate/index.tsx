@@ -5,6 +5,7 @@ import { APPLICANT_STATUS, BOUNTY_STATUS, USER_ROLE } from '@/constants'
 import { useBountyContractStore } from '@/stores/bountyContract'
 
 export default defineComponent({
+  name: 'PostUpdate',
   props: {
     disabled: {
       type: Boolean,

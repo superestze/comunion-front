@@ -3,7 +3,6 @@ import dayjs from 'dayjs'
 import { format } from 'timeago.js'
 import { defineComponent, PropType, computed } from 'vue'
 import { useBountyContractWrapper } from '../../hooks/useBountyContractWrapper'
-import styles from './activity.module.css'
 import Bubble from './core'
 import { ItemType } from './getItemType'
 import { transcationUrl } from '@/constants'
@@ -33,41 +32,38 @@ type TransactionContent = {
 }
 
 function normalMessage(obj: NormalMessage) {
-  const className = `${styles.normal_message} normal-message bg-purple rounded-8px text-black mt-12px py-16px px-24px overflow-hidden`
   return (
-    <div class="flex flex-col flex-grow ml-5">
-      <div class="flex justify-between">
-        <p class="mb-2 u-title1">{obj.name}</p>
-        <div class="flex items-center">
-          <p class="text-14px text-grey3 mr-16px">{obj.date}</p>
-        </div>
+    <div class="flex-1 ml-4">
+      <div class="flex justify-between items-center">
+        <p class="mb-2 u-title3">{obj.name}</p>
+        <p class="mr-16px text-14px text-grey3">{obj.date}</p>
       </div>
-      <div class={className} innerHTML={obj.content} />
+      <div class={`bg-purple rounded-md  mt-3 py-4 px-6 `}>
+        <div class={` text-black u-body2 max-h-20 overflow-auto`} innerHTML={obj.content}></div>
+      </div>
     </div>
   )
 }
 
 function transactionMessage(obj: TransactionMessage) {
   return (
-    <div class="flex flex-col flex-grow ml-5">
-      <div class="flex justify-between">
-        <p class="mb-2 u-title1">{obj.name}</p>
-        <div class="flex items-center">
-          <p class="text-14px text-grey3 mr-16px">{obj.date}</p>
-        </div>
+    <div class="flex-1 ml-4">
+      <div class="flex justify-between items-center">
+        <p class="mb-2 u-title3">{obj.name}</p>
+        <p class="mr-16px text-14px text-grey3">{obj.date}</p>
       </div>
-      <p class="flex bg-purple rounded-8px text-black mt-12px py-6 px-6 overflow-hidden items-center">
+      <p class="bg-purple flex rounded-8px mt-12px text-black py-6 px-6 overflow-hidden items-center">
         <div class="flex items-center">
-          <div class="flex justify-center items-center rounded-20px w-40px h-40px bg-white">
+          <div class="bg-white flex rounded-20px h-40px w-40px justify-center items-center">
             <VectorFilled class="text-primary" />
           </div>
-          <div class="flex flex-col ml-3 pr-6 border-r-1px border-solid border-grey5 h-16 justify-center">
+          <div class="border-solid flex flex-col border-r-1px border-grey5 h-16 ml-3 pr-6 justify-center">
             <p class="text-16px text-grey1">Send</p>
-            <p class="text-14px text-grey3 mt-10px">{obj.dateTime}</p>
+            <p class="mt-10px text-14px text-grey3">{obj.dateTime}</p>
           </div>
         </div>
         <div class="flex flex-col ml-6">
-          <p class="u-title2 text-grey1">
+          <p class="text-grey1 u-title2">
             {obj.content.token1Amount || 0} {obj.content.token1Symbol}
             {obj.content.token2Symbol && (
               <>
@@ -75,11 +71,11 @@ function transactionMessage(obj: TransactionMessage) {
               </>
             )}
           </p>
-          <p class="u-body2 mt-4px">Txn Hash：</p>
+          <p class="mt-4px u-body2">Txn Hash：</p>
           <a
             href={`${obj.url}${obj.content.transactionHash1}`}
             target="_blank"
-            class="u-body2 text-primary mt-4px"
+            class="mt-4px text-primary u-body2"
           >
             {obj.content.transactionHash1}
           </a>
@@ -87,7 +83,7 @@ function transactionMessage(obj: TransactionMessage) {
             <a
               href={`${obj.url}${obj.content.transactionHash2}`}
               target="_blank"
-              class="u-body2 text-primary mt-4px"
+              class="mt-4px text-primary u-body2"
             >
               {obj.content.transactionHash2}
             </a>
@@ -99,6 +95,7 @@ function transactionMessage(obj: TransactionMessage) {
 }
 
 export default defineComponent({
+  name: 'ActivityBubble',
   props: {
     activity: {
       type: Array as PropType<ItemType<ServiceReturn<'bounty@bounty-activities-list'>>>,
