@@ -6,9 +6,14 @@ import {
   UFormItemsFactory
 } from '@comunion/components'
 import { SelectOption } from '@comunion/components/src/constants'
+import { ethers } from 'ethers'
 import { computed, defineComponent, PropType, ref, Ref } from 'vue'
 import { ProposalInfo } from '../typing'
 import RichEditor from '@/components/Editor'
+import { infuraKey } from '@/constants'
+import { useErc20Contract } from '@/contracts'
+import { services } from '@/services'
+import { useWalletStore } from '@/stores'
 
 export interface ProposalBasicInformationRef {
   proposalBasicInfoForm: FormInst | null
@@ -27,7 +32,35 @@ export const BasicInfo = defineComponent({
     }
   },
   setup(props, ctx) {
+    const tokenContract = useErc20Contract()
+    const walletStore = useWalletStore()
     const proposalBasicInfoForm = ref<FormInst | null>(null)
+
+    const getVotePower = async (strategy: {
+      chainId: number
+      strategyName: string
+      voteDecimals: number
+      tokenContractAddress?: string
+    }) => {
+      switch (strategy?.strategyName) {
+        case 'ticket': {
+          return 1
+        }
+        case 'erc20-balance-of': {
+          if (strategy.tokenContractAddress) {
+            const userAddress = walletStore.address
+
+            const rpcProvider = walletStore.getRpcProvider(strategy.chainId, infuraKey)
+            const tokenRes = tokenContract(strategy.tokenContractAddress, rpcProvider)
+            const userBalance = await tokenRes.balanceOf(userAddress)
+            return ethers.utils.formatUnits(userBalance, strategy.voteDecimals)
+          }
+          return 0
+        }
+        default:
+          return 0
+      }
+    }
 
     const formFields: Ref<FormFactoryField[]> = computed(() => [
       {
@@ -36,7 +69,32 @@ export const BasicInfo = defineComponent({
         name: 'startupId',
         placeholder: 'Please select a startup',
         rules: [
-          { required: true, message: ' Please select a startup', type: 'number', trigger: 'blur' }
+          { required: true, message: 'Startup cannot be blank', type: 'number', trigger: 'blur' },
+          {
+            asyncValidator: async (rule, value, callback) => {
+              try {
+                const { error, data } = await services['governance@get-startup-governace-setting']({
+                  startupID: value
+                })
+                if (!error && data) {
+                  const strategy = data.strategies?.[data.strategies?.length - 1]
+                  const votePower = await getVotePower(strategy)
+                  console.log('votePower===>', votePower)
+                  if (votePower < data.proposalThreshold) {
+                    callback(
+                      `You need to have a minimum of ${data.proposalThreshold} votes in order to submit a proposal.`
+                    )
+                    return
+                  }
+                }
+                callback()
+              } catch (error) {
+                console.error('error==>', error)
+                callback(error as Error)
+              }
+            },
+            trigger: 'blur'
+          }
         ],
         options: props.startupOptions
       },
@@ -44,7 +102,16 @@ export const BasicInfo = defineComponent({
         t: 'string',
         title: 'Title',
         name: 'title',
-        rules: [{ required: true, message: 'Title cannot be blank', trigger: 'blur' }],
+        rules: [
+          { required: true, message: 'Title cannot be blank', trigger: 'blur' },
+          {
+            validator: (rule, value) => {
+              return value.length > 12
+            },
+            message: 'Title must be 12 characters or more',
+            trigger: 'blur'
+          }
+        ],
         placeholder: 'Title',
         maxlength: 64
       },
@@ -71,6 +138,13 @@ export const BasicInfo = defineComponent({
         title: 'Discussion',
         name: 'discussion',
         placeholder: 'https://',
+        rules: [
+          {
+            validator: (rule, value) => !value || (value && value.startsWith('https://')),
+            message: 'Invalid URL',
+            trigger: 'blur'
+          }
+        ],
         maxlength: 200
       }
     ])

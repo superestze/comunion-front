@@ -4,5 +4,5 @@ export interface StrategyType {
   network?: number
   voteDecimals?: number
   contractAddress?: string
-  symbol?: string
+  voteSymbol?: string
 }
