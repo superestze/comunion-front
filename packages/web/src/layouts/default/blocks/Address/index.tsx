@@ -36,7 +36,7 @@ const WalletAddress = defineComponent({
         <UButton
           size="small"
           onClick={connectWallet}
-          class="h-8 font-primary"
+          class="h-8"
           style={{
             '--n-border-radius': '2px',
             '--n-border': '1px solid rgba(218, 220, 224, 1)'

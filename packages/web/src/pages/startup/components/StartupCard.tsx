@@ -29,11 +29,7 @@ const StartupCard = defineComponent({
 
     return () => (
       <div
-<<<<<<< HEAD
         class="bg-white border border-color-border rounded-sm cursor-pointer h-90 top-0 relative hover:bg-color-hover"
-=======
-        class="bg-white border border-color-border rounded cursor-pointer h-96 top-0 relative hover:shadow-md hover:-top-0.5rem"
->>>>>>> 9f04e0ec (feat(doc): ✨ add doc/agreement)
         style="transition:all ease .3s"
         onClick={() => toStartDetail(props.startup)}
       >
