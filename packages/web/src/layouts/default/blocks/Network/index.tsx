@@ -47,7 +47,14 @@ const NetworkSwitcher = defineComponent({
         }))}
         onSelect={onSelectNetwork}
       >
-        <UButton size="small" class="h-8">
+        <UButton
+          size="small"
+          class="h-8"
+          style={{
+            '--n-border-radius': '2px',
+            '--n-border': '1px solid rgba(218, 220, 224, 1)'
+          }}
+        >
           <div class="flex flex-nowrap items-center" ref={btnRef}>
             {networkCache.value && (
               <>
