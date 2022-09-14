@@ -3,6 +3,7 @@ import { storage } from '@comunion/utils'
 import { ethers, getDefaultProvider, providers } from 'ethers'
 import { defineStore } from 'pinia'
 import { markRaw } from 'vue'
+import { useChainStore } from './chain'
 import { useUserStore } from './user'
 import {
   STORE_KEY_WALLET_CONNECTED,
@@ -63,7 +64,16 @@ export const useWalletStore = defineStore('wallet', {
     bindModalOpened: false
   }),
   getters: {
-    isNetworkSupported: state => (state.chainId ? true : false),
+    isNetworkSupported: state => {
+      const chainStore = useChainStore()
+      let status = false
+      chainStore.getSupportedNetworks.forEach(item => {
+        if (item.chainId === state.chainId) {
+          status = true
+        }
+      })
+      return status
+    },
     blockchainExplorerUrl: state => allNetworks.find(n => n.chainId === state.chainId)?.explorerUrl
   },
   actions: {
