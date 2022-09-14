@@ -18,9 +18,9 @@ export default defineConfig({
         color1: 'var(--u-color-1)',
         color2: 'var(--u-color-2)',
         color3: 'var(--u-color-3)',
-        color4: 'var(--u-color-4)',
-        color5: 'var(--u-color-5)',
-        color6: 'var(--u-color-6)',
+        'color-line': 'var(--u-color-line)',
+        'color-border': 'var(--u-color-border)',
+        'color-hover': 'var(--u-color-hover)',
         // old
         primary1: 'var(--u-primary-1-color)',
         primary2: 'var(--u-primary-2-color)',
