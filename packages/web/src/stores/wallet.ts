@@ -8,7 +8,6 @@ import {
   STORE_KEY_WALLET_CONNECTED,
   STORE_KEY_WALLET_TYPE,
   allNetworks,
-  supportedChainIds,
   STORE_KEY_WALLET_CONSTAST_TYPE
 } from '@/constants'
 import router from '@/router'
@@ -64,8 +63,7 @@ export const useWalletStore = defineStore('wallet', {
     bindModalOpened: false
   }),
   getters: {
-    isNetworkSupported: state =>
-      state.chainId ? supportedChainIds.includes(state.chainId) : false,
+    isNetworkSupported: state => (state.chainId ? true : false),
     blockchainExplorerUrl: state => allNetworks.find(n => n.chainId === state.chainId)?.explorerUrl
   },
   actions: {
