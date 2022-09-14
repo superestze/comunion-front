@@ -1,5 +1,5 @@
 import { MenuOption, UBreadcrumb, USpin } from '@comunion/components'
-import { defineComponent, ref } from 'vue'
+import { defineComponent, ref, computed, unref } from 'vue'
 import { useRoute } from 'vue-router'
 import Dapp from './components/dapp'
 import Finance from './components/finance'
@@ -14,7 +14,7 @@ import { Team } from './components/team'
 import { useStartup } from '@/pages/startup/hooks/useStartup'
 export const getContactList = (startupInfo: { [x: string]: any }) => {
   return contactList.map(item => {
-    const value = startupInfo[item.name]
+    const value = unref(startupInfo)[item.name]
     return {
       // socialType: value ? item.value : 0,
       socialType: item.value,
@@ -31,11 +31,19 @@ export default defineComponent({
     const startup = useStartup()
     const route = useRoute()
     startup.get(route.params.id as string)
+
+    const socialList = computed(() => {
+      const list = getContactList(startup.detail).filter(item => !!item.socialLink)
+
+      return list.length ? list : [{ socialType: 1, socialLink: '' }]
+    })
+
     return {
       loading,
       currentEditComponent,
       startup: startup.detail,
-      route
+      route,
+      socialList
     }
   },
   render() {
@@ -115,7 +123,7 @@ export default defineComponent({
               <Social
                 data={{
                   tags: this.startup?.hashTags.map(e => e.name) || [],
-                  socials: getContactList(this.startup || { socialType: 1, socialLink: '' })
+                  socials: this.socialList
                 }}
                 startupId={this.route.params.id as string}
               />
