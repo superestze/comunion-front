@@ -23,15 +23,15 @@ export const UStyleProviderProps = {
     type: String,
     default: 'rgba(255,255,255,.3)'
   },
-  color4: {
+  colorLine: {
     type: String,
     default: 'rgba(255,255,255,.1)'
   },
-  color5: {
+  colorBorder: {
     type: String,
     default: '#DADCE0'
   },
-  color6: {
+  colorHover: {
     type: String,
     default: '#F0F0F0'
   },
@@ -182,6 +182,12 @@ const UStyleProvider = defineComponent({
       const warningColor = hex2rgb(props.warningColor)
       style.innerHTML = `:root {
         --u-primary-value: ${r}, ${g}, ${b};
+        --u-color-1: ${props.color1};
+        --u-color-2: ${props.color2};
+        --u-color-3: ${props.color3};
+        --u-color-line: ${props.colorLine};
+        --u-color-border: ${props.colorBorder};
+        --u-color-hover: ${props.colorHover};
         --u-primary2-value: ${primary2Color.r},${primary2Color.g},${primary2Color.b};
         --u-primary-color: ${props.primaryColor};
         --u-primary-1-color: ${props.primary1Color};
