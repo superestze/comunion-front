@@ -6,10 +6,36 @@ import type { ExtractPropTypes } from 'vue'
 import '../UTypography/font.css'
 
 export const UStyleProviderProps = {
+  // ui 2.0
   primaryColor: {
     type: String,
     default: '#5331F4'
   },
+  color1: {
+    type: String,
+    default: '#000'
+  },
+  color2: {
+    type: String,
+    default: 'rgba(255,255,255,.5)'
+  },
+  color3: {
+    type: String,
+    default: 'rgba(255,255,255,.3)'
+  },
+  color4: {
+    type: String,
+    default: 'rgba(255,255,255,.1)'
+  },
+  color5: {
+    type: String,
+    default: '#DADCE0'
+  },
+  color6: {
+    type: String,
+    default: '#F0F0F0'
+  },
+  // old
   primary1Color: {
     type: String,
     default: '#3F2D99'
@@ -159,7 +185,7 @@ const UStyleProvider = defineComponent({
         --u-primary2-value: ${primary2Color.r},${primary2Color.g},${primary2Color.b};
         --u-primary-color: ${props.primaryColor};
         --u-primary-1-color: ${props.primary1Color};
-        --u-primary-2-color: ${props.primary2Color}; 
+        --u-primary-2-color: ${props.primary2Color};
         --u-error-color: ${props.errorColor};
         --u-success-color: ${props.successColor};
         --u-warning-color: ${props.warningColor};
@@ -169,7 +195,7 @@ const UStyleProvider = defineComponent({
         --u-grey-2-color: ${props.grey2Color};
         --u-grey-3-color: ${props.grey3Color};
         --u-grey-4-color: ${props.grey4Color};
-        --u-grey-5-color: ${props.grey5Color}; 
+        --u-grey-5-color: ${props.grey5Color};
         --u-green-1-color: ${props.green1Color};
         --u-purple-color: ${props.purpleBg};
         --u-purple-light-color: ${props.purpleLightBg};
