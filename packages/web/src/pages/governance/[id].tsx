@@ -586,13 +586,7 @@ const ProposalDetail = defineComponent({
                 >
                   Cancel
                 </UButton>
-                <UButton
-                  type="primary"
-                  size="small"
-                  class="w-40"
-                  onClick={this.confirmVote}
-                  disabled={!this.votePower}
-                >
+                <UButton type="primary" size="small" class="w-40" onClick={this.confirmVote}>
                   Vote
                 </UButton>
               </div>
