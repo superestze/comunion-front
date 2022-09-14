@@ -68,3 +68,6 @@ export const PERIOD_OPTIONS = [
   { label: 'Weeks', value: 2, type: 'Week' },
   { label: 'Months', value: 3, type: 'Month' }
 ]
+
+// Get the currency types supported by bounty
+export const BASE_CURRENCY: string[] = ['USDC', 'USD', 'RMB']

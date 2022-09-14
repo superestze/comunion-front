@@ -18,6 +18,7 @@ import { AVAX_USDC_ADDR } from '@/contracts/utils'
 import { services } from '@/services'
 import { useUserStore, useWalletStore } from '@/stores'
 import { useContractStore } from '@/stores/contract'
+
 const CreateBountyForm = defineComponent({
   name: 'CreateBountyForm',
   emits: ['cancel'],
@@ -374,6 +375,7 @@ const CreateBountyForm = defineComponent({
               <PayDetailStage
                 ref={(ref: any) => (this.payStageRef = ref)}
                 bountyInfo={this.bountyInfo}
+                chainInfo={this.chainInfo}
                 onDelStage={this.delStage}
                 onAddStage={this.addStage}
                 onShowLeaveTipModal={this.showLeaveTipModal}
@@ -392,6 +394,7 @@ const CreateBountyForm = defineComponent({
             >
               <PayDetailPeriod
                 bountyInfo={this.bountyInfo}
+                chainInfo={this.chainInfo}
                 ref={(ref: any) => (this.payPeriodRef = ref)}
                 onShowLeaveTipModal={this.showLeaveTipModal}
               />

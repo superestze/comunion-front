@@ -86,15 +86,13 @@ const BountyBasicInfo = defineComponent({
             renderMessage: () => {
               return (
                 <div class="flex items-center">
-                  <span>
-                    The startup cannot create a crowdfunding without being on the blockchain,
-                  </span>
+                  <span>The startup cannot create a bounty without being on the blockchain,</span>
                   <span
                     onClick={() => goSetting()}
-                    class="ml-2 !text-primary cursor-pointer flex items-center"
+                    class="cursor-pointer flex ml-2 items-center !text-primary"
                   >
                     <span>Go to setting</span>
-                    <ArrowLineRightOutlined class="ml-2 w-[16px] h-[16px]" />
+                    <ArrowLineRightOutlined class="h-[16px] ml-2 w-[16px]" />
                   </span>
                 </div>
               )
