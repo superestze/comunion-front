@@ -10,6 +10,7 @@ import { MinusCircleOutlined, AddCircleOutlined } from '@comunion/icons'
 import { defineComponent, PropType, ref, computed } from 'vue'
 import { BountyInfo } from '../typing'
 import { MAX_AMOUNT, renderUnit } from './BasicInfo'
+import { allNetworks, BASE_CURRENCY } from '@/constants'
 
 export interface PayDetailStageRef {
   payStageForm: FormInst | null
@@ -19,12 +20,20 @@ export interface PayDetailStageRef {
   }
 }
 
+interface chainInfoType {
+  chainID: number
+  onChain: boolean
+}
+
 const PayDetailStage = defineComponent({
   name: 'PayDetailStage',
   props: {
     bountyInfo: {
       type: Object as PropType<BountyInfo>,
       required: true
+    },
+    chainInfo: {
+      type: Object as PropType<chainInfoType>
     }
   },
   emits: ['delStage', 'addStage', 'showLeaveTipModal'],
@@ -58,9 +67,26 @@ const PayDetailStage = defineComponent({
       payStagesTotal
     })
 
-    const token1SymbolOptions = [
-      ...new Set(['USDC', 'USD', 'RMB']).add(props.bountyInfo.token1Symbol)
-    ].map(label => {
+    const currentStartupCurrency = computed<string>(() => {
+      const currentChainId = props.chainInfo?.chainID
+      if (currentChainId) {
+        const targetIndex = allNetworks.findIndex(net => net.chainId === currentChainId)
+        if (targetIndex !== -1) {
+          return allNetworks[targetIndex].currencySymbol
+        }
+      }
+      return ''
+    })
+
+    const token1SymbolOptions = (
+      currentStartupCurrency.value
+        ? [
+            ...new Set(BASE_CURRENCY)
+              .add(props.bountyInfo.token1Symbol)
+              .add(currentStartupCurrency.value)
+          ]
+        : [...new Set(BASE_CURRENCY).add(props.bountyInfo.token1Symbol)]
+    ).map(label => {
       return {
         label,
         value: label
@@ -102,6 +128,7 @@ const PayDetailStage = defineComponent({
                   class="flex-1"
                   type="withSelect"
                   inputProps={{
+                    class: 'flex-1',
                     precision: 0,
                     min: 0,
                     max: MAX_AMOUNT,
@@ -119,6 +146,7 @@ const PayDetailStage = defineComponent({
                   class="flex-1"
                   type="withUnit"
                   inputProps={{
+                    class: 'flex-1',
                     precision: 0,
                     min: 0,
                     max: MAX_AMOUNT,

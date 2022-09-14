@@ -11,7 +11,7 @@ import { defineComponent, PropType, ref, computed } from 'vue'
 import { BountyInfo } from '../typing'
 import { MAX_AMOUNT, renderUnit } from './BasicInfo'
 import RichEditor from '@/components/Editor'
-import { PERIOD_OPTIONS } from '@/constants'
+import { PERIOD_OPTIONS, allNetworks, BASE_CURRENCY } from '@/constants'
 
 export interface PayDetailPeriodRef {
   payPeriodForm: FormInst | null
@@ -21,12 +21,20 @@ export interface PayDetailPeriodRef {
   }
 }
 
+interface chainInfoType {
+  chainID: number
+  onChain: boolean
+}
+
 const PayDetailPeriod = defineComponent({
   name: 'PayDetailPeriod',
   props: {
     bountyInfo: {
       type: Object as PropType<BountyInfo>,
       required: true
+    },
+    chainInfo: {
+      type: Object as PropType<chainInfoType>
     }
   },
   emits: ['showLeaveTipModal'],
@@ -46,6 +54,41 @@ const PayDetailPeriod = defineComponent({
         tokenTotal: props.bountyInfo.period.periodAmount * props.bountyInfo.period.token2Amount
       }
     })
+
+    const currentStartupCurrency = computed<string>(() => {
+      const currentChainId = props.chainInfo?.chainID
+      if (currentChainId) {
+        const targetIndex = allNetworks.findIndex(net => net.chainId === currentChainId)
+        if (targetIndex !== -1) {
+          return allNetworks[targetIndex].currencySymbol
+        }
+      }
+      return ''
+    })
+
+    const token1SymbolOptions = (
+      currentStartupCurrency.value
+        ? [
+            ...new Set(BASE_CURRENCY)
+              .add(props.bountyInfo.token1Symbol)
+              .add(currentStartupCurrency.value)
+          ]
+        : [...new Set(BASE_CURRENCY).add(props.bountyInfo.token1Symbol)]
+    ).map(label => {
+      return {
+        label,
+        value: label
+      }
+    })
+
+    const renderRewardsSelect = computed(() => (
+      <USelect
+        class="text-center w-30"
+        options={token1SymbolOptions}
+        v-model:value={props.bountyInfo.token1Symbol}
+      />
+    ))
+
     const payDetailPeriodFields: FormFactoryField[] = [
       {
         t: 'custom',
@@ -57,6 +100,7 @@ const PayDetailPeriod = defineComponent({
               <div class="flex items-center">
                 <UInputNumberGroup
                   inputProps={{
+                    class: 'flex-1',
                     precision: 0,
                     min: 2
                   }}
@@ -68,6 +112,7 @@ const PayDetailPeriod = defineComponent({
                 <div class="px-5 text-grey2 text-3xl invisible">+</div>
                 <UInputNumberGroup
                   inputProps={{
+                    class: 'flex-1',
                     precision: 0,
                     min: 1,
                     max: 24
@@ -91,7 +136,7 @@ const PayDetailPeriod = defineComponent({
             <div class="flex w-full items-start">
               <UInputNumberGroup
                 class="flex-1"
-                type="withUnit"
+                type="withSelect"
                 v-model:value={props.bountyInfo.period.token1Amount}
                 inputProps={{
                   precision: 0,
@@ -104,7 +149,7 @@ const PayDetailPeriod = defineComponent({
                   },
                   status: payPeriodTotal.value.usdcTotal > MAX_AMOUNT ? 'error' : undefined
                 }}
-                renderUnit={() => renderUnit(props.bountyInfo.token1Symbol)}
+                renderSelect={() => renderRewardsSelect.value}
               ></UInputNumberGroup>
               <div class="px-5 text-grey2 text-3xl">+</div>
               <div class="flex-1">

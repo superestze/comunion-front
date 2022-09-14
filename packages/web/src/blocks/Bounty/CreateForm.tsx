@@ -374,6 +374,7 @@ const CreateBountyForm = defineComponent({
               <PayDetailStage
                 ref={(ref: any) => (this.payStageRef = ref)}
                 bountyInfo={this.bountyInfo}
+                chainInfo={this.chainInfo}
                 onDelStage={this.delStage}
                 onAddStage={this.addStage}
                 onShowLeaveTipModal={this.showLeaveTipModal}
@@ -392,6 +393,7 @@ const CreateBountyForm = defineComponent({
             >
               <PayDetailPeriod
                 bountyInfo={this.bountyInfo}
+                chainInfo={this.chainInfo}
                 ref={(ref: any) => (this.payPeriodRef = ref)}
                 onShowLeaveTipModal={this.showLeaveTipModal}
               />
