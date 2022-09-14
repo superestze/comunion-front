@@ -34,7 +34,7 @@ const CreateStartupBlock = defineComponent({
   },
   render() {
     return (
-      <UDrawer title="Create startup" maskClosable={false} v-model:show={this.visible}>
+      <UDrawer title="Create Startup" maskClosable={false} v-model:show={this.visible}>
         {this.visible && <CreateStartupForm onCancel={this.close} />}
       </UDrawer>
     )

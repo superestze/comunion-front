@@ -200,7 +200,7 @@ function renderField(field: FormFactoryField, values: FormData) {
               {{
                 trigger: () => <QuestionCircleOutlined class="h-4 ml-2 text-grey3 w-4" />,
                 default: () => (
-                  <p class="text-white text-center u-body2">
+                  <p class="text-white text-left u-body2">
                     <p>Recommend strongly to post the two fields to</p>
                     <p>blockchain for using more functions of Comunion</p>
                   </p>
