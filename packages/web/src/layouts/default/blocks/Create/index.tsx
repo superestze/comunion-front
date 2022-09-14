@@ -1,9 +1,9 @@
 import { UButton } from '@comunion/components'
 import {
-  CreateStartupFilled,
-  CreateBountyFilled,
-  CreateOfferingFilled,
-  ProposalFilled
+  CreateStartupNewFilled,
+  CreateBountyNewFilled,
+  CreateCrowdfundingNewFilled,
+  CreateProposalNewFilled
 } from '@comunion/icons'
 import { defineComponent, ref, watch } from 'vue'
 import { useRouter } from 'vue-router'
@@ -115,11 +115,11 @@ const CreateBlock = defineComponent({
               key: 'startup',
               label: () => (
                 <div class="flex items-center" onClick={onCreateStartup}>
-                  <div class="rounded flex bg-[#f8f8f8] h-8 mr-4 w-8 items-center justify-center">
-                    <CreateStartupFilled class="text-primary" />
+                  <div class="rounded flex h-14.5 mr-4 w-8 items-center justify-center">
+                    <CreateStartupNewFilled />
                   </div>
                   <div>
-                    <div class="text-primary1 u-title2">Startup</div>
+                    <div class="text-[#000000] u-title2">Startup</div>
                     {/* <div class="font-semibold mt-1 text-xs text-grey2">
                       Create your Startup, initial your dream
                     </div> */}
@@ -131,11 +131,11 @@ const CreateBlock = defineComponent({
               key: 'bounty',
               label: () => (
                 <div class="flex items-center" onClick={onCreateBounty}>
-                  <div class="rounded flex bg-[#f8f8f8] h-8 mr-4 w-8 items-center justify-center">
-                    <CreateBountyFilled class="text-primary" />
+                  <div class="rounded flex h-14.5 mr-4 w-8 items-center justify-center">
+                    <CreateCrowdfundingNewFilled class="text-primary" />
                   </div>
                   <div>
-                    <div class="text-primary1 u-title2">Bounty</div>
+                    <div class="text-[#000000] u-title2">Bounty</div>
                     {/* <div class="font-semibold mt-1 text-xs text-grey2">
                       Post your bounty to expand your startup
                     </div> */}
@@ -147,11 +147,11 @@ const CreateBlock = defineComponent({
               key: 'Crowdfunding',
               label: () => (
                 <div class="flex items-center" onClick={onCreateCrowdfunding}>
-                  <div class="rounded flex bg-[#f8f8f8] h-8 mr-4 w-8 items-center justify-center">
-                    <CreateOfferingFilled class="text-primary" />
+                  <div class="rounded flex h-14.5 mr-4 w-8 items-center justify-center">
+                    <CreateBountyNewFilled class="text-primary" />
                   </div>
                   <div>
-                    <div class="text-primary1 u-title2">dCrowdfunding</div>
+                    <div class="text-[#000000] u-title2">dCrowdfunding</div>
                     {/* <div class="font-semibold mt-1 text-xs text-grey2">
                       Post your crowdfunding for start-up capital
                     </div> */}
@@ -163,11 +163,11 @@ const CreateBlock = defineComponent({
               key: 'Proposal',
               label: () => (
                 <div class="flex items-center" onClick={onCreateProposal}>
-                  <div class="rounded flex bg-[#f8f8f8] h-8 mr-4 w-8 items-center justify-center">
-                    <ProposalFilled class="text-primary" />
+                  <div class="rounded flex h-14.5 mr-4 w-8 items-center justify-center">
+                    <CreateProposalNewFilled class="text-primary" />
                   </div>
                   <div>
-                    <div class="text-primary1 u-title2">Proposal</div>
+                    <div class="text-[#000000] u-title2">Proposal</div>
                     {/* <div class="mt-1 text-grey2 text-xs font-semibold">
                       Create a proposal about startup governance
                     </div> */}
@@ -177,7 +177,14 @@ const CreateBlock = defineComponent({
             }
           ]}
         >
-          <UButton type="primary" size="small" class="h-8 text-white w-19.25 u-body2">
+          <UButton
+            type="primary"
+            size="small"
+            class="h-8 w-19.25"
+            style={{
+              '--n-border-radius': '2px'
+            }}
+          >
             Create
           </UButton>
           {/* <button class={[styles.btn, ctx.attrs.class]}></button> */}
