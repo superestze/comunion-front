@@ -40,7 +40,7 @@ const CreateProposalFrom = defineComponent({
     const voteOptions = ref<VoteOption[] | undefined>()
     const modalVisibleState = ref(false)
     const ipfsClient = getClient()
-    const proposalInfo: ProposalInfo = reactive<ProposalInfo>(props.defaultProposalInfo)
+    const proposalInfo: ProposalInfo = reactive<ProposalInfo>({ ...props.defaultProposalInfo })
     const showLeaveTipModal = () => {
       modalVisibleState.value = true
     }

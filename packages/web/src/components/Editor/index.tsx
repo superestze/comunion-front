@@ -29,7 +29,7 @@ const RichEditor = defineComponent({
     const editor = useEditor({
       editorProps: {
         attributes: {
-          class: 'py-2 px-4'
+          class: 'py-2 px-4 min-h-full'
         }
       },
       content: props.value,
@@ -58,11 +58,11 @@ const RichEditor = defineComponent({
     })
 
     return () => (
-      <div class="rich-editor">
+      <div class="rich-editor flex flex-col overflow-auto">
         <div class="bg-purple py-1 px-4 flex items-center">
           {editor.value && <RichEditorHeader editor={editor.value} />}
         </div>
-        <EditorContent editor={editor.value} />
+        <EditorContent editor={editor.value} class="flex-1 h-full" />
       </div>
     )
   }
