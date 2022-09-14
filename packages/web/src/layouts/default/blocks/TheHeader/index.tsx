@@ -68,18 +68,18 @@ const TheHeader = defineComponent({
 
     return () => (
       <div class={headerClass.value} style={styles.value}>
-        <div class="mr-15">
-          <ULogo height={20} withText theme="colorful" />
+        <div class="mr-4">
+          <ULogo height={20} theme="colorful" />
         </div>
-        <div class="text-grey1 gap-x-6 inline-flex item-center">
+        <div class="text-[#0009] gap-x-6 inline-flex item-center">
           {navigations.map(nav => (
             <RouterLink
               key={nav.name}
               class={[
                 'transition u-body2 font-bold ',
-                nav.disabled ? '!text-grey4 cursor-default' : 'text-primary1 hover:text-primary'
+                nav.disabled ? '!text-grey4 cursor-default' : 'text-[#0009] hover:text-primary'
               ]}
-              activeClass={[nav.disabled ? '' : '!text-primary'].join(' ')}
+              activeClass={[nav.disabled ? 'text-[#0009]' : '!text-primary'].join(' ')}
               to={nav.disabled ? '' : nav.url}
             >
               {nav.name}

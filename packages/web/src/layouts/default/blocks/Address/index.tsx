@@ -1,5 +1,5 @@
 import { UButton } from '@comunion/components'
-import { SignOutFilled } from '@comunion/icons'
+import { DisConnectFilled } from '@comunion/icons'
 import { shortenAddress } from '@comunion/utils'
 import { defineComponent } from 'vue'
 import HeaderDropdown from '../../components/HeaderDropdown'
@@ -33,7 +33,15 @@ const WalletAddress = defineComponent({
         // <HeaderButton class={ctx.attrs.class} onClick={connectWallet}>
 
         // </HeaderButton>
-        <UButton size="small" onClick={connectWallet} class="h-8">
+        <UButton
+          size="small"
+          onClick={connectWallet}
+          class="h-8"
+          style={{
+            '--n-border-radius': '2px',
+            '--n-border': '1px solid rgba(218, 220, 224, 1)'
+          }}
+        >
           {walletStore.connected && walletStore.address
             ? shortenAddress(walletStore.address)
             : 'Connect Wallet'}
@@ -48,7 +56,7 @@ const WalletAddress = defineComponent({
               options={[
                 {
                   key: 'disconnect',
-                  icon: () => <SignOutFilled class="bg-purple rounded-3xl text-primary" />,
+                  icon: () => <DisConnectFilled class="bg-purple rounded-3xl text-primary" />,
                   label: () => (
                     <div class="flex items-center" onClick={disconnect}>
                       Disconnect
