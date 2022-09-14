@@ -1,5 +1,4 @@
-import { MenuOption, UBreadcrumb, UBreadcrumbItem, USpin } from '@comunion/components'
-import { ArrowLeftOutlined } from '@comunion/icons'
+import { MenuOption, UBreadcrumb, USpin } from '@comunion/components'
 import { defineComponent, ref } from 'vue'
 import { useRoute } from 'vue-router'
 import Dapp from './components/dapp'
@@ -47,7 +46,7 @@ export default defineComponent({
     return (
       <USpin show={this.loading}>
         <UBreadcrumb class="mt-10 mb-10">
-          <UBreadcrumbItem>
+          {/* <UBreadcrumbItem>
             <span
               class="cursor-pointer flex text-primary items-center u-label2"
               onClick={() => {
@@ -57,7 +56,7 @@ export default defineComponent({
               <ArrowLeftOutlined />
               <span class="ml-1">BACK</span>
             </span>
-          </UBreadcrumbItem>
+          </UBreadcrumbItem> */}
         </UBreadcrumb>
         <div class="flex mb-20 gap-6">
           <div class="basis-1/4">
