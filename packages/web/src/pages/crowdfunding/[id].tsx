@@ -1,14 +1,13 @@
-import { UBreadcrumb, UBreadcrumbItem, UCard, USpin } from '@comunion/components'
-import { ArrowLeftOutlined } from '@comunion/icons'
+import { UBreadcrumb, UCard, USpin } from '@comunion/components'
 import { ethers } from 'ethers'
 import { defineComponent, onMounted, ref, computed } from 'vue'
-import { useRoute, useRouter } from 'vue-router'
+import { useRoute } from 'vue-router'
 import { CrowdfundingInfo } from './components/CrowdfundingInfo'
 import { IBORateHistory } from './components/IBORateHistory'
 import { Invest } from './components/Invest'
 import { InvestmentRecords, InvestmentsRecordsExpose } from './components/InvestmentRecords'
-import StartupCard from './components/StartupCard'
 import { useErc20Contract } from '@/contracts'
+import StartupCard from '@/pages/bounty/detail/components/StartupCard'
 import { ServiceReturn, services } from '@/services'
 import { useWalletStore } from '@/stores'
 import { getChainInfoByChainId } from '@/utils/etherscan'
@@ -25,7 +24,6 @@ export type CoinType = {
 const CrowdfundingDetail = defineComponent({
   name: 'CrowdfundingDetail',
   setup(props) {
-    const router = useRouter()
     const route = useRoute()
     const walletStore = useWalletStore()
 
@@ -49,7 +47,11 @@ const CrowdfundingDetail = defineComponent({
         pageLoading.value = true
         const { error, data } = await services['startup@startup-get']({ startupId })
         if (!error) {
-          startupInfo.value = data
+          startupInfo.value = {
+            ...data,
+            title: data.name,
+            tag: data.hashTags.map(e => e.name)
+          }
         }
         pageLoading.value = false
       } catch (error) {
@@ -127,14 +129,7 @@ const CrowdfundingDetail = defineComponent({
 
     return () => (
       <USpin show={pageLoading.value}>
-        <UBreadcrumb class="mt-10 mb-10">
-          <UBreadcrumbItem v-slots={{ separator: () => <ArrowLeftOutlined /> }} />
-          <UBreadcrumbItem>
-            <span class="u-label2 cursor-pointer uppercase text-primary" onClick={router.back}>
-              Back
-            </span>
-          </UBreadcrumbItem>
-        </UBreadcrumb>
+        <UBreadcrumb class="mt-10 mb-10"></UBreadcrumb>
         <div class="flex mb-20 gap-6">
           <div class="w-228">
             {crowdfundingInfo.value && (
@@ -145,6 +140,7 @@ const CrowdfundingDetail = defineComponent({
                 onRefreshCoin={initPage}
               />
             )}
+
             {crowdfundingInfo.value && <CrowdfundingInfo info={crowdfundingInfo.value} />}
           </div>
           <div class="flex-1 min-w-111">
@@ -153,12 +149,14 @@ const CrowdfundingDetail = defineComponent({
                 <StartupCard startup={startupInfo.value} />
               </UCard>
             )}
-            <IBORateHistory class="mb-6" />
+
             <InvestmentRecords
+              class="mb-6"
               ref={(ref: any) => (investRecordsRef.value = ref)}
               buyTokenName={buyCoinInfo.value.symbol}
               sellTokenName={sellCoinInfo.value.symbol}
             />
+            <IBORateHistory />
           </div>
         </div>
       </USpin>

@@ -5,7 +5,8 @@ import {
   getFieldsRules,
   UButton,
   UForm,
-  UFormItemsFactory
+  UFormItemsFactory,
+  message
 } from '@comunion/components'
 import { defineComponent, ref, reactive, PropType, watch } from 'vue'
 import { services } from '@/services'
@@ -107,6 +108,7 @@ export default defineComponent({
             contractAudit: this.info.contractAudit
           })
           this.loading = false
+          message.success('successfully saved')
         }
       })
     }

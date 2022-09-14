@@ -7,7 +7,7 @@ import {
   UFormItemsFactory,
   UPopover
 } from '@comunion/components'
-import { PenOutlined, DeleteFilled, PlusOutlined } from '@comunion/icons'
+import { PenOutlined, DeleteFilled } from '@comunion/icons'
 import { defineComponent, ref, reactive, computed, PropType, watch } from 'vue'
 import { btnGroup } from '../btnGroup'
 import Edit from '../edit'
@@ -36,12 +36,12 @@ function socialIconComponent(
           v-slots={{
             trigger: () => <SocialIcon icon={item.value} />,
             default: () => (
-              <div class="flex m-3 cursor-pointer">
+              <div class="cursor-pointer flex m-3">
                 <PenOutlined
-                  class="text-primary w-3.5 h-3.5 mr-4.5"
+                  class="h-3.5 text-primary mr-4.5 w-3.5"
                   onClick={() => edit(item.value, social)}
                 />
-                <DeleteFilled class="text-primary w-3.5 h-3.5" onClick={() => del(item.value)} />
+                <DeleteFilled class="h-3.5 text-primary w-3.5" onClick={() => del(item.value)} />
               </div>
             )
           }}
@@ -222,26 +222,21 @@ export default defineComponent({
                 } else if (this.view) {
                   return
                 }
-                return (
-                  <Edit onHandleClick={handleEditMode(true)}>
-                    <PlusOutlined class="h-4 mr-3 w-4" />
-                    ADD NEW
-                  </Edit>
-                )
+                return <Edit onHandleClick={handleEditMode(true)}>Add New</Edit>
               }
             }}
           >
             {this.editMode ? (
-              <div class="flex flex-col mt-6 flex-wrap">
+              <div class="flex flex-col flex-wrap mt-6">
                 <UForm rules={rules} model={this.info} ref={(ref: any) => (this.form = ref)}>
                   <UFormItemsFactory fields={this.fields} values={this.info} />
                 </UForm>
                 {btnGroup(handleEditMode(), handleSubmit)}
               </div>
             ) : (
-              <div class="my-6 flex gap-4 cursor-pointer flex-wrap">
+              <div class="cursor-pointer flex flex-wrap my-6 gap-4">
                 {this.socials.length === 0 ? (
-                  <p class="text-14px font-[400] text-grey4">Add your social</p>
+                  <p class="font-[400] text-14px text-grey4">Add your social</p>
                 ) : (
                   <>{socialIconComponent(this.socialsObj, this.view, editIcon, delIcon)}</>
                 )}

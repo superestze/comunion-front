@@ -89,31 +89,30 @@ export const InvestmentRecords = defineComponent({
           {(this.investRecords ?? []).map(record => {
             return (
               <div class="mt-6">
-                <div class="flex items-start">
+                <div class="flex">
                   <ULazyImage
                     src={record.comerAvatar ?? ''}
-                    class="rounded-full cursor-pointer h-10 w-10"
+                    class="rounded-full cursor-pointer h-9 w-9"
                   />
-                  <div class="ml-4">
-                    <div class="mb-2 flex items-center">
-                      <div class="u-title2 truncate max-w-35">{record.comerName}</div>
+                  <div class=" flex-1 mx-4">
+                    <div class="flex mb-2 items-center">
+                      <div class="text-grey1 truncate u-title3">{record.comerName}</div>
                       {record.access === 1 ? (
-                        <span class="px-2 py-0.5 ml-2 rounded-sm text-white text-xs bg-[#00BFA5]">
+                        <span class="rounded-sm bg-[#00BFA5] text-white text-xs ml-2 py-0.5 px-2">
                           Invest
                         </span>
                       ) : (
-                        <span class="px-2 py-0.5 ml-2 rounded-sm text-white text-xs bg-warning">
+                        <span class="bg-warning rounded-sm text-white text-xs ml-2 py-0.5 px-2">
                           Sell
                         </span>
                       )}
                     </div>
-                    <div class="mb-2 u-body2 text-grey4">
+                    <div class="mb-2 text-grey4 u-body2">
                       {dayjs(record.time).format('YYYY-MM-DD HH:mm')}
                     </div>
                   </div>
-                  <div class="ml-auto text-primary font-semibold">{this.getAmount(record)}</div>
+                  <div class="font-semibold ml-auto text-primary">{this.getAmount(record)}</div>
                 </div>
-                <div class="h-px ml-14 bg-grey5"></div>
               </div>
             )
           })}

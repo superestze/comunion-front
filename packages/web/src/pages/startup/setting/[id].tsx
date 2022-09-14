@@ -1,6 +1,5 @@
-import { MenuOption, UBreadcrumb, UBreadcrumbItem, USpin } from '@comunion/components'
-import { ArrowLeftOutlined } from '@comunion/icons'
-import { defineComponent, ref } from 'vue'
+import { MenuOption, UBreadcrumb, USpin } from '@comunion/components'
+import { defineComponent, ref, computed, unref } from 'vue'
 import { useRoute } from 'vue-router'
 import Dapp from './components/dapp'
 import Finance from './components/finance'
@@ -15,7 +14,7 @@ import { Team } from './components/team'
 import { useStartup } from '@/pages/startup/hooks/useStartup'
 export const getContactList = (startupInfo: { [x: string]: any }) => {
   return contactList.map(item => {
-    const value = startupInfo[item.name]
+    const value = unref(startupInfo)[item.name]
     return {
       // socialType: value ? item.value : 0,
       socialType: item.value,
@@ -33,11 +32,18 @@ export default defineComponent({
     const route = useRoute()
     startup.get(route.params.id as string)
 
+    const socialList = computed(() => {
+      const list = getContactList(startup.detail).filter(item => !!item.socialLink)
+
+      return list.length ? list : [{ socialType: 1, socialLink: '' }]
+    })
+
     return {
       loading,
       currentEditComponent,
       startup: startup.detail,
-      route
+      route,
+      socialList
     }
   },
   render() {
@@ -48,7 +54,7 @@ export default defineComponent({
     return (
       <USpin show={this.loading}>
         <UBreadcrumb class="mt-10 mb-10">
-          <UBreadcrumbItem>
+          {/* <UBreadcrumbItem>
             <span
               class="cursor-pointer flex text-primary items-center u-label2"
               onClick={() => {
@@ -58,7 +64,7 @@ export default defineComponent({
               <ArrowLeftOutlined />
               <span class="ml-1">BACK</span>
             </span>
-          </UBreadcrumbItem>
+          </UBreadcrumbItem> */}
         </UBreadcrumb>
         <div class="flex mb-20 gap-6">
           <div class="basis-1/4">
@@ -75,7 +81,9 @@ export default defineComponent({
                   mission: this.startup?.mission || '',
                   overview: this.startup?.overview || '',
                   blockChainAddress: this.startup?.blockChainAddress || '',
-                  chainID: this.startup?.chainID
+                  chainID: this.startup?.chainID,
+                  hashTags: this.startup?.hashTags.map(e => e.name) || [],
+                  isChain: this.startup?.onChain
                 }}
                 startupId={this.route.params.id as string}
               />
@@ -115,7 +123,7 @@ export default defineComponent({
               <Social
                 data={{
                   tags: this.startup?.hashTags.map(e => e.name) || [],
-                  socials: getContactList(this.startup || { socialType: 1, socialLink: '' })
+                  socials: this.socialList
                 }}
                 startupId={this.route.params.id as string}
               />

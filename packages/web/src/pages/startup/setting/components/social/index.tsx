@@ -8,7 +8,8 @@ import {
   UFormItemsFactory,
   UInput,
   UInputGroup,
-  USelect
+  USelect,
+  message
 } from '@comunion/components'
 import { AddCircleOutlined, MinusCircleOutlined } from '@comunion/icons'
 import { defineComponent, ref, reactive, PropType, watch } from 'vue'
@@ -58,12 +59,12 @@ export default defineComponent({
     // 1-SocialEmail  	2-SocialWebsite 	3-SocialTwitter 	4-SocialDiscord 	5-SocialTelegram 	6-SocialMedium 	7-SocialFacebook 	8-SocialLinktre
     const contactOptions = ref(contactList)
     const fields: FormFactoryField[] = [
-      {
-        t: 'startupTags',
-        required: true,
-        title: 'Tag',
-        name: 'tags'
-      },
+      // {
+      //   t: 'startupTags',
+      //   required: true,
+      //   title: 'Tag',
+      //   name: 'tags'
+      // },
       {
         t: 'custom',
         title: 'Social',
@@ -175,6 +176,7 @@ export default defineComponent({
             deletedSocials: this.info.socials.filter(e => e.delete).map(e => e.socialType)
           })
           this.loading = false
+          message.success('successfully saved')
         }
       })
     }

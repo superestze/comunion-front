@@ -3,12 +3,12 @@ import { storage } from '@comunion/utils'
 import { ethers, getDefaultProvider, providers } from 'ethers'
 import { defineStore } from 'pinia'
 import { markRaw } from 'vue'
+import { useChainStore } from './chain'
 import { useUserStore } from './user'
 import {
   STORE_KEY_WALLET_CONNECTED,
   STORE_KEY_WALLET_TYPE,
   allNetworks,
-  supportedChainIds,
   STORE_KEY_WALLET_CONSTAST_TYPE
 } from '@/constants'
 import router from '@/router'
@@ -64,8 +64,16 @@ export const useWalletStore = defineStore('wallet', {
     bindModalOpened: false
   }),
   getters: {
-    isNetworkSupported: state =>
-      state.chainId ? supportedChainIds.includes(state.chainId) : false,
+    isNetworkSupported: state => {
+      const chainStore = useChainStore()
+      let status = false
+      chainStore.getSupportedNetworks.forEach(item => {
+        if (item.chainId === state.chainId) {
+          status = true
+        }
+      })
+      return status
+    },
     blockchainExplorerUrl: state => allNetworks.find(n => n.chainId === state.chainId)?.explorerUrl
   },
   actions: {
@@ -133,9 +141,11 @@ export const useWalletStore = defineStore('wallet', {
       this.wallet = undefined
       this._removeEventListeners()
     },
-    async _onNetworkChange(newNetwork: string, oldNetwork: string) {
+    async _onNetworkChange(newNetwork: any, oldNetwork: any) {
       console.log('You have changed the network', newNetwork, oldNetwork)
-      location.reload()
+      if (newNetwork?.chainId) {
+        location.reload()
+      }
       const network = await this.wallet!.getProvider().getNetwork()
       this.chainId = network.chainId
       this.chainName = network.name

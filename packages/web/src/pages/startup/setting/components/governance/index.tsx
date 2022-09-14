@@ -197,7 +197,7 @@ export default defineComponent({
               admins: govSetting.admins.filter(Boolean).map(admin => ({ walletAddress: admin }))
             })
             if (!error) {
-              message.success('Save Successfully')
+              message.success('successfully saved')
             }
           }
         })
@@ -245,10 +245,10 @@ export default defineComponent({
         <UForm
           ref={(ref: any) => (this.formRef = ref)}
           model={this.govSetting}
-          class="bg-white border rounded-lg mb-6 min-h-205.5 relative overflow-hidden p-10 governance-setting"
+          class="bg-white border rounded-lg mb-6 min-h-205.5 p-10 relative overflow-hidden governance-setting"
         >
-          <div class="w-full mb-6 border border-grey5 rounded-lg">
-            <div class="border-b border-b-grey5 py-3 px-6 u-title3 flex items-center">
+          <div class="border rounded-lg border-grey5 mb-6 w-full">
+            <div class="border-b flex border-b-grey5 py-3 px-6 items-center u-title3">
               <span class="mr-2">Strategie(s)</span>
               <UTooltip placement="right">
                 {{
@@ -265,17 +265,17 @@ export default defineComponent({
             <div class="p-6">
               {this.govSetting.strategies.length ? (
                 this.govSetting.strategies.map(strategy => (
-                  <div class="rounded-lg border border-grey5 px-4 py-3 flex justify-between items-center mb-6">
+                  <div class="border rounded-lg flex border-grey5 mb-6 py-3 px-4 justify-between items-center">
                     <span class="u-body4">
                       {strategy.dictLabel}{' '}
                       {strategy.voteSymbol && (
-                        <span class="bg-[#8247E50F] py-1 px-4 text-primary text-xs ml-4 rounded-2xl">
+                        <span class="bg-[#8247E50F] rounded-2xl text-primary text-xs ml-4 py-1 px-4">
                           {strategy.voteSymbol}
                         </span>
                       )}
                     </span>
                     <div
-                      class="transform scale-75 cursor-pointer"
+                      class="cursor-pointer transform scale-75"
                       onClick={() => this.delStrategy(strategy.dictValue!)}
                     >
                       <DeleteFilled class="text-grey3" />
@@ -283,14 +283,14 @@ export default defineComponent({
                   </div>
                 ))
               ) : (
-                <div class="flex items-center border rounded-lg border-warning py-4 px-6 mb-6">
+                <div class="border border-warning rounded-lg flex mb-6 py-4 px-6 items-center">
                   <WarningFilled class="mr-2" />
                   <span>You must add at least one strategy</span>
                 </div>
               )}
               {}
               <div
-                class="border border-dashed rounded-lg u-body2 text-grey3 py-2 flex items-center justify-center cursor-pointer"
+                class="border border-dashed rounded-lg cursor-pointer flex py-2 text-grey3 items-center justify-center u-body2"
                 onClick={this.addStrategy}
               >
                 <span style={{ fontSize: '18px', marginRight: '10px' }}>+</span>
@@ -298,7 +298,7 @@ export default defineComponent({
               </div>
             </div>
           </div>
-          <div class="w-full mb-6 border border-grey5 rounded-lg">
+          <div class="border rounded-lg border-grey5 mb-6 w-full">
             <div class="border-b border-b-grey5 py-3 px-6 u-title3">Vote symbol</div>
             <div class="p-6">
               <UFormItem
@@ -314,12 +314,12 @@ export default defineComponent({
               >
                 <UInput v-model:value={this.govSetting.voteSymbol} maxlength={8} />
               </UFormItem>
-              <div class="u-tag text-grey4 mt-2">
+              <div class="mt-2 text-grey4 u-tag">
                 Set up a special vote symbol that can be used to distinguish it from other startup
               </div>
             </div>
           </div>
-          <div class="w-full mb-6 border border-grey5 rounded-lg">
+          <div class="border rounded-lg border-grey5 mb-6 w-full">
             <div class="border-b border-b-grey5 py-3 px-6 u-title3">Proposal precondition</div>
             <div class="p-6">
               <div class="mb-6">
@@ -330,9 +330,9 @@ export default defineComponent({
                     return {}
                   }}
                 />
-                <span class="u-body2 ml-4">Allow all team members to submit a proposal</span>
+                <span class="ml-4 u-body2">Allow all team members to submit a proposal</span>
               </div>
-              <div class="u-body4 mb-2">Proposal threshold </div>
+              <div class="mb-2 u-body4">Proposal threshold </div>
               <UInputNumberGroup
                 v-model:value={this.govSetting.proposalThreshold}
                 type="withUnit"
@@ -351,12 +351,12 @@ export default defineComponent({
                   }
                 }}
               />
-              <div class="u-tag text-grey4 mt-2">
+              <div class="mt-2 text-grey4 u-tag">
                 The minimum amount of voting power required to create a proposal
               </div>
             </div>
           </div>
-          <div class="w-full mb-6 border border-grey5 rounded-lg">
+          <div class="border rounded-lg border-grey5 mb-6 w-full">
             <div class="border-b border-b-grey5 py-3 px-6 u-title3">Proposal validity</div>
             <div class="p-6">
               <UInputNumberGroup
@@ -378,12 +378,12 @@ export default defineComponent({
                   }
                 }}
               />
-              <div class="u-tag text-grey4 mt-2">
+              <div class="mt-2 text-grey4 u-tag">
                 The minimum amount of voting power required for the proposal to pass
               </div>
             </div>
           </div>
-          <div class="w-full mb-2 border border-grey5 rounded-lg">
+          <div class="border rounded-lg border-grey5 mb-2 w-full">
             <div class="border-b border-b-grey5 py-3 px-6 u-title3">Admin</div>
             <div class="p-6">
               <div class="flex mb-4">
@@ -409,7 +409,7 @@ export default defineComponent({
                   ]}
                 >
                   <UInput v-model:value={this.govSetting.admins[itemIndex + 1]} class="flex-1" />
-                  <div class="basis-20 flex items-center">
+                  <div class="flex items-center basis-20">
                     <MinusCircleOutlined
                       onClick={() => this.delAdmin(itemIndex)}
                       class={`
@@ -418,18 +418,18 @@ export default defineComponent({
                       `}
                     />
 
-                    <AddCircleOutlined class="ml-3 cursor-pointer" onClick={this.addAdmin} />
+                    <AddCircleOutlined class="cursor-pointer ml-3" onClick={this.addAdmin} />
                   </div>
                 </UFormItem>
               ))}
             </div>
           </div>
-          <div class="u-tag text-grey4">
+          <div class="text-grey4 u-tag">
             The admins will be able to moderate proposals. You must add one address per line.
           </div>
-          <div class="mt-10 flex justify-end">
+          <div class="flex mt-10 justify-end">
             <div
-              class="bg-primary1 text-white rounded-lg px-8 py-2 cursor-pointer"
+              class="rounded-lg cursor-pointer bg-primary1 text-white py-2 px-8"
               onClick={this.saveGovSetting}
             >
               Save
@@ -438,13 +438,13 @@ export default defineComponent({
         </UForm>
         <UModal
           show={this.strategyModal === 'selectModal'}
-          class="bg-white py-8 px-10 w-150 rounded-lg"
+          class="bg-white rounded-lg py-8 px-10 w-150"
         >
           <div>
-            <header class="flex justify-between items-center mb-6">
-              <span class="u-card-title2 text-primary1 tracking-normal">Add strategy</span>
+            <header class="flex mb-6 justify-between items-center">
+              <span class="tracking-normal text-primary1 u-card-title2">Add strategy</span>
               <CloseOutlined
-                class="text-primary1 text-xs cursor-pointer transform scale-75"
+                class="cursor-pointer text-xs transform text-primary1 scale-75"
                 onClick={() => {
                   this.strategyModal = ''
                 }}
@@ -454,7 +454,7 @@ export default defineComponent({
             <div>
               {this.strategies?.map(strate => (
                 <div
-                  class="border rounded-lg p-6 mb-6 u-title3 cursor-pointer"
+                  class="border rounded-lg cursor-pointer mb-6 p-6 u-title3"
                   onClick={() => (this.strategyModal = strate.dictValue)}
                 >
                   {strate.dictLabel}
@@ -465,21 +465,21 @@ export default defineComponent({
         </UModal>
         <UModal
           show={this.strategyModal === 'erc20-balance-of'}
-          class="bg-white py-8 px-10 w-150 rounded-lg"
+          class="bg-white rounded-lg py-8 px-10 w-150"
         >
           <div>
             <UForm
               model={this.erc20BalanceStrategy}
               ref={(ref: any) => (this.erc20BalanceForm = ref)}
             >
-              <header class="flex justify-between items-center mb-6">
-                <span class="u-card-title2 text-primary1">erc20-balance-of</span>
+              <header class="flex mb-6 justify-between items-center">
+                <span class="text-primary1 u-card-title2">erc20-balance-of</span>
                 <CloseOutlined
-                  class="text-primary1 text-xs cursor-pointer transform scale-75"
+                  class="cursor-pointer text-xs transform text-primary1 scale-75"
                   onClick={() => (this.strategyModal = '')}
                 />
               </header>
-              {/* <div class="u-body4 my-2">Network</div> */}
+              {/* <div class="my-2 u-body4">Network</div> */}
               <UFormItem label="Network" path="network">
                 <USelect
                   v-model:value={this.erc20BalanceStrategy.network}
@@ -488,7 +488,7 @@ export default defineComponent({
                   valueField="chainId"
                 />
               </UFormItem>
-              {/* <div class="u-body4 my-2"></div> */}
+              {/* <div class="my-2 u-body4"></div> */}
               <UFormItem
                 label="Contract address"
                 path="contractAddress"
@@ -510,7 +510,7 @@ export default defineComponent({
               >
                 <UInput v-model:value={this.erc20BalanceStrategy.contractAddress} />
               </UFormItem>
-              {/* <div class="u-body4 my-2">Symbol</div> */}
+              {/* <div class="my-2 u-body4">Symbol</div> */}
               <UFormItem label="Symbol" path="symbol">
                 <UInput
                   value={this.erc20BalanceStrategy.symbol}
@@ -523,21 +523,21 @@ export default defineComponent({
                   }}
                 />
               </UFormItem>
-              <div class="u-tag text-grey4 mt-2 mb-6">
+              <div class="mt-2 mb-6 text-grey4 u-tag">
                 This strategy returns the balances of the voters for a specific ERC20 token.You can
                 edit the strategy by clicking on it if you want to add your own token.
               </div>
               {!this.contractAddressExist && (
-                <div class="flex items-center border border-[#F53F3F] rounded-lg  mb-10 px-4 py-1">
-                  <ErrorTipFilled class="text-[#F53F3F] transform scale-75" />
-                  <span class="ml-4 u-body1 text-[#F53F3F]">
+                <div class="border rounded-lg flex border-[#F53F3F] mb-10  py-1 px-4 items-center">
+                  <ErrorTipFilled class="transform text-[#F53F3F] scale-75" />
+                  <span class="ml-4 text-[#F53F3F] u-body1">
                     The token address was not found, please make sure the network is correct
                   </span>
                 </div>
               )}
-              <div class="mt-4 flex justify-end">
+              <div class="flex mt-4 justify-end">
                 <div
-                  class="w-40 bg-primary1 text-white py-2 rounded-lg text-center cursor-pointer"
+                  class="rounded-lg cursor-pointer bg-primary1 text-white text-center py-2 w-40"
                   onClick={() =>
                     this.addErc20Strategy({
                       ...this.erc20BalanceStrategy,
@@ -552,7 +552,7 @@ export default defineComponent({
             </UForm>
           </div>
         </UModal>
-        <UModal show={this.strategyModal === 'ticket'} class="bg-white py-8 px-10 w-150 rounded-lg">
+        <UModal show={this.strategyModal === 'ticket'} class="bg-white rounded-lg py-8 px-10 w-150">
           <div>
             <UForm model={this.ticketStrategy}>
               <header class="flex justify-between items-center mb-6">

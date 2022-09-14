@@ -273,7 +273,7 @@ export default defineComponent({
                   )}
                 </>
               ) : (
-                <Edit class="mr-24px" onHandleClick={handleEditMode} />
+                <Edit onHandleClick={handleEditMode} />
               )}
             </div>
             <div class="flex flex-col mt-30px mb-24px px-10">

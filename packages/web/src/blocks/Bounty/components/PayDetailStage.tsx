@@ -1,8 +1,16 @@
-import { FormInst, UForm, UFormItem, UInput, UInputNumberGroup } from '@comunion/components'
+import {
+  FormInst,
+  UForm,
+  UFormItem,
+  UInput,
+  UInputNumberGroup,
+  USelect
+} from '@comunion/components'
 import { MinusCircleOutlined, AddCircleOutlined } from '@comunion/icons'
 import { defineComponent, PropType, ref, computed } from 'vue'
-import { BountyInfo } from '../typing'
+import { BountyInfo, chainInfoType } from '../typing'
 import { MAX_AMOUNT, renderUnit } from './BasicInfo'
+import { allNetworks, BASE_CURRENCY } from '@/constants'
 
 export interface PayDetailStageRef {
   payStageForm: FormInst | null
@@ -18,6 +26,9 @@ const PayDetailStage = defineComponent({
     bountyInfo: {
       type: Object as PropType<BountyInfo>,
       required: true
+    },
+    chainInfo: {
+      type: Object as PropType<chainInfoType>
     }
   },
   emits: ['delStage', 'addStage', 'showLeaveTipModal'],
@@ -50,12 +61,48 @@ const PayDetailStage = defineComponent({
       payStageForm,
       payStagesTotal
     })
+
+    const currentStartupCurrency = computed<string>(() => {
+      const currentChainId = props.chainInfo?.chainID
+      if (currentChainId) {
+        const targetIndex = allNetworks.findIndex(net => net.chainId === currentChainId)
+        if (targetIndex !== -1) {
+          return allNetworks[targetIndex].currencySymbol
+        }
+      }
+      return ''
+    })
+
+    const token1SymbolOptions = (
+      currentStartupCurrency.value
+        ? [
+            ...new Set(BASE_CURRENCY)
+              .add(props.bountyInfo.token1Symbol)
+              .add(currentStartupCurrency.value)
+          ]
+        : [...new Set(BASE_CURRENCY).add(props.bountyInfo.token1Symbol)]
+    ).map(label => {
+      return {
+        label,
+        value: label
+      }
+    })
+
+    const renderSelect = computed(() => (
+      <USelect
+        class="text-center w-30"
+        options={token1SymbolOptions}
+        v-model:value={props.bountyInfo.token1Symbol}
+      />
+    ))
+
     return {
       payStageForm,
       payStagesTotal,
       delStage,
       addStage,
-      showLeaveTipModal
+      showLeaveTipModal,
+      renderSelect
     }
   },
   render() {
@@ -74,8 +121,9 @@ const PayDetailStage = defineComponent({
               <div class="grid grid-cols-[1fr,56px,1fr]">
                 <UInputNumberGroup
                   class="flex-1"
-                  type="withUnit"
+                  type="withSelect"
                   inputProps={{
+                    class: 'flex-1',
                     precision: 0,
                     min: 0,
                     max: MAX_AMOUNT,
@@ -86,13 +134,14 @@ const PayDetailStage = defineComponent({
                     status: this.payStagesTotal.usdcTotal > MAX_AMOUNT ? 'error' : undefined
                   }}
                   v-model:value={stage.token1Amount}
-                  renderUnit={() => renderUnit(this.bountyInfo.token1Symbol)}
+                  renderSelect={() => this.renderSelect}
                 ></UInputNumberGroup>
                 <div class="px-5 text-grey2 text-3xl">+</div>
                 <UInputNumberGroup
                   class="flex-1"
                   type="withUnit"
                   inputProps={{
+                    class: 'flex-1',
                     precision: 0,
                     min: 0,
                     max: MAX_AMOUNT,
@@ -100,7 +149,8 @@ const PayDetailStage = defineComponent({
                       if (value === null) return 0
                       return Number(value)
                     },
-                    status: this.payStagesTotal.tokenTotal > MAX_AMOUNT ? 'error' : undefined
+                    status: this.payStagesTotal.tokenTotal > MAX_AMOUNT ? 'error' : undefined,
+                    disabled: !this.bountyInfo.token2Symbol
                   }}
                   v-model:value={stage.token2Amount}
                   renderUnit={() => renderUnit(this.bountyInfo.token2Symbol)}
@@ -135,7 +185,7 @@ const PayDetailStage = defineComponent({
                 ]}
               >
                 <UInput
-                  placeholder="Will pay after applicant complete this stage"
+                  placeholder="The applicant will get the rewards when do complete this stage"
                   type="textarea"
                   rows={1}
                   class="-mt-1"

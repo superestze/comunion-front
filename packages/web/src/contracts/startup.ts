@@ -2,7 +2,6 @@ import { Contract } from 'ethers'
 import { computed } from 'vue'
 import { getContract, GetContractArgs, wrapTransaction } from './share'
 import { useWalletStore, useChainStore, abiType } from '@/stores'
-
 // export const StartupAddresses: Record<number, string> = {
 //   5: '0xEdf4565af54D9508e247c044F09EddcaD91DAdED',
 //   43113: '0x7E94572BCc67B6eDa93DBa0493b681dC0ae9E964',
@@ -14,8 +13,9 @@ import { useWalletStore, useChainStore, abiType } from '@/stores'
 export const getStartupAddresses = () => {
   const walletStore = useWalletStore()
   const chainStore = useChainStore()
+  const address = (chainStore.abiInfo as abiType)[walletStore.chainId!]?.startup?.address || ''
   return {
-    [walletStore.chainId!]: (chainStore.abiInfo as abiType)[walletStore.chainId!].startup.address
+    [walletStore.chainId!]: address
   }
 }
 export function useStartupContract(
@@ -26,11 +26,12 @@ export function useStartupContract(
     p: [
       name: string,
       mode: number,
-      network: string,
+      network: number,
       mission: string,
       overview: string,
       isValidate: any
     ],
+    modelInfo: any,
     pendingText: string,
     waitingText: string,
     overrides?: any
@@ -65,13 +66,14 @@ export function useStartupContract(
 } {
   const walletStore = useWalletStore()
   const chainStore = useChainStore()
-  const abi = (chainStore.abiInfo as abiType)[walletStore.chainId!].startup.abi
+  const abi = (chainStore.abiInfo as abiType)[walletStore.chainId!]?.startup?.abi
     .replace(/\\t/g, '')
     .replace(/\\r/g, '')
     .replace(/\\n/g, '')
     .replace(/\\"/g, '"')
   const StartupAddresses = {
-    [walletStore.chainId!]: (chainStore.abiInfo as abiType)[walletStore.chainId!].startup.address
+    [walletStore.chainId!]:
+      (chainStore.abiInfo as abiType)[walletStore.chainId!]?.startup?.address || ''
   }
   const getContractArgs = computed<GetContractArgs>(() => {
     return {

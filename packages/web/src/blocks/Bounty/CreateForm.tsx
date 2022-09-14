@@ -4,13 +4,13 @@ import { PeriodOutlined, StageOutlined, WarningFilled } from '@comunion/icons'
 import dayjs from 'dayjs'
 
 import { Contract, ethers } from 'ethers'
-import { defineComponent, ref, reactive, watch } from 'vue'
+import { defineComponent, ref, watch } from 'vue'
 import { useRouter } from 'vue-router'
 import BountyBasicInfo, { BountyBasicInfoRef, MAX_AMOUNT } from './components/BasicInfo'
 import Deposit from './components/Deposit'
 import PayDetailPeriod, { PayDetailPeriodRef } from './components/PayDetailPeriod'
 import PayDetailStage, { PayDetailStageRef } from './components/PayDetailStage'
-import { BountyInfo } from './typing'
+import { BountyInfo, chainInfoType } from './typing'
 import Steps from '@/components/Step'
 import { useBountyFactoryContract, useErc20Contract } from '@/contracts'
 import { BountyFactoryAddresses as bountyFactoryAddresses } from '@/contracts/bountyFactory'
@@ -36,7 +36,11 @@ const CreateBountyForm = defineComponent({
     const bountyBasicInfoRef = ref<BountyBasicInfoRef>()
     const payPeriodRef = ref<PayDetailPeriodRef>()
     const payStageRef = ref<PayDetailStageRef>()
-    const bountyInfo = reactive<BountyInfo>({
+    const chainInfo = ref<chainInfoType>({
+      chainID: undefined,
+      onChain: false
+    })
+    const bountyInfoRef = ref<BountyInfo>({
       current: 1,
       startupID: undefined,
       title: '',
@@ -59,9 +63,10 @@ const CreateBountyForm = defineComponent({
         token2Amount: 0
       },
       deposit: 0,
-      agreement: false
+      agreement: false,
+      onChain: false
     })
-
+    const bountyInfo = bountyInfoRef.value
     const addContact = () => {
       bountyInfo.contact.push({ type: 1, value: '' })
     }
@@ -112,12 +117,11 @@ const CreateBountyForm = defineComponent({
         ) // convert usdc unit to wei
         if (value !== 0) {
           contractStore.startContract(approvePendingText)
-          const bountyFactoryAddress = bountyFactoryAddresses[walletStore.chainId!]
+          const bountyFactoryAddress = bountyFactoryAddresses()
           // approve amount to bounty factory contract
           const approveRes: Contract = await usdcRes.approve(bountyFactoryAddress, bountyAmount)
           await approveRes.wait()
         }
-
         // second send tx to bountyFactory create bounty
         const contractRes: any = await bountyContract.createBounty(
           usdcTokenAddress,
@@ -237,10 +241,9 @@ const CreateBountyForm = defineComponent({
     }
 
     const onSubmit = async () => {
-      // const value = new Big(bountyInfo.deposit).times(Math.pow(10, 18)).toNumber()
+      // const value = new Big(bountyInfo.deposit).times(Math.pow(10, 18)).toNumber
       postSubmit()
     }
-
     const getFinanceSymbol = async (startupId?: number) => {
       if (!startupId) {
         bountyInfo.token2Symbol = ''
@@ -251,16 +254,25 @@ const CreateBountyForm = defineComponent({
       })
       if (!error) {
         bountyInfo.token2Symbol = data.tokenSymbol
+        netWorkChange(data.chainID)
+        chainInfo.value = { chainID: data.chainID, onChain: data.onChain }
       }
     }
-
+    const netWorkChange = async (value: number) => {
+      if (walletStore.chainId !== value) {
+        await walletStore.ensureWalletConnected()
+        const result = await walletStore.wallet?.switchNetwork(value)
+        if (!result) {
+          closeDrawer()
+        }
+      }
+    }
     watch(
       () => bountyInfo.startupID,
       () => {
         getFinanceSymbol(bountyInfo.startupID)
       }
     )
-
     const toNext = () => {
       if (bountyInfo.current === 1) {
         bountyBasicInfoRef.value?.bountyDetailForm?.validate(error => {
@@ -323,7 +335,8 @@ const CreateBountyForm = defineComponent({
       addStage,
       showLeaveTipModal,
       closeDrawer,
-      modalClickYesToWhere
+      modalClickYesToWhere,
+      chainInfo
     }
   },
 
@@ -340,6 +353,7 @@ const CreateBountyForm = defineComponent({
         {this.bountyInfo.current === 1 && (
           <BountyBasicInfo
             bountyInfo={this.bountyInfo}
+            chainInfo={this.chainInfo}
             onDelContact={this.delContact}
             onAddContact={this.addContact}
             onCloseDrawer={this.closeDrawer}
@@ -361,6 +375,7 @@ const CreateBountyForm = defineComponent({
               <PayDetailStage
                 ref={(ref: any) => (this.payStageRef = ref)}
                 bountyInfo={this.bountyInfo}
+                chainInfo={this.chainInfo}
                 onDelStage={this.delStage}
                 onAddStage={this.addStage}
                 onShowLeaveTipModal={this.showLeaveTipModal}
@@ -379,6 +394,7 @@ const CreateBountyForm = defineComponent({
             >
               <PayDetailPeriod
                 bountyInfo={this.bountyInfo}
+                chainInfo={this.chainInfo}
                 ref={(ref: any) => (this.payPeriodRef = ref)}
                 onShowLeaveTipModal={this.showLeaveTipModal}
               />

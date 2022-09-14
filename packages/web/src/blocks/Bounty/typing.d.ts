@@ -26,8 +26,12 @@ export interface BountyInfo {
   }
   deposit: number
   agreement: boolean
+  onChain: boolean
 }
-
+export type chainInfoType = {
+  chainID: number | undefined
+  onChain: boolean
+}
 export interface CreateBountyFormRef {
   bountyInfo: BountyInfo
   toPreviousStep?: () => void

@@ -21,6 +21,7 @@ const UserAvatar = defineComponent({
       userStore.logged ? (
         <HeaderDropdown
           placement="bottom-end"
+          trigger="hover"
           onSelect={onClick}
           options={[
             {
@@ -35,10 +36,12 @@ const UserAvatar = defineComponent({
             }
           ]}
         >
-          <ULazyImage
-            src={userStore.profile?.avatar ?? ''}
-            class="rounded-full cursor-pointer h-8 w-8"
-          />
+          <div
+            class="rounded-full cursor-pointer h-8 w-8 overflow-hidden"
+            onClick={() => router.push('/comer')}
+          >
+            <ULazyImage src={userStore.profile?.avatar ?? ''} class="h-full w-full" />
+          </div>
         </HeaderDropdown>
       ) : (
         <div />

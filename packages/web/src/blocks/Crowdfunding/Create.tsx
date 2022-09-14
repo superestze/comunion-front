@@ -19,7 +19,7 @@ const CreateCrowdfundingBlock = defineComponent({
     const show = async () => {
       await walletStore.ensureWalletConnected()
       if (!walletStore.isNetworkSupported) {
-        message.warning('Please switch to the supported network to create a bounty')
+        message.warning('Please switch to the supported network to create a Dcrowdfunding')
         // not supported network, try to switch
         walletStore.openNetworkSwitcher()
       } else {

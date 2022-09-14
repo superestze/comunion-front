@@ -125,7 +125,7 @@ export default defineComponent({
           </div>
           <div class="overflow-hidden basis-2/3">
             <Filter
-              startupId={this.startupId}
+              tabSequence={this.startup?.tabSequence}
               onSelectedTagChange={tags => (this.selectedTags = tags)}
             />
             {this.canShowByTagName('Bounty') && <Bounties startupId={this.startupId} />}

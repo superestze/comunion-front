@@ -2,7 +2,7 @@ import { UButton, UCard, UModal } from '@comunion/components'
 import { WarningFilled } from '@comunion/icons'
 import dayjs from 'dayjs'
 import { ethers } from 'ethers'
-import { defineComponent, PropType, reactive, ref } from 'vue'
+import { defineComponent, PropType, reactive, ref, watch } from 'vue'
 import { AdditionalInformation, AdditionalInformationRef } from './components/AdditionalInfomation'
 import {
   CrowdfundingInformation,
@@ -69,6 +69,29 @@ const CreateCrowdfundingForm = defineComponent({
       detail: '',
       description: undefined
     })
+    watch(
+      () => crowdfundingInfo.startupId,
+      () => {
+        getFinanceSymbol(crowdfundingInfo.startupId)
+      }
+    )
+    const getFinanceSymbol = async (startupId?: number) => {
+      const { error, data } = await services['startup@startup-get']({
+        startupId
+      })
+      if (!error) {
+        netWorkChange(data.chainID)
+      }
+    }
+    const netWorkChange = async (value: number) => {
+      if (walletStore.chainId !== value) {
+        await walletStore.ensureWalletConnected()
+        const result = await walletStore.wallet?.switchNetwork(value)
+        if (!result) {
+          closeDrawer()
+        }
+      }
+    }
     const showLeaveTipModal = () => {
       modalVisibleState.value = true
     }
@@ -118,7 +141,7 @@ const CreateCrowdfundingForm = defineComponent({
           crowdfundingInfo.sellTokenDecimals
         )
         // get dcrowdfunding factory address
-        const factoryAddress = CrowdfundingFactoryAddresses[walletStore.chainId!]
+        const factoryAddress = CrowdfundingFactoryAddresses()
         contractStore.startContract(approvePendingText)
         // approve sellToken to crowdfund factory contract
         const erc20Res = await erc20TokenContract(crowdfundingInfo.sellTokenContract!)

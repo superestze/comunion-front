@@ -6,18 +6,19 @@ import {
   UFormItemsFactory
 } from '@comunion/components'
 import { SelectOption } from '@comunion/components/src/constants'
+import { ArrowLineRightOutlined } from '@comunion/icons'
 import { defineComponent, ref, computed, Ref, PropType, h, onMounted, nextTick } from 'vue'
 import { useRouter } from 'vue-router'
 import { CrowdfundingInfo } from '../typing'
 import { useErc20Contract } from '@/contracts'
 import { services } from '@/services'
-
 export interface VerifyTokenRef {
   verifyTokenForm: FormInst | null
 }
 
 interface StartupOption extends SelectOption {
   tokenAddress?: string
+  onChain: boolean
 }
 
 export const VerifyToken = defineComponent({
@@ -30,7 +31,6 @@ export const VerifyToken = defineComponent({
   },
   emits: ['closeDrawer'],
   setup(props, ctx) {
-    console.log(props.crowdfundingInfo)
     const router = useRouter()
     const erc20TokenContract = useErc20Contract()
     const verifyTokenForm = ref<FormInst | null>(null)
@@ -82,32 +82,41 @@ export const VerifyToken = defineComponent({
             required: true,
             message: ' Please select a startup',
             type: 'number',
-            trigger: ['change', 'blur']
+            trigger: ['blur']
           },
           {
             validator: (rule, value) => {
-              changeStartup(value)
-              // 5.9Incomplete function
-              // startupID Determine whether the current network is consistent with the network of choice
-              console.log(value)
-              return false
+              if (value) {
+                let status = true
+                startupOptions.value.forEach(item => {
+                  if (item.value === value) {
+                    status = item.onChain
+                  }
+                })
+                return status
+              }
+              return true
             },
             renderMessage: () => {
               return (
-                <div>
+                <div class="flex items-center">
                   <span>
                     The startup cannot create a crowdfunding without being on the blockchain,
                   </span>
-                  <span onClick={() => goSetting()} class="!text-primary cursor-pointer">
-                    {' '}
-                    Go to setting
+                  <span
+                    onClick={() => goSetting()}
+                    class="ml-2 !text-primary cursor-pointer flex items-center"
+                  >
+                    <span>Go to setting</span>
+                    <ArrowLineRightOutlined class="ml-2 w-[16px] h-[16px]" />
                   </span>
                 </div>
               )
             },
-            trigger: 'change'
+            trigger: 'blur'
           }
         ],
+        onUpdateValue: changeStartup,
         options: startupOptions.value
       },
       {
@@ -207,11 +216,9 @@ export const VerifyToken = defineComponent({
         maxlength: 64
       }
     ])
-
     onMounted(() => {
       getStartups()
     })
-
     const getStartups = async () => {
       try {
         const { error, data } = await services['crowdfunding@crowdfundable-startups']()
@@ -220,7 +227,8 @@ export const VerifyToken = defineComponent({
             label: startup.startupName,
             value: startup.startupId,
             disabled: !startup.canRaise,
-            tokenAddress: startup.tokenContract
+            tokenAddress: startup.tokenContract,
+            onChain: startup.onChain
           }))
         }
       } catch (error) {

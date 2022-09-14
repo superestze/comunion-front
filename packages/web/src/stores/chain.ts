@@ -41,7 +41,6 @@ export const useChainStore = defineStore('chain', {
       try {
         const { data } = await services['chain@chain-list']({})
         const supportNet: Array<ChainNetworkType> = []
-        console.log(data)
         data?.list?.map((item: any) => {
           this.allNetworks.map(sn => {
             if (Number(item.chain_id) === Number(sn.chainId)) {
@@ -86,12 +85,24 @@ export const useChainStore = defineStore('chain', {
           })
           ;(this.abiInfo as abiType)[snet.chainId] = obj
         })
+        console.log(this.abiInfo)
         this.supportedNetworks = supportNet
         // setTimeout(() => {
         //   this.supportedNetworks = supportNet
         // }, 2000)
       } catch (error) {
         console.warn(error)
+      }
+    },
+    goTxHashPath(chainId: number, address: string) {
+      let url = ''
+      this.allNetworks.forEach(item => {
+        if (item.chainId === chainId) {
+          url = item.explorerUrl
+        }
+      })
+      if (url) {
+        window.open(`${url}/tx/${address}`, address)
       }
     }
   }

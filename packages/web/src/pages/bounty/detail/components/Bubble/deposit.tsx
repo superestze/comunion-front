@@ -15,13 +15,13 @@ export default defineComponent({
     const depositFn = computed(() => {
       if (props.depositInfo?.access === 1) {
         return () => (
-          <div class="text-success u-card-title2 flex items-center">
+          <div class="flex text-success items-center u-card-title2">
             +{props.depositInfo?.tokenAmount} USDC
           </div>
         )
       } else if (props.depositInfo?.access === 2) {
         return () => (
-          <div class="text-warning u-card-title2 flex items-center">
+          <div class="flex text-warning items-center u-card-title2">
             -{props.depositInfo?.tokenAmount} USDC
           </div>
         )
@@ -37,10 +37,10 @@ export default defineComponent({
         comerId={this.depositInfo?.comerID as unknown as string}
         v-slots={{
           default: () => (
-            <div class="flex justify-between flex-grow">
-              <div class="flex flex-col ml-5">
-                <p class="mb-2 u-title1">{this.depositInfo?.name}</p>
-                <p class="text-14px text-grey3">
+            <div class="flex flex-1 items-center">
+              <div class="flex-1 mx-4">
+                <p class="mb-2 truncate u-title3">{this.depositInfo?.name}</p>
+                <p class="text-grey3 u-tag">
                   {format(this.depositInfo?.time || '', 'comunionTimeAgo')}
                 </p>
               </div>

@@ -58,7 +58,7 @@ export enum USER_ROLE {
   OTHERS
 }
 
-export const transcationUrl: { [key: number]: string } = {
+export const TRANSCATION_URL: { [key: number]: string } = {
   43113: 'https://cchain.explorer.avax-test.network/tx/',
   43114: 'https://etherscan.io/tx/'
 }
@@ -68,3 +68,6 @@ export const PERIOD_OPTIONS = [
   { label: 'Weeks', value: 2, type: 'Week' },
   { label: 'Months', value: 3, type: 'Month' }
 ]
+
+// Get the currency types supported by bounty
+export const BASE_CURRENCY: string[] = ['USDC', 'USD', 'RMB']

@@ -35,6 +35,10 @@ const UInputBigNumber = defineComponent({
     },
     parse: {
       type: Object as PropType<(value: any) => any>
+    },
+    disabled: {
+      type: Boolean,
+      default: false
     }
   },
   setup(props, ctx) {
@@ -85,11 +89,17 @@ const UInputBigNumber = defineComponent({
       ctx.emit('update:value', inputValue.value)
     }
     const addCurrentValue = () => {
+      if (props.disabled) {
+        return null
+      }
       const newValue = new Big((inputValue.value as string) || 0).add(props.step)
       formatValue(newValue)
     }
 
     const minusCurrentValue = () => {
+      if (props.disabled) {
+        return null
+      }
       const newValue = new Big((inputValue.value as string) || 0).minus(props.step)
       formatValue(newValue)
     }
@@ -112,7 +122,7 @@ const UInputBigNumber = defineComponent({
       longEnterEventRef.value = null
     }
     const controlSlot = (
-      <div class="bg-purple w-4.5 h-6 flex flex-col items-center justify-center">
+      <div class="bg-purple flex flex-col h-6 w-4.5 items-center justify-center">
         <div
           style={{ height: '12px' }}
           onMousedown={() => longEnterStart('up')}

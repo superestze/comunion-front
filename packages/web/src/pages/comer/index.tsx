@@ -29,13 +29,13 @@ export default defineComponent({
   setup() {
     const route = useRoute()
     const { id } = route.query
-    console.log(id)
+    // console.log(id)
     const instance = useProfile(id as string)
     console.log(instance.view)
 
     instance.getProfileData()
 
-    const createdByMe = ref<boolean>(false)
+    const createdByMe = ref<boolean>(true)
     const systemTasks = ref<string[]>(['All', 'Startup', 'Bounty', 'dCrowdfunding', 'Proposal'])
     const selectedTasks = ref<string[]>(['All'])
 
@@ -51,7 +51,7 @@ export default defineComponent({
           moduleTag.tagCount.startupCnt === 0
         )
       }
-      console.log(selectedTasks.value)
+      // console.log(selectedTasks.value)
       const result = selectedTasks.value
         .map(value => {
           return moduleTag.tagCount[keyValue[value]]
@@ -103,7 +103,7 @@ export default defineComponent({
       }
       return this.selectedTasks.findIndex((task: string) => task === key) > -1
     }
-    console.log('profile', this.profile)
+    // console.log('profile', this.profile)
     return (
       <USpin show={this.loading}>
         <div class="mt-50px text-primary mb-10 u-h2"></div>

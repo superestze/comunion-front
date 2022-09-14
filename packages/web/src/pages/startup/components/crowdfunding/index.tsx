@@ -3,6 +3,7 @@ import { EmptyFilled } from '@comunion/icons'
 import { defineComponent, ref } from 'vue'
 import CrowdfundingMiniCard from '@/pages/crowdfunding/components/CrowdfundingMiniCard'
 import { ServiceReturn, services } from '@/services'
+import '@/assets/style/last-item-noborder.css'
 
 type DataType = NonNullable<ServiceReturn<'crowdfunding@crowdfunding-list-of-startup'>>
 export default defineComponent({
@@ -30,11 +31,13 @@ export default defineComponent({
   },
   render() {
     return (
-      <UCard title="dCROWDFUNDING" class="mb-6">
+      <UCard title="dCROWDFUNDING" class="mb-6 last-item-noborder">
         {Array.isArray(this.list) && this.list.length > 0 ? (
           this.list
             .filter(item => item.status !== 5)
-            .map(item => <CrowdfundingMiniCard info={item} key={item.crowdfundingId} />)
+            .map(item => (
+              <CrowdfundingMiniCard class="_item" info={item} key={item.crowdfundingId} />
+            ))
         ) : (
           <UNoContent textTip="TO BE EMPTY">
             <EmptyFilled />

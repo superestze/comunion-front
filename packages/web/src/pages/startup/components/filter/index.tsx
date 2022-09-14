@@ -1,15 +1,28 @@
-import { defineComponent, ref } from 'vue'
+import { defineComponent, PropType, computed } from 'vue'
+import { startupSortItemList } from '../../setting/components/sequence/BasicSortable'
 import { ModuleTags } from '@/components/Tags'
 
 export default defineComponent({
   props: {
-    startupId: {
-      type: String,
-      required: true
+    tabSequence: {
+      type: Object as PropType<number[]>
     }
   },
   setup(props) {
-    const tasks = ref(['All', 'Bounty', 'dCrowdfunding', 'Governance', 'Other dapp'])
+    const tasksList = computed<string[]>(() => {
+      const _tabSequence = Array.isArray(props.tabSequence) ? props.tabSequence : [2, 3, 4, 5]
+      return _tabSequence.map(value => {
+        const targetIndex = startupSortItemList.findIndex(item => item.id === value)
+        if (targetIndex !== -1) {
+          return startupSortItemList[targetIndex].name
+        }
+        return ''
+      })
+    })
+
+    const tasks = computed(() => {
+      return ['All', ...tasksList.value.filter(item => !!item)]
+    })
 
     return {
       tasks

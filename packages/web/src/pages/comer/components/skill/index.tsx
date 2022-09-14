@@ -6,7 +6,6 @@ import {
   UForm,
   UFormItemsFactory
 } from '@comunion/components'
-import { PlusOutlined } from '@comunion/icons'
 import { defineComponent, ref, reactive, PropType, watchEffect } from 'vue'
 import { btnGroup } from '../btnGroup'
 import Edit from '../edit'
@@ -86,12 +85,7 @@ export default defineComponent({
                 } else if (this.view) {
                   return
                 }
-                return (
-                  <Edit onHandleClick={handleEditMode()}>
-                    <PlusOutlined class="h-4 mr-3 w-4" />
-                    ADD NEW
-                  </Edit>
-                )
+                return <Edit onHandleClick={handleEditMode()}>Add New</Edit>
               }
             }}
           >
@@ -105,13 +99,13 @@ export default defineComponent({
             ) : (
               <div class="flex flex-wrap mt-6">
                 {Array.isArray(this.info.skills) && this.info.skills.length === 0 ? (
-                  <p class="text-14px font-[400] text-grey4 mt-6">Add your skill</p>
+                  <p class="font-[400] mt-6 text-14px text-grey4">Add your skill</p>
                 ) : (
                   <>
                     {this.info.skills.map(value => (
                       <div
                         style={{ backgroundColor: 'rgba(83, 49, 244, 0.1)' }}
-                        class="text-primary py-1.5 px-4 opacity-0.9 rounded-8px mr-2 mb-2"
+                        class="rounded-8px text-primary mr-2 mb-2 opacity-0.9 py-1.5 px-4"
                       >
                         {value}
                       </div>

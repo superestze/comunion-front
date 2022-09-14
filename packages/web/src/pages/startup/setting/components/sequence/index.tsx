@@ -1,6 +1,6 @@
-import { UButton, USpin } from '@comunion/components'
+import { UButton, USpin, message } from '@comunion/components'
 import { PropType, defineComponent, ref, watch } from 'vue'
-import { BasicSortable } from '@/components/sortable'
+import BasicSortable from './BasicSortable'
 import { services } from '@/services'
 
 type DataType = {
@@ -47,6 +47,7 @@ export default defineComponent({
         tabs: this.list
       })
       this.loading = false
+      message.success('successfully saved')
     }
     return (
       <USpin show={this.loading}>

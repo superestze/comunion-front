@@ -1,18 +1,30 @@
 import { Contract, BigNumber } from 'ethers'
 import { computed } from 'vue'
 import { getContract, GetContractArgs, wrapTransaction } from './share'
-import { useWalletStore } from '@/stores'
+import { useWalletStore, useChainStore, abiType } from '@/stores'
 
-export const CrowdfundingFactoryAddresses: Record<number, string> = {
-  43113: '0x36B2B4db5B81a7D329e67d8eaE9041F9A75c8930',
-  43114: '0xc7a1bAe0Db6203F3Ee3C721909B3b959a1b437Ca'
+// export const CrowdfundingFactoryAddresses: Record<number, string> = {
+//   43113: '0x36B2B4db5B81a7D329e67d8eaE9041F9A75c8930',
+//   43114: '0xc7a1bAe0Db6203F3Ee3C721909B3b959a1b437Ca'
+// }
+export const CrowdfundingFactoryAddresses = () => {
+  const walletStore = useWalletStore()
+  const chainStore = useChainStore()
+  const addres = (chainStore.abiInfo as abiType)[walletStore.chainId!]?.bounty?.address || ''
+  return addres
 }
-
-const abi =
-  '[{"inputs":[{"internalType":"address","name":"_sellToken","type":"address"},{"internalType":"address","name":"_buyToken","type":"address"},{"internalType":"uint256","name":"_raiseTotal","type":"uint256"},{"internalType":"uint256","name":"_buyPrice","type":"uint256"},{"internalType":"uint16","name":"_swapPercent","type":"uint16"},{"internalType":"uint16","name":"_sellTax","type":"uint16"},{"internalType":"uint256","name":"_maxBuyAmount","type":"uint256"},{"internalType":"uint16","name":"_maxSellPercent","type":"uint16"},{"internalType":"address","name":"_teamWallet","type":"address"},{"internalType":"uint256","name":"_startTime","type":"uint256"},{"internalType":"uint256","name":"_endTime","type":"uint256"}],"name":"createCrowdfundingContract","outputs":[],"stateMutability":"nonpayable","type":"function"},{"inputs":[],"name":"getDeployedCrowdfundingContracts","outputs":[{"internalType":"address[]","name":"","type":"address[]"}],"stateMutability":"view","type":"function"},{"inputs":[],"name":"owner","outputs":[{"internalType":"address","name":"","type":"address"}],"stateMutability":"view","type":"function"},{"inputs":[],"name":"renounceOwnership","outputs":[],"stateMutability":"nonpayable","type":"function"},{"inputs":[{"internalType":"address","name":"newOwner","type":"address"}],"name":"transferOwnership","outputs":[],"stateMutability":"nonpayable","type":"function"}]'
-
+// const abi =
+//   '[{"inputs":[{"internalType":"address","name":"_sellToken","type":"address"},{"internalType":"address","name":"_buyToken","type":"address"},{"internalType":"uint256","name":"_raiseTotal","type":"uint256"},{"internalType":"uint256","name":"_buyPrice","type":"uint256"},{"internalType":"uint16","name":"_swapPercent","type":"uint16"},{"internalType":"uint16","name":"_sellTax","type":"uint16"},{"internalType":"uint256","name":"_maxBuyAmount","type":"uint256"},{"internalType":"uint16","name":"_maxSellPercent","type":"uint16"},{"internalType":"address","name":"_teamWallet","type":"address"},{"internalType":"uint256","name":"_startTime","type":"uint256"},{"internalType":"uint256","name":"_endTime","type":"uint256"}],"name":"createCrowdfundingContract","outputs":[],"stateMutability":"nonpayable","type":"function"},{"inputs":[],"name":"getDeployedCrowdfundingContracts","outputs":[{"internalType":"address[]","name":"","type":"address[]"}],"stateMutability":"view","type":"function"},{"inputs":[],"name":"owner","outputs":[{"internalType":"address","name":"","type":"address"}],"stateMutability":"view","type":"function"},{"inputs":[],"name":"renounceOwnership","outputs":[],"stateMutability":"nonpayable","type":"function"},{"inputs":[{"internalType":"address","name":"newOwner","type":"address"}],"name":"transferOwnership","outputs":[],"stateMutability":"nonpayable","type":"function"}]'
+export const getCrowdfundingAddresses = () => {
+  const walletStore = useWalletStore()
+  const chainStore = useChainStore()
+  const address = (chainStore.abiInfo as abiType)[walletStore.chainId!]?.crowdfunding?.address || ''
+  return {
+    [walletStore.chainId!]: address
+  }
+}
 export function useCrowdfundingFactoryContract(
-  params: Omit<GetContractArgs, 'abi'> = { addresses: CrowdfundingFactoryAddresses }
+  params: Omit<GetContractArgs, 'abi'> = { addresses: getCrowdfundingAddresses() }
 ): {
   getContract: () => Contract
   createCrowdfundingContract: (
@@ -46,10 +58,16 @@ export function useCrowdfundingFactoryContract(
   ) => Promise<[]>
 } {
   const walletStore = useWalletStore()
+  const chainStore = useChainStore()
+  const abi = (chainStore.abiInfo as abiType)[walletStore.chainId!]?.crowdfunding?.abi
+  const BountyFactoryAddresses = {
+    [walletStore.chainId!]:
+      (chainStore.abiInfo as abiType)[walletStore.chainId!]?.crowdfunding?.address || ''
+  }
   const getContractArgs = computed<GetContractArgs>(() => {
     return {
       abi,
-      addresses: CrowdfundingFactoryAddresses,
+      addresses: BountyFactoryAddresses,
       wallet: walletStore.wallet,
       chainId: walletStore.chainId
     }
