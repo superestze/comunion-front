@@ -58,7 +58,7 @@ export enum USER_ROLE {
   OTHERS
 }
 
-export const transcationUrl: { [key: number]: string } = {
+export const TRANSCATION_URL: { [key: number]: string } = {
   43113: 'https://cchain.explorer.avax-test.network/tx/',
   43114: 'https://etherscan.io/tx/'
 }

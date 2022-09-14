@@ -5,7 +5,7 @@ import { defineComponent, PropType, computed } from 'vue'
 import { useBountyContractWrapper } from '../../hooks/useBountyContractWrapper'
 import Bubble from './core'
 import { ItemType } from './getItemType'
-import { transcationUrl } from '@/constants'
+import { TRANSCATION_URL } from '@/constants'
 import { ServiceReturn } from '@/services'
 
 type NormalMessage = {
@@ -117,7 +117,7 @@ export default defineComponent({
           name: props.activity?.name || '',
           date: format(props.activity?.timestamp || '', 'comunionTimeAgo'),
           dateTime: dayjs(props.activity?.timestamp || '').format('MMM D'),
-          url: transcationUrl[chainId as number],
+          url: TRANSCATION_URL[chainId as number],
           content: JSON.parse(props.activity?.content as string) as TransactionContent
         }
         return () => <>{transactionMessage(obj)}</>
