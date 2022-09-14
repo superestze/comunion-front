@@ -1,5 +1,5 @@
 import { UButton } from '@comunion/components'
-import { SignOutFilled } from '@comunion/icons'
+import { DisConnectFilled } from '@comunion/icons'
 import { shortenAddress } from '@comunion/utils'
 import { defineComponent } from 'vue'
 import HeaderDropdown from '../../components/HeaderDropdown'
@@ -56,7 +56,7 @@ const WalletAddress = defineComponent({
               options={[
                 {
                   key: 'disconnect',
-                  icon: () => <SignOutFilled class="bg-purple rounded-3xl text-primary" />,
+                  icon: () => <DisConnectFilled class="bg-purple rounded-3xl text-primary" />,
                   label: () => (
                     <div class="flex items-center" onClick={disconnect}>
                       Disconnect
