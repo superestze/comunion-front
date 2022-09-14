@@ -114,7 +114,7 @@ const CreateBlock = defineComponent({
             {
               key: 'startup',
               label: () => (
-                <div class="flex items-center" onClick={onCreateStartup}>
+                <div class="flex items-center h-14.5" onClick={onCreateStartup}>
                   <div class="rounded flex h-14.5 mr-4 w-8 items-center justify-center">
                     <CreateStartupNewFilled />
                   </div>
