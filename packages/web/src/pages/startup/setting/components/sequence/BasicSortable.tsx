@@ -20,7 +20,7 @@ type ListItemType = {
   icon: () => any
 }
 
-const initialData = [
+export const startupSortItemList = [
   {
     name: 'Bounty',
     text: '',
@@ -59,7 +59,7 @@ export default defineComponent({
   },
   emits: ['update:modelValue'],
   setup(props, ctx) {
-    const list = ref<ListItemType[]>([...initialData])
+    const list = ref<ListItemType[]>([...startupSortItemList])
 
     const emitChange = () => {
       ctx.emit(
@@ -77,11 +77,11 @@ export default defineComponent({
           !propData.filter(e => [2, 3, 4, 5].indexOf(e) === -1).length
         ) {
           list.value = propData.map(index => {
-            return initialData[initialData.findIndex(e => e.id === index)]
+            return startupSortItemList[startupSortItemList.findIndex(e => e.id === index)]
           })
         } else {
           list.value = [2, 3, 4, 5].map(index => {
-            return initialData[initialData.findIndex(e => e.id === index)]
+            return startupSortItemList[startupSortItemList.findIndex(e => e.id === index)]
           })
         }
       },
