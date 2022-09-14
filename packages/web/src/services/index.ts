@@ -149,12 +149,11 @@ export const services = {
     return requestAdapter<
       {
         /**
-   * @description
-  ModuleStartup - 1
-  ModuleBounty - 2
-  ModuleCrowdfunding - 3
-  ModuleProposal - 4
-
+   * @description 
+	ModuleStartup - 1
+	ModuleBounty - 2
+	ModuleCrowdfunding - 3
+	ModuleProposal - 4
 
 
      */
@@ -2030,9 +2029,9 @@ export const services = {
   'crowdfunding@crowdfundable-startups'(args?: any) {
     return requestAdapter<
       {
-        onChain: any
-        startupId: number
-        startupName: string
+        startupId?: number
+        startupName?: string
+        canRaise?: boolean
         /**
          * @description 是否上链
          */
@@ -2963,14 +2962,14 @@ export const services = {
   'startup@social-delete'(args: { startupID: any }) {
     return requestAdapter<{
       /**
-   * @description 	1-SocialEmail
-  2-SocialWebsite
-  3-SocialTwitter
-  4-SocialDiscord
-  5-SocialTelegram
-  6-SocialMedium
-  7-SocialFacebook
-  8-SocialLinktre
+   * @description 	1-SocialEmail 
+	2-SocialWebsite
+	3-SocialTwitter
+	4-SocialDiscord
+	5-SocialTelegram
+	6-SocialMedium
+	7-SocialFacebook
+	8-SocialLinktre
      */
       socialType: number
     }>({
@@ -2986,12 +2985,24 @@ export const services = {
       name: string
       logo: string
       cover: string
+      /**
+       * @description 交易hash
+       */
       txHash: string
+      /**
+       * @description 上链ID
+       */
       chainId: number
+      /**
+   * @description 	ModeESG Mode = 1
+	ModeNGO Mode = 2
+	ModeDAO Mode = 3
+	ModeCOM Mode = 4
+
+     */
       mode: number
       mission: string
       overview: string
-      hashTags: Array<string>
     }
   ) {
     return requestAdapter<{}>({
@@ -3092,7 +3103,6 @@ export const services = {
       /**
        * @description whether it is on the chain
        */
-      isSet: boolean
       onChain: boolean
       kyc: string
       contractAudit: string
