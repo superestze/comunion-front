@@ -85,7 +85,7 @@ const StartupCard = defineComponent({
             </div>
           </div>
 
-          <div class="mt-6 mb-0.875rem truncate u-h3" title={props.startup.name}>
+          <div class="mt-6 mb-0.875rem text-color1 truncate u-h3" title={props.startup.name}>
             {props.startup.name}
           </div>
           <p class=" mb-6 break-all u-body1 line-clamp-3">{props.startup.mission}</p>
