@@ -40,9 +40,9 @@ const CreateStartupForm = defineComponent({
     const contractStore = useContractStore()
     const supportedNetworks = reactive(chainStore.supportedNetworks)
     const defaultModel = {
-      nextwork: undefined,
+      nextwork: walletStore.chainId,
       // logo: '',
-      switch: false,
+      switch: true,
       name: '',
       type: undefined,
       mission: '',
@@ -199,8 +199,7 @@ const CreateStartupForm = defineComponent({
           label: item.name,
           logo: item.logo
         })),
-        // 5.9Incomplete function
-        // startupID Determine whether the current network is consistent with the network of choice
+        defaultValue: walletStore.chainId,
         onUpdateValue: (value: number) => netWorkChange(value),
         renderTag: ({ option }) => {
           return h(
