@@ -8,7 +8,7 @@ import {
   UInputNumberGroup
 } from '@comunion/components'
 import { defineComponent, PropType, ref, computed } from 'vue'
-import { BountyInfo } from '../typing'
+import { BountyInfo, chainInfoType } from '../typing'
 import { MAX_AMOUNT, renderUnit } from './BasicInfo'
 import RichEditor from '@/components/Editor'
 import { PERIOD_OPTIONS, allNetworks, BASE_CURRENCY } from '@/constants'
@@ -19,11 +19,6 @@ export interface PayDetailPeriodRef {
     usdcTotal: number
     tokenTotal: number
   }
-}
-
-interface chainInfoType {
-  chainID: number
-  onChain: boolean
 }
 
 const PayDetailPeriod = defineComponent({

@@ -18,6 +18,7 @@ import { AVAX_USDC_ADDR } from '@/contracts/utils'
 import { services } from '@/services'
 import { useUserStore, useWalletStore } from '@/stores'
 import { useContractStore } from '@/stores/contract'
+
 const CreateBountyForm = defineComponent({
   name: 'CreateBountyForm',
   emits: ['cancel'],

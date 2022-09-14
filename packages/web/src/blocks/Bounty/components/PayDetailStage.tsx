@@ -8,7 +8,7 @@ import {
 } from '@comunion/components'
 import { MinusCircleOutlined, AddCircleOutlined } from '@comunion/icons'
 import { defineComponent, PropType, ref, computed } from 'vue'
-import { BountyInfo } from '../typing'
+import { BountyInfo, chainInfoType } from '../typing'
 import { MAX_AMOUNT, renderUnit } from './BasicInfo'
 import { allNetworks, BASE_CURRENCY } from '@/constants'
 
@@ -18,11 +18,6 @@ export interface PayDetailStageRef {
     usdcTotal: number
     tokenTotal: number
   }
-}
-
-interface chainInfoType {
-  chainID: number
-  onChain: boolean
 }
 
 const PayDetailStage = defineComponent({
