@@ -7,7 +7,7 @@
 
   :global {
     .n-dropdown-option-body {
-      @apply rounded-md min-w-180px;
+      @apply rounded-md min-w-180px h-17.5;
 
       &.n-dropdown-option-body--pending:not(.n-dropdown-option-body--disabled) {
         background-color: var(--active-bg-new) !important;
