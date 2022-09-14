@@ -75,6 +75,10 @@ export default defineComponent({
       proposalValidity: 0,
       admins: []
     })
+    //  ticket strategy
+    const ticketStrategy = reactive({
+      network: 1
+    })
     const erc20BalanceStrategy = reactive({
       network: 1,
       contractAddress: '',
@@ -164,7 +168,8 @@ export default defineComponent({
     }
 
     const addTicketStrategy = async (strategy: StrategyType) => {
-      govSetting.strategies?.push(strategy)
+      // govSetting.strategies?.push(strategy)
+      govSetting.strategies = [strategy]
       strategyModal.value = undefined
     }
 
@@ -176,6 +181,7 @@ export default defineComponent({
           if (!error) {
             const strategies = govSetting.strategies?.map(strategy => ({
               strategyName: strategy.dictLabel,
+              voteSymbol: strategy.voteSymbol,
               dictValue: strategy.dictValue,
               chainId: strategy.network,
               tokenContractAddress: strategy.contractAddress,
@@ -218,6 +224,7 @@ export default defineComponent({
       govSetting,
       strategies,
       strategyModal,
+      ticketStrategy,
       erc20BalanceStrategy,
       erc20BalanceForm,
       contractAddressExist,
@@ -547,30 +554,43 @@ export default defineComponent({
         </UModal>
         <UModal show={this.strategyModal === 'ticket'} class="bg-white py-8 px-10 w-150 rounded-lg">
           <div>
-            <header class="flex justify-between items-center mb-6">
-              <span class="u-card-title2 text-primary1">Ticket</span>
-              <CloseOutlined
-                class="text-primary1 text-xs cursor-pointer transform scale-75"
-                onClick={() => (this.strategyModal = '')}
-              />
-            </header>
-            <div class="text-sm text-grey4 mt-2 mb-6 inline-block">
-              This strategy means that voting can be done as long as the wallet is linked, and each
-              wallet address has only one vote
-            </div>
-            <div class="mt-4 flex justify-end">
-              <div
-                class="w-40 bg-primary1 text-white py-2 rounded-lg text-center cursor-pointer"
-                onClick={() =>
-                  this.addTicketStrategy({
-                    dictLabel: 'Ticket',
-                    dictValue: 'ticket'
-                  })
-                }
-              >
-                Add
+            <UForm model={this.ticketStrategy}>
+              <header class="flex justify-between items-center mb-6">
+                <span class="u-card-title2 text-primary1">Ticket</span>
+                <CloseOutlined
+                  class="text-primary1 text-xs cursor-pointer transform scale-75"
+                  onClick={() => (this.strategyModal = '')}
+                />
+              </header>
+              {/* <div class="u-body4 my-2">Network</div> */}
+              <UFormItem label="Network" path="network">
+                <USelect
+                  v-model:value={this.ticketStrategy.network}
+                  options={this.networks}
+                  labelField="name"
+                  valueField="chainId"
+                />
+              </UFormItem>
+
+              <div class="u-tag text-grey4 mt-2 mb-6">
+                This strategy means that voting can be done as long as the wallet is linked, and
+                each wallet address has only one vote
               </div>
-            </div>
+              <div class="mt-4 flex justify-end">
+                <div
+                  class="w-40 bg-primary1 text-white py-2 rounded-lg text-center cursor-pointer"
+                  onClick={() =>
+                    this.addTicketStrategy({
+                      ...this.ticketStrategy,
+                      dictLabel: 'Ticket',
+                      dictValue: 'ticket'
+                    })
+                  }
+                >
+                  Add
+                </div>
+              </div>
+            </UForm>
           </div>
         </UModal>
       </div>

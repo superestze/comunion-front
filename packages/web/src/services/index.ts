@@ -149,7 +149,7 @@ export const services = {
     return requestAdapter<
       {
         /**
-   * @description
+   * @description 
 	ModuleStartup - 1
 	ModuleBounty - 2
 	ModuleCrowdfunding - 3
@@ -172,6 +172,10 @@ export const services = {
         startupId: number
         startupName: string
         startupLogo: string
+        /**
+         * @description 是否已上链
+         */
+        onChain: boolean
       }[]
     >({
       url: replacePath('/account/related-startups', args),
@@ -1332,11 +1336,17 @@ export const services = {
   },
   'bounty@bounty-startups'(args: { comerID: any }) {
     return requestAdapter<{
-      total?: number
       list?: {
-        startupID: number
-        name: string
+        startupID?: number
+        comerId?: number
+        /**
+         * @description 是否在链上
+         */
+        onChain?: boolean
+        name?: string
+        isFollowed?: boolean
       }[]
+      total?: number
     }>({
       url: replacePath('/cores/startups/comer/{comerID}', args),
       method: 'GET',
@@ -2019,13 +2029,13 @@ export const services = {
   'crowdfunding@crowdfundable-startups'(args?: any) {
     return requestAdapter<
       {
-        startupId: number
-        startupName: string
+        startupId?: number
+        startupName?: string
+        canRaise?: boolean
         /**
-         * @description 能否募资：true,可，false,不能
+         * @description 是否上链
          */
-        canRaise: boolean
-        tokenContract?: string
+        onChain?: boolean
       }[]
     >({
       url: replacePath('/cores/startups/crowdfundable', args),
@@ -2337,6 +2347,7 @@ export const services = {
         strategyName?: string
         chainId?: number
         tokenContractAddress?: string
+        voteSymbol?: string
         voteDecimals?: number
         tokenMinBalance?: number
       }[]
@@ -2400,18 +2411,22 @@ export const services = {
     return requestAdapter<{
       proposalId: number
       startupId: number
+      allowMember: boolean
       voteSystem: string
+      voteSymbol: string
       blockNumber: number
       discussionLink: string
       startupLogo: string
       startupName: string
       authorComerId: number
+      authorComerAvatar: string
       authorWalletAddress: string
       title: string
       description: string
       status: number
       startTime: string
       endTime: string
+      voteSystemId: number
       strategies: {
         id: number
         settingId: number
@@ -2832,7 +2847,7 @@ export const services = {
         chainID: number
         blockChainAddress: string
         tokenContractAddress: string
-        isSet: boolean
+        onChain: boolean
         wallets: {
           id: number
           createdAt: string
@@ -2881,7 +2896,7 @@ export const services = {
         chainID: number
         blockChainAddress: string
         tokenContractAddress: string
-        isSet: boolean
+        onChain: boolean
         wallets: {
           id: number
           createdAt: string
@@ -2947,7 +2962,7 @@ export const services = {
   'startup@social-delete'(args: { startupID: any }) {
     return requestAdapter<{
       /**
-   * @description 	1-SocialEmail
+   * @description 	1-SocialEmail 
 	2-SocialWebsite
 	3-SocialTwitter
 	4-SocialDiscord
@@ -2970,6 +2985,14 @@ export const services = {
       name: string
       logo: string
       cover: string
+      /**
+       * @description 交易hash
+       */
+      txHash: string
+      /**
+       * @description 上链ID
+       */
+      chainId: number
       /**
    * @description 	ModeESG Mode = 1
 	ModeNGO Mode = 2
@@ -3078,9 +3101,9 @@ export const services = {
       chainID: number
       blockChainAddress: string
       /**
-       * @description 暂时未找到在哪里使用过的字段，然后又没有相关数据库文档，暂时作为是否上链使用
+       * @description whether it is on the chain
        */
-      isSet: boolean
+      onChain: boolean
       kyc: string
       contractAudit: string
       hashTags: {
@@ -3291,7 +3314,7 @@ export const services = {
         overview: string
         chainID: number
         blockChainAddress: string
-        isSet: boolean
+        onChain: boolean
         kyc: string
         contractAudit: string
         hashTags: {
@@ -3361,7 +3384,7 @@ export const services = {
         chainID: number
         blockChainAddress: string
         tokenContractAddress: string
-        isSet: boolean
+        onChain: boolean
         wallets: {
           id: number
           createdAt: string
@@ -3432,7 +3455,7 @@ export const services = {
         chainID: number
         blockChainAddress: string
         tokenContractAddress: string
-        isSet: boolean
+        onChain: boolean
         kyc: string
         contractAudit: string
         hashTags: {
@@ -3658,7 +3681,7 @@ export const services = {
         chainID: number
         blockChainAddress: string
         tokenContractAddress: string
-        isSet: boolean
+        onChain: boolean
         wallets: {
           id: number
           createdAt: string
@@ -3716,7 +3739,7 @@ export const services = {
         chainID: number
         blockChainAddress: string
         tokenContractAddress: string
-        isSet: boolean
+        onChain: boolean
         overview: string
         kyc: string
         contractAudit: string
@@ -3826,7 +3849,7 @@ export const services = {
         logo: string
         mission: string
         tokenContractAddress: string
-        isSet: boolean
+        onChain: boolean
         wallets: {
           id: number
           createdAt: string

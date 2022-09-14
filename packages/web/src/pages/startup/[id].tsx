@@ -6,6 +6,7 @@ import Connection from './components/connection'
 import Crowdfunding from './components/crowdfunding'
 import Filter from './components/filter'
 import Finance from './components/finance'
+import Governance from './components/governance'
 import Overview from './components/overview'
 import Profile from './components/profile'
 import Security from './components/security'
@@ -129,6 +130,7 @@ export default defineComponent({
             />
             {this.canShowByTagName('Bounty') && <Bounties startupId={this.startupId} />}
             {this.canShowByTagName('dCrowdfunding') && <Crowdfunding startupId={this.startupId} />}
+            {this.canShowByTagName('Governance') && <Governance startupId={this.startupId} />}
             {!this.hasDataToShow && <Empty />}
           </div>
         </div>

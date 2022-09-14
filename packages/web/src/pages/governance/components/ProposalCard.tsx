@@ -64,7 +64,7 @@ export const ProposalCard = defineComponent({
         <div class="flex-1 truncate">
           <div class="flex items-center justify-between">
             <div>
-              <span class="mr-2 text-grey3 text-xs">Linkedin by</span>
+              <span class="mr-2 text-grey3 text-xs">{this.proposalData.startupName} by</span>
               <span class="text-primary text-xs">
                 {shortenAddress(this.proposalData.authorWalletAddress)}
               </span>
