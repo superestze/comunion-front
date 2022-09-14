@@ -221,7 +221,7 @@ export default defineComponent({
                             <ULazyImage class="w-full" src={item.comerAvatar || defaultAvatar} />
                           </div>
                           <div class="flex flex-col ml-6">
-                            <p class="font-orbitron u-title2">{item.comerName}</p>
+                            <p class="font-primary u-title2">{item.comerName}</p>
                             <p class="font-400 mt-1 text-12px text-grey1 truncate ">
                               {/* {item.groupName && <span class="mr-2">{item.groupName}</span>} */}
                               <span>{item.position || ''}</span>

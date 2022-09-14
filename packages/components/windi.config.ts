@@ -9,7 +9,7 @@ export default defineConfig({
   theme: {
     extend: {
       fontFamily: {
-        orbitron: ['Orbitron', 'sans-serif'],
+        primary: ['Outfit', 'sans-serif'],
         opensans: ['Open Sans', 'sans-serif']
       },
       colors: {
@@ -36,12 +36,12 @@ export default defineConfig({
     }
   },
   shortcuts: {
-    'u-h1': 'font-orbitron font-bold tracking-normal text-[40px] text-grey1 leading-14',
-    'u-h2': 'font-orbitron font-bold tracking-normal text-[32px] text-grey1 leading-10',
-    'u-h3': 'font-orbitron font-bold tracking-normal text-[24px] text-grey1 leading-8',
-    'u-h4': 'font-orbitron font-bold tracking-normal text-[20px] text-grey1 leading-7',
-    'u-card-title1': 'font-orbitron font-bold text-[20px] text-grey1 leading-6 tracking-[2px]',
-    'u-card-title2': 'font-orbitron font-bold text-[14px] text-grey1 leading-5 tracking-[2px]',
+    'u-h1': 'font-primary font-bold tracking-normal text-[40px] text-grey1 leading-14',
+    'u-h2': 'font-primary font-bold tracking-normal text-[32px] text-grey1 leading-10',
+    'u-h3': 'font-primary font-bold tracking-normal text-[24px] text-grey1 leading-8',
+    'u-h4': 'font-primary font-bold tracking-normal text-[20px] text-grey1 leading-7',
+    'u-card-title1': 'font-primary font-bold text-[20px] text-grey1 leading-6 tracking-[2px]',
+    'u-card-title2': 'font-primary font-bold text-[14px] text-grey1 leading-5 tracking-[2px]',
     'u-title1': 'font-opensans font-semibold tracking-normal text-[20px] text-grey1 leading-6',
     'u-title2': 'font-opensans font-semibold tracking-normal text-[18px] text-grey1 leading-5.5',
     'u-title3': 'font-opensans font-semibold tracking-normal text-[16px] text-grey1 leading-5',

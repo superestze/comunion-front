@@ -55,7 +55,7 @@ export default defineComponent({
       return (
         // text-warning
         <strong
-          class="font-orbitron leading-none px-1 text-9 truncate relative"
+          class="font-primary leading-none px-1 text-9 truncate relative"
           style={{ fontSize: `${props.enhance}px` }}
         >
           {prefix.value}
