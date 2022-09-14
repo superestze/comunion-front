@@ -1,4 +1,3 @@
-import { message } from '@comunion/components'
 import { Contract, BigNumber } from 'ethers'
 import { computed } from 'vue'
 import { getContract, GetContractArgs, wrapTransaction } from './share'
@@ -20,9 +19,6 @@ export const getCrowdfundingAddresses = () => {
   const walletStore = useWalletStore()
   const chainStore = useChainStore()
   const address = (chainStore.abiInfo as abiType)[walletStore.chainId!]?.crowdfunding?.address || ''
-  if (!address) {
-    message.warning('The current network does not obtain abi，Please select another network')
-  }
   return {
     [walletStore.chainId!]: address
   }

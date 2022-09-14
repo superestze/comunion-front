@@ -1,4 +1,3 @@
-import { message } from '@comunion/components'
 import { Contract } from 'ethers'
 import { computed } from 'vue'
 import { getContract, GetContractArgs, wrapTransaction } from './share'
@@ -15,9 +14,6 @@ export const getStartupAddresses = () => {
   const walletStore = useWalletStore()
   const chainStore = useChainStore()
   const address = (chainStore.abiInfo as abiType)[walletStore.chainId!]?.startup?.address || ''
-  if (!address) {
-    message.warning('The current network does not obtain abi，Please select another network')
-  }
   return {
     [walletStore.chainId!]: address
   }
