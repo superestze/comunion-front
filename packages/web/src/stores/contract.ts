@@ -69,10 +69,12 @@ export const useContractStore = defineStore('contract', {
     ) {
       this.contract.status = status as UContractInteractionStatus
       if (ret.success) {
-        if (options?.setting) {
-          this.setStartupSuccessAfter({ ...options, ...{ txHash: ret.hash } })
-        } else {
-          this.createStartupSuccessAfter({ ...options, ...{ txHash: ret.hash } })
+        if (options.name) {
+          if (options?.setting) {
+            this.setStartupSuccessAfter({ ...options, ...{ txHash: ret.hash } })
+          } else {
+            this.createStartupSuccessAfter({ ...options, ...{ txHash: ret.hash } })
+          }
         }
         const transaction: ContractState['transacations'][number] = reactive({
           hash: ret.hash,

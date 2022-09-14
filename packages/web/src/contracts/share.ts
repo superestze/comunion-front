@@ -21,7 +21,12 @@ export function wrapTransaction(
     if (pengdingText) {
       contractStore.startContract(pengdingText)
     }
-    const options = fnArgs.pop()
+    let options: any
+    if (functionName === 'newStartup') {
+      options = fnArgs.pop()
+    } else {
+      options = {}
+    }
     const contract = getContract(contractArgs)
     const fn = contract[functionName]
     return fn(...fnArgs, overrides)
