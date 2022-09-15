@@ -31,14 +31,13 @@ const StartupCard = defineComponent({
       router.push({ path: `/startup/${startupInfo.id}` })
     }
     const theChainName = getChainInfoByChainId(props.startup.chainID)?.shortName
-    const STARTUP_TAG_CLASS =
-      'inline-block h-1.25rem leading-5 px-0.5rem text-[#3F2D99] border-1 border-[#3F2D99] rounded-sm'
+
     const STARTUP_SUB_TAG_CLASS =
       'inline-block ml-1 h-1.25rem leading-5 px-0.5rem text-[#fff] rounded-sm'
 
     return () => (
       <div
-        class="bg-white border border-color-border rounded cursor-pointer h-96 top-0 relative hover:shadow-md hover:-top-0.5rem"
+        class="bg-white border border-color-border rounded-sm cursor-pointer h-96 top-0 relative hover:bg-color-hover"
         style="transition:all ease .3s"
         onClick={() => toStartDetail(props.startup)}
       >
@@ -48,7 +47,7 @@ const StartupCard = defineComponent({
               src={props.startup.logo}
               width="8"
               height="12"
-              class="rounded h-3.75rem mr-0.75rem w-3.75rem !object-cover"
+              class="bg-white rounded h-3.75rem mr-0.75rem w-3.75rem !object-cover"
             />
             <div class="flex-1 ">
               <div class="mb-0.5rem float-right">
