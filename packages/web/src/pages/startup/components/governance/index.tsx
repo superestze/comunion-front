@@ -1,10 +1,10 @@
 import { UCard, UScrollList } from '@comunion/components'
 import { defineComponent, reactive, ref, onMounted } from 'vue'
 import { useRouter } from 'vue-router'
+import styles from './governance.module.css'
 import { ProposalCard } from '@/pages/governance/components/ProposalCard'
 import { ServiceReturn, services } from '@/services'
 import { IPagination } from '@/types'
-
 export default defineComponent({
   name: 'governance',
   props: {
@@ -82,7 +82,7 @@ export default defineComponent({
     return (
       <UCard title="PROPOSAL" class="mb-6">
         <UScrollList
-          class="max-h-100"
+          class={['max-h-100 overflow-unset', styles.srollList]}
           triggered={this.pagination.loading}
           page={this.pagination.page}
           pageSize={this.pagination.pageSize}
@@ -92,12 +92,12 @@ export default defineComponent({
           {this.proposalList.map(proposal => (
             <div>
               <div
-                class="cursor-pointer"
+                class="cursor-pointer pt-4 pb-1 rounded-[2px] hover:bg-[#F0F0F0] hover:w-[102%] hover:ml-[-1%] hover:pl-[1%] hover:pr-[1%]"
                 onClick={() => this.toProposalDetail(proposal.proposalId)}
               >
                 <ProposalCard proposalData={proposal} />
               </div>
-              <div class="h-px w-[90%] bg-grey5 ml-auto"></div>
+              {/* <div class="h-px w-[90%] bg-grey5 ml-auto"></div> */}
             </div>
           ))}
         </UScrollList>

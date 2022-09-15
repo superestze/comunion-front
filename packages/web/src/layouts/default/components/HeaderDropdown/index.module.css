@@ -15,7 +15,7 @@
         color: #3f2d99 !important;
       }
 
-      @apply rounded-gl min-w-180px items-center !h-auto;
+      @apply rounded-[2px] min-w-180px items-center !h-auto;
 
       &:not(.n-dropdown-option-body--group) {
         @apply -mx-2 py-2.5 px-3;

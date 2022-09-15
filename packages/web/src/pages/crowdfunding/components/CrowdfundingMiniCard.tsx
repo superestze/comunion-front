@@ -88,7 +88,7 @@ export default defineComponent({
 
     return () => (
       <div
-        class="py-4 hover:bg-[#F0F0F0]  hover:w-[102%] hover:ml-[-1%] hover:pl-[1%] hover:pr-[1%]"
+        class="py-4 rounded-[2px] hover:bg-[#F0F0F0] hover:w-[102%] hover:ml-[-1%] hover:pl-[1%] hover:pr-[1%]"
         style="transition:background ease .3s"
         onClick={() => toDetail(props.info.crowdfundingId, props.info.chainId)}
       >
@@ -97,7 +97,7 @@ export default defineComponent({
             src={props.info.poster}
             width="10"
             height="10"
-            class="rounded-gl h-15 mr-3 w-15"
+            class="rounded-[2px] h-15 mr-3 w-15"
           />
 
           <div class="flex-1 overflow-hidden">
@@ -106,7 +106,7 @@ export default defineComponent({
 
               <span
                 class={[
-                  'rounded-gl h-5 font-primary text-color2 ml-4 px-2 text-xs leading-1.25rem inline-block border-1 border-[#DADCE0]'
+                  'rounded-[2px] h-5 font-primary text-color2 ml-4 px-2 text-xs leading-1.25rem inline-block border-1 border-[#DADCE0]'
                 ]}
               >
                 {CROWDFUNDING_TYPES[props.info.status - 1]}

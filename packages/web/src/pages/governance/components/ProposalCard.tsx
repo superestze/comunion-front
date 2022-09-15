@@ -64,26 +64,31 @@ export const ProposalCard = defineComponent({
   },
   render() {
     return (
-      <div class="flex bg-white py-6 w-full border-grey5 rounded-lg">
+      <div class="flex">
         <div class="w-15 h-15 mr-4">
           <UStartupLogo src={this.proposalData.startupLogo || ''} width="15" height="15" />
         </div>
         <div class="flex-1 truncate">
-          <div class="flex items-center justify-between">
+          <div class="flex items-center">
             <div>
-              <span class="mr-2 text-grey3 text-xs">{this.proposalData.startupName} by</span>
-              <span class="text-primary text-xs" onClick={this.toComerDetail}>
+              <span class="mr-2 text-color3 text-xs">{this.proposalData.startupName} by</span>
+              <span class="text-color2 text-xs" onClick={this.toComerDetail}>
                 {shortenAddress(this.proposalData.authorWalletAddress)}
               </span>
             </div>
-            <div class={['status ml-auto', this.statusStyle]}>
+            {/* , this.statusStyle */}
+            <div
+              class={[
+                'status rounded-[2px] h-5 font-primary text-color2 ml-4 px-2 text-xs leading-1.25rem inline-block border-1 border-[#DADCE0]'
+              ]}
+            >
               {GOVERNANCE_KEY[this.proposalData.status as keyof typeof GOVERNANCE_KEY]}
             </div>
           </div>
-          <div class="u-title3 truncate break-all max-w-full my-2">{this.proposalData.title}</div>
+          <div class="u-h2 truncate break-all max-w-full mt-2 mb-1">{this.proposalData.title}</div>
           {this.proposalData.description && (
             <div
-              class="u-body2 truncate break-all whitespace-pre-line line-clamp-2"
+              class="text-xs text-color3 truncate break-all whitespace-pre-line line-clamp-2"
               v-html={this.proposalData.description}
             />
           )}

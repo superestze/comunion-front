@@ -64,7 +64,7 @@ const StartupCard = defineComponent({
       <div
         class={
           wrapClass +
-          'py-4 hover:bg-[#F0F0F0]  hover:w-[102%] hover:ml-[-1%] hover:pl-[1%] hover:pr-[1%]'
+          'rounded-[2px] py-4 hover:bg-[#F0F0F0]  hover:w-[102%] hover:ml-[-1%] hover:pl-[1%] hover:pr-[1%]'
         }
         style="transition:background ease .3s"
         onClick={handleCard(props.startup.bountyId)}
@@ -74,7 +74,7 @@ const StartupCard = defineComponent({
             src={props.startup.logo}
             width="10"
             height="10"
-            class="rounded-gl h-15 mr-3 w-15"
+            class="rounded-[2px] h-15 mr-3 w-15"
           />
 
           <div class="flex-1 overflow-hidden">
@@ -90,7 +90,7 @@ const StartupCard = defineComponent({
               {/* style={{
                   'background-color': color ? color.value : BOUNTY_TYPES_COLOR_MAP[0].value
                 }} */}
-              <span class="rounded-gl h-5 font-primary text-color2 ml-4 px-2 text-xs leading-1.25rem inline-block border-1 border-[#DADCE0]">
+              <span class="rounded-[2px] h-5 font-primary text-color2 ml-4 px-2 text-xs leading-1.25rem inline-block border-1 border-[#DADCE0]">
                 {color ? color.label : BOUNTY_TYPES_COLOR_MAP[0].label}
               </span>
             </div>
