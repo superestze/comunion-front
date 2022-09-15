@@ -42,7 +42,11 @@
 
       /** label */
       &__label {
-        @apply leading-none;
+        @apply leading-none !u-h6;
+
+        &::first-child {
+          @apply text-color2;
+        }
       }
 
       /** title */
