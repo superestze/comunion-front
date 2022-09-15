@@ -5,7 +5,7 @@
     @apply p-0 pb-[10px] !important;
 
     .n-card-header__main {
-      @apply text-primary1 u-card-title1;
+      @apply u-h5 !text-color2;
     }
   }
 

@@ -29,7 +29,7 @@ export default defineComponent({
     })
 
     const title = computed(() => {
-      return `TEAM（${list.value.length}）`
+      return `Team（${list.value.length}）`
     })
 
     return {
