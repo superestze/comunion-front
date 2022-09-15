@@ -5,8 +5,6 @@ import { useRouter } from 'vue-router'
 import {
   getStartupTypeFromNumber,
   StartupTypesType,
-  STARTUP_TYPES_COLOR_MAP,
-  STARTUP_TYPES_SUBCOLOR_MAP,
   NETWORKS_COLOR_MAP,
   NETWORKS_SUBCOLOR_MAP
 } from '@/constants'
@@ -56,9 +54,10 @@ const StartupCard = defineComponent({
               <div class="mb-0.5rem float-right">
                 {props.startup.mode > 0 && (
                   <UTag
-                    type="filled"
-                    bgColor={STARTUP_TYPES_SUBCOLOR_MAP[modeName]}
-                    style={{ color: STARTUP_TYPES_COLOR_MAP[modeName] }}
+                    class="text-color2 !h-6"
+                    // type="filled"
+                    // bgColor={STARTUP_TYPES_SUBCOLOR_MAP[modeName]}
+                    // style={{ color: STARTUP_TYPES_COLOR_MAP[modeName] }}
                   >
                     {modeName}
                   </UTag>
@@ -90,18 +89,10 @@ const StartupCard = defineComponent({
           <p class=" mb-6 break-all u-body1 line-clamp-3">{props.startup.mission}</p>
           <div class="flex flex-wrap text-0.75rem gap-2">
             {hashtagsArray.map((key, value) => {
-              return (
-                value < 4 && (
-                  <UTag key={value} class="!h-5">
-                    {key}
-                  </UTag>
-                )
-              )
+              return value < 4 && <UTag key={value}>{key}</UTag>
             })}
 
-            {hashtagsArray.length - 4 > 0 ? (
-              <UTag class="!h-5">+ {hashtagsArray.length - 4}</UTag>
-            ) : null}
+            {hashtagsArray.length - 4 > 0 ? <UTag>+ {hashtagsArray.length - 4}</UTag> : null}
           </div>
           {/* footer */}
           <div class="right-6 bottom-6 left-6 text-0.75rem absolute">
