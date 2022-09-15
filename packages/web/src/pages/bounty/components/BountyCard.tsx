@@ -52,8 +52,8 @@ const StartupCard = defineComponent({
     }
 
     const wrapClass = props.miniCard
-      ? 'bg-white cursor-pointer py-2 '
-      : 'bg-white rounded-md cursor-pointer border-1 h-40 mb-1.5rem px-10 pt-2rem hover:shadow-md'
+      ? 'bg-white cursor-pointer py-2 mt-6 px-4 '
+      : 'bg-white rounded-md cursor-pointer border-1 h-40 mb-6 px-10 pt-2rem hover:shadow-md'
 
     const skillTagShowLength = 3
     const skillTagsList = props.miniCard
@@ -64,7 +64,7 @@ const StartupCard = defineComponent({
       <div
         class={
           wrapClass +
-          'rounded-[2px] py-4 hover:bg-[#F0F0F0]  hover:w-[102%] hover:ml-[-1%] hover:pl-[1%] hover:pr-[1%]'
+          'py-4 hover:bg-[#F0F0F0]  hover:w-[102%] hover:ml-[-1%] hover:pl-[1%] hover:pr-[1%]'
         }
         style="transition:background ease .3s"
         onClick={handleCard(props.startup.bountyId)}
@@ -107,7 +107,7 @@ const StartupCard = defineComponent({
                 )
               })}
               {props.miniCard && props.startup.applicationSkills.length > skillTagShowLength && (
-                <UTag class="mr-2 mb-1 px-2 !border-[#DADCE0] !h-1.25rem !u-h7 !leading-1.25rem">
+                <UTag class="mr-2 mb-1 px-2 !border-[#DADCE0] !h-1.25rem !leading-1.25rem !u-h7">
                   +{props.startup.applicationSkills.length - skillTagShowLength}
                 </UTag>
               )}
@@ -126,8 +126,8 @@ const StartupCard = defineComponent({
               //       ? 'rgba(var( --u-warning2-value), 0.1)'
               //       : 'rgba(var(--u-primary-value), 0.1)'
               // }}
-              <div key={i} class="text-primary font-primary text-[12px]">
-                <span class="text-primary font-primary font-semibold mr-0.5 text-[14px] align-middle">
+              <div key={i} class="font-primary text-primary text-[12px]">
+                <span class="font-primary font-semibold text-primary mr-0.5 text-[14px] align-middle">
                   {item.amount}
                 </span>
                 <span class="align-middle">{item.tokenSymbol}</span>
@@ -150,8 +150,8 @@ const StartupCard = defineComponent({
             <span class="font-700 mx-2 text-color3">·</span>
             <span class="text-color3 ">Created {date.value}</span>
           </div>
-          <span class="text-color3 font-primary">Deposit：</span>
-          <span class="font-primary truncate  text-color">
+          <span class="font-primary text-color3">Deposit：</span>
+          <span class="font-primary text-color  truncate">
             <span class="font-primary font-semibold">{props.startup.depositRequirements}</span> USDC
           </span>
         </div>

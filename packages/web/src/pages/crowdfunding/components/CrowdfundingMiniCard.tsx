@@ -4,7 +4,6 @@ import { defineComponent, PropType, computed, ref, onMounted } from 'vue'
 import { useRouter } from 'vue-router'
 import { CROWDFUNDING_TYPES } from '@/constants'
 import { useErc20Contract, useCrowdfundingContract } from '@/contracts'
-import { CrowdfundingStatus } from '@/pages/crowdfunding/utils'
 import { ServiceReturn } from '@/services'
 import { getChainInfoByChainId } from '@/utils/etherscan'
 import { formatToFloor } from '@/utils/numberFormat'
@@ -70,16 +69,6 @@ export default defineComponent({
         buyTokenSymbol.value = await buyTokenRes.symbol()
       }
     }
-
-    const getStatusLabelStyle = computed(() => {
-      const statusClassMap = {
-        [CrowdfundingStatus.UPCOMING]: 'bg-success ',
-        [CrowdfundingStatus.LIVE]: 'bg-[#00BFA5] ',
-        [CrowdfundingStatus.ENDED]: 'bg-warning',
-        [CrowdfundingStatus.CANCELED]: 'bg-grey5'
-      }
-      return statusClassMap[props.info.status as keyof typeof statusClassMap]
-    })
 
     onMounted(() => {
       getTokenName()

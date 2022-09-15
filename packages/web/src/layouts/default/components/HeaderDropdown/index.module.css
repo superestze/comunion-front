@@ -11,6 +11,7 @@
         left: 0px !important;
         right: 0px !important;
       }
+
       &::hover {
         color: #3f2d99 !important;
       }
@@ -30,6 +31,7 @@
 
       &__prefix {
         @apply !w-auto !hidden;
+
         &.n-dropdown-option-body__prefix--show-icon {
           @apply mr-2 !inline-flex;
         }

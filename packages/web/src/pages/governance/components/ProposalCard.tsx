@@ -49,13 +49,19 @@ export const ProposalCard = defineComponent({
       } else if (props.proposalData.status === 3) {
         return (
           <div class="flex items-center">
-            <ConfirmOutlined class="text-primary mr-2 w-4 h-4" />{' '}
+            <ConfirmOutlined class="h-4 text-primary mr-2 w-4" />{' '}
             {props.proposalData.maximumVotesChoice} -- {props.proposalData.votes}
           </div>
         )
       }
       return null
     })
+
+    const handleCard = (id?: number) => () => {
+      console.log(id)
+      !!id && router.push(`/governance/${id}`)
+    }
+
     return {
       statusStyle,
       timeTip,
@@ -92,7 +98,7 @@ export const ProposalCard = defineComponent({
               v-html={this.proposalData.description}
             />
           )}
-          {this.timeTip && <div class="text-grey3  mt-2">{this.timeTip}</div>}
+          {this.timeTip && <div class="mt-2  text-grey3">{this.timeTip}</div>}
         </div>
       </div>
     )
