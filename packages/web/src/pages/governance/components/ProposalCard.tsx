@@ -3,6 +3,7 @@ import { ConfirmOutlined } from '@comunion/icons'
 import { shortenAddress } from '@comunion/utils'
 import dayjs from 'dayjs'
 import { defineComponent, PropType, computed } from 'vue'
+import { useRouter } from 'vue-router'
 import { GOVERNANCE_KEY, GOVERNANCE_STATUS_STYLE } from '../utils'
 import { ServiceReturn } from '@/services'
 
@@ -17,6 +18,11 @@ export const ProposalCard = defineComponent({
     }
   },
   setup(props) {
+    const router = useRouter()
+    const toComerDetail = (e: Event) => {
+      e.stopPropagation()
+      router.push({ path: '/comer', query: { id: props.proposalData.authorComerId } })
+    }
     const statusStyle = computed(() => {
       return GOVERNANCE_STATUS_STYLE[
         props.proposalData.status as keyof typeof GOVERNANCE_STATUS_STYLE
@@ -52,7 +58,8 @@ export const ProposalCard = defineComponent({
     })
     return {
       statusStyle,
-      timeTip
+      timeTip,
+      toComerDetail
     }
   },
   render() {
@@ -65,7 +72,7 @@ export const ProposalCard = defineComponent({
           <div class="flex items-center justify-between">
             <div>
               <span class="mr-2 text-grey3 text-xs">{this.proposalData.startupName} by</span>
-              <span class="text-primary text-xs">
+              <span class="text-primary text-xs" onClick={this.toComerDetail}>
                 {shortenAddress(this.proposalData.authorWalletAddress)}
               </span>
             </div>
