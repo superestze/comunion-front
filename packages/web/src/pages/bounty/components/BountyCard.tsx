@@ -141,7 +141,7 @@ const StartupCard = defineComponent({
             <span class="text-color3 ">Created {date.value}</span>
           </div>
           <span class="font-primary text-color3">Deposit：</span>
-          <span class="font-primary text-color  truncate">
+          <span class="font-primary text-color1  truncate">
             <span class="font-primary font-semibold">{props.startup.depositRequirements}</span> USDC
           </span>
         </div>
