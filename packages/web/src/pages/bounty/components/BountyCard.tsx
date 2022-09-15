@@ -8,8 +8,8 @@ import { BOUNTY_TYPES_COLOR_MAP } from '@/constants'
 import { ServiceReturn, services } from '@/services'
 
 type BountyType = NonNullable<ServiceReturn<'bounty@bounty-list(tab)'>>['rows']
-const StartupCard = defineComponent({
-  name: 'StartupCard',
+export default defineComponent({
+  name: 'BountyCard',
   props: {
     startup: {
       type: Object as PropType<BountyType[number]>,
@@ -149,4 +149,3 @@ const StartupCard = defineComponent({
     )
   }
 })
-export default StartupCard

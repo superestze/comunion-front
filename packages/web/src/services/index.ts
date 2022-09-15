@@ -2046,6 +2046,7 @@ export const services = {
          * @description 是否上链
          */
         onChain?: boolean
+        tokenContract?: string
       }[]
     >({
       url: replacePath('/cores/startups/crowdfundable', args),
