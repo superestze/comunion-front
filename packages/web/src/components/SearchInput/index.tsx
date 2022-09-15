@@ -63,7 +63,7 @@ const SearchInput = defineComponent({
             }, 300)
           }}
         >
-          <div class={`bg-purple w-full h-full rounded-sm px-3 flex items-center`}>
+          <div class={`bg-white w-full h-full rounded-sm px-3 flex items-center`}>
             <span class="truncate">{this.input || 'Search'}</span>
           </div>
           <NInput
