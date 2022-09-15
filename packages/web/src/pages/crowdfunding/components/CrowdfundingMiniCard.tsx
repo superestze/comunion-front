@@ -4,7 +4,6 @@ import { defineComponent, PropType, computed, ref, onMounted } from 'vue'
 import { useRouter } from 'vue-router'
 import { CROWDFUNDING_TYPES } from '@/constants'
 import { useErc20Contract, useCrowdfundingContract } from '@/contracts'
-import { CrowdfundingStatus } from '@/pages/crowdfunding/utils'
 import { ServiceReturn } from '@/services'
 import { getChainInfoByChainId } from '@/utils/etherscan'
 import { formatToFloor } from '@/utils/numberFormat'
@@ -71,16 +70,6 @@ export default defineComponent({
       }
     }
 
-    const getStatusLabelStyle = computed(() => {
-      const statusClassMap = {
-        [CrowdfundingStatus.UPCOMING]: 'bg-success ',
-        [CrowdfundingStatus.LIVE]: 'bg-[#00BFA5] ',
-        [CrowdfundingStatus.ENDED]: 'bg-warning',
-        [CrowdfundingStatus.CANCELED]: 'bg-grey5'
-      }
-      return statusClassMap[props.info.status as keyof typeof statusClassMap]
-    })
-
     onMounted(() => {
       getTokenName()
       getFundingState()
@@ -88,45 +77,41 @@ export default defineComponent({
 
     return () => (
       <div
-        class="bg-white cursor-pointer mt-1.5rem py-2"
-        style="transition:all ease .3s"
+        class="rounded-sm cursor-pointer py-4 px-4 hover:bg-color-hover"
+        style="transition:background ease .3s"
         onClick={() => toDetail(props.info.crowdfundingId, props.info.chainId)}
       >
-        <div class="flex mb-3 overflow-hidden">
-          <UStartupLogo
-            src={props.info.poster}
-            width="10"
-            height="10"
-            class="rounded-md h-15 mr-3 w-15"
-          />
+        <div class="flex overflow-hidden">
+          <UStartupLogo src={props.info.poster} width="10" height="10" class="h-15 mr-3 w-15" />
 
           <div class="flex-1 overflow-hidden">
-            <div class="flex mb-4 items-center">
-              <div class=" max-w-4/5 truncate u-title3">{props.info.startupName}</div>
+            <div class="flex mb-2 items-center">
+              <div class="text-[#000] leading-7 truncate u-h3">{props.info.startupName}</div>
 
               <span
                 class={[
-                  getStatusLabelStyle.value,
-                  'rounded-sm h-1.25rem ml-2 px-2 text-0.75rem leading-1.25rem inline-block text-white'
+                  'rounded-sm h-5 font-primary text-color2 ml-4 px-2 text-xs leading-1.25rem inline-block border-1 border-[#DADCE0]'
                 ]}
               >
                 {CROWDFUNDING_TYPES[props.info.status - 1]}
               </span>
             </div>
-            <div class="border-b border-grey5 pb-6">
+            <div class="border-b border-grey5">
               <div class="u-body2">
-                <span class="text-[#9F9F9F]">Raise Goal：</span>
-                <span class="text-primary u-body3">
-                  {raiseState.value.raiseGoal}
-                  {buyTokenSymbol.value}
+                <span class="text-color2 text-[14px]">Raise Goal：</span>
+                <span class="font-primary text-xs text-primary">
+                  <span class="font-semibold">{raiseState.value.raiseGoal}</span>
+                  <span>{buyTokenSymbol.value}</span>
                 </span>
-                <span class="font-700 mx-2 text-[#D9D9D9]">·</span>
-                <span class="text-[#9F9F9F]">Progress：</span>
-                <span class="text-primary u-body3">
-                  {raiseState.value.raiseAmount}
-                  {buyTokenSymbol.value}
+                <span class="font-700 mx-2 text-color2">·</span>
+                <span class="text-color2 text-[14px]">Progress：</span>
+                <span class="font-primary text-xs text-primary">
+                  <span class="text-primary">{raiseState.value.raiseAmount}</span>
+                  <span>{buyTokenSymbol.value}</span>
                 </span>
-                <span class="text-primary ml-2">({raiseState.value.raisePercent} %)</span>
+                <span class="font-primary text-xs text-primary">
+                  ({raiseState.value.raisePercent} %)
+                </span>
               </div>
             </div>
           </div>

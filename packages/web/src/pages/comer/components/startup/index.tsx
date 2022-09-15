@@ -1,6 +1,6 @@
 import { UCard } from '@comunion/components'
 import { defineComponent, reactive, ref, watch } from 'vue'
-import StartupCard from '@/pages/dashboard/components/StartupCard'
+import StartupCard from './StartupCard'
 import { services } from '@/services'
 import { StartupItem } from '@/types'
 import '@/assets/style/last-item-noborder.css'

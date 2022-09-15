@@ -452,7 +452,7 @@ export const Invest = defineComponent({
         <UTooltip>
           {{
             trigger: () => (
-              <div class="font-bold font-orbitron text-primary text-xl leading-8">
+              <div class="font-bold font-primary text-primary text-xl leading-8">
                 {Number(data).toFixed(2).replace(/\.00$/, '')}
               </div>
             ),
@@ -563,7 +563,7 @@ export const Invest = defineComponent({
         <div class="bg-grey5 w-px"></div>
         <div class="flex-1">
           <div class="flex mb-2 justify-between">
-            <span class="font-orbitron u-title1">{mode.value === 'buy' ? 'INVEST' : 'SELL'}</span>
+            <span class="font-primary u-title1">{mode.value === 'buy' ? 'INVEST' : 'SELL'}</span>
             <span class="flex bg-[rgba(83,49,244,0.06)] rounded-4xl leading-snug py-1 px-4 text-primary1 items-center">
               <img src={chainInfo?.logo} class="h-5 w-5" />{' '}
               <span class="font-opensans font-600 ml-2">{chainInfo?.name}</span>

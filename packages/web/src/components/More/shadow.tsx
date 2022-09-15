@@ -23,11 +23,15 @@ export default defineComponent({
     }
     return (
       <div
-        class="w-100px flex justify-end items-center text-primary cursor-pointer"
+        class="w-100px flex justify-center items-center text-color2 text-[14px] font-primary font-semibold cursor-pointer"
         onClick={handleMore}
       >
-        <span class="u-title2 mr-4 text-primary">{this.btnText}</span>
-        {this.fold ? <ArrowDownOutlined /> : <ArrowUpOutlined />}
+        <span class="mr-2 text-[14px] font-primary font-semibold">{this.btnText}</span>
+        {this.fold ? (
+          <ArrowDownOutlined class="text-color2 w-4 h-4" />
+        ) : (
+          <ArrowUpOutlined class="text-color2 w-4 h-4" />
+        )}
       </div>
     )
   }
