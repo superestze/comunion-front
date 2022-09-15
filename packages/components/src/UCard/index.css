@@ -1,5 +1,7 @@
 .u-card {
-  @apply py-8 px-10;
+  @apply p-4;
+
+  border-radius: 2px;
 
   .n-card-header {
     @apply p-0 pb-[10px] !important;
