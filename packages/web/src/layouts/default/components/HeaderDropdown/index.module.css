@@ -16,14 +16,13 @@
         color: #3f2d99 !important;
       }
 
-      @apply rounded-lg min-w-180px items-center !h-auto;
+      @apply rounded-[2px] min-w-180px items-center !h-auto;
 
       &:not(.n-dropdown-option-body--group) {
         @apply -mx-2 py-2.5 px-3;
 
         &:not(.n-dropdown-option-body--disabled):hover {
           background-color: var(--active-bg-new) !important;
-
           &.n-dropdown-option-body.n-dropdown-option-body--pending::before {
             background-color: unset !important;
           }
@@ -41,7 +40,6 @@
       /** label */
       &__label {
         @apply leading-none !u-h6;
-
         &::first-child {
           @apply text-color2;
         }
@@ -64,13 +62,11 @@
 
       &--active {
         color: #000000 !important;
-
         .n-dropdown-option-body {
           &__suffix {
             @apply rounded-lg bg-green1 h-2 -mr-2px ml-2 w-2 self-center !min-w-0 !p-0 !block;
           }
         }
-
         &::before {
           color: none !important;
           background: none !important;

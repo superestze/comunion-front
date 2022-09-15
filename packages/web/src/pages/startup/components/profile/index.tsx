@@ -7,9 +7,9 @@ import SocialIcon from '@/components/SocialIcon'
 import { getStartupTypeFromNumber, StartupTypesType } from '@/constants'
 import { getContactList } from '@/pages/startup/setting/[id]'
 import { contactList } from '@/pages/startup/setting/components/social/util'
+import { useChainStore } from '@/stores'
 import { StartupDetail } from '@/types'
 import { getChainInfoByChainId } from '@/utils/etherscan'
-
 export default defineComponent({
   props: {
     startupId: {
@@ -22,6 +22,7 @@ export default defineComponent({
     }
   },
   setup(props) {
+    const chainStore = useChainStore()
     const modeName = computed(() => {
       return getStartupTypeFromNumber(props.startup.mode) as StartupTypesType
     })
@@ -29,7 +30,7 @@ export default defineComponent({
     const loading = ref<boolean>(false)
     const profile = useStartupProfile()
     const { toggleFollowStartup, getUserIsFollow } = profile
-    const theChainName = getChainInfoByChainId(props.startup.chainID)?.shortName
+    let theChainName = getChainInfoByChainId(props.startup.chainID)?.shortName
     getUserIsFollow(props.startupId)
       .then(() => (userIsFollow.value = true))
       .catch(() => (userIsFollow.value = false))
@@ -40,7 +41,20 @@ export default defineComponent({
       () => props.startup,
       () => {
         startupInfo.value = props.startup
-        console.log(startupInfo.value, 213131232133)
+        if (startupInfo.value.onChain) {
+          theChainName = startupInfo.value.blockChainAddress
+          if (theChainName.length > 11) {
+            theChainName =
+              startupInfo.value.blockChainAddress.substring(0, 7) +
+              '...' +
+              startupInfo.value.blockChainAddress.substring(
+                startupInfo.value.blockChainAddress.length - 5,
+                startupInfo.value.blockChainAddress.length - 1
+              )
+          }
+        } else {
+          theChainName = 'Non-Blockchian'
+        }
       },
       {
         immediate: true
@@ -71,7 +85,11 @@ export default defineComponent({
         )
       }
     }
-
+    const goPath = () => {
+      if (startupInfo.value?.onChain) {
+        chainStore.goTxHashPath(startupInfo.value?.chainID, startupInfo.value.blockChainAddress)
+      }
+    }
     return {
       modeName,
       toggleFollowStartup,
@@ -81,7 +99,8 @@ export default defineComponent({
       socialList,
       theChainName,
       props,
-      getLinkTarget
+      getLinkTarget,
+      goPath
     }
   },
   render() {
@@ -138,7 +157,14 @@ export default defineComponent({
                   }
                   class="h-1.25rem mr-0.2rem w-1.25rem"
                 />
-                <span class={`u-h7 truncate !text-color2`}>{this.theChainName}</span>
+                <span
+                  class={`text-12px truncate ${
+                    this.startupInfo?.onChain ? 'cursor-pointer' : 'text-[#E0E0E0]'
+                  }`}
+                  onClick={() => this.goPath()}
+                >
+                  {this.theChainName}
+                </span>
               </div>
             )}
           </div>

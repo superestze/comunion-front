@@ -19,6 +19,10 @@ export const ProposalCard = defineComponent({
   },
   setup(props) {
     const router = useRouter()
+    const toComerDetail = (e: Event) => {
+      e.stopPropagation()
+      router.push({ path: '/comer', query: { id: props.proposalData.authorComerId } })
+    }
     const statusStyle = computed(() => {
       return GOVERNANCE_STATUS_STYLE[
         props.proposalData.status as keyof typeof GOVERNANCE_STATUS_STYLE
@@ -61,34 +65,36 @@ export const ProposalCard = defineComponent({
     return {
       statusStyle,
       timeTip,
-      handleCard
+      toComerDetail
     }
   },
   render() {
     return (
-      <div
-        class="bg-white border-color-border rounded-lg cursor-pointer flex mb-6 w-full py-6 px-10 hover:bg-color-hover"
-        onClick={this.handleCard(this.proposalData?.proposalId)}
-      >
-        <div class="h-15 mr-4 w-15">
+      <div class="flex">
+        <div class="w-15 h-15 mr-4">
           <UStartupLogo src={this.proposalData.startupLogo || ''} width="15" height="15" />
         </div>
         <div class="flex-1 truncate">
-          <div class="flex items-center justify-between">
+          <div class="flex items-center">
             <div>
-              <span class="mr-2 text-xs text-grey3">Linkedin by</span>
-              <span class="text-primary text-xs">
+              <span class="mr-2 text-color3 text-xs">{this.proposalData.startupName} by</span>
+              <span class="text-color2 text-xs" onClick={this.toComerDetail}>
                 {shortenAddress(this.proposalData.authorWalletAddress)}
               </span>
             </div>
-            <div class={['status ml-auto', this.statusStyle]}>
+            {/* , this.statusStyle */}
+            <div
+              class={[
+                'status rounded-[2px] h-5 font-primary text-color2 ml-4 px-2 text-xs leading-1.25rem inline-block border-1 border-[#DADCE0]'
+              ]}
+            >
               {GOVERNANCE_KEY[this.proposalData.status as keyof typeof GOVERNANCE_KEY]}
             </div>
           </div>
-          <div class="max-w-full my-2 truncate break-all u-title3">{this.proposalData.title}</div>
+          <div class="u-h2 truncate break-all max-w-full mt-2 mb-1">{this.proposalData.title}</div>
           {this.proposalData.description && (
             <div
-              class="truncate break-all whitespace-pre-line u-body2 line-clamp-2"
+              class="text-xs text-color3 truncate break-all whitespace-pre-line line-clamp-2"
               v-html={this.proposalData.description}
             />
           )}

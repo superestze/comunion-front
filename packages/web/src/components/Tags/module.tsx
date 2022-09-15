@@ -16,13 +16,13 @@ export default defineComponent({
     const selectedList = ref<string[]>(['All'])
     const taskList = computed(() => {
       const str =
-        'flex h-8 rounded-lg justify-center items-center mr-2 min-w-12 px-4 py-1.5 cursor-pointer border-1 border-gray-300'
+        'flex h-8 rounded-[2px] justify-center items-center mr-2 min-w-12 px-4 py-1.5 cursor-pointer border-1 border-gray-300'
       return props.tasks.map(task => {
         const index = selectedList.value.findIndex(item => item === task)
         if (index > -1) {
           return {
             value: task,
-            class: `${str} u-h5 text-color`,
+            class: `${str}`,
             active: true
           }
         }
@@ -78,7 +78,7 @@ export default defineComponent({
           return (
             // style={task.active ? { borderRadius: 'rgba(83, 49, 244, 0.1)' } : {}}
             <div
-              class={`${task.class} ${task.active ? 'u-h5 text-color' : ''}`}
+              class={`${task.class} ${task.active ? 'u-h5 !text-[#0D0D21]' : ''}`}
               onClick={handleTag(task.value)}
             >
               {task.value}

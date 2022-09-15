@@ -68,10 +68,14 @@ export const BasicInfo = defineComponent({
         title: 'Startup',
         name: 'startupId',
         placeholder: 'Please select a startup',
+        formItemProps: {
+          first: true
+        },
         rules: [
           { required: true, message: 'Startup cannot be blank', type: 'number', trigger: 'blur' },
           {
             asyncValidator: async (rule, value, callback) => {
+              if (!value) return
               try {
                 const { error, data } = await services['governance@get-startup-governace-setting']({
                   startupID: value
@@ -127,12 +131,14 @@ export const BasicInfo = defineComponent({
         },
         render() {
           return (
-            <RichEditor
-              limit={6400}
-              placeholder="Describe what you proposal is about"
-              class="w-full h-70"
-              v-model:value={props.proposalInfo.description}
-            />
+            <div class="h-60 w-full">
+              <RichEditor
+                limit={6400}
+                placeholder="Describe what you proposal is about"
+                class="w-full h-full"
+                v-model:value={props.proposalInfo.description}
+              />
+            </div>
           )
         }
       },

@@ -17,7 +17,6 @@ import SearchInput from '@/components/SearchInput'
 import { CrowdfundingType, CROWDFUNDING_TYPES } from '@/constants'
 import { services } from '@/services'
 import { CrowdfundingItem } from '@/types'
-import { checkSupportNetwork } from '@/utils/wallet'
 
 const CrowdfundingList = defineComponent({
   name: 'CrowdfundingList',
@@ -61,10 +60,10 @@ const CrowdfundingList = defineComponent({
     const router = useRouter()
 
     const toDetail = async (crowdfundingId: number, chainId: number) => {
-      const isSupport = await checkSupportNetwork(chainId)
-      if (isSupport) {
-        router.push('/crowdfunding/' + crowdfundingId)
-      }
+      // const isSupport = await checkSupportNetwork(chainId)
+      // if (isSupport) {
+      router.push('/crowdfunding/' + crowdfundingId)
+      // }
     }
     const onLoadMore = async (p: number, reload?: boolean) => {
       pagination.loading = true

@@ -1,21 +1,20 @@
 import { UCard, UScrollList } from '@comunion/components'
-import { defineComponent, reactive, ref, watch } from 'vue'
+import { defineComponent, reactive, ref, onMounted } from 'vue'
 import { useRouter } from 'vue-router'
+import styles from './governance.module.css'
 import { ProposalCard } from '@/pages/governance/components/ProposalCard'
 import { ServiceReturn, services } from '@/services'
-import { useUserStore } from '@/stores'
 import { IPagination } from '@/types'
-
 export default defineComponent({
+  name: 'governance',
   props: {
-    createdByMe: {
-      type: Boolean,
-      default: () => true
+    startupId: {
+      type: String,
+      default: () => ''
     }
   },
   setup(props) {
     const router = useRouter()
-    const userStore = useUserStore()
     const pagination = reactive<IPagination>({
       pageSize: 5,
       total: 0,
@@ -24,21 +23,17 @@ export default defineComponent({
     })
 
     const proposalList = ref<
-      NonNullable<ServiceReturn<'governance@proposal-list-of-comer-posted'>>['rows']
+      NonNullable<ServiceReturn<'governance@proposal-list-by-startup'>>['rows']
     >([])
 
     const getProposalList = async (page: number) => {
       // let serviceError = false
-      // let serviceData: ServiceReturn<'governance@proposal-list-of-comer-posted'>
+      // let serviceData: ServiceReturn<'governance@proposal-list-by-startup'>
       try {
         pagination.page = page
         pagination.loading = true
-        const { error, data } = await services[
-          props.createdByMe
-            ? 'governance@proposal-list-of-comer-posted'
-            : 'governance@proposal-list-of-comer-participated'
-        ]({
-          comerID: userStore.profile?.comerID,
+        const { error, data } = await services['governance@proposal-list-by-startup']({
+          startupId: props.startupId,
           page,
           limit: pagination.pageSize
         })
@@ -57,18 +52,22 @@ export default defineComponent({
       router.push({ path: `/governance/${proposalId}` })
     }
 
-    watch(
-      () => props.createdByMe,
-      () => {
-        pagination.page = 1
-        pagination.total = 0
-        proposalList.value = []
-        getProposalList(pagination.page)
-      },
-      {
-        immediate: true
-      }
-    )
+    onMounted(() => {
+      getProposalList(pagination.page)
+    })
+
+    // watch(
+    //   () => props.createdByMe,
+    //   () => {
+    //     pagination.page = 1
+    //     pagination.total = 0
+    //     proposalList.value = []
+    //     getProposalList(pagination.page)
+    //   },
+    //   {
+    //     immediate: true
+    //   }
+    // )
 
     return {
       pagination,
@@ -83,7 +82,7 @@ export default defineComponent({
     return (
       <UCard title="PROPOSAL" class="mb-6">
         <UScrollList
-          class="max-h-100"
+          class={['max-h-100 overflow-unset', styles.srollList]}
           triggered={this.pagination.loading}
           page={this.pagination.page}
           pageSize={this.pagination.pageSize}
@@ -93,12 +92,12 @@ export default defineComponent({
           {this.proposalList.map(proposal => (
             <div>
               <div
-                class="cursor-pointer"
+                class="cursor-pointer pt-4 pb-1 rounded-[2px] hover:bg-[#F0F0F0] hover:w-[102%] hover:ml-[-1%] hover:pl-[1%] hover:pr-[1%]"
                 onClick={() => this.toProposalDetail(proposal.proposalId)}
               >
                 <ProposalCard proposalData={proposal} />
               </div>
-              <div class="h-px w-[90%] bg-grey5 ml-auto"></div>
+              {/* <div class="h-px w-[90%] bg-grey5 ml-auto"></div> */}
             </div>
           ))}
         </UScrollList>

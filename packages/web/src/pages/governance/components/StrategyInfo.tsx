@@ -33,8 +33,13 @@ export const StrategyInformation = defineComponent({
           <div class="grid grid-cols-2 gap-y-4 justify-between y-body2">
             <div class="text-grey3">Strategie(s) :</div>
             <div
-              class={['text-right text-primary cursor-pointer']}
-              onClick={() => this.$emit('showStrategyDetail')}
+              class={[
+                'text-right',
+                { 'text-primary cursor-pointer': this.strategy?.dictValue !== 'ticket' }
+              ]}
+              onClick={() =>
+                this.strategy?.dictValue === 'ticket' ? null : this.$emit('showStrategyDetail')
+              }
             >
               {this.strategy?.strategyName}
             </div>

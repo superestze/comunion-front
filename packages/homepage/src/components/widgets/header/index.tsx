@@ -48,12 +48,12 @@ export default defineComponent({
           <div class="flex ml-40px w-136px items-center <sm:w-119px">
             <img src={logo} class="w-full" />
           </div>
-          <div class="flex h-60px text-primary1 text-16px gap-x-10 justify-between items-center">
+          <div class="flex h-60px text-primary1 text-16px gap-x-12 justify-between items-center">
             <span class="cursor-pointer text-primary hover:text-primary">Home</span>
+            <span class="text-grey4">ComerID</span>
             <span class="text-grey4">Governance</span>
             <span class="text-grey4">Combinator</span>
-            <span class="text-grey4">Innovation</span>
-            <span class="text-grey4">Capital</span>
+            <span class="text-grey4">Grants</span>
             <span class="text-grey4">dAppstore</span>
             <span class="text-grey4">Developer</span>
           </div>
@@ -93,17 +93,15 @@ export default defineComponent({
               <ul style={{ listStyle: 'none', padding: 0 }} class="font-bold mt-9 ml-16 text-4xl">
                 <li class="flex mx- h-12 mb-15 auto text-grey1 w-155.5 items-center">Home</li>
                 <li class="flex mx- h-12 mb-15 auto text-[#B3B3B3] w-155.5 items-center">
+                  ComerID
+                </li>
+                <li class="flex mx- h-12 mb-15 auto text-[#B3B3B3] w-155.5 items-center">
                   Governance
                 </li>
                 <li class="flex mx- h-12 mb-15 auto text-[#B3B3B3] w-155.5 items-center">
                   Combinator
                 </li>
-                <li class="flex mx- h-12 mb-15 auto text-[#B3B3B3] w-155.5 items-center">
-                  Innovation
-                </li>
-                <li class="flex mx- h-12 mb-15 auto text-[#B3B3B3] w-155.5 items-center">
-                  Capital
-                </li>
+                <li class="flex mx- h-12 mb-15 auto text-[#B3B3B3] w-155.5 items-center">Grants</li>
                 <li class="flex mx- h-12 mb-15 auto text-[#B3B3B3] w-155.5 items-center">
                   dAppstore
                 </li>

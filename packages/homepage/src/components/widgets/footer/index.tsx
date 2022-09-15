@@ -67,7 +67,7 @@ export default defineComponent({
           title: 'Combinator'
         },
         {
-          title: 'Capital'
+          title: 'Grants'
         },
         {
           title: 'dAppstore'
@@ -79,7 +79,7 @@ export default defineComponent({
           title: 'Innovation'
         },
         {
-          title: 'Innovation'
+          title: 'ComerID'
         }
       ]
     ]
