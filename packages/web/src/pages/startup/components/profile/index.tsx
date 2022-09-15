@@ -136,7 +136,7 @@ export default defineComponent({
           </div>
           <div>
             <div class="flex items-center">
-              <p class="ml-46 u-h2 text-color1">{this.startupInfo?.name}</p>
+              <p class="ml-46 text-color1 u-h2">{this.startupInfo?.name}</p>
               {this.startupInfo && this.startupInfo.mode > 0 && (
                 <UTag
                   class="border-1 border-gray-500/50 ml-5 u-6 !h-6.5 !text-color2"

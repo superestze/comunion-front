@@ -90,7 +90,7 @@ export default defineComponent({
 
               <span
                 class={[
-                  'rounded-lg h-5 font-primary text-color2 ml-4 px-2 text-xs leading-1.25rem inline-block border-1 border-[#DADCE0]'
+                  'rounded-sm h-5 font-primary text-color2 ml-4 px-2 text-xs leading-1.25rem inline-block border-1 border-[#DADCE0]'
                 ]}
               >
                 {CROWDFUNDING_TYPES[props.info.status - 1]}

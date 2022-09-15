@@ -97,7 +97,7 @@ export const ProposalCard = defineComponent({
           <div class="max-w-full mt-2 mb-1 truncate break-all u-h4">{this.proposalData.title}</div>
           {this.proposalData.description && (
             <div
-              class="truncate break-all whitespace-pre-line u-body2 line-clamp-2"
+              class="text-xs text-color3 truncate break-all whitespace-pre-line line-clamp-2"
               v-html={this.proposalData.description}
             />
           )}
