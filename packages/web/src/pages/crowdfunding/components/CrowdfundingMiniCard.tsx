@@ -4,7 +4,6 @@ import { defineComponent, PropType, computed, ref, onMounted } from 'vue'
 import { useRouter } from 'vue-router'
 import { CROWDFUNDING_TYPES } from '@/constants'
 import { useErc20Contract, useCrowdfundingContract } from '@/contracts'
-import { CrowdfundingStatus } from '@/pages/crowdfunding/utils'
 import { ServiceReturn } from '@/services'
 import { getChainInfoByChainId } from '@/utils/etherscan'
 import { formatToFloor } from '@/utils/numberFormat'
@@ -71,16 +70,6 @@ export default defineComponent({
       }
     }
 
-    const getStatusLabelStyle = computed(() => {
-      const statusClassMap = {
-        [CrowdfundingStatus.UPCOMING]: 'bg-success ',
-        [CrowdfundingStatus.LIVE]: 'bg-[#00BFA5] ',
-        [CrowdfundingStatus.ENDED]: 'bg-warning',
-        [CrowdfundingStatus.CANCELED]: 'bg-grey5'
-      }
-      return statusClassMap[props.info.status as keyof typeof statusClassMap]
-    })
-
     onMounted(() => {
       getTokenName()
       getFundingState()
@@ -88,7 +77,7 @@ export default defineComponent({
 
     return () => (
       <div
-        class="py-4 hover:bg-[#F0F0F0]  hover:w-[102%] hover:ml-[-1%] hover:pl-[1%] hover:pr-[1%]"
+        class="py-4 px-4 hover:bg-[#F0F0F0]  hover:ml-[-1%] hover:pr-[1%] hover:pl-[1%] hover:w-[102%]"
         style="transition:background ease .3s"
         onClick={() => toDetail(props.info.crowdfundingId, props.info.chainId)}
       >
@@ -102,7 +91,7 @@ export default defineComponent({
 
           <div class="flex-1 overflow-hidden">
             <div class="flex mb-2 items-center">
-              <div class="u-h3 text-[#000] leading-7 truncate">{props.info.startupName}</div>
+              <div class="text-[#000] leading-7 truncate u-h3">{props.info.startupName}</div>
 
               <span
                 class={[
@@ -115,17 +104,17 @@ export default defineComponent({
             <div class="border-b border-grey5">
               <div class="u-body2">
                 <span class="text-color2 text-[14px]">Raise Goal：</span>
-                <span class="text-xs text-primary font-primary">
+                <span class="font-primary text-xs text-primary">
                   <span class="font-semibold">{raiseState.value.raiseGoal}</span>
                   <span>{buyTokenSymbol.value}</span>
                 </span>
                 <span class="font-700 mx-2 text-color2">·</span>
                 <span class="text-color2 text-[14px]">Progress：</span>
-                <span class="text-xs text-primary font-primary">
+                <span class="font-primary text-xs text-primary">
                   <span class="text-primary">{raiseState.value.raiseAmount}</span>
                   <span>{buyTokenSymbol.value}</span>
                 </span>
-                <span class="text-xs text-primary font-primary">
+                <span class="font-primary text-xs text-primary">
                   ({raiseState.value.raisePercent} %)
                 </span>
               </div>

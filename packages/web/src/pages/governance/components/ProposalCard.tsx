@@ -56,15 +56,25 @@ export const ProposalCard = defineComponent({
       }
       return null
     })
+
+    const handleCard = (id?: number) => () => {
+      console.log(id)
+      !!id && router.push(`/governance/${id}`)
+    }
+
     return {
       statusStyle,
       timeTip,
-      toComerDetail
+      toComerDetail,
+      handleCard
     }
   },
   render() {
     return (
-      <div class="bg-white rounded-lg flex border-grey5 mb-6 w-full py-6">
+      <div
+        class="bg-white border-color-border rounded-lg cursor-pointer flex mb-6 w-full py-6 px-10 hover:bg-color-hover"
+        onClick={this.handleCard(this.proposalData?.proposalId)}
+      >
         <div class="h-15 mr-4 w-15">
           <UStartupLogo src={this.proposalData.startupLogo || ''} width="15" height="15" />
         </div>

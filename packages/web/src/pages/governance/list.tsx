@@ -122,7 +122,7 @@ const GovernanceListPage = defineComponent({
             />
           </div>
           {this.DataList.map(item => (
-            <ProposalCard key={item.proposalId} proposalData={item} class="border px-10" />
+            <ProposalCard key={item.proposalId} proposalData={item} />
           ))}
         </div>
       </USpin>
