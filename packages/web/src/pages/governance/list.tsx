@@ -115,7 +115,7 @@ const GovernanceListPage = defineComponent({
             <div class="flex-1"></div>
             <UDropdownFilter
               options={GOVERNANCE_TYPES.map((item, index) => ({ label: item, value: index }))}
-              placeholder="ALL status"
+              placeholder="All Status"
               class="rounded mr-4 w-28"
               clearable
               v-model:value={this.proposalStatus}
