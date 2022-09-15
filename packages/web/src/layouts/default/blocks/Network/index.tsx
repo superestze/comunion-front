@@ -49,13 +49,13 @@ const NetworkSwitcher = defineComponent({
       >
         <UButton
           size="small"
-          class="h-8"
+          class="h-8 u-h6"
           style={{
             '--n-border-radius': '2px',
             '--n-border': '1px solid rgba(218, 220, 224, 1)'
           }}
         >
-          <div class="flex flex-nowrap items-center" ref={btnRef}>
+          <div class="flex flex-nowrap items-center u-h6" ref={btnRef}>
             {networkCache.value && (
               <>
                 <img src={networkCache.value?.logo} class="rounded-xl h-5 mr-2 w-5" />
