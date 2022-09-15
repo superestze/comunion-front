@@ -17,15 +17,15 @@ export const UStyleProviderProps = {
   },
   color2: {
     type: String,
-    default: 'rgba(255,255,255,.5)'
+    default: 'rgba(0,0,0,.5)'
   },
   color3: {
     type: String,
-    default: 'rgba(255,255,255,.3)'
+    default: 'rgba(0,0,0,.3)'
   },
   colorLine: {
     type: String,
-    default: 'rgba(255,255,255,.1)'
+    default: 'rgba(0,0,0,.1)'
   },
   colorBorder: {
     type: String,
