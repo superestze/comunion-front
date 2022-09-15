@@ -20,12 +20,12 @@ export const Utag = defineComponent({
   props: UTagProps,
   setup(props, { slots }) {
     return () => (
-      <div
-        class={`u-tag-com u-tag__${props.type}`}
+      <span
+        class={`u-tag-com u-tag-com__${props.type}`}
         style={props.type === 'filled' ? { backgroundColor: props.bgColor } : undefined}
       >
         {slots.default?.()}
-      </div>
+      </span>
     )
   }
 })
