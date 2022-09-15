@@ -56,7 +56,6 @@ const StartupCard = defineComponent({
               <div class="mb-0.5rem float-right">
                 {props.startup.mode > 0 && (
                   <UTag
-                    class="u-body3 !rounded-bl-md !rounded-tr-md !font-bold !text-14px"
                     type="filled"
                     bgColor={STARTUP_TYPES_SUBCOLOR_MAP[modeName]}
                     style={{ color: STARTUP_TYPES_COLOR_MAP[modeName] }}
@@ -93,15 +92,15 @@ const StartupCard = defineComponent({
             {hashtagsArray.map((key, value) => {
               return (
                 value < 4 && (
-                  <span key={value} class={STARTUP_TAG_CLASS}>
+                  <UTag key={value} class="!h-5">
                     {key}
-                  </span>
+                  </UTag>
                 )
               )
             })}
 
             {hashtagsArray.length - 4 > 0 ? (
-              <span class={STARTUP_TAG_CLASS}>+ {hashtagsArray.length - 4}</span>
+              <UTag class="!h-5">+ {hashtagsArray.length - 4}</UTag>
             ) : null}
           </div>
           {/* footer */}
