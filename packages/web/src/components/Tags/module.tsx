@@ -16,19 +16,19 @@ export default defineComponent({
     const selectedList = ref<string[]>(['All'])
     const taskList = computed(() => {
       const str =
-        'flex h-8 rounded-8px justify-center items-center mr-2 min-w-12 px-4 py-1.5 cursor-pointer'
+        'flex h-8 rounded-gl justify-center items-center mr-2 min-w-12 px-4 py-1.5 cursor-pointer border-1 border-gray-300'
       return props.tasks.map(task => {
         const index = selectedList.value.findIndex(item => item === task)
         if (index > -1) {
           return {
             value: task,
-            class: `${str} text-primary`,
+            class: `${str} u-h5 text-color`,
             active: true
           }
         }
         return {
           value: task,
-          class: `${str} bg-purple text-grey2`,
+          class: `${str} text-color2 u-h6`,
           active: false
         }
       })
@@ -76,10 +76,10 @@ export default defineComponent({
       <div class="flex w-auto">
         {this.taskList.map(task => {
           return (
+            // style={task.active ? { borderRadius: 'rgba(83, 49, 244, 0.1)' } : {}}
             <div
-              class={task.class}
+              class={`${task.class} ${task.active ? 'u-h5 text-color' : ''}`}
               onClick={handleTag(task.value)}
-              style={task.active ? { backgroundColor: 'rgba(83, 49, 244, 0.1)' } : {}}
             >
               {task.value}
             </div>
