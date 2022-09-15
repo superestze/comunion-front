@@ -11,17 +11,19 @@
         left: 0px !important;
         right: 0px !important;
       }
+
       &::hover {
         color: #3f2d99 !important;
       }
 
-      @apply rounded-gl min-w-180px items-center !h-auto;
+      @apply rounded-lg min-w-180px items-center !h-auto;
 
       &:not(.n-dropdown-option-body--group) {
         @apply -mx-2 py-2.5 px-3;
 
         &:not(.n-dropdown-option-body--disabled):hover {
           background-color: var(--active-bg-new) !important;
+
           &.n-dropdown-option-body.n-dropdown-option-body--pending::before {
             background-color: unset !important;
           }
@@ -30,6 +32,7 @@
 
       &__prefix {
         @apply !w-auto !hidden;
+
         &.n-dropdown-option-body__prefix--show-icon {
           @apply mr-2 !inline-flex;
         }
@@ -38,6 +41,7 @@
       /** label */
       &__label {
         @apply leading-none !u-h6;
+
         &::first-child {
           @apply text-color2;
         }
@@ -60,11 +64,13 @@
 
       &--active {
         color: #000000 !important;
+
         .n-dropdown-option-body {
           &__suffix {
             @apply rounded-lg bg-green1 h-2 -mr-2px ml-2 w-2 self-center !min-w-0 !p-0 !block;
           }
         }
+
         &::before {
           color: none !important;
           background: none !important;

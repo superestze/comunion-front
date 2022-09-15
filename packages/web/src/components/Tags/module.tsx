@@ -16,7 +16,7 @@ export default defineComponent({
     const selectedList = ref<string[]>(['All'])
     const taskList = computed(() => {
       const str =
-        'flex h-8 rounded-gl justify-center items-center mr-2 min-w-12 px-4 py-1.5 cursor-pointer border-1 border-gray-300'
+        'flex h-8 rounded-lg justify-center items-center mr-2 min-w-12 px-4 py-1.5 cursor-pointer border-1 border-gray-300'
       return props.tasks.map(task => {
         const index = selectedList.value.findIndex(item => item === task)
         if (index > -1) {

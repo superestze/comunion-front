@@ -74,7 +74,7 @@ const StartupCard = defineComponent({
             src={props.startup.logo}
             width="10"
             height="10"
-            class="rounded-gl h-15 mr-3 w-15"
+            class="rounded-lg h-15 mr-3 w-15"
           />
 
           <div class="flex-1 overflow-hidden">
@@ -90,7 +90,7 @@ const StartupCard = defineComponent({
               {/* style={{
                   'background-color': color ? color.value : BOUNTY_TYPES_COLOR_MAP[0].value
                 }} */}
-              <span class="rounded-gl font-primary border-1 border-[#DADCE0] h-5 text-xs ml-4 px-2 text-color2 leading-1.25rem inline-block">
+              <span class="rounded-lg font-primary border-1 border-[#DADCE0] h-5 text-xs ml-4 px-2 text-color2 leading-1.25rem inline-block">
                 {color ? color.label : BOUNTY_TYPES_COLOR_MAP[0].label}
               </span>
             </div>
