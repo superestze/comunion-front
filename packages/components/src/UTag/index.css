@@ -6,6 +6,6 @@
   }
 
   &__outlined {
-    @apply bg-white border border-color-border;
+    @apply border border-color-border;
   }
 }

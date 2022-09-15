@@ -1,4 +1,4 @@
-import { UDropdownFilter, UInputGroup, USearch } from '@comunion/components'
+import { UDropdownFilter } from '@comunion/components'
 import { debounce } from '@comunion/utils'
 import {
   defineComponent,
@@ -12,6 +12,7 @@ import {
 } from 'vue'
 import StartupCard from './components/StartupCard'
 import StartupSkeleton from './components/StartupSkeleton'
+import SearchInput from '@/components/SearchInput'
 import { StartupTypesType, STARTUP_TYPES } from '@/constants'
 import { services } from '@/services'
 import { StartupItem } from '@/types'
@@ -56,21 +57,16 @@ const StartupsPage = defineComponent({
       pagination.loading = false
     }
     // filter
+    const debounceLoad = debounce(onLoadMore)
+
     watch(
       () => startupType.value,
-      () => {
-        setTimeout(() => {
-          onLoadMore(1)
-        }, 0)
-      }
+      () => debounceLoad(1)
     )
 
-    const debounceLoad = debounce(onLoadMore)
     watch(
       () => inputMember.value,
-      () => {
-        debounceLoad(1)
-      }
+      () => debounceLoad(1)
     )
 
     const isLastPage = computed(() => {
@@ -109,28 +105,25 @@ const StartupsPage = defineComponent({
 
     return () => (
       <div class="mt-10 mb-16">
-        <div class=" flex mb-8 ">
-          {/* <h3 class="text-grey1 u-h3">{pagination.total.toLocaleString()} Startups</h3> */}
-          <div class="flex ml-auto self-end items-center u-body4 ">
-            Filter by:
-            <UDropdownFilter
-              options={STARTUP_TYPES.map(item => ({ label: item, value: item }))}
-              placeholder="Startup Type"
-              class="rounded border-1 h-10 ml-6 w-37"
-              clearable
-              v-model:value={startupType.value}
-            />
-            <UInputGroup class="h-10 ml-6 w-37 ">
-              <USearch
-                v-model:value={inputMember.value}
-                placeholder="Search"
-                class="bg-transparent -my-0\.5 "
-              />
-            </UInputGroup>
+        <div class=" flex mb-8 items-center ">
+          <div class="flex-1">
+            {/* <h3 class="text-grey1 u-h3">{pagination.total.toLocaleString()} Startups</h3> */}
           </div>
+          <UDropdownFilter
+            options={STARTUP_TYPES.map(item => ({ label: item, value: item }))}
+            placeholder="Startup Type"
+            class="rounded mr-4 w-32"
+            clearable
+            v-model:value={startupType.value}
+          />
+          <SearchInput
+            v-model:value={inputMember.value}
+            placeholder="Search"
+            loading={pagination.loading}
+          />
         </div>
 
-        <div class="grid pb-6 gap-8 grid-cols-1 md:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4">
+        <div class="grid pb-6 gap-6 grid-cols-1 md:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4">
           {DataList.value.map(startup => (
             <StartupCard startup={startup} key={startup.id} />
           ))}

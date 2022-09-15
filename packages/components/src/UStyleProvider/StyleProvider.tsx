@@ -117,10 +117,10 @@ const UStyleProvider = defineComponent({
         heightLarge: '48px',
         heightMedium: '40px',
         heightSmall: '36px',
-        borderRadius: '8px',
+        borderRadius: '2px',
         borderRadiusLarge: '8px',
-        borderRadiusMedium: '8px',
-        borderRadiusSmall: '8px',
+        borderRadiusMedium: '4px',
+        borderRadiusSmall: '2px',
         primaryColor: props.primaryColor,
         infoColor: props.infoColor,
         successColor: props.successColor,
@@ -130,7 +130,7 @@ const UStyleProvider = defineComponent({
         primaryColorPressed: props.primaryColor,
         successColorHover: props.successColor,
         successColorPressed: props.successColor,
-        textColor2: props.grey1Color,
+        textColor2: props.color1,
         skipLinks: props.skipLinks
       },
       Form: {
@@ -153,17 +153,17 @@ const UStyleProvider = defineComponent({
       Input: {
         border: `1px solid ${props.grey5Color}`,
         borderFocus: `1px solid ${props.primaryColor}`,
-        borderHover: `1px solid ${props.primaryColor}`,
+        borderHover: `1px solid transparent`,
         borderWarning: `1px solid ${props.warningColor}`,
         borderError: `1px solid ${props.errorColor}`,
         borderDisabled: `1px solid ${props.grey5Color}`,
         placeholderColor: props.grey3Color,
-        // textColor: props.grey3Color,
+        fontSizeMedium: '14px',
         fontSizeLarge: '16px',
         paddingLarge: '16px'
       },
       Scrollbar: {
-        color: props.primary1Color,
+        color: props.primaryColor,
         colorHover: props.primaryColor
       },
       Checkbox: {
@@ -171,8 +171,12 @@ const UStyleProvider = defineComponent({
       },
       Card: {
         paddingHuge: '40px',
-        borderRadius: '8px',
-        borderColor: props.grey5Color
+        borderRadius: '2px',
+        borderColor: props.colorBorder
+      },
+      InternalSelection: {
+        borderHover: `1px solid transparent`,
+        placeholderColor: props.color2
       }
     }))
 
