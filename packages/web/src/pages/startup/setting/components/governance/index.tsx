@@ -1,5 +1,6 @@
 import {
   message,
+  UButton,
   UForm,
   UFormItem,
   UInput,
@@ -54,6 +55,7 @@ export default defineComponent({
   },
   setup(props) {
     const formRef = ref()
+    const addStrategyBtnLoading = ref(false)
     const walletStore = useWalletStore()
     const tokenContract = useErc20Contract()
     const strategies = ref<ServiceReturn<'meta@dict-list-by-type'>>()
@@ -143,8 +145,8 @@ export default defineComponent({
       erc20BalanceForm.value?.validate(async (error: any) => {
         console.log('error===>', error)
         console.log('strategy==>', strategy)
-
         if (!error) {
+          addStrategyBtnLoading.value = true
           try {
             const { network, contractAddress, symbol } = erc20BalanceStrategy
             const provider = await walletStore.getRpcProvider(network, infuraKey)
@@ -159,8 +161,10 @@ export default defineComponent({
             // govSetting.strategies?.push({ ...strategy, voteDecimals: decimal, symbol })
             govSetting.strategies = [{ ...strategy, voteDecimals: decimal, voteSymbol: symbol }]
             strategyModal.value = undefined
+            addStrategyBtnLoading.value = false
           } catch (error) {
             contractAddressExist.value = false
+            addStrategyBtnLoading.value = false
           }
         }
       })
@@ -219,6 +223,23 @@ export default defineComponent({
       return allNetworks
     })
 
+    const editStrategy = async (strategy: StrategyType) => {
+      switch (strategy.dictValue) {
+        case 'ticket': {
+          ticketStrategy.network = strategy.network as number
+          strategyModal.value = 'ticket'
+          break
+        }
+        case 'erc20Balance': {
+          erc20BalanceStrategy.network = strategy.chainId as number
+          erc20BalanceStrategy.contractAddress = strategy.tokenContractAddress as string
+          erc20BalanceStrategy.symbol = strategy.voteSymbol as string
+          strategyModal.value = 'erc20-balance-of'
+          break
+        }
+      }
+    }
+
     return {
       govSetting,
       strategies,
@@ -229,7 +250,9 @@ export default defineComponent({
       contractAddressExist,
       formRef,
       networks,
+      addStrategyBtnLoading,
       addStrategy,
+      editStrategy,
       delStrategy,
       addTicketStrategy,
       addErc20Strategy,
@@ -264,7 +287,10 @@ export default defineComponent({
             <div class="p-6">
               {this.govSetting.strategies.length ? (
                 this.govSetting.strategies.map(strategy => (
-                  <div class="border rounded-lg flex border-grey5 mb-6 py-3 px-4 justify-between items-center">
+                  <div
+                    class="border rounded-lg flex border-grey5 mb-6 py-3 px-4 justify-between items-center"
+                    onClick={() => this.editStrategy(strategy)}
+                  >
                     <span class="u-body4">
                       {strategy.dictLabel}{' '}
                       {strategy.voteSymbol && (
@@ -535,8 +561,10 @@ export default defineComponent({
                 </div>
               )}
               <div class="flex mt-4 justify-end">
-                <div
-                  class="rounded-lg cursor-pointer bg-primary1 text-white text-center py-2 w-40"
+                <UButton
+                  type="primary"
+                  loading={this.addStrategyBtnLoading}
+                  class="rounded-lg cursor-pointer bg-primary1 !hover:bg-primary1 text-white text-center py-2 w-40"
                   onClick={() =>
                     this.addErc20Strategy({
                       ...this.erc20BalanceStrategy,
@@ -546,7 +574,7 @@ export default defineComponent({
                   }
                 >
                   Add
-                </div>
+                </UButton>
               </div>
             </UForm>
           </div>

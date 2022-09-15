@@ -446,7 +446,7 @@ const ProposalDetail = defineComponent({
                     'text-white text-center py-3 rounded-lg ',
                     this.selectedChoice &&
                     this.proposalInfo?.status === 2 &&
-                    this.votePower &&
+                    Number(this.votePower) &&
                     (this.proposalInfo.allowMember ||
                       this.votePower >= Number(this.govSetting?.proposalThreshold))
                       ? 'bg-primary1 cursor-pointer'
@@ -455,7 +455,7 @@ const ProposalDetail = defineComponent({
                   onClick={() =>
                     this.selectedChoice &&
                     this.proposalInfo?.status === 2 &&
-                    this.votePower &&
+                    Number(this.votePower) &&
                     (this.proposalInfo.allowMember ||
                       this.votePower >= Number(this.govSetting?.proposalThreshold))
                       ? this.showVoteInfo()
