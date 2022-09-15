@@ -1130,6 +1130,10 @@ export const services = {
          * @description startup id
          */
         startupId: number
+        /**
+         * @description chain id
+         */
+        chainID: number
         logo: string
         /**
          * @description 标题
@@ -2313,7 +2317,9 @@ export const services = {
         chainId: number
         contractAudit?: string
         buyTokenAddress: string
+        buyTokenSymbol: string
         sellTokenAddress: string
+        sellTokenSymbol: string
       }[]
     }>({
       url: replacePath('/cores/crowdfundings', args),

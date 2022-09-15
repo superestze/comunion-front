@@ -131,6 +131,8 @@ export function useCrowdfundingContract(
     ),
     sell: wrapTransaction({ ...getContractArgs.value, ...params }, 'sell'),
     state: wrapTransaction({ ...getContractArgs.value, ...params }, 'state'),
+    // 新增的合约方法 暂未使用
+    // updateParas: wrapTransaction({ ...getContractArgs.value, ...params }, 'updateParas'),
     transferOwnership: wrapTransaction({ ...getContractArgs.value, ...params }, 'transferOwnership')
   }
 }

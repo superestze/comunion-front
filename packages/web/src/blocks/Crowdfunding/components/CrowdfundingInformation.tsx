@@ -42,6 +42,7 @@ export const CrowdfundingInformation = defineComponent({
     onMounted(() => {
       props.crowdfundingInfo.buyTokenContract = raiseGoalOptions.value[0].value as string
       props.crowdfundingInfo.buyTokenName = raiseGoalOptions.value[0].label as string
+      props.crowdfundingInfo.buyTokenSymbol = raiseGoalOptions.value[0].label as string
     })
     const totalSellToken = computed(() => {
       if (props.crowdfundingInfo.raiseGoal && props.crowdfundingInfo.buyPrice) {
