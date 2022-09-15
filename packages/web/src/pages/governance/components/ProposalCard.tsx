@@ -3,6 +3,7 @@ import { ConfirmOutlined } from '@comunion/icons'
 import { shortenAddress } from '@comunion/utils'
 import dayjs from 'dayjs'
 import { defineComponent, PropType, computed } from 'vue'
+import { useRouter } from 'vue-router'
 import { GOVERNANCE_KEY, GOVERNANCE_STATUS_STYLE } from '../utils'
 import { ServiceReturn } from '@/services'
 
@@ -17,6 +18,7 @@ export const ProposalCard = defineComponent({
     }
   },
   setup(props) {
+    const router = useRouter()
     const statusStyle = computed(() => {
       return GOVERNANCE_STATUS_STYLE[
         props.proposalData.status as keyof typeof GOVERNANCE_STATUS_STYLE
@@ -50,14 +52,24 @@ export const ProposalCard = defineComponent({
       }
       return null
     })
+
+    const handleCard = (id?: number) => () => {
+      console.log(id)
+      !!id && router.push(`/governance/${id}`)
+    }
+
     return {
       statusStyle,
-      timeTip
+      timeTip,
+      handleCard
     }
   },
   render() {
     return (
-      <div class="bg-white rounded-lg flex border-grey5 mb-6 w-full py-6">
+      <div
+        class="bg-white border-color-border rounded-lg cursor-pointer flex mb-6 w-full py-6 px-10 hover:bg-color-hover"
+        onClick={this.handleCard(this.proposalData?.proposalId)}
+      >
         <div class="h-15 mr-4 w-15">
           <UStartupLogo src={this.proposalData.startupLogo || ''} width="15" height="15" />
         </div>
