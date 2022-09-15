@@ -117,7 +117,7 @@ const BountyPage = defineComponent({
             <UDropdownFilter
               options={BOUNTY_TYPES.map(item => ({ label: item, value: item }))}
               placeholder="All Status"
-              class="rounded mr-4 w-38"
+              class="rounded mr-4 w-37"
               clearable
               v-model:value={searchType.value}
             />
