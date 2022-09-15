@@ -77,7 +77,7 @@ export default defineComponent({
 
     return () => (
       <div
-        class="cursor-pointer py-4 px-4 hover:bg-color-hover"
+        class="rounded-sm cursor-pointer py-4 px-4 hover:bg-color-hover"
         style="transition:background ease .3s"
         onClick={() => toDetail(props.info.crowdfundingId, props.info.chainId)}
       >
