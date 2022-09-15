@@ -119,7 +119,7 @@ const CreateBlock = defineComponent({
                     <CreateStartupNewFilled />
                   </div>
                   <div>
-                    <div class="text-[#000000] u-title2">Startup</div>
+                    <div class="text-[#000000] u-h4">Startup</div>
                     {/* <div class="font-semibold mt-1 text-xs text-grey2">
                       Create your Startup, initial your dream
                     </div> */}
@@ -135,7 +135,7 @@ const CreateBlock = defineComponent({
                     <CreateCrowdfundingNewFilled class="text-primary" />
                   </div>
                   <div>
-                    <div class="text-[#000000] u-title2">Bounty</div>
+                    <div class="text-[#000000] u-h4">Bounty</div>
                     {/* <div class="font-semibold mt-1 text-xs text-grey2">
                       Post your bounty to expand your startup
                     </div> */}
@@ -151,7 +151,7 @@ const CreateBlock = defineComponent({
                     <CreateBountyNewFilled class="text-primary" />
                   </div>
                   <div>
-                    <div class="text-[#000000] u-title2">dCrowdfunding</div>
+                    <div class="text-[#000000] u-h4">dCrowdfunding</div>
                     {/* <div class="font-semibold mt-1 text-xs text-grey2">
                       Post your crowdfunding for start-up capital
                     </div> */}
@@ -167,7 +167,7 @@ const CreateBlock = defineComponent({
                     <CreateProposalNewFilled class="text-primary" />
                   </div>
                   <div>
-                    <div class="text-[#000000] u-title2">Proposal</div>
+                    <div class="text-[#000000] u-h4">Proposal</div>
                     {/* <div class="mt-1 text-grey2 text-xs font-semibold">
                       Create a proposal about startup governance
                     </div> */}
@@ -180,7 +180,7 @@ const CreateBlock = defineComponent({
           <UButton
             type="primary"
             size="small"
-            class="h-8 w-19.25"
+            class="h-8 w-19.25 font-primary font-semibold font-medium"
             style={{
               '--n-border-radius': '2px'
             }}
