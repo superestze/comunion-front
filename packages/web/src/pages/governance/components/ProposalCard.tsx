@@ -43,7 +43,7 @@ export const ProposalCard = defineComponent({
       } else if (props.proposalData.status === 3) {
         return (
           <div class="flex items-center">
-            <ConfirmOutlined class="text-primary mr-2 w-4 h-4" />{' '}
+            <ConfirmOutlined class="h-4 text-primary mr-2 w-4" />{' '}
             {props.proposalData.maximumVotesChoice} -- {props.proposalData.votes}
           </div>
         )
@@ -57,14 +57,14 @@ export const ProposalCard = defineComponent({
   },
   render() {
     return (
-      <div class="flex bg-white py-6 w-full border-grey5 rounded-lg">
-        <div class="w-15 h-15 mr-4">
+      <div class="bg-white rounded-lg flex border-grey5 mb-6 w-full py-6">
+        <div class="h-15 mr-4 w-15">
           <UStartupLogo src={this.proposalData.startupLogo || ''} width="15" height="15" />
         </div>
         <div class="flex-1 truncate">
           <div class="flex items-center justify-between">
             <div>
-              <span class="mr-2 text-grey3 text-xs">Linkedin by</span>
+              <span class="mr-2 text-xs text-grey3">Linkedin by</span>
               <span class="text-primary text-xs">
                 {shortenAddress(this.proposalData.authorWalletAddress)}
               </span>
@@ -73,14 +73,14 @@ export const ProposalCard = defineComponent({
               {GOVERNANCE_KEY[this.proposalData.status as keyof typeof GOVERNANCE_KEY]}
             </div>
           </div>
-          <div class="u-title3 truncate break-all max-w-full my-2">{this.proposalData.title}</div>
+          <div class="max-w-full my-2 truncate break-all u-title3">{this.proposalData.title}</div>
           {this.proposalData.description && (
             <div
-              class="u-body2 truncate break-all whitespace-pre-line line-clamp-2"
+              class="truncate break-all whitespace-pre-line u-body2 line-clamp-2"
               v-html={this.proposalData.description}
             />
           )}
-          {this.timeTip && <div class="text-grey3  mt-2">{this.timeTip}</div>}
+          {this.timeTip && <div class="mt-2  text-grey3">{this.timeTip}</div>}
         </div>
       </div>
     )
