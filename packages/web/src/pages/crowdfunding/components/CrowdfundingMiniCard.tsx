@@ -77,17 +77,12 @@ export default defineComponent({
 
     return () => (
       <div
-        class="py-4 px-4 hover:bg-[#F0F0F0]  hover:ml-[-1%] hover:pr-[1%] hover:pl-[1%] hover:w-[102%]"
+        class="cursor-pointer py-4 px-4 hover:bg-color-hover"
         style="transition:background ease .3s"
         onClick={() => toDetail(props.info.crowdfundingId, props.info.chainId)}
       >
         <div class="flex overflow-hidden">
-          <UStartupLogo
-            src={props.info.poster}
-            width="10"
-            height="10"
-            class="rounded-lg h-15 mr-3 w-15"
-          />
+          <UStartupLogo src={props.info.poster} width="10" height="10" class="h-15 mr-3 w-15" />
 
           <div class="flex-1 overflow-hidden">
             <div class="flex mb-2 items-center">

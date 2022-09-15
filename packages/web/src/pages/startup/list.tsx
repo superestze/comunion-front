@@ -20,8 +20,8 @@ import { StartupItem } from '@/types'
 const StartupsPage = defineComponent({
   name: 'StartupsPage',
   setup() {
-    const startupType = ref<string | undefined>(undefined)
-    const inputMember = ref<string>('')
+    const searchType = ref<string | undefined>(undefined)
+    const searchInput = ref<string>('')
     const pagination = reactive<{
       pageSize: number
       total: number
@@ -40,10 +40,10 @@ const StartupsPage = defineComponent({
         limit: pagination.pageSize,
         offset: pagination.pageSize * (pagination.page - 1),
         mode:
-          startupType.value !== undefined
-            ? STARTUP_TYPES.indexOf(startupType.value as StartupTypesType) + 1
+          searchType.value !== undefined
+            ? STARTUP_TYPES.indexOf(searchType.value as StartupTypesType) + 1
             : undefined,
-        keyword: inputMember.value
+        keyword: searchInput.value
       })
       if (!error) {
         if (reload) {
@@ -65,12 +65,12 @@ const StartupsPage = defineComponent({
     const debounceLoad = debounce(onLoadMore)
 
     watch(
-      () => startupType.value,
+      () => searchType.value,
       () => debounceLoad(1, true)
     )
 
     watch(
-      () => inputMember.value,
+      () => searchInput.value,
       () => debounceLoad(1, true)
     )
 
@@ -118,10 +118,10 @@ const StartupsPage = defineComponent({
               placeholder="All Type"
               class="rounded mr-4 w-28"
               clearable
-              v-model:value={startupType.value}
+              v-model:value={searchType.value}
             />
             <SearchInput
-              v-model:value={inputMember.value}
+              v-model:value={searchInput.value}
               placeholder="Search"
               loading={pagination.loading}
             />

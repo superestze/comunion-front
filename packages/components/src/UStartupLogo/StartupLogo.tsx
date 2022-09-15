@@ -50,7 +50,7 @@ const UStartupLogo = defineComponent({
     return () =>
       loaded.value ? (
         <img
-          class="rounded-md u-lazy-image-img"
+          class="rounded u-lazy-image-img"
           src={props.src}
           alt={props.alt}
           {...{ loading: 'lazy' }}
@@ -58,7 +58,7 @@ const UStartupLogo = defineComponent({
         />
       ) : (
         <div
-          class={['rounded-md border-1 border-color-border flex', { failed: errored.value }]}
+          class={['rounded border-1 border-color-border flex', { failed: errored.value }]}
           {...ctx.attrs}
         >
           {errored.value && (

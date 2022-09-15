@@ -12,6 +12,7 @@ import {
 } from 'vue'
 import BountyCard from './components/BountyCard'
 import BountySkeleton from './components/BountySkeleton'
+import SearchInput from '@/components/SearchInput'
 import { BOUNTY_TYPES } from '@/constants'
 import { services } from '@/services'
 
@@ -20,7 +21,8 @@ import { BountyItem } from '@/types'
 const BountyPage = defineComponent({
   name: 'BountyPage',
   setup() {
-    const CreatedType = ref(BOUNTY_TYPES[0])
+    const searchType = ref(undefined)
+    const searchInput = ref<string>('')
     const DataList = ref<BountyItem[]>([])
     const pagination = reactive<{
       pageSize: number
@@ -37,7 +39,11 @@ const BountyPage = defineComponent({
     const fetchData = async (reload?: boolean) => {
       const { error, data } = await services['bounty@bounty-list(tab)']({
         page: pagination.page,
-        sort: CreatedType.value
+        mode:
+          searchType.value !== undefined
+            ? STARTUP_TYPES.indexOf(searchType.value as StartupTypesType) + 1
+            : undefined,
+        keyword: searchInput.value
       })
       if (!error) {
         if (reload) {
@@ -59,7 +65,12 @@ const BountyPage = defineComponent({
     const debounceLoad = debounce(onLoadMore)
 
     watch(
-      () => CreatedType.value,
+      () => searchType.value,
+      () => debounceLoad(1, true)
+    )
+
+    watch(
+      () => searchInput.value,
       () => debounceLoad(1, true)
     )
 
@@ -109,7 +120,12 @@ const BountyPage = defineComponent({
               placeholder="All Status"
               class="rounded mr-4 w-38"
               clearable
-              v-model:value={CreatedType.value}
+              v-model:value={searchType.value}
+            />
+            <SearchInput
+              v-model:value={searchInput.value}
+              placeholder="Search"
+              loading={pagination.loading}
             />
           </div>
           {DataList.value.map(item => (
