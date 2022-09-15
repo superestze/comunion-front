@@ -97,7 +97,7 @@ export default defineComponent({
             src={props.info.poster}
             width="10"
             height="10"
-            class="rounded-gl h-15 mr-3 w-15"
+            class="rounded-lg h-15 mr-3 w-15"
           />
 
           <div class="flex-1 overflow-hidden">
@@ -106,7 +106,7 @@ export default defineComponent({
 
               <span
                 class={[
-                  'rounded-gl h-5 font-primary text-color2 ml-4 px-2 text-xs leading-1.25rem inline-block border-1 border-[#DADCE0]'
+                  'rounded-lg h-5 font-primary text-color2 ml-4 px-2 text-xs leading-1.25rem inline-block border-1 border-[#DADCE0]'
                 ]}
               >
                 {CROWDFUNDING_TYPES[props.info.status - 1]}

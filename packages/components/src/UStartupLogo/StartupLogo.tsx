@@ -57,11 +57,12 @@ const UStartupLogo = defineComponent({
           {...ctx.attrs}
         />
       ) : (
-        <div class={['flex', { failed: errored.value }]} {...ctx.attrs}>
-          {errored.value ? (
+        <div
+          class={['border-1 border-color-border flex', { failed: errored.value }]}
+          {...ctx.attrs}
+        >
+          {errored.value && (
             <StartupLogoFilled class={`w-${props.width} h-${props.height} m-auto`} />
-          ) : (
-            ''
           )}
         </div>
       )
