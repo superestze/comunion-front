@@ -114,8 +114,8 @@ const CreateBlock = defineComponent({
             {
               key: 'startup',
               label: () => (
-                <div class="flex h-14.5 items-center" onClick={onCreateStartup}>
-                  <div class="rounded flex h-14.5 mr-4 w-8 items-center justify-center">
+                <div class="flex items-center" onClick={onCreateStartup}>
+                  <div class="rounded flex h-full mr-4 w-8 items-center justify-center">
                     <CreateStartupNewFilled />
                   </div>
                   <div>
@@ -131,7 +131,7 @@ const CreateBlock = defineComponent({
               key: 'bounty',
               label: () => (
                 <div class="flex items-center" onClick={onCreateBounty}>
-                  <div class="rounded flex h-14.5 mr-4 w-8 items-center justify-center">
+                  <div class="rounded flex h-full mr-4 w-8 items-center justify-center">
                     <CreateCrowdfundingNewFilled class="text-primary" />
                   </div>
                   <div>
@@ -147,7 +147,7 @@ const CreateBlock = defineComponent({
               key: 'Crowdfunding',
               label: () => (
                 <div class="flex items-center" onClick={onCreateCrowdfunding}>
-                  <div class="rounded flex h-14.5 mr-4 w-8 items-center justify-center">
+                  <div class="rounded flex h-full mr-4 w-8 items-center justify-center">
                     <CreateBountyNewFilled class="text-primary" />
                   </div>
                   <div>
@@ -163,7 +163,7 @@ const CreateBlock = defineComponent({
               key: 'Proposal',
               label: () => (
                 <div class="flex items-center" onClick={onCreateProposal}>
-                  <div class="rounded flex h-14.5 mr-4 w-8 items-center justify-center">
+                  <div class="rounded flex h-full mr-4 w-8 items-center justify-center">
                     <CreateProposalNewFilled class="text-primary" />
                   </div>
                   <div>
