@@ -362,16 +362,7 @@ export default defineComponent({
             if (!this.info.isChain && this.info.switchChain) {
               try {
                 await startupContract.newStartup(
-                  [
-                    this.info.name,
-                    this.info.type === undefined
-                      ? 0
-                      : getStartupNumberFromType(this.info.type as StartupTypesType),
-                    this.info.chainID === undefined ? 0 : this.info.chainID,
-                    this.info.mission,
-                    this.info.overview,
-                    true
-                  ],
+                  [this.info.name, this.info.chainID === undefined ? 0 : this.info.chainID, true],
                   requestParams,
                   'Waiting to submit all contents to blockchain for creating startup',
                   `Startup "${this.info.name}" is Creating`
@@ -380,6 +371,7 @@ export default defineComponent({
               } catch (error) {
                 this.info.switchChain = false
                 this.info.isChain = false
+                console.error(error)
                 throw new Error('cancel to chain')
               }
               this.setFieldsStatus(true)
