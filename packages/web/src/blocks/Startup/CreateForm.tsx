@@ -126,14 +126,14 @@ const CreateStartupForm = defineComponent({
                 await startupContract.newStartup(
                   [
                     model.name,
-                    model.type ? model.type : 0,
+                    // model.type ? model.type : 0,
                     // model.tags,
                     // model.logo,
                     model.nextwork === undefined ? 0 : model.nextwork,
-                    model.mission,
+                    // model.mission,
                     // model.tokenContract,
                     // model.composes.map(item => [item.name, item.address]),
-                    model.overview,
+                    // model.overview,
                     true
                   ],
                   model,
