@@ -52,8 +52,8 @@ const StartupCard = defineComponent({
     }
 
     const wrapClass = props.miniCard
-      ? 'bg-white cursor-pointer py-2 '
-      : 'bg-white rounded-md cursor-pointer border-1 h-40 mb-1.5rem px-10 pt-2rem hover:shadow-md'
+      ? 'bg-white rounded-sm cursor-pointer py-4 mt-6 px-4 hover:bg-color-hover'
+      : 'bg-white rounded-sm cursor-pointer border-1 mb-6 px-6 py-6 hover:bg-color-hover'
 
     const skillTagShowLength = 3
     const skillTagsList = props.miniCard
@@ -62,20 +62,12 @@ const StartupCard = defineComponent({
 
     return () => (
       <div
-        class={
-          wrapClass +
-          'py-4 hover:bg-[#F0F0F0]  hover:w-[102%] hover:ml-[-1%] hover:pl-[1%] hover:pr-[1%]'
-        }
+        class={wrapClass}
         style="transition:background ease .3s"
         onClick={handleCard(props.startup.bountyId)}
       >
         <div class="flex mb-3 overflow-hidden">
-          <UStartupLogo
-            src={props.startup.logo}
-            width="10"
-            height="10"
-            class="rounded-lg h-15 mr-3 w-15"
-          />
+          <UStartupLogo src={props.startup.logo} width="10" height="10" class="h-15 mr-3 w-15" />
 
           <div class="flex-1 overflow-hidden">
             <div class="flex mb-2 items-center">
@@ -90,9 +82,7 @@ const StartupCard = defineComponent({
               {/* style={{
                   'background-color': color ? color.value : BOUNTY_TYPES_COLOR_MAP[0].value
                 }} */}
-              <span class="rounded-lg font-primary border-1 border-[#DADCE0] h-5 text-xs ml-4 px-2 text-color2 leading-1.25rem inline-block">
-                {color ? color.label : BOUNTY_TYPES_COLOR_MAP[0].label}
-              </span>
+              <UTag class="ml-4">{color ? color.label : BOUNTY_TYPES_COLOR_MAP[0].label}</UTag>
             </div>
             {/* skill tags miniCard */}
             <div class="flex flex-row flex-wrap items-center">
