@@ -1,4 +1,4 @@
-import { hexlify } from 'ethers/lib/utils'
+import { hexValue } from 'ethers/lib/utils'
 import AbstractWallet from './AbstractWallet'
 import { CoinbaseWalletProvider } from './provider/CoinbaseWalletProvider'
 import { allNetworks, ChainNetworkType } from '@/constants'
@@ -42,7 +42,7 @@ export default class CoinbaseWallet extends AbstractWallet {
         method: 'wallet_addEthereumChain',
         params: [
           {
-            chainId: hexlify(network.chainId),
+            chainId: hexValue(network.chainId),
             chainName: network.name,
             nativeCurrency: {
               name: network.currencySymbol,
@@ -65,7 +65,7 @@ export default class CoinbaseWallet extends AbstractWallet {
     try {
       await this._coinbaseWalletProvider.ethereum.request!({
         method: 'wallet_switchEthereumChain',
-        params: [{ chainId: hexlify(chainId) }]
+        params: [{ chainId: hexValue(chainId) }]
       })
       return true
     } catch (e: any) {
