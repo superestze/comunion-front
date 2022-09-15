@@ -68,9 +68,6 @@ export const BasicInfo = defineComponent({
         title: 'Startup',
         name: 'startupId',
         placeholder: 'Please select a startup',
-        formItemProps: {
-          first: true
-        },
         rules: [
           { required: true, message: 'Startup cannot be blank', type: 'number', trigger: 'blur' },
           {

@@ -101,7 +101,6 @@ export default defineComponent({
         if (!error) {
           console.log('data===>', data)
           strategies.value = data
-          govSetting.strategies = [data[0]]
         }
       } catch (error) {
         console.error('error===>', error)

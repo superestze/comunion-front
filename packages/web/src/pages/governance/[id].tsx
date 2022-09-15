@@ -101,7 +101,7 @@ const ProposalDetail = defineComponent({
           votePower.value = 1
           break
         }
-        case 'erc20-balance-of': {
+        case 'erc20Balance': {
           if (strategy.tokenContractAddress) {
             const userAddress = walletStore.address
 

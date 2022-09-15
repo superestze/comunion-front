@@ -43,7 +43,7 @@ export default defineComponent({
               src={this.startup?.logo || ''}
               width="15"
               height="15"
-              class="rounded !object-contain"
+              class="rounded !object-contain cursor-pointer"
             />
           </div>
           <div class="flex-1 flex flex-col ml-6 truncate">
