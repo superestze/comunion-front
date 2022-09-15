@@ -5,7 +5,7 @@ const StartupSkeleton = defineComponent({
   name: 'StartupSkeleton',
   setup(props) {
     return () => (
-      <div class="bg-white rounded cursor-pointer h-96 relative">
+      <div class="bg-white rounded cursor-pointer h-90 relative">
         <div class="p-6">
           <div class="mb-2rem overflow-hidden">
             <USkeleton class="rounded-md float-left" width="4rem" height="4rem" />

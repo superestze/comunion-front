@@ -24,7 +24,7 @@ const DefaultLayout = defineComponent({
     })
 
     return () => (
-      <div class="bg-purple flex flex-col h-full min-h-screen text-[14px] relative">
+      <div class="bg-white flex flex-col h-full min-h-screen text-[14px] relative">
         <TheHeader />
         <div class="flex-1 u-page-container relative">
           {/* Header */}
