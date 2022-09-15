@@ -101,7 +101,7 @@ const ProposalDetail = defineComponent({
           votePower.value = 1
           break
         }
-        case 'erc20-balance-of': {
+        case 'erc20Balance': {
           if (strategy.tokenContractAddress) {
             const userAddress = walletStore.address
 
@@ -155,7 +155,7 @@ const ProposalDetail = defineComponent({
       }
     }
 
-    const getVoteRecords = async (page: number) => {
+    const getVoteRecords = async (page: number, override = false) => {
       try {
         const { error, data } = await services['governance@proposal-vote-record-list']({
           limit: pagination.pageSize,
@@ -164,7 +164,11 @@ const ProposalDetail = defineComponent({
         })
         if (!error) {
           pagination.total = data.totalRows
-          voteRecords.value = [...(voteRecords.value || []), ...(data.rows || [])]
+          if (override) {
+            voteRecords.value = data.rows || []
+          } else {
+            voteRecords.value = [...(voteRecords.value || []), ...(data.rows || [])]
+          }
         }
       } catch (error) {
         console.error('error===>', error)
@@ -224,7 +228,7 @@ const ProposalDetail = defineComponent({
             })
             if (!error) {
               getProposalDetail()
-              getVoteRecords(1)
+              getVoteRecords(1, true)
               voteInfoVisible.value = false
             }
           }
@@ -324,7 +328,7 @@ const ProposalDetail = defineComponent({
 
     onMounted(() => {
       getProposalDetail()
-      getVoteRecords(1)
+      getVoteRecords(1, true)
     })
 
     return {
@@ -479,7 +483,7 @@ const ProposalDetail = defineComponent({
                   <UTable>
                     <tbody class="">
                       {this.voteRecords?.map(record => (
-                        <tr>
+                        <tr key={record.voterComerId}>
                           <td>
                             <div class="flex items-center ml-7">
                               <ULazyImage src={record.voterComerAvatar} class="w-7 h-7 mr-3" />
