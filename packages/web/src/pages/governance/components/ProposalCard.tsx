@@ -79,14 +79,19 @@ export const ProposalCard = defineComponent({
           <UStartupLogo src={this.proposalData.startupLogo || ''} width="15" height="15" />
         </div>
         <div class="flex-1 truncate">
-          <div class="flex items-center justify-between">
+          <div class="flex items-center">
             <div>
               <span class="mr-2 text-xs text-grey3">Linkedin by</span>
               <span class="text-primary text-xs">
                 {shortenAddress(this.proposalData.authorWalletAddress)}
               </span>
             </div>
-            <div class={['status ml-auto', this.statusStyle]}>
+            {/* , this.statusStyle */}
+            <div
+              class={[
+                'status rounded-[2px] h-5 font-primary text-color2 ml-4 px-2 text-xs leading-1.25rem inline-block border-1 border-[#DADCE0]'
+              ]}
+            >
               {GOVERNANCE_KEY[this.proposalData.status as keyof typeof GOVERNANCE_KEY]}
             </div>
           </div>
