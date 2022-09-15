@@ -40,10 +40,9 @@ const BountyPage = defineComponent({
       const { error, data } = await services['bounty@bounty-list(tab)']({
         page: pagination.page,
         mode:
-          searchType.value !== undefined
-            ? STARTUP_TYPES.indexOf(searchType.value as StartupTypesType) + 1
-            : undefined,
-        keyword: searchInput.value
+          searchType.value !== undefined ? BOUNTY_TYPES.indexOf(searchType.value) + 1 : undefined,
+        keyword: searchInput.value,
+        sort: ''
       })
       if (!error) {
         if (reload) {
