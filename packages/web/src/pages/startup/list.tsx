@@ -1,4 +1,4 @@
-import { UDropdownFilter } from '@comunion/components'
+import { UDropdownFilter, USpin } from '@comunion/components'
 import { debounce } from '@comunion/utils'
 import {
   defineComponent,
@@ -35,7 +35,7 @@ const StartupsPage = defineComponent({
     })
 
     const DataList = ref<StartupItem[]>([])
-    const fetchData = async () => {
+    const fetchData = async (reload?: boolean) => {
       const { error, data } = await services['startup@startup-list']({
         limit: pagination.pageSize,
         offset: pagination.pageSize * (pagination.page - 1),
@@ -46,14 +46,19 @@ const StartupsPage = defineComponent({
         keyword: inputMember.value
       })
       if (!error) {
-        DataList.value.push(...(data!.list as unknown as StartupItem[]))
+        if (reload) {
+          DataList.value = data!.list as unknown as StartupItem[]
+        } else {
+          DataList.value.push(...(data!.list as unknown as StartupItem[]))
+        }
+
         pagination.total = data!.total
       }
     }
-    const onLoadMore = async (p: number) => {
+    const onLoadMore = async (p: number, reload?: boolean) => {
       pagination.loading = true
       pagination.page = p
-      await fetchData()
+      await fetchData(reload)
       pagination.loading = false
     }
     // filter
@@ -61,12 +66,12 @@ const StartupsPage = defineComponent({
 
     watch(
       () => startupType.value,
-      () => debounceLoad(1)
+      () => debounceLoad(1, true)
     )
 
     watch(
       () => inputMember.value,
-      () => debounceLoad(1)
+      () => debounceLoad(1, true)
     )
 
     const isLastPage = computed(() => {
@@ -80,9 +85,7 @@ const StartupsPage = defineComponent({
         const bodyRect = body?.getBoundingClientRect()
 
         if (bodyRect.height + bodyRect.top - winHeight < 240) {
-          if (isLastPage.value) {
-            document.removeEventListener('scroll', scrollHandler)
-          } else {
+          if (!isLastPage.value) {
             pagination.page++
             onLoadMore(pagination.page)
           }
@@ -104,33 +107,35 @@ const StartupsPage = defineComponent({
     })
 
     return () => (
-      <div class="mt-8 mb-16">
-        <div class="flex mb-6 items-center ">
-          <div class="flex-1">
-            {/* <h3 class="text-grey1 u-h3">{pagination.total.toLocaleString()} Startups</h3> */}
+      <USpin show={pagination.loading}>
+        <div class="mt-8 mb-16">
+          <div class="flex mb-6 items-center ">
+            <div class="flex-1">
+              {/* <h3 class="text-grey1 u-h3">{pagination.total.toLocaleString()} Startups</h3> */}
+            </div>
+            <UDropdownFilter
+              options={STARTUP_TYPES.map(item => ({ label: item, value: item }))}
+              placeholder="All Type"
+              class="rounded mr-4 w-28"
+              clearable
+              v-model:value={startupType.value}
+            />
+            <SearchInput
+              v-model:value={inputMember.value}
+              placeholder="Search"
+              loading={pagination.loading}
+            />
           </div>
-          <UDropdownFilter
-            options={STARTUP_TYPES.map(item => ({ label: item, value: item }))}
-            placeholder="Startup Type"
-            class="rounded mr-4 w-32"
-            clearable
-            v-model:value={startupType.value}
-          />
-          <SearchInput
-            v-model:value={inputMember.value}
-            placeholder="Search"
-            loading={pagination.loading}
-          />
-        </div>
 
-        <div class="grid pb-6 gap-6 grid-cols-1 md:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4">
-          {DataList.value.map(startup => (
-            <StartupCard startup={startup} key={startup.id} />
-          ))}
-          {pagination.loading &&
-            new Array(pagination.pageSize).fill('').map(item => <StartupSkeleton />)}
+          <div class="grid pb-6 gap-6 grid-cols-1 md:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4">
+            {DataList.value.map(startup => (
+              <StartupCard startup={startup} key={startup.id} />
+            ))}
+            {pagination.loading &&
+              new Array(pagination.pageSize).fill('').map(item => <StartupSkeleton />)}
+          </div>
         </div>
-      </div>
+      </USpin>
     )
   }
 })

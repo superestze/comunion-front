@@ -58,7 +58,6 @@ export default defineComponent<InputProps>({
           }
           this.showInput = true
           setTimeout(() => {
-            console.log(this.inputRef)
             this.inputRef.focus()
           }, 300)
         }}
