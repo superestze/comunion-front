@@ -3014,6 +3014,7 @@ export const services = {
       mode: number
       mission: string
       overview: string
+      hashTags: string[]
     }
   ) {
     return requestAdapter<{}>({
