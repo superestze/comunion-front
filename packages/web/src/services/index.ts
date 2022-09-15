@@ -149,7 +149,7 @@ export const services = {
     return requestAdapter<
       {
         /**
-   * @description
+   * @description 
 	ModuleStartup - 1
 	ModuleBounty - 2
 	ModuleCrowdfunding - 3
@@ -1090,6 +1090,16 @@ export const services = {
        * @example 排序
        */
       sort?: any
+      /**
+       * @description bounty状态   1:Ready to work 2:Work started 3:Completed
+       * @example 1
+       */
+      mode?: any
+      /**
+       * @description title 的模糊搜索
+       * @example Test
+       */
+      keyword?: any
     } & {
       /**
        * @description 第几页，默认1
@@ -1180,7 +1190,7 @@ export const services = {
     }>({
       url: replacePath('/cores/bounties', args),
       method: 'GET',
-      ...extract('GET', args, ['page', 'sort'], [])
+      ...extract('GET', args, ['page', 'sort', 'mode', 'keyword'], [])
     })
   },
   'bounty@bounty-list-applicants'(args: { bountyID: any }) {
@@ -2029,14 +2039,13 @@ export const services = {
   'crowdfunding@crowdfundable-startups'(args?: any) {
     return requestAdapter<
       {
-        onChain: any
-        startupId: number
-        startupName: string
+        startupId?: number
+        startupName?: string
+        canRaise?: boolean
         /**
-         * @description 能否募资：true,可，false,不能
+         * @description 是否上链
          */
-        canRaise: boolean
-        tokenContract?: string
+        onChain?: boolean
       }[]
     >({
       url: replacePath('/cores/startups/crowdfundable', args),
@@ -2963,7 +2972,7 @@ export const services = {
   'startup@social-delete'(args: { startupID: any }) {
     return requestAdapter<{
       /**
-   * @description 	1-SocialEmail
+   * @description 	1-SocialEmail 
 	2-SocialWebsite
 	3-SocialTwitter
 	4-SocialDiscord
@@ -2986,12 +2995,24 @@ export const services = {
       name: string
       logo: string
       cover: string
+      /**
+       * @description 交易hash
+       */
       txHash: string
+      /**
+       * @description 上链ID
+       */
       chainId: number
+      /**
+   * @description 	ModeESG Mode = 1
+	ModeNGO Mode = 2
+	ModeDAO Mode = 3
+	ModeCOM Mode = 4
+
+     */
       mode: number
       mission: string
       overview: string
-      hashTags: Array<string>
     }
   ) {
     return requestAdapter<{}>({
