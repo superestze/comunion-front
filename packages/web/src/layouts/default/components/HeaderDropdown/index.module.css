@@ -37,10 +37,9 @@
 
       /** label */
       &__label {
-        @apply leading-none;
+        @apply leading-none !u-h6;
         &::first-child {
-          color: rgba(0, 0, 0, 0.5) !important;
-          @apply !text-3.5;
+          @apply text-color2;
         }
       }
 
