@@ -370,23 +370,17 @@ const ProposalDetail = defineComponent({
               </span>
             </div>
             <div class="flex items-center w-7 h-7">
-              <div class="flex items-center cursor-pointer">
+              <div
+                class="flex items-center cursor-pointer"
+                onClick={() => this.toComerDetail(this.proposalInfo?.authorComerId)}
+              >
                 <div class="w-7 h-7">
                   <ULazyImage
                     class="rounded-full w-7 h-7"
                     src={this.proposalInfo?.authorComerAvatar || ''}
                   />
-                  {/* <UStartupLogo
-                  width="7"
-                  height="7"
-                  src={this.proposalInfo?.startupLogo || ''}
-                  class="rounded-full"
-                /> */}
                 </div>
-                <div
-                  class="text-primary mx-4"
-                  onClick={() => this.toComerDetail(this.proposalInfo?.authorComerId)}
-                >
+                <div class="text-primary mx-4">
                   {shortenAddress(this.proposalInfo?.authorWalletAddress || '')}
                 </div>
               </div>
@@ -448,18 +442,18 @@ const ProposalDetail = defineComponent({
                     'text-white text-center py-3 rounded-lg ',
                     this.selectedChoice &&
                     this.proposalInfo?.status === 2 &&
+                    this.votePower &&
                     (this.proposalInfo.allowMember ||
-                      (this.votePower &&
-                        this.votePower >= Number(this.govSetting?.proposalThreshold)))
+                      this.votePower >= Number(this.govSetting?.proposalThreshold))
                       ? 'bg-primary1 cursor-pointer'
                       : 'bg-grey5 cursor-not-allowed'
                   ]}
                   onClick={() =>
                     this.selectedChoice &&
                     this.proposalInfo?.status === 2 &&
+                    this.votePower &&
                     (this.proposalInfo.allowMember ||
-                      (this.votePower &&
-                        this.votePower >= Number(this.govSetting?.proposalThreshold)))
+                      this.votePower >= Number(this.govSetting?.proposalThreshold))
                       ? this.showVoteInfo()
                       : null
                   }
