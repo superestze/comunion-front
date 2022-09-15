@@ -30,21 +30,26 @@ export default defineComponent({
     const getProposalList = async (page: number) => {
       // let serviceError = false
       // let serviceData: ServiceReturn<'governance@proposal-list-of-comer-posted'>
-      console.log('props.createdByMe===>', props.createdByMe)
+      try {
+        pagination.page = page
+        pagination.loading = true
+        const { error, data } = await services[
+          props.createdByMe
+            ? 'governance@proposal-list-of-comer-posted'
+            : 'governance@proposal-list-of-comer-participated'
+        ]({
+          comerID: userStore.profile?.comerID,
+          page,
+          limit: pagination.pageSize
+        })
 
-      const { error, data } = await services[
-        props.createdByMe
-          ? 'governance@proposal-list-of-comer-posted'
-          : 'governance@proposal-list-of-comer-participated'
-      ]({
-        comerID: userStore.profile?.comerID,
-        page,
-        limit: pagination.pageSize
-      })
-
-      if (!error && data?.rows) {
-        pagination.total = data.totalRows
-        proposalList.value = proposalList.value.concat(data.rows)
+        if (!error && data?.rows) {
+          pagination.total = data.totalRows
+          proposalList.value = proposalList.value.concat(data.rows)
+        }
+        pagination.loading = false
+      } catch (error) {
+        pagination.loading = false
       }
     }
 
@@ -78,12 +83,12 @@ export default defineComponent({
     return (
       <UCard title="PROPOSAL" class="mb-6">
         <UScrollList
-          class="max-h-70"
+          class="max-h-100"
           triggered={this.pagination.loading}
           page={this.pagination.page}
           pageSize={this.pagination.pageSize}
           total={this.pagination.total}
-          onLoadMore={() => this.getProposalList(this.pagination.page)}
+          onLoadMore={() => this.getProposalList(this.pagination.page + 1)}
         >
           {this.proposalList.map(proposal => (
             <div>

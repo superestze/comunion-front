@@ -29,16 +29,22 @@ export default defineComponent({
     const getProposalList = async (page: number) => {
       // let serviceError = false
       // let serviceData: ServiceReturn<'governance@proposal-list-by-startup'>
+      try {
+        pagination.page = page
+        pagination.loading = true
+        const { error, data } = await services['governance@proposal-list-by-startup']({
+          startupId: props.startupId,
+          page,
+          limit: pagination.pageSize
+        })
 
-      const { error, data } = await services['governance@proposal-list-by-startup']({
-        startupId: props.startupId,
-        page,
-        limit: pagination.pageSize
-      })
-
-      if (!error && data?.rows) {
-        pagination.total = data.totalRows
-        proposalList.value = proposalList.value.concat(data.rows)
+        if (!error && data?.rows) {
+          pagination.total = data.totalRows
+          proposalList.value = proposalList.value.concat(data.rows)
+        }
+        pagination.loading = false
+      } catch (error) {
+        pagination.loading = false
       }
     }
 
@@ -76,11 +82,12 @@ export default defineComponent({
     return (
       <UCard title="PROPOSAL" class="mb-6">
         <UScrollList
+          class="max-h-100"
           triggered={this.pagination.loading}
           page={this.pagination.page}
           pageSize={this.pagination.pageSize}
           total={this.pagination.total}
-          onLoadMore={() => this.getProposalList(this.pagination.page)}
+          onLoadMore={() => this.getProposalList(this.pagination.page + 1)}
         >
           {this.proposalList.map(proposal => (
             <div>
