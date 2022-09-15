@@ -52,7 +52,7 @@ const StartupCard = defineComponent({
     }
 
     const wrapClass = props.miniCard
-      ? 'bg-white rounded-sm cursor-pointer py-4 mt-6 px-4 hover:bg-color-hover'
+      ? 'bg-white rounded-sm cursor-pointer py-4 px-4 hover:bg-color-hover'
       : 'bg-white rounded-sm cursor-pointer border-1 mb-6 px-6 py-6 hover:bg-color-hover'
 
     const skillTagShowLength = 3

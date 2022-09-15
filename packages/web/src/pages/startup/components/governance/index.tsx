@@ -82,7 +82,7 @@ export default defineComponent({
     return (
       <UCard title="PROPOSAL" class="mb-6">
         <UScrollList
-          class={['max-h-100 overflow-unset', styles.srollList]}
+          class={['max-h-100', styles.srollList]}
           triggered={this.pagination.loading}
           page={this.pagination.page}
           pageSize={this.pagination.pageSize}
@@ -92,7 +92,7 @@ export default defineComponent({
           {this.proposalList.map(proposal => (
             <div>
               <div
-                class="cursor-pointer pt-4 pb-1 rounded-[2px] hover:bg-[#F0F0F0] hover:w-[102%] hover:ml-[-1%] hover:pl-[1%] hover:pr-[1%]"
+                class="cursor-pointer pt-4 pb-1 px-4 rounded-[2px] hover:bg-[#F0F0F0]"
                 onClick={() => this.toProposalDetail(proposal.proposalId)}
               >
                 <ProposalCard proposalData={proposal} />
