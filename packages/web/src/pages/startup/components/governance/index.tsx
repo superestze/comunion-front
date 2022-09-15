@@ -37,6 +37,7 @@ export default defineComponent({
       })
 
       if (!error && data?.rows) {
+        pagination.total = data.totalRows
         proposalList.value = proposalList.value.concat(data.rows)
       }
     }

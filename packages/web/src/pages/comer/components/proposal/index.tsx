@@ -43,6 +43,7 @@ export default defineComponent({
       })
 
       if (!error && data?.rows) {
+        pagination.total = data.totalRows
         proposalList.value = proposalList.value.concat(data.rows)
       }
     }
@@ -77,6 +78,7 @@ export default defineComponent({
     return (
       <UCard title="PROPOSAL" class="mb-6">
         <UScrollList
+          class="max-h-70"
           triggered={this.pagination.loading}
           page={this.pagination.page}
           pageSize={this.pagination.pageSize}
