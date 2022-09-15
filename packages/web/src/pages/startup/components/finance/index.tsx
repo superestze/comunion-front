@@ -16,25 +16,25 @@ export default defineComponent({
       const findNet = allNetworks.find(network => network.chainId === props.startup?.launchNetwork)
       return [
         {
-          name: 'Launch Network:',
+          name: 'Launch Network ：',
           value: findNet ? findNet.name : '--'
         },
         {
-          name: 'Token Name:',
+          name: 'Token Name ：',
           value: props.startup?.tokenName || '--'
         },
         {
-          name: 'Token Symbol:',
+          name: 'Token Symbol ：',
           value: props.startup?.tokenSymbol || '--'
         },
         {
-          name: 'Token Supply:',
+          name: 'Token Supply ：',
           value: props.startup?.totalSupply
             ? Number(props.startup?.totalSupply).toLocaleString()
             : '--'
         },
         {
-          name: 'Token Concract:',
+          name: 'Token Concract ：',
           value: props.startup?.tokenContractAddress ? (
             <UAddress autoSlice address={props.startup?.tokenContractAddress} />
           ) : (
@@ -42,7 +42,7 @@ export default defineComponent({
           )
         },
         {
-          name: 'Presale:',
+          name: 'Presale ：',
           value:
             props.startup?.presaleStart && props.startup?.presaleEnd
               ? `${dayjs.utc(props.startup?.presaleStart).format('YYYY-MM-DD')} ~ ${dayjs
@@ -51,7 +51,7 @@ export default defineComponent({
               : '--'
         },
         {
-          name: 'Launch:',
+          name: 'Launch ：',
           value: props.startup?.launchDate
             ? dayjs.utc(props.startup?.launchDate).format('YYYY-MM-DD UTC')
             : '--'
@@ -78,18 +78,28 @@ export default defineComponent({
           {this.financeBasic.map(item => {
             return (
               <div class="flex mt-4  items-center">
-                <p class="max-w-1/2 text-grey3 w-38 u-body2">{item.name}</p>
-                <p class="text-primary2 overflow-hidden u-body2">{item.value}</p>
+                <p class="max-w-1/2 w-38 font-primary font-medium tracking-normal text-[14px]">
+                  {item.name}
+                </p>
+                <p
+                  class={`font-primary tracking-normal text-[14px] overflow-hidden text-color3 ${
+                    item.name.includes('Token Concract') ? 'text-color2' : ''
+                  }`}
+                >
+                  {item.value}
+                </p>
               </div>
             )
           })}
 
           <div class="bg-grey5 h-1px mt-6.5 w-full"></div>
           <div class="flex mt-5.5  items-center">
-            <p class="max-w-1/2 text-grey3 w-38 u-body2">Presale wallet：</p>
+            <p class="max-w-1/2 w-38 font-primary font-medium tracking-normal text-[14px]">
+              Presale wallet：
+            </p>
             <div class="overflow-hidden">
               {(this.wallets || []).map(item => {
-                return <UAddress class="text-primary u-body2" autoSlice address={item.value} />
+                return <UAddress class="font-primary text-color2" autoSlice address={item.value} />
               })}
             </div>
           </div>
