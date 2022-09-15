@@ -19,10 +19,7 @@ export const ProposalCard = defineComponent({
   },
   setup(props) {
     const router = useRouter()
-    const toComerDetail = (e: Event) => {
-      e.stopPropagation()
-      router.push({ path: '/comer', query: { id: props.proposalData.authorComerId } })
-    }
+
     const statusStyle = computed(() => {
       return GOVERNANCE_STATUS_STYLE[
         props.proposalData.status as keyof typeof GOVERNANCE_STATUS_STYLE
@@ -56,10 +53,12 @@ export const ProposalCard = defineComponent({
       }
       return null
     })
-
-    const handleCard = (id?: number) => () => {
-      console.log(id)
-      !!id && router.push(`/governance/${id}`)
+    const toComerDetail = (e: Event) => {
+      e.stopPropagation()
+      router.push({ path: '/comer', query: { id: props.proposalData.authorComerId } })
+    }
+    const handleCard = () => {
+      router.push(`/governance/${props.proposalData.proposalId}`)
     }
 
     return {
@@ -72,8 +71,8 @@ export const ProposalCard = defineComponent({
   render() {
     return (
       <div
-        class="bg-white border-color-border rounded-lg cursor-pointer flex mb-6 w-full py-6 px-10 hover:bg-color-hover"
-        onClick={this.handleCard(this.proposalData?.proposalId)}
+        class="bg-white rounded-sm cursor-pointer flex border-1 mb-6 py-6 px-6 hover:bg-color-hover"
+        onClick={() => this.handleCard()}
       >
         <div class="h-15 mr-4 w-15">
           <UStartupLogo src={this.proposalData.startupLogo || ''} width="15" height="15" />
@@ -81,8 +80,8 @@ export const ProposalCard = defineComponent({
         <div class="flex-1 truncate">
           <div class="flex items-center">
             <div>
-              <span class="mr-2 text-xs text-grey3">Linkedin by</span>
-              <span class="text-primary text-xs">
+              <span class="mr-2 text-xs text-color3">{this.proposalData.startupName} by</span>
+              <span class="text-xs text-color2" onClick={this.toComerDetail}>
                 {shortenAddress(this.proposalData.authorWalletAddress)}
               </span>
             </div>
@@ -95,7 +94,7 @@ export const ProposalCard = defineComponent({
               {GOVERNANCE_KEY[this.proposalData.status as keyof typeof GOVERNANCE_KEY]}
             </div>
           </div>
-          <div class="max-w-full my-2 truncate break-all u-title3">{this.proposalData.title}</div>
+          <div class="max-w-full mt-2 mb-1 truncate break-all u-h4">{this.proposalData.title}</div>
           {this.proposalData.description && (
             <div
               class="truncate break-all whitespace-pre-line u-body2 line-clamp-2"
