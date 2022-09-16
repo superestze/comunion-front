@@ -61,7 +61,9 @@ const CrowdfundingList = defineComponent({
     const router = useRouter()
 
     const toDetail = async (crowdfundingId: number, chainId: number) => {
-      const isSupport = await checkSupportNetwork(chainId)
+      const isSupport = await checkSupportNetwork(chainId, () => {
+        router.push('/crowdfunding/' + crowdfundingId)
+      })
       if (isSupport) {
         router.push('/crowdfunding/' + crowdfundingId)
       }
