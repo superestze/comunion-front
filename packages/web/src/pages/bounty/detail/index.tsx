@@ -136,7 +136,7 @@ export default defineComponent({
               )}
             </div>
             <UCard
-              title="PAYMENT"
+              title="payment"
               class="mb-6 !pb-8"
               v-slots={{
                 header: () => (
@@ -145,14 +145,14 @@ export default defineComponent({
                       <span class="mr-6 text-color2 u-h5">payment</span>
                       {this.bountySection.bountyPayment?.bountyPaymentInfo?.paymentMode === 1 ? (
                         <>
-                          <StageOutlined class="h-4 text-primary w-4" />
-                          <p class="text-primary ml-2 font-primary font-medium">stage</p>
+                          <StageOutlined class="h-4 w-4" />
+                          <p class="text-primary ml-2 font-medium">Stage</p>
                         </>
                       ) : (
                         <>
                           <PeriodOutlined class="h-4 text-primary w-4" />
-                          <p class="text-primary ml-2 font-primary font-medium">
-                            PERIOD:{' '}
+                          <p class="text-primary ml-2 font-medium">
+                            Period:{' '}
                             {getPeriodByType(
                               this.bountySection.bountyPayment?.periodTerms?.periodType || 1
                             )}

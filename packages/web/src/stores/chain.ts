@@ -85,7 +85,6 @@ export const useChainStore = defineStore('chain', {
           })
           ;(this.abiInfo as abiType)[snet.chainId] = obj
         })
-        console.log(this.abiInfo)
         this.supportedNetworks = supportNet
         // setTimeout(() => {
         //   this.supportedNetworks = supportNet
