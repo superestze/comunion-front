@@ -166,7 +166,7 @@ export const CrowdfundingCard = defineComponent({
             <div class="text-right text-color1 u-num2">{raiseState.value.raisePercent} %</div>
           </div>
           <div class="flex mt-3 justify-between u-h6">
-            <span class="text-color3">IBO Rate:</span>
+            <span class="text-color3">Rate:</span>
             <span class="text-right text-color1">
               1 {buyTokenSymbol.value} = {props.info.buyPrice} {sellTokenSymbol.value}
             </span>

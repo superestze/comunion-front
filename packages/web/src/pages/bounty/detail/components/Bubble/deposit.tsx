@@ -39,10 +39,10 @@ export default defineComponent({
           default: () => (
             <div class="flex flex-1 items-center">
               <div class="flex-1 mx-4">
-                <p class="font-primary font-semibold  mb-2 text-[16px] truncate">
+                <p class="font-primary font-semibold mb-2 text-[16px] truncate">
                   {this.depositInfo?.name}
                 </p>
-                <p class="text-grey3 u-num2">
+                <p class="text-grey3 u-num2 !font-400">
                   {format(this.depositInfo?.time || '', 'comunionTimeAgo')}
                 </p>
               </div>
