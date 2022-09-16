@@ -9,7 +9,7 @@
     box-shadow: 0 2px 4px rgb(23 39 51 / 11%);
 
     &__title {
-      @apply u-card-title2 text-primary1;
+      @apply u-card-title2 text-primary1 font-primary font-semibold text-[16px];
     }
 
     &__close {
