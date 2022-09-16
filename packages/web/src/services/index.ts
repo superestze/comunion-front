@@ -1140,6 +1140,10 @@ export const services = {
          * @description startup id
          */
         startupId: number
+        /**
+         * @description chain id
+         */
+        chainID: number
         logo: string
         /**
          * @description 标题
@@ -1465,6 +1469,7 @@ export const services = {
          * @description logo
          */
         bountyId: number
+        chainID: number
         applyCutoffDate: string
         /**
          * @description 上链状态
@@ -1563,6 +1568,7 @@ export const services = {
          * @description logo
          */
         bountyId: number
+        chainID: number
         applyCutoffDate: string
         startupId: number
         logo: string
@@ -1659,6 +1665,7 @@ export const services = {
          * @description logo
          */
         bountyId: number
+        chainID: number
         applyCutoffDate: string
         /**
          * @description 上链状态
@@ -1755,6 +1762,7 @@ export const services = {
          * @description logo
          */
         bountyId: number
+        chainID: number
         applyCutoffDate: string
         startupId: number
         logo: string
@@ -1846,6 +1854,7 @@ export const services = {
        */
       rows: {
         bountyId: number
+        chainID: number
         applyCutoffDate: string
         startupId: number
         logo: string
@@ -1939,7 +1948,9 @@ export const services = {
         poster: string
         chainId: number
         buyTokenAddress: string
+        buyTokenSymbol: string
         sellTokenAddress: string
+        sellTokenSymbol: string
       }[]
     >({
       url: replacePath('/account/comer/:comerID/participated-crowdfundings', args),
@@ -1978,7 +1989,9 @@ export const services = {
         poster: string
         chainId: number
         buyTokenAddress: string
+        buyTokenSymbol: string
         sellTokenAddress: string
+        sellTokenSymbol: string
       }[]
     >({
       url: replacePath('/account/comer/:comerID/posted-crowdfundings', args),
@@ -2102,7 +2115,9 @@ export const services = {
         status: number
         chainId: number
         buyTokenAddress: string
+        buyTokenSymbol: string
         sellTokenAddress: string
+        sellTokenSymbol: string
         startTime: string
         crowdfundingContract: string
         contractAudit: string
@@ -2323,7 +2338,9 @@ export const services = {
         chainId: number
         contractAudit?: string
         buyTokenAddress: string
+        buyTokenSymbol: string
         sellTokenAddress: string
+        sellTokenSymbol: string
       }[]
     }>({
       url: replacePath('/cores/crowdfundings', args),

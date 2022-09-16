@@ -1,7 +1,7 @@
 import { UBreadcrumb, UCard, USpin } from '@comunion/components'
 import { ethers } from 'ethers'
 import { defineComponent, onMounted, ref, computed } from 'vue'
-import { useRoute } from 'vue-router'
+import { useRoute, useRouter } from 'vue-router'
 import { CrowdfundingInfo } from './components/CrowdfundingInfo'
 import { IBORateHistory } from './components/IBORateHistory'
 import { Invest } from './components/Invest'
@@ -24,6 +24,7 @@ export type CoinType = {
 const CrowdfundingDetail = defineComponent({
   name: 'CrowdfundingDetail',
   setup(props) {
+    const router = useRouter()
     const route = useRoute()
     const walletStore = useWalletStore()
 
@@ -47,6 +48,12 @@ const CrowdfundingDetail = defineComponent({
         pageLoading.value = true
         const { error, data } = await services['startup@startup-get']({ startupId })
         if (!error) {
+          // The wallet switching chain operation on the details page will return to the list page
+          if (data.chainID != walletStore.chainId) {
+            router.push('/crowdfunding/list')
+            return
+          }
+
           startupInfo.value = {
             ...data,
             title: data.name,

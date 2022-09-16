@@ -68,10 +68,7 @@ export function useBountyFactoryContract(
   return {
     getContract: () => getContract({ ...getContractArgs.value, ...params }),
     createBounty: wrapTransaction({ ...getContractArgs.value, ...params }, 'createBounty'),
-    getDeployedBounties: wrapTransaction(
-      { ...getContractArgs.value, ...params },
-      'getDeployedBounties'
-    ),
+    getDeployedBounties: wrapTransaction({ ...getContractArgs.value, ...params }, 'children'),
     owner: wrapTransaction({ ...getContractArgs.value, ...params }, 'owner'),
     renounceOwnership: wrapTransaction(
       { ...getContractArgs.value, ...params },

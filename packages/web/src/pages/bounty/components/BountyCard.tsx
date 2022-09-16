@@ -6,6 +6,7 @@ import { defineComponent, PropType, reactive, onMounted, ref } from 'vue'
 import { useRouter } from 'vue-router'
 import { BOUNTY_TYPES_COLOR_MAP } from '@/constants'
 import { ServiceReturn, services } from '@/services'
+import { checkSupportNetwork } from '@/utils/wallet'
 
 type BountyType = NonNullable<ServiceReturn<'bounty@bounty-list(tab)'>>['rows']
 export default defineComponent({
@@ -47,8 +48,11 @@ export default defineComponent({
       return item.label === status
     })
 
-    const handleCard = (bountyId: number) => () => {
-      router.push(`/bounty/detail?bountyId=${bountyId}&from=0`)
+    const handleCard = (bountyId: number) => async () => {
+      const isSupport = await checkSupportNetwork(props.startup.chainID)
+      if (isSupport) {
+        router.push(`/bounty/detail?bountyId=${bountyId}&from=0`)
+      }
     }
 
     const wrapClass = props.miniCard

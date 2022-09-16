@@ -56,7 +56,6 @@ export const useBountyStore = defineStore('bounty', {
       const { error, data } = await services['bounty@bounty-get-detail']({ bountyID: id })
       if (!error) {
         this.detail = data
-        console.log(data)
         return data
       }
       return

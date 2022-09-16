@@ -6,6 +6,7 @@ import { CrowdfundingStatus } from '../utils'
 import { CROWDFUNDING_TYPES } from '@/constants'
 import { useErc20Contract, useCrowdfundingContract } from '@/contracts'
 import { ServiceReturn } from '@/services'
+import { useWalletStore } from '@/stores'
 import { getChainInfoByChainId } from '@/utils/etherscan'
 import { formatToFloor } from '@/utils/numberFormat'
 
@@ -23,6 +24,8 @@ export const CrowdfundingCard = defineComponent({
     }
   },
   setup(props, ctx) {
+    const walletStore = useWalletStore()
+    const chainID = walletStore.chainId
     const sellTokenSymbol = ref()
     const buyTokenSymbol = ref()
     const tokenContract = useErc20Contract()
@@ -43,12 +46,20 @@ export const CrowdfundingCard = defineComponent({
     })
 
     const getFundingState = async () => {
-      const fundingContractState = await fundingContract.state('', '')
-      raiseState.value.raiseGoal = Number(ethers.utils.formatEther(fundingContractState[0]))
-      raiseState.value.raiseAmount = Number(ethers.utils.formatEther(fundingContractState[1]))
-      raiseState.value.raisePercent =
-        Number(formatToFloor(raiseState.value.raiseAmount / raiseState.value.raiseGoal, 4)) * 100
-      raiseState.value.swapAmount = Number(ethers.utils.formatEther(fundingContractState[2]))
+      // console.log('props.info', props.info)
+      if (props.info.chainId == chainID) {
+        const fundingContractState = await fundingContract.state('', '')
+        raiseState.value.raiseGoal = Number(ethers.utils.formatEther(fundingContractState[0]))
+        raiseState.value.raiseAmount = Number(ethers.utils.formatEther(fundingContractState[1]))
+        raiseState.value.raisePercent =
+          Number(formatToFloor(raiseState.value.raiseAmount / raiseState.value.raiseGoal, 4)) * 100
+        raiseState.value.swapAmount = Number(ethers.utils.formatEther(fundingContractState[2]))
+      } else {
+        raiseState.value.raiseGoal = Number(props.info.raiseGoal)
+        raiseState.value.raiseAmount = Number(props.info.raiseBalance)
+        raiseState.value.raisePercent = Number(props.info.raisedPercent)
+        raiseState.value.swapAmount = Number(props.info.swapPercent)
+      }
     }
 
     const buyIsMainCoin = computed(() => {
@@ -56,14 +67,19 @@ export const CrowdfundingCard = defineComponent({
     })
     // get buy token and sell token
     const getTokenName = async () => {
-      const sellRes = await tokenContract(props.info.sellTokenAddress)
-      sellTokenSymbol.value = await sellRes.symbol()
+      if (props.info.chainId == chainID) {
+        const sellRes = await tokenContract(props.info.sellTokenAddress)
+        sellTokenSymbol.value = await sellRes.symbol()
 
-      if (buyIsMainCoin.value) {
-        buyTokenSymbol.value = getChainInfoByChainId(props.info.chainId)?.currencySymbol
+        if (buyIsMainCoin.value) {
+          buyTokenSymbol.value = getChainInfoByChainId(props.info.chainId)?.currencySymbol
+        } else {
+          const buyTokenRes = await tokenContract(props.info.buyTokenAddress)
+          buyTokenSymbol.value = await buyTokenRes.symbol()
+        }
       } else {
-        const buyTokenRes = await tokenContract(props.info.buyTokenAddress)
-        buyTokenSymbol.value = await buyTokenRes.symbol()
+        sellTokenSymbol.value = props.info.sellTokenSymbol
+        buyTokenSymbol.value = props.info.buyTokenSymbol
       }
     }
 
