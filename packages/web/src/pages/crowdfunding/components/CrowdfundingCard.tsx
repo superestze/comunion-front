@@ -5,14 +5,8 @@ import { defineComponent, PropType, computed, ref, onMounted } from 'vue'
 import { CrowdfundingStatus } from '../utils'
 import { CROWDFUNDING_TYPES } from '@/constants'
 import { useErc20Contract, useCrowdfundingContract } from '@/contracts'
-<<<<<<< HEAD
 import { useWalletStore } from '@/stores'
-<<<<<<< HEAD
-=======
->>>>>>> 7ad84c53 (feat(style): ✨ 🎨 update crowdfunding list style)
-=======
 import { CrowdfundingItem } from '@/types'
->>>>>>> 23ca32ad (feat(style): ✨ 🎨 update dashboard style3)
 import { getChainInfoByChainId } from '@/utils/etherscan'
 import { formatToFloor } from '@/utils/numberFormat'
 
@@ -172,7 +166,7 @@ export const CrowdfundingCard = defineComponent({
             <div class="text-right text-color1 u-num2">{raiseState.value.raisePercent} %</div>
           </div>
           <div class="flex mt-3 justify-between u-h6">
-            <span class="text-color3">Rate:</span>
+            <span class="text-color3">IBO Rate:</span>
             <span class="text-right text-color1">
               1 {buyTokenSymbol.value} = {props.info.buyPrice} {sellTokenSymbol.value}
             </span>
