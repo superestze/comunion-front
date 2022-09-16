@@ -172,7 +172,8 @@ const UStyleProvider = defineComponent({
       Card: {
         paddingHuge: '40px',
         borderRadius: '2px',
-        borderColor: props.colorBorder
+        borderColor: props.colorBorder,
+        paddingMedium: '24px'
       },
       InternalSelection: {
         borderHover: `1px solid transparent`,

@@ -1,17 +1,7 @@
 .u-card {
-  @apply p-4;
-
-  border-radius: 2px;
-
   .n-card-header {
-    @apply p-0 pb-[10px] !important;
-
     .n-card-header__main {
       @apply u-h5 !text-color2;
     }
-  }
-
-  .n-card__content {
-    @apply py-0 px-0;
   }
 }
