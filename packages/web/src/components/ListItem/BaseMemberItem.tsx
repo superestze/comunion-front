@@ -55,7 +55,7 @@ export default defineComponent({
       })
     }
     return (
-      <div class="cursor-default flex w-full py-2 px-4 items-center hover:bg-color-hover">
+      <div class="cursor-default flex w-full py-4 px-4 items-center hover:bg-color-hover">
         {typeof this.$slots.avatar === 'function' && this.$slots.avatar()}
         <div class="flex flex-1 px-4 items-center overflow-hidden">
           {typeof this.$slots.content === 'function' ? (

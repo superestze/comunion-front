@@ -120,10 +120,10 @@ export default defineComponent({
                           v-slots={{
                             avatar: () => (
                               <div
-                                class="cursor-pointer flex h-9 w-9 items-center overflow-hidden"
+                                class="cursor-pointer flex h-11 w-11 items-center overflow-hidden"
                                 onClick={() => this.$router.push(`/startup/${item.startupId}`)}
                               >
-                                <UStartupLogo src={item.startupLogo} width="9" height="9" />
+                                <UStartupLogo src={item.startupLogo} width="11" height="11" />
                               </div>
                             )
                           }}
@@ -165,12 +165,12 @@ export default defineComponent({
                           v-slots={{
                             avatar: () => (
                               <div
-                                class="cursor-pointer flex h-9 w-9 "
+                                class="cursor-pointer flex h-11 w-11 "
                                 onClick={() =>
                                   this.$router.push({ path: '/comer', query: { id: item.comerId } })
                                 }
                               >
-                                <UStartupLogo src={item.comerAvatar} width="9" height="9" />
+                                <UStartupLogo src={item.comerAvatar} width="11" height="11" />
                               </div>
                             )
                           }}
@@ -210,12 +210,12 @@ export default defineComponent({
                           v-slots={{
                             avatar: () => (
                               <div
-                                class="cursor-pointer flex h-9 w-9 items-center overflow-hidden"
+                                class="cursor-pointer flex h-11 w-11 items-center overflow-hidden"
                                 onClick={() =>
                                   this.$router.push({ path: '/comer', query: { id: item.comerId } })
                                 }
                               >
-                                <UStartupLogo src={item.comerAvatar} width="9" height="9" />
+                                <UStartupLogo src={item.comerAvatar} width="11" height="11" />
                               </div>
                             )
                           }}
