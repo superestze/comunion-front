@@ -1,4 +1,4 @@
-import { UDropdownFilter, USpin } from '@comunion/components'
+import { UDropdownFilter, USpin, UTab, UTabs } from '@comunion/components'
 import { debounce } from '@comunion/utils'
 import {
   defineComponent,
@@ -107,12 +107,22 @@ const BountyPage = defineComponent({
       document.removeEventListener('scroll', scrollHandler)
     })
 
+    const tabsChange = (tabName: string) => {
+      console.log(tabName)
+      return false
+    }
+
     return () => (
       <USpin show={pagination.loading}>
         <div class="mt-8 mb-16">
           <div class="flex mb-6">
             <div class="flex-1">
-              {/* <h3 class="text-grey1 u-h3">{pagination.total?.toLocaleString()} Bounties available</h3> */}
+              <UTabs onBeforeLeave={tabsChange} class="no-border">
+                <UTab name="CREATED">CREATED</UTab>
+                <UTab name="PARTICIPATED" disabled>
+                  <span class=" text-color3">PARTICIPATED</span>
+                </UTab>
+              </UTabs>
             </div>
             <UDropdownFilter
               options={BOUNTY_TYPES.map(item => ({ label: item, value: item }))}

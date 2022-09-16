@@ -43,10 +43,10 @@
   }
 
   &-placeholder {
-    @apply bg-grey5 inline-block overflow-hidden;
+    @apply bg-color3 inline-block overflow-hidden;
 
     &.failed {
-      @apply bg-grey4 text-white inline-flex items-center justify-center;
+      @apply bg-color3 text-white inline-flex items-center justify-center;
     }
   }
 }
