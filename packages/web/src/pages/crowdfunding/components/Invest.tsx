@@ -424,14 +424,22 @@ export const Invest = defineComponent({
       console.log('maxSell.value==>', maxSell.value)
     }
 
+    const chainID = walletStore.chainId
     const getFundingState = async () => {
-      fundingContractState.value = await fundingContract.state('', '')
-      raiseState.value.raiseGoal = Number(ethers.utils.formatEther(fundingContractState.value[0]))
-      raiseState.value.raiseAmount = Number(ethers.utils.formatEther(fundingContractState.value[1]))
-      raiseState.value.raisePercent =
-        Number(formatToFloor(raiseState.value.raiseAmount / raiseState.value.raiseGoal, 4)) * 100
-      raiseState.value.swapAmount = Number(ethers.utils.formatEther(fundingContractState.value[2]))
-      console.log('fundingContractState.value===>', fundingContractState.value)
+      // console.log('props.info', props.info)
+      if (props.info.chainId == chainID) {
+        const fundingContractState = await fundingContract.state('', '')
+        raiseState.value.raiseGoal = Number(ethers.utils.formatEther(fundingContractState[0]))
+        raiseState.value.raiseAmount = Number(ethers.utils.formatEther(fundingContractState[1]))
+        raiseState.value.raisePercent =
+          Number(formatToFloor(raiseState.value.raiseAmount / raiseState.value.raiseGoal, 4)) * 100
+        raiseState.value.swapAmount = Number(ethers.utils.formatEther(fundingContractState[2]))
+      } else {
+        raiseState.value.raiseGoal = Number(props.info.raiseGoal)
+        raiseState.value.raiseAmount = Number(props.info.raiseBalance)
+        raiseState.value.raisePercent = Number(props.info.raisedPercent)
+        raiseState.value.swapAmount = Number(props.info.swapPercent)
+      }
     }
 
     onMounted(() => {
