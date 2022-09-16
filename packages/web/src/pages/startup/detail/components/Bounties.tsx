@@ -121,15 +121,9 @@ const BountiesCard = defineComponent({
             </div>
             <div class="flex">
               <div class="mt-3">
-<<<<<<< fix/multi-chain-switch
-                <span class="u-body2 text-grey2">Deposit requirements：</span>
-                <span class="u-card-title2 text-warning">
-                  {props.startup.depositRequirements} {props.startup.depositTokenSymbol}
-=======
                 <span class="text-grey2 u-body2">Deposit requirements：</span>
                 <span class="text-warning u-card-title2">
-                  {props.startup.depositRequirements} USDC
->>>>>>> develop
+                  {props.startup.depositRequirements} {props.startup.depositTokenSymbol}
                 </span>
               </div>
               <div class="flex-1"></div>
