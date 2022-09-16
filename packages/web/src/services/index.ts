@@ -1112,84 +1112,29 @@ export const services = {
     }
   ) {
     return requestAdapter<{
-      /**
-       * @description 每页记录数
-       */
-      limit: number
-      /**
-       * @description 当前页
-       */
-      page: number
-      /**
-       * @description 总记录数
-       */
-      totalRows: number
-      /**
-       * @description 总页数
-       */
-      totalPages: number
-      /**
-       * @description 记录列表
-       */
+      limit?: number
+      page?: number
+      sort?: string
+      totalRows?: number
+      totalPages?: number
       rows: {
-        /**
-         * @description bountyId
-         */
         bountyId: number
-        /**
-         * @description startup id
-         */
         startupId: number
-        /**
-         * @description chain id
-         */
         chainID: number
         logo: string
-        /**
-         * @description 标题
-         */
         title: string
-        /**
-         * @description 状态
-         */
         status: string
-        /**
-         * @description 支付方式
-         */
+        onChainStatus: string
         paymentType: string
-        /**
-         * @description 创建时间
-         */
-        createdTime: number
-        /**
-         * @description 申请截止日期
-         */
         applyCutoffDate: string
-        /**
-         * @description 报酬
-         */
-        rewards?: {
-          /**
-           * @description 币类型:uvu,其他
-           */
+        createdTime: string
+        rewards: {
           tokenSymbol: string
-          /**
-           * @description 总额
-           */
-          amount: string
+          amount: number
         }[]
-        /**
-         * @description 申请人数
-         */
         applicantCount: number
-        /**
-         * @description 押金要求
-         */
-        depositRequirements: number
-        /**
-         * @description 技能要求
-         */
         applicationSkills: string[]
+        depositRequirements: number
       }[]
     }>({
       url: replacePath('/cores/bounties', args),
@@ -1492,7 +1437,7 @@ export const services = {
         /**
          * @description 创建时间
          */
-        createdTime: number
+        createdTime: string
         /**
          * @description 报酬
          */
@@ -1504,7 +1449,7 @@ export const services = {
           /**
            * @description 总额
            */
-          amount: string
+          amount: number
         }[]
         /**
          * @description 申请人数
@@ -1587,7 +1532,7 @@ export const services = {
         /**
          * @description 创建时间
          */
-        createdTime: number
+        createdTime: string
         /**
          * @description 报酬
          */
@@ -1599,7 +1544,7 @@ export const services = {
           /**
            * @description 总额
            */
-          amount: string
+          amount: number
         }[]
         /**
          * @description 申请人数
@@ -1688,7 +1633,7 @@ export const services = {
         /**
          * @description 创建时间
          */
-        createdTime: number
+        createdTime: string
         /**
          * @description 报酬
          */
@@ -1700,7 +1645,7 @@ export const services = {
           /**
            * @description 总额
            */
-          amount: string
+          amount: number
         }[]
         /**
          * @description 申请人数
@@ -1781,7 +1726,7 @@ export const services = {
         /**
          * @description 创建时间
          */
-        createdTime: number
+        createdTime: string
         /**
          * @description 报酬
          */
@@ -1793,7 +1738,7 @@ export const services = {
           /**
            * @description 总额
            */
-          amount: string
+          amount: number
         }[]
         /**
          * @description 申请人数
@@ -1873,7 +1818,7 @@ export const services = {
         /**
          * @description 创建时间
          */
-        createdTime: number
+        createdTime: string
         /**
          * @description 报酬
          */
@@ -1885,7 +1830,7 @@ export const services = {
           /**
            * @description 总额
            */
-          amount: string
+          amount: number
         }[]
         /**
          * @description 申请人数
@@ -1936,21 +1881,24 @@ export const services = {
         comerId: number
         startupName: string
         endTime: string
-        raiseBalance: number
-        raisedPercent: number
+        raiseBalance: string
+        raisedPercent: string
         status: number
         startTime: string
         startupLogo: string
         crowdfundingContract: string
-        raiseGoal: number
-        buyPrice: number
-        swapPercent: number
+        raiseGoal: string
+        buyPrice: string
+        swapPercent: string
         poster: string
         chainId: number
         buyTokenAddress: string
         buyTokenSymbol: string
         sellTokenAddress: string
         sellTokenSymbol: string
+        kyc?: string
+        contractAudit?: string
+        buyTokenAmount?: number
       }[]
     >({
       url: replacePath('/account/comer/:comerID/participated-crowdfundings', args),
@@ -1977,21 +1925,24 @@ export const services = {
         comerId: number
         startupName: string
         endTime: string
-        raiseBalance: number
-        raisedPercent: number
+        raiseBalance: string
+        raisedPercent: string
         status: number
         startTime: string
         startupLogo: string
         crowdfundingContract: string
-        raiseGoal: number
-        buyPrice: number
-        swapPercent: number
+        raiseGoal: string
+        buyPrice: string
+        swapPercent: string
         poster: string
         chainId: number
         buyTokenAddress: string
         buyTokenSymbol: string
         sellTokenAddress: string
         sellTokenSymbol: string
+        kyc?: string
+        contractAudit?: string
+        buyTokenAmount?: number
       }[]
     >({
       url: replacePath('/account/comer/:comerID/posted-crowdfundings', args),
@@ -2106,11 +2057,11 @@ export const services = {
         comerId: number
         startupName: string
         endTime: string
-        raiseBalance: number
-        raiseGoal: number
-        raisedPercent: number
-        buyPrice: number
-        swapPercent: number
+        raiseBalance: string
+        raiseGoal: string
+        raisedPercent: string
+        buyPrice: string
+        swapPercent: string
         poster: string
         status: number
         chainId: number
@@ -2122,6 +2073,8 @@ export const services = {
         crowdfundingContract: string
         contractAudit: string
         kyc: string
+        startupLogo: string
+        buyTokenAmount: number
       }[]
     >({
       url: replacePath('/cores/crowdfundings/startup/:startupId', args),
@@ -2312,35 +2265,35 @@ export const services = {
     keyword?: string
   }) {
     return requestAdapter<{
-      limit: number
-      page: number
-      totalPages: number
-      totalRows: number
-      rows: {
+      limit?: number
+      page?: number
+      sort?: string
+      totalRows?: number
+      totalPages?: number
+      rows?: {
         crowdfundingId: number
-        /**
-         * @description 合约地址
-         */
-        crowdfundingContract: string
         startupId: number
         comerId: number
         startupName: string
+        startupLogo: string
         startTime: string
         endTime: string
-        raiseBalance: number
-        raiseGoal: number
-        raisedPercent: number
-        buyPrice: number
-        swapPercent: number
+        raiseBalance: string
+        raiseGoal: string
+        raisedPercent: string
+        buyPrice: string
+        swapPercent: string
         poster: string
         status: number
-        kyc?: string
+        crowdfundingContract: string
         chainId: number
-        contractAudit?: string
-        buyTokenAddress: string
-        buyTokenSymbol: string
+        kyc: string
+        contractAudit: string
         sellTokenAddress: string
         sellTokenSymbol: string
+        buyTokenAddress: string
+        buyTokenSymbol: string
+        buyTokenAmount: any
       }[]
     }>({
       url: replacePath('/cores/crowdfundings', args),

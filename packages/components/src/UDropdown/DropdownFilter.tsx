@@ -13,7 +13,7 @@ const UDropdownFilter = defineComponent({
     return () => (
       <NSelect
         {...props}
-        class="u-dropdown-filter"
+        class="rounded-sm cursor-pointer u-dropdown-filter hover:bg-color-hover"
         placeholder={props.placeholder || 'Select'}
         menuProps={{
           class: 'u-dropdown-filter__menu'

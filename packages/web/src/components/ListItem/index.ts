@@ -1,1 +1,1 @@
-export { default as BasicItem } from './basic'
+export { default as BasicItem } from './BaseMemberItem'

@@ -22,8 +22,8 @@ import { checkSupportNetwork } from '@/utils/wallet'
 const CrowdfundingList = defineComponent({
   name: 'CrowdfundingList',
   setup() {
-    const startupType = ref<string | undefined>(undefined)
-    const inputMember = ref<string>('')
+    const searchType = ref<string | undefined>(undefined)
+    const searchInput = ref<string>('')
     const pagination = reactive<{
       pageSize: number
       total: number
@@ -42,10 +42,10 @@ const CrowdfundingList = defineComponent({
         limit: pagination.pageSize,
         page: pagination.page,
         mode:
-          startupType.value !== undefined
-            ? CROWDFUNDING_TYPES.indexOf(startupType.value as CrowdfundingType) + 1
+          searchType.value !== undefined
+            ? CROWDFUNDING_TYPES.indexOf(searchType.value as CrowdfundingType) + 1
             : undefined,
-        keyword: inputMember.value
+        keyword: searchInput.value
       })
       if (!error) {
         if (reload) {
@@ -54,7 +54,7 @@ const CrowdfundingList = defineComponent({
           dataList.value.push(...(data?.rows || []))
         }
 
-        pagination.total = data!.totalRows
+        pagination.total = data!.totalRows || 0
       }
     }
 
@@ -76,12 +76,12 @@ const CrowdfundingList = defineComponent({
     const debounceLoad = debounce(onLoadMore)
 
     watch(
-      () => startupType.value,
+      () => searchType.value,
       () => debounceLoad(1, true)
     )
 
     watch(
-      () => inputMember.value,
+      () => searchInput.value,
       () => debounceLoad(1, true)
     )
 
@@ -129,15 +129,15 @@ const CrowdfundingList = defineComponent({
               placeholder="All Status"
               class="rounded mr-4 w-28"
               clearable
-              v-model:value={startupType.value}
+              v-model:value={searchType.value}
             />
             <SearchInput
-              v-model:value={inputMember.value}
+              v-model:value={searchInput.value}
               placeholder="Search"
               loading={pagination.loading}
             />
           </div>
-          <div class="grid pb-6 gap-8 grid-cols-1 md:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4">
+          <div class="grid pb-6 gap-6 grid-cols-1 md:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4">
             {dataList.value.map(crowdfunding => (
               <CrowdfundingCard
                 key={crowdfunding.crowdfundingId}

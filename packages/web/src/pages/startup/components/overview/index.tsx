@@ -36,10 +36,10 @@ export default defineComponent({
     return (
       <>
         {this.content.trim() === '' ? null : (
-          <UCard title="OVERVIEW" class="mb-6">
+          <UCard title="Overview" class="mb-6">
             <div
               class="transition-all ease-linear duration-1000 overflow-hidden relative"
-              style={{ height: this.fold ? '162px' : 'auto' }}
+              style={{ height: 'auto' }}
             >
               <p
                 class="text-color2 text-[14px] font-primary font-semibold mt-4.5"

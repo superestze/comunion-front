@@ -247,25 +247,25 @@ export default defineComponent({
             }}
           />
         </div>
-        <div class="mt-16 mb-10">
-          <div class="text-primary1 u-card-title1">TERMS</div>
+        <div class="flex justify-between mt-10 mb-6">
+          <div class="text-color3 font-primary font-medium">Terms</div>
           {this.payMode === 'stage' && (
-            <div class="mt-2 ">
-              <span class="text-grey3 text-16px">Total Stage: </span>
-              <span class="text-primary text-16px">{this.stageTerms.length}</span>
+            <div class="mt-2 text-3">
+              <span class="text-grey3 font-primary">Total Stage: </span>
+              <span class="text-primary2 ">{this.stageTerms.length}</span>
             </div>
           )}
 
           {this.payMode === 'period' && (
-            <div class="mt-2 ">
-              <span class="text-grey3 text-16px">Total Period: </span>
-              <span class="text-primary text-16px">
+            <div class="mt-2 text-3">
+              <span class="text-grey3 font-primary">Total Period: </span>
+              <span class="text-primary2">
                 {`${this.periodTerms.length} ${
                   this.periodTerms.length > 1 ? pluralize(periodType) : periodType
                 }`}
               </span>
-              <span class="ml-10 text-grey3 text-16px">Daily working: </span>
-              <span class="text-primary text-16px">
+              <span class="ml-10 text-grey3 font-primary">Daily working: </span>
+              <span class="text-primary2">
                 {`${this.paymentInfo?.periodTerms?.hoursPerDay || 0} ${
                   (this.paymentInfo?.periodTerms?.hoursPerDay || 0) > 1 ? pluralize('Hour') : 'Hour'
                 }`}

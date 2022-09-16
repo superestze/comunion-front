@@ -119,7 +119,11 @@ export default defineComponent({
     return (
       <UModal show={this.visible}>
         <UCard
-          style="width: 600px"
+          style={{
+            width: '600px',
+            '--n-title-text-color': '#000000',
+            '--n-close-icon-color': '#5331F4'
+          }}
           title="Post update"
           bordered={false}
           size="huge"

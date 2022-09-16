@@ -127,7 +127,7 @@ export default defineComponent({
 
         <div class="flex mb-20 gap-6">
           <div class="overflow-hidden basis-2/3">
-            <div class="bg-white border rounded-lg mb-6 p-10">
+            <div class="bg-white border rounded-[2px] mb-6 p-6">
               {this.bountySection.detail && (
                 <BountyCard
                   bountyExpired={this.bountyExpired}
@@ -136,23 +136,23 @@ export default defineComponent({
               )}
             </div>
             <UCard
-              title="PAYMENT"
+              title="payment"
               class="mb-6 !pb-8"
               v-slots={{
                 header: () => (
                   <div class="flex justify-between">
                     <p class="flex items-center">
-                      <span class="mr-6 text-[#3F2D99] u-card-title1">PAYMENT</span>
+                      <span class="mr-6 text-color2 u-h5">payment</span>
                       {this.bountySection.bountyPayment?.bountyPaymentInfo?.paymentMode === 1 ? (
                         <>
-                          <StageOutlined class="h-5 text-primary w-5" />
-                          <p class=" text-primary ml-2 u-label2">STAGE</p>
+                          <StageOutlined class="h-4 w-4" />
+                          <p class="font-medium text-primary ml-2">Stage</p>
                         </>
                       ) : (
                         <>
-                          <PeriodOutlined class="h-5 text-primary w-5" />
-                          <p class=" text-primary ml-2 u-label2">
-                            PERIOD:{' '}
+                          <PeriodOutlined class="h-4 text-primary w-4" />
+                          <p class="font-medium text-primary ml-2">
+                            Period:{' '}
                             {getPeriodByType(
                               this.bountySection.bountyPayment?.periodTerms?.periodType || 1
                             )}
@@ -160,9 +160,9 @@ export default defineComponent({
                         </>
                       )}
                     </p>
-                    <div class="flex  bg-[rgba(83,49,244,0.06)] rounded-4xl h-8 px-4 items-center">
-                      <img src={this.chainInfo?.logo} class="h-5 w-5" />{' '}
-                      <span class="font-opensans font-600 ml-2 tracking-normal text-[#3F2D99] text-16px">
+                    <div class="flex items-center">
+                      <img src={this.chainInfo?.logo} class="h-4 w-4" />{' '}
+                      <span class="font-thin font-primary ml-2 tracking-normal text-color2">
                         {this.chainInfo?.name}
                       </span>
                     </div>
@@ -179,7 +179,7 @@ export default defineComponent({
               )}
             </UCard>
             <UCard
-              title="ACTIVITIES"
+              title="Activities"
               class="mb-6"
               v-slots={{
                 'header-extra': () => {
@@ -207,13 +207,13 @@ export default defineComponent({
                           {/* just applicant show countdown tips */}
                           {this.bountyContractInfo.role !== USER_ROLE.FOUNDER &&
                             (this.gapValue >= 0 ? (
-                              <p class="flex mr-4 text-grey3 items-center u-body3">
+                              <p class="flex mr-4 text-grey3 items-center ">
                                 Founder can unlock after
-                                <span class="mx-1 text-parimary">{this.gapValue}</span>
+                                <span class="mx-1 text-primary">{this.gapValue}</span>
                                 {this.gapValue > 1 ? `${pluralize(this.gapUnit)}` : this.gapUnit}
                               </p>
                             ) : (
-                              <p class="flex text-error mr-4 items-center u-body3">
+                              <p class="flex text-error mr-4 items-center">
                                 Founder can already unlock deposits
                               </p>
                             ))}
@@ -233,7 +233,7 @@ export default defineComponent({
                 </>
               )}
             </UCard>
-            <UCard title="APPLICANTS">
+            <UCard title="Applicants">
               {this.bountySection.applicantsList && this.bountySection.applicantsList.length > 0 && (
                 <>
                   {this.bountySection.applicantsList.map(applicant => (
@@ -247,10 +247,10 @@ export default defineComponent({
             </UCard>
           </div>
           <div class="overflow-hidden basis-1/3">
-            <div class="bg-white border rounded-lg mb-6 p-10">
+            <div class="bg-white border rounded-[2px] mb-6 p-6">
               {this.bountySection.startup && <StartupCard startup={this.bountySection.startup} />}
             </div>
-            <UCard title="FOUNDER" class="mb-6">
+            <UCard title="Founder" class="mb-6">
               {this.bountySection.founder && (
                 <PersonalCard
                   profile={this.bountySection.founder}
@@ -268,7 +268,7 @@ export default defineComponent({
               )}
             </UCard>
             <UCard
-              title="APPROVED"
+              title="Approved"
               class="mb-6"
               // v-slots={{
               //   'header-extra': () => (
@@ -295,12 +295,12 @@ export default defineComponent({
                 />
               )}
             </UCard>
-            <UCard title="DEPOSIT RECORDS">
+            <UCard title="Deposit records">
               {this.bountySection.depositRecords && this.bountySection.depositRecords.length > 0 && (
                 <>
                   {this.bountySection.depositRecords.map((item, index) => (
                     <DepositBubble
-                      class={`mb-6 ${index === 0 && 'mt-10'}`}
+                      class={`mb-4 ${index === 0 && 'mt-6'}`}
                       depositInfo={item}
                       key={item.name}
                     />

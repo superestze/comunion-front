@@ -2,14 +2,14 @@
   @apply flex flex-wrap;
 
   &-item {
-    @apply flex u-label2 my-2;
+    @apply flex my-2 u-label2;
 
     &__label {
-      @apply text-grey3 flex-shrink-0;
+      @apply flex-shrink-0 text-color2;
     }
 
     &__content {
-      @apply u-title2 text-primary2 flex-shrink-0 flex-1 overflow-ellipsis;
+      @apply flex-shrink-0 flex-1 text-primary2 overflow-ellipsis u-title2;
     }
   }
 }

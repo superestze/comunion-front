@@ -55,42 +55,39 @@ export default defineComponent({
       })
     }
     return (
-      <div class="flex w-full items-center flex-shrink-0 hover:bg-[#F0F0F0] hover:w-[105%] hover:ml-[-2.5%] hover:pl-2.25 hover:pr-2.25">
-        <div class="flex h-full flex-shrink-0 mt-2px items-center justify-center">
-          {typeof this.$slots.avatar === 'function' && this.$slots.avatar()}
-        </div>
-        <div class="flex flex-1 h-15 ml-4 items-center overflow-hidden">
+      <div class="rounded-sm cursor-default flex w-full py-4 px-4 items-center hover:bg-color-hover">
+        {typeof this.$slots.avatar === 'function' && this.$slots.avatar()}
+        <div class="flex flex-1 px-4 items-center overflow-hidden">
           {typeof this.$slots.content === 'function' ? (
             this.$slots.content()
           ) : (
-            <div title={this.item[this.keyMap.name]} class="flex-1 text-grey1 truncate u-title3 ">
+            <div title={this.item[this.keyMap.name]} class="flex-1 text-color1 truncate u-h3 ">
               {this.item[this.keyMap.name]}
             </div>
           )}
-          {this.connect ? (
-            <UButton
-              class="flex flex-shrink-0 u-h7 text-color2"
-              size="tiny"
-              text
-              disabled={this.disabled}
-              onClick={handleUnconnect}
-            >
-              {/* <CheckFilled class="mr-2" /> */}
-              Unconnect
-            </UButton>
-          ) : (
-            <UButton
-              class="flex flex-shrink-0 u-h7 text-color2"
-              size="tiny"
-              text
-              disabled={this.disabled}
-              onClick={handleConnect}
-            >
-              {/* <PlusOutlined class="h-4 mr-2 w-4" /> */}
-              Connect
-            </UButton>
-          )}
         </div>
+        {this.connect ? (
+          <UButton
+            class="flex flex-shrink-0 text-color2 u-h7"
+            size="tiny"
+            text
+            disabled={this.disabled}
+            onClick={handleUnconnect}
+          >
+            {/* <CheckFilled class="mr-2" /> */}
+            Unconnect
+          </UButton>
+        ) : (
+          <UButton
+            class="flex flex-shrink-0 text-color2 u-h7"
+            size="tiny"
+            text
+            disabled={this.disabled}
+            onClick={handleConnect}
+          >
+            Connect
+          </UButton>
+        )}
       </div>
     )
   }

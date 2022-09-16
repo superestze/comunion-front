@@ -77,6 +77,7 @@ const CreateBountyBlock = defineComponent({
   render() {
     return (
       <UDrawer
+        style={{}}
         title="Create Bounty"
         maskClosable={false}
         v-model:show={this.visible}
