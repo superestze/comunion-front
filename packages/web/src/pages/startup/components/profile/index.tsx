@@ -113,7 +113,7 @@ export default defineComponent({
         .finally(() => (this.loading = false))
     }
     return (
-      <div class="bg-white border rounded-lg mb-6  overflow-hidden">
+      <div class="bg-white border rounded-[2px] mb-6  overflow-hidden">
         <div class="h-13.125rem overflow-hidden">
           <img
             src={this.startupInfo?.cover || defaultCover}

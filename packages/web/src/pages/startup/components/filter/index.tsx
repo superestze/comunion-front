@@ -34,7 +34,7 @@ export default defineComponent({
       this.$emit('selectedTagChange', selectedList)
     }
     return (
-      <div class="bg-white border rounded-lg mb-6 p-6 relative overflow-hidden">
+      <div class="bg-white border rounded-[2px] mb-6 p-6 relative overflow-hidden">
         <ModuleTags tasks={this.tasks} onSelectedChange={handleSelectedChange} />
       </div>
     )
