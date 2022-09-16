@@ -9,10 +9,6 @@
         @apply u-h4;
       }
     }
-
-    .n-tabs-tab--active > .n-tabs-tab__label {
-      @apply u-h4 !text-primary;
-    }
   }
 }
 

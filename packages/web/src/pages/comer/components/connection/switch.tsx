@@ -25,15 +25,15 @@ export default defineComponent({
     const tabList = computed(() => {
       return props.tabs.map(tab => {
         let str =
-          'w-1/3 flex w-30 flex-col justify-center text-14px font-bold text-center cursor-pointer flex-grow'
+          'w-1/3 flex flex-col border-b-1 justify-center u-h4 text-center cursor-pointer flex-grow'
         if (tab.id === currentTabId.value) {
-          str += ' text-primary pb-4 border-primary'
+          str += ' text-primary pb-4 border-b-2 border-primary'
           return {
             ...tab,
             class: str
           }
         }
-        str += ' text-primary1 pb-4 border-grey5'
+        str += ' text-primary1 pb-4 border-color-border'
         return {
           ...tab,
           class: str
@@ -55,12 +55,7 @@ export default defineComponent({
       <div class="flex">
         {this.tabList.map(tab => {
           return (
-            <p
-              class={tab.class}
-              style={{ 'border-bottom-width': '1px' }}
-              onClick={switchTab(tab.id)}
-              key={tab.id}
-            >
+            <p class={tab.class} onClick={switchTab(tab.id)} key={tab.id}>
               <p>{tab.title}</p>
               <p class="mt-1">{tab.subTitle}</p>
             </p>

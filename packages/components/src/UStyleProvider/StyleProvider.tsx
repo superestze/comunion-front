@@ -173,11 +173,16 @@ const UStyleProvider = defineComponent({
         paddingHuge: '40px',
         borderRadius: '2px',
         borderColor: props.colorBorder,
-        paddingMedium: '24px'
+        paddingMedium: '24px',
+        titleTextColor: props.color2
       },
       InternalSelection: {
         borderHover: `1px solid transparent`,
         placeholderColor: props.color2
+      },
+      Tabs: {
+        tabTextColorActiveBar: props.primaryColor,
+        tabTextColorBar: props.color3
       }
     }))
 
