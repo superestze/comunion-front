@@ -65,8 +65,8 @@ export default defineComponent({
   render() {
     return (
       <div class="flex">
-        <div class="max-w-1/2 text-[#9F9F9F] w-42 u-body2">{this.label}</div>
-        <div class="flex-1 overflow-hidden">
+        <div class="max-w-1/2 text-color1 font-primary w-42 ">{this.label}</div>
+        <div class="flex-1 overflow-hidden font-primary">
           {this.foldAble ? (
             <UScrollbar style={{ maxHeight: `${this.maxHeight}px` }}>
               <p
