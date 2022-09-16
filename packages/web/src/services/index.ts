@@ -1187,6 +1187,10 @@ export const services = {
          */
         depositRequirements: number
         /**
+         * @description 押金token symbol
+         */
+        depositTokenSymbol: number
+        /**
          * @description 技能要求
          */
         applicationSkills: string[]

@@ -87,12 +87,12 @@ const PayDetailStage = defineComponent({
         value: label
       }
     })
-
+    const token1Symbol = ref<string>(props.bountyInfo.token1Symbol)
     const renderSelect = computed(() => (
       <USelect
         class="text-center w-30"
         options={token1SymbolOptions}
-        v-model:value={props.bountyInfo.token1Symbol}
+        v-model:value={token1Symbol.value}
       />
     ))
 

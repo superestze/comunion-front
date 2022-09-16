@@ -11,6 +11,7 @@ import Deposit from './components/Deposit'
 import PayDetailPeriod, { PayDetailPeriodRef } from './components/PayDetailPeriod'
 import PayDetailStage, { PayDetailStageRef } from './components/PayDetailStage'
 import { BountyInfo, chainInfoType } from './typing'
+import { getBuyCoinAddress } from '@/blocks/Crowdfunding/utils'
 import Steps from '@/components/Step'
 import { useBountyFactoryContract, useErc20Contract } from '@/contracts'
 import { BountyFactoryAddresses as bountyFactoryAddresses } from '@/contracts/bountyFactory'
@@ -40,6 +41,8 @@ const CreateBountyForm = defineComponent({
       chainID: undefined,
       onChain: false
     })
+    const tokens = getBuyCoinAddress('0x0')
+    const token1Symbol = tokens[walletStore.chainId!][1].label || 'USDC'
     const bountyInfoRef = ref<BountyInfo>({
       current: 1,
       startupID: undefined,
@@ -51,7 +54,7 @@ const CreateBountyForm = defineComponent({
       applicantsDeposit: 0,
       description: '',
       payDetailType: 'stage',
-      token1Symbol: 'USDC',
+      token1Symbol: token1Symbol,
       token2Symbol: '',
       stages: [{ token1Amount: 0, token2Amount: 0, terms: '' }],
       period: {

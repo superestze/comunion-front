@@ -146,7 +146,8 @@ export default defineComponent({
           </div>
           <span class="font-primary text-color3">Deposit：</span>
           <span class="font-primary text-color1  truncate">
-            <span class="font-primary font-semibold">{props.startup.depositRequirements}</span> USDC
+            <span class="font-primary font-semibold">{props.startup.depositRequirements}</span>{' '}
+            {props.startup.depositTokenSymbol}
           </span>
         </div>
       </div>

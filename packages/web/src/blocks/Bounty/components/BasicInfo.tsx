@@ -278,7 +278,7 @@ const BountyBasicInfo = defineComponent({
                   return Number(value)
                 }
               }}
-              renderUnit={() => renderUnit('USDC')}
+              renderUnit={() => renderUnit(props.bountyInfo.token1Symbol)}
             />
           )
         }
