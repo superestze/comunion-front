@@ -10,10 +10,10 @@ import {
 } from '@comunion/icons'
 import { defineComponent } from 'vue'
 function asyncComponent(type: string, wrapper: string, disable?: boolean) {
-  let textClass = 'text-[#636366]'
-  if (disable) {
-    textClass = 'text-[#E0E0E0]'
-  }
+  const textClass = ''
+  // if (disable) {
+  //   textClass = 'text-color3'
+  // }
   if (type === 'Website') {
     return <WebsiteFilled class={`${wrapper} ${textClass}`} />
   } else if (type === 'Discord') {
@@ -65,7 +65,7 @@ export default defineComponent({
     return (
       <div
         class={`flex justify-center items-center rounded-[50%] ${this.outWrapper} ${
-          this.disable ? 'cursor-not-allowed' : ' hover:bg-purple'
+          this.disable ? 'cursor-not-allowed text-color3' : 'text-color2 hover:text-color1'
         }`}
       >
         {this.link ? (

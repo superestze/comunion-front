@@ -74,7 +74,7 @@ export default defineComponent({
   },
   render() {
     return (
-      <UCard title="STARTUPS" class="mb-6 last-item-noborder">
+      <UCard title="Startups" class="mb-6 last-item-noborder">
         {this.startups.map((startup, i) => (
           <StartupCard class="_item" startup={startup} key={i} view={this.view} />
         ))}

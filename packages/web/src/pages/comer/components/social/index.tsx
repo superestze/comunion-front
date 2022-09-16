@@ -213,7 +213,7 @@ export default defineComponent({
       <>
         {this.view && this.socials.length === 0 ? null : (
           <UCard
-            title="SOCIAL"
+            title="Social"
             class="mb-6"
             v-slots={{
               'header-extra': () => {

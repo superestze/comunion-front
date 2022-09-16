@@ -146,7 +146,7 @@ export default defineComponent({
       <>
         {this.view && this.educations.length === 0 ? null : (
           <UCard
-            title="EDUCATION"
+            title="Education"
             class="mb-6"
             v-slots={{
               'header-extra': () => {
