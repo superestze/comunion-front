@@ -9,7 +9,7 @@ import { ServiceReturn, services } from '@/services'
 import { getChainInfoByChainId } from '@/utils/etherscan'
 import { checkSupportNetwork } from '@/utils/wallet'
 
-type BountyType = NonNullable<ServiceReturn<'bounty@bounty-list(tab)'>>['rows']
+type BountyType = NonNullable<ServiceReturn<'bounty@startup-bounty-list'>>['rows']
 
 export default defineComponent({
   name: 'BountyCard',

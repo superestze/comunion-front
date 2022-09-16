@@ -1818,7 +1818,7 @@ export const services = {
         /**
          * @description 创建时间
          */
-        createdTime: number
+        createdTime: string
         /**
          * @description 报酬
          */
@@ -1830,7 +1830,7 @@ export const services = {
           /**
            * @description 总额
            */
-          amount: string
+          amount: number
         }[]
         /**
          * @description 申请人数
@@ -2073,6 +2073,8 @@ export const services = {
         crowdfundingContract: string
         contractAudit: string
         kyc: string
+        startupLogo: string
+        buyTokenAmount?: number
       }[]
     >({
       url: replacePath('/cores/crowdfundings/startup/:startupId', args),

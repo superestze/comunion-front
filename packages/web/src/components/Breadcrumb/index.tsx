@@ -13,7 +13,7 @@ const Breadcrumb = defineComponent({
       // TODO: the routes should add parent route info in meta, includes name, path, parent route and so on, so the data get by route directly
       const result: { path: string; name: RouteRecordName | undefined }[] = [
         {
-          path: '/dashboard',
+          path: '/comer',
           name: 'my dashboard'
         }
       ]
@@ -44,16 +44,16 @@ const Breadcrumb = defineComponent({
 
     return () => (
       <>
-        <div class="mb-10 mt-15">
+        <div class="mt-15 mb-10">
           <UBreadcrumb class="flex items-center">
             <UBreadcrumbItem v-slots={slots}></UBreadcrumbItem>
             {breadcrumbData.value.map((item, index) => (
               <UBreadcrumbItem key={item.path} v-slots={slots}>
                 {index == breadcrumbData.value.length - 1 ? (
-                  <span class="u-label1 uppercase text-primary">{item.name}</span>
+                  <span class="text-primary uppercase u-label1">{item.name}</span>
                 ) : (
                   <span
-                    class="u-label1 uppercase text-primary"
+                    class="text-primary uppercase u-label1"
                     onClick={() => onLinkClick(item.path)}
                   >
                     {item.name}
