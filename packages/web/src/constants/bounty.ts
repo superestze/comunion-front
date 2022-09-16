@@ -52,6 +52,9 @@ export enum USER_ROLE {
 }
 
 export const TRANSCATION_URL: { [key: number]: string } = {
+  5: 'https://goerli.etherscan.io/tx/',
+  97: 'https://testnet.bscscan.com/tx/',
+  4002: 'https://testnet.ftmscan.com/tx/',
   43113: 'https://cchain.explorer.avax-test.network/tx/',
   43114: 'https://etherscan.io/tx/'
 }
