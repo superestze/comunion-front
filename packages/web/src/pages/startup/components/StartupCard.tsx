@@ -78,7 +78,7 @@ const StartupCard = defineComponent({
             {props.startup.name}
           </div>
           <p class="mb-2 text-color3 break-all u-h6 line-clamp-3">{props.startup.mission}</p>
-          <div class="flex flex-wrap text-0.75rem gap-2">
+          <div class="flex flex-wrap gap-2">
             {hashtagsArray.map((key, value) => {
               return (
                 value < 4 && (
@@ -94,7 +94,7 @@ const StartupCard = defineComponent({
             ) : null}
           </div>
           {/* footer */}
-          <div class="right-6 bottom-6 left-6 text-0.75rem absolute">
+          <div class="right-6 bottom-6 left-6 absolute">
             <div class="flex items-center">
               <span class="h-4 px-2 text-color2 inline-block u-h7">
                 <strong class="mr-0.2rem text-color3">{props.startup.followCount}</strong>
