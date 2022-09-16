@@ -152,16 +152,16 @@ export default defineComponent({
             }}
           >
             {this.editMode ? (
-              <div class="flex flex-col mt-6">
+              <div class="flex flex-col ">
                 <UForm rules={rules} model={this.info} ref={(ref: any) => (this.form = ref)}>
                   <UFormItemsFactory fields={this.fields} values={this.info} />
                 </UForm>
                 {btnGroup(handleEditMode(), handleSubmit)}
               </div>
             ) : (
-              <div class="flex flex-col mt-6">
+              <div class="flex flex-col ">
                 {this.languages.length === 0 ? (
-                  <p class="font-[400] text-14px text-grey4">Add your Languages</p>
+                  <p class="text-color2 u-h5">Add your Languages</p>
                 ) : (
                   <>
                     {this.languages.map(item => (

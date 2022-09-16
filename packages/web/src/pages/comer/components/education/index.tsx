@@ -160,16 +160,16 @@ export default defineComponent({
             }}
           >
             {this.editMode ? (
-              <div class="mt-6">
+              <div>
                 <UForm rules={rules} model={this.info} ref={(ref: any) => (this.form = ref)}>
                   <UFormItemsFactory fields={this.fields} values={this.info} />
                 </UForm>
                 {btnGroup(handleEditMode(), handleSubmit)}
               </div>
             ) : (
-              <div class="mt-2">
+              <div>
                 {this.educations.length === 0 ? (
-                  <p class="font-[400] text-14px text-grey4">Add your Education</p>
+                  <p class="text-color2 u-h5">Add your Education</p>
                 ) : (
                   <>
                     {this.educations.map(item => {

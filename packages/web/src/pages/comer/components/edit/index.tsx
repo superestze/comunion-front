@@ -7,7 +7,7 @@ export default defineComponent({
       this.$emit('handleClick')
     }
     return (
-      <span onClick={handleClick} class="cursor-pointer text-grey3 u-body2 hover:text-primary">
+      <span onClick={handleClick} class="cursor-pointer text-color3 hover:text-primary">
         {typeof this.$slots.default === 'function' ? this.$slots.default() : 'Edit'}
       </span>
     )

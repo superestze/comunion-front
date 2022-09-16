@@ -96,7 +96,7 @@ export default defineComponent({
     }
     return (
       <UCard title="CONNECTED" class="mb-6">
-        <div class="flex flex-col mt-6">
+        <div class="flex flex-col">
           <Switch
             tabs={this.tabsInstance.tabs.value}
             onSwitchPanel={tabsChange}
