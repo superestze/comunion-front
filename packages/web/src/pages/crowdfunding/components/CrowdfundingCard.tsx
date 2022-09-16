@@ -3,9 +3,8 @@ import dayjs from 'dayjs'
 import { ethers } from 'ethers'
 import { defineComponent, PropType, computed, ref, onMounted } from 'vue'
 import { CrowdfundingStatus } from '../utils'
-import { CROWDFUNDING_TYPES } from '@/constants'
+import { CROWDFUNDING_TYPES, CrowdfundingItemType } from '@/constants'
 import { useErc20Contract, useCrowdfundingContract } from '@/contracts'
-import { ServiceReturn } from '@/services'
 import { useWalletStore } from '@/stores'
 import { getChainInfoByChainId } from '@/utils/etherscan'
 import { formatToFloor } from '@/utils/numberFormat'
@@ -14,9 +13,7 @@ export const CrowdfundingCard = defineComponent({
   name: 'CrowdfundingCard',
   props: {
     info: {
-      type: Object as PropType<
-        NonNullable<ServiceReturn<'crowdfunding@public-crowdfunding-list'>>['rows'][number]
-      >,
+      type: Object as PropType<CrowdfundingItemType>,
       required: true
     },
     onClick: {
@@ -85,10 +82,10 @@ export const CrowdfundingCard = defineComponent({
 
     const Time = computed(() => {
       if (props.info.status === CrowdfundingStatus.CANCELED) {
-        return <div class="text-grey4 u-body2">Canceled</div>
+        return <div class="text-color3">Canceled</div>
       }
       if (dayjs().isAfter(props.info.endTime)) {
-        return <div class="text-grey4 u-body2">Ended</div>
+        return <div class="text-color3">Ended</div>
       }
 
       if (dayjs.utc().isBefore(dayjs(props.info.startTime).utc())) {
@@ -120,16 +117,6 @@ export const CrowdfundingCard = defineComponent({
       )
     })
 
-    const getStatusLabelStyle = computed(() => {
-      const statusClassMap = {
-        [CrowdfundingStatus.UPCOMING]: 'bg-success ',
-        [CrowdfundingStatus.LIVE]: 'bg-[#00BFA5] ',
-        [CrowdfundingStatus.ENDED]: 'bg-warning',
-        [CrowdfundingStatus.CANCELED]: 'bg-grey5'
-      }
-      return statusClassMap[props.info.status as keyof typeof statusClassMap]
-    })
-
     onMounted(() => {
       getTokenName()
       getFundingState()
@@ -137,73 +124,58 @@ export const CrowdfundingCard = defineComponent({
 
     return () => (
       <div
-        class="bg-white rounded-lg cursor-pointer top-0 relative hover:shadow-md hover:-top-0.5rem"
+        class="bg-white border border-color-border rounded-sm cursor-pointer font-primary top-0 overflow-hidden relative hover:bg-color-hover"
         style="transition:all ease .3s"
         onClick={() => props.onClick?.()}
       >
-        <div
-          class={[
-            getStatusLabelStyle.value,
-            'absolute top-4 right-4 h-1.25rem leading-1.125rem px-2 rounded-sm text-xs text-white border-1 border-white'
-          ]}
-        >
+        <UTag type="filled" bgColor="#fff" class="top-4 right-4 absolute !text-color2">
           {CROWDFUNDING_TYPES[props.info.status - 1]}
-        </div>
-        <ULazyImage src={props.info.poster} class="rounded-t-lg h-10.75rem w-full" />
+        </UTag>
+        <ULazyImage src={props.info.poster} class=" h-10.75rem w-full" />
         <div class="p-6">
           <div class="flex mb-2 items-center">
-            <span class="flex-1 mr-4 truncate u-h3">{props.info.startupName}</span>
+            <span class="flex-1 mr-4 text-color1 truncate u-h3">{props.info.startupName}</span>
             <img src={logo.value} />
           </div>
           <div class="flex mb-2">
             <div class="flex-1 text-0.75rem">
               <div class="text-grey3  leading-6">Raise Goal </div>
-              <div class="text-primary ">
-                <strong class="mr-1 text-1.25rem" style="font-family: Orbitron,sans-serif;">
-                  {raiseState.value.raiseGoal}
-                </strong>
-                <strong>{buyTokenSymbol.value}</strong>
+              <div class="text-primary">
+                <span class="mr-1 u-h3">{raiseState.value.raiseGoal}</span>
+                <span class="u-h7">{buyTokenSymbol.value}</span>
               </div>
             </div>
-            {props.info.kyc && (
-              <UTag class="font-semibold text-xs mr-1 !h-5" type="filled" bgColor="#EC53A4">
-                KYC
-              </UTag>
-            )}
-            {props.info.contractAudit && (
-              <UTag class="font-semibold text-xs mr-1 !h-5" type="filled" bgColor="#5331F4">
-                AUDIT
-              </UTag>
-            )}
+            {props.info.kyc && <UTag class="mr-1 ">KYC</UTag>}
+            {props.info.contractAudit && <UTag>AUDIT</UTag>}
           </div>
 
           <UProgress
             showIndicator={false}
             percentage={raiseState.value.raisePercent}
+            color="#00BFA5"
             height={6}
-            class="mb-1"
+            class="mb-2"
           />
 
-          <div class="flex text-xs mb-2 items-center">
-            <div class="flex-1 text-0.75rem">
-              {raiseState.value.raiseAmount}
-              <span class="ml-1 text-grey3">{buyTokenSymbol.value}</span>
+          <div class="flex mb-2 items-center">
+            <div class="flex-1 u-h7">
+              <span class="text-color1">{raiseState.value.raiseAmount}</span>
+              <span class="ml-1 text-color3">{buyTokenSymbol.value}</span>
             </div>
-            <div class="text-right text-sm mb-2 u-body3">{raiseState.value.raisePercent} %</div>
+            <div class="text-right text-color1 u-num2">{raiseState.value.raisePercent} %</div>
           </div>
-          <div class="flex mt-3 justify-between u-body2">
-            <span class="text-grey2">IBO Rate:</span>
-            <span class="text-right">
+          <div class="flex mt-3 justify-between u-h6">
+            <span class="text-color3">IBO Rate:</span>
+            <span class="text-right text-color1">
               1 {buyTokenSymbol.value} = {props.info.buyPrice} {sellTokenSymbol.value}
             </span>
           </div>
-          <div class="flex mt-2 justify-between u-body2">
-            <span class="text-grey2">Swap %:</span>
-            <span class="text-right">{props.info.swapPercent} %</span>
+          <div class="flex mt-2 justify-between ">
+            <span class="text-color3">Swap %:</span>
+            <span class="text-right text-color1">{props.info.swapPercent} %</span>
           </div>
         </div>
-        <div class="bg-purple h-px w-full"></div>
-        <div class="border-purple border-t-1 py-3 px-6">{Time.value}</div>
+        <div class="border-color-border border-t-1 py-3 px-6 text-color3 u-h6">{Time.value}</div>
       </div>
     )
   }
