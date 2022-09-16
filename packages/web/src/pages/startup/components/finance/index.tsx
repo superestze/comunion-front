@@ -17,28 +17,28 @@ export default defineComponent({
       return [
         {
           name: 'Launch Network ：',
-          value: findNet ? findNet.name : '--'
+          value: findNet ? findNet.name : ''
         },
         {
           name: 'Token Name ：',
-          value: props.startup?.tokenName || '--'
+          value: props.startup?.tokenName
         },
         {
           name: 'Token Symbol ：',
-          value: props.startup?.tokenSymbol || '--'
+          value: props.startup?.tokenSymbol
         },
         {
           name: 'Token Supply ：',
           value: props.startup?.totalSupply
             ? Number(props.startup?.totalSupply).toLocaleString()
-            : '--'
+            : ''
         },
         {
           name: 'Token Concract ：',
           value: props.startup?.tokenContractAddress ? (
             <UAddress autoSlice address={props.startup?.tokenContractAddress} />
           ) : (
-            '--'
+            ''
           )
         },
         {
@@ -48,13 +48,13 @@ export default defineComponent({
               ? `${dayjs.utc(props.startup?.presaleStart).format('YYYY-MM-DD')} ~ ${dayjs
                   .utc(props.startup?.presaleEnd)
                   .format('YYYY-MM-DD UTC')}`
-              : '--'
+              : ''
         },
         {
           name: 'Launch ：',
           value: props.startup?.launchDate
             ? dayjs.utc(props.startup?.launchDate).format('YYYY-MM-DD UTC')
-            : '--'
+            : ''
         }
       ]
     })
@@ -76,20 +76,22 @@ export default defineComponent({
       <UCard title="FINANCE" class="mb-6">
         <div class="flex flex-col">
           {this.financeBasic.map(item => {
-            return (
-              <div class="flex mt-4  items-center">
-                <p class="max-w-1/2 w-38 font-primary font-medium tracking-normal text-[14px]">
-                  {item.name}
-                </p>
-                <p
-                  class={`font-primary tracking-normal text-[14px] overflow-hidden text-color3 ${
-                    item.name.includes('Token Concract') ? 'text-color2' : ''
-                  }`}
-                >
-                  {item.value}
-                </p>
-              </div>
-            )
+            if (item.value) {
+              return (
+                <div class="flex mt-4  items-center">
+                  <p class="max-w-1/2 w-38 font-primary font-medium tracking-normal text-[14px]">
+                    {item.name}
+                  </p>
+                  <p
+                    class={`font-primary tracking-normal text-[14px] overflow-hidden text-color3 ${
+                      item.name.includes('Token Concract') ? 'text-color2' : ''
+                    }`}
+                  >
+                    {item.value}
+                  </p>
+                </div>
+              )
+            }
           })}
 
           <div class="bg-grey5 h-1px mt-6.5 w-full"></div>
