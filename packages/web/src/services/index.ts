@@ -149,7 +149,7 @@ export const services = {
     return requestAdapter<
       {
         /**
-   * @description 
+   * @description
 	ModuleStartup - 1
 	ModuleBounty - 2
 	ModuleCrowdfunding - 3
@@ -2639,6 +2639,7 @@ export const services = {
         proposalId: number
         voterComerId: number
         voterWalletAddress: string
+        voterComerName: string
         choiceItemId: number
         choiceItemName: string
         votes: number
@@ -2953,7 +2954,7 @@ export const services = {
   'startup@social-delete'(args: { startupID: any }) {
     return requestAdapter<{
       /**
-   * @description 	1-SocialEmail 
+   * @description 	1-SocialEmail
 	2-SocialWebsite
 	3-SocialTwitter
 	4-SocialDiscord
