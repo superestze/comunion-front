@@ -39,7 +39,7 @@ export default defineComponent({
   },
   render() {
     return (
-      <UCard title="SECURITY" class="mb-6">
+      <UCard title="Security" class="mb-6">
         <div class="mt-3">
           {this.kycInfo && (
             <div class="h-5 leading-5 font-primary font-medium mb-2">

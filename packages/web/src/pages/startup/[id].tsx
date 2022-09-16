@@ -112,8 +112,8 @@ export default defineComponent({
         </div>
         <div class="flex mb-20 gap-6">
           <div class="overflow-hidden basis-1/3">
-            <Team startupId={this.startupId} />
             <Overview content={this.startup?.overview || ''} />
+            <Team startupId={this.startupId} />
             {(this.startup?.kyc || this.startup?.contractAudit) && (
               <Security
                 kyc={this.startup?.kyc || ''}

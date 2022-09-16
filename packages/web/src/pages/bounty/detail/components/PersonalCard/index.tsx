@@ -58,21 +58,25 @@ export default defineComponent({
       <div class="flex">
         <Avatar avatar={this.normalize.avatar} onClickAvatar={toComerDetail} class="!h-12 !w-12" />
         <div class="flex-1 ml-4 ">
-          <div class="mb-2 u-title3">{this.normalize.name}</div>
+          <div class="mb-2 truncate font-primary font-semibold text-[16px]">
+            {this.normalize.name}
+          </div>
           <div class="flex mb-2 items-center">
             {Array.isArray(this.normalize.skills) &&
               this.normalize.skills.map((tag, i) => {
                 return i + 1 < 4 ? (
                   <>
-                    {i !== 0 && <i class="bg-grey5 h-3 mx-1 w-1px"></i>}
-                    <span class="u-tag" key={i}>
+                    <span
+                      class="rounded-sm text-color1 mr-2 px-2 text-0.75rem leading-1.25rem inline-block border-1 border-[#DADCE0]"
+                      key={i}
+                    >
                       {tag}
                     </span>
                   </>
                 ) : null
               })}
           </div>
-          <div class="mb-2 text-grey3 u-body2">
+          <div class="mb-2 text-[#9F9F9F] text-[14px] leading-4 u-h6">
             {this.normalize.email ? `${this.normalize.email} · ` : ''}
             {this.normalize.location ? `${this.normalize.location} · ` : ''}
             {this.normalize.timeZone}
