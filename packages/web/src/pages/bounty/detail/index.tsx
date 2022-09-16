@@ -247,7 +247,7 @@ export default defineComponent({
             </UCard>
           </div>
           <div class="overflow-hidden basis-1/3">
-            <div class="bg-white border rounded-[2px] mb-6 p-10">
+            <div class="bg-white border rounded-[2px] mb-6 p-6">
               {this.bountySection.startup && <StartupCard startup={this.bountySection.startup} />}
             </div>
             <UCard title="Founder" class="mb-6">
