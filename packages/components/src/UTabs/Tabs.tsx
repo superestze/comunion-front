@@ -4,14 +4,16 @@ import './index.css'
 
 export type UTabsPropsType = TabsProps
 
-// const UTabs: typeof NTabs = NTabs
-// UTabs.name = 'UTabs'
+/**
+ * custom class:
+ * no-border
+ * */
 
 const UTabs = defineComponent({
   name: 'UTabs',
   extends: NTabs,
   setup(props, ctx) {
-    return () => <NTabs {...props} class="u-tabs" v-slots={ctx.slots} />
+    return () => <NTabs {...props} class={`u-tabs ${ctx.attrs.class}`} v-slots={ctx.slots} />
   }
 })
 

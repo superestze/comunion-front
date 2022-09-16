@@ -190,7 +190,7 @@ function renderField(field: FormFactoryField, values: FormData) {
       return <UDatePicker {...(props as UDatePickerPropsType)} v-model:value={values[field.name]} />
     case 'switch':
       return (
-        <div class="w-full border-b border-[#E0E0E0]" style="margin-top: -24px">
+        <div class="border-b border-[#E0E0E0] w-full" style="margin-top: -24px">
           <div class="flex items-center" style="padding-bottom: 40px">
             <USwitch {...(props as USwitchPropsType)} v-model:value={values[field.name]}></USwitch>
             <span class="text-[14px] " style="margin: 0 0 0 18px;">
@@ -198,7 +198,7 @@ function renderField(field: FormFactoryField, values: FormData) {
             </span>
             <UTooltip trigger="hover" style={{ backgroundColor: 'rgba(0, 0, 0, 0.6)' }}>
               {{
-                trigger: () => <QuestionCircleOutlined class="h-4 ml-2 text-grey3 w-4" />,
+                trigger: () => <QuestionCircleOutlined class="h-4 ml-2 text-color2 w-4" />,
                 default: () => (
                   <p class="text-white text-left u-body2">
                     <p>Recommend strongly to post the two fields to</p>

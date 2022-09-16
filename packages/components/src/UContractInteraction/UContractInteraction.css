@@ -50,10 +50,10 @@
 }
 
 .u-contract-interaction {
-  @apply relative rounded-2xl flex flex-col min-h-60 bg-white items-center w-100 px-16 py-12;
+  @apply bg-white flex flex-col rounded-2xl min-h-60 py-12 px-16 w-100 relative items-center;
 
   &-close {
-    @apply absolute w-5 h-5 right-4 top-4 z-10 cursor-pointer;
+    @apply cursor-pointer h-5 top-4 right-4 w-5 z-10 absolute;
   }
 
   &-animation {
@@ -63,7 +63,7 @@
     &::after {
       transition: all 0.3s linear;
       content: '';
-      @apply absolute top-0 left-1/2 w-8 h-8 -ml-4 rounded-full;
+      @apply rounded-full h-8 -ml-4 top-0 left-1/2 w-8 absolute;
     }
 
     &::before {
@@ -80,10 +80,10 @@
   }
 
   &-status {
-    @apply mt-8 u-title1 text-grey1;
+    @apply mt-8 text-color1 u-title1;
   }
 
   &-text {
-    @apply mt-6 u-caption text-grey3 text-center;
+    @apply mt-6 text-center text-color3 u-caption;
   }
 }

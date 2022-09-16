@@ -42,14 +42,14 @@ const UInputNumber = defineComponent({
       clearInterval(longEnterEventRef.value)
     }
     const controlSlot = (
-      <div class="bg-purple w-4.5 h-6 flex flex-col items-center justify-center">
+      <div class="bg-purple flex flex-col h-6 w-4.5 items-center justify-center">
         <div
           style={{ height: '12px' }}
           onMousedown={() => longEnterStart('up')}
           onMouseup={longEnterEnd}
           onMouseleave={longEnterEnd}
         >
-          <NumberUpOutlined class="cursor-pointer text-grey1 block" onClick={addCurrentValue} />
+          <NumberUpOutlined class="cursor-pointer text-color1 block" onClick={addCurrentValue} />
         </div>
         <div
           style={{ height: '12px' }}
@@ -57,7 +57,10 @@ const UInputNumber = defineComponent({
           onMouseup={longEnterEnd}
           onMouseleave={longEnterEnd}
         >
-          <NumberDownOutlined class="cursor-pointer text-grey1 block" onClick={minusCurrentValue} />
+          <NumberDownOutlined
+            class="cursor-pointer text-color1 block"
+            onClick={minusCurrentValue}
+          />
         </div>
       </div>
     )
