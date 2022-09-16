@@ -207,13 +207,13 @@ export default defineComponent({
                           {/* just applicant show countdown tips */}
                           {this.bountyContractInfo.role !== USER_ROLE.FOUNDER &&
                             (this.gapValue >= 0 ? (
-                              <p class="flex mr-4 text-grey3 items-center u-body3">
+                              <p class="flex mr-4 text-grey3 items-center ">
                                 Founder can unlock after
-                                <span class="mx-1 text-parimary">{this.gapValue}</span>
+                                <span class="mx-1 text-primary">{this.gapValue}</span>
                                 {this.gapValue > 1 ? `${pluralize(this.gapUnit)}` : this.gapUnit}
                               </p>
                             ) : (
-                              <p class="flex text-error mr-4 items-center u-body3">
+                              <p class="flex text-error mr-4 items-center">
                                 Founder can already unlock deposits
                               </p>
                             ))}
