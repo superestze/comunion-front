@@ -39,15 +39,17 @@ export default defineComponent({
         comerID: props.comerId
       })
       if (!error) {
-        const dataList: CrowdfundingItem[] = data.map(item => {
-          return {
-            ...item,
-            kyc: item.kyc || '',
-            contractAudit: item.contractAudit || '',
-            buyTokenAmount: item.buyTokenAmount || 0
-          }
-        })
-        list.value = dataList || []
+        const dataList: CrowdfundingItem[] = Array.isArray(data)
+          ? data.map(item => {
+              return {
+                ...item,
+                kyc: item.kyc || '',
+                contractAudit: item.contractAudit || '',
+                buyTokenAmount: item.buyTokenAmount || 0
+              }
+            })
+          : []
+        list.value = dataList
       }
     }
 

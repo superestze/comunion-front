@@ -61,7 +61,7 @@ export default defineComponent({
           {typeof this.$slots.content === 'function' ? (
             this.$slots.content()
           ) : (
-            <div title={this.item[this.keyMap.name]} class="flex-1 text-color1 truncate u-h3 ">
+            <div title={this.item[this.keyMap.name]} class="flex-1 text-color1 truncate u-h4">
               {this.item[this.keyMap.name]}
             </div>
           )}
