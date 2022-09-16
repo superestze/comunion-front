@@ -48,7 +48,7 @@ const CrowdfundingDetail = defineComponent({
         pageLoading.value = true
         const { error, data } = await services['startup@startup-get']({ startupId })
         if (!error) {
-          // 如果刷新后不再链上调用切换链
+          // The wallet switching chain operation on the details page will return to the list page
           if (data.chainID != walletStore.chainId) {
             router.push('/crowdfunding/list')
             return
