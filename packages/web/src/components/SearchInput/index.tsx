@@ -50,9 +50,11 @@ const SearchInput = defineComponent({
     return (
       <>
         <div
-          class={` w-20  u-search-input relative overflow-hidden h-10 ${
-            this.showLong ? '!w-40' : ''
-          } ${this.input.trim().length > 0 ? 'text-color1' : 'text-color2'}`}
+          class={`rounded-sm cursor-pointer hover:bg-color-hover w-20 u-search-input relative overflow-hidden h-10 ${
+            this.$attrs.class
+          } ${this.showLong ? '!w-40' : ''} ${
+            this.input.trim().length > 0 ? 'text-color1' : 'text-color2'
+          }`}
           onClick={() => {
             if (this.props.loading) {
               return null
@@ -63,7 +65,7 @@ const SearchInput = defineComponent({
             }, 300)
           }}
         >
-          <div class={`w-full h-full rounded-sm px-3 flex items-center`}>
+          <div class={`w-full h-full rounded px-3 flex items-center`}>
             <span class="truncate">{this.input || 'Search'}</span>
           </div>
           <NInput

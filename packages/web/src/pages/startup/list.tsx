@@ -116,9 +116,10 @@ const StartupsPage = defineComponent({
             <UDropdownFilter
               options={STARTUP_TYPES.map(item => ({ label: item, value: item }))}
               placeholder="All Type"
-              class="rounded mr-4 w-28"
+              class="mr-4 w-28 "
               clearable
               v-model:value={searchType.value}
+              consistent-menu-width={false}
             />
             <SearchInput
               v-model:value={searchInput.value}
