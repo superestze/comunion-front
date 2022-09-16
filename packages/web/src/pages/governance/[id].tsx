@@ -384,9 +384,7 @@ const ProposalDetail = defineComponent({
                     src={this.proposalInfo?.authorComerAvatar || ''}
                   />
                 </div>
-                <div class="text-primary mx-4">
-                  {shortenAddress(this.proposalInfo?.authorWalletAddress || '')}
-                </div>
+                <div class="text-primary mx-4">{this.proposalInfo?.authorComerName}</div>
               </div>
               <UPopover
                 trigger="click"
@@ -479,9 +477,7 @@ const ProposalDetail = defineComponent({
                           <td>
                             <div class="flex items-center ml-7">
                               <ULazyImage src={record.voterComerAvatar} class="w-7 h-7 mr-3" />
-                              <span class="u-body4 text-primary">
-                                {shortenAddress(record.voterWalletAddress)}
-                              </span>
+                              <span class="u-body4 text-primary">{record.voterComerName}</span>
                             </div>
                           </td>
                           <td>

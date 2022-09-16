@@ -1,6 +1,5 @@
 import { UStartupLogo } from '@comunion/components'
 import { ConfirmOutlined } from '@comunion/icons'
-import { shortenAddress } from '@comunion/utils'
 import dayjs from 'dayjs'
 import { defineComponent, PropType, computed } from 'vue'
 import { useRouter } from 'vue-router'
@@ -73,7 +72,7 @@ export const ProposalCard = defineComponent({
             <div>
               <span class="mr-2 text-grey3 text-xs">{this.proposalData.startupName} by</span>
               <span class="text-primary text-xs" onClick={this.toComerDetail}>
-                {shortenAddress(this.proposalData.authorWalletAddress)}
+                {this.proposalData.authorComerName}
               </span>
             </div>
             <div class={['status ml-auto', this.statusStyle]}>

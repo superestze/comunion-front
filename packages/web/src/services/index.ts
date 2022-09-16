@@ -149,7 +149,7 @@ export const services = {
     return requestAdapter<
       {
         /**
-   * @description
+   * @description 
 	ModuleStartup - 1
 	ModuleBounty - 2
 	ModuleCrowdfunding - 3
@@ -1090,6 +1090,16 @@ export const services = {
        * @example 排序
        */
       sort?: any
+      /**
+       * @description bounty状态   1:Ready to work 2:Work started 3:Completed
+       * @example 1
+       */
+      mode?: any
+      /**
+       * @description title 的模糊搜索
+       * @example Test
+       */
+      keyword?: any
     } & {
       /**
        * @description 第几页，默认1
@@ -1102,85 +1112,34 @@ export const services = {
     }
   ) {
     return requestAdapter<{
-      /**
-       * @description 每页记录数
-       */
-      limit: number
-      /**
-       * @description 当前页
-       */
-      page: number
-      /**
-       * @description 总记录数
-       */
-      totalRows: number
-      /**
-       * @description 总页数
-       */
-      totalPages: number
-      /**
-       * @description 记录列表
-       */
+      limit?: number
+      page?: number
+      sort?: string
+      totalRows?: number
+      totalPages?: number
       rows: {
-        /**
-         * @description bountyId
-         */
         bountyId: number
-        /**
-         * @description startup id
-         */
         startupId: number
+        chainID: number
         logo: string
-        /**
-         * @description 标题
-         */
         title: string
-        /**
-         * @description 状态
-         */
         status: string
-        /**
-         * @description 支付方式
-         */
+        onChainStatus: string
         paymentType: string
-        /**
-         * @description 创建时间
-         */
-        createdTime: number
-        /**
-         * @description 申请截止日期
-         */
         applyCutoffDate: string
-        /**
-         * @description 报酬
-         */
-        rewards?: {
-          /**
-           * @description 币类型:uvu,其他
-           */
+        createdTime: string
+        rewards: {
           tokenSymbol: string
-          /**
-           * @description 总额
-           */
-          amount: string
+          amount: number
         }[]
-        /**
-         * @description 申请人数
-         */
         applicantCount: number
-        /**
-         * @description 押金要求
-         */
-        depositRequirements: number
-        /**
-         * @description 技能要求
-         */
         applicationSkills: string[]
+        depositRequirements: number
       }[]
     }>({
       url: replacePath('/cores/bounties', args),
       method: 'GET',
-      ...extract('GET', args, ['page', 'sort'], [])
+      ...extract('GET', args, ['page', 'sort', 'mode', 'keyword'], [])
     })
   },
   'bounty@bounty-list-applicants'(args: { bountyID: any }) {
@@ -1455,6 +1414,7 @@ export const services = {
          * @description logo
          */
         bountyId: number
+        chainID: number
         applyCutoffDate: string
         /**
          * @description 上链状态
@@ -1477,7 +1437,7 @@ export const services = {
         /**
          * @description 创建时间
          */
-        createdTime: number
+        createdTime: string
         /**
          * @description 报酬
          */
@@ -1489,7 +1449,7 @@ export const services = {
           /**
            * @description 总额
            */
-          amount: string
+          amount: number
         }[]
         /**
          * @description 申请人数
@@ -1553,6 +1513,7 @@ export const services = {
          * @description logo
          */
         bountyId: number
+        chainID: number
         applyCutoffDate: string
         startupId: number
         logo: string
@@ -1571,7 +1532,7 @@ export const services = {
         /**
          * @description 创建时间
          */
-        createdTime: number
+        createdTime: string
         /**
          * @description 报酬
          */
@@ -1583,7 +1544,7 @@ export const services = {
           /**
            * @description 总额
            */
-          amount: string
+          amount: number
         }[]
         /**
          * @description 申请人数
@@ -1649,6 +1610,7 @@ export const services = {
          * @description logo
          */
         bountyId: number
+        chainID: number
         applyCutoffDate: string
         /**
          * @description 上链状态
@@ -1671,7 +1633,7 @@ export const services = {
         /**
          * @description 创建时间
          */
-        createdTime: number
+        createdTime: string
         /**
          * @description 报酬
          */
@@ -1683,7 +1645,7 @@ export const services = {
           /**
            * @description 总额
            */
-          amount: string
+          amount: number
         }[]
         /**
          * @description 申请人数
@@ -1745,6 +1707,7 @@ export const services = {
          * @description logo
          */
         bountyId: number
+        chainID: number
         applyCutoffDate: string
         startupId: number
         logo: string
@@ -1763,7 +1726,7 @@ export const services = {
         /**
          * @description 创建时间
          */
-        createdTime: number
+        createdTime: string
         /**
          * @description 报酬
          */
@@ -1775,7 +1738,7 @@ export const services = {
           /**
            * @description 总额
            */
-          amount: string
+          amount: number
         }[]
         /**
          * @description 申请人数
@@ -1836,6 +1799,7 @@ export const services = {
        */
       rows: {
         bountyId: number
+        chainID: number
         applyCutoffDate: string
         startupId: number
         logo: string
@@ -1854,7 +1818,7 @@ export const services = {
         /**
          * @description 创建时间
          */
-        createdTime: number
+        createdTime: string
         /**
          * @description 报酬
          */
@@ -1866,7 +1830,7 @@ export const services = {
           /**
            * @description 总额
            */
-          amount: string
+          amount: number
         }[]
         /**
          * @description 申请人数
@@ -1917,19 +1881,24 @@ export const services = {
         comerId: number
         startupName: string
         endTime: string
-        raiseBalance: number
-        raisedPercent: number
+        raiseBalance: string
+        raisedPercent: string
         status: number
         startTime: string
         startupLogo: string
         crowdfundingContract: string
-        raiseGoal: number
-        buyPrice: number
-        swapPercent: number
+        raiseGoal: string
+        buyPrice: string
+        swapPercent: string
         poster: string
         chainId: number
         buyTokenAddress: string
+        buyTokenSymbol: string
         sellTokenAddress: string
+        sellTokenSymbol: string
+        kyc?: string
+        contractAudit?: string
+        buyTokenAmount?: number
       }[]
     >({
       url: replacePath('/account/comer/:comerID/participated-crowdfundings', args),
@@ -1956,19 +1925,24 @@ export const services = {
         comerId: number
         startupName: string
         endTime: string
-        raiseBalance: number
-        raisedPercent: number
+        raiseBalance: string
+        raisedPercent: string
         status: number
         startTime: string
         startupLogo: string
         crowdfundingContract: string
-        raiseGoal: number
-        buyPrice: number
-        swapPercent: number
+        raiseGoal: string
+        buyPrice: string
+        swapPercent: string
         poster: string
         chainId: number
         buyTokenAddress: string
+        buyTokenSymbol: string
         sellTokenAddress: string
+        sellTokenSymbol: string
+        kyc?: string
+        contractAudit?: string
+        buyTokenAmount?: number
       }[]
     >({
       url: replacePath('/account/comer/:comerID/posted-crowdfundings', args),
@@ -2029,13 +2003,13 @@ export const services = {
   'crowdfunding@crowdfundable-startups'(args?: any) {
     return requestAdapter<
       {
-        onChain: any
-        startupId: number
-        startupName: string
+        startupId?: number
+        startupName?: string
+        canRaise?: boolean
         /**
-         * @description 能否募资：true,可，false,不能
+         * @description 是否上链
          */
-        canRaise: boolean
+        onChain?: boolean
         tokenContract?: string
       }[]
     >({
@@ -2083,20 +2057,24 @@ export const services = {
         comerId: number
         startupName: string
         endTime: string
-        raiseBalance: number
-        raiseGoal: number
-        raisedPercent: number
-        buyPrice: number
-        swapPercent: number
+        raiseBalance: string
+        raiseGoal: string
+        raisedPercent: string
+        buyPrice: string
+        swapPercent: string
         poster: string
         status: number
         chainId: number
         buyTokenAddress: string
+        buyTokenSymbol: string
         sellTokenAddress: string
+        sellTokenSymbol: string
         startTime: string
         crowdfundingContract: string
         contractAudit: string
         kyc: string
+        startupLogo: string
+        buyTokenAmount: number
       }[]
     >({
       url: replacePath('/cores/crowdfundings/startup/:startupId', args),
@@ -2287,33 +2265,35 @@ export const services = {
     keyword?: string
   }) {
     return requestAdapter<{
-      limit: number
-      page: number
-      totalPages: number
-      totalRows: number
-      rows: {
+      limit?: number
+      page?: number
+      sort?: string
+      totalRows?: number
+      totalPages?: number
+      rows?: {
         crowdfundingId: number
-        /**
-         * @description 合约地址
-         */
-        crowdfundingContract: string
         startupId: number
         comerId: number
         startupName: string
+        startupLogo: string
         startTime: string
         endTime: string
-        raiseBalance: number
-        raiseGoal: number
-        raisedPercent: number
-        buyPrice: number
-        swapPercent: number
+        raiseBalance: string
+        raiseGoal: string
+        raisedPercent: string
+        buyPrice: string
+        swapPercent: string
         poster: string
         status: number
-        kyc?: string
+        crowdfundingContract: string
         chainId: number
-        contractAudit?: string
-        buyTokenAddress: string
+        kyc: string
+        contractAudit: string
         sellTokenAddress: string
+        sellTokenSymbol: string
+        buyTokenAddress: string
+        buyTokenSymbol: string
+        buyTokenAmount: any
       }[]
     }>({
       url: replacePath('/cores/crowdfundings', args),
@@ -2421,6 +2401,7 @@ export const services = {
       startupName: string
       authorComerId: number
       authorComerAvatar: string
+      authorComerName: string
       authorWalletAddress: string
       title: string
       description: string
@@ -2537,6 +2518,8 @@ export const services = {
         startupName: string
         authorComerId: number
         authorWalletAddress: string
+        authorComerName: string
+        authorComerAvatar: string
         title: string
         description: string
         /**
@@ -2576,6 +2559,8 @@ export const services = {
         startupName: string
         authorComerId: number
         authorWalletAddress: string
+        authorComerName: string
+        authorComerAvatar: string
         title: string
         description: string
         /**
@@ -2615,6 +2600,8 @@ export const services = {
         startupName: string
         authorComerId: number
         authorWalletAddress: string
+        authorComerName: string
+        authorComerAvatar: string
         title: string
         description: string
         /**
@@ -2657,6 +2644,7 @@ export const services = {
         votes: number
         ipfsHash: string
         voterComerAvatar: string
+        field_10: string
       }[]
     }>({
       url: replacePath('/cores/proposals/:proposalID/vote-records', args),
@@ -2677,6 +2665,8 @@ export const services = {
         startupName: string
         authorComerId: number
         authorWalletAddress: string
+        authorComerName: string
+        authorComerAvatar: string
         title: string
         description: string
         /**
@@ -2963,7 +2953,7 @@ export const services = {
   'startup@social-delete'(args: { startupID: any }) {
     return requestAdapter<{
       /**
-   * @description 	1-SocialEmail
+   * @description 	1-SocialEmail 
 	2-SocialWebsite
 	3-SocialTwitter
 	4-SocialDiscord
@@ -2986,12 +2976,25 @@ export const services = {
       name: string
       logo: string
       cover: string
+      /**
+       * @description 交易hash
+       */
       txHash: string
+      /**
+       * @description 上链ID
+       */
       chainId: number
+      /**
+   * @description 	ModeESG Mode = 1
+	ModeNGO Mode = 2
+	ModeDAO Mode = 3
+	ModeCOM Mode = 4
+
+     */
       mode: number
       mission: string
       overview: string
-      hashTags: Array<string>
+      hashTags: string[]
     }
   ) {
     return requestAdapter<{}>({
