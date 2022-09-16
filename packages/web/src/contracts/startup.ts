@@ -23,14 +23,7 @@ export function useStartupContract(
 ): {
   getContract: () => Contract
   newStartup: (
-    p: [
-      name: string,
-      mode: number,
-      network: number,
-      mission: string,
-      overview: string,
-      isValidate: any
-    ],
+    p: [name: string, network: number, isValidate: any],
     modelInfo: any,
     pendingText: string,
     waitingText: string,
@@ -85,7 +78,7 @@ export function useStartupContract(
   })
   return {
     getContract: () => getContract({ ...getContractArgs.value, ...params }),
-    newStartup: wrapTransaction({ ...getContractArgs.value, ...params }, 'newStartup'),
+    newStartup: wrapTransaction({ ...getContractArgs.value, ...params }, 'createStartup'),
     startups: wrapTransaction({ ...getContractArgs.value, ...params }, 'startups'),
     suicide0: wrapTransaction({ ...getContractArgs.value, ...params }, 'suicide0'),
     transferOwnership: wrapTransaction({ ...getContractArgs.value, ...params }, 'transferOwnership')

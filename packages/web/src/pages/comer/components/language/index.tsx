@@ -138,7 +138,7 @@ export default defineComponent({
       <>
         {this.view && this.languages.length === 0 ? null : (
           <UCard
-            title="LANGUAGES"
+            title="Languages"
             class="mb-6"
             v-slots={{
               'header-extra': () => {
@@ -152,31 +152,31 @@ export default defineComponent({
             }}
           >
             {this.editMode ? (
-              <div class="flex flex-col mt-6">
+              <div class="flex flex-col ">
                 <UForm rules={rules} model={this.info} ref={(ref: any) => (this.form = ref)}>
                   <UFormItemsFactory fields={this.fields} values={this.info} />
                 </UForm>
                 {btnGroup(handleEditMode(), handleSubmit)}
               </div>
             ) : (
-              <div class="flex flex-col mt-6">
+              <div class="flex flex-col ">
                 {this.languages.length === 0 ? (
-                  <p class="font-[400] text-14px text-grey4">Add your Languages</p>
+                  <p class="text-color2 u-h5">Add your Languages</p>
                 ) : (
                   <>
                     {this.languages.map(item => (
                       <div
-                        class={`cursor-pointer -mx-3.5 px-3.5 flex items-center h-11 rounded-6px ${listHover['list-hover']}`}
+                        class={`cursor-pointer -mx-3.5 px-3.5 flex items-center h-11 rounded-sm ${listHover['list-hover']}`}
                       >
                         <div class="flex flex-1 items-center overflow-hidden">
                           <p
                             title={LanguageList.find(l => l.value === item.language)?.label}
-                            class="h-18px max-w-2/3 p-1px text-grey1 truncate u-body4"
+                            class="h-5 max-w-2/3 text-color1 truncate u-h6"
                           >
                             {LanguageList.find(l => l.value === item.language)?.label}
                           </p>
-                          <p class="bg-grey5 h-3 mx-2 w-1px"></p>
-                          <p class="text-grey3 u-tag truncate">{item.level}</p>
+                          <p class="bg-color3 h-3 mx-2 w-1px"></p>
+                          <p class="text-color3 u-tag truncate">{item.level}</p>
                         </div>
                         <div
                           class={`hidden mr-4 ${

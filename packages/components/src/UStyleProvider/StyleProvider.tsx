@@ -6,10 +6,36 @@ import type { ExtractPropTypes } from 'vue'
 import '../UTypography/font.css'
 
 export const UStyleProviderProps = {
+  // ui 2.0
   primaryColor: {
     type: String,
     default: '#5331F4'
   },
+  color1: {
+    type: String,
+    default: '#000'
+  },
+  color2: {
+    type: String,
+    default: 'rgba(0,0,0,.5)'
+  },
+  color3: {
+    type: String,
+    default: 'rgba(0,0,0,.3)'
+  },
+  colorLine: {
+    type: String,
+    default: 'rgba(0,0,0,.1)'
+  },
+  colorBorder: {
+    type: String,
+    default: '#DADCE0'
+  },
+  colorHover: {
+    type: String,
+    default: '#F0F0F0'
+  },
+  // old
   primary1Color: {
     type: String,
     default: '#3F2D99'
@@ -91,10 +117,10 @@ const UStyleProvider = defineComponent({
         heightLarge: '48px',
         heightMedium: '40px',
         heightSmall: '36px',
-        borderRadius: '8px',
+        borderRadius: '2px',
         borderRadiusLarge: '8px',
-        borderRadiusMedium: '8px',
-        borderRadiusSmall: '8px',
+        borderRadiusMedium: '4px',
+        borderRadiusSmall: '2px',
         primaryColor: props.primaryColor,
         infoColor: props.infoColor,
         successColor: props.successColor,
@@ -104,7 +130,7 @@ const UStyleProvider = defineComponent({
         primaryColorPressed: props.primaryColor,
         successColorHover: props.successColor,
         successColorPressed: props.successColor,
-        textColor2: props.grey1Color,
+        textColor2: props.color1,
         skipLinks: props.skipLinks
       },
       Form: {
@@ -127,17 +153,17 @@ const UStyleProvider = defineComponent({
       Input: {
         border: `1px solid ${props.grey5Color}`,
         borderFocus: `1px solid ${props.primaryColor}`,
-        borderHover: `1px solid ${props.primaryColor}`,
+        borderHover: `1px solid transparent`,
         borderWarning: `1px solid ${props.warningColor}`,
         borderError: `1px solid ${props.errorColor}`,
         borderDisabled: `1px solid ${props.grey5Color}`,
         placeholderColor: props.grey3Color,
-        // textColor: props.grey3Color,
+        fontSizeMedium: '14px',
         fontSizeLarge: '16px',
         paddingLarge: '16px'
       },
       Scrollbar: {
-        color: props.primary1Color,
+        color: props.primaryColor,
         colorHover: props.primaryColor
       },
       Checkbox: {
@@ -145,8 +171,18 @@ const UStyleProvider = defineComponent({
       },
       Card: {
         paddingHuge: '40px',
-        borderRadius: '8px',
-        borderColor: props.grey5Color
+        borderRadius: '2px',
+        borderColor: props.colorBorder,
+        paddingMedium: '24px',
+        titleTextColor: props.color2
+      },
+      InternalSelection: {
+        borderHover: `1px solid transparent`,
+        placeholderColor: props.color2
+      },
+      Tabs: {
+        tabTextColorActiveBar: props.primaryColor,
+        tabTextColorBar: props.primary1Color
       }
     }))
 
@@ -156,10 +192,16 @@ const UStyleProvider = defineComponent({
       const warningColor = hex2rgb(props.warningColor)
       style.innerHTML = `:root {
         --u-primary-value: ${r}, ${g}, ${b};
+        --u-color-1: ${props.color1};
+        --u-color-2: ${props.color2};
+        --u-color-3: ${props.color3};
+        --u-color-line: ${props.colorLine};
+        --u-color-border: ${props.colorBorder};
+        --u-color-hover: ${props.colorHover};
         --u-primary2-value: ${primary2Color.r},${primary2Color.g},${primary2Color.b};
         --u-primary-color: ${props.primaryColor};
         --u-primary-1-color: ${props.primary1Color};
-        --u-primary-2-color: ${props.primary2Color}; 
+        --u-primary-2-color: ${props.primary2Color};
         --u-error-color: ${props.errorColor};
         --u-success-color: ${props.successColor};
         --u-warning-color: ${props.warningColor};
@@ -169,7 +211,7 @@ const UStyleProvider = defineComponent({
         --u-grey-2-color: ${props.grey2Color};
         --u-grey-3-color: ${props.grey3Color};
         --u-grey-4-color: ${props.grey4Color};
-        --u-grey-5-color: ${props.grey5Color}; 
+        --u-grey-5-color: ${props.grey5Color};
         --u-green-1-color: ${props.green1Color};
         --u-purple-color: ${props.purpleBg};
         --u-purple-light-color: ${props.purpleLightBg};

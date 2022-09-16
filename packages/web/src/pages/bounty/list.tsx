@@ -1,4 +1,5 @@
-import { UDropdownFilter } from '@comunion/components'
+import { UDropdownFilter, USpin, UTab, UTabs } from '@comunion/components'
+import { debounce } from '@comunion/utils'
 import {
   defineComponent,
   ref,
@@ -11,6 +12,7 @@ import {
 } from 'vue'
 import BountyCard from './components/BountyCard'
 import BountySkeleton from './components/BountySkeleton'
+import SearchInput from '@/components/SearchInput'
 import { BOUNTY_TYPES } from '@/constants'
 import { services } from '@/services'
 
@@ -19,7 +21,8 @@ import { BountyItem } from '@/types'
 const BountyPage = defineComponent({
   name: 'BountyPage',
   setup() {
-    const CreatedType = ref('Created:Recent')
+    const searchType = ref(undefined)
+    const searchInput = ref<string>('')
     const DataList = ref<BountyItem[]>([])
     const pagination = reactive<{
       pageSize: number
@@ -33,32 +36,41 @@ const BountyPage = defineComponent({
       loading: false
     })
 
-    const fetchData = async () => {
-      console.log('CreatedType', CreatedType.value)
+    const fetchData = async (reload?: boolean) => {
       const { error, data } = await services['bounty@bounty-list(tab)']({
         page: pagination.page,
-        sort: CreatedType.value
+        mode:
+          searchType.value !== undefined ? BOUNTY_TYPES.indexOf(searchType.value) + 1 : undefined,
+        keyword: searchInput.value,
+        sort: ''
       })
       if (!error) {
-        DataList.value.push(...(data!.rows as unknown as BountyItem[]))
+        if (reload) {
+          DataList.value = data!.rows as unknown as BountyItem[]
+        } else {
+          DataList.value.push(...(data!.rows as unknown as BountyItem[]))
+        }
+
         pagination.total = data?.totalRows
       }
     }
-    const onLoadMore = async (p: number) => {
+    const onLoadMore = async (p: number, reload?: boolean) => {
       pagination.loading = true
       pagination.page = p
-      await fetchData()
+      await fetchData(reload)
       pagination.loading = false
     }
     // filter
+    const debounceLoad = debounce(onLoadMore)
+
     watch(
-      () => CreatedType.value,
-      () => {
-        setTimeout(() => {
-          DataList.value = []
-          onLoadMore(1)
-        }, 0)
-      }
+      () => searchType.value,
+      () => debounceLoad(1, true)
+    )
+
+    watch(
+      () => searchInput.value,
+      () => debounceLoad(1, true)
     )
 
     const isLastPage = computed(() => {
@@ -95,27 +107,46 @@ const BountyPage = defineComponent({
       document.removeEventListener('scroll', scrollHandler)
     })
 
+    const tabsChange = (tabName: string) => {
+      console.log(tabName)
+      return false
+    }
+
     return () => (
-      <div class="mt-10 mb-16">
-        <div class="flex mb-8">
-          {/* <h3 class="text-grey1 u-h3">{pagination.total?.toLocaleString()} Bounties available</h3> */}
-          <div class="flex ml-auto self-end items-center u-body4 ">
-            Filter by:
-            <UDropdownFilter
-              options={BOUNTY_TYPES.map(item => ({ label: item, value: item }))}
-              placeholder="Startup Type"
-              class="rounded border-1 h-10 ml-6 w-50"
-              clearable
-              v-model:value={CreatedType.value}
-            />
+      <USpin show={pagination.loading}>
+        <div class="mt-8 mb-16">
+          <div class="flex mb-6">
+            <div class="flex-1">
+              <UTabs onBeforeLeave={tabsChange} class="no-border">
+                <UTab name="BOUNTY">BOUNTY</UTab>
+                <UTab name="OFFERING" disabled>
+                  <span class=" text-color3">OFFERING</span>
+                </UTab>
+              </UTabs>
+            </div>
+            <div class="flex items-start">
+              <UDropdownFilter
+                options={BOUNTY_TYPES.map(item => ({ label: item, value: item }))}
+                placeholder="All Status"
+                class="rounded mr-4 w-37"
+                clearable
+                v-model:value={searchType.value}
+              />
+
+              <SearchInput
+                v-model:value={searchInput.value}
+                placeholder="Search"
+                loading={pagination.loading}
+              />
+            </div>
           </div>
+          {DataList.value.map(item => (
+            <BountyCard key={item.bountyId} startup={item} />
+          ))}
+          {pagination.loading &&
+            new Array(pagination.pageSize).fill('').map(item => <BountySkeleton />)}
         </div>
-        {DataList.value.map(item => (
-          <BountyCard key={item.bountyId} startup={item} />
-        ))}
-        {pagination.loading &&
-          new Array(pagination.pageSize).fill('').map(item => <BountySkeleton />)}
-      </div>
+      </USpin>
     )
   }
 })

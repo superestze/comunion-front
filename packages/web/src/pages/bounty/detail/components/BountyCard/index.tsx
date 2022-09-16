@@ -65,7 +65,7 @@ export default defineComponent({
           <div class="flex flex-col flex-grow flex-1">
             <UTooltip width={400} placement="top-start" trigger="hover">
               {{
-                trigger: () => <span class=" u-h4">{this.bountyDetail?.title}</span>,
+                trigger: () => <span class=" u-h4 text-color1">{this.bountyDetail?.title}</span>,
                 default: () => this.bountyDetail?.title
               }}
             </UTooltip>
@@ -75,7 +75,7 @@ export default defineComponent({
                   return (
                     <UTag
                       key={i}
-                      class="mr-2 mb-2 px-2 !border-[#3F2D99] !h-1.25rem !text-[#3F2D99] !leading-1.25rem"
+                      class="mr-2 mb-2 px-2 !h-1.25rem !text-[#211B42] !leading-4 font-primary "
                     >
                       {tag}
                     </UTag>
@@ -84,22 +84,16 @@ export default defineComponent({
             </div>
           </div>
           {this.bountyStatus && (
-            <span
-              class="rounded-sm h-1.25rem mt-1 ml-2 px-2 text-0.75rem leading-1.25rem inline-block"
-              style={{
-                color: '#fff',
-                'background-color': this.bountyStatus.value
-              }}
-            >
+            <span class="!border-1 !border-[#DADCE0] inline-block px-2 py-0.5 h-5 rounded-[2px] text-color3 flex-shrink-0">
               {this.bountyStatus.label}
             </span>
           )}
         </div>
         <Paragraph
-          class="mt-8"
+          class="mt-6"
           label={'Created :'}
           content={this.createdAt}
-          contentClass="text-primary2"
+          contentClass="text-color2"
         />
         {this.bountyDetail?.contact?.map(item => {
           return (
@@ -116,13 +110,13 @@ export default defineComponent({
           class="mt-4"
           label={'Apply Cutoff Date :'}
           content={dayjs.utc(this.bountyDetail?.expiresIn).format('YYYY-MM-DD HH:mm UTC')}
-          contentClass="text-primary2"
+          contentClass="text-color2 font-primary"
         />
         <Paragraph
           class="mt-4"
           label={'Applicants deposit :'}
           content={`${this.bountyDetail?.applicantsDeposit} USDC`}
-          contentClass="text-primary2"
+          contentClass="text-color2 font-primary"
         />
         <Paragraph
           class="mt-4"
@@ -131,11 +125,11 @@ export default defineComponent({
           foldAble={true}
           fold={this.fold}
           maxHeight={300}
-          contentClass="text-primary2"
+          contentClass="text-color3 font-primary"
           ref={(ref: any) => (this.pRef = ref)}
         />
         {this.showMoreBtn && (
-          <div class="flex mt-20px justify-end">
+          <div class="flex mt-6 justify-end">
             <More onMore={this.handleMore} fold={this.fold} />
           </div>
         )}

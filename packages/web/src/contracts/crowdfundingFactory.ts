@@ -10,7 +10,7 @@ import { useWalletStore, useChainStore, abiType } from '@/stores'
 export const CrowdfundingFactoryAddresses = () => {
   const walletStore = useWalletStore()
   const chainStore = useChainStore()
-  const addres = (chainStore.abiInfo as abiType)[walletStore.chainId!]?.bounty?.address || ''
+  const addres = (chainStore.abiInfo as abiType)[walletStore.chainId!]?.crowdfunding?.address || ''
   return addres
 }
 // const abi =
@@ -80,7 +80,7 @@ export function useCrowdfundingFactoryContract(
     ),
     getDeployedCrowdfundingContracts: wrapTransaction(
       { ...getContractArgs.value, ...params },
-      'getDeployedCrowdfundingContracts'
+      'children'
     ),
     owner: wrapTransaction({ ...getContractArgs.value, ...params }, 'owner'),
     renounceOwnership: wrapTransaction(

@@ -17,11 +17,13 @@ export default defineComponent({
       <>
         {this.end ? null : (
           <div
-            class="w-100px flex justify-end items-center text-primary cursor-pointer"
+            class="cursor-pointer flex px-4 text-color2 group justify-center items-center u-h5 hover:text-primary"
             onClick={handleMore}
           >
-            <span class="u-title2 mr-4 text-primary">More</span>
-            <ArrowDownOutlined />
+            <span class="mr-2">
+              {typeof this.$slots.text === 'function' ? this.$slots.text() : 'More'}
+            </span>
+            <ArrowDownOutlined class={`text-color2 w-4 h-4 group-hover:text-primary `} />
           </div>
         )}
       </>

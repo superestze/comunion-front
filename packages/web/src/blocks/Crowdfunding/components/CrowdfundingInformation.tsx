@@ -42,6 +42,7 @@ export const CrowdfundingInformation = defineComponent({
     onMounted(() => {
       props.crowdfundingInfo.buyTokenContract = raiseGoalOptions.value[0].value as string
       props.crowdfundingInfo.buyTokenName = raiseGoalOptions.value[0].label as string
+      props.crowdfundingInfo.buyTokenSymbol = raiseGoalOptions.value[0].label as string
     })
     const totalSellToken = computed(() => {
       if (props.crowdfundingInfo.raiseGoal && props.crowdfundingInfo.buyPrice) {
@@ -188,7 +189,7 @@ export const CrowdfundingInformation = defineComponent({
           label: () => [
             h(
               <div class="flex items-end">
-                IBO Rate
+                Rate
                 <span class="n-form-item-label__asterisk">&nbsp;*</span>
                 <span class="ml-1 u-body2">
                   1 {props.crowdfundingInfo.buyTokenName} = {props.crowdfundingInfo.buyPrice || '?'}{' '}
@@ -201,12 +202,12 @@ export const CrowdfundingInformation = defineComponent({
         rules: [
           {
             validator: (rule, value) => !!value,
-            message: 'IBO Rate cannot be blank',
+            message: 'Rate cannot be blank',
             trigger: ['blur']
           },
           {
             validator: (rule, value) => value > 0,
-            message: ' IBO Rate must be positive number',
+            message: ' Rate must be positive number',
             trigger: 'blur'
           }
         ],
@@ -435,7 +436,8 @@ export const CrowdfundingInformation = defineComponent({
           <UFormItemsFactory fields={this.formFields} values={this.crowdfundingInfo} />
         </UForm>
         <div class="bg-purple rounded-lg mt-4 py-5.5 px-6">
-          Need <span class="text-primary">{this.totalSellToken}</span> UVU to create dCrowdfunding.
+          Need <span class="text-primary">{this.totalSellToken}</span>{' '}
+          {this.crowdfundingInfo.sellTokenSymbol} to create dCrowdfunding.
         </div>
       </div>
     )

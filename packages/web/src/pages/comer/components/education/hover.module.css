@@ -1,5 +1,5 @@
 .list-hover:hover {
-  @apply bg-purple;
+  @apply bg-color-hover;
 }
 
 .list-hover:hover > .hidden {

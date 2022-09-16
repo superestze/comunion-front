@@ -29,7 +29,7 @@ export default defineComponent({
     })
 
     const title = computed(() => {
-      return `TEAM（${list.value.length}）`
+      return `Team（${list.value.length}）`
     })
 
     return {
@@ -87,8 +87,8 @@ export default defineComponent({
               ),
               content: () => (
                 <div class="flex-1 overflow-hidden">
-                  <p class="text-grey1 truncate u-title3">{item.comerProfile?.name}</p>
-                  <p class="u-tag truncate !px-0 !text-grey3">{item.comerProfile?.location}</p>
+                  <p class="text-grey1 truncate u-h4">{item.comerProfile?.name}</p>
+                  <p class="u-h7 truncate !px-0 !text-grey3">{item.comerProfile?.location}</p>
                 </div>
               )
             }}

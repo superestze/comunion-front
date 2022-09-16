@@ -117,7 +117,7 @@ export default defineComponent({
             }}
           >
             {this.editMode ? (
-              <div class="flex flex-col mt-6">
+              <div class="flex flex-col">
                 <UForm rules={rules} model={this.info} ref={(ref: any) => (this.form = ref)}>
                   <UFormItemsFactory fields={this.fields} values={this.info} />
                 </UForm>
@@ -126,7 +126,7 @@ export default defineComponent({
             ) : (
               <>
                 {this.content.trim() === '' ? (
-                  <p class="font-[400] mt-6 text-14px text-grey4">Edit your Bio</p>
+                  <p class="font-[400] text-14px text-grey4">Edit your Bio</p>
                 ) : (
                   <>
                     <div

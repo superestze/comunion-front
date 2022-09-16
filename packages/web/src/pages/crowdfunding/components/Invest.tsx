@@ -424,14 +424,22 @@ export const Invest = defineComponent({
       console.log('maxSell.value==>', maxSell.value)
     }
 
+    const chainID = walletStore.chainId
     const getFundingState = async () => {
-      fundingContractState.value = await fundingContract.state('', '')
-      raiseState.value.raiseGoal = Number(ethers.utils.formatEther(fundingContractState.value[0]))
-      raiseState.value.raiseAmount = Number(ethers.utils.formatEther(fundingContractState.value[1]))
-      raiseState.value.raisePercent =
-        Number(formatToFloor(raiseState.value.raiseAmount / raiseState.value.raiseGoal, 4)) * 100
-      raiseState.value.swapAmount = Number(ethers.utils.formatEther(fundingContractState.value[2]))
-      console.log('fundingContractState.value===>', fundingContractState.value)
+      // console.log('props.info', props.info)
+      if (props.info.chainId == chainID) {
+        const fundingContractState = await fundingContract.state('', '')
+        raiseState.value.raiseGoal = Number(ethers.utils.formatEther(fundingContractState[0]))
+        raiseState.value.raiseAmount = Number(ethers.utils.formatEther(fundingContractState[1]))
+        raiseState.value.raisePercent =
+          Number(formatToFloor(raiseState.value.raiseAmount / raiseState.value.raiseGoal, 4)) * 100
+        raiseState.value.swapAmount = Number(ethers.utils.formatEther(fundingContractState[2]))
+      } else {
+        raiseState.value.raiseGoal = Number(props.info.raiseGoal)
+        raiseState.value.raiseAmount = Number(props.info.raiseBalance)
+        raiseState.value.raisePercent = Number(props.info.raisedPercent)
+        raiseState.value.swapAmount = Number(props.info.swapPercent)
+      }
     }
 
     onMounted(() => {
@@ -452,7 +460,7 @@ export const Invest = defineComponent({
         <UTooltip>
           {{
             trigger: () => (
-              <div class="font-bold font-orbitron text-primary text-xl leading-8">
+              <div class="font-bold font-primary text-primary text-xl leading-8">
                 {Number(data).toFixed(2).replace(/\.00$/, '')}
               </div>
             ),
@@ -563,7 +571,7 @@ export const Invest = defineComponent({
         <div class="bg-grey5 w-px"></div>
         <div class="flex-1">
           <div class="flex mb-2 justify-between">
-            <span class="font-orbitron u-title1">{mode.value === 'buy' ? 'INVEST' : 'SELL'}</span>
+            <span class="font-primary u-title1">{mode.value === 'buy' ? 'INVEST' : 'SELL'}</span>
             <span class="flex bg-[rgba(83,49,244,0.06)] rounded-4xl leading-snug py-1 px-4 text-primary1 items-center">
               <img src={chainInfo?.logo} class="h-5 w-5" />{' '}
               <span class="font-opensans font-600 ml-2">{chainInfo?.name}</span>

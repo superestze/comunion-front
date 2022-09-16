@@ -22,7 +22,7 @@ export function wrapTransaction(
       contractStore.startContract(pengdingText)
     }
     let options: any
-    if (functionName === 'newStartup') {
+    if (functionName === 'createStartup') {
       options = fnArgs.pop()
     } else {
       options = {}

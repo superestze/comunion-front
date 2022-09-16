@@ -78,7 +78,7 @@ export const InvestmentRecords = defineComponent({
   },
   render() {
     return (
-      <UCard title="INVESTMENT RECORD">
+      <UCard title="Investment record">
         <UScrollList
           triggered={this.pagination.loading}
           page={this.pagination.page}

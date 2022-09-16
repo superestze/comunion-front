@@ -5,7 +5,7 @@ const StartupSkeleton = defineComponent({
   name: 'StartupSkeleton',
   setup(props) {
     return () => (
-      <div class="bg-white rounded-md h-36 mb-1.5rem px-10 pt-2rem">
+      <div class="bg-white rounded-md h-33 mb-1.5rem px-10 pt-2rem">
         <div class="flex ">
           <USkeleton class="rounded-md mr-3" width="3.75rem" height="3.75rem" />
           <div class="flex-1">

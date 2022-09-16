@@ -1,14 +1,9 @@
 /**
  * Bounty types
  */
-export const BOUNTY_TYPES = [
-  'Created:Recent',
-  'Created:Oldest',
-  'Value:Highest',
-  'Value:Lowest',
-  'Deposit:Highest',
-  'Deposit:Lowest'
-] as const
+import { ServiceReturn } from '@/services'
+
+export const BOUNTY_TYPES = ['Ready to work', 'Started working', 'Completed'] as const
 
 export const BOUNTY_TYPES_COLOR_MAP = [
   {
@@ -59,6 +54,9 @@ export enum USER_ROLE {
 }
 
 export const TRANSCATION_URL: { [key: number]: string } = {
+  5: 'https://goerli.etherscan.io/tx/',
+  97: 'https://testnet.bscscan.com/tx/',
+  4002: 'https://testnet.ftmscan.com/tx/',
   43113: 'https://cchain.explorer.avax-test.network/tx/',
   43114: 'https://etherscan.io/tx/'
 }
@@ -71,3 +69,5 @@ export const PERIOD_OPTIONS = [
 
 // Get the currency types supported by bounty
 export const BASE_CURRENCY: string[] = ['USDC', 'USD', 'RMB']
+
+export type BountyItemType = NonNullable<ServiceReturn<'bounty@bounty-list(tab)'>>['rows']

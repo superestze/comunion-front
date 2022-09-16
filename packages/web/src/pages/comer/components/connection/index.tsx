@@ -1,8 +1,6 @@
-import { UCard, UNoContent, UStartupLogo } from '@comunion/components'
-import { EmptyFilled } from '@comunion/icons'
+import { UCard, UStartupLogo, UDropdownFilter } from '@comunion/components'
 import { defineComponent, ref, watch, onMounted } from 'vue'
 
-import Switch from './switch'
 import { useConnector } from './useConnector'
 import { useFollowComer } from './useFollowComer'
 import { useFollowedStartups } from './useFollowedStartups'
@@ -59,9 +57,6 @@ export default defineComponent({
     }
   },
   render() {
-    const tabsChange = (id: string) => {
-      this.currentTabId = id
-    }
     const handleMore = () => {
       if (this.currentTabId === '0') {
         this.followedStartups.page.value += 1
@@ -94,151 +89,167 @@ export default defineComponent({
         this.connector.unconnect(item.comerId, item.cb)
       }
     }
+
+    const tabContents = [
+      <>
+        {this.followedStartups.list.value.length > 0 && (
+          <>
+            {this.followedStartups.list.value.map(item => {
+              return (
+                <BasicItem
+                  item={item}
+                  onConnect={handleConnect}
+                  onUnconnect={handleUnConnect}
+                  keyMap={{
+                    name: 'startupName',
+                    follow: 'followedByMe'
+                  }}
+                  v-slots={{
+                    avatar: () => (
+                      <div
+                        class="cursor-pointer flex h-11 w-11 items-center overflow-hidden"
+                        onClick={() => this.$router.push(`/startup/${item.startupId}`)}
+                      >
+                        <UStartupLogo src={item.startupLogo} />
+                      </div>
+                    )
+                  }}
+                />
+              )
+            })}
+          </>
+        )}
+        {this.followedStartups.total.value > 5 && (
+          <div class="flex mt-5 justify-center">
+            <LoadingBtn
+              onMore={handleMore}
+              end={this.followedStartups.list.value.length >= this.followedStartups.total.value}
+              v-slots={{
+                text: () => {
+                  return `More${this.tabsInstance.tabs.value[0].subTitle}`
+                }
+              }}
+            />
+          </div>
+        )}
+      </>,
+      <>
+        {this.followComer.list.value.length > 0 && (
+          <>
+            {this.followComer.list.value.map(item => {
+              return (
+                <BasicItem
+                  item={item}
+                  onConnect={handleConnect}
+                  onUnconnect={handleUnConnect}
+                  keyMap={{
+                    name: 'comerName',
+                    follow: 'followedByMe'
+                  }}
+                  v-slots={{
+                    avatar: () => (
+                      <div
+                        class="cursor-pointer flex h-11 w-11 "
+                        onClick={() =>
+                          this.$router.push({ path: '/comer', query: { id: item.comerId } })
+                        }
+                      >
+                        <UStartupLogo src={item.comerAvatar} width="11" height="11" />
+                      </div>
+                    )
+                  }}
+                />
+              )
+            })}
+          </>
+        )}
+        {this.followComer.total.value > 5 && (
+          <div class="flex mt-5 justify-center">
+            <LoadingBtn
+              onMore={handleMore}
+              end={this.followComer.list.value.length >= this.followComer.total.value}
+              v-slots={{
+                text: () => {
+                  return `More${this.tabsInstance.tabs.value[1].subTitle}`
+                }
+              }}
+            />
+          </div>
+        )}
+      </>,
+      <>
+        {this.connector.list.value.length > 0 && (
+          <>
+            {this.connector.list.value.map(item => {
+              return (
+                <BasicItem
+                  item={item}
+                  onConnect={handleConnect}
+                  onUnconnect={handleUnConnect}
+                  keyMap={{
+                    name: 'comerName',
+                    follow: 'followedByMe'
+                  }}
+                  v-slots={{
+                    avatar: () => (
+                      <div
+                        class="cursor-pointer flex h-11 w-11 items-center overflow-hidden"
+                        onClick={() =>
+                          this.$router.push({ path: '/comer', query: { id: item.comerId } })
+                        }
+                      >
+                        <UStartupLogo src={item.comerAvatar} width="11" height="11" />
+                      </div>
+                    )
+                  }}
+                />
+              )
+            })}
+          </>
+        )}
+        {this.connector.total.value > 5 && (
+          <div class="flex mt-5 justify-center">
+            <LoadingBtn
+              onMore={handleMore}
+              end={this.connector.list.value.length >= this.connector.total.value}
+              v-slots={{
+                text: () => {
+                  return `More${this.tabsInstance.tabs.value[2].subTitle}`
+                }
+              }}
+            />
+          </div>
+        )}
+      </>
+    ]
+
     return (
-      <UCard title="CONNECTED" class="mb-6">
-        <div class="flex flex-col mt-6">
-          <Switch
+      <UCard
+        title="Connected"
+        class="mb-6"
+        v-slots={{
+          'header-extra': () => {
+            return (
+              <UDropdownFilter
+                options={this.tabsInstance.tabs.value.map(item => ({
+                  label: `${item.title}`,
+                  value: item.id
+                }))}
+                class="mr-4 w-32"
+                v-model:value={this.currentTabId}
+                consistent-menu-width={false}
+              />
+            )
+          }
+        }}
+      >
+        <div class="flex flex-col">
+          {/* <Switch
             tabs={this.tabsInstance.tabs.value}
             onSwitchPanel={tabsChange}
             currentId={this.currentTabId}
-          />
-          <div class="flex flex-col">
-            {this.currentTabId === '0' && (
-              <>
-                {this.followedStartups.list.value.length > 0 ? (
-                  <>
-                    {this.followedStartups.list.value.map(item => {
-                      return (
-                        <BasicItem
-                          item={item}
-                          onConnect={handleConnect}
-                          onUnconnect={handleUnConnect}
-                          keyMap={{
-                            name: 'startupName',
-                            follow: 'followedByMe'
-                          }}
-                          v-slots={{
-                            avatar: () => (
-                              <div
-                                class="cursor-pointer flex h-9 w-9 items-center overflow-hidden"
-                                onClick={() => this.$router.push(`/startup/${item.startupId}`)}
-                              >
-                                <UStartupLogo src={item.startupLogo} width="9" height="9" />
-                              </div>
-                            )
-                          }}
-                        />
-                      )
-                    })}
-                  </>
-                ) : (
-                  <UNoContent textTip="NO STARTUP YET" class="my-10">
-                    <EmptyFilled />
-                  </UNoContent>
-                )}
-                {this.followedStartups.total.value > 5 && (
-                  <div class="flex mt-5 justify-center">
-                    <LoadingBtn
-                      onMore={handleMore}
-                      end={
-                        this.followedStartups.list.value.length >= this.followedStartups.total.value
-                      }
-                    />
-                  </div>
-                )}
-              </>
-            )}
-            {this.currentTabId === '1' && (
-              <>
-                {this.followComer.list.value.length > 0 ? (
-                  <>
-                    {this.followComer.list.value.map(item => {
-                      return (
-                        <BasicItem
-                          item={item}
-                          onConnect={handleConnect}
-                          onUnconnect={handleUnConnect}
-                          keyMap={{
-                            name: 'comerName',
-                            follow: 'followedByMe'
-                          }}
-                          v-slots={{
-                            avatar: () => (
-                              <div
-                                class="cursor-pointer flex h-9 w-9 items-center overflow-hidden"
-                                onClick={() =>
-                                  this.$router.push({ path: '/comer', query: { id: item.comerId } })
-                                }
-                              >
-                                <UStartupLogo src={item.comerAvatar} width="9" height="9" />
-                              </div>
-                            )
-                          }}
-                        />
-                      )
-                    })}
-                  </>
-                ) : (
-                  <UNoContent textTip="NO COMER YET" class="my-10">
-                    <EmptyFilled />
-                  </UNoContent>
-                )}
-                {this.followComer.total.value > 5 && (
-                  <div class="flex mt-5 justify-center">
-                    <LoadingBtn
-                      onMore={handleMore}
-                      end={this.followComer.list.value.length >= this.followComer.total.value}
-                    />
-                  </div>
-                )}
-              </>
-            )}
-            {this.currentTabId === '2' && (
-              <>
-                {this.connector.list.value.length > 0 ? (
-                  <>
-                    {this.connector.list.value.map(item => {
-                      return (
-                        <BasicItem
-                          item={item}
-                          onConnect={handleConnect}
-                          onUnconnect={handleUnConnect}
-                          keyMap={{
-                            name: 'comerName',
-                            follow: 'followedByMe'
-                          }}
-                          v-slots={{
-                            avatar: () => (
-                              <div
-                                class="cursor-pointer flex h-9 w-9 items-center overflow-hidden"
-                                onClick={() =>
-                                  this.$router.push({ path: '/comer', query: { id: item.comerId } })
-                                }
-                              >
-                                <UStartupLogo src={item.comerAvatar} width="9" height="9" />
-                              </div>
-                            )
-                          }}
-                        />
-                      )
-                    })}
-                  </>
-                ) : (
-                  <UNoContent textTip="NO CONNECTOR YET" class="my-10">
-                    <EmptyFilled />
-                  </UNoContent>
-                )}
-                {this.connector.total.value > 5 && (
-                  <div class="flex mt-5 justify-center">
-                    <LoadingBtn
-                      onMore={handleMore}
-                      end={this.connector.list.value.length >= this.connector.total.value}
-                    />
-                  </div>
-                )}
-              </>
-            )}
-          </div>
+          /> */}
+          {!isNaN(Number(this.currentTabId)) && tabContents[Number(this.currentTabId)]}
         </div>
       </UCard>
     )

@@ -129,7 +129,7 @@ const UInputBigNumber = defineComponent({
           onMouseup={longEnterEnd}
           onMouseleave={longEnterEnd}
         >
-          <NumberUpOutlined class="cursor-pointer text-grey1 block" onClick={addCurrentValue} />
+          <NumberUpOutlined class="cursor-pointer text-color1 block" onClick={addCurrentValue} />
         </div>
         <div
           style={{ height: '12px' }}
@@ -137,7 +137,10 @@ const UInputBigNumber = defineComponent({
           onMouseup={longEnterEnd}
           onMouseleave={longEnterEnd}
         >
-          <NumberDownOutlined class="cursor-pointer text-grey1 block" onClick={minusCurrentValue} />
+          <NumberDownOutlined
+            class="cursor-pointer text-color1 block"
+            onClick={minusCurrentValue}
+          />
         </div>
       </div>
     )

@@ -6,11 +6,11 @@ import '../ULazyImage/LazyImage.css'
 export const UStartupLogoProps = {
   width: {
     type: String,
-    required: true
+    default: 0
   },
   height: {
     type: String,
-    required: true
+    default: 0
   },
   src: {
     type: String,
@@ -50,18 +50,26 @@ const UStartupLogo = defineComponent({
     return () =>
       loaded.value ? (
         <img
-          class="u-lazy-image-img"
+          class="rounded h-full object-cover w-full"
           src={props.src}
           alt={props.alt}
           {...{ loading: 'lazy' }}
           {...ctx.attrs}
         />
       ) : (
-        <div class={['border-1 border-grey5 flex', { failed: errored.value }]} {...ctx.attrs}>
-          {errored.value ? (
-            <StartupLogoFilled class={`w-${props.width} h-${props.height} m-auto`} />
-          ) : (
-            ''
+        <div
+          class={[
+            'rounded border-1 border-color-border w-full h-full flex items-center',
+            { failed: errored.value }
+          ]}
+          {...ctx.attrs}
+        >
+          {errored.value && (
+            <StartupLogoFilled
+              class={`${props.width ? 'w-' + props.width : 'w-full'} ${
+                props.height ? 'h-' + props.height : 'h-full'
+              } m-auto`}
+            />
           )}
         </div>
       )

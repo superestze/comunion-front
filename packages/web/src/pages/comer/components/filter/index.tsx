@@ -33,9 +33,9 @@ export default defineComponent({
     }
 
     return (
-      <div class="bg-white border rounded-lg mb-6 py-6 px-8 relative overflow-hidden">
+      <div class="bg-white border border-color-border rounded-sm mb-6 py-6 px-8 relative overflow-hidden">
         <UTabs onUpdateValue={tabsChange}>
-          <UTabPane name="CREATED" tab="CREATED">
+          <UTabPane name="CREATED" tab="Created">
             <ModuleTags
               class="mt-2"
               tasks={this.tasks}
@@ -43,7 +43,7 @@ export default defineComponent({
               ref={(ref: any) => (this.tag2 = ref)}
             />
           </UTabPane>
-          <UTabPane name="PARTICIPATED" tab="PARTICIPATED">
+          <UTabPane name="PARTICIPATED" tab="Participated">
             <ModuleTags
               class="mt-2"
               tasks={this.tasks}

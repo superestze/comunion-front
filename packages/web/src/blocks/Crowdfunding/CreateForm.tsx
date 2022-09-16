@@ -55,6 +55,8 @@ const CreateCrowdfundingForm = defineComponent({
       // second step
       raiseGoal: null,
       buyTokenContract: '',
+      buyTokenName: '',
+      buyTokenSymbol: '',
       swapPercent: undefined,
       buyPrice: undefined,
       maxBuyAmount: undefined,
@@ -176,6 +178,7 @@ const CreateCrowdfundingForm = defineComponent({
     }
     const postSubmit = async () => {
       try {
+        console.log(crowdfundingInfo)
         const contractRes = await contractSubmit()
         console.log('contractRes==>', contractRes)
 
@@ -202,11 +205,13 @@ const CreateCrowdfundingForm = defineComponent({
           poster: crowdfundingInfo.poster.url,
           description: crowdfundingInfo.description!,
           sellTokenContract: crowdfundingInfo.sellTokenContract!,
+          sellTokenSymbol: crowdfundingInfo.sellTokenSymbol!,
           maxSellPercent: crowdfundingInfo.maxSell!,
           buyTokenContract:
             crowdfundingInfo.buyTokenContract === MAIN_COIN_ADDR
               ? crowdfundingInfo.sellTokenContract!
               : crowdfundingInfo.buyTokenContract,
+          buyTokenSymbol: crowdfundingInfo.buyTokenSymbol!,
           sellTokenDeposit: Number(crowdfundingInfo.sellTokenDeposit),
           ...dynamic
         })

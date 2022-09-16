@@ -1,4 +1,4 @@
-import { UDropdownFilter, UInputGroup, USearch } from '@comunion/components'
+import { UDropdownFilter, USpin } from '@comunion/components'
 import { debounce } from '@comunion/utils'
 import {
   defineComponent,
@@ -13,15 +13,17 @@ import {
 import { useRouter } from 'vue-router'
 import { CrowdfundingCard } from './components/CrowdfundingCard'
 import CrowdfundingSkeleton from './components/CrowdfundingSkeleton'
+import SearchInput from '@/components/SearchInput'
 import { CrowdfundingType, CROWDFUNDING_TYPES } from '@/constants'
 import { services } from '@/services'
 import { CrowdfundingItem } from '@/types'
+import { checkSupportNetwork } from '@/utils/wallet'
 
 const CrowdfundingList = defineComponent({
   name: 'CrowdfundingList',
   setup() {
-    const startupType = ref<string | undefined>(undefined)
-    const inputMember = ref<string>('')
+    const searchType = ref<string | undefined>(undefined)
+    const searchInput = ref<string>('')
     const pagination = reactive<{
       pageSize: number
       total: number
@@ -35,52 +37,52 @@ const CrowdfundingList = defineComponent({
     })
 
     const dataList = ref<CrowdfundingItem[]>([])
-    const fetchData = async () => {
+    const fetchData = async (reload?: boolean) => {
       const { error, data } = await services['crowdfunding@public-crowdfunding-list']({
         limit: pagination.pageSize,
         page: pagination.page,
         mode:
-          startupType.value !== undefined
-            ? CROWDFUNDING_TYPES.indexOf(startupType.value as CrowdfundingType) + 1
+          searchType.value !== undefined
+            ? CROWDFUNDING_TYPES.indexOf(searchType.value as CrowdfundingType) + 1
             : undefined,
-        keyword: inputMember.value
+        keyword: searchInput.value
       })
       if (!error) {
-        dataList.value.push(...data!.rows)
-        pagination.total = data!.totalRows
+        if (reload) {
+          dataList.value = data?.rows || []
+        } else {
+          dataList.value.push(...(data?.rows || []))
+        }
+
+        pagination.total = data!.totalRows || 0
       }
     }
 
     const router = useRouter()
 
     const toDetail = async (crowdfundingId: number, chainId: number) => {
-      // const isSupport = await checkSupportNetwork(chainId)
-      // if (isSupport) {
-      router.push('/crowdfunding/' + crowdfundingId)
-      // }
+      const isSupport = await checkSupportNetwork(chainId)
+      if (isSupport) {
+        router.push('/crowdfunding/' + crowdfundingId)
+      }
     }
-    const onLoadMore = async (p: number) => {
+    const onLoadMore = async (p: number, reload?: boolean) => {
       pagination.loading = true
       pagination.page = p
-      await fetchData()
+      await fetchData(reload)
       pagination.loading = false
     }
     // filter
+    const debounceLoad = debounce(onLoadMore)
+
     watch(
-      () => startupType.value,
-      () => {
-        setTimeout(() => {
-          onLoadMore(1)
-        }, 0)
-      }
+      () => searchType.value,
+      () => debounceLoad(1, true)
     )
 
-    const debounceLoad = debounce(onLoadMore)
     watch(
-      () => inputMember.value,
-      () => {
-        debounceLoad(1)
-      }
+      () => searchInput.value,
+      () => debounceLoad(1, true)
     )
 
     const isLastPage = computed(() => {
@@ -94,9 +96,7 @@ const CrowdfundingList = defineComponent({
         const bodyRect = body?.getBoundingClientRect()
 
         if (bodyRect.height + bodyRect.top - winHeight < 240) {
-          if (isLastPage.value) {
-            document.removeEventListener('scroll', scrollHandler)
-          } else {
+          if (!isLastPage.value) {
             pagination.page++
             onLoadMore(pagination.page)
           }
@@ -118,39 +118,38 @@ const CrowdfundingList = defineComponent({
     })
 
     return () => (
-      <div class="mt-10 mb-16">
-        <div class="flex mb-8">
-          {/* <h3 class="text-grey1 u-h3">{total.value.toLocaleString()} Available</h3> */}
-          <div class="flex ml-auto self-end items-center u-body4">
-            Filter by:
+      <USpin show={pagination.loading}>
+        <div class="mt-8 mb-16">
+          <div class="flex mb-6">
+            <div class="flex-1">
+              {/* <h3 class="text-grey1 u-h3">{total.value.toLocaleString()} Available</h3> */}
+            </div>
             <UDropdownFilter
               options={CROWDFUNDING_TYPES.map(item => ({ label: item, value: item }))}
-              placeholder="ALL status"
-              class="rounded border-1 h-10 ml-6 w-37 uppercase"
+              placeholder="All Status"
+              class="rounded mr-4 w-28"
               clearable
-              v-model:value={startupType.value}
+              v-model:value={searchType.value}
             />
-            <UInputGroup class="h-10 ml-6 w-37 ">
-              <USearch
-                v-model:value={inputMember.value}
-                placeholder="Search"
-                class="bg-transparent -my-0\.5 "
+            <SearchInput
+              v-model:value={searchInput.value}
+              placeholder="Search"
+              loading={pagination.loading}
+            />
+          </div>
+          <div class="grid pb-6 gap-6 grid-cols-1 md:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4">
+            {dataList.value.map(crowdfunding => (
+              <CrowdfundingCard
+                key={crowdfunding.crowdfundingId}
+                info={crowdfunding}
+                onClick={() => toDetail(crowdfunding.crowdfundingId, crowdfunding.chainId)}
               />
-            </UInputGroup>
+            ))}
+            {pagination.loading &&
+              new Array(pagination.pageSize).fill('').map(item => <CrowdfundingSkeleton />)}
           </div>
         </div>
-        <div class="grid pb-6 gap-8 grid-cols-1 md:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4">
-          {dataList.value.map(crowdfunding => (
-            <CrowdfundingCard
-              key={crowdfunding.crowdfundingId}
-              info={crowdfunding}
-              onClick={() => toDetail(crowdfunding.crowdfundingId, crowdfunding.chainId)}
-            />
-          ))}
-          {pagination.loading &&
-            new Array(pagination.pageSize).fill('').map(item => <CrowdfundingSkeleton />)}
-        </div>
-      </div>
+      </USpin>
     )
   }
 })

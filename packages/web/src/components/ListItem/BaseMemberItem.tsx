@@ -1,5 +1,4 @@
 import { UButton } from '@comunion/components'
-import { CheckFilled, PlusOutlined } from '@comunion/icons'
 import { defineComponent, PropType, ref, watch, computed } from 'vue'
 
 export default defineComponent({
@@ -56,44 +55,39 @@ export default defineComponent({
       })
     }
     return (
-      <div class="flex w-full items-center">
-        <div class="flex h-full flex-shrink-0 mt-2px items-center justify-center">
-          {typeof this.$slots.avatar === 'function' && this.$slots.avatar()}
-        </div>
-        <div class="flex flex-1 h-17 ml-4 items-center overflow-hidden">
+      <div class="rounded-sm cursor-default flex w-full py-4 px-4 items-center hover:bg-color-hover">
+        {typeof this.$slots.avatar === 'function' && this.$slots.avatar()}
+        <div class="flex flex-1 px-4 items-center overflow-hidden">
           {typeof this.$slots.content === 'function' ? (
             this.$slots.content()
           ) : (
-            <div title={this.item[this.keyMap.name]} class="flex-1 text-grey1 truncate u-title3 ">
+            <div title={this.item[this.keyMap.name]} class="flex-1 text-color1 truncate u-h4">
               {this.item[this.keyMap.name]}
             </div>
           )}
-          {this.connect ? (
-            <UButton
-              class="flex flex-shrink-0 h-7 w-111px"
-              size="tiny"
-              secondary
-              type="tertiary"
-              disabled={this.disabled}
-              onClick={handleUnconnect}
-            >
-              <CheckFilled class="mr-2" />
-              Unconnect
-            </UButton>
-          ) : (
-            <UButton
-              class="flex flex-shrink-0 h-7 w-111px"
-              size="tiny"
-              ghost
-              type="primary"
-              disabled={this.disabled}
-              onClick={handleConnect}
-            >
-              <PlusOutlined class="h-4 mr-2 w-4" />
-              Connect
-            </UButton>
-          )}
         </div>
+        {this.connect ? (
+          <UButton
+            class="flex flex-shrink-0 text-color2 u-h7"
+            size="tiny"
+            text
+            disabled={this.disabled}
+            onClick={handleUnconnect}
+          >
+            {/* <CheckFilled class="mr-2" /> */}
+            Unconnect
+          </UButton>
+        ) : (
+          <UButton
+            class="flex flex-shrink-0 text-color2 u-h7"
+            size="tiny"
+            text
+            disabled={this.disabled}
+            onClick={handleConnect}
+          >
+            Connect
+          </UButton>
+        )}
       </div>
     )
   }
