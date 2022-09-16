@@ -58,7 +58,7 @@ export function useBountyContractWrapper(bountyId?: string) {
     bountyContractStore.initialize(bountyContract, bountyId as string, true)
   }
   const usdcTokenContract = useErc20Contract()
-  const usdc = usdcTokenContract(AVAX_USDC_ADDR[43113])
+  const usdc = usdcTokenContract(AVAX_USDC_ADDR[walletStore.chainId!])
 
   const approve = async (contractAddress: string, amount: BigNumber) => {
     const usdcRes = await usdc.approve(contractAddress, amount)
