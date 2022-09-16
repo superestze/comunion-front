@@ -15,24 +15,19 @@ export default defineComponent({
   setup(props) {
     const selectedList = ref<string[]>(['All'])
     const taskList = computed(() => {
-      const str =
-        'flex h-8 rounded-sm justify-center items-center mr-2 min-w-12 px-4 py-1.5 cursor-pointer border-1 border-gray-300'
       return props.tasks.map(task => {
-        const index = selectedList.value.findIndex(item => item === task)
-        if (index > -1) {
-          return {
-            value: task,
-            class: `${str}`,
-            active: true
-          }
-        }
+        const targetIndex = selectedList.value.findIndex(item => item === task)
+
         return {
           value: task,
-          class: `${str} text-color2 u-h6`,
-          active: false
+          class: `h-8 leading-8 rounded-sm  mr-2 min-w-12 px-4  cursor-pointer border border-color-border text-color2 u-h6 hover:text-color1 ${
+            targetIndex !== -1 ? 'text-color1' : ''
+          }`,
+          active: targetIndex !== -1
         }
       })
     })
+
     return {
       selectedList,
       taskList,
@@ -42,6 +37,7 @@ export default defineComponent({
   emits: ['selectedChange'],
   render() {
     const handleTag = (key: string) => () => {
+      console.warn(key)
       if (key === 'All') {
         this.selectedList = ['All']
         this.$emit('selectedChange', this.selectedList)
@@ -78,7 +74,7 @@ export default defineComponent({
           return (
             // style={task.active ? { borderRadius: 'rgba(83, 49, 244, 0.1)' } : {}}
             <div
-              class={`${task.class} ${task.active ? 'u-h5 !text-[#0D0D21]' : ''}`}
+              class={`${task.class} ${task.active ? '!text-color1' : ''}`}
               onClick={handleTag(task.value)}
             >
               {task.value}

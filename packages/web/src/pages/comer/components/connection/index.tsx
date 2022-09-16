@@ -102,7 +102,7 @@ export default defineComponent({
             onSwitchPanel={tabsChange}
             currentId={this.currentTabId}
           />
-          <div class="flex flex-col">
+          <div class="pt-4">
             {this.currentTabId === '0' && (
               <>
                 {this.followedStartups.list.value.length > 0 ? (
@@ -165,7 +165,7 @@ export default defineComponent({
                           v-slots={{
                             avatar: () => (
                               <div
-                                class="cursor-pointer flex h-9 w-9 items-center overflow-hidden"
+                                class="cursor-pointer flex h-9 w-9 "
                                 onClick={() =>
                                   this.$router.push({ path: '/comer', query: { id: item.comerId } })
                                 }

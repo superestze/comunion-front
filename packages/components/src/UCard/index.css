@@ -1,7 +1,7 @@
 .u-card {
   .n-card-header {
     .n-card-header__main {
-      @apply u-h5 !text-color2;
+      @apply u-h5;
     }
   }
 }

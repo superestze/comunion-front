@@ -1,4 +1,4 @@
-import { UStartupLogo } from '@comunion/components'
+import { UStartupLogo, UTag } from '@comunion/components'
 import { SettingOutlined } from '@comunion/icons'
 import { defineComponent, PropType } from 'vue'
 import { useRouter } from 'vue-router'
@@ -32,40 +32,35 @@ const StartupCard = defineComponent({
 
     return () => (
       <div
-        class="rounded cursor-pointer flex h-22 mb-4 px-4 pt-4 hover:bg-[#F5F6FA]"
+        class="rounded-sm cursor-pointer flex py-4 px-4 items-center hover:bg-color-hover"
         onClick={toStartDetail}
       >
         <UStartupLogo
           src={props.startup.logo}
           width="8"
           height="8"
-          class="rounded-md h-15 mr-3 w-15"
+          class="rounded-sm h-15 mr-4 w-15"
         />
-        <div class="flex h-full border-b-1 flex-1">
-          <div class="flex-1">
-            <div class="mb-2 u-title3">{props.startup.name}</div>
-            <div class="flex items-center">
-              {props.startup.hashTags.map((tag, i) => {
-                return i + 1 < 4 ? (
-                  <>
-                    {i !== 0 && <p class="bg-grey5 h-3 mx-1 w-1px"></p>}
-                    <span class="u-tag" key={i}>
-                      {tag.name}
-                    </span>
-                  </>
-                ) : null
-              })}
-            </div>
+        <div class="flex-1">
+          <div class="mb-2 text-color1 u-h4">{props.startup.name}</div>
+          <div class="flex gap-2 items-center">
+            {props.startup.hashTags.map((tag, i) => {
+              return i + 1 < 4 ? (
+                <>
+                  <UTag key={i}>{tag.name}</UTag>
+                </>
+              ) : null
+            })}
           </div>
-          {userStore.profile?.comerID === props.startup.comerID && (
-            <>
-              <SettingOutlined
-                class="cursor-pointer rounded-2 h-6 mt-2 text-primary w-6"
-                onClick={basicSetting}
-              />
-            </>
-          )}
         </div>
+        {userStore.profile?.comerID === props.startup.comerID && (
+          <>
+            <SettingOutlined
+              class="cursor-pointer rounded-2 h-5 ml-4 text-color2 w-5 hover:text-primary"
+              onClick={basicSetting}
+            />
+          </>
+        )}
       </div>
     )
   }
