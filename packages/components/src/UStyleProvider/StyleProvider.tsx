@@ -182,7 +182,7 @@ const UStyleProvider = defineComponent({
       },
       Tabs: {
         tabTextColorActiveBar: props.primaryColor,
-        tabTextColorBar: props.color3
+        tabTextColorBar: props.primary1Color
       }
     }))
 
