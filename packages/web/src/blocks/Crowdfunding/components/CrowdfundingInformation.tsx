@@ -189,7 +189,7 @@ export const CrowdfundingInformation = defineComponent({
           label: () => [
             h(
               <div class="flex items-end">
-                IBO Rate
+                Rate
                 <span class="n-form-item-label__asterisk">&nbsp;*</span>
                 <span class="ml-1 u-body2">
                   1 {props.crowdfundingInfo.buyTokenName} = {props.crowdfundingInfo.buyPrice || '?'}{' '}
@@ -202,12 +202,12 @@ export const CrowdfundingInformation = defineComponent({
         rules: [
           {
             validator: (rule, value) => !!value,
-            message: 'IBO Rate cannot be blank',
+            message: 'Rate cannot be blank',
             trigger: ['blur']
           },
           {
             validator: (rule, value) => value > 0,
-            message: ' IBO Rate must be positive number',
+            message: ' Rate must be positive number',
             trigger: 'blur'
           }
         ],
