@@ -145,14 +145,14 @@ export default defineComponent({
                       <span class="mr-6 text-color2 u-h5">payment</span>
                       {this.bountySection.bountyPayment?.bountyPaymentInfo?.paymentMode === 1 ? (
                         <>
-                          <StageOutlined class="h-4 text-primary w-4" />
-                          <p class="font-primary font-medium text-primary ml-2">stage</p>
+                          <StageOutlined class="h-4 w-4" />
+                          <p class="font-medium text-primary ml-2">Stage</p>
                         </>
                       ) : (
                         <>
                           <PeriodOutlined class="h-4 text-primary w-4" />
-                          <p class="font-primary font-medium text-primary ml-2">
-                            PERIOD:{' '}
+                          <p class="font-medium text-primary ml-2">
+                            Period:{' '}
                             {getPeriodByType(
                               this.bountySection.bountyPayment?.periodTerms?.periodType || 1
                             )}
