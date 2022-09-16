@@ -9,10 +9,6 @@
 }
 
 .u-lazy-image {
-  &-img {
-    @apply object-cover;
-  }
-
   /** https://codepen.io/goodkatz/pen/LYPGxQz */
   &-waves {
     @apply h-1/2 mt-1/2;
