@@ -1665,6 +1665,7 @@ export const services = {
          * @description logo
          */
         bountyId: number
+        chainID: number
         applyCutoffDate: string
         /**
          * @description 上链状态
