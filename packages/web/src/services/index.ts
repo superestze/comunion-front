@@ -2057,11 +2057,11 @@ export const services = {
         comerId: number
         startupName: string
         endTime: string
-        raiseBalance: number
-        raiseGoal: number
-        raisedPercent: number
-        buyPrice: number
-        swapPercent: number
+        raiseBalance: string
+        raiseGoal: string
+        raisedPercent: string
+        buyPrice: string
+        swapPercent: string
         poster: string
         status: number
         chainId: number
@@ -2074,7 +2074,7 @@ export const services = {
         contractAudit: string
         kyc: string
         startupLogo: string
-        buyTokenAmount?: number
+        buyTokenAmount: number
       }[]
     >({
       url: replacePath('/cores/crowdfundings/startup/:startupId', args),
