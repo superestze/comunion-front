@@ -149,7 +149,7 @@ export const services = {
     return requestAdapter<
       {
         /**
-   * @description 
+   * @description
 	ModuleStartup - 1
 	ModuleBounty - 2
 	ModuleCrowdfunding - 3
@@ -2401,6 +2401,7 @@ export const services = {
       startupName: string
       authorComerId: number
       authorComerAvatar: string
+      authorComerName: string
       authorWalletAddress: string
       title: string
       description: string
@@ -2517,6 +2518,8 @@ export const services = {
         startupName: string
         authorComerId: number
         authorWalletAddress: string
+        authorComerName: string
+        authorComerAvatar: string
         title: string
         description: string
         /**
@@ -2556,6 +2559,8 @@ export const services = {
         startupName: string
         authorComerId: number
         authorWalletAddress: string
+        authorComerName: string
+        authorComerAvatar: string
         title: string
         description: string
         /**
@@ -2595,6 +2600,8 @@ export const services = {
         startupName: string
         authorComerId: number
         authorWalletAddress: string
+        authorComerName: string
+        authorComerAvatar: string
         title: string
         description: string
         /**
@@ -2632,11 +2639,13 @@ export const services = {
         proposalId: number
         voterComerId: number
         voterWalletAddress: string
+        voterComerName: string
         choiceItemId: number
         choiceItemName: string
         votes: number
         ipfsHash: string
         voterComerAvatar: string
+        field_10: string
       }[]
     }>({
       url: replacePath('/cores/proposals/:proposalID/vote-records', args),
@@ -2657,6 +2666,8 @@ export const services = {
         startupName: string
         authorComerId: number
         authorWalletAddress: string
+        authorComerName: string
+        authorComerAvatar: string
         title: string
         description: string
         /**
@@ -2943,7 +2954,7 @@ export const services = {
   'startup@social-delete'(args: { startupID: any }) {
     return requestAdapter<{
       /**
-   * @description 	1-SocialEmail 
+   * @description 	1-SocialEmail
 	2-SocialWebsite
 	3-SocialTwitter
 	4-SocialDiscord
