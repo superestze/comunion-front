@@ -145,14 +145,14 @@ export default defineComponent({
                       <span class="mr-6 text-color2 u-h5">payment</span>
                       {this.bountySection.bountyPayment?.bountyPaymentInfo?.paymentMode === 1 ? (
                         <>
-                          <StageOutlined class="h-4 w-4" />
-                          <p class="text-primary ml-2 font-medium">Stage</p>
+                          <StageOutlined class="h-4 text-primary w-4" />
+                          <p class="font-primary font-medium text-primary ml-2">stage</p>
                         </>
                       ) : (
                         <>
                           <PeriodOutlined class="h-4 text-primary w-4" />
-                          <p class="text-primary ml-2 font-medium">
-                            Period:{' '}
+                          <p class="font-primary font-medium text-primary ml-2">
+                            PERIOD:{' '}
                             {getPeriodByType(
                               this.bountySection.bountyPayment?.periodTerms?.periodType || 1
                             )}
@@ -162,7 +162,7 @@ export default defineComponent({
                     </p>
                     <div class="flex items-center">
                       <img src={this.chainInfo?.logo} class="h-4 w-4" />{' '}
-                      <span class="font-thin font-primary text-color2 ml-2 tracking-normal">
+                      <span class="font-thin font-primary ml-2 tracking-normal text-color2">
                         {this.chainInfo?.name}
                       </span>
                     </div>
@@ -247,7 +247,7 @@ export default defineComponent({
             </UCard>
           </div>
           <div class="overflow-hidden basis-1/3">
-            <div class="bg-white border rounded-[2px] mb-6 p-6">
+            <div class="bg-white border rounded-[2px] mb-6 p-10">
               {this.bountySection.startup && <StartupCard startup={this.bountySection.startup} />}
             </div>
             <UCard title="Founder" class="mb-6">
