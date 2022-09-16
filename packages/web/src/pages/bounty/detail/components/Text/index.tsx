@@ -60,7 +60,7 @@ export default defineComponent({
         >
           {prefix.value}
           {props.value}
-          {remainingStr.length && '.'}
+          {remainingStr.length ? '.' : ''}
           {remainingStr}
         </strong>
       )

@@ -80,7 +80,7 @@ const PayDetailPeriod = defineComponent({
       <USelect
         class="text-center w-30"
         options={token1SymbolOptions}
-        v-model:value={props.bountyInfo.token1Symbol}
+        v-model:value={props.bountyInfo.payTokenSymbol}
       />
     ))
 
@@ -197,7 +197,7 @@ const PayDetailPeriod = defineComponent({
               The current total rewards as{' '}
               <span class="text-primary">
                 <span class={[{ 'text-error': payPeriodTotal.value.usdcTotal > MAX_AMOUNT }]}>
-                  {payPeriodTotal.value.usdcTotal} {props.bountyInfo.token1Symbol}{' '}
+                  {payPeriodTotal.value.usdcTotal} {props.bountyInfo.payTokenSymbol}{' '}
                 </span>
                 {props.bountyInfo.token2Symbol && (
                   <span>

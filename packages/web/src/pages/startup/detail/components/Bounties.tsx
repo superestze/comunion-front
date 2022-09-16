@@ -123,7 +123,7 @@ const BountiesCard = defineComponent({
               <div class="mt-3">
                 <span class="u-body2 text-grey2">Deposit requirements：</span>
                 <span class="u-card-title2 text-warning">
-                  {props.startup.depositRequirements} USDC
+                  {props.startup.depositRequirements} {props.startup.depositTokenSymbol}
                 </span>
               </div>
               <div class="flex-1"></div>

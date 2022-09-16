@@ -56,6 +56,7 @@ const CreateBountyForm = defineComponent({
       payDetailType: 'stage',
       token1Symbol: token1Symbol,
       token2Symbol: '',
+      payTokenSymbol: '',
       stages: [{ token1Amount: 0, token2Amount: 0, terms: '' }],
       period: {
         periodType: 2,
@@ -155,7 +156,7 @@ const CreateBountyForm = defineComponent({
                 return {
                   seqNum: stageIndex + 1,
                   token1Amount: token1Amount || 0, // usdc amount
-                  token1Symbol: bountyInfo.token1Symbol, // usdc symbol
+                  token1Symbol: bountyInfo.payTokenSymbol, // usdc symbol
                   token2Amount: token2Amount || 0, // finance setting token amount
                   token2Symbol: bountyInfo.token2Symbol, // finance setting token symbol
                   terms: stage.terms
@@ -173,7 +174,7 @@ const CreateBountyForm = defineComponent({
                 periodType: bountyInfo.period.periodType,
                 hoursPerDay: hoursPerDay || 0,
                 token1Amount: token1Amount || 0, // usdc amount
-                token1Symbol: bountyInfo.token1Symbol, // usdc symbol
+                token1Symbol: bountyInfo.payTokenSymbol, // usdc symbol
                 token2Amount: token2Amount || 0, // finance setting token amount
                 token2Symbol: bountyInfo.token2Symbol, // finance setting token symbol
                 target: bountyInfo.period.target
@@ -323,6 +324,7 @@ const CreateBountyForm = defineComponent({
       showLeaveTipModal
     })
 
+    bountyInfo.payTokenSymbol = bountyInfo.payTokenSymbol || bountyInfo.token1Symbol
     return {
       stepOptions,
       bountyInfo,

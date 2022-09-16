@@ -303,6 +303,7 @@ export default defineComponent({
                       class={`mb-6 ${index === 0 && 'mt-10'}`}
                       depositInfo={item}
                       key={item.name}
+                      tokenSymbol={this.bountyContractInfo.depositTokenSymbol}
                     />
                   ))}
                 </>

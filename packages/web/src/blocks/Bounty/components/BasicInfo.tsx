@@ -244,7 +244,7 @@ const BountyBasicInfo = defineComponent({
         name: 'applicantsDeposit',
         title: 'Applicants deposit',
         formItemProps: {
-          feedback: 'The maximal deposit amount is 9999USDC',
+          feedback: `The maximal deposit amount is 9999 ${props.bountyInfo.token1Symbol}`,
           themeOverrides: {
             feedbackTextColor: 'var(--u-grey-4-color)',
             feedbackFontSizeMedium: '12px'
@@ -256,7 +256,7 @@ const BountyBasicInfo = defineComponent({
               <div>
                 Applicants deposit
                 <span class="font-normal text-xs ml-4 text-grey4">
-                  Applicant must deposit usdc for applying the bounty
+                  Applicant must deposit {props.bountyInfo.token1Symbol} for applying the bounty
                 </span>
               </div>
             )

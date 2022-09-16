@@ -1072,6 +1072,10 @@ export const services = {
        * @description 押金合约地址
        */
       depositContract?: string
+      /**
+       * @description 押金token symbol
+       */
+      depositTokenSymbol: string
     }>({
       url: replacePath('/bounty/{bountyID}/detail', args),
       method: 'GET',
@@ -1189,7 +1193,7 @@ export const services = {
         /**
          * @description 押金token symbol
          */
-        depositTokenSymbol: number
+        depositTokenSymbol: string
         /**
          * @description 技能要求
          */
@@ -1385,6 +1389,10 @@ export const services = {
        * @description 存入余额
        */
       depositBalance?: number
+      /**
+       * @description 押金token symbol
+       */
+      depositTokenSymbol?: string
       /**
        * @description founder存入金额
        */
@@ -1896,6 +1904,10 @@ export const services = {
          */
         applicantCount: number
         depositRequirements: number
+        /**
+         * @description 押金token symbol
+         */
+        depositTokenSymbol: string
         /**
          * @description 技能要求
          */

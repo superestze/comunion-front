@@ -15,6 +15,7 @@ export interface BountyInfo {
   payDetailType: string
   token1Symbol: string
   token2Symbol: string
+  payTokenSymbol: string
   stages: { token1Amount: number; token2Amount: number; terms: string }[]
   period: {
     periodType: number

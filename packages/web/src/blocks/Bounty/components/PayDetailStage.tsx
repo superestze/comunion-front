@@ -87,12 +87,11 @@ const PayDetailStage = defineComponent({
         value: label
       }
     })
-    const token1Symbol = ref<string>(props.bountyInfo.token1Symbol)
     const renderSelect = computed(() => (
       <USelect
         class="text-center w-30"
         options={token1SymbolOptions}
-        v-model:value={token1Symbol.value}
+        v-model:value={props.bountyInfo.payTokenSymbol}
       />
     ))
 
@@ -227,7 +226,7 @@ const PayDetailStage = defineComponent({
           The current total rewards as{' '}
           <span class="text-primary">
             <span class={[{ 'text-error': this.payStagesTotal.usdcTotal > MAX_AMOUNT }]}>
-              {this.payStagesTotal.usdcTotal} {this.bountyInfo.token1Symbol}
+              {this.payStagesTotal.usdcTotal} {this.bountyInfo.payTokenSymbol}
             </span>
             {this.bountyInfo.token2Symbol && (
               <span>

@@ -121,7 +121,7 @@ export default defineComponent({
         <Paragraph
           class="mt-4"
           label={'Applicants deposit :'}
-          content={`${this.bountyDetail?.applicantsDeposit} USDC`}
+          content={`${this.bountyDetail?.applicantsDeposit} ${this.bountyDetail?.depositTokenSymbol}`}
           contentClass="text-primary2"
         />
         <Paragraph
