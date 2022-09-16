@@ -247,10 +247,10 @@ export default defineComponent({
             </UCard>
           </div>
           <div class="overflow-hidden basis-1/3">
-            <div class="bg-white border rounded-[2px] mb-6 p-10">
+            <div class="bg-white border rounded-[2px] mb-6 p-6">
               {this.bountySection.startup && <StartupCard startup={this.bountySection.startup} />}
             </div>
-            <UCard title="FOUNDER" class="mb-6">
+            <UCard title="Founder" class="mb-6">
               {this.bountySection.founder && (
                 <PersonalCard
                   profile={this.bountySection.founder}
@@ -268,7 +268,7 @@ export default defineComponent({
               )}
             </UCard>
             <UCard
-              title="APPROVED"
+              title="Approved"
               class="mb-6"
               // v-slots={{
               //   'header-extra': () => (
@@ -295,12 +295,12 @@ export default defineComponent({
                 />
               )}
             </UCard>
-            <UCard title="DEPOSIT RECORDS">
+            <UCard title="Deposit records">
               {this.bountySection.depositRecords && this.bountySection.depositRecords.length > 0 && (
                 <>
                   {this.bountySection.depositRecords.map((item, index) => (
                     <DepositBubble
-                      class={`mb-6 ${index === 0 && 'mt-10'}`}
+                      class={`mb-4 ${index === 0 && 'mt-6'}`}
                       depositInfo={item}
                       key={item.name}
                     />

@@ -1,9 +1,9 @@
 .startupSocialItem {
-  @apply bg-purple rounded w-10 h-10 flex items-center justify-center;
+  @apply w-8 h-8 flex items-center justify-center;
 }
 
 .activeSocialItemIcon {
-  @apply cursor-pointer text-primary;
+  @apply cursor-pointer text-color2  hover:text-color1;
 }
 
 .inactiveSocialItemIcon {

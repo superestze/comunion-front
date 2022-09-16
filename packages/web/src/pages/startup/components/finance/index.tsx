@@ -73,7 +73,7 @@ export default defineComponent({
   },
   render() {
     return (
-      <UCard title="FINANCE" class="mb-6">
+      <UCard title="Finance" class="mb-6">
         <div class="flex flex-col">
           {this.financeBasic.map(item => {
             if (item.value) {

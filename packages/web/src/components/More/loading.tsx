@@ -17,11 +17,11 @@ export default defineComponent({
       <>
         {this.end ? null : (
           <div
-            class="w-100px flex justify-center items-center text-color2 text-[14px] font-primary font-semibold cursor-pointer"
+            class="group w-100px flex justify-center items-center text-color2 text-[14px] font-primary font-semibold cursor-pointer hover:text-primary"
             onClick={handleMore}
           >
             <span class="mr-2 text-[14px] font-primary font-semibold">More</span>
-            <ArrowDownOutlined class="text-color2 w-4 h-4" />
+            <ArrowDownOutlined class={`text-color2 w-4 h-4 group-hover:text-primary `} />
           </div>
         )}
       </>

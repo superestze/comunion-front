@@ -1,6 +1,6 @@
 import { UStartupLogo, UTag } from '@comunion/components'
 import { defineComponent, PropType, computed } from 'vue'
-import { getStartupTypeFromNumber, StartupTypesType, STARTUP_TYPES_COLOR_MAP } from '@/constants'
+import { getStartupTypeFromNumber, StartupTypesType } from '@/constants'
 import { SocialGroup } from '@/pages/startup/components/SocialGroup'
 import { ServiceReturn } from '@/services'
 
@@ -39,22 +39,18 @@ export default defineComponent({
             class="rounded-md h-15 mr-4 w-15"
           />
           <div class="flex-1 overflow-hidden">
-            <div class="mb-2 truncate u-h3">{this.startup?.title}</div>
+            <div class="mb-2 truncate font-primary font-semibold text-[20px] text-color1">
+              {this.startup?.title}
+            </div>
             {(this.startup?.mode || 0) > 0 && (
-              <span
-                class="rounded-sm h-1.25rem mr-2 px-2 text-0.75rem leading-1.25rem inline-block"
-                style={{
-                  'background-color': STARTUP_TYPES_COLOR_MAP[this.modeName],
-                  color: '#fff'
-                }}
-              >
+              <span class="rounded-sm h-1.25rem mr-2 px-2 text-0.75rem leading-1.25rem inline-block border-1 border-[#DADCE0]">
                 {this.modeName}
               </span>
             )}
           </div>
         </div>
         {this.tags.length > 0 && (
-          <div class="flex flex-wrap mt-5 gap-2">
+          <div class="flex flex-wrap mt-5 gap-2 text-[#211B42]">
             {this.tags.slice(0, 4).map((value, $index) => {
               return <UTag key={`tag_${$index}`}>{value}</UTag>
             })}
@@ -63,7 +59,7 @@ export default defineComponent({
           </div>
         )}
         {this.startup?.mission && (
-          <p class="mt-6 text-grey1 u-body2 line-clamp-2">{this.startup?.mission}</p>
+          <p class="mt-6 text-grey1 u-body2 line-clamp-2 text-color3">{this.startup?.mission}</p>
         )}
         <SocialGroup
           discord={this.startup?.discord}
@@ -71,7 +67,7 @@ export default defineComponent({
           telegram={this.startup?.telegram}
           twitter={this.startup?.twitter}
           docs={this.startup?.docs}
-          class="flex mt-7 gap-4"
+          class="flex mt-4 gap-4"
         />
       </>
     )
