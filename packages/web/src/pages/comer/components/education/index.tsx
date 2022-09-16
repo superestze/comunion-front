@@ -175,14 +175,14 @@ export default defineComponent({
                     {this.educations.map(item => {
                       return (
                         <div
-                          class={`-mx-3.5 mt-2 cursor-pointer flex items-center h-17 rounded-6px ${listHover['list-hover']}`}
+                          class={`-mx-3.5 px-3.5 cursor-pointer flex items-center h-17 rounded-sm ${listHover['list-hover']}`}
                         >
-                          <div class="flex-1 pt-1 pl-2">
-                            <p class="pl-2.5 text-grey1 u-body4">{item.school}</p>
+                          <div class="flex-1 overflow-hidden">
+                            <p class=" text-color1 u-h5">{item.school}</p>
 
-                            <div class="flex mt-1 text-grey3 items-center">
+                            <div class="flex mt-2 text-color3 items-center">
                               <p class="u-tag">{item.major} Graduated</p>
-                              <p class="bg-grey5 h-3 mx-2 w-1px"></p>
+                              <p class="bg-color3 h-3 mx-2 w-1px"></p>
                               <p class="u-tag">{dayjs(item.graduatedAt).format('YYYY')}</p>
                             </div>
                           </div>

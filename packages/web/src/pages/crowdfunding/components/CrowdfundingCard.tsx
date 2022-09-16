@@ -3,9 +3,10 @@ import dayjs from 'dayjs'
 import { ethers } from 'ethers'
 import { defineComponent, PropType, computed, ref, onMounted } from 'vue'
 import { CrowdfundingStatus } from '../utils'
-import { CROWDFUNDING_TYPES, CrowdfundingItemType } from '@/constants'
+import { CROWDFUNDING_TYPES } from '@/constants'
 import { useErc20Contract, useCrowdfundingContract } from '@/contracts'
 import { useWalletStore } from '@/stores'
+import { CrowdfundingItem } from '@/types'
 import { getChainInfoByChainId } from '@/utils/etherscan'
 import { formatToFloor } from '@/utils/numberFormat'
 
@@ -13,7 +14,7 @@ export const CrowdfundingCard = defineComponent({
   name: 'CrowdfundingCard',
   props: {
     info: {
-      type: Object as PropType<CrowdfundingItemType>,
+      type: Object as PropType<CrowdfundingItem>,
       required: true
     },
     onClick: {
