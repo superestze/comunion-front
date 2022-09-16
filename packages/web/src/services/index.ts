@@ -1472,6 +1472,10 @@ export const services = {
         applicantCount: number
         depositRequirements: number
         /**
+         * @description 押金token symbol
+         */
+        depositTokenSymbol: string
+        /**
          * @description 技能要求
          */
         applicationSkills: string[]
@@ -1566,6 +1570,10 @@ export const services = {
          */
         applicantCount: number
         depositRequirements: number
+        /**
+         * @description 押金token symbol
+         */
+        depositTokenSymbol: string
         /**
          * @description 技能要求
          */
@@ -1760,6 +1768,10 @@ export const services = {
          */
         applicantCount: number
         depositRequirements: number
+        /**
+         * @description 押金token symbol
+         */
+        depositTokenSymbol: string
         /**
          * @description 技能要求
          */

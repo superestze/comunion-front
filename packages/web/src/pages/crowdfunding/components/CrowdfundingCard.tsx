@@ -55,7 +55,8 @@ export const CrowdfundingCard = defineComponent({
       } else {
         raiseState.value.raiseGoal = Number(props.info.raiseGoal)
         raiseState.value.raiseAmount = Number(props.info.raiseBalance)
-        raiseState.value.raisePercent = Number(props.info.raisedPercent)
+        console.log(formatToFloor(props.info.raisedPercent, 4))
+        raiseState.value.raisePercent = Number(formatToFloor(props.info.raisedPercent, 4))
         raiseState.value.swapAmount = Number(props.info.swapPercent)
       }
     }
