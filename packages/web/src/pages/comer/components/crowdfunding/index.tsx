@@ -75,7 +75,7 @@ export default defineComponent({
   },
   render() {
     return (
-      <UCard title="dCROWDFUNDING" class="mb-6 last-item-noborder">
+      <UCard title="dCrowdfunding" class="mb-6 last-item-noborder">
         {Array.isArray(this.list) &&
           this.list.map(item => <ItemCard class="_item" info={item} key={item.crowdfundingId} />)}
       </UCard>

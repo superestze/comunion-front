@@ -138,7 +138,7 @@ export default defineComponent({
       <>
         {this.view && this.languages.length === 0 ? null : (
           <UCard
-            title="LANGUAGES"
+            title="Languages"
             class="mb-6"
             v-slots={{
               'header-extra': () => {

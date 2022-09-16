@@ -95,7 +95,7 @@ export default defineComponent({
       }
     }
     return (
-      <UCard title="CONNECTED" class="mb-6">
+      <UCard title="Connected" class="mb-6">
         <div class="flex flex-col">
           <Switch
             tabs={this.tabsInstance.tabs.value}
