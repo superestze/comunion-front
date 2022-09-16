@@ -105,10 +105,10 @@ export const VerifyToken = defineComponent({
                   </span>
                   <span
                     onClick={() => goSetting()}
-                    class="ml-2 !text-primary cursor-pointer flex items-center"
+                    class="cursor-pointer flex ml-2 items-center !text-primary"
                   >
                     <span>Go to setting</span>
-                    <ArrowLineRightOutlined class="ml-2 w-[16px] h-[16px]" />
+                    <ArrowLineRightOutlined class="h-[16px] ml-2 w-[16px]" />
                   </span>
                 </div>
               )
@@ -167,11 +167,11 @@ export const VerifyToken = defineComponent({
         render(value) {
           return (
             <div class="grid grid-cols-[100px,2fr]">
-              <div class="u-body2 text-grey3 mb-6">Name:</div>
+              <div class="mb-6 text-grey3 u-body2">Name:</div>
               <div>{props.crowdfundingInfo.sellTokenName}</div>
-              <div class="u-body2 text-grey3 mb-6">Symbol:</div>
+              <div class="mb-6 text-grey3 u-body2">Symbol:</div>
               <div>{props.crowdfundingInfo.sellTokenSymbol}</div>
-              <div class="u-body2 text-grey3">Decimals:</div>
+              <div class="text-grey3 u-body2">Decimals:</div>
               <div>{props.crowdfundingInfo.sellTokenDecimals}</div>
             </div>
           )
@@ -191,7 +191,7 @@ export const VerifyToken = defineComponent({
               <div>
                 Team Wallet Address
                 <span class="n-form-item-label__asterisk">&nbsp;*</span>
-                <span class="text-xs text-grey4 font-normal ml-4">
+                <span class="font-normal text-xs ml-4 text-grey4">
                   Team wallet address used to receive funds raised
                 </span>
               </div>
@@ -224,11 +224,11 @@ export const VerifyToken = defineComponent({
         const { error, data } = await services['crowdfunding@crowdfundable-startups']()
         if (!error) {
           startupOptions.value = (data || []).map(startup => ({
-            label: startup.startupName,
-            value: startup.startupId,
+            label: startup.startupName || '',
+            value: startup.startupId || 0,
             disabled: !startup.canRaise,
             tokenAddress: startup.tokenContract,
-            onChain: startup.onChain
+            onChain: startup.onChain || false
           }))
         }
       } catch (error) {

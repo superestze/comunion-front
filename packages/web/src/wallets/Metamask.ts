@@ -1,5 +1,5 @@
 import type { ExternalProvider } from '@ethersproject/providers'
-import { hexlify } from 'ethers/lib/utils'
+import { hexValue } from 'ethers/lib/utils'
 import AbstractWallet from './AbstractWallet'
 import { MetamaskProvider } from './provider/MetamaskProvider'
 import { allNetworks, ChainNetworkType } from '@/constants'
@@ -45,7 +45,7 @@ export default class MetamaskWallet extends AbstractWallet {
         method: 'wallet_addEthereumChain',
         params: [
           {
-            chainId: hexlify(network.chainId),
+            chainId: hexValue(network.chainId),
             chainName: network.name,
             nativeCurrency: {
               name: network.currencySymbol,
@@ -68,7 +68,7 @@ export default class MetamaskWallet extends AbstractWallet {
     try {
       await (window.ethereum as ExternalProvider).request!({
         method: 'wallet_switchEthereumChain',
-        params: [{ chainId: hexlify(chainId) }]
+        params: [{ chainId: hexValue(chainId) }]
       })
       return true
     } catch (e: any) {

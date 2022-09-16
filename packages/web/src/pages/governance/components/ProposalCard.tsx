@@ -19,10 +19,7 @@ export const ProposalCard = defineComponent({
   },
   setup(props) {
     const router = useRouter()
-    const toComerDetail = (e: Event) => {
-      e.stopPropagation()
-      router.push({ path: '/comer', query: { id: props.proposalData.authorComerId } })
-    }
+
     const statusStyle = computed(() => {
       return GOVERNANCE_STATUS_STYLE[
         props.proposalData.status as keyof typeof GOVERNANCE_STATUS_STYLE
@@ -49,45 +46,62 @@ export const ProposalCard = defineComponent({
       } else if (props.proposalData.status === 3) {
         return (
           <div class="flex items-center">
-            <ConfirmOutlined class="text-primary mr-2 w-4 h-4" />{' '}
+            <ConfirmOutlined class="h-4 text-primary mr-2 w-4" />{' '}
             {props.proposalData.maximumVotesChoice} -- {props.proposalData.votes}
           </div>
         )
       }
       return null
     })
+    const toComerDetail = (e: Event) => {
+      e.stopPropagation()
+      router.push({ path: '/comer', query: { id: props.proposalData.authorComerId } })
+    }
+    const handleCard = () => {
+      router.push(`/governance/${props.proposalData.proposalId}`)
+    }
+
     return {
       statusStyle,
       timeTip,
-      toComerDetail
+      toComerDetail,
+      handleCard
     }
   },
   render() {
     return (
-      <div class="flex bg-white py-6 w-full border-grey5 rounded-lg">
-        <div class="w-15 h-15 mr-4">
+      <div
+        class="bg-white rounded-sm cursor-pointer flex border-1 mb-6 py-6 px-6 hover:bg-color-hover"
+        onClick={() => this.handleCard()}
+      >
+        <div class="h-15 mr-4 w-15">
           <UStartupLogo src={this.proposalData.startupLogo || ''} width="15" height="15" />
         </div>
         <div class="flex-1 truncate">
-          <div class="flex items-center justify-between">
+          <div class="flex items-center">
             <div>
-              <span class="mr-2 text-grey3 text-xs">{this.proposalData.startupName} by</span>
-              <span class="text-primary text-xs" onClick={this.toComerDetail}>
+              <span class="mr-2 text-xs text-color3">{this.proposalData.startupName} by</span>
+              <span class="text-xs text-color2" onClick={this.toComerDetail}>
                 {shortenAddress(this.proposalData.authorWalletAddress)}
               </span>
             </div>
-            <div class={['status ml-auto', this.statusStyle]}>
+            {/* , this.statusStyle */}
+            <div
+              class={[
+                'status rounded-[2px] h-5 font-primary text-color2 ml-4 px-2 text-xs leading-1.25rem inline-block border-1 border-[#DADCE0]'
+              ]}
+            >
               {GOVERNANCE_KEY[this.proposalData.status as keyof typeof GOVERNANCE_KEY]}
             </div>
           </div>
-          <div class="u-title3 truncate break-all max-w-full my-2">{this.proposalData.title}</div>
+          <div class="max-w-full mt-2 mb-1 truncate break-all u-h4">{this.proposalData.title}</div>
           {this.proposalData.description && (
             <div
-              class="u-body2 truncate break-all whitespace-pre-line line-clamp-2"
+              class="text-xs text-color3 truncate break-all whitespace-pre-line line-clamp-2"
               v-html={this.proposalData.description}
             />
           )}
-          {this.timeTip && <div class="text-grey3  mt-2">{this.timeTip}</div>}
+          {this.timeTip && <div class="mt-2  text-grey3">{this.timeTip}</div>}
         </div>
       </div>
     )

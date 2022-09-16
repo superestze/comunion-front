@@ -1,15 +1,16 @@
 .dropdown {
   --active-bg: rgb(94 24 254 / 10%);
+  --active-bg-new: rgb(240 240 240 / 100%);
 
   box-shadow: 0 2px 10px rgb(0 0 0 / 10%);
   @apply !rounded-lg !mt-5 !ml-0 !py-5 !px-3;
 
   :global {
     .n-dropdown-option-body {
-      @apply rounded-md min-w-180px;
+      @apply rounded-md min-w-180px h-17.5;
 
       &.n-dropdown-option-body--pending:not(.n-dropdown-option-body--disabled) {
-        background-color: var(--active-bg) !important;
+        background-color: var(--active-bg-new) !important;
       }
 
       &--group {
@@ -27,7 +28,7 @@
       }
 
       &--active {
-        background: var(--active-bg);
+        background: #fff !important;
 
         .n-dropdown-option-body {
           &__suffix {

@@ -1,11 +1,10 @@
 import { UButton, UPopover, UStartupLogo, UTag } from '@comunion/components'
-import { HookFilled, PlusOutlined } from '@comunion/icons'
 import { defineComponent, computed, ref, watch, PropType } from 'vue'
 
 import { useStartupProfile } from '../../hooks/useStartupProfile'
 import defaultCover from './assets/cover.png'
 import SocialIcon from '@/components/SocialIcon'
-import { getStartupTypeFromNumber, StartupTypesType, STARTUP_TYPES_COLOR_MAP } from '@/constants'
+import { getStartupTypeFromNumber, StartupTypesType } from '@/constants'
 import { getContactList } from '@/pages/startup/setting/[id]'
 import { contactList } from '@/pages/startup/setting/components/social/util'
 import { useChainStore } from '@/stores'
@@ -137,24 +136,19 @@ export default defineComponent({
           </div>
           <div>
             <div class="flex items-center">
-              <p class="ml-46 u-h3">{this.startupInfo?.name}</p>
+              <p class="ml-46 text-color1 u-h2">{this.startupInfo?.name}</p>
               {this.startupInfo && this.startupInfo.mode > 0 && (
                 <UTag
-                  class="h-5 ml-5 u-tag2"
+                  class="border-1 border-gray-500/50 ml-5 u-6 !h-6.5 !text-color2"
                   type="filled"
-                  bgColor={STARTUP_TYPES_COLOR_MAP[this.modeName]}
+                  bgColor="#fffffff"
                 >
                   {this.modeName}
                 </UTag>
               )}
             </div>
             {this.theChainName && (
-              <div
-                class="ml-46 rounded flex py-0.25rem items-center"
-                style={{
-                  color: '#5331F4'
-                }}
-              >
+              <div class="rounded flex ml-46 py-0.25rem items-center">
                 <img
                   src={
                     this.startupInfo?.onChain
@@ -179,42 +173,48 @@ export default defineComponent({
               type="primary"
               loading={this.loading}
               ghost
-              class="mr-10 w-30"
+              class="font-primary font-semibold mr-10 pr-4.25 pl-4.25 text-4"
+              style={{
+                '--n-border-radius': '2px'
+              }}
               size="small"
               onClick={() => handleFollowStartup('unfollow')}
             >
-              <HookFilled class="mr-1 w-4.5" />
+              {/* <HookFilled class="mr-1 w-4.5" /> */}
               Unconnect
             </UButton>
           ) : (
             <UButton
               type="primary"
               loading={this.loading}
-              class="mr-10 w-30"
+              class="font-primary font-semibold mr-10 pr-4.25 pl-4.25 text-4"
+              style={{
+                '--n-border-radius': '2px'
+              }}
               size="small"
               onClick={() => handleFollowStartup('follow')}
             >
-              <PlusOutlined class="mt-1 mb-3px w-4.5" />
+              {/* <PlusOutlined class="mt-1 mb-3px w-4.5" /> */}
               Connect
             </UButton>
           )}
         </div>
         <div class="flex mt-9 mr-10 mb-10 ml-10 justify-between">
-          <div class="flex items-end justify-between w-[100%]">
+          <div class="flex w-[100%] items-end justify-between">
             <div class="w-[60%]">
               <div class="flex gap-2">
                 {Array.isArray(this.startupInfo?.hashTags) &&
                   this.startupInfo?.hashTags.map((item: { name: string }, i: number) => {
                     return (
-                      <UTag key={i} class="!border-1 !border-[#3F2D99] !text-[#3F2D99]">
+                      <UTag key={i} class="!border-1 !border-gray-500/50 !u-h6">
                         {item.name}
                       </UTag>
                     )
                   })}
               </div>
-              <p class="mt-5 w-[100%] u-body2">{this.startupInfo?.mission}</p>
+              <p class="mt-5 text-color2 w-[100%] u-h6">{this.startupInfo?.mission}</p>
             </div>
-            <div class="flex flex-wrap gap-4 -mb-[8px]">
+            <div class="flex flex-wrap -mb-[8px] gap-4">
               {this.socialList.map(item => (
                 <UPopover
                   placement="bottom"
