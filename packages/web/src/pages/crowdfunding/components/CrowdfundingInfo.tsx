@@ -149,7 +149,7 @@ export const CrowdfundingInfo = defineComponent({
           <div>
             {props.info.raiseGoal * props.info.buyPrice} {sellCoinInfo.value.symbol}
           </div>
-          <div class="text-grey3 u-body2">IBO Rate :</div>
+          <div class="text-grey3 u-body2">Rate :</div>
           <div>
             1 {buyCoinInfo.value.symbol} = {props.info.buyPrice} {sellCoinInfo.value.symbol}
           </div>
