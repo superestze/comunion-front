@@ -102,11 +102,11 @@ export default defineComponent({
                 {Array.isArray(this.info.skills) && this.info.skills.length === 0 ? (
                   <p class="text-color2 u-h5">Add your skill</p>
                 ) : (
-                  <div class="flex gap-2">
+                  <>
                     {this.info.skills.map(value => (
                       <UTag class="text-color1">{value}</UTag>
                     ))}
-                  </div>
+                  </>
                 )}
               </div>
             )}
