@@ -205,7 +205,7 @@ export default defineComponent({
     const rules = getFieldsRules(this.fields)
 
     return (
-      <div class="bg-white border rounded-lg mb-6 relative overflow-hidden">
+      <div class="bg-white border border-color-border rounded-sm mb-6 relative overflow-hidden">
         {this.editMode ? (
           <>
             <AvatarSelect v-model:show={this.showAvatarModal} v-model:avatar={this.info.avatar} />
@@ -214,7 +214,7 @@ export default defineComponent({
               customRequest={this.customRequest}
               accept="image/png, image/jpeg, image/bmp, image/psd, image/svg, image/tiff"
             >
-              <div class="flex h-180px w-full relative">
+              <div class="flex h-45 w-full relative">
                 <div class="bg-[rgba(0,0,0,0.5)] top-0 right-0 bottom-0 left-0 absolute"></div>
                 <img src={this.imageUrl} alt="bg" class="object-fill w-full" />
                 <PenOutlined class="h-4 -mt-2 mr-3 text-white -ml-2 top-1/2 left-1/2 w-4 absolute" />
@@ -226,7 +226,7 @@ export default defineComponent({
             >
               <UploadFilled class="h-6 -mt-3 text-white -ml-3 top-1/2 left-1/2 w-6 z-1 absolute" />
               <div class="bg-[rgba(0,0,0,0.5)] top-0 right-0 bottom-0 left-0 absolute"></div>
-              <ULazyImage class="rounded-1/2 h-80px w-80px" src={this.info.avatar} />
+              <ULazyImage class="rounded-1/2 h-20 w-20" src={this.info.avatar} />
             </div>
             <div class="mt-79px p-6">
               <UForm rules={rules} model={this.info} ref={(ref: any) => (this.form = ref)}>
@@ -237,14 +237,11 @@ export default defineComponent({
           </>
         ) : (
           <>
-            <div class=" h-180px ">
+            <div class="h-45">
               <img src={this.imageUrl} alt="bg" class="h-full object-cover w-full" />
             </div>
-            <ULazyImage
-              class="rounded-1/2 h-20 top-155px left-10 w-20 absolute"
-              src={this.avatar}
-            />
-            <div class="flex mt-5 w-full pr-10 justify-end">
+            <ULazyImage class="rounded-1/2 h-20 top-155px left-6 w-20 absolute" src={this.avatar} />
+            <div class="flex mt-5 w-full pr-6 justify-end">
               {this.view ? (
                 <>
                   {!this.self ? (
@@ -276,9 +273,9 @@ export default defineComponent({
                 <Edit onHandleClick={handleEditMode} />
               )}
             </div>
-            <div class="flex flex-col mt-30px mb-24px px-10">
-              <p class="text-primary2 u-title3">{this.name}</p>
-              <p class="mt-2 text-grey3 u-body2">{this.subTitle}</p>
+            <div class="flex flex-col mt-8 mb-6 px-6">
+              <p class="text-color1 u-h3">{this.name}</p>
+              <p class="mt-2 text-color3 u-h6">{this.subTitle}</p>
               {/* oauth */}
               {!this.view && (
                 <div class="flex flex-wrap mt-6">

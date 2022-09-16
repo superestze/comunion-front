@@ -124,15 +124,24 @@ export default defineComponent({
           v-slots={{
             default: () => (
               <div class="flex-1 ml-4">
-                <div class="flex items-center">
-                  <p class="flex-1 mb-2 u-title3">{this.applicant?.name}</p>
-                  <p class="mr-16px text-14px text-grey3">{this.formatDate}</p>
+                <div class="flex justify-between items-center">
+                  <div>
+                    <p class="mb-2 font-primary font-semibold text-color1">
+                      {this.applicant?.name}
+                    </p>
+                    <p class="mr-16px text-color3 u-h7">{this.formatDate}</p>
+                  </div>
                   {this.bountyRole === USER_ROLE.FOUNDER && (
                     <UButton
                       disabled={
                         this.approveDisabled || this.bountyStatus >= BOUNTY_STATUS.WORKSTARTED
                       }
-                      class="w-120px"
+                      color={
+                        this.approveDisabled || this.bountyStatus >= BOUNTY_STATUS.WORKSTARTED
+                          ? 'rgba(0,0,0,0.1)'
+                          : ''
+                      }
+                      class="w-30"
                       type="primary"
                       size="small"
                       onClick={triggerDialog}
@@ -141,7 +150,7 @@ export default defineComponent({
                     </UButton>
                   )}
                 </div>
-                <div class="bg-purple rounded-md mt-3 py-4 px-6 ">
+                <div class="bg-purple rounded-[8px] mt-3 py-4 px-6 ">
                   <div class="text-black max-h-20 overflow-auto u-body2">
                     {this.applicant?.description}
                   </div>

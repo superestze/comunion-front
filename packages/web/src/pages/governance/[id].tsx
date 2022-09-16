@@ -384,9 +384,7 @@ const ProposalDetail = defineComponent({
                     src={this.proposalInfo?.authorComerAvatar || ''}
                   />
                 </div>
-                <div class="text-primary mx-4">
-                  {shortenAddress(this.proposalInfo?.authorWalletAddress || '')}
-                </div>
+                <div class="text-primary mx-4">{this.proposalInfo?.authorComerName}</div>
               </div>
               <UPopover
                 trigger="click"
@@ -444,20 +442,12 @@ const ProposalDetail = defineComponent({
                 <div
                   class={[
                     'text-white text-center py-3 rounded-lg ',
-                    this.selectedChoice &&
-                    this.proposalInfo?.status === 2 &&
-                    Number(this.votePower) &&
-                    (this.proposalInfo.allowMember ||
-                      this.votePower >= Number(this.govSetting?.proposalThreshold))
+                    this.selectedChoice && this.proposalInfo?.status === 2
                       ? 'bg-primary1 cursor-pointer'
                       : 'bg-grey5 cursor-not-allowed'
                   ]}
                   onClick={() =>
-                    this.selectedChoice &&
-                    this.proposalInfo?.status === 2 &&
-                    Number(this.votePower) &&
-                    (this.proposalInfo.allowMember ||
-                      this.votePower >= Number(this.govSetting?.proposalThreshold))
+                    this.selectedChoice && this.proposalInfo?.status === 2
                       ? this.showVoteInfo()
                       : null
                   }
@@ -487,9 +477,7 @@ const ProposalDetail = defineComponent({
                           <td>
                             <div class="flex items-center ml-7">
                               <ULazyImage src={record.voterComerAvatar} class="w-7 h-7 mr-3" />
-                              <span class="u-body4 text-primary">
-                                {shortenAddress(record.voterWalletAddress)}
-                              </span>
+                              <span class="u-body4 text-primary">{record.voterComerName}</span>
                             </div>
                           </td>
                           <td>
@@ -584,7 +572,17 @@ const ProposalDetail = defineComponent({
                 >
                   Cancel
                 </UButton>
-                <UButton type="primary" size="small" class="w-40" onClick={this.confirmVote}>
+                <UButton
+                  type="primary"
+                  size="small"
+                  class="w-40"
+                  onClick={this.confirmVote}
+                  disabled={
+                    !Number(this.votePower) ||
+                    (!this.proposalInfo?.allowMember &&
+                      this.votePower < Number(this.govSetting?.proposalThreshold))
+                  }
+                >
                   Vote
                 </UButton>
               </div>

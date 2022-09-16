@@ -1,7 +1,7 @@
 @import '@comunion/components/dist/es/index.css';
 
 body {
-  @apply font-opensans text-color2 leading-5 break-words;
+  @apply font-primary text-color2 leading-5 break-words;
 }
 
 ::-webkit-scrollbar {

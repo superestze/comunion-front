@@ -58,22 +58,22 @@ export const USingleImageFileUpload = defineComponent({
       })
     }
     const EmptyStatus = computed(() => () => (
-      <div class="rounded-lg border border-grey5 h-10 px-4 flex items-center cursor-pointer">
+      <div class="border border-color-border rounded-lg cursor-pointer flex h-10 px-4 items-center">
         <UploadFilled class="mr-3.5" />
-        <span class="text-grey1">{props.placeholder}</span>
+        <span class="text-color1">{props.placeholder}</span>
       </div>
     ))
     {
       /* Process status */
     }
     const ProcessStatus = computed(() => () => (
-      <div class="flex flex-col justify-center rounded-lg border border-grey5 h-10 px-4 relative">
+      <div class="border border-color-border rounded-lg flex flex-col h-10 px-4 justify-center relative">
         <div class="flex justify-between items-center">
           <div class="flex items-center">
             <PosterFilled class="mr-3.5 text-primary" />
             <span>{props.value?.name}</span>
           </div>
-          <CloseOutlined class="text-grey4 cursor-pointer" onClick={delImage} />
+          <CloseOutlined class="cursor-pointer text-color3" onClick={delImage} />
         </div>
         <div class="absolute" style={{ bottom: '2px', left: '48px', right: '48px' }}>
           <NProgress
@@ -90,14 +90,14 @@ export const USingleImageFileUpload = defineComponent({
       /* Failed status */
     }
     const FailedStatus = computed(() => () => (
-      <div class="rounded-lg border border-grey5 h-10 px-4 flex justify-between items-center text-error">
+      <div class="border border-color-border rounded-lg flex h-10 text-error px-4 justify-between items-center">
         <div class="flex items-center">
           <PosterFilled class="mr-3.5" />
           <span>{props.value?.name}</span>
         </div>
         <div class="flex items-center">
           <CloseOutlined class="cursor-pointer" onClick={delImage} />
-          <RefreshOutlined class="ml-2 cursor-pointer" onClick={() => uploadRef.value?.submit()} />
+          <RefreshOutlined class="cursor-pointer ml-2" onClick={() => uploadRef.value?.submit()} />
         </div>
       </div>
     ))
@@ -105,13 +105,13 @@ export const USingleImageFileUpload = defineComponent({
       /* Success status */
     }
     const SuccessStatus = computed(() => () => (
-      <div class="rounded-lg border border-grey5 h-10 px-4 flex items-center justify-between">
+      <div class="border border-border-color rounded-lg flex h-10 px-4 items-center justify-between">
         <div class="flex items-center">
           {/* <ULazyImage src={props.value!.url!} /> */}
           <PosterFilled class="mr-3.5 text-primary" />
           <span>{props.value?.name}</span>
         </div>
-        <DeleteFilled class="text-grey4 cursor-pointer" onClick={delImage} />
+        <DeleteFilled class="cursor-pointer text-color3" onClick={delImage} />
       </div>
     ))
 

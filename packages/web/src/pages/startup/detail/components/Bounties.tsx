@@ -52,7 +52,7 @@ const BountiesCard = defineComponent({
 
     return () => (
       <div
-        class="flex h-38 w-full items-center cursor-pointer border-b-1 mt-8"
+        class="cursor-pointer flex border-b-1 h-38 mt-8 w-full items-center"
         onClick={handleCard(props.startup.bountyId)}
       >
         <div class="flex h-full w-22 items-center">
@@ -60,11 +60,11 @@ const BountiesCard = defineComponent({
             src={props.startup.logo}
             width="10"
             height="10"
-            class="h-20 w-20 -mt-15 rounded-md"
+            class="rounded-md h-20 -mt-15 w-20"
           />
         </div>
-        <div class="flex-1 h-full ml-6 w-full items-center">
-          <div class="content w-full">
+        <div class="h-full flex-1 ml-6 w-full items-center">
+          <div class="w-full content">
             <div class="flex w-full">
               <div
                 class={[
@@ -81,7 +81,7 @@ const BountiesCard = defineComponent({
               )}
             </div>
 
-            <div class="flex items-center flex-row mb-4">
+            <div class="flex flex-row mb-4 items-center">
               <div class="mr-2">
                 <UTag
                   class="px-2"
@@ -115,21 +115,27 @@ const BountiesCard = defineComponent({
                   created {date.value}
                 </UTag>
               </div>
-              <div class="u-body2 truncate text-grey3">
+              <div class="text-grey3 truncate u-body2">
                 {props.startup.applicantCount ?? 0} Applicant
               </div>
             </div>
             <div class="flex">
               <div class="mt-3">
+<<<<<<< fix/multi-chain-switch
                 <span class="u-body2 text-grey2">Deposit requirements：</span>
                 <span class="u-card-title2 text-warning">
                   {props.startup.depositRequirements} {props.startup.depositTokenSymbol}
+=======
+                <span class="text-grey2 u-body2">Deposit requirements：</span>
+                <span class="text-warning u-card-title2">
+                  {props.startup.depositRequirements} USDC
+>>>>>>> develop
                 </span>
               </div>
               <div class="flex-1"></div>
               <div class="flex justify-end">
                 {props.startup.rewards &&
-                  props.startup.rewards.map((item: { tokenSymbol: string; amount: string }, i) => {
+                  props.startup.rewards.map((item: { tokenSymbol: string; amount: number }, i) => {
                     return (
                       <div
                         key={i}

@@ -197,8 +197,14 @@ export default defineComponent({
                 onTriggerClick={this.handleGithubLink(account.accountId)}
                 disabled={false}
               >
-                <GithubFilled class="h-5 mr-4 text-primary w-5" />
-                <span class="text-primary u-title2">{account.linked ? 'Linked' : 'Link'}</span>
+                <GithubFilled class="h-5 mr-4 w-5" />
+                <span class=" u-h5">
+                  {account.linked ? (
+                    <span class="text-color2">Linked</span>
+                  ) : (
+                    <span class="text-color1">Link</span>
+                  )}
+                </span>
               </OAuthLinkBtn>
             )
           } else if (account.accountType === 2) {
@@ -210,7 +216,13 @@ export default defineComponent({
                 disabled={false}
               >
                 <GoogleFilled class="h-5 mr-4 text-primary w-5" />
-                <span class="text-primary u-title2">{account.linked ? 'Linked' : 'Link'}</span>
+                <span class="u-h5">
+                  {account.linked ? (
+                    <span class="text-color2">Linked</span>
+                  ) : (
+                    <span class="text-color1">Link</span>
+                  )}
+                </span>
               </OAuthLinkBtn>
             )
           }

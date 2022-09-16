@@ -1,6 +1,8 @@
 /**
  * Bounty types
  */
+import { ServiceReturn } from '@/services'
+
 export const BOUNTY_TYPES = ['Ready to work', 'Started working', 'Completed'] as const
 
 export const BOUNTY_TYPES_COLOR_MAP = [
@@ -67,3 +69,5 @@ export const PERIOD_OPTIONS = [
 
 // Get the currency types supported by bounty
 export const BASE_CURRENCY: string[] = ['USDC', 'USD', 'RMB']
+
+export type BountyItemType = NonNullable<ServiceReturn<'bounty@bounty-list(tab)'>>['rows']

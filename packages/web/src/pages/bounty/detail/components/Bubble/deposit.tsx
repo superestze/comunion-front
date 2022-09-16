@@ -19,13 +19,13 @@ export default defineComponent({
     const depositFn = computed(() => {
       if (props.depositInfo?.access === 1) {
         return () => (
-          <div class="flex text-success items-center u-card-title2">
+          <div class="flex font-primary font-medium text-success items-center">
             +{props.depositInfo?.tokenAmount} {props.tokenSymbol}
           </div>
         )
       } else if (props.depositInfo?.access === 2) {
         return () => (
-          <div class="flex text-warning items-center u-card-title2">
+          <div class="flex font-primary font-medium text-warning items-center">
             -{props.depositInfo?.tokenAmount} {props.tokenSymbol}
           </div>
         )
@@ -43,8 +43,10 @@ export default defineComponent({
           default: () => (
             <div class="flex flex-1 items-center">
               <div class="flex-1 mx-4">
-                <p class="mb-2 truncate u-title3">{this.depositInfo?.name}</p>
-                <p class="text-grey3 u-tag">
+                <p class="font-primary font-semibold mb-2 text-[16px] truncate">
+                  {this.depositInfo?.name}
+                </p>
+                <p class="text-grey3 u-num2 !font-400">
                   {format(this.depositInfo?.time || '', 'comunionTimeAgo')}
                 </p>
               </div>

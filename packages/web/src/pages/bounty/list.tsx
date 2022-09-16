@@ -1,4 +1,4 @@
-import { UDropdownFilter, USpin } from '@comunion/components'
+import { UDropdownFilter, USpin, UTab, UTabs } from '@comunion/components'
 import { debounce } from '@comunion/utils'
 import {
   defineComponent,
@@ -107,25 +107,38 @@ const BountyPage = defineComponent({
       document.removeEventListener('scroll', scrollHandler)
     })
 
+    const tabsChange = (tabName: string) => {
+      console.log(tabName)
+      return false
+    }
+
     return () => (
       <USpin show={pagination.loading}>
         <div class="mt-8 mb-16">
           <div class="flex mb-6">
             <div class="flex-1">
-              {/* <h3 class="text-grey1 u-h3">{pagination.total?.toLocaleString()} Bounties available</h3> */}
+              <UTabs onBeforeLeave={tabsChange} class="no-border">
+                <UTab name="BOUNTY">BOUNTY</UTab>
+                <UTab name="OFFERING" disabled>
+                  <span class=" text-color3">OFFERING</span>
+                </UTab>
+              </UTabs>
             </div>
-            <UDropdownFilter
-              options={BOUNTY_TYPES.map(item => ({ label: item, value: item }))}
-              placeholder="All Status"
-              class="rounded mr-4 w-37"
-              clearable
-              v-model:value={searchType.value}
-            />
-            <SearchInput
-              v-model:value={searchInput.value}
-              placeholder="Search"
-              loading={pagination.loading}
-            />
+            <div class="flex items-start">
+              <UDropdownFilter
+                options={BOUNTY_TYPES.map(item => ({ label: item, value: item }))}
+                placeholder="All Status"
+                class="rounded mr-4 w-37"
+                clearable
+                v-model:value={searchType.value}
+              />
+
+              <SearchInput
+                v-model:value={searchInput.value}
+                placeholder="Search"
+                loading={pagination.loading}
+              />
+            </div>
           </div>
           {DataList.value.map(item => (
             <BountyCard key={item.bountyId} startup={item} />

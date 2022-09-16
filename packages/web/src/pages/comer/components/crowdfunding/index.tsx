@@ -1,10 +1,9 @@
 import { UCard } from '@comunion/components'
 import { defineComponent, reactive, ref, watch } from 'vue'
 import { default as ItemCard } from '@/pages/crowdfunding/components/CrowdfundingMiniCard'
-import { ServiceReturn, services } from '@/services'
+import { services } from '@/services'
+import { CrowdfundingItem } from '@/types'
 import '@/assets/style/last-item-noborder.css'
-
-type BountyType = NonNullable<ServiceReturn<'crowdfunding@comer-posted-crowdfunding-list'>>
 
 export default defineComponent({
   props: {
@@ -28,7 +27,7 @@ export default defineComponent({
       page: 1,
       loading: false
     })
-    const list = ref<BountyType>([])
+    const list = ref<CrowdfundingItem[]>([])
     const getBounties = async () => {
       const { error, data } = await services[
         props.createdByMe
@@ -40,7 +39,17 @@ export default defineComponent({
         comerID: props.comerId
       })
       if (!error) {
-        list.value = data || []
+        const dataList: CrowdfundingItem[] = Array.isArray(data)
+          ? data.map(item => {
+              return {
+                ...item,
+                kyc: item.kyc || '',
+                contractAudit: item.contractAudit || '',
+                buyTokenAmount: item.buyTokenAmount || 0
+              }
+            })
+          : []
+        list.value = dataList
       }
     }
 
@@ -68,7 +77,7 @@ export default defineComponent({
   },
   render() {
     return (
-      <UCard title="dCROWDFUNDING" class="mb-6 last-item-noborder">
+      <UCard title="dCrowdfunding" class="mb-6 last-item-noborder">
         {Array.isArray(this.list) &&
           this.list.map(item => <ItemCard class="_item" info={item} key={item.crowdfundingId} />)}
       </UCard>

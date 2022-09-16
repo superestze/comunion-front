@@ -163,7 +163,11 @@ export default defineComponent({
     return (
       <UModal show={this.visible}>
         <UCard
-          style="width: 600px"
+          style={{
+            width: '600px',
+            '--n-title-text-color': '#3F2D99',
+            '--n-close-icon-color': '#3F2D99'
+          }}
           title="Increase deposit"
           bordered={false}
           size="huge"

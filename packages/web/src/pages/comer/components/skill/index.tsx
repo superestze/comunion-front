@@ -4,7 +4,8 @@ import {
   getFieldsRules,
   UCard,
   UForm,
-  UFormItemsFactory
+  UFormItemsFactory,
+  UTag
 } from '@comunion/components'
 import { defineComponent, ref, reactive, PropType, watchEffect } from 'vue'
 import { btnGroup } from '../btnGroup'
@@ -76,7 +77,7 @@ export default defineComponent({
       <>
         {this.view && this.skills.length === 0 ? null : (
           <UCard
-            title="SKILLS"
+            title="Skills"
             class="mb-6"
             v-slots={{
               'header-extra': () => {
@@ -90,25 +91,20 @@ export default defineComponent({
             }}
           >
             {this.editMode ? (
-              <div class="flex flex-col mt-6">
+              <div class="flex flex-col">
                 <UForm rules={rules} model={this.info} ref={(ref: any) => (this.form = ref)}>
                   <UFormItemsFactory fields={this.fields} values={this.info} />
                 </UForm>
                 {btnGroup(handleEditMode(true), handleSubmit)}
               </div>
             ) : (
-              <div class="flex flex-wrap mt-6">
+              <div class="flex flex-wrap gap-2">
                 {Array.isArray(this.info.skills) && this.info.skills.length === 0 ? (
-                  <p class="font-[400] mt-6 text-14px text-grey4">Add your skill</p>
+                  <p class="text-color2 u-h5">Add your skill</p>
                 ) : (
                   <>
                     {this.info.skills.map(value => (
-                      <div
-                        style={{ backgroundColor: 'rgba(83, 49, 244, 0.1)' }}
-                        class="rounded-8px text-primary mr-2 mb-2 opacity-0.9 py-1.5 px-4"
-                      >
-                        {value}
-                      </div>
+                      <UTag class="text-color1">{value}</UTag>
                     ))}
                   </>
                 )}

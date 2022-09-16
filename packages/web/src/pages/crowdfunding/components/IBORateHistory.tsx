@@ -37,7 +37,7 @@ export const IBORateHistory = defineComponent({
     }
 
     return () => (
-      <UCard title="IBO Rate History">
+      <UCard title="Rate History">
         <UScrollList
           triggered={pagination.loading}
           page={pagination.page}

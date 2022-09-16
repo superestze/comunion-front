@@ -5,7 +5,7 @@ const CrowdfundingSkeleton = defineComponent({
   name: 'CrowdfundingSkeleton',
   setup(props) {
     return () => (
-      <div class="relative rounded-lg bg-white h-28.5rem">
+      <div class="bg-white rounded-lg h-108 relative">
         <div class="p-4">
           <USkeleton class=" rounded mb-8" height="10rem" />
           <div class="flex mb-4">

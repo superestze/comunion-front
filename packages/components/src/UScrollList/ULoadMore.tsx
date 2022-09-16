@@ -43,7 +43,7 @@ const ULoadMore = defineComponent({
             class="flex flex-row items-center justify-center"
           >
             <div class="flex flex-row items-center justify-center">
-              <span class="ml-8px text-grey3 text-[14px]">{noMoreText?.value}</span>
+              <span class="ml-8px text-color2 ">{noMoreText?.value}</span>
             </div>
           </div>
         )
@@ -59,7 +59,7 @@ const ULoadMore = defineComponent({
         >
           <div class="flex flex-row items-center justify-center">
             <NSpin size="small" />
-            <span class="ml-16px text-grey3 text-[14px]">{loadingText?.value}</span>
+            <span class="ml-16px text-color2 ">{loadingText?.value}</span>
           </div>
         </div>
       )
