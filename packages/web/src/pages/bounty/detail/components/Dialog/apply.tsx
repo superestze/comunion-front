@@ -22,7 +22,6 @@ import { services } from '@/services'
 import { useBountyStore } from '@/stores'
 import { useContractStore } from '@/stores/contract'
 import { checkSupportNetwork } from '@/utils/wallet'
-
 type checkboxItem = {
   value: boolean
   validate: boolean
@@ -246,7 +245,11 @@ const ApplyDialog = defineComponent({
     return (
       <UModal show={this.visible}>
         <UCard
-          style="width: 600px"
+          style={{
+            width: '540px',
+            '--n-title-text-color': '#3F2D99',
+            '--n-close-icon-color': '#3F2D99'
+          }}
           title={this.title}
           bordered={false}
           size="huge"

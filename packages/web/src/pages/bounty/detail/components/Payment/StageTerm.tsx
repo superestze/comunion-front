@@ -93,14 +93,13 @@ export default defineComponent({
 
             {this.bountyContractStore.bountyContractInfo.role === USER_ROLE.FOUNDER && (
               <UButton
-                secondary={!this.payBtnAbled}
                 disabled={!this.payBtnAbled}
                 class={`h-9 w-30 font-primary font-semibold  -mr-8 px-8 ${
                   !this.payBtnAbled
                     ? 'text-[#FFFFFF]'
-                    : 'text-[#3F2D99] border-1 border-[#3F2D99] border-solid rounded-sm !hover:text-[#3F2D99]'
+                    : 'text-[#5331F4] border-1 border-[#5331F4] border-solid rounded-sm !hover:text-[#5331F4]'
                 }`}
-                color={!this.payBtnAbled ? 'rgba(0,0,0,0.1)' : '#FFFFFF'}
+                color={!this.payBtnAbled ? 'rgba(0,0,0,0.1)' : ''}
                 type="default"
                 size="small"
                 onClick={triggerDialog}
