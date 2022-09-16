@@ -74,7 +74,7 @@ export default defineComponent({
         onClick={handleCard(props.startup.bountyId)}
       >
         <div class="flex items-start">
-          <UStartupLogo src={props.startup.logo} width="10" height="10" class="h-15 mr-3 w-15" />
+          <UStartupLogo src={props.startup.logo} width="10" height="10" class="h-15 mr-4 w-15" />
 
           <div class="flex-1 overflow-hidden">
             <div class="flex mb-2 items-center">
@@ -86,7 +86,9 @@ export default defineComponent({
               {/* style={{
                   'background-color': color ? color.value : BOUNTY_TYPES_COLOR_MAP[0].value
                 }} */}
-              <UTag class="ml-4">{color ? color.label : BOUNTY_TYPES_COLOR_MAP[0].label}</UTag>
+              <UTag class="ml-4 text-color2">
+                {color ? color.label : BOUNTY_TYPES_COLOR_MAP[0].label}
+              </UTag>
             </div>
             {/* skill tags miniCard */}
             <div class="flex flex-wrap gap-2">

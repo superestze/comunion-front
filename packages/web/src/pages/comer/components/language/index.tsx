@@ -166,17 +166,17 @@ export default defineComponent({
                   <>
                     {this.languages.map(item => (
                       <div
-                        class={`cursor-pointer -mx-3.5 px-3.5 flex items-center h-11 rounded-6px ${listHover['list-hover']}`}
+                        class={`cursor-pointer -mx-3.5 px-3.5 flex items-center h-11 rounded-sm ${listHover['list-hover']}`}
                       >
                         <div class="flex flex-1 items-center overflow-hidden">
                           <p
                             title={LanguageList.find(l => l.value === item.language)?.label}
-                            class="h-18px max-w-2/3 p-1px text-grey1 truncate u-body4"
+                            class="h-5 max-w-2/3 text-color1 truncate u-h6"
                           >
                             {LanguageList.find(l => l.value === item.language)?.label}
                           </p>
-                          <p class="bg-grey5 h-3 mx-2 w-1px"></p>
-                          <p class="text-grey3 u-tag truncate">{item.level}</p>
+                          <p class="bg-color3 h-3 mx-2 w-1px"></p>
+                          <p class="text-color3 u-tag truncate">{item.level}</p>
                         </div>
                         <div
                           class={`hidden mr-4 ${

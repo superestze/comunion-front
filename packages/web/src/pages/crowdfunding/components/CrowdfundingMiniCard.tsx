@@ -1,11 +1,11 @@
-import { UStartupLogo } from '@comunion/components'
+import { UStartupLogo, UTag } from '@comunion/components'
 import { ethers } from 'ethers'
 import { defineComponent, PropType, computed, ref, onMounted } from 'vue'
 import { useRouter } from 'vue-router'
 import { CROWDFUNDING_TYPES } from '@/constants'
 import { useErc20Contract, useCrowdfundingContract } from '@/contracts'
-import { ServiceReturn } from '@/services'
 import { useWalletStore } from '@/stores'
+import { CrowdfundingItem } from '@/types'
 import { getChainInfoByChainId } from '@/utils/etherscan'
 import { formatToFloor } from '@/utils/numberFormat'
 import { checkSupportNetwork } from '@/utils/wallet'
@@ -14,9 +14,7 @@ export default defineComponent({
   name: 'CrowdfundingMiniCard',
   props: {
     info: {
-      type: Object as PropType<
-        NonNullable<ServiceReturn<'crowdfunding@public-crowdfunding-list'>>['rows'][number]
-      >,
+      type: Object as PropType<CrowdfundingItem>,
       required: true
     }
   },
@@ -93,43 +91,28 @@ export default defineComponent({
 
     return () => (
       <div
-        class="rounded-sm cursor-pointer py-4 px-4 hover:bg-color-hover"
-        style="transition:background ease .3s"
+        class="rounded-sm cursor-pointer flex py-4 px-4 items-center hover:bg-color-hover"
         onClick={() => toDetail(props.info.crowdfundingId, props.info.chainId)}
       >
-        <div class="flex overflow-hidden">
-          <UStartupLogo src={props.info.poster} width="10" height="10" class="h-15 mr-3 w-15" />
+        <UStartupLogo src={props.info.poster} width="10" height="10" class="h-15 mr-4 w-15" />
 
-          <div class="flex-1 overflow-hidden">
-            <div class="flex mb-2 items-center">
-              <div class="text-[#000] leading-7 truncate u-h3">{props.info.startupName}</div>
-
-              <span
-                class={[
-                  'rounded-sm h-5 font-primary text-color2 ml-4 px-2 text-xs leading-1.25rem inline-block border-1 border-[#DADCE0]'
-                ]}
-              >
-                {CROWDFUNDING_TYPES[props.info.status - 1]}
-              </span>
-            </div>
-            <div class="border-b border-grey5">
-              <div class="u-body2">
-                <span class="text-color2 text-[14px]">Raise Goal：</span>
-                <span class="font-primary text-xs text-primary">
-                  <span class="font-semibold">{raiseState.value.raiseGoal}</span>
-                  <span>{buyTokenSymbol.value}</span>
-                </span>
-                <span class="font-700 mx-2 text-color2">·</span>
-                <span class="text-color2 text-[14px]">Progress：</span>
-                <span class="font-primary text-xs text-primary">
-                  <span class="text-primary">{raiseState.value.raiseAmount}</span>
-                  <span>{buyTokenSymbol.value}</span>
-                </span>
-                <span class="font-primary text-xs text-primary">
-                  ({raiseState.value.raisePercent} %)
-                </span>
-              </div>
-            </div>
+        <div class="flex-1 overflow-hidden">
+          <div class="flex mb-2 items-center">
+            <div class="text-color1 truncate u-h4">{props.info.startupName}</div>
+            <UTag class="ml-4 text-color2">{CROWDFUNDING_TYPES[props.info.status - 1]}</UTag>
+          </div>
+          <div class="text-color3 u-h6">
+            <span>Raise Goal：</span>
+            <span class="text-primary">
+              <span class="u-num1">{raiseState.value.raiseGoal}</span>
+              <span>{buyTokenSymbol.value}</span>
+            </span>
+            <strong class=" mx-2">·</strong>
+            <span>Progress：</span>
+            <span class=" text-primary">
+              <span class="u-num1">{raiseState.value.raiseAmount}</span>
+              <span>{buyTokenSymbol.value}</span>({raiseState.value.raisePercent} %)
+            </span>
           </div>
         </div>
       </div>

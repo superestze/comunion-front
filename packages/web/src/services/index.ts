@@ -149,7 +149,7 @@ export const services = {
     return requestAdapter<
       {
         /**
-   * @description
+   * @description 
 	ModuleStartup - 1
 	ModuleBounty - 2
 	ModuleCrowdfunding - 3
@@ -1437,7 +1437,7 @@ export const services = {
         /**
          * @description 创建时间
          */
-        createdTime: number
+        createdTime: string
         /**
          * @description 报酬
          */
@@ -1449,7 +1449,7 @@ export const services = {
           /**
            * @description 总额
            */
-          amount: string
+          amount: number
         }[]
         /**
          * @description 申请人数
@@ -1532,7 +1532,7 @@ export const services = {
         /**
          * @description 创建时间
          */
-        createdTime: number
+        createdTime: string
         /**
          * @description 报酬
          */
@@ -1544,7 +1544,7 @@ export const services = {
           /**
            * @description 总额
            */
-          amount: string
+          amount: number
         }[]
         /**
          * @description 申请人数
@@ -1633,7 +1633,7 @@ export const services = {
         /**
          * @description 创建时间
          */
-        createdTime: number
+        createdTime: string
         /**
          * @description 报酬
          */
@@ -1645,7 +1645,7 @@ export const services = {
           /**
            * @description 总额
            */
-          amount: string
+          amount: number
         }[]
         /**
          * @description 申请人数
@@ -1726,7 +1726,7 @@ export const services = {
         /**
          * @description 创建时间
          */
-        createdTime: number
+        createdTime: string
         /**
          * @description 报酬
          */
@@ -1738,7 +1738,7 @@ export const services = {
           /**
            * @description 总额
            */
-          amount: string
+          amount: number
         }[]
         /**
          * @description 申请人数
@@ -1881,21 +1881,24 @@ export const services = {
         comerId: number
         startupName: string
         endTime: string
-        raiseBalance: number
-        raisedPercent: number
+        raiseBalance: string
+        raisedPercent: string
         status: number
         startTime: string
         startupLogo: string
         crowdfundingContract: string
-        raiseGoal: number
-        buyPrice: number
-        swapPercent: number
+        raiseGoal: string
+        buyPrice: string
+        swapPercent: string
         poster: string
         chainId: number
         buyTokenAddress: string
         buyTokenSymbol: string
         sellTokenAddress: string
         sellTokenSymbol: string
+        kyc?: string
+        contractAudit?: string
+        buyTokenAmount?: number
       }[]
     >({
       url: replacePath('/account/comer/:comerID/participated-crowdfundings', args),
@@ -1922,21 +1925,24 @@ export const services = {
         comerId: number
         startupName: string
         endTime: string
-        raiseBalance: number
-        raisedPercent: number
+        raiseBalance: string
+        raisedPercent: string
         status: number
         startTime: string
         startupLogo: string
         crowdfundingContract: string
-        raiseGoal: number
-        buyPrice: number
-        swapPercent: number
+        raiseGoal: string
+        buyPrice: string
+        swapPercent: string
         poster: string
         chainId: number
         buyTokenAddress: string
         buyTokenSymbol: string
         sellTokenAddress: string
         sellTokenSymbol: string
+        kyc?: string
+        contractAudit?: string
+        buyTokenAmount?: number
       }[]
     >({
       url: replacePath('/account/comer/:comerID/posted-crowdfundings', args),
@@ -2935,7 +2941,7 @@ export const services = {
   'startup@social-delete'(args: { startupID: any }) {
     return requestAdapter<{
       /**
-   * @description 	1-SocialEmail
+   * @description 	1-SocialEmail 
 	2-SocialWebsite
 	3-SocialTwitter
 	4-SocialDiscord
