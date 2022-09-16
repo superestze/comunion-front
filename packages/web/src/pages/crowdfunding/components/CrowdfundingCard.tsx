@@ -5,14 +5,8 @@ import { defineComponent, PropType, computed, ref, onMounted } from 'vue'
 import { CrowdfundingStatus } from '../utils'
 import { CROWDFUNDING_TYPES } from '@/constants'
 import { useErc20Contract, useCrowdfundingContract } from '@/contracts'
-<<<<<<< HEAD
 import { useWalletStore } from '@/stores'
-<<<<<<< HEAD
-=======
->>>>>>> 7ad84c53 (feat(style): ✨ 🎨 update crowdfunding list style)
-=======
 import { CrowdfundingItem } from '@/types'
->>>>>>> 23ca32ad (feat(style): ✨ 🎨 update dashboard style3)
 import { getChainInfoByChainId } from '@/utils/etherscan'
 import { formatToFloor } from '@/utils/numberFormat'
 
