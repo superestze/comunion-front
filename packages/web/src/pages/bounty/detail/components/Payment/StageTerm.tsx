@@ -36,13 +36,13 @@ export default defineComponent({
     const flagStr = computed(() => {
       if (props.item?.seqNum) {
         if (props.item.seqNum > 3) {
-          return `${props.item.seqNum}TH`
+          return `${props.item.seqNum}th`
         } else if (props.item.seqNum === 3) {
-          return '3RD'
+          return '3rd'
         } else if (props.item.seqNum === 2) {
-          return '2ND'
+          return '2nd'
         } else if (props.item.seqNum === 1) {
-          return '1ST'
+          return '1st'
         }
       }
       return 'err'
