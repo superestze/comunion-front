@@ -3,7 +3,7 @@ import { PeriodOutlined, StageOutlined, ClockOutlined } from '@comunion/icons'
 import dayjs from 'dayjs'
 import { pluralize } from 'inflected'
 import { defineComponent, computed, ref, watch } from 'vue'
-import { useRoute } from 'vue-router'
+import { useRoute, useRouter } from 'vue-router'
 import BountyCard from './components/BountyCard'
 import { ActivityBubble, ApplicantBubble, DepositBubble } from './components/Bubble'
 import { Payment } from './components/Payment'
@@ -12,7 +12,7 @@ import PostUpdate from './components/PostUpdate'
 import StartupCard from './components/StartupCard'
 import { useBountyContractWrapper } from './hooks/useBountyContractWrapper'
 import { BOUNTY_STATUS, PERIOD_OPTIONS, USER_ROLE } from '@/constants'
-import { useBountyStore } from '@/stores'
+import { useBountyStore, useWalletStore } from '@/stores'
 import { useBountyContractStore } from '@/stores/bountyContract'
 import { getChainInfoByChainId } from '@/utils/etherscan'
 
@@ -20,7 +20,9 @@ export default defineComponent({
   name: 'BountyDetail',
   setup() {
     const route = useRoute()
+    const router = useRouter()
     const bountyStore = useBountyStore()
+    const walletStore = useWalletStore()
 
     const loading = ref<boolean>(true)
 
@@ -28,7 +30,9 @@ export default defineComponent({
       bountyStore.initialize(route.query.bountyId as string)
     }
     initBountyStore()
-    const bountySection = computed(() => bountyStore.bountySection)
+    const bountySection = computed(() => {
+      return bountyStore.bountySection
+    })
     const bountyContractStore = useBountyContractStore()
     const bountyContract = ref()
     const postUpdate = ref<any>()
@@ -56,6 +60,10 @@ export default defineComponent({
       [() => bountySection.value.detail, bountyContractStore.bountyContractInfo],
       ([detail, bountyContractInfo]) => {
         if (detail?.depositContract && !isInit) {
+          if (detail.chainID != walletStore.chainId) {
+            router.push('/bounty/list')
+            return
+          }
           const BountyContractWrapper = useBountyContractWrapper(route.query.bountyId as string)
           postUpdate.value = BountyContractWrapper.bountyContract.postUpdate
           loading.value = false

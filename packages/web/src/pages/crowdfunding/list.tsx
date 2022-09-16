@@ -17,6 +17,7 @@ import SearchInput from '@/components/SearchInput'
 import { CrowdfundingType, CROWDFUNDING_TYPES } from '@/constants'
 import { services } from '@/services'
 import { CrowdfundingItem } from '@/types'
+import { checkSupportNetwork } from '@/utils/wallet'
 
 const CrowdfundingList = defineComponent({
   name: 'CrowdfundingList',
@@ -53,17 +54,17 @@ const CrowdfundingList = defineComponent({
           dataList.value.push(...(data?.rows || []))
         }
 
-        pagination.total = data!.totalRows
+        pagination.total = data!.totalRows || 0
       }
     }
 
     const router = useRouter()
 
     const toDetail = async (crowdfundingId: number, chainId: number) => {
-      // const isSupport = await checkSupportNetwork(chainId)
-      // if (isSupport) {
-      router.push('/crowdfunding/' + crowdfundingId)
-      // }
+      const isSupport = await checkSupportNetwork(chainId)
+      if (isSupport) {
+        router.push('/crowdfunding/' + crowdfundingId)
+      }
     }
     const onLoadMore = async (p: number, reload?: boolean) => {
       pagination.loading = true
@@ -136,7 +137,7 @@ const CrowdfundingList = defineComponent({
               loading={pagination.loading}
             />
           </div>
-          <div class="grid pb-6 gap-8 grid-cols-1 md:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4">
+          <div class="grid pb-6 gap-6 grid-cols-1 md:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4">
             {dataList.value.map(crowdfunding => (
               <CrowdfundingCard
                 key={crowdfunding.crowdfundingId}

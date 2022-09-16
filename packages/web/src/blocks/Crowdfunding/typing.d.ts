@@ -11,6 +11,7 @@ export interface CrowdfundingInfo {
   raiseGoal: number | null
   buyTokenContract: string
   buyTokenName?: string
+  buyTokenSymbol?: string
   swapPercent?: number
   buyPrice?: number
   maxBuyAmount?: number

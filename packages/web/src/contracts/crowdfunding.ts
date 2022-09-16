@@ -131,6 +131,8 @@ export function useCrowdfundingContract(
     ),
     sell: wrapTransaction({ ...getContractArgs.value, ...params }, 'sell'),
     state: wrapTransaction({ ...getContractArgs.value, ...params }, 'state'),
+    // New contract method, not used
+    // updateParas: wrapTransaction({ ...getContractArgs.value, ...params }, 'updateParas'),
     transferOwnership: wrapTransaction({ ...getContractArgs.value, ...params }, 'transferOwnership')
   }
 }

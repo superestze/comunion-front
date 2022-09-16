@@ -80,7 +80,7 @@ export function useCrowdfundingFactoryContract(
     ),
     getDeployedCrowdfundingContracts: wrapTransaction(
       { ...getContractArgs.value, ...params },
-      'getDeployedCrowdfundingContracts'
+      'children'
     ),
     owner: wrapTransaction({ ...getContractArgs.value, ...params }, 'owner'),
     renounceOwnership: wrapTransaction(
