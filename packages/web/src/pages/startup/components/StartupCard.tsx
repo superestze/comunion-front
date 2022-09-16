@@ -80,10 +80,18 @@ const StartupCard = defineComponent({
           <p class="mb-2 text-color3 break-all u-h6 line-clamp-3">{props.startup.mission}</p>
           <div class="flex flex-wrap text-0.75rem gap-2">
             {hashtagsArray.map((key, value) => {
-              return value < 4 && <UTag key={value}>{key}</UTag>
+              return (
+                value < 4 && (
+                  <UTag key={value} class="text-color1">
+                    {key}
+                  </UTag>
+                )
+              )
             })}
 
-            {hashtagsArray.length - 4 > 0 ? <UTag>+ {hashtagsArray.length - 4}</UTag> : null}
+            {hashtagsArray.length - 4 > 0 ? (
+              <UTag class="text-color1">+ {hashtagsArray.length - 4}</UTag>
+            ) : null}
           </div>
           {/* footer */}
           <div class="right-6 bottom-6 left-6 text-0.75rem absolute">
