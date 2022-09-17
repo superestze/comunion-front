@@ -1,4 +1,4 @@
-import { UStartupLogo } from '@comunion/components'
+import { UStartupLogo, UTag } from '@comunion/components'
 import { ConfirmOutlined } from '@comunion/icons'
 import dayjs from 'dayjs'
 import { defineComponent, PropType, computed } from 'vue'
@@ -70,37 +70,29 @@ export const ProposalCard = defineComponent({
   render() {
     return (
       <div
-        class="bg-white rounded-sm cursor-pointer flex border-1 mb-6 py-6 px-6 hover:bg-color-hover"
+        class="bg-white rounded-sm cursor-pointer flex border-1 mb-5 py-6 px-6 hover:bg-color-hover"
         onClick={() => this.handleCard()}
       >
-        <div class="h-15 mr-4 w-15">
-          <UStartupLogo src={this.proposalData.startupLogo || ''} width="15" height="15" />
-        </div>
-        <div class="flex-1 truncate">
+        <UStartupLogo src={this.proposalData.startupLogo || ''} class="h-15 mr-4 w-15" />
+        <div class="flex-1 overflow-hidden">
           <div class="flex items-center">
-            <div>
-              <span class="mr-2 text-grey3 text-xs">{this.proposalData.startupName} by</span>
-              <span class="text-xs text-color2" onClick={this.toComerDetail}>
+            <div class="flex-1 text-color3 u-h7">
+              {this.proposalData.startupName}
+              <span class="px-2">by</span>
+              <span class="text-color2 hover:text-primary" onClick={this.toComerDetail}>
                 {this.proposalData.authorComerName}
               </span>
             </div>
             {/* , this.statusStyle */}
-            <div
-              class={[
-                'status rounded-[2px] h-5 font-primary text-color2 ml-4 px-2 text-xs leading-1.25rem inline-block border-1 border-[#DADCE0]'
-              ]}
-            >
-              {GOVERNANCE_KEY[this.proposalData.status as keyof typeof GOVERNANCE_KEY]}
-            </div>
+            <UTag>{GOVERNANCE_KEY[this.proposalData.status as keyof typeof GOVERNANCE_KEY]}</UTag>
           </div>
-          <div class="max-w-full mt-2 mb-1 truncate break-all u-h4">{this.proposalData.title}</div>
+          <div class="mt-2 mb-1 max-w-9/10 text-color1 truncate u-h4">
+            {this.proposalData.title}
+          </div>
           {this.proposalData.description && (
-            <div
-              class="text-xs text-color3 truncate break-all whitespace-pre-line line-clamp-2"
-              v-html={this.proposalData.description}
-            />
+            <div class="text-color2 u-h6 line-clamp-2" v-html={this.proposalData.description} />
           )}
-          {this.timeTip && <div class="mt-2  text-grey3">{this.timeTip}</div>}
+          {this.timeTip && <div class="mt-2 text-color3 u-h7">{this.timeTip}</div>}
         </div>
       </div>
     )
