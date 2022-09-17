@@ -1,4 +1,4 @@
-import { UCard, UScrollList } from '@comunion/components'
+import { UCard } from '@comunion/components'
 import { defineComponent, reactive, ref, watch } from 'vue'
 import { useRouter } from 'vue-router'
 import { ProposalCard } from '@/pages/governance/components/ProposalCard'
@@ -78,30 +78,13 @@ export default defineComponent({
     }
   },
   render() {
-    console.log('proposal render')
-
     return (
       <UCard title="Proposal" class="mb-6">
-        <UScrollList
-          class="max-h-100"
-          triggered={this.pagination.loading}
-          page={this.pagination.page}
-          pageSize={this.pagination.pageSize}
-          total={this.pagination.total}
-          onLoadMore={() => this.getProposalList(this.pagination.page + 1)}
-        >
-          {this.proposalList.map(proposal => (
-            <div>
-              <div
-                class="cursor-pointer"
-                onClick={() => this.toProposalDetail(proposal.proposalId)}
-              >
-                <ProposalCard proposalData={proposal} />
-              </div>
-              <div class="h-px ml-auto bg-grey5 w-[90%]"></div>
-            </div>
-          ))}
-        </UScrollList>
+        {this.proposalList.map(proposal => (
+          <div class="cursor-pointer" onClick={() => this.toProposalDetail(proposal.proposalId)}>
+            <ProposalCard proposalData={proposal} />
+          </div>
+        ))}
       </UCard>
     )
   }
