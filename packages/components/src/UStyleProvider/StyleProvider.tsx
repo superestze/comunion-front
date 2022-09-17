@@ -194,7 +194,8 @@ const UStyleProvider = defineComponent({
         heightLarge: '34px',
         heightMedium: '22px',
         heightSmall: '22px',
-        heightTiny: '20px'
+        heightTiny: '20px',
+        closeIconSizeMedium: '12px'
       }
     }))
 
