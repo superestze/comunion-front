@@ -80,7 +80,7 @@ export default defineComponent({
     console.log('proposal render')
 
     return (
-      <UCard title="PROPOSAL" class="mb-6">
+      <UCard title="Governance" class="mb-6">
         <UScrollList
           class={['max-h-100', styles.srollList]}
           triggered={this.pagination.loading}
