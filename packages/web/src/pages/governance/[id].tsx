@@ -386,7 +386,7 @@ const ProposalDetail = defineComponent({
                     src={this.proposalInfo?.authorComerAvatar || ''}
                   />
                 </div>
-                <div class="mx-4 text-color2 hover:text-primary">
+                <div class="mx-4 text-color2 whitespace-nowrap hover:text-primary">
                   {this.proposalInfo?.authorComerName}
                 </div>
               </div>
