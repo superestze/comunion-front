@@ -256,7 +256,7 @@ export default defineComponent({
                       </UInputGroup>
                       {this.info.composes.length > 1 && (
                         <CloseOutlined
-                          class="cursor-pointer ml-4 text-grey3 hover:text-primary"
+                          class="cursor-pointer ml-4 text-color3 hover:text-primary"
                           onClick={() => removeCompose(index)}
                         />
                       )}

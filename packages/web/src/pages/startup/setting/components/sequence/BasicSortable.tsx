@@ -126,7 +126,7 @@ export default defineComponent({
                     <p class="u-title2">{element.name}</p>
                   </div>
                   <div class="cursor-pointer mr-8.5 w-5 handle">
-                    <DragFilled class="w-full text-grey3" />
+                    <DragFilled class="w-full text-color3" />
                   </div>
                 </li>
               )

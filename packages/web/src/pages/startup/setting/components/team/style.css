@@ -1,7 +1,3 @@
-.startup-team-list:hover {
-  background-color: rgb(83 49 244 / 10%);
-}
-
 .startup-team-list .change {
   visibility: hidden;
 }

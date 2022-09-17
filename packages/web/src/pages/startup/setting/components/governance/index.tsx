@@ -274,7 +274,7 @@ export default defineComponent({
               <span class="mr-2">Strategie(s)</span>
               <UTooltip placement="right">
                 {{
-                  trigger: () => <QuestionFilled class="h-4 text-grey3 w-4" />,
+                  trigger: () => <QuestionFilled class="h-4 text-color3 w-4" />,
                   default: () => (
                     <div class="w-60">
                       Strategris are used determine voting power or whether a user is eligible to
@@ -303,7 +303,7 @@ export default defineComponent({
                       class="cursor-pointer transform scale-75"
                       onClick={() => this.delStrategy(strategy.dictValue!)}
                     >
-                      <DeleteFilled class="text-grey3" />
+                      <DeleteFilled class="text-color3" />
                     </div>
                   </div>
                 ))
@@ -315,7 +315,7 @@ export default defineComponent({
               )}
               {}
               <div
-                class="border border-dashed rounded-lg cursor-pointer flex py-2 text-grey3 items-center justify-center u-body2"
+                class="border border-dashed rounded-lg cursor-pointer flex py-2 text-color3 items-center justify-center u-body2"
                 onClick={this.addStrategy}
               >
                 <span style={{ fontSize: '18px', marginRight: '10px' }}>+</span>

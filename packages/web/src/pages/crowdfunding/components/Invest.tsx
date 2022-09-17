@@ -735,11 +735,20 @@ export const Invest = defineComponent({
           <UCard
             style={{ width: '540px' }}
             closable={true}
-            class="!p-7"
             onClose={() => (cancelModal.value = false)}
+            v-slots={{
+              header: () => {
+                return (
+                  <div class="flex relative items-center">
+                    <span class="text-color1 u-h3">Cancellation of dCrowdfunding</span>
+                  </div>
+                )
+              }
+            }}
           >
-            <div class="-top-3 relative u-title1 ">Cancellation of dCrowdfunding</div>
-            <div class="text-grey3 u-body2">This can't be undo and you'll lose your changes</div>
+            <div class="min-h-20 p-4 text-color2 u-h6">
+              This can't be undo and you'll lose your changes
+            </div>
             <div class="flex mt-20 justify-end">
               <UButton
                 type="primary"
@@ -759,13 +768,21 @@ export const Invest = defineComponent({
           <UCard
             style={{ width: '540px' }}
             closable={true}
-            class="!p-7"
             onClose={() => (removeModal.value = false)}
+            v-slots={{
+              header: () => {
+                return (
+                  <div class="flex relative items-center">
+                    <span class="text-color1 u-h3">Remove dCrowdfunding！</span>
+                  </div>
+                )
+              }
+            }}
           >
-            <div class="-top-3 relative u-title1 ">Remove dCrowdfunding！</div>
-            <div class="text-grey3 u-body2">
+            <div class="min-h-20 p-4 text-color2 u-h6">
               This will transfer all funds raised to the team wallet
             </div>
+
             <div class="flex mt-20 justify-end">
               <UButton
                 type="primary"

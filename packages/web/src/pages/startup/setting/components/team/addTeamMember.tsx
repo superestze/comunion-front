@@ -68,10 +68,10 @@ export default defineComponent({
 
     return (
       <>
-        <div class="h-10 mb-6 search">
+        <div class="mb-6 search">
           <UInputGroup>
             <UInput
-              class="h-12 leading-12"
+              class="h-10 leading-10"
               v-model:value={this.inputWalletAddress}
               size="small"
               placeholder="Search comer by wallet address"
@@ -79,7 +79,7 @@ export default defineComponent({
             <UButton
               onClick={searchMember}
               size="small"
-              class="font-opensans bg-primary1 font-600 h-12 text-white text-[16px] w-34"
+              class="bg-primary1 h-10 text-white w-34 uh4"
             >
               Add
             </UButton>
