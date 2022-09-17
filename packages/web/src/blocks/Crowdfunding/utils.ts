@@ -11,6 +11,10 @@ export function getBuyCoinAddress(mainCoinAddress: string): Record<number, Selec
       { label: 'BNB', value: mainCoinAddress },
       { label: 'QCTS', value: AVAX_USDC_ADDR[97] }
     ],
+    2814: [
+      { label: 'RSYS', value: mainCoinAddress },
+      { label: 'SUSDC', value: AVAX_USDC_ADDR[2814] }
+    ],
     4002: [
       { label: 'FTM', value: mainCoinAddress },
       { label: 'QCTS', value: AVAX_USDC_ADDR[4002] }
@@ -22,6 +26,10 @@ export function getBuyCoinAddress(mainCoinAddress: string): Record<number, Selec
     43114: [
       { label: 'AVAX', value: mainCoinAddress },
       { label: 'USDC', value: AVAX_USDC_ADDR[43114] }
+    ],
+    80001: [
+      { label: 'MATIC', value: mainCoinAddress },
+      { label: 'USDC', value: AVAX_USDC_ADDR[80001] }
     ]
   }
 }
