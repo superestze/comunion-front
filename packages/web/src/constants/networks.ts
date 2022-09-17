@@ -141,7 +141,7 @@ export const allNetworks: ChainNetworkType[] = [
     chainId: 2814,
     name: 'Rollux OPv1 Private',
     shortName: 'Rollux',
-    currencySymbol: 'AVAX',
+    currencySymbol: 'RSYS',
     rpcUrl: 'https://testnet.rollux.com:2814',
     explorerUrl: 'https://explorer.testnet.rollux.com'
   }
