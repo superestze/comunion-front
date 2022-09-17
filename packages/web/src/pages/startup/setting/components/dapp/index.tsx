@@ -11,7 +11,7 @@ export default defineComponent({
   },
   render() {
     return (
-      <div class="bg-white border rounded-lg flex mb-6 min-h-205.5 relative  overflow-hidden items-center justify-center">
+      <div class="bg-white border rounded-sm flex mb-6 min-h-200 relative  overflow-hidden items-center justify-center">
         <div class="my-9.5 mx-10">
           <UDeveloping>
             <EmptyFilled />

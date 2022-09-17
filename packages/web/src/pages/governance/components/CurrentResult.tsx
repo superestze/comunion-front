@@ -16,13 +16,13 @@ export const CurrentResult = defineComponent({
   },
   render() {
     return (
-      <UCard class="!p-6" contentStyle={{ paddingTop: 0 }}>
-        <div class="u-card-title2 mb-9">Current results</div>
+      <UCard>
+        <div class="u-h5 text-color2 mb-6">Current results</div>
         {(this.proposalInfo.choiceVoteInfos || []).map(choiceOption => (
           <div>
-            <div class="flex justify-between mb-1">
+            <div class="flex justify-between mb-1 u-h6">
               <span>{choiceOption.itemName}</span>
-              <span>
+              <span class="text-color3">
                 {choiceOption.votes}
                 <span class="mx-2">{this.voteSymbol}</span> {Number(choiceOption.percent) * 100}%
               </span>

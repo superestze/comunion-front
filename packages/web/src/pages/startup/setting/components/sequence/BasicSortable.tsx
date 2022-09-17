@@ -110,23 +110,11 @@ export default defineComponent({
               const { element } = data
               // console.log(element, index)
               return (
-                <li
-                  class="bg-white flex rounded-6px h-20 mb-6 w-full items-center justify-between"
-                  style={{
-                    boxShadow: '0px 2px 8px rgba(128, 145, 207, 0.1)'
-                  }}
-                >
-                  <div class="flex items-center">
-                    <div
-                      class="rounded-full flex h-12 mr-6 ml-4 w-12 items-center justify-center"
-                      style={{ backgroundColor: 'rgba(83, 49, 244, 0.1)' }}
-                    >
-                      {element.icon()}
-                    </div>
-                    <p class="u-title2">{element.name}</p>
-                  </div>
-                  <div class="cursor-pointer mr-8.5 w-5 handle">
-                    <DragFilled class="w-full text-grey3" />
+                <li class="bg-white border border-color-border rounded flex h-20 mb-6 w-full px-6 items-center justify-between">
+                  <div class="mr-4 w-8">{element.icon()}</div>
+                  <p class="flex-1 text-color1 u-h4">{element.name}</p>
+                  <div class="cursor-pointer handle">
+                    <DragFilled class="w-full text-color3" />
                   </div>
                 </li>
               )

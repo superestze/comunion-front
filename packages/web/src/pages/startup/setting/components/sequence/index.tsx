@@ -51,17 +51,15 @@ export default defineComponent({
     }
     return (
       <USpin show={this.loading}>
-        <div class="bg-white border rounded-lg mb-6 min-h-205.5 relative overflow-hidden">
-          <div class="my-9.5 mx-10">
-            <h3 class="mb-10 u-h3">
-              Show each activities in startup detail according to the following sequence
-            </h3>
-            <BasicSortable v-model={this.list} />
-            <div class="flex mt-10 items-center justify-end">
-              <UButton class="w-30" type="primary" size="small" onClick={handleSubmit}>
-                Save
-              </UButton>
-            </div>
+        <div class="bg-white border rounded-sm mb-6 min-h-200 p-10 relative overflow-hidden">
+          <h3 class="mb-10 text-color1 u-h2">
+            Show each activities in startup detail according to the following sequence
+          </h3>
+          <BasicSortable v-model={this.list} />
+          <div class="flex mt-10 items-center justify-end">
+            <UButton class="w-30" type="primary" size="small" onClick={handleSubmit}>
+              Save
+            </UButton>
           </div>
         </div>
       </USpin>

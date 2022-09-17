@@ -32,7 +32,7 @@ export default defineComponent({
   },
   render() {
     return (
-      <UCard title="dCROWDFUNDING" class="mb-6 last-item-noborder">
+      <UCard title="dCrowdfunding" class="mb-6 last-item-noborder">
         {Array.isArray(this.list) && this.list.length > 0 ? (
           this.list
             .filter(item => item.status !== 5)

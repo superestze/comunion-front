@@ -267,14 +267,14 @@ export default defineComponent({
         <UForm
           ref={(ref: any) => (this.formRef = ref)}
           model={this.govSetting}
-          class="bg-white border rounded-lg mb-6 min-h-205.5 p-10 relative overflow-hidden governance-setting"
+          class="bg-white border rounded-sm mb-6 min-h-200 p-10 relative overflow-hidden governance-setting"
         >
-          <div class="border rounded-lg border-grey5 mb-6 w-full">
+          <div class="border rounded-sm border-grey5 mb-6 w-full">
             <div class="border-b flex border-b-grey5 py-3 px-6 items-center u-title3">
               <span class="mr-2">Strategie(s)</span>
               <UTooltip placement="right">
                 {{
-                  trigger: () => <QuestionFilled class="h-4 text-grey3 w-4" />,
+                  trigger: () => <QuestionFilled class="h-4 text-color3 w-4" />,
                   default: () => (
                     <div class="w-60">
                       Strategris are used determine voting power or whether a user is eligible to
@@ -288,7 +288,7 @@ export default defineComponent({
               {this.govSetting.strategies.length ? (
                 this.govSetting.strategies.map(strategy => (
                   <div
-                    class="border rounded-lg flex border-grey5 mb-6 py-3 px-4 justify-between items-center"
+                    class="border rounded-sm flex border-grey5 mb-6 py-3 px-4 justify-between items-center"
                     onClick={() => this.editStrategy(strategy)}
                   >
                     <span class="u-body4">
@@ -303,19 +303,19 @@ export default defineComponent({
                       class="cursor-pointer transform scale-75"
                       onClick={() => this.delStrategy(strategy.dictValue!)}
                     >
-                      <DeleteFilled class="text-grey3" />
+                      <DeleteFilled class="text-color3" />
                     </div>
                   </div>
                 ))
               ) : (
-                <div class="border border-warning rounded-lg flex mb-6 py-4 px-6 items-center">
+                <div class="border border-warning rounded-sm flex mb-6 py-4 px-6 items-center">
                   <WarningFilled class="mr-2" />
                   <span>You must add at least one strategy</span>
                 </div>
               )}
               {}
               <div
-                class="border border-dashed rounded-lg cursor-pointer flex py-2 text-grey3 items-center justify-center u-body2"
+                class="border border-dashed rounded-sm cursor-pointer flex py-2 text-color3 items-center justify-center u-body2"
                 onClick={this.addStrategy}
               >
                 <span style={{ fontSize: '18px', marginRight: '10px' }}>+</span>
@@ -323,7 +323,7 @@ export default defineComponent({
               </div>
             </div>
           </div>
-          <div class="border rounded-lg border-grey5 mb-6 w-full">
+          <div class="border rounded-sm border-grey5 mb-6 w-full">
             <div class="border-b border-b-grey5 py-3 px-6 u-title3">Vote symbol</div>
             <div class="p-6">
               <UFormItem
@@ -344,7 +344,7 @@ export default defineComponent({
               </div>
             </div>
           </div>
-          <div class="border rounded-lg border-grey5 mb-6 w-full">
+          <div class="border rounded-sm border-grey5 mb-6 w-full">
             <div class="border-b border-b-grey5 py-3 px-6 u-title3">Proposal precondition</div>
             <div class="p-6">
               <div class="mb-6">
@@ -381,7 +381,7 @@ export default defineComponent({
               </div>
             </div>
           </div>
-          <div class="border rounded-lg border-grey5 mb-6 w-full">
+          <div class="border rounded-sm border-grey5 mb-6 w-full">
             <div class="border-b border-b-grey5 py-3 px-6 u-title3">Proposal validity</div>
             <div class="p-6">
               <UInputNumberGroup
@@ -408,7 +408,7 @@ export default defineComponent({
               </div>
             </div>
           </div>
-          <div class="border rounded-lg border-grey5 mb-2 w-full">
+          <div class="border rounded-sm border-grey5 mb-2 w-full">
             <div class="border-b border-b-grey5 py-3 px-6 u-title3">Admin</div>
             <div class="p-6">
               <div class="flex mb-4">
@@ -454,7 +454,7 @@ export default defineComponent({
           </div>
           <div class="flex mt-10 justify-end">
             <div
-              class="rounded-lg cursor-pointer bg-primary1 text-white py-2 px-8"
+              class="rounded-sm cursor-pointer bg-primary1 text-white py-2 px-8"
               onClick={this.saveGovSetting}
             >
               Save
@@ -463,7 +463,7 @@ export default defineComponent({
         </UForm>
         <UModal
           show={this.strategyModal === 'selectModal'}
-          class="bg-white rounded-lg py-8 px-10 w-150"
+          class="bg-white rounded-sm py-8 px-10 w-150"
         >
           <div>
             <header class="flex mb-6 justify-between items-center">
@@ -479,7 +479,7 @@ export default defineComponent({
             <div>
               {this.strategies?.map(strate => (
                 <div
-                  class="border rounded-lg cursor-pointer mb-6 p-6 u-title3"
+                  class="border rounded-sm cursor-pointer mb-6 p-6 u-title3"
                   onClick={() => (this.strategyModal = strate.dictValue)}
                 >
                   {strate.dictLabel}
@@ -490,7 +490,7 @@ export default defineComponent({
         </UModal>
         <UModal
           show={this.strategyModal === 'erc20-balance-of'}
-          class="bg-white rounded-lg py-8 px-10 w-150"
+          class="bg-white rounded-sm py-8 px-10 w-150"
         >
           <div>
             <UForm
@@ -553,7 +553,7 @@ export default defineComponent({
                 edit the strategy by clicking on it if you want to add your own token.
               </div>
               {!this.contractAddressExist && (
-                <div class="border rounded-lg flex border-[#F53F3F] mb-10  py-1 px-4 items-center">
+                <div class="border rounded-sm flex border-[#F53F3F] mb-10  py-1 px-4 items-center">
                   <ErrorTipFilled class="transform text-[#F53F3F] scale-75" />
                   <span class="ml-4 text-[#F53F3F] u-body1">
                     The token address was not found, please make sure the network is correct
@@ -564,7 +564,7 @@ export default defineComponent({
                 <UButton
                   type="primary"
                   loading={this.addStrategyBtnLoading}
-                  class="rounded-lg cursor-pointer bg-primary1 !hover:bg-primary1 text-white text-center py-2 w-40"
+                  class="rounded-sm cursor-pointer bg-primary1 !hover:bg-primary1 text-white text-center py-2 w-40"
                   onClick={() =>
                     this.addErc20Strategy({
                       ...this.erc20BalanceStrategy,
@@ -579,7 +579,7 @@ export default defineComponent({
             </UForm>
           </div>
         </UModal>
-        <UModal show={this.strategyModal === 'ticket'} class="bg-white rounded-lg py-8 px-10 w-150">
+        <UModal show={this.strategyModal === 'ticket'} class="bg-white rounded-sm py-8 px-10 w-150">
           <div>
             <UForm model={this.ticketStrategy}>
               <header class="flex justify-between items-center mb-6">
@@ -605,7 +605,7 @@ export default defineComponent({
               </div>
               <div class="mt-4 flex justify-end">
                 <div
-                  class="w-40 bg-primary1 text-white py-2 rounded-lg text-center cursor-pointer"
+                  class="w-40 bg-primary1 text-white py-2 rounded-sm text-center cursor-pointer"
                   onClick={() =>
                     this.addTicketStrategy({
                       ...this.ticketStrategy,

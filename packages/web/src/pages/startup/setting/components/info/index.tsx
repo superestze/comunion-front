@@ -390,45 +390,43 @@ export default defineComponent({
     const rules = getFieldsRules(this.fields)
     return (
       <USpin show={this.loading}>
-        <div class="bg-white border rounded-lg mb-6 min-h-205.5 relative overflow-hidden">
-          <div class="my-9.5 mx-10">
-            <div class="flex mb-14">
-              <RectDraggerUpload
-                text="Startup logo"
-                tip={() => (
-                  <p class="text-white text-center u-body2">
-                    <p>Recommended：180px*180px</p>
-                    <p>Max size：10MB</p>
-                  </p>
-                )}
-                fileSize={10 * 1024 * 1024}
-                accept="image/png, image/jpeg, image/bmp, image/psd, image/svg, image/tiff"
-                imageUrl={this.info.logo}
-                customRequest={this.handleUploadLogo}
-              />
-              <RectDraggerUpload
-                class="ml-16"
-                text="Startup Banner"
-                tip={() => (
-                  <p class="text-white text-center u-body2">
-                    <p>Recommended：1380px*210px</p>
-                    <p>Max size：10MB</p>
-                  </p>
-                )}
-                fileSize={10 * 1024 * 1024}
-                accept="image/png, image/jpeg, image/bmp, image/psd, image/svg, image/tiff"
-                imageUrl={this.info.cover}
-                customRequest={this.handleUploadCover}
-              />
-            </div>
-            <UForm rules={rules} model={this.info} ref={(ref: any) => (this.form = ref)}>
-              <UFormItemsFactory fields={this.fields} values={this.info} />
-            </UForm>
-            <div class="flex mt-10 items-center justify-end">
-              <UButton class="w-30" type="primary" size="small" onClick={handleSubmit}>
-                Save
-              </UButton>
-            </div>
+        <div class="bg-white border rounded-sm mb-6 min-h-100 p-10 relative overflow-hidden">
+          <div class="flex mb-14">
+            <RectDraggerUpload
+              text="Startup logo"
+              tip={() => (
+                <>
+                  <p>Recommended：180px*180px</p>
+                  <p>Max size：10MB</p>
+                </>
+              )}
+              fileSize={10 * 1024 * 1024}
+              accept="image/png, image/jpeg, image/bmp, image/psd, image/svg, image/tiff"
+              imageUrl={this.info.logo}
+              customRequest={this.handleUploadLogo}
+            />
+            <RectDraggerUpload
+              class="ml-16"
+              text="Startup Banner"
+              tip={() => (
+                <>
+                  <p>Recommended：1380px*210px</p>
+                  <p>Max size：10MB</p>
+                </>
+              )}
+              fileSize={10 * 1024 * 1024}
+              accept="image/png, image/jpeg, image/bmp, image/psd, image/svg, image/tiff"
+              imageUrl={this.info.cover}
+              customRequest={this.handleUploadCover}
+            />
+          </div>
+          <UForm rules={rules} model={this.info} ref={(ref: any) => (this.form = ref)}>
+            <UFormItemsFactory fields={this.fields} values={this.info} />
+          </UForm>
+          <div class="flex mt-10 items-center justify-end">
+            <UButton class="w-30" type="primary" size="small" onClick={handleSubmit}>
+              Save
+            </UButton>
           </div>
         </div>
       </USpin>

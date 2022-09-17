@@ -17,42 +17,42 @@ export default defineComponent({
   setup() {
     const menuOptions: MenuOption[] = [
       {
-        label: () => h(<p>INFO</p>),
+        label: () => h(<p>Info</p>),
         key: 'INFO',
         icon: () => h(<InfoOutlined />)
       },
       {
-        label: () => h(<p>SECURITY</p>),
+        label: () => h(<p>Security</p>),
         key: 'SECURITY',
         icon: () => h(<SecurityOutlined />)
       },
       {
-        label: () => h(<p>FINANCE</p>),
+        label: () => h(<p>Finance</p>),
         key: 'FINANCE',
         icon: () => h(<FinanceOutlined />)
       },
       {
-        label: () => h(<p>TEAM</p>),
+        label: () => h(<p>Team</p>),
         key: 'TEAM',
         icon: () => h(<TeamOutlined />)
       },
       {
-        label: () => h(<p>SOCIAL</p>),
+        label: () => h(<p>Social</p>),
         key: 'SOCIAL',
         icon: () => h(<SocialOutlined />)
       },
       {
-        label: () => h(<p>GOVERNANCE</p>),
+        label: () => h(<p>Governance</p>),
         key: 'GOVERNANCE',
         icon: () => h(<GovernenceOutlined />)
       },
       {
-        label: () => h(<p>SEQUENCE</p>),
+        label: () => h(<p>Sequence</p>),
         key: 'SEQUENCE',
         icon: () => h(<SequenceOutlined />)
       },
       {
-        label: () => h(<p>DAPP</p>),
+        label: () => h(<p>Dapp</p>),
         key: 'DAPP',
         icon: () => h(<DappOutlined />)
       }
@@ -68,8 +68,8 @@ export default defineComponent({
       console.log(key, item)
     }
     return (
-      <div class="bg-white rounded-lg border mb-6 relative overflow-hidden h-205.5 menu-wrapper">
-        <p class="u-body2 m-6 text-grey3">Settings</p>
+      <div class="bg-white border rounded-ms h-200 mb-6 relative overflow-hidden menu-wrapper">
+        <p class="m-6 text-color3 u-body2">Settings</p>
         <UMenu options={this.menuOptions} onUpdateValue={handleUpdateValue} defaultValue="INFO" />
       </div>
     )

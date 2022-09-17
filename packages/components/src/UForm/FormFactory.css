@@ -1,12 +1,12 @@
 .u-form-factory {
   &_item {
     .n-form-item-label {
-      @apply font-primary font-semibold text-sm;
+      @apply u-h5;
     }
 
     .n-form-item-feedback-wrapper {
       .n-form-item-feedback {
-        @apply mb-4.5;
+        @apply mb-4;
       }
     }
   }

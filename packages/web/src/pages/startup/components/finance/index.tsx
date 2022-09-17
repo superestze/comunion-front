@@ -94,8 +94,24 @@ export default defineComponent({
             }
             return ''
           })}
-
-          <div class="bg-grey5 h-1px mt-6.5 w-full"></div>
+          {(this.wallets || [])?.length > 0 && (
+            <>
+              <div class="bg-grey5 h-1px mt-6.5 w-full"></div>
+              <div class="flex mt-5.5  items-center">
+                <p class="max-w-1/2 w-38 font-primary font-medium tracking-normal text-[14px]">
+                  Presale wallet：
+                </p>
+                <div class="overflow-hidden">
+                  {(this.wallets || []).map(item => {
+                    return (
+                      <UAddress class="font-primary text-color2" autoSlice address={item.value} />
+                    )
+                  })}
+                </div>
+              </div>
+            </>
+          )}
+          {/* <div class="bg-grey5 h-1px mt-6.5 w-full"></div>
           <div class="flex mt-5.5  items-center">
             <p class="font-primary font-medium tracking-normal max-w-1/2 text-[14px] w-38">
               Presale wallet：
@@ -105,7 +121,7 @@ export default defineComponent({
                 return <UAddress class="font-primary text-color2" autoSlice address={item.value} />
               })}
             </div>
-          </div>
+          </div> */}
         </div>
       </UCard>
     )

@@ -116,16 +116,14 @@ export default defineComponent({
     const rules = getFieldsRules(this.fields)
     return (
       <USpin show={this.loading}>
-        <div class="bg-white border rounded-lg mb-6 min-h-205.5 relative overflow-hidden">
-          <div class="my-9.5 mx-10">
-            <UForm rules={rules} model={this.info} ref={(ref: any) => (this.form = ref)}>
-              <UFormItemsFactory fields={this.fields} values={this.info} />
-            </UForm>
-            <div class="flex mt-10 items-center justify-end">
-              <UButton class="w-30" type="primary" size="small" onClick={handleSubmit}>
-                Save
-              </UButton>
-            </div>
+        <div class="bg-white border rounded-sm mb-6 min-h-200 p-10 relative overflow-hidden">
+          <UForm rules={rules} model={this.info} ref={(ref: any) => (this.form = ref)}>
+            <UFormItemsFactory fields={this.fields} values={this.info} />
+          </UForm>
+          <div class="flex mt-10 items-center justify-end">
+            <UButton class="w-30" type="primary" size="small" onClick={handleSubmit}>
+              Save
+            </UButton>
           </div>
         </div>
       </USpin>

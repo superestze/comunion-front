@@ -34,7 +34,7 @@ export default defineComponent({
   },
   render() {
     return (
-      <UCard title="BOUNTIES" class="mb-6 last-item-noborder">
+      <UCard title="Bounty" class="mb-6 last-item-noborder">
         {Array.isArray(this.bounties) && this.bounties.length > 0 ? (
           this.bounties.map(item => (
             <BountiesCard class="_item" startup={item} key={item.bountyId} miniCard />

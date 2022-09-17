@@ -20,7 +20,7 @@ export default defineComponent({
 
         return {
           value: task,
-          class: `h-8 leading-8 rounded-sm  mr-2 min-w-12 px-4  cursor-pointer border border-color-border text-color2 u-h6 hover:text-color1 ${
+          class: `box-content h-7 leading-7 rounded-sm  mr-2 min-w-4 px-4  cursor-pointer border border-color-border text-color2 u-h6 hover:text-color1 ${
             targetIndex !== -1 ? 'text-color1' : ''
           }`,
           active: targetIndex !== -1

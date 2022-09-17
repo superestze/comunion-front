@@ -156,125 +156,123 @@ export default defineComponent({
 
     return (
       <USpin show={this.loading}>
-        <div class="bg-white border rounded-lg mb-6 min-h-205.5 relative overflow-hidden">
-          <div class="my-9.5 mx-10">
-            <UForm ref={(ref: any) => (this.form = ref)} rules={rules} model={this.info}>
-              <UFormItem label="Launch Network" required={true} label-style={divStyle}>
-                <div class="w-full">
-                  <USelect
-                    v-model:value={this.info.network}
-                    // options={networkDateList}
-                    placeholder="Select your launch network"
-                    clearable
-                    renderLabel={(option: any) => {
-                      return [
-                        h(<UImage src={option.logo} class="h-5 mr-2 w-5 inline float-left" />),
-                        option.label as string
-                      ]
-                    }}
-                    options={this.dateList.allNetworksList.map(item => ({
-                      label: item.name,
-                      value: item.chainId,
-                      logo: item.logo
-                    }))}
-                  />
-                </div>
-              </UFormItem>
-              <UFormItem label="Token Name" label-style={divStyle}>
-                <div class="w-full">
-                  <UInput
-                    v-model:value={this.info.tokenName}
-                    placeholder="Please enter your Token Name"
-                    maxlength={50}
-                  />
-                </div>
-              </UFormItem>
-              <UFormItem label="Token Symbol" label-style={divStyle}>
-                <div class="w-full">
-                  <UInput
-                    v-model:value={this.info.tokenSymbol}
-                    placeholder="Please enter your Token Symbol"
-                    maxlength={10}
-                  />
-                </div>
-              </UFormItem>
-              <UFormItem label="Token Supply" label-style={divStyle}>
-                <div class="w-full">
-                  <UInput
-                    v-model:value={this.info.totalSupply}
-                    placeholder="Please enter your Token Supply"
-                    onInput={value => {
-                      this.info.totalSupply = Number(value.replace(/[^\d]/g, ''))
-                    }}
-                  />
-                </div>
-              </UFormItem>
-              <UFormItem label="Token Contract" label-style={divStyle}>
-                <UAddressInput
-                  placeholder="Please enter your token contract address"
-                  v-model:value={this.info.contract}
+        <div class="bg-white border rounded-sm mb-6 min-h-200 p-10 relative overflow-hidden">
+          <UForm ref={(ref: any) => (this.form = ref)} rules={rules} model={this.info}>
+            <UFormItem label="Launch Network" required={true} label-style={divStyle}>
+              <div class="w-full">
+                <USelect
+                  v-model:value={this.info.network}
+                  // options={networkDateList}
+                  placeholder="Select your launch network"
+                  clearable
+                  renderLabel={(option: any) => {
+                    return [
+                      h(<UImage src={option.logo} class="h-5 mr-2 w-5 inline float-left" />),
+                      option.label as string
+                    ]
+                  }}
+                  options={this.dateList.allNetworksList.map(item => ({
+                    label: item.name,
+                    value: item.chainId,
+                    logo: item.logo
+                  }))}
                 />
-              </UFormItem>
-              {/* onChange={onTokenContractChange} */}
-              <UFormItem label="Presale" label-style={divStyle}>
-                <div class="w-full">
-                  <UDatePicker
-                    v-model:value={this.info.presaleDate}
-                    type="daterange"
-                    clearable
-                    startPlaceholder="yy-mm-dd (UTC time zone)"
-                    endPlaceholder="yy-mm-dd (UTC time zone)"
-                    onChange={presaleDateChange}
-                  />
-                </div>
-              </UFormItem>
-              <UFormItem label="Launch" label-style={divStyle}>
-                <div class="w-full">
-                  <UDatePicker
-                    v-model:value={this.info.launchDate}
-                    type="date"
-                    clearable
-                    placeholder="yy-mm-dd (UTC time zone)"
-                  />
-                </div>
-              </UFormItem>
-              <UFormItem label="Wallet" label-style={divStyle}>
-                <div class="w-full">
-                  {this.info.composes.map((compose, index) => (
-                    <div class="flex mb-6 w-full items-center">
-                      <UInputGroup key={index} class="flex w-full">
-                        <UInput
-                          v-model:value={compose.walletName}
-                          class="!w-50"
-                          placeholder="Wallet name"
-                        />
-                        <UAddressInput
-                          v-model:value={compose.walletAddress}
-                          class="flex-1"
-                          placeholder="Please enter wallet address"
-                        />
-                      </UInputGroup>
-                      {this.info.composes.length > 1 && (
-                        <CloseOutlined
-                          class="cursor-pointer ml-4 text-grey3 hover:text-primary"
-                          onClick={() => removeCompose(index)}
-                        />
-                      )}
-                    </div>
-                  ))}
-                </div>
-              </UFormItem>
-              <UButton text onClick={addCompose} type="primary">
-                <PlusOutlined class="mr-2" />
-                ADD ANOTHER WALLET
-              </UButton>
-              <div class="flex mt-10 items-center justify-end">
-                <UButton class="w-30" type="primary" size="small" onClick={handleSubmit}>
-                  Save
-                </UButton>
               </div>
-            </UForm>
-          </div>
+            </UFormItem>
+            <UFormItem label="Token Name" label-style={divStyle}>
+              <div class="w-full">
+                <UInput
+                  v-model:value={this.info.tokenName}
+                  placeholder="Please enter your Token Name"
+                  maxlength={50}
+                />
+              </div>
+            </UFormItem>
+            <UFormItem label="Token Symbol" label-style={divStyle}>
+              <div class="w-full">
+                <UInput
+                  v-model:value={this.info.tokenSymbol}
+                  placeholder="Please enter your Token Symbol"
+                  maxlength={10}
+                />
+              </div>
+            </UFormItem>
+            <UFormItem label="Token Supply" label-style={divStyle}>
+              <div class="w-full">
+                <UInput
+                  v-model:value={this.info.totalSupply}
+                  placeholder="Please enter your Token Supply"
+                  onInput={value => {
+                    this.info.totalSupply = Number(value.replace(/[^\d]/g, ''))
+                  }}
+                />
+              </div>
+            </UFormItem>
+            <UFormItem label="Token Contract" label-style={divStyle}>
+              <UAddressInput
+                placeholder="Please enter your token contract address"
+                v-model:value={this.info.contract}
+              />
+            </UFormItem>
+            {/* onChange={onTokenContractChange} */}
+            <UFormItem label="Presale" label-style={divStyle}>
+              <div class="w-full">
+                <UDatePicker
+                  v-model:value={this.info.presaleDate}
+                  type="daterange"
+                  clearable
+                  startPlaceholder="yy-mm-dd (UTC time zone)"
+                  endPlaceholder="yy-mm-dd (UTC time zone)"
+                  onChange={presaleDateChange}
+                />
+              </div>
+            </UFormItem>
+            <UFormItem label="Launch" label-style={divStyle}>
+              <div class="w-full">
+                <UDatePicker
+                  v-model:value={this.info.launchDate}
+                  type="date"
+                  clearable
+                  placeholder="yy-mm-dd (UTC time zone)"
+                />
+              </div>
+            </UFormItem>
+            <UFormItem label="Wallet" label-style={divStyle}>
+              <div class="w-full">
+                {this.info.composes.map((compose, index) => (
+                  <div class="flex mb-6 w-full items-center">
+                    <UInputGroup key={index} class="flex w-full">
+                      <UInput
+                        v-model:value={compose.walletName}
+                        class="!w-50"
+                        placeholder="Wallet name"
+                      />
+                      <UAddressInput
+                        v-model:value={compose.walletAddress}
+                        class="flex-1"
+                        placeholder="Please enter wallet address"
+                      />
+                    </UInputGroup>
+                    {this.info.composes.length > 1 && (
+                      <CloseOutlined
+                        class="cursor-pointer ml-4 text-color3 hover:text-primary"
+                        onClick={() => removeCompose(index)}
+                      />
+                    )}
+                  </div>
+                ))}
+              </div>
+            </UFormItem>
+            <UButton text onClick={addCompose} type="primary">
+              <PlusOutlined class="mr-2" />
+              ADD ANOTHER WALLET
+            </UButton>
+            <div class="flex mt-10 items-center justify-end">
+              <UButton class="w-30" type="primary" size="small" onClick={handleSubmit}>
+                Save
+              </UButton>
+            </div>
+          </UForm>
         </div>
       </USpin>
     )
