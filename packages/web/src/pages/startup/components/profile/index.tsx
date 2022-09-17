@@ -195,7 +195,10 @@ export default defineComponent({
                   )
                 })}
             </div>
-            <p class="mt-2 text-color2 u-h6">{this.startupInfo?.mission}</p>
+            <p class="mt-2 text-color2 u-h6 max-w-[600px]">
+              {this.startupInfo?.mission}
+              sdashdasjdkahdkjajasdaksjdhajsdhaksdjhlkajsdklajskdlasjdkasjdklasjdlajskldjaksldjaskdklajlskdjasldkjasldjkasjdas
+            </p>
           </div>
           <div class="flex flex-wrap gap-2">
             {this.socialList.map(item => (
