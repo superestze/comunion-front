@@ -396,10 +396,10 @@ export default defineComponent({
               <RectDraggerUpload
                 text="Startup logo"
                 tip={() => (
-                  <p class="text-white text-center u-body2">
+                  <>
                     <p>Recommended：180px*180px</p>
                     <p>Max size：10MB</p>
-                  </p>
+                  </>
                 )}
                 fileSize={10 * 1024 * 1024}
                 accept="image/png, image/jpeg, image/bmp, image/psd, image/svg, image/tiff"
@@ -410,10 +410,10 @@ export default defineComponent({
                 class="ml-16"
                 text="Startup Banner"
                 tip={() => (
-                  <p class="text-white text-center u-body2">
+                  <>
                     <p>Recommended：1380px*210px</p>
                     <p>Max size：10MB</p>
-                  </p>
+                  </>
                 )}
                 fileSize={10 * 1024 * 1024}
                 accept="image/png, image/jpeg, image/bmp, image/psd, image/svg, image/tiff"
