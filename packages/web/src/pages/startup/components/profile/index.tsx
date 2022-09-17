@@ -122,7 +122,7 @@ export default defineComponent({
           />
         </div>
 
-        <div class="flex mt-2 justify-between relative">
+        <div class="flex mt-2 px-10 justify-between relative">
           <div
             class="rounded h-30 bottom-2 left-10 w-30 absolute overflow-hidden"
             style="box-shadow: 2px 6px 12px rgba(69, 68, 132, 0.25);"
@@ -134,15 +134,15 @@ export default defineComponent({
               class="bg-white rounded h-full w-full !object-cover"
             />
           </div>
-          <div>
+          <div class="pl-36">
             <div class="flex items-center">
-              <p class="ml-46 text-color1 u-h2">{this.startupInfo?.name}</p>
+              <p class="text-color1 u-h2">{this.startupInfo?.name}</p>
               {this.startupInfo && this.startupInfo.mode > 0 && (
                 <UTag class="ml-4">{this.modeName}</UTag>
               )}
             </div>
             {this.theChainName && (
-              <div class="rounded flex ml-46 py-0.25rem items-center">
+              <div class="rounded flex py-0.25rem items-center">
                 <img
                   src={
                     this.startupInfo?.onChain
@@ -167,11 +167,6 @@ export default defineComponent({
               type="primary"
               loading={this.loading}
               ghost
-              class="font-primary font-semibold mr-10 pr-4.25 pl-4.25 text-4"
-              style={{
-                '--n-border-radius': '2px'
-              }}
-              size="small"
               onClick={() => handleFollowStartup('unfollow')}
             >
               {/* <HookFilled class="mr-1 w-4.5" /> */}
@@ -181,11 +176,6 @@ export default defineComponent({
             <UButton
               type="primary"
               loading={this.loading}
-              class="font-primary font-semibold mr-10 pr-4.25 pl-4.25 text-4"
-              style={{
-                '--n-border-radius': '2px'
-              }}
-              size="small"
               onClick={() => handleFollowStartup('follow')}
             >
               {/* <PlusOutlined class="mt-1 mb-3px w-4.5" /> */}
@@ -193,7 +183,7 @@ export default defineComponent({
             </UButton>
           )}
         </div>
-        <div class="flex mx-10 mt-7 mb-6 items-end">
+        <div class="flex mx-10 mt-6 mb-6 items-end">
           <div class="flex-1 overflow-hidden">
             <div class="flex gap-2">
               {Array.isArray(this.startupInfo?.hashTags) &&
@@ -205,7 +195,7 @@ export default defineComponent({
                   )
                 })}
             </div>
-            <p class="mt-5 text-color2 u-h6">{this.startupInfo?.mission}</p>
+            <p class="mt-2 text-color2 u-h6">{this.startupInfo?.mission}</p>
           </div>
           <div class="flex flex-wrap gap-2">
             {this.socialList.map(item => (
