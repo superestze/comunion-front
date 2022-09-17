@@ -40,30 +40,36 @@ export default defineComponent({
   render() {
     return (
       <UCard title="Security" class="mb-6">
-        <div>
-          {this.kycInfo && (
-            <div class="font-primary font-medium h-5 mb-2 leading-5">
-              <a href={this.kycInfo} target="_blank">
-                <div class="flex justify-end items-center">
-                  <span class="mr-auto">KYC</span>
-                  <p class="font-400 ml-1 max-w-58 text-color3 truncate">{this.kycInfo}</p>
-                  <ArrowRightOutlined class="font-medium h-4 text-color3 w-4" />
-                </div>
-              </a>
-            </div>
-          )}
-          {this.auditInfo && (
-            <div class="font-primary font-medium h-5 mb-2 leading-5">
-              <a href={this.auditInfo} target="_blank">
-                <div class="flex justify-end items-center">
-                  <span class="mr-auto">AUDIT</span>
-                  <p class="font-400 ml-1 max-w-58 text-color3 truncate">{this.auditInfo}</p>
-                  <ArrowRightOutlined class="font-medium h-4 text-color3 w-4" />
-                </div>
-              </a>
-            </div>
-          )}
-        </div>
+        {(this.kycInfo || this.auditInfo) && (
+          <>
+            {this.kycInfo && (
+              <div class="mb-2">
+                <a
+                  href={this.kycInfo}
+                  target="_blank"
+                  class="flex text-color3 justify-end items-center hover:text-primary"
+                >
+                  <span class="flex-1 text-color1 uh5">KYC</span>
+                  <p class="max-w-58  truncate u-h6">{this.kycInfo}</p>
+                  <ArrowRightOutlined class="font-bold w-4" />
+                </a>
+              </div>
+            )}
+            {this.auditInfo && (
+              <div class="mb-2">
+                <a
+                  href={this.auditInfo}
+                  target="_blank"
+                  class="flex text-color3 justify-end items-center hover:text-primary"
+                >
+                  <span class="flex-1 text-color1 uh5">AUDIT</span>
+                  <p class="max-w-58 truncate u-h6">{this.auditInfo}</p>
+                  <ArrowRightOutlined class="font-bold w-4" />
+                </a>
+              </div>
+            )}
+          </>
+        )}
       </UCard>
     )
   }
