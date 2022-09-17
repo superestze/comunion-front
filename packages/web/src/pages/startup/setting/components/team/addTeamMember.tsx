@@ -76,11 +76,7 @@ export default defineComponent({
               size="small"
               placeholder="Search comer by wallet address"
             />
-            <UButton
-              onClick={searchMember}
-              size="small"
-              class="bg-primary1 h-10 text-white w-34 uh4"
-            >
+            <UButton onClick={searchMember} type="primary" class="h-10 w-34 u-h4">
               Add
             </UButton>
           </UInputGroup>
