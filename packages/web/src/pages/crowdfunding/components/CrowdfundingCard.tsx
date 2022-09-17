@@ -49,13 +49,16 @@ export const CrowdfundingCard = defineComponent({
         const fundingContractState = await fundingContract.state('', '')
         raiseState.value.raiseGoal = Number(ethers.utils.formatEther(fundingContractState[0]))
         raiseState.value.raiseAmount = Number(ethers.utils.formatEther(fundingContractState[1]))
-        raiseState.value.raisePercent =
-          Number(formatToFloor(raiseState.value.raiseAmount / raiseState.value.raiseGoal, 4)) * 100
+        raiseState.value.raisePercent = Number(
+          formatToFloor((raiseState.value.raiseAmount / raiseState.value.raiseGoal) * 100, 4)
+        )
         raiseState.value.swapAmount = Number(ethers.utils.formatEther(fundingContractState[2]))
       } else {
-        raiseState.value.raiseGoal = Number(props.info.raiseGoal)
-        raiseState.value.raiseAmount = Number(props.info.raiseBalance)
-        raiseState.value.raisePercent = Number(props.info.raisedPercent)
+        raiseState.value.raiseGoal = Number(formatToFloor(Number(props.info.raiseGoal), 8))
+        raiseState.value.raiseAmount = Number(formatToFloor(Number(props.info.raiseBalance), 8))
+        raiseState.value.raisePercent = Number(
+          formatToFloor(Number(props.info.raisedPercent) * 100, 4)
+        )
         raiseState.value.swapAmount = Number(props.info.swapPercent)
       }
     }

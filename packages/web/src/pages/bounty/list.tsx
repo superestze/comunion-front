@@ -118,9 +118,9 @@ const BountyPage = defineComponent({
           <div class="flex mb-6">
             <div class="flex-1">
               <UTabs onBeforeLeave={tabsChange} class="no-border">
-                <UTab name="BOUNTY">BOUNTY</UTab>
-                <UTab name="OFFERING" disabled>
-                  <span class=" text-color3">OFFERING</span>
+                <UTab name="Bounty">Bounty</UTab>
+                <UTab name="Offering" disabled>
+                  <span class=" text-color3">Offering</span>
                 </UTab>
               </UTabs>
             </div>

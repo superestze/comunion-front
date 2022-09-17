@@ -151,16 +151,18 @@ const UStyleProvider = defineComponent({
         itemTextColorHover: props.primaryColor
       },
       Input: {
-        border: `1px solid ${props.grey5Color}`,
+        border: `1px solid ${props.colorBorder}`,
         borderFocus: `1px solid ${props.primaryColor}`,
         borderHover: `1px solid transparent`,
         borderWarning: `1px solid ${props.warningColor}`,
         borderError: `1px solid ${props.errorColor}`,
-        borderDisabled: `1px solid ${props.grey5Color}`,
-        placeholderColor: props.grey3Color,
+        borderDisabled: `1px solid ${props.color3}`,
+        placeholderColor: props.color3,
         fontSizeMedium: '14px',
         fontSizeLarge: '16px',
-        paddingLarge: '16px'
+        paddingLarge: '16px',
+        heightMedium: '36px',
+        suffixTextColor: props.color3
       },
       Scrollbar: {
         color: props.primaryColor,
@@ -178,11 +180,21 @@ const UStyleProvider = defineComponent({
       },
       InternalSelection: {
         borderHover: `1px solid transparent`,
-        placeholderColor: props.color2
+        placeholderColor: props.color2,
+        heightMedium: '36px'
       },
       Tabs: {
         tabTextColorActiveBar: props.primaryColor,
         tabTextColorBar: props.primary1Color
+      },
+      Popover: {
+        color: '#808080'
+      },
+      Tag: {
+        heightLarge: '34px',
+        heightMedium: '22px',
+        heightSmall: '22px',
+        heightTiny: '20px'
       }
     }))
 

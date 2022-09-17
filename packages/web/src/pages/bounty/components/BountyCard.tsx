@@ -54,7 +54,7 @@ export default defineComponent({
     const handleCard = (bountyId: number) => async () => {
       const isSupport = await checkSupportNetwork(props.startup.chainID)
       if (isSupport) {
-        router.push(`/bounty/detail?bountyId=${bountyId}&from=0`)
+        router.push(`/bounty/${bountyId}`)
       }
     }
 
@@ -130,22 +130,6 @@ export default defineComponent({
         </div>
         <div class="flex font-primary ml-4.5rem text-color3 items-center u-h7">
           <div class="flex flex-1 items-center">
-            {theChainName && (
-              <div
-                class="flex items-center"
-                // style={{
-                //   color: NETWORKS_COLOR_MAP[theChainName.split(' ').join('')],
-                //   background: NETWORKS_SUBCOLOR_MAP[theChainName.split(' ').join('')]
-                // }}
-              >
-                <img
-                  src={getChainInfoByChainId(props.startup.chainID)?.logo}
-                  class="h-4 mr-1 w-4"
-                />
-                <span class="u-h6">{theChainName}</span>
-              </div>
-            )}
-            <strong class=" mx-2">·</strong>
             {props.startup.paymentType === 'Stage' ? (
               <StageOutlined class="h-4 w-4" />
             ) : (
@@ -157,10 +141,13 @@ export default defineComponent({
             <strong class=" mx-2">·</strong>
             <span class="text-color3">{props.startup.applicantCount ?? 0} Applicant</span>
           </div>
+          {theChainName && (
+            <img src={getChainInfoByChainId(props.startup.chainID)?.logo} class="h-4 mr-1 w-4" />
+          )}
           <span>Deposit：</span>
           <span class="text-color1  truncate">
             <span class="mr-1 u-num2">{props.startup.depositRequirements}</span>
-            <span class="u-h7">USDC</span>
+            <span class="u-h7">{props.startup.depositTokenSymbol}</span>
           </span>
         </div>
       </div>

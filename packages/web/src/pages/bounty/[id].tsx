@@ -4,7 +4,7 @@ import dayjs from 'dayjs'
 import { pluralize } from 'inflected'
 import { defineComponent, computed, ref, watch } from 'vue'
 import { useRoute, useRouter } from 'vue-router'
-import BountyCard from './components/BountyCard'
+import BountyDetailCard from './components/BountyDetailCard'
 import { ActivityBubble, ApplicantBubble, DepositBubble } from './components/Bubble'
 import { Payment } from './components/Payment'
 import PersonalCard from './components/PersonalCard'
@@ -12,6 +12,7 @@ import PostUpdate from './components/PostUpdate'
 import StartupCard from './components/StartupCard'
 import { useBountyContractWrapper } from './hooks/useBountyContractWrapper'
 import { BOUNTY_STATUS, PERIOD_OPTIONS, USER_ROLE } from '@/constants'
+import { services } from '@/services'
 import { useBountyStore, useWalletStore } from '@/stores'
 import { useBountyContractStore } from '@/stores/bountyContract'
 import { getChainInfoByChainId } from '@/utils/etherscan'
@@ -24,12 +25,9 @@ export default defineComponent({
     const bountyStore = useBountyStore()
     const walletStore = useWalletStore()
 
-    const loading = ref<boolean>(true)
+    const loading = ref<boolean>(false)
 
-    const initBountyStore = () => {
-      bountyStore.initialize(route.query.bountyId as string)
-    }
-    initBountyStore()
+    bountyStore.initialize(route.params.id as string)
     const bountySection = computed(() => {
       return bountyStore.bountySection
     })
@@ -55,16 +53,22 @@ export default defineComponent({
       return false
     })
 
+    // Need to get the chain id of the current bounty, because there is a problem with store caching
+    services['bounty@bounty-get-detail']({ bountyID: route.params.id }).then(res => {
+      const { error, data } = res
+      if (!error) {
+        if (data.chainID != walletStore.chainId) {
+          router.push('/bounty/list')
+        }
+      }
+    })
+
     let isInit = false
     watch(
       [() => bountySection.value.detail, bountyContractStore.bountyContractInfo],
       ([detail, bountyContractInfo]) => {
         if (detail?.depositContract && !isInit) {
-          if (detail.chainID != walletStore.chainId) {
-            router.push('/bounty/list')
-            return
-          }
-          const BountyContractWrapper = useBountyContractWrapper(route.query.bountyId as string)
+          const BountyContractWrapper = useBountyContractWrapper(route.params.id as string)
           postUpdate.value = BountyContractWrapper.bountyContract.postUpdate
           loading.value = false
           isInit = true
@@ -88,7 +92,6 @@ export default defineComponent({
       }
     )
     return {
-      initBountyStore,
       bountyContract,
       postUpdate,
       bountySection,
@@ -129,7 +132,7 @@ export default defineComponent({
           <div class="overflow-hidden basis-2/3">
             <div class="bg-white border rounded-[2px] mb-6 p-6">
               {this.bountySection.detail && (
-                <BountyCard
+                <BountyDetailCard
                   bountyExpired={this.bountyExpired}
                   bountyDetail={this.bountySection.detail}
                 />
@@ -142,7 +145,7 @@ export default defineComponent({
                 header: () => (
                   <div class="flex justify-between">
                     <p class="flex items-center">
-                      <span class="mr-6 text-color2 u-h5">payment</span>
+                      <span class="mr-6 text-color2 u-h5">Payment</span>
                       {this.bountySection.bountyPayment?.bountyPaymentInfo?.paymentMode === 1 ? (
                         <>
                           <StageOutlined class="h-4 w-4" />
@@ -303,6 +306,7 @@ export default defineComponent({
                       class={`mb-4 ${index === 0 && 'mt-6'}`}
                       depositInfo={item}
                       key={item.name}
+                      tokenSymbol={this.bountyContractInfo.depositTokenSymbol}
                     />
                   ))}
                 </>

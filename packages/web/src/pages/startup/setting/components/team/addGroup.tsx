@@ -114,7 +114,7 @@ export default defineComponent({
                       suffix: () =>
                         this.list.length > 1 && group.name.trim().length ? (
                           <DeleteFilled
-                            class="cursor-pointer h-3 ml-4.5 text-grey3 w-3"
+                            class="cursor-pointer h-3 ml-4.5 text-color3 w-3"
                             onClick={removeGroup(index)}
                           />
                         ) : null
@@ -123,7 +123,7 @@ export default defineComponent({
                 </div>
               ))}
             <UButton dashed class="w-full u-body2" onClick={addGroup}>
-              <span class="flex text-grey3 items-center u-body2">
+              <span class="flex text-color3 items-center u-body2">
                 <PlusOutlined class="h-4 mr-3 w-4" />
                 Add
               </span>

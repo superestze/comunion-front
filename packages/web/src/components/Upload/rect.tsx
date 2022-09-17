@@ -7,6 +7,7 @@ import image from './image.png'
 import './rect.css'
 
 export default defineComponent({
+  name: 'RectDraggerUpload',
   props: {
     text: {
       type: String,
@@ -71,17 +72,17 @@ export default defineComponent({
               <div class="bg-purple flex h-full w-full justify-center items-center">
                 <div class="flex flex-col items-center">
                   <UploadFilled class="h-10 text-primary w-10" />
-                  <p class="mt-4 u-body2">Upload</p>
+                  <p class="mt-4 u-h6">Upload</p>
                 </div>
               </div>
             )}
           </UUploadDragger>
         </UUpload>
-        <p class="flex font-600 mt-2 text-14px text-grey1 w-45 items-center">
+        <p class="flex mt-2 text-color1 w-45 items-center u-h6">
           {this.text}
-          <UTooltip trigger="hover">
+          <UTooltip trigger="hover" placement="bottom">
             {{
-              trigger: () => <QuestionCircleOutlined class="h-4 ml-2 text-grey3 w-4" />,
+              trigger: () => <QuestionCircleOutlined class="h-4 ml-2 text-color3 w-4" />,
               default: this.tip()
             }}
           </UTooltip>

@@ -9,6 +9,7 @@ import { ServiceReturn } from '@/services'
 import { useBountyContractStore } from '@/stores/bountyContract'
 
 export default defineComponent({
+  name: 'BountyDetailCard',
   props: {
     bountyDetail: {
       type: Object as PropType<ServiceReturn<'bounty@bounty-get-detail'>>,
@@ -65,7 +66,7 @@ export default defineComponent({
           <div class="flex flex-col flex-grow flex-1">
             <UTooltip width={400} placement="top-start" trigger="hover">
               {{
-                trigger: () => <span class=" u-h4 text-color1">{this.bountyDetail?.title}</span>,
+                trigger: () => <span class=" text-color1 u-h4">{this.bountyDetail?.title}</span>,
                 default: () => this.bountyDetail?.title
               }}
             </UTooltip>
@@ -75,7 +76,7 @@ export default defineComponent({
                   return (
                     <UTag
                       key={i}
-                      class="mr-2 mb-2 px-2 !h-1.25rem !text-[#211B42] !leading-4 font-primary "
+                      class="font-primary mr-2 mb-2 px-2 !h-1.25rem !text-[#211B42] !leading-4 "
                     >
                       {tag}
                     </UTag>
@@ -84,7 +85,7 @@ export default defineComponent({
             </div>
           </div>
           {this.bountyStatus && (
-            <span class="!border-1 !border-[#DADCE0] inline-block px-2 py-0.5 h-5 rounded-[2px] text-color3 flex-shrink-0">
+            <span class="rounded-[2px] flex-shrink-0 h-5 py-0.5 px-2 text-color3 inline-block !border-1 !border-[#DADCE0]">
               {this.bountyStatus.label}
             </span>
           )}
@@ -115,7 +116,7 @@ export default defineComponent({
         <Paragraph
           class="mt-4"
           label={'Applicants deposit :'}
-          content={`${this.bountyDetail?.applicantsDeposit} USDC`}
+          content={`${this.bountyDetail?.applicantsDeposit} ${this.bountyDetail?.depositTokenSymbol}`}
           contentClass="text-color2 font-primary"
         />
         <Paragraph

@@ -431,13 +431,16 @@ export const Invest = defineComponent({
         const fundingContractState = await fundingContract.state('', '')
         raiseState.value.raiseGoal = Number(ethers.utils.formatEther(fundingContractState[0]))
         raiseState.value.raiseAmount = Number(ethers.utils.formatEther(fundingContractState[1]))
-        raiseState.value.raisePercent =
-          Number(formatToFloor(raiseState.value.raiseAmount / raiseState.value.raiseGoal, 4)) * 100
+        raiseState.value.raisePercent = Number(
+          formatToFloor((raiseState.value.raiseAmount / raiseState.value.raiseGoal) * 100, 4)
+        )
         raiseState.value.swapAmount = Number(ethers.utils.formatEther(fundingContractState[2]))
       } else {
-        raiseState.value.raiseGoal = Number(props.info.raiseGoal)
-        raiseState.value.raiseAmount = Number(props.info.raiseBalance)
-        raiseState.value.raisePercent = Number(props.info.raisedPercent)
+        raiseState.value.raiseGoal = Number(formatToFloor(Number(props.info.raiseGoal), 8))
+        raiseState.value.raiseAmount = Number(formatToFloor(Number(props.info.raiseBalance), 8))
+        raiseState.value.raisePercent = Number(
+          formatToFloor(Number(props.info.raisedPercent) * 100, 4)
+        )
         raiseState.value.swapAmount = Number(props.info.swapPercent)
       }
     }
@@ -735,11 +738,20 @@ export const Invest = defineComponent({
           <UCard
             style={{ width: '540px' }}
             closable={true}
-            class="!p-7"
             onClose={() => (cancelModal.value = false)}
+            v-slots={{
+              header: () => {
+                return (
+                  <div class="flex relative items-center">
+                    <span class="text-color1 u-h3">Cancellation of dCrowdfunding</span>
+                  </div>
+                )
+              }
+            }}
           >
-            <div class="-top-3 relative u-title1 ">Cancellation of dCrowdfunding</div>
-            <div class="text-grey3 u-body2">This can't be undo and you'll lose your changes</div>
+            <div class="min-h-20 p-4 text-color2 u-h6">
+              This can't be undo and you'll lose your changes
+            </div>
             <div class="flex mt-20 justify-end">
               <UButton
                 type="primary"
@@ -759,13 +771,21 @@ export const Invest = defineComponent({
           <UCard
             style={{ width: '540px' }}
             closable={true}
-            class="!p-7"
             onClose={() => (removeModal.value = false)}
+            v-slots={{
+              header: () => {
+                return (
+                  <div class="flex relative items-center">
+                    <span class="text-color1 u-h3">Remove dCrowdfunding！</span>
+                  </div>
+                )
+              }
+            }}
           >
-            <div class="-top-3 relative u-title1 ">Remove dCrowdfunding！</div>
-            <div class="text-grey3 u-body2">
+            <div class="min-h-20 p-4 text-color2 u-h6">
               This will transfer all funds raised to the team wallet
             </div>
+
             <div class="flex mt-20 justify-end">
               <UButton
                 type="primary"

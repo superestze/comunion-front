@@ -63,7 +63,11 @@ const ApplyDialog = defineComponent({
         }
       }
     )
-    const { bountyContract, approve, chainId } = useBountyContractWrapper()
+
+    const bountyStore = useBountyStore()
+
+    const { detail } = bountyStore
+    const { bountyContract, bountyContractStore, approve, chainId } = useBountyContractWrapper()
     const fields: Ref<FormFactoryField[]> = computed(() => [
       {
         t: 'custom',
@@ -85,7 +89,8 @@ const ApplyDialog = defineComponent({
           feedback: () => [
             h(
               <span class="text-12px text-grey4">
-                Minimum deposit <span class="text-primary">{deposit}</span> USDC for applying bounty
+                Minimum deposit <span class="text-primary">{deposit}</span>{' '}
+                {detail?.depositTokenSymbol} for applying bounty
               </span>
             )
           ]
@@ -106,7 +111,9 @@ const ApplyDialog = defineComponent({
                   return Number(value)
                 }
               }}
-              renderUnit={() => renderUnit('USDC')}
+              renderUnit={() =>
+                renderUnit(bountyContractStore.bountyContractInfo.depositTokenSymbol)
+              }
             />
           )
         }
@@ -146,10 +153,6 @@ const ApplyDialog = defineComponent({
       return `text-14px ${accept.validate ? 'text-error' : 'text-grey1'}`
     })
 
-    const bountyStore = useBountyStore()
-
-    const { detail } = bountyStore
-
     return {
       fields,
       applyFields,
@@ -162,7 +165,8 @@ const ApplyDialog = defineComponent({
       bountyContract,
       approve,
       chainId,
-      detail
+      detail,
+      bountyContractStore
     }
   },
   render() {
@@ -188,7 +192,7 @@ const ApplyDialog = defineComponent({
         if (typeof err === 'undefined' && this.terms.value && this.accept.value) {
           // console.log(ethers.utils.parseUnits(this.formData.deposit.toString(), 18))
           let response!: BountyContractReturnType
-          const tokenSymbol = 'USDC'
+          const tokenSymbol = this.bountyContractStore.bountyContractInfo.depositTokenSymbol
           if (this.formData.deposit >= this.deposit) {
             const approvePendingText =
               'Waiting to submit all contents to blockchain for approval deposit'

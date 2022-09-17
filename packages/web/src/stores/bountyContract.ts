@@ -8,6 +8,7 @@ export type BountyContractInfoType = {
   bountyStatus: number
   applicantCount: number
   depositBalance: number
+  depositTokenSymbol: string
   founderDepositAmount: number
   applicantDepositAmount: number
   applicantDepositMinAmount: number
@@ -33,6 +34,7 @@ export const useBountyContractStore = defineStore('bountyContract', {
       bountyStatus: 0,
       applicantCount: 0,
       depositBalance: 0,
+      depositTokenSymbol: '',
       founderDepositAmount: 0,
       applicantDepositAmount: 0,
       applicantDepositMinAmount: 0,
@@ -67,6 +69,7 @@ export const useBountyContractStore = defineStore('bountyContract', {
               bountyStatus: 0,
               applicantCount: 0,
               depositBalance: 0,
+              depositTokenSymbol: '',
               founderDepositAmount: 0,
               applicantDepositAmount: 0,
               applicantDepositMinAmount: 0,
@@ -96,6 +99,8 @@ export const useBountyContractStore = defineStore('bountyContract', {
                   this.bountyContractInfo.bountyStatus || data.bountyStatus || 0
                 this.bountyContractInfo.depositBalance =
                   this.bountyContractInfo.depositBalance || data.depositBalance || 0
+                this.bountyContractInfo.depositTokenSymbol =
+                  this.bountyContractInfo.depositTokenSymbol || data.depositTokenSymbol || 'USDC'
                 this.bountyContractInfo.depositLock =
                   this.bountyContractInfo.depositLock || (data.depositLock as boolean)
                 this.bountyContractInfo.founderDepositAmount =

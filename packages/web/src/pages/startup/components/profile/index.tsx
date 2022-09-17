@@ -206,7 +206,7 @@ export default defineComponent({
                 {Array.isArray(this.startupInfo?.hashTags) &&
                   this.startupInfo?.hashTags.map((item: { name: string }, i: number) => {
                     return (
-                      <UTag key={i} class="!border-1 !border-gray-500/50 !u-h6">
+                      <UTag key={i} class="!border-1 !border-gray-500/50 !u-h6 !text-color1">
                         {item.name}
                       </UTag>
                     )

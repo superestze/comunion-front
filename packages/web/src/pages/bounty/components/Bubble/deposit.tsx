@@ -9,6 +9,10 @@ export default defineComponent({
     depositInfo: {
       type: Object as PropType<ItemType<ServiceReturn<'bounty@bounty-deposit-records'>>>,
       required: true
+    },
+    tokenSymbol: {
+      type: String,
+      required: true
     }
   },
   setup(props) {
@@ -16,13 +20,13 @@ export default defineComponent({
       if (props.depositInfo?.access === 1) {
         return () => (
           <div class="flex font-primary font-medium text-success items-center">
-            +{props.depositInfo?.tokenAmount} USDC
+            +{props.depositInfo?.tokenAmount} {props.tokenSymbol}
           </div>
         )
       } else if (props.depositInfo?.access === 2) {
         return () => (
           <div class="flex font-primary font-medium text-warning items-center">
-            -{props.depositInfo?.tokenAmount} USDC
+            -{props.depositInfo?.tokenAmount} {props.tokenSymbol}
           </div>
         )
       }

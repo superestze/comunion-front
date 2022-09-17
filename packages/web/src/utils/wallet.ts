@@ -3,14 +3,16 @@ import { useWalletStore } from '@/stores'
 import { getChainInfoByChainId } from '@/utils/etherscan'
 
 // Check wallet network against chainId
-export async function checkSupportNetwork(chainId: number) {
+export async function checkSupportNetwork(chainId: number, callback?: () => void) {
   const walletStore = useWalletStore()
   const chainInfo = getChainInfoByChainId(chainId)
   if (chainId && walletStore.chainId !== chainId) {
-    walletStore.wallet?.switchNetwork(chainId)
     message.warning(`Please switch to ${chainInfo?.name}`)
     // not supported network, try to switch
     walletStore.openNetworkSwitcher()
+    walletStore.wallet?.switchNetwork(chainId).then(res => {
+      if (res && callback) callback()
+    })
     return false
   } else {
     return true

@@ -185,7 +185,7 @@ export default defineComponent({
                       <Text
                         textColor="text-warning"
                         value={`${this.bountyContractInfo.founderDepositAmount || 0}`}
-                        unit="USDC"
+                        unit={this.bountyContractInfo.depositTokenSymbol}
                         enhance={40}
                         digit={4}
                       />
@@ -195,7 +195,7 @@ export default defineComponent({
                         value={`${this.bountyApplicantAmount}`}
                         enhance={40}
                         digit={4}
-                        unit="USDC"
+                        unit={this.bountyContractInfo.depositTokenSymbol}
                       />
                     </div>
                   </div>

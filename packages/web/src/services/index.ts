@@ -1072,6 +1072,10 @@ export const services = {
        * @description 押金合约地址
        */
       depositContract?: string
+      /**
+       * @description 押金token symbol
+       */
+      depositTokenSymbol: string
     }>({
       url: replacePath('/bounty/{bountyID}/detail', args),
       method: 'GET',
@@ -1133,6 +1137,13 @@ export const services = {
           amount: number
         }[]
         applicantCount: number
+        /**
+         * @description 押金token symbol
+         */
+        depositTokenSymbol: string
+        /**
+         * @description 技能要求
+         */
         applicationSkills: string[]
         depositRequirements: number
       }[]
@@ -1327,6 +1338,10 @@ export const services = {
        */
       depositBalance?: number
       /**
+       * @description 押金token symbol
+       */
+      depositTokenSymbol?: string
+      /**
        * @description founder存入金额
        */
       founderDepositAmount?: number
@@ -1457,6 +1472,10 @@ export const services = {
         applicantCount: number
         depositRequirements: number
         /**
+         * @description 押金token symbol
+         */
+        depositTokenSymbol: string
+        /**
          * @description 技能要求
          */
         applicationSkills: string[]
@@ -1551,6 +1570,10 @@ export const services = {
          */
         applicantCount: number
         depositRequirements: number
+        /**
+         * @description 押金token symbol
+         */
+        depositTokenSymbol: string
         /**
          * @description 技能要求
          */
@@ -1746,6 +1769,10 @@ export const services = {
         applicantCount: number
         depositRequirements: number
         /**
+         * @description 押金token symbol
+         */
+        depositTokenSymbol: string
+        /**
          * @description 技能要求
          */
         applicationSkills: string[]
@@ -1837,6 +1864,10 @@ export const services = {
          */
         applicantCount: number
         depositRequirements: number
+        /**
+         * @description 押金token symbol
+         */
+        depositTokenSymbol: string
         /**
          * @description 技能要求
          */

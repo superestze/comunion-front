@@ -7,7 +7,9 @@ import nobinance from '@/assets/networks/nobinance.svg'
 import noethereum from '@/assets/networks/noethereum.svg'
 import nofantom from '@/assets/networks/nofantom.svg'
 import nopolygon from '@/assets/networks/nopolygon.svg'
+import nosyscoin from '@/assets/networks/nosyscoin.svg'
 import polygon from '@/assets/networks/polygon.svg'
+import syscoin from '@/assets/networks/syscoin.svg'
 /**
  * https://chainlist.org/
  */
@@ -122,6 +124,26 @@ export const allNetworks: ChainNetworkType[] = [
     currencySymbol: 'MATIC',
     rpcUrl: 'https://polygon-rpc.com',
     explorerUrl: 'https://polygonscan.com'
+  },
+  {
+    logo: polygon,
+    nologo: nopolygon,
+    chainId: 80001,
+    name: 'Mumbai',
+    shortName: 'Mumbai',
+    currencySymbol: 'MATIC',
+    rpcUrl: 'https://matic-mumbai.chainstacklabs.com',
+    explorerUrl: 'https://mumbai.polygonscan.com'
+  },
+  {
+    logo: syscoin,
+    nologo: nosyscoin,
+    chainId: 2814,
+    name: 'Rollux OPv1 Private',
+    shortName: 'Rollux',
+    currencySymbol: 'AVAX',
+    rpcUrl: 'https://testnet.rollux.com:2814',
+    explorerUrl: 'https://explorer.testnet.rollux.com'
   }
 ]
 interface NETWORKS_COLOR_MAP_TYPE {
