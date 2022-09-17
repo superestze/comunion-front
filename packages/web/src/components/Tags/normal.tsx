@@ -23,11 +23,7 @@ export default defineComponent({
   },
   render() {
     return (
-      <UTag
-        class="ml-5 !u-body3-pure"
-        type={this.type}
-        bgColor={STARTUP_TYPES_COLOR_MAP[this.modeName]}
-      >
+      <UTag type={this.type} bgColor={STARTUP_TYPES_COLOR_MAP[this.modeName]}>
         {this.modeName}
       </UTag>
     )

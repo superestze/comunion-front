@@ -162,7 +162,7 @@ export default defineComponent({
             onClose={userBehavier('cancel')}
           >
             <>
-              <div class="flex bg-[#f6f6f6] rounded-8px h-21 mt-7.5 mb-6 items-center">
+              <div class="bg-color-hover rounded-sm flex h-21  mb-6 items-center">
                 <div class="h-15 mx-4 w-15">
                   <ULazyImage class="w-full" src={this.comer?.comerAvatar || defaultAvatar} />
                 </div>

@@ -365,33 +365,33 @@ const ProposalDetail = defineComponent({
   render() {
     return (
       <USpin show={this.pageLoading}>
-        <div class="flex gap-x-6 mb-20 mt-12">
-          <div class="w-228 bg-white rounded-lg border border-grey5 p-10">
-            <div class="mb-5 flex justify-between">
-              <span class="u-title1 truncate max-w-200">{this.proposalInfo?.title}</span>
+        <div class="flex mt-12 mb-20 gap-x-6">
+          <div class="bg-white border rounded-lg border-grey5 p-10 w-228">
+            <div class="flex mb-5 justify-between">
+              <span class="max-w-200 truncate u-title1">{this.proposalInfo?.title}</span>
               <span class={this.statusStyle}>
                 {GOVERNANCE_KEY[this.proposalInfo?.status as keyof typeof GOVERNANCE_KEY]}
               </span>
             </div>
-            <div class="flex items-center w-7 h-7">
+            <div class="flex h-7 w-7 items-center">
               <div
-                class="flex items-center cursor-pointer"
+                class="cursor-pointer flex items-center"
                 onClick={() => this.toComerDetail(this.proposalInfo?.authorComerId)}
               >
-                <div class="w-7 h-7">
+                <div class="h-7 w-7">
                   <ULazyImage
-                    class="rounded-full w-7 h-7"
+                    class="rounded-full h-7 w-7"
                     src={this.proposalInfo?.authorComerAvatar || ''}
                   />
                 </div>
-                <div class="text-primary mx-4">{this.proposalInfo?.authorComerName}</div>
+                <div class="mx-4 text-primary">{this.proposalInfo?.authorComerName}</div>
               </div>
               <UPopover
                 trigger="click"
                 placement="bottom"
                 v-slots={{
                   trigger: () => (
-                    <div class="w-7 h-7">
+                    <div class="h-7 w-7">
                       <MoreFilled class="cursor-pointer" />
                     </div>
                   ),
@@ -415,18 +415,18 @@ const ProposalDetail = defineComponent({
               ></UPopover>
             </div>
             {this.proposalInfo?.description && (
-              <div class="u-body2 mt-4" v-html={this.proposalInfo?.description} />
+              <div class="mt-4 u-body2" v-html={this.proposalInfo?.description} />
             )}
             {this.proposalInfo?.discussionLink && (
               <div class="mt-8">
-                <div class="u-title3 mb-1">Discussion：</div>
+                <div class="mb-1 u-title3">Discussion：</div>
                 <a href={this.proposalInfo.discussionLink} target="__blank" class="text-primary">
                   {this.proposalInfo.discussionLink}
                 </a>
               </div>
             )}
-            <div class="border border-grey5 rounded-lg my-10">
-              <header class="bg-purple u-title3 py-4 px-10">Cast your vote</header>
+            <div class="border rounded-lg border-grey5 my-10">
+              <header class="bg-purple py-4 px-10 u-title3">Cast your vote</header>
               <section class="p-8">
                 {this.proposalInfo?.choices?.map(voteInfo => (
                   <div
@@ -462,7 +462,7 @@ const ProposalDetail = defineComponent({
                   <thead>
                     <tr>
                       <th>
-                        <div class="u-title3 px-7">Votes({this.pagination.total})</div>
+                        <div class="px-7 u-title3">Votes({this.pagination.total})</div>
                       </th>
                       <th></th>
                       <th></th>
@@ -475,9 +475,9 @@ const ProposalDetail = defineComponent({
                       {this.voteRecords?.map(record => (
                         <tr key={record.voterComerId}>
                           <td>
-                            <div class="flex items-center ml-7">
-                              <ULazyImage src={record.voterComerAvatar} class="w-7 h-7 mr-3" />
-                              <span class="u-body4 text-primary">{record.voterComerName}</span>
+                            <div class="flex ml-7 items-center">
+                              <ULazyImage src={record.voterComerAvatar} class="h-7 mr-3 w-7" />
+                              <span class="text-primary u-body4">{record.voterComerName}</span>
                             </div>
                           </td>
                           <td>
@@ -540,34 +540,34 @@ const ProposalDetail = defineComponent({
               />
             )}
           </div>
-          <UModal show={this.voteInfoVisible} class="bg-white p-10 w-150 rounded-lg">
+          <UModal show={this.voteInfoVisible} class="bg-white rounded-lg p-10 w-150">
             <div>
-              <div class="u-title1 mb-6">Vote overview</div>
-              <div class="border border-grey5 grid grid-cols-2 py-4 px-6 rounded-lg gap-y-4">
-                <div class="u-body2 text-grey3">Option(s)</div>
-                <div class="u-body2 text-grey1 text-right">{this.selectedChoice?.itemName}</div>
-                <div class="u-body2 text-grey3">Block height</div>
-                <div class="u-body2 text-grey1 flex justify-end items-center">
+              <div class="mb-6 u-title1">Vote overview</div>
+              <div class="border rounded-lg border-grey5 grid py-4 px-6 gap-y-4 grid-cols-2">
+                <div class="text-grey3 u-body2">Option(s)</div>
+                <div class="text-right text-grey1 u-body2">{this.selectedChoice?.itemName}</div>
+                <div class="text-grey3 u-body2">Block height</div>
+                <div class="flex text-grey1 justify-end items-center u-body2">
                   {this.proposalInfo?.blockNumber?.toLocaleString()}
                   {this.blockExploreUrl && (
                     <a
                       href={`${this.blockExploreUrl}/block/${this.proposalInfo?.blockNumber}`}
                       target="__blank"
-                      class="ml-2 leading-4 outline-none"
+                      class="outline-none ml-2 leading-4"
                     >
                       <UrlOutlined class="text-primary" />
                     </a>
                   )}
                 </div>
-                <div class="u-body2 text-grey3">Your voting power</div>
-                <div class="u-body2 text-grey1 text-right">
+                <div class="text-grey3 u-body2">Your voting power</div>
+                <div class="text-right text-grey1 u-body2">
                   {this.votePower} {this.proposalInfo?.voteSymbol}
                 </div>
               </div>
-              <div class="flex justify-end mt-6">
+              <div class="flex mt-6 justify-end">
                 <UButton
                   size="small"
-                  class="w-40 mr-4"
+                  class="mr-4 w-40"
                   onClick={() => (this.voteInfoVisible = false)}
                 >
                   Cancel
@@ -588,49 +588,49 @@ const ProposalDetail = defineComponent({
               </div>
             </div>
           </UModal>
-          <UModal show={this.strategyVisible} class="bg-white p-7 w-150 rounded-lg">
+          <UModal show={this.strategyVisible} class="bg-white rounded-lg p-7 w-150">
             <div>
-              <div class="u-title1 mb-6 flex justify-between">
-                <span class="u-title1 text-primary2">Strategies</span>
+              <div class="flex mb-6 justify-between u-title1">
+                <span class="text-primary2 u-title1">Strategies</span>
                 <CloseOutlined
-                  class="text-primary w-6 h-6 cursor-pointer"
+                  class="cursor-pointer h-6 text-primary w-6"
                   onClick={() => (this.strategyVisible = false)}
                 />
               </div>
-              <div class="border border-grey5 grid grid-cols-2 py-4 px-6 rounded-lg gap-y-4">
-                <div class="u-body2 text-grey3">Symbol</div>
-                <div class="u-body2 text-grey1 text-right">
+              <div class="border rounded-lg border-grey5 grid py-4 px-6 gap-y-4 grid-cols-2">
+                <div class="text-grey3 u-body2">Symbol</div>
+                <div class="text-right text-grey1 u-body2">
                   {this.strategyInfo.voteSymbol || '--'}
                 </div>
-                <div class="u-body2 text-grey3">Address</div>
-                <div class="u-body2 text-primary flex items-center justify-end">
+                <div class="text-grey3 u-body2">Address</div>
+                <div class="flex text-primary items-center justify-end u-body2">
                   {shortenAddress(this.strategyInfo?.tokenContractAddress) || '--'}{' '}
                   <a
                     href={`${this.blockExploreUrl}/address/${this.strategyInfo?.tokenContractAddress}`}
                     target="__blank"
-                    class="ml-2 leading-4 outline-none"
+                    class="outline-none ml-2 leading-4"
                   >
                     <UrlOutlined class="text-primary" />
                   </a>
                 </div>
-                <div class="u-body2 text-grey3">Decimals</div>
-                <div class="u-body2 text-grey1 text-right">{this.strategyInfo?.voteDecimals}</div>
+                <div class="text-grey3 u-body2">Decimals</div>
+                <div class="text-right text-grey1 u-body2">{this.strategyInfo?.voteDecimals}</div>
               </div>
             </div>
           </UModal>
-          <UModal show={this.ipfsDetail.visible} class="bg-white px-8 py-7 w-150 rounded-lg">
+          <UModal show={this.ipfsDetail.visible} class="bg-white rounded-lg py-7 px-8 w-150">
             <div>
-              <div class="u-title1 mb-6 flex justify-between text-primary">
-                <span class="u-card-title2 text-primary">Receipt</span>
+              <div class="flex text-primary mb-6 justify-between u-title1">
+                <span class="text-primary u-card-title2">Receipt</span>
                 <CloseOutlined
-                  class="text-primary w-6 h-6 cursor-pointer"
+                  class="cursor-pointer h-6 text-primary w-6"
                   onClick={this.closeIPFSDetail}
                 />
               </div>
-              <div class="border border-grey5 p-5 text-center flex justify-between rounded-lg">
+              <div class="border rounded-lg flex border-grey5 text-center p-5 justify-between">
                 <span>Author</span>
-                <span class="text-primary flex items-center">
-                  <span class="u-body4 text-primary mr-4">
+                <span class="flex text-primary items-center">
+                  <span class="text-primary mr-4 u-body4">
                     #{this.ipfsDetail.hash.substring(0, 8)}
                   </span>
                   <ShareOutlined
@@ -640,7 +640,7 @@ const ProposalDetail = defineComponent({
                 </span>
               </div>
               <div
-                class="border border-grey5 py-4 px-6 rounded-full text-primary flex justify-center items-center mt-5 cursor-pointer"
+                class="border rounded-full cursor-pointer flex border-grey5 mt-5 text-primary py-4 px-6 justify-center items-center"
                 onClick={() =>
                   this.toVerify({
                     ipfs: this.ipfsDetail.hash
@@ -656,25 +656,32 @@ const ProposalDetail = defineComponent({
             <UCard
               style={{ width: '540px' }}
               closable={true}
-              class="!p-7"
               onClose={() => (this.delProposalVisible = false)}
+              v-slots={{
+                header: () => {
+                  return (
+                    <div class="flex relative items-center">
+                      <WarningFilled class="mr-4" />{' '}
+                      <span class="text-color1 u-h3">Are you sure delete proposal?</span>
+                    </div>
+                  )
+                }
+              }}
             >
-              <div class="relative -top-3 flex items-center">
-                <WarningFilled /> <span class="u-title1 ml-4">Are you sure delete proposal?</span>
-              </div>
-              <div class="mt-3 ml-12 u-body2 text-grey3">
+              <div class="min-h-20 p-4 text-color2 u-h6">
                 This action cannot be undone, the proposal will be permanently deleted
               </div>
-              <div class="flex justify-end mt-20">
+
+              <div class="flex mt-20 justify-end">
                 <UButton
                   type="primary"
                   ghost
-                  class="w-41 mr-4 h-9"
+                  class="h-9 mr-4 w-41"
                   onClick={() => (this.delProposalVisible = false)}
                 >
                   Cancel
                 </UButton>
-                <UButton type="primary" class="w-41 h-9" onClick={this.deleteProposal}>
+                <UButton type="primary" class="h-9 w-41" onClick={this.deleteProposal}>
                   Yes
                 </UButton>
               </div>
