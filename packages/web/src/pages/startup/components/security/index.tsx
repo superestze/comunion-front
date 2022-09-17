@@ -40,25 +40,25 @@ export default defineComponent({
   render() {
     return (
       <UCard title="Security" class="mb-6">
-        <div class="mt-3">
+        <div>
           {this.kycInfo && (
-            <div class="h-5 leading-5 font-primary font-medium mb-2">
-              <a href="https://google.com" target="_blank">
+            <div class="font-primary font-medium h-5 mb-2 leading-5">
+              <a href={this.kycInfo} target="_blank">
                 <div class="flex justify-end items-center">
                   <span class="mr-auto">KYC</span>
-                  <p class="ml-1 text-color3 font-400 max-w-58 truncate">https://google.com</p>
-                  <ArrowRightOutlined class="w-4 h-4 text-color3 font-medium" />
+                  <p class="font-400 ml-1 max-w-58 text-color3 truncate">{this.kycInfo}</p>
+                  <ArrowRightOutlined class="font-medium h-4 text-color3 w-4" />
                 </div>
               </a>
             </div>
           )}
           {this.auditInfo && (
-            <div class="h-5 leading-5 font-primary font-medium mb-2">
-              <a href="https://google.com" target="_blank">
+            <div class="font-primary font-medium h-5 mb-2 leading-5">
+              <a href={this.auditInfo} target="_blank">
                 <div class="flex justify-end items-center">
                   <span class="mr-auto">AUDIT</span>
-                  <p class="ml-1 text-color3 font-400 max-w-58 truncate">https://google.com</p>
-                  <ArrowRightOutlined class="w-4 h-4 text-color3 font-medium" />
+                  <p class="font-400 ml-1 max-w-58 text-color3 truncate">{this.auditInfo}</p>
+                  <ArrowRightOutlined class="font-medium h-4 text-color3 w-4" />
                 </div>
               </a>
             </div>
