@@ -115,7 +115,7 @@ const PayDetailStage = defineComponent({
         {this.bountyInfo.stages.map((stage: any, stageIndex: number) => (
           <div class="flex mb-6 items-center">
             <div class="bg-purple rounded-lg px-4 pt-4">
-              <div class="text-grey1">Rewards</div>
+              <div class="text-color1">Rewards</div>
               {/* <div class="flex items-center"> */}
               <div class="grid grid-cols-[1fr,56px,1fr]">
                 <UInputNumberGroup
