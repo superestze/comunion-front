@@ -368,8 +368,10 @@ const ProposalDetail = defineComponent({
         <div class="flex mt-12 mb-20 gap-x-6">
           <div class="bg-white border rounded-lg border-grey5 p-10 w-228">
             <div class="flex mb-5 justify-between">
-              <span class="max-w-200 truncate u-title1">{this.proposalInfo?.title}</span>
-              <span class={this.statusStyle}>
+              <span class="font-primary font-semibold max-w-200 text-color1 text-[24px] truncate">
+                {this.proposalInfo?.title}
+              </span>
+              <span class="rounded-[2px] px-4 !border-1 !border-gray-500/50 !u-h6">
                 {GOVERNANCE_KEY[this.proposalInfo?.status as keyof typeof GOVERNANCE_KEY]}
               </span>
             </div>
@@ -378,13 +380,15 @@ const ProposalDetail = defineComponent({
                 class="cursor-pointer flex items-center"
                 onClick={() => this.toComerDetail(this.proposalInfo?.authorComerId)}
               >
-                <div class="h-7 w-7">
+                <div class="flex-shrink-0 h-7 w-7">
                   <ULazyImage
                     class="rounded-full h-7 w-7"
                     src={this.proposalInfo?.authorComerAvatar || ''}
                   />
                 </div>
-                <div class="mx-4 text-primary">{this.proposalInfo?.authorComerName}</div>
+                <div class="mx-4 text-color2 hover:text-primary">
+                  {this.proposalInfo?.authorComerName}
+                </div>
               </div>
               <UPopover
                 trigger="click"
@@ -426,12 +430,12 @@ const ProposalDetail = defineComponent({
               </div>
             )}
             <div class="border rounded-lg border-grey5 my-10">
-              <header class="bg-purple py-4 px-10 u-title3">Cast your vote</header>
-              <section class="p-8">
+              <header class="bg-purple py-4 px-6 text-color1 u-h4">Cast your vote</header>
+              <section class="p-6">
                 {this.proposalInfo?.choices?.map(voteInfo => (
                   <div
                     class={[
-                      'border border-primary-10 text-primary text-center py-3 mb-4 rounded-lg cursor-pointer',
+                      'border border-primary-10 text-primary text-center py-3 mb-4 rounded-lg cursor-pointer hover:border-[#5331F4]',
                       { 'border-primary': this.selectedChoice?.id === voteInfo.id }
                     ]}
                     onClick={() => this.choiceVote(voteInfo)}
@@ -462,7 +466,7 @@ const ProposalDetail = defineComponent({
                   <thead>
                     <tr>
                       <th>
-                        <div class="px-7 u-title3">Votes({this.pagination.total})</div>
+                        <div class="px-3 text-color1 u-h4">Votes({this.pagination.total})</div>
                       </th>
                       <th></th>
                       <th></th>
@@ -475,20 +479,22 @@ const ProposalDetail = defineComponent({
                       {this.voteRecords?.map(record => (
                         <tr key={record.voterComerId}>
                           <td>
-                            <div class="flex ml-7 items-center">
+                            <div class="flex ml-3 items-center">
                               <ULazyImage src={record.voterComerAvatar} class="h-7 mr-3 w-7" />
-                              <span class="text-primary u-body4">{record.voterComerName}</span>
+                              <span class="text-color2 u-h6">{record.voterComerName}</span>
                             </div>
                           </td>
                           <td>
-                            <div class="flex items-center">{record.choiceItemName}</div>
+                            <div class="flex text-color1 items-center u-h6">
+                              {record.choiceItemName}
+                            </div>
                           </td>
                           <td>
-                            <div class="flex justify-end items-center">
+                            <div class="flex text-color3 justify-end items-center u-h6">
                               <span>{record.votes}</span>
                               <span class="mx-2">{this.strategyInfo?.voteSymbol}</span>
                               <SignOutlined
-                                class="cursor-pointer mr-5"
+                                class="cursor-pointer mr-5 text-color2"
                                 onClick={() =>
                                   this.showVerifyModal(
                                     record.ipfsHash,
@@ -521,7 +527,7 @@ const ProposalDetail = defineComponent({
           </div>
           <div class="flex-1 min-w-111">
             {this.startupInfo && (
-              <UCard contentStyle={{ paddingTop: 0 }} class="mb-6">
+              <UCard contentStyle={{ paddingTop: 24 }} class="mb-6">
                 <StartupCard startup={this.startupInfo} />
               </UCard>
             )}
@@ -542,12 +548,12 @@ const ProposalDetail = defineComponent({
           </div>
           <UModal show={this.voteInfoVisible} class="bg-white rounded-lg p-10 w-150">
             <div>
-              <div class="mb-6 u-title1">Vote overview</div>
+              <div class="mb-6 u-h3">Vote overview</div>
               <div class="border rounded-lg border-grey5 grid py-4 px-6 gap-y-4 grid-cols-2">
-                <div class="text-grey3 u-body2">Option(s)</div>
-                <div class="text-right text-grey1 u-body2">{this.selectedChoice?.itemName}</div>
-                <div class="text-grey3 u-body2">Block height</div>
-                <div class="flex text-grey1 justify-end items-center u-body2">
+                <div class="text-color1 u-h5">Option(s)</div>
+                <div class="text-right text-color3 u-h6">{this.selectedChoice?.itemName}</div>
+                <div class="text-color1 u-h5">Block height</div>
+                <div class="flex text-color3 justify-end items-center u-h6">
                   {this.proposalInfo?.blockNumber?.toLocaleString()}
                   {this.blockExploreUrl && (
                     <a
@@ -559,8 +565,8 @@ const ProposalDetail = defineComponent({
                     </a>
                   )}
                 </div>
-                <div class="text-grey3 u-body2">Your voting power</div>
-                <div class="text-right text-grey1 u-body2">
+                <div class="text-color1 u-h5">Your voting power</div>
+                <div class="text-right text-color3 u-h6">
                   {this.votePower} {this.proposalInfo?.voteSymbol}
                 </div>
               </div>
@@ -590,45 +596,48 @@ const ProposalDetail = defineComponent({
           </UModal>
           <UModal show={this.strategyVisible} class="bg-white rounded-lg p-7 w-150">
             <div>
-              <div class="flex mb-6 justify-between u-title1">
-                <span class="text-primary2 u-title1">Strategies</span>
+              <div class="flex mb-6 justify-between">
+                <span class="text-primary2 u-h3">Strategies</span>
                 <CloseOutlined
                   class="cursor-pointer h-6 text-primary w-6"
                   onClick={() => (this.strategyVisible = false)}
                 />
               </div>
               <div class="border rounded-lg border-grey5 grid py-4 px-6 gap-y-4 grid-cols-2">
-                <div class="text-grey3 u-body2">Symbol</div>
-                <div class="text-right text-grey1 u-body2">
+                <div class="text-colo1 u-h4">{this.strategyInfo?.strategyName}</div>
+                <div class="text-right text-color3 u-body2"></div>
+                <div class="text-colo1 u-h5">Symbol</div>
+                <div class="text-right text-color3 u-body2">
                   {this.strategyInfo.voteSymbol || '--'}
                 </div>
-                <div class="text-grey3 u-body2">Address</div>
-                <div class="flex text-primary items-center justify-end u-body2">
+                <div class="text-color1 u-h5">Address</div>
+                <div class="flex text-color2 items-center justify-end u-body2">
                   {shortenAddress(this.strategyInfo?.tokenContractAddress) || '--'}{' '}
                   <a
                     href={`${this.blockExploreUrl}/address/${this.strategyInfo?.tokenContractAddress}`}
                     target="__blank"
-                    class="outline-none ml-2 leading-4"
+                    class="outline-none ml-2 leading-4 "
                   >
                     <UrlOutlined class="text-primary" />
                   </a>
                 </div>
-                <div class="text-grey3 u-body2">Decimals</div>
-                <div class="text-right text-grey1 u-body2">{this.strategyInfo?.voteDecimals}</div>
+                <div class="text-color1 u-h5">Decimals</div>
+                <div class="text-right text-color3 u-body2">{this.strategyInfo?.voteDecimals}</div>
               </div>
             </div>
           </UModal>
+          {/* this.ipfsDetail.visible */}
           <UModal show={this.ipfsDetail.visible} class="bg-white rounded-lg py-7 px-8 w-150">
             <div>
-              <div class="flex text-primary mb-6 justify-between u-title1">
-                <span class="text-primary u-card-title2">Receipt</span>
+              <div class="flex text-primary mb-6 justify-between u-h5">
+                <span class="text-color1 u-h5">Receipt</span>
                 <CloseOutlined
                   class="cursor-pointer h-6 text-primary w-6"
                   onClick={this.closeIPFSDetail}
                 />
               </div>
               <div class="border rounded-lg flex border-grey5 text-center p-5 justify-between">
-                <span>Author</span>
+                <span class="u-h5">Author</span>
                 <span class="flex text-primary items-center">
                   <span class="text-primary mr-4 u-body4">
                     #{this.ipfsDetail.hash.substring(0, 8)}
@@ -640,14 +649,16 @@ const ProposalDetail = defineComponent({
                 </span>
               </div>
               <div
-                class="border rounded-full cursor-pointer flex border-grey5 mt-5 text-primary py-4 px-6 justify-center items-center"
+                class="border rounded-full cursor-pointer flex border-grey5 mt-5 text-primary py-4 px-6 group justify-center items-center hover:border-[#5331F4]"
                 onClick={() =>
                   this.toVerify({
                     ipfs: this.ipfsDetail.hash
                   })
                 }
               >
-                <span class="mr-2">Verify on Signator.io</span>
+                <span class="mr-2 text-color2 u-h5 group-hover:text-primary">
+                  Verify on Signator.io
+                </span>
                 <ShareOutlined />
               </div>
             </div>

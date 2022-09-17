@@ -1,7 +1,7 @@
 import { UStartupLogo, UTag } from '@comunion/components'
 import { defineComponent, PropType, computed } from 'vue'
 import { useRouter } from 'vue-router'
-import { getStartupTypeFromNumber, StartupTypesType, STARTUP_TYPES_COLOR_MAP } from '@/constants'
+import { getStartupTypeFromNumber, StartupTypesType } from '@/constants'
 import { SocialGroup } from '@/pages/startup/components/SocialGroup'
 import { ServiceReturn } from '@/services'
 
@@ -52,10 +52,11 @@ export default defineComponent({
             </div>
             <div class="flex">
               {(this.startup?.mode || 0) > 0 && (
+                // STARTUP_TYPES_COLOR_MAP[this.modeName]
                 <UTag
-                  class="u-body3-pure !text-white !text-xs !h-5"
+                  class="border-1 border-[#DADCE0] !text-color2 font-primary !text-xs !h-5"
                   type="filled"
-                  bgColor={STARTUP_TYPES_COLOR_MAP[this.modeName]}
+                  bgColor={''}
                 >
                   {this.modeName}
                 </UTag>
@@ -70,7 +71,7 @@ export default defineComponent({
 
           {(this.tags || []).length - 3 > 1 ? <UTag>+ {(this.tags || []).length - 3}</UTag> : null}
         </div>
-        <p class="u-body1 text-grey1 break-all line-clamp-2 mt-4">{this.startup?.mission}</p>
+        <p class="font-opensans text-color2 break-all line-clamp-2 mt-4">{this.startup?.mission}</p>
         <SocialGroup
           discord={this.startup?.discord}
           website={this.startup?.website}
