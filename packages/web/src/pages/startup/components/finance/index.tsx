@@ -79,7 +79,7 @@ export default defineComponent({
             if (item.value) {
               return (
                 <div class="flex mt-4  items-center">
-                  <p class="max-w-1/2 w-38 font-primary font-medium tracking-normal text-[14px]">
+                  <p class="font-primary font-medium tracking-normal max-w-1/2 text-[14px] w-38">
                     {item.name}
                   </p>
                   <p
@@ -92,6 +92,7 @@ export default defineComponent({
                 </div>
               )
             }
+            return ''
           })}
           {(this.wallets || [])?.length > 0 && (
             <>
@@ -112,7 +113,7 @@ export default defineComponent({
           )}
           {/* <div class="bg-grey5 h-1px mt-6.5 w-full"></div>
           <div class="flex mt-5.5  items-center">
-            <p class="max-w-1/2 w-38 font-primary font-medium tracking-normal text-[14px]">
+            <p class="font-primary font-medium tracking-normal max-w-1/2 text-[14px] w-38">
               Presale wallet：
             </p>
             <div class="overflow-hidden">

@@ -2,10 +2,11 @@ import { UCard, UNoContent } from '@comunion/components'
 import { EmptyFilled } from '@comunion/icons'
 import { defineComponent, ref } from 'vue'
 import CrowdfundingMiniCard from '@/pages/crowdfunding/components/CrowdfundingMiniCard'
-import { ServiceReturn, services } from '@/services'
+import { services } from '@/services'
 import '@/assets/style/last-item-noborder.css'
 
-type DataType = NonNullable<ServiceReturn<'crowdfunding@crowdfunding-list-of-startup'>>
+import { CrowdfundingItem } from '@/types'
+
 export default defineComponent({
   props: {
     startupId: {
@@ -14,7 +15,7 @@ export default defineComponent({
     }
   },
   setup(props) {
-    const list = ref<DataType>([])
+    const list = ref<CrowdfundingItem[]>([])
     const getBounties = async () => {
       const { error, data } = await services['crowdfunding@crowdfunding-list-of-startup']({
         startupId: props.startupId

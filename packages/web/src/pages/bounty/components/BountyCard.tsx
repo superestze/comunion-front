@@ -9,7 +9,7 @@ import { ServiceReturn, services } from '@/services'
 import { getChainInfoByChainId } from '@/utils/etherscan'
 import { checkSupportNetwork } from '@/utils/wallet'
 
-type BountyType = NonNullable<ServiceReturn<'bounty@bounty-list(tab)'>>['rows']
+type BountyType = NonNullable<ServiceReturn<'bounty@startup-bounty-list'>>['rows']
 
 export default defineComponent({
   name: 'BountyCard',
@@ -60,7 +60,7 @@ export default defineComponent({
 
     const wrapClass = props.miniCard
       ? 'bg-white rounded-sm cursor-pointer py-4 px-4 hover:bg-color-hover'
-      : 'bg-white rounded-sm cursor-pointer border border-color-border mb-6 px-6 py-6 hover:bg-color-hover'
+      : 'bg-white rounded-sm cursor-pointer border border-color-border mb-4 px-6 py-6 hover:bg-color-hover'
 
     const skillTagShowLength = 3
     const skillTagsList = props.miniCard

@@ -146,12 +146,12 @@ export default defineComponent({
                       {this.bountySection.bountyPayment?.bountyPaymentInfo?.paymentMode === 1 ? (
                         <>
                           <StageOutlined class="h-4 w-4" />
-                          <p class="text-primary ml-2 font-medium">Stage</p>
+                          <p class="font-medium text-primary ml-2">Stage</p>
                         </>
                       ) : (
                         <>
                           <PeriodOutlined class="h-4 text-primary w-4" />
-                          <p class="text-primary ml-2 font-medium">
+                          <p class="font-medium text-primary ml-2">
                             Period:{' '}
                             {getPeriodByType(
                               this.bountySection.bountyPayment?.periodTerms?.periodType || 1
@@ -162,7 +162,7 @@ export default defineComponent({
                     </p>
                     <div class="flex items-center">
                       <img src={this.chainInfo?.logo} class="h-4 w-4" />{' '}
-                      <span class="font-thin font-primary text-color2 ml-2 tracking-normal">
+                      <span class="font-thin font-primary ml-2 tracking-normal text-color2">
                         {this.chainInfo?.name}
                       </span>
                     </div>
