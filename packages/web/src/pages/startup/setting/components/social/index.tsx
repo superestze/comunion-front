@@ -124,14 +124,14 @@ export default defineComponent({
                           }
                         ></UInput>
                       </UInputGroup>
-                      {info.socials.length > 1 && (
+                      {info.socials.filter(e => !e.delete).length > 1 && (
                         <div
                           class="cursor-pointer flex items-center"
                           onClick={() => {
                             info.socials[itemIndex]['delete'] = true
                           }}
                         >
-                          <MinusCircleOutlined class="h-5 ml-4.5 w-5" />
+                          <MinusCircleOutlined class="h-5 text-error ml-4.5 w-5" />
                         </div>
                       )}
                       <div
@@ -184,16 +184,14 @@ export default defineComponent({
     const rules = getFieldsRules(this.fields)
     return (
       <USpin show={this.loading}>
-        <div class="bg-white border rounded-lg mb-6 relative overflow-hidden">
-          <div class="my-9.5 mx-10">
-            <UForm rules={rules} model={this.info} ref={(ref: any) => (this.form = ref)}>
-              <UFormItemsFactory fields={this.fields} values={this.info} />
-            </UForm>
-            <div class="flex mt-10 items-center justify-end">
-              <UButton class="w-30" type="primary" size="small" onClick={handleSubmit}>
-                Save
-              </UButton>
-            </div>
+        <div class="bg-white border rounded-sm mb-6 min-h-200 p-10 relative overflow-hidden">
+          <UForm rules={rules} model={this.info} ref={(ref: any) => (this.form = ref)}>
+            <UFormItemsFactory fields={this.fields} values={this.info} />
+          </UForm>
+          <div class="flex mt-10 items-center justify-end">
+            <UButton class="w-30" type="primary" size="small" onClick={handleSubmit}>
+              Save
+            </UButton>
           </div>
         </div>
       </USpin>
