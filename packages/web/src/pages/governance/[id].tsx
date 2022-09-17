@@ -366,7 +366,7 @@ const ProposalDetail = defineComponent({
     return (
       <USpin show={this.pageLoading}>
         <div class="flex mt-12 mb-20 gap-x-6">
-          <div class="bg-white border rounded-lg border-grey5 p-10 w-228">
+          <div class="bg-white border rounded-lg border-color-border p-10 w-228">
             <div class="flex mb-5 justify-between">
               <span class="font-primary font-semibold max-w-200 text-color1 text-[24px] truncate">
                 {this.proposalInfo?.title}
@@ -429,7 +429,7 @@ const ProposalDetail = defineComponent({
                 </a>
               </div>
             )}
-            <div class="border rounded-lg border-grey5 my-10">
+            <div class="border rounded-lg border-color-border my-10">
               <header class="bg-purple py-4 px-6 text-color1 u-h4">Cast your vote</header>
               <section class="p-6">
                 {this.proposalInfo?.choices?.map(voteInfo => (
@@ -549,7 +549,7 @@ const ProposalDetail = defineComponent({
           <UModal show={this.voteInfoVisible} class="bg-white rounded-lg p-10 w-150">
             <div>
               <div class="mb-6 u-h3">Vote overview</div>
-              <div class="border rounded-lg border-grey5 grid py-4 px-6 gap-y-4 grid-cols-2">
+              <div class="border rounded-lg border-color-border grid py-4 px-6 gap-y-4 grid-cols-2">
                 <div class="text-color1 u-h5">Option(s)</div>
                 <div class="text-right text-color3 u-h6">{this.selectedChoice?.itemName}</div>
                 <div class="text-color1 u-h5">Block height</div>
@@ -603,7 +603,7 @@ const ProposalDetail = defineComponent({
                   onClick={() => (this.strategyVisible = false)}
                 />
               </div>
-              <div class="border rounded-lg border-grey5 grid py-4 px-6 gap-y-4 grid-cols-2">
+              <div class="border rounded-lg border-color-border grid py-4 px-6 gap-y-4 grid-cols-2">
                 <div class="text-colo1 u-h4">{this.strategyInfo?.strategyName}</div>
                 <div class="text-right text-color3 u-body2"></div>
                 <div class="text-colo1 u-h5">Symbol</div>
@@ -636,7 +636,7 @@ const ProposalDetail = defineComponent({
                   onClick={this.closeIPFSDetail}
                 />
               </div>
-              <div class="border rounded-lg flex border-grey5 text-center p-5 justify-between">
+              <div class="border rounded-lg flex border-color-border text-center p-5 justify-between">
                 <span class="u-h5">Author</span>
                 <span class="flex text-primary items-center">
                   <span class="text-primary mr-4 u-body4">
@@ -649,7 +649,7 @@ const ProposalDetail = defineComponent({
                 </span>
               </div>
               <div
-                class="border rounded-full cursor-pointer flex border-grey5 mt-5 text-primary py-4 px-6 group justify-center items-center hover:border-[#5331F4]"
+                class="border rounded-full cursor-pointer flex border-color-border mt-5 text-primary py-4 px-6 group justify-center items-center hover:border-[#5331F4]"
                 onClick={() =>
                   this.toVerify({
                     ipfs: this.ipfsDetail.hash

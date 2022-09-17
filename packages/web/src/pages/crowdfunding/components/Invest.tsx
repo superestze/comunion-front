@@ -481,7 +481,7 @@ export const Invest = defineComponent({
     }
 
     return () => (
-      <div class="bg-white rounded-lg flex border-1 border-grey5 mb-6 p-10 gap-6 items-stretch invest">
+      <div class="bg-white rounded-lg flex border-1 border-color-border mb-6 p-10 gap-6 items-stretch invest">
         <div class="flex-1">
           <div class="mb-4 u-title2">{countDownTime.value.label}</div>
           <div class="flex mb-12 items-center">
@@ -677,7 +677,7 @@ export const Invest = defineComponent({
               {mode.value === 'buy' ? 'Buy' : 'Sell'}
             </UButton>
           </div>
-          <div class="border rounded-lg border-grey5 p-4">
+          <div class="border rounded-lg border-color-border p-4">
             <div class="flex justify-between u-body2">
               <span class="flex text-sm mb-4 text-grey3 items-center">
                 Swap %：

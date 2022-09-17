@@ -107,7 +107,7 @@ const MoreNavigationPage = defineComponent({
       <>
         <section>
           <UPopupMenu trigger="click" options={options.value}>
-            <MoreOutlined class="top-9 right-15 absolute cursor-pointer hover:bg-grey5" />
+            <MoreOutlined class="cursor-pointer top-9 right-15 absolute hover:bg-color-hover" />
           </UPopupMenu>
         </section>
       </>

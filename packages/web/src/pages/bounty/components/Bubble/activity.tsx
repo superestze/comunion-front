@@ -57,7 +57,7 @@ function transactionMessage(obj: TransactionMessage) {
           <div class="bg-white flex rounded-20px h-40px w-40px justify-center items-center">
             <VectorFilled class="text-primary" />
           </div>
-          <div class="border-solid flex flex-col border-r-1px border-grey5 h-16 ml-3 pr-6 justify-center">
+          <div class="border-solid flex flex-col border-r-1px border-color-border h-16 ml-3 pr-6 justify-center">
             <p class="text-16px font-primary font-semibold text-[##333333]">Send</p>
             <p class="mt-10px text-14px text-grey3">{obj.dateTime}</p>
           </div>

@@ -131,7 +131,7 @@ const RegisterProfilePage = defineComponent({
           <p class="mt-2 mb-6 text-grey2 u-body2">
             Add your profile, a short bio, and links to your other online websites.
           </p>
-          <div class="bg-white border rounded-lg border-grey5 pt-10 pb-5">
+          <div class="bg-white border rounded-lg border-color-border pt-10 pb-5">
             <div class="mx-auto w-200">
               <UFormFactory
                 fields={fields}
