@@ -134,15 +134,15 @@ export default defineComponent({
               class="bg-white rounded h-full w-full !object-cover"
             />
           </div>
-          <div>
+          <div class="pl-36">
             <div class="flex items-center">
-              <p class="ml-46 text-color1 u-h2">{this.startupInfo?.name}</p>
+              <p class="text-color1 u-h2">{this.startupInfo?.name}</p>
               {this.startupInfo && this.startupInfo.mode > 0 && (
                 <UTag class="ml-4">{this.modeName}</UTag>
               )}
             </div>
             {this.theChainName && (
-              <div class="rounded flex ml-46 py-0.25rem items-center">
+              <div class="rounded flex py-0.25rem items-center">
                 <img
                   src={
                     this.startupInfo?.onChain
