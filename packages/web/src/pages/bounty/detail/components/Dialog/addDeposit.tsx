@@ -47,6 +47,12 @@ export default defineComponent({
       }
     )
 
+    const { bountyContract, bountyContractStore, approve, chainId } = useBountyContractWrapper()
+
+    const bountyStore = useBountyStore()
+
+    const { detail } = bountyStore
+    const { deposit } = bountyContract
     const fields: Ref<FormFactoryField[]> = computed(() => [
       {
         t: 'custom',
@@ -85,7 +91,9 @@ export default defineComponent({
                   return Number(value)
                 }
               }}
-              renderUnit={() => renderUnit('USDC')}
+              renderUnit={() =>
+                renderUnit(bountyContractStore.bountyContractInfo.depositTokenSymbol)
+              }
             />
           )
         }
@@ -94,12 +102,6 @@ export default defineComponent({
     const addDepositFields = getFieldsRules(fields.value)
     const form = ref<FormInst>()
 
-    const { bountyContract, approve, chainId } = useBountyContractWrapper()
-
-    const bountyStore = useBountyStore()
-
-    const { detail } = bountyStore
-    const { deposit } = bountyContract
     return {
       addDepositFields,
       fields,
@@ -108,7 +110,8 @@ export default defineComponent({
       deposit,
       approve,
       chainId,
-      detail
+      detail,
+      bountyContractStore
     }
   },
   render() {
@@ -130,7 +133,7 @@ export default defineComponent({
             'Waiting to submit all contents to blockchain for approval deposit'
           const contractStore = useContractStore()
           contractStore.startContract(approvePendingText)
-          const tokenSymbol = 'USDC'
+          const tokenSymbol = this.bountyContractStore.bountyContractInfo.depositTokenSymbol
           await this.approve(
             this.detail?.depositContract || '',
             ethers.utils.parseUnits((this.formData.increaseDeposit || '').toString(), 18)

@@ -52,7 +52,9 @@ export default defineComponent({
     })
 
     const handleCard = (bountyId: number) => async () => {
-      const isSupport = await checkSupportNetwork(props.startup.chainID)
+      const isSupport = await checkSupportNetwork(props.startup.chainID, () => {
+        router.push(`/bounty/detail?bountyId=${bountyId}&from=0`)
+      })
       if (isSupport) {
         router.push(`/bounty/detail?bountyId=${bountyId}&from=0`)
       }
@@ -160,7 +162,7 @@ export default defineComponent({
           <span>Deposit：</span>
           <span class="text-color1  truncate">
             <span class="mr-1 u-num2">{props.startup.depositRequirements}</span>
-            <span class="u-h7">USDC</span>
+            <span class="u-h7">{props.startup.depositTokenSymbol}</span>
           </span>
         </div>
       </div>

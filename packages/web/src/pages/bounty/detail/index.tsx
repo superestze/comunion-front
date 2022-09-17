@@ -12,6 +12,7 @@ import PostUpdate from './components/PostUpdate'
 import StartupCard from './components/StartupCard'
 import { useBountyContractWrapper } from './hooks/useBountyContractWrapper'
 import { BOUNTY_STATUS, PERIOD_OPTIONS, USER_ROLE } from '@/constants'
+import { services } from '@/services'
 import { useBountyStore, useWalletStore } from '@/stores'
 import { useBountyContractStore } from '@/stores/bountyContract'
 import { getChainInfoByChainId } from '@/utils/etherscan'
@@ -55,15 +56,21 @@ export default defineComponent({
       return false
     })
 
+    // Need to get the chain id of the current bounty, because there is a problem with store caching
+    services['bounty@bounty-get-detail']({ bountyID: route.query.bountyId }).then(res => {
+      const { error, data } = res
+      if (!error) {
+        if (data.chainID != walletStore.chainId) {
+          router.push('/bounty/list')
+        }
+      }
+    })
+
     let isInit = false
     watch(
       [() => bountySection.value.detail, bountyContractStore.bountyContractInfo],
       ([detail, bountyContractInfo]) => {
         if (detail?.depositContract && !isInit) {
-          if (detail.chainID != walletStore.chainId) {
-            router.push('/bounty/list')
-            return
-          }
           const BountyContractWrapper = useBountyContractWrapper(route.query.bountyId as string)
           postUpdate.value = BountyContractWrapper.bountyContract.postUpdate
           loading.value = false
@@ -303,6 +310,7 @@ export default defineComponent({
                       class={`mb-4 ${index === 0 && 'mt-6'}`}
                       depositInfo={item}
                       key={item.name}
+                      tokenSymbol={this.bountyContractInfo.depositTokenSymbol}
                     />
                   ))}
                 </>

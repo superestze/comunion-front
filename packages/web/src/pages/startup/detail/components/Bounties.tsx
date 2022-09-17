@@ -4,6 +4,7 @@ import { defineComponent, onMounted, reactive, PropType, ref } from 'vue'
 import { useRouter } from 'vue-router'
 import { BOUNTY_TYPES_COLOR_MAP } from '@/constants'
 import { ServiceReturn, services } from '@/services'
+import { checkSupportNetwork } from '@/utils/wallet'
 
 type BountyType = NonNullable<ServiceReturn<'bounty@startup-bounty-list'>>['rows']
 const BountiesCard = defineComponent({
@@ -46,8 +47,13 @@ const BountiesCard = defineComponent({
       date.value = format(props.startup.createdTime, 'comunionTimeAgo')
     })
 
-    const handleCard = (bountyId: number) => () => {
-      router.push(`/bounty/detail?bountyId=${bountyId}&from=1`)
+    const handleCard = (bountyId: number) => async () => {
+      const isSupport = await checkSupportNetwork(props.startup.chainID, () => {
+        router.push(`/bounty/detail?bountyId=${bountyId}&from=1`)
+      })
+      if (isSupport) {
+        router.push(`/bounty/detail?bountyId=${bountyId}&from=1`)
+      }
     }
 
     return () => (
@@ -123,7 +129,7 @@ const BountiesCard = defineComponent({
               <div class="mt-3">
                 <span class="text-grey2 u-body2">Deposit requirements：</span>
                 <span class="text-warning u-card-title2">
-                  {props.startup.depositRequirements} USDC
+                  {props.startup.depositRequirements} {props.startup.depositTokenSymbol}
                 </span>
               </div>
               <div class="flex-1"></div>
