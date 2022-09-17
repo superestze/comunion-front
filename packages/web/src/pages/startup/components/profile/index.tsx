@@ -183,7 +183,7 @@ export default defineComponent({
             </UButton>
           )}
         </div>
-        <div class="flex mx-10 mt-7 mb-6 items-end">
+        <div class="flex mx-10 mt-6 mb-6 items-end">
           <div class="flex-1 overflow-hidden">
             <div class="flex gap-2">
               {Array.isArray(this.startupInfo?.hashTags) &&
@@ -195,7 +195,7 @@ export default defineComponent({
                   )
                 })}
             </div>
-            <p class="mt-5 text-color2 u-h6">{this.startupInfo?.mission}</p>
+            <p class="mt-2 text-color2 u-h6">{this.startupInfo?.mission}</p>
           </div>
           <div class="flex flex-wrap gap-2">
             {this.socialList.map(item => (
