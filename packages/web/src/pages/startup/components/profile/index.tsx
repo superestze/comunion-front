@@ -122,7 +122,7 @@ export default defineComponent({
           />
         </div>
 
-        <div class="flex mt-2 justify-between relative">
+        <div class="flex mt-2 px-10 justify-between relative">
           <div
             class="rounded h-30 bottom-2 left-10 w-30 absolute overflow-hidden"
             style="box-shadow: 2px 6px 12px rgba(69, 68, 132, 0.25);"
@@ -167,11 +167,6 @@ export default defineComponent({
               type="primary"
               loading={this.loading}
               ghost
-              class="font-primary font-semibold mr-10 pr-4.25 pl-4.25 text-4"
-              style={{
-                '--n-border-radius': '2px'
-              }}
-              size="small"
               onClick={() => handleFollowStartup('unfollow')}
             >
               {/* <HookFilled class="mr-1 w-4.5" /> */}
@@ -181,11 +176,6 @@ export default defineComponent({
             <UButton
               type="primary"
               loading={this.loading}
-              class="font-primary font-semibold mr-10 pr-4.25 pl-4.25 text-4"
-              style={{
-                '--n-border-radius': '2px'
-              }}
-              size="small"
               onClick={() => handleFollowStartup('follow')}
             >
               {/* <PlusOutlined class="mt-1 mb-3px w-4.5" /> */}
