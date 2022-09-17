@@ -90,14 +90,8 @@ export default defineComponent({
           onLoadMore={() => this.getProposalList(this.pagination.page + 1)}
         >
           {this.proposalList.map(proposal => (
-            <div>
-              <div
-                class="cursor-pointer pt-4 pb-1 px-4 rounded-[2px] hover:bg-[#F0F0F0]"
-                onClick={() => this.toProposalDetail(proposal.proposalId)}
-              >
-                <ProposalCard proposalData={proposal} />
-              </div>
-              {/* <div class="h-px w-[90%] bg-grey5 ml-auto"></div> */}
+            <div onClick={() => this.toProposalDetail(proposal.proposalId)}>
+              <ProposalCard proposalData={proposal} />
             </div>
           ))}
         </UScrollList>
