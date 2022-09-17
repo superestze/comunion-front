@@ -183,6 +183,15 @@ const UStyleProvider = defineComponent({
       Tabs: {
         tabTextColorActiveBar: props.primaryColor,
         tabTextColorBar: props.primary1Color
+      },
+      Popover: {
+        color: '#808080'
+      },
+      Tag: {
+        heightLarge: '34px',
+        heightMedium: '22px',
+        heightSmall: '22px',
+        heightTiny: '20px'
       }
     }))
 
