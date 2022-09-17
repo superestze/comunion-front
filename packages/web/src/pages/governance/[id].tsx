@@ -384,7 +384,9 @@ const ProposalDetail = defineComponent({
                     src={this.proposalInfo?.authorComerAvatar || ''}
                   />
                 </div>
-                <div class="text-primary mx-4">{this.proposalInfo?.authorComerName}</div>
+                <div class="text-primary mx-4 whitespace-nowrap">
+                  {this.proposalInfo?.authorComerName}
+                </div>
               </div>
               <UPopover
                 trigger="click"
