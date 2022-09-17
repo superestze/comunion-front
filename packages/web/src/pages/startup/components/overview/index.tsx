@@ -42,7 +42,7 @@ export default defineComponent({
               style={{ height: 'auto' }}
             >
               <p
-                class="font-primary font-semibold text-color2 text-[14px]"
+                class="text-color2 u-h6 "
                 ref={(ref: any) => (this.pRef = ref)}
                 v-html={this.content}
               />
