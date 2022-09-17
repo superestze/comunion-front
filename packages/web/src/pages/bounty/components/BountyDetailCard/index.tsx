@@ -85,7 +85,7 @@ export default defineComponent({
             </div>
           </div>
           {this.bountyStatus && (
-            <span class="rounded-[2px] flex-shrink-0 h-5 py-0.5 px-2 text-color3 inline-block !border-1 !border-[#DADCE0]">
+            <span class="rounded-sm flex-shrink-0 h-5 py-0.5 px-2 text-color3 inline-block !border-1 !border-[#DADCE0]">
               {this.bountyStatus.label}
             </span>
           )}

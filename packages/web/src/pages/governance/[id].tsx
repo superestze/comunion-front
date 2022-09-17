@@ -371,7 +371,7 @@ const ProposalDetail = defineComponent({
               <span class="font-primary font-semibold max-w-200 text-color1 text-[24px] truncate">
                 {this.proposalInfo?.title}
               </span>
-              <span class="rounded-[2px] px-4 !border-1 !border-gray-500/50 !u-h6">
+              <span class="rounded-sm px-4 !border-1 !border-gray-500/50 !u-h6">
                 {GOVERNANCE_KEY[this.proposalInfo?.status as keyof typeof GOVERNANCE_KEY]}
               </span>
             </div>
