@@ -52,11 +52,9 @@ export default defineComponent({
     })
 
     const handleCard = (bountyId: number) => async () => {
-      const isSupport = await checkSupportNetwork(props.startup.chainID, () => {
-        router.push(`/bounty/detail?bountyId=${bountyId}&from=0`)
-      })
+      const isSupport = await checkSupportNetwork(props.startup.chainID)
       if (isSupport) {
-        router.push(`/bounty/detail?bountyId=${bountyId}&from=0`)
+        router.push(`/bounty/${bountyId}`)
       }
     }
 
