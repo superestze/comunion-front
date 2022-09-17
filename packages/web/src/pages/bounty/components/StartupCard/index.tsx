@@ -59,7 +59,7 @@ export default defineComponent({
           </div>
         )}
         {this.startup?.mission && (
-          <p class="mt-6 text-grey1 u-body2 line-clamp-2 text-color3">{this.startup?.mission}</p>
+          <p class="mt-6 text-color1 u-body2 line-clamp-2 text-color3">{this.startup?.mission}</p>
         )}
         <SocialGroup
           discord={this.startup?.discord}

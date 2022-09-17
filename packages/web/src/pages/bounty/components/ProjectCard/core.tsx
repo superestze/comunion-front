@@ -80,7 +80,7 @@ export default defineComponent({
                   value={`${this.info.token1Amount || 0}`}
                   enhance={36}
                   digit={3}
-                  unitClass="text-grey1"
+                  unitClass="text-color1"
                 />
               )}
               {this.info?.token2Symbol && (
@@ -92,7 +92,7 @@ export default defineComponent({
                   plus={true}
                   enhance={36}
                   digit={3}
-                  unitClass="text-grey1"
+                  unitClass="text-color1"
                 />
               )}
               {this.info?.terms && (

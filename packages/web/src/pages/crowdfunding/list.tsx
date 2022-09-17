@@ -124,7 +124,7 @@ const CrowdfundingList = defineComponent({
         <div class="mt-8 mb-16">
           <div class="flex mb-6">
             <div class="flex-1">
-              {/* <h3 class="text-grey1 u-h3">{total.value.toLocaleString()} Available</h3> */}
+              {/* <h3 class="text-color1 u-h3">{total.value.toLocaleString()} Available</h3> */}
             </div>
             <UDropdownFilter
               options={CROWDFUNDING_TYPES.map(item => ({ label: item, value: item }))}

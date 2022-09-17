@@ -63,7 +63,7 @@ function transactionMessage(obj: TransactionMessage) {
           </div>
         </div>
         <div class="flex flex-col ml-6">
-          <p class="text-grey1 u-title2">
+          <p class="text-color1 u-title2">
             {obj.content.token1Amount || 0} {obj.content.token1Symbol}
             {obj.content.token2Symbol && (
               <>

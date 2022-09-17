@@ -17,7 +17,7 @@ export const renderUnit = (name: string) => (
   <div
     class={[
       'u-label2 flex justify-center items-center border rounded-r-lg bg-purple w-30',
-      { 'text-grey1': name, 'text-grey4': !name }
+      { 'text-color1': name, 'text-grey4': !name }
     ]}
   >
     {name || 'Token'}
@@ -549,17 +549,17 @@ export const Invest = defineComponent({
           <div class="u-body2">
             <div class="token-info-item">
               <span class="token-info-item-label">Totally Supply：</span>
-              <span class="text-grey1  whitespace-nowrap">
+              <span class="text-color1  whitespace-nowrap">
                 {props.sellCoinInfo.supply} {props.sellCoinInfo.symbol}{' '}
               </span>
             </div>
             <div class="token-info-item">
               <span class="token-info-item-label">Token Name：</span>
-              <span class="text-grey1  whitespace-nowrap">{props.sellCoinInfo.symbol}</span>
+              <span class="text-color1  whitespace-nowrap">{props.sellCoinInfo.symbol}</span>
             </div>
             <div class="token-info-item">
               <span class="token-info-item-label">Token Symbol：</span>
-              <span class="text-grey1  whitespace-nowrap">{props.sellCoinInfo.symbol}</span>
+              <span class="text-color1  whitespace-nowrap">{props.sellCoinInfo.symbol}</span>
             </div>
             <div class="mb-0 token-info-item">
               <div class="token-info-item-label">Token Contract：</div>
