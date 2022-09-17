@@ -87,8 +87,8 @@ export default defineComponent({
               ),
               content: () => (
                 <div class="flex-1 overflow-hidden">
-                  <p class="text-grey1 truncate u-h4">{item.comerProfile?.name}</p>
-                  <p class="u-h7 truncate !px-0 !text-color3">{item.comerProfile?.location}</p>
+                  <p class="text-color1 truncate u-h4">{item.comerProfile?.name}</p>
+                  <p class="truncate u-h7 !px-0 !text-color3">{item.comerProfile?.location}</p>
                 </div>
               )
             }}

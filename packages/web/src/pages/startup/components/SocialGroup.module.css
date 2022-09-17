@@ -1,5 +1,5 @@
 .startupSocialItem {
-  @apply w-8 h-8 flex items-center justify-center;
+  @apply flex h-8 w-8 items-center justify-center;
 }
 
 .activeSocialItemIcon {
@@ -7,5 +7,5 @@
 }
 
 .inactiveSocialItemIcon {
-  @apply cursor-not-allowed text-grey4;
+  @apply cursor-not-allowed text-color3;
 }
