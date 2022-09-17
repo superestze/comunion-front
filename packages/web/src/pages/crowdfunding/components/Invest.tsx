@@ -1,5 +1,5 @@
 import { UAddress, UButton, UCard, UInputNumberGroup, UModal, UTooltip } from '@comunion/components'
-import { ExchangeOutlined, QuestionFilled } from '@comunion/icons'
+import { ExchangeOutlined, QuestionFilled, MoneyIconFilled } from '@comunion/icons'
 import dayjs from 'dayjs'
 import { BigNumber, Contract, ethers } from 'ethers'
 import { defineComponent, computed, PropType, ref, onMounted } from 'vue'
@@ -20,7 +20,8 @@ export const renderUnit = (name: string) => (
       { 'text-color1': name, 'text-grey4': !name }
     ]}
   >
-    {name || 'Token'}
+    <MoneyIconFilled class="w-4 h-4 mr-2" />
+    <span>{name || 'Token'}</span>
   </div>
 )
 
@@ -458,23 +459,27 @@ export const Invest = defineComponent({
       // window.location.reload()
     }
 
-    const numberTip = (data: number) => {
+    const numberTip = (data: number, symbol = '') => {
+      const divClass = 'class="font-bold font-primary text-primary text-xl leading-8"'
+      const defaultText = Number(data).toLocaleString().includes('.')
+        ? Number(data).toLocaleString()
+        : Number(data).toLocaleString() + '.00'
       return (
-        <UTooltip>
+        <UTooltip
+          style={{
+            background: ' rgba(0,0,0,0.6)'
+          }}
+        >
           {{
-            trigger: () => (
-              <div class="font-bold font-primary text-primary text-xl leading-8">
-                {Number(data).toFixed(2).replace(/\.00$/, '')}
-              </div>
-            ),
-            default: () =>
+            trigger: () =>
               data > 1000000 ? (
-                <div>{(data / 1000000).toFixed(2)} M</div>
+                <div class={divClass}>{(data / 1000000).toFixed(1).replace(/\.0$/, '')} M</div>
               ) : data > 1000 ? (
-                <div>{(data / 1000).toFixed(2)} K</div>
+                <div class={divClass}>{(data / 1000).toFixed(1).replace(/\.0$/, '')} K</div>
               ) : (
-                data
-              )
+                <div class={divClass}>{data.toFixed(1).replace(/\.0$/, '')} </div>
+              ),
+            default: () => <div>{defaultText + ' ' + symbol}</div>
           }}
         </UTooltip>
       )
@@ -483,17 +488,17 @@ export const Invest = defineComponent({
     return () => (
       <div class="bg-white rounded-lg flex border-1 border-color-border mb-6 p-10 gap-6 items-stretch invest">
         <div class="flex-1">
-          <div class="mb-4 u-title2">{countDownTime.value.label}</div>
-          <div class="flex mb-12 items-center">
+          <div class="mb-4 u-h5 text-color2">{countDownTime.value.label}</div>
+          <div class="flex mb-15 items-center">
             <span
-              class={`${countDownTime.value.class} font-semibold text-center leading-10 rounded-lg w-9 h-10 mr-2`}
+              class={`${countDownTime.value.class} font-semibold text-center leading-10 rounded-sm w-9 h-10 mr-2`}
             >
               {countDownTime.value.value.days}
             </span>
             <span
               class={[
                 countDownTime.value.class,
-                'font-semibold text-center leading-10 rounded-lg w-9 h-10 mr-2'
+                'font-semibold text-center leading-10 rounded-sm w-9 h-10 mr-2'
               ]}
             >
               {countDownTime.value.value.hours}
@@ -501,7 +506,7 @@ export const Invest = defineComponent({
             <span
               class={[
                 countDownTime.value.class,
-                'font-semibold text-center leading-10 rounded-lg w-9 h-10 mr-2'
+                'font-semibold text-center leading-10 rounded-sm w-9 h-10 mr-2'
               ]}
             >
               {countDownTime.value.value.minutes}
@@ -509,43 +514,49 @@ export const Invest = defineComponent({
             <span
               class={[
                 countDownTime.value.class,
-                'font-semibold text-center leading-10 rounded-lg w-9 h-10 mr-2'
+                'font-semibold text-center leading-10 rounded-sm w-9 h-10 mr-2'
               ]}
             >
               {countDownTime.value.value.seconds}
             </span>
           </div>
-          <div class="mb-4 u-title2">dCrowdfunding Detail</div>
+          <div class="mb-4 u-h5 text-color2">dCrowdfunding Detail</div>
           <div class="mb-13 grid gap-4 grid-cols-2">
-            <div class="rounded-lg flex flex-col bg-[rgba(83,49,244,0.06)] h-22 pl-4 justify-center">
+            <div class="rounded-sm flex flex-col bg-[rgba(83,49,244,0.06)] h-22 pl-4 justify-center">
               <div class="flex text-primary leading-loose items-end">
-                <span class="mr-1">{numberTip(raiseState.value.raiseAmount)}</span>
+                <span class="mr-1">
+                  {numberTip(raiseState.value.raiseAmount, props.buyCoinInfo.symbol)}
+                </span>
                 {props.buyCoinInfo.symbol}
               </div>
-              <div class="text-xs text-grey3">Raised</div>
+              <div class="text-xs text-grey3 font-opensans">Raised</div>
             </div>
-            <div class="rounded-lg flex flex-col bg-[rgba(83,49,244,0.06)] h-22 pl-4 justify-center">
+            <div class="rounded-sm flex flex-col bg-[rgba(83,49,244,0.06)] h-22 pl-4 justify-center">
               <div class="flex text-primary leading-loose items-end">
-                <span class="mr-1">{numberTip(raiseState.value.raisePercent)}</span>%
+                <span class="mr-1">{numberTip(raiseState.value.raisePercent, '%')}</span>%
               </div>
-              <div class="text-xs text-grey3">Progress</div>
+              <div class="text-xs text-grey3 font-opensans">Progress</div>
             </div>
-            <div class="rounded-lg flex flex-col bg-[rgba(28,96,243,0.06)] bg-opacity-6 h-22 pl-4 justify-center">
+            <div class="rounded-sm flex flex-col bg-[rgba(28,96,243,0.06)] bg-opacity-6 h-22 pl-4 justify-center">
               <div class="flex text-primary leading-loose items-end">
-                <span class="mr-1">{numberTip(raiseState.value.raiseGoal)}</span>
+                <span class="mr-1">
+                  {numberTip(raiseState.value.raiseGoal, props.buyCoinInfo.symbol)}
+                </span>
                 {props.buyCoinInfo.symbol}
               </div>
-              <div class="text-xs text-grey3">Raised Goal</div>
+              <div class="text-xs text-grey3 font-opensans">Raised Goal</div>
             </div>
-            <div class="rounded-lg flex flex-col bg-[rgba(28,96,243,0.06)] bg-opacity-6 h-22 pl-4 justify-center">
+            <div class="rounded-sm flex flex-col bg-[rgba(28,96,243,0.06)] bg-opacity-6 h-22 pl-4 justify-center">
               <div class="flex text-primary leading-loose items-end">
-                <span class="mr-1">{numberTip(raiseState.value.swapAmount)}</span>
+                <span class="mr-1">
+                  {numberTip(raiseState.value.swapAmount, props.buyCoinInfo.symbol)}
+                </span>
                 {props.buyCoinInfo.symbol}
               </div>
-              <div class="text-xs text-grey3">Available Swap</div>
+              <div class="text-xs text-grey3 font-opensans">Available Swap</div>
             </div>
           </div>
-          <div class="mb-6 u-title2">Token Information</div>
+          <div class="mb-6 u-h5 text-color2">Token Information</div>
           <div class="u-body2">
             <div class="token-info-item">
               <span class="token-info-item-label">Totally Supply：</span>
@@ -573,19 +584,19 @@ export const Invest = defineComponent({
         </div>
         <div class="bg-grey5 w-px"></div>
         <div class="flex-1">
-          <div class="flex mb-2 justify-between">
-            <span class="font-primary u-title1">{mode.value === 'buy' ? 'INVEST' : 'SELL'}</span>
-            <span class="flex bg-[rgba(83,49,244,0.06)] rounded-4xl leading-snug py-1 px-4 text-primary1 items-center">
-              <img src={chainInfo?.logo} class="h-5 w-5" />{' '}
-              <span class="font-opensans font-600 ml-2">{chainInfo?.name}</span>
+          <div class="flex mb-3 justify-between">
+            <span class="u-h4 text-color1">{mode.value === 'buy' ? 'Invest' : 'Sell'}</span>
+            <span class="flex leading-snug items-center">
+              <img src={chainInfo?.logo} class="h-4 w-4" />{' '}
+              <span class="u-h6 text-color2 ml-2">{chainInfo?.name}</span>
             </span>
           </div>
-          <div class="mb-10 u-body2 !text-primary">
+          <div class="mb-10 u-h6 font-400 !text-primary">
             Rate：1 {props.buyCoinInfo.symbol} = {props.info.buyPrice} {props.sellCoinInfo.symbol}
           </div>
           <div class="flex mb-2 justify-between">
-            <span class="text-grey3 u-body2">From</span>
-            <span class="text-sm text-primary1 italic u-body3">
+            <span class="text-color3 u-h7">From</span>
+            <span class="text-primary1 u-h6">
               Balance :{' '}
               {(mode.value === 'buy' ? props.buyCoinInfo.balance : props.sellCoinInfo.balance) || 0}
             </span>
@@ -614,7 +625,7 @@ export const Invest = defineComponent({
           </div>
           <div class="flex justify-center">
             <div
-              class="bg-purple-light rounded-full cursor-pointer flex h-9 my-8 text-primary w-9 justify-center items-center"
+              class="bg-purple-light rounded-full cursor-pointer flex h-9 mt-8 mb-16 text-primary w-9 justify-center items-center"
               onClick={changeMode}
             >
               <ExchangeOutlined />
@@ -622,7 +633,7 @@ export const Invest = defineComponent({
           </div>
           <div class="flex mb-2 justify-between">
             <span class="text-grey3 u-body2">To</span>
-            <span class="text-sm text-primary1 italic u-body3">
+            <span class="text-primary1 u-h6">
               Balance :{' '}
               {(mode.value === 'buy' ? props.sellCoinInfo.balance : props.buyCoinInfo.balance) || 0}
             </span>
@@ -645,7 +656,7 @@ export const Invest = defineComponent({
               }
             />
           </div>
-          <div class="flex mt-10 mb-6 gap-4 items-center">
+          <div class="flex mt-8.5 mb-6 gap-4 items-center">
             {props.info.comerId === userStore.profile?.comerID && (
               <UButton
                 type="primary"
@@ -681,7 +692,11 @@ export const Invest = defineComponent({
             <div class="flex justify-between u-body2">
               <span class="flex text-sm mb-4 text-grey3 items-center">
                 Swap %：
-                <UTooltip>
+                <UTooltip
+                  style={{
+                    background: ' rgba(0,0,0,0.6)'
+                  }}
+                >
                   {{
                     trigger: () => <QuestionFilled class="h-4 text-grey3 w-4" />,
                     default: () => (
@@ -696,15 +711,19 @@ export const Invest = defineComponent({
               <span>{props.info.swapPercent} %</span>
             </div>
             <div class="flex justify-between u-body2">
-              <span class="flex text-sm mb-4 text-grey3 items-center">Maximum buy：</span>
+              <span class="flex text-[14px] mb-4 text-color1 items-center">Maximum buy：</span>
               <span>
                 {props.info.maxBuyAmount} {props.buyCoinInfo.symbol}
               </span>
             </div>
             <div class="flex justify-between u-body2">
-              <span class="flex text-sm mb-4 text-grey3 items-center">
+              <span class="flex text-[14px] mb-4 text-color1 items-center">
                 Sell tax %：
-                <UTooltip>
+                <UTooltip
+                  style={{
+                    background: ' rgba(0,0,0,0.6)'
+                  }}
+                >
                   {{
                     trigger: () => <QuestionFilled class="h-4 text-grey3 w-4" />,
                     default: () => (
@@ -719,9 +738,13 @@ export const Invest = defineComponent({
               <span>{props.info.sellTax} %</span>
             </div>
             <div class="flex justify-between u-body2">
-              <span class="flex text-sm text-grey3 items-center">
+              <span class="flex text-[14px] mb-4 text-color1 items-center">
                 Maximum sell % ：
-                <UTooltip>
+                <UTooltip
+                  style={{
+                    background: ' rgba(0,0,0,0.6)'
+                  }}
+                >
                   {{
                     trigger: () => <QuestionFilled class="h-4 text-grey3 w-4" />,
                     default: () => (

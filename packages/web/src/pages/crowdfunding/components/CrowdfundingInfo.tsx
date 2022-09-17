@@ -71,7 +71,7 @@ export const CrowdfundingInfo = defineComponent({
     getSellTokenInfo()
 
     return () => (
-      <UCard title="INFO">
+      <UCard title="info">
         {props.info.youtube && (
           <div class="mb-6">
             <iframe
@@ -95,8 +95,8 @@ export const CrowdfundingInfo = defineComponent({
           </div>
         )}
         <div class="mt-6 mb-10 break-all u-body2" v-html={props.info.description}></div>
-        <div class="grid gap-y-6 grid-cols-[220px,1fr] u-body2">
-          <div class="text-grey3">dCrowdfunding Address :</div>
+        <div class="grid gap-y-6 grid-cols-[220px,1fr] u-h6 text-color2">
+          <div class="text-color1">dCrowdfunding Address :</div>
           <div class="text-primary">
             <a
               target="_blank"
@@ -109,7 +109,7 @@ export const CrowdfundingInfo = defineComponent({
               {props.info.crowdfundingContract}
             </a>
           </div>
-          <div class="text-grey3">Team Wallet Address :</div>
+          <div class="text-color1">Team Wallet Address :</div>
           <div class="text-primary">
             <a
               target="_blank"
@@ -122,7 +122,7 @@ export const CrowdfundingInfo = defineComponent({
               {props.info.teamWallet}
             </a>
           </div>
-          <div class="text-grey3">Token Contract :</div>
+          <div class="text-color1">Token Contract :</div>
           <div class="text-primary">
             <a
               target="_blank"
@@ -135,33 +135,33 @@ export const CrowdfundingInfo = defineComponent({
               {props.info.sellTokenContract}
             </a>
           </div>
-          <div class="text-grey3 u-body2">Token Name :</div>
+          <div class="text-color1">Token Name :</div>
           <div>{sellCoinInfo.value.name}</div>
-          <div class="text-grey3 u-body2">Token Symbol :</div>
+          <div class="text-color1">Token Symbol :</div>
           <div>{sellCoinInfo.value.symbol}</div>
-          <div class="text-grey3 u-body2">Token Decimals :</div>
+          <div class="text-color1">Token Decimals :</div>
           <div>{sellCoinInfo.value.decimal}</div>
-          <div class="text-grey3 u-body2">Total Supply :</div>
+          <div class="text-color1">Total Supply :</div>
           <div>
             {sellCoinInfo.value.supply} {sellCoinInfo.value.symbol}
           </div>
-          <div class="text-grey3 u-body2">Token For dCrowdfunding :</div>
+          <div class="text-color1">Token For dCrowdfunding :</div>
           <div>
             {props.info.raiseGoal * props.info.buyPrice} {sellCoinInfo.value.symbol}
           </div>
-          <div class="text-grey3 u-body2">Rate :</div>
+          <div class="text-color1">Rate :</div>
           <div>
             1 {buyCoinInfo.value.symbol} = {props.info.buyPrice} {sellCoinInfo.value.symbol}
           </div>
-          <div class="text-grey3 u-body2">Swap :</div>
+          <div class="text-color1">Swap :</div>
           <div>{props.info.swapPercent} %</div>
-          <div class="text-grey3 u-body2">Sell Tax :</div>
+          <div class="text-color1">Sell Tax :</div>
           <div>{props.info.sellTax} %</div>
-          <div class="text-grey3 u-body2">Maximum Sell :</div>
+          <div class="text-color1">Maximum Sell :</div>
           <div>{props.info.maxSellPercent} % of the bought token amount</div>
-          <div class="text-grey3 u-body2">dCrowdfunding Start Time (UTC) :</div>
+          <div class="text-color1">Start Time :</div>
           <div>{dayjs.utc(props.info.startTime).format('YYYY-MM-DD HH:mm')}</div>
-          <div class="text-grey3 u-body2">dCrowdfunding End Time (UTC) :</div>
+          <div class="text-color1">End Time :</div>
           <div>{dayjs.utc(props.info.endTime).format('YYYY-MM-DD HH:mm')}</div>
         </div>
       </UCard>
