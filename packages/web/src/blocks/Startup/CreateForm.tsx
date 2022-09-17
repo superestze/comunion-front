@@ -393,7 +393,7 @@ const CreateStartupForm = defineComponent({
         <UFormItemsFactory fields={infoFields} values={model} />
         {/* <div class="bg-purple h-13px my-8"></div> */}
         {/* <p class="mb-7 uppercase u-card-title1">Finance Setting</p> */}
-        {/* <ul class="border rounded-lg list-disc border-grey5 mb-6 p-4 pl-8 text-body1 relative">
+        {/* <ul class="border rounded-lg list-disc border-color-border mb-6 p-4 pl-8 text-body1 relative">
           <li>Firstly, the token must be bound to the Start-Up as Proof-of-Stake.</li>
           <li>A token can only be bound to one Startup and can't be changed after bound.</li>
           <li>If you have not a token yet, use Erc20-Generator to create your token.</li>
@@ -409,7 +409,7 @@ const CreateStartupForm = defineComponent({
             onChange={onTokenContractChange}
           />
         </UFormItem> */}
-        {/* <div class="border rounded-lg border-grey5 mb-2 grid py-4.5 px-4 text-body2 gap-x-2 gap-y-4 grid-cols-2">
+        {/* <div class="border rounded-lg border-color-border mb-2 grid py-4.5 px-4 text-body2 gap-x-2 gap-y-4 grid-cols-2">
           <div class="flex items-center">
             <span class="w-36">TOKEN NAME:</span>
             <span>{tokenInfo.name || '--'}</span>

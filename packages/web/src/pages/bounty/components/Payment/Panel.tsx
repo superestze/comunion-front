@@ -286,7 +286,7 @@ export default defineComponent({
         )}
 
         {this.payMode === 'period' && (
-          <div class="border-solid border-grey5 border-width-1px rounded-8px mt-24px max-h-258px p-24px overflow-hidden">
+          <div class="border-solid border-color-border border-width-1px rounded-8px mt-24px max-h-258px p-24px overflow-hidden">
             <p class="mb-6 u-title1">Target</p>
             <UScrollbar style={{ maxHeight: `${162}px` }}>
               <p class="text-grey2 u-body2" innerHTML={this.paymentInfo?.periodTerms?.terms} />

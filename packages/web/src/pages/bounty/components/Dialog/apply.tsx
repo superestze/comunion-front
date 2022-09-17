@@ -146,11 +146,11 @@ const ApplyDialog = defineComponent({
     const accept = reactive<checkboxItem>({ value: false, validate: false })
 
     const termsClass = computed(() => {
-      return `text-14px ${terms.validate ? 'text-error' : 'text-grey1'}`
+      return `text-14px ${terms.validate ? 'text-error' : 'text-color1'}`
     })
 
     const acceptClass = computed(() => {
-      return `text-14px ${accept.validate ? 'text-error' : 'text-grey1'}`
+      return `text-14px ${accept.validate ? 'text-error' : 'text-color1'}`
     })
 
     return {

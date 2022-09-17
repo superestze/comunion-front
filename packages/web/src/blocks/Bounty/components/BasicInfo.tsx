@@ -26,7 +26,7 @@ export const renderUnit = (name: string) => (
   <div
     class={[
       'flex justify-center items-center border rounded-r-lg bg-white w-30',
-      { 'text-grey1': name, 'text-grey4': !name }
+      { 'text-color1': name, 'text-grey4': !name }
     ]}
   >
     {name || 'Token'}

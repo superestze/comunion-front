@@ -70,25 +70,18 @@ export default defineComponent({
                 default: () => this.bountyDetail?.title
               }}
             </UTooltip>
-            <div class="flex flex-wrap mt-5">
+            <div class="flex flex-wrap mt-5 gap-2">
               {Array.isArray(this.bountyDetail?.applicantSkills) &&
                 this.bountyDetail?.applicantSkills.map((tag: string, i: number) => {
                   return (
-                    <UTag
-                      key={i}
-                      class="font-primary mr-2 mb-2 px-2 !h-1.25rem !text-[#211B42] !leading-4 "
-                    >
+                    <UTag key={i} class="text-color1">
                       {tag}
                     </UTag>
                   )
                 })}
             </div>
           </div>
-          {this.bountyStatus && (
-            <span class="rounded-[2px] flex-shrink-0 h-5 py-0.5 px-2 text-color3 inline-block !border-1 !border-[#DADCE0]">
-              {this.bountyStatus.label}
-            </span>
-          )}
+          {this.bountyStatus && <UTag>{this.bountyStatus.label}</UTag>}
         </div>
         <Paragraph
           class="mt-6"

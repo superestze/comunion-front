@@ -49,7 +49,7 @@ export const IBORateHistory = defineComponent({
             return (
               <div class="mb-6">
                 <div class="mb-2 u-body2 text-grey4">{dayjs().format('YYYY-MM-DD HH:mm')}</div>
-                <div class="border-1 border-grey5 rounded-lg bg-purple flex justify-between px-4 py-2.5">
+                <div class="border-1 border-color-border rounded-lg bg-purple flex justify-between px-4 py-2.5">
                   <span class="u-title2">
                     1 {record.buyTokenSymbol} = {record.buyPrice} {record.sellTokenSymbol}
                   </span>

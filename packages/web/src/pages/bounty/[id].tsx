@@ -130,7 +130,7 @@ export default defineComponent({
 
         <div class="flex mb-20 gap-6">
           <div class="overflow-hidden basis-2/3">
-            <div class="bg-white border rounded-[2px] mb-6 p-6">
+            <div class="bg-white border rounded-sm mb-6 p-6">
               {this.bountySection.detail && (
                 <BountyDetailCard
                   bountyExpired={this.bountyExpired}
@@ -250,7 +250,7 @@ export default defineComponent({
             </UCard>
           </div>
           <div class="overflow-hidden basis-1/3">
-            <div class="bg-white border rounded-[2px] mb-6 p-6">
+            <div class="bg-white border rounded-sm mb-6 p-6">
               {this.bountySection.startup && <StartupCard startup={this.bountySection.startup} />}
             </div>
             <UCard title="Founder" class="mb-6">
