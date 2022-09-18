@@ -3,6 +3,7 @@ import { QuestionCircleOutlined, RefreshOutlined, UploadFilled } from '@comunion
 import { CustomRequest } from 'naive-ui/lib/upload/src/interface'
 import { defineComponent, ref } from 'vue'
 import type { PropType } from 'vue'
+import bgImage from './bgImage.png'
 import image from './image.png'
 import './rect.css'
 
@@ -32,8 +33,8 @@ export default defineComponent({
       type: Function as PropType<CustomRequest>
     },
     bgSize: {
-      type: String,
-      default: () => 'full'
+      type: Boolean,
+      default: () => false
     }
   },
   setup() {
@@ -68,8 +69,8 @@ export default defineComponent({
                   <RefreshOutlined class="h-10 -mt-5 text-white -ml-5 top-1/2 left-1/2 w-10 absolute" />
                 </div>
                 <img
-                  src={this.imageUrl || image}
-                  class={`h-${this.bgSize} object-cover w-${this.bgSize} top-0 left-0 right-0 m-auto z-1 absolute`}
+                  src={this.imageUrl || this.bgSize ? bgImage : image}
+                  class={`h-full object-cover w-full top-0 left-0 right-0 m-auto z-1 absolute`}
                 />
               </div>
             ) : (

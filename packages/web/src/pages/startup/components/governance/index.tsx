@@ -82,7 +82,7 @@ export default defineComponent({
       <UCard title="Governance" class="mb-6">
         {this.proposalList.map(proposal => (
           <div onClick={() => this.toProposalDetail(proposal.proposalId)}>
-            <ProposalCard proposalData={proposal} noBorder={true} />
+            <ProposalCard proposalData={proposal} noDescription={true} noBorder={true} />
           </div>
         ))}
       </UCard>
