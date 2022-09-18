@@ -14,11 +14,14 @@ export const ProposalCard = defineComponent({
         NonNullable<ServiceReturn<'governance@public-list'>>['rows'][number]
       >,
       required: true
+    },
+    noBorder: {
+      type: Boolean,
+      default: () => false
     }
   },
   setup(props) {
     const router = useRouter()
-
     const statusStyle = computed(() => {
       return GOVERNANCE_STATUS_STYLE[
         props.proposalData.status as keyof typeof GOVERNANCE_STATUS_STYLE
@@ -70,7 +73,9 @@ export const ProposalCard = defineComponent({
   render() {
     return (
       <div
-        class="bg-white rounded-sm cursor-pointer flex border-1 mb-5 py-6 px-6 hover:bg-color-hover"
+        class={`bg-white rounded-sm cursor-pointer flex mb-5 py-6 px-6 ${
+          this.noBorder ? '' : 'border-1'
+        } hover:bg-color-hover`}
         onClick={() => this.handleCard()}
       >
         <UStartupLogo src={this.proposalData.startupLogo || ''} class="h-15 mr-4 w-15" />

@@ -77,46 +77,49 @@ export const InvestmentRecords = defineComponent({
     }
   },
   render() {
+    console.log(this.investRecords)
     return (
       <UCard title="Investment record">
-        <UScrollList
-          triggered={this.pagination.loading}
-          page={this.pagination.page}
-          pageSize={this.pagination.pageSize}
-          total={this.pagination.total}
-          onLoadMore={() => this.getInvestRecord(this.pagination.page)}
-        >
-          {(this.investRecords ?? []).map(record => {
-            return (
-              <div class="mt-6">
-                <div class="flex">
-                  <ULazyImage
-                    src={record.comerAvatar ?? ''}
-                    class="rounded-full cursor-pointer h-9 w-9"
-                  />
-                  <div class=" flex-1 mx-4">
-                    <div class="flex mb-2 items-center">
-                      <div class="text-color1 truncate u-title3">{record.comerName}</div>
-                      {record.access === 1 ? (
-                        <span class="rounded-sm bg-[#00BFA5] text-white text-xs ml-2 py-0.5 px-2">
-                          Invest
-                        </span>
-                      ) : (
-                        <span class="bg-warning rounded-sm text-white text-xs ml-2 py-0.5 px-2">
-                          Sell
-                        </span>
-                      )}
+        {!!this.investRecords?.length && (
+          <UScrollList
+            triggered={this.pagination.loading}
+            page={this.pagination.page}
+            pageSize={this.pagination.pageSize}
+            total={this.pagination.total}
+            onLoadMore={() => this.getInvestRecord(this.pagination.page)}
+          >
+            {(this.investRecords ?? []).map(record => {
+              return (
+                <div class="mt-6">
+                  <div class="flex">
+                    <ULazyImage
+                      src={record.comerAvatar ?? ''}
+                      class="rounded-full cursor-pointer h-9 w-9"
+                    />
+                    <div class=" flex-1 mx-4">
+                      <div class="flex mb-2 items-center">
+                        <div class="text-color1 truncate u-title3">{record.comerName}</div>
+                        {record.access === 1 ? (
+                          <span class="rounded-sm bg-[#00BFA5] text-white text-xs ml-2 py-0.5 px-2">
+                            Invest
+                          </span>
+                        ) : (
+                          <span class="bg-warning rounded-sm text-white text-xs ml-2 py-0.5 px-2">
+                            Sell
+                          </span>
+                        )}
+                      </div>
+                      <div class="mb-2 text-grey4 u-body2">
+                        {dayjs(record.time).format('YYYY-MM-DD HH:mm')}
+                      </div>
                     </div>
-                    <div class="mb-2 text-grey4 u-body2">
-                      {dayjs(record.time).format('YYYY-MM-DD HH:mm')}
-                    </div>
+                    <div class="font-semibold ml-auto text-primary">{this.getAmount(record)}</div>
                   </div>
-                  <div class="font-semibold ml-auto text-primary">{this.getAmount(record)}</div>
                 </div>
-              </div>
-            )
-          })}
-        </UScrollList>
+              )
+            })}
+          </UScrollList>
+        )}
       </UCard>
     )
   }
