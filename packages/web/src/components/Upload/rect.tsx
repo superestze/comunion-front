@@ -30,6 +30,10 @@ export default defineComponent({
     },
     customRequest: {
       type: Function as PropType<CustomRequest>
+    },
+    bgSize: {
+      type: String,
+      default: () => 'full'
     }
   },
   setup() {
@@ -65,7 +69,7 @@ export default defineComponent({
                 </div>
                 <img
                   src={this.imageUrl || image}
-                  class="h-full object-cover w-full top-0 left-0 z-1 absolute"
+                  class={`h-${this.bgSize} object-cover w-${this.bgSize} top-0 left-0 right-0 m-auto z-1 absolute`}
                 />
               </div>
             ) : (

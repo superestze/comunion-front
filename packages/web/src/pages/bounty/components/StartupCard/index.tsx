@@ -36,7 +36,7 @@ export default defineComponent({
             src={this.startup?.logo || ''}
             width="15"
             height="15"
-            class="rounded-md h-15 mr-4 w-15"
+            class="rounded-sm h-15 mr-4 w-15"
           />
           <div class="flex-1 overflow-hidden">
             <div class="mb-2 truncate font-primary font-semibold text-[20px] text-color1">
