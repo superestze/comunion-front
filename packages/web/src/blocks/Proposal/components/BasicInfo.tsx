@@ -137,7 +137,8 @@ export const BasicInfo = defineComponent({
               />
             </div>
           )
-        }
+        },
+        rules: [{ required: true, message: 'description cannot be blank', trigger: 'blur' }]
       },
       {
         t: 'string',

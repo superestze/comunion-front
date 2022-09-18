@@ -43,7 +43,7 @@ export default defineComponent({
               {this.startup?.title}
             </div>
             {(this.startup?.mode || 0) > 0 && (
-              <span class="rounded-sm h-1.25rem mr-2 px-2 text-0.75rem leading-1.25rem inline-block border-1 border-[#DADCE0]">
+              <span class="rounded-sm h-1.25rem mr-2 px-2 text-0.75rem text-color2 leading-1.25rem inline-block border-1 border-[#DADCE0]">
                 {this.modeName}
               </span>
             )}
