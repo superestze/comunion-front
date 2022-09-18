@@ -9,3 +9,11 @@
 .rect-upload:hover .rect-upload-mask {
   opacity: 1;
 }
+
+.n-upload-trigger {
+  @apply !w-full;
+
+  .n-upload-dragger {
+    @apply !w-full;
+  }
+}

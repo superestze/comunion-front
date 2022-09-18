@@ -82,7 +82,7 @@ export default defineComponent({
       <UCard title="Proposal" class="mb-6">
         {this.proposalList.map(proposal => (
           <div class="cursor-pointer" onClick={() => this.toProposalDetail(proposal.proposalId)}>
-            <ProposalCard proposalData={proposal} />
+            <ProposalCard noBorder={true} proposalData={proposal} />
           </div>
         ))}
       </UCard>

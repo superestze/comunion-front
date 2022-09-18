@@ -19,6 +19,7 @@ import {
 import { shortenAddress } from '@comunion/utils'
 import dayjs from 'dayjs'
 import { ethers } from 'ethers'
+import { NSpin } from 'naive-ui'
 import { defineComponent, ref, reactive, onMounted, computed } from 'vue'
 import { useRoute, useRouter } from 'vue-router'
 import { CurrentResult } from './components/CurrentResult'
@@ -65,6 +66,7 @@ const ProposalDetail = defineComponent({
     })
     const selectedChoice = ref<SelectChoiceType>()
     const votePower = ref<number | string>(0)
+    const votePowerShow = ref<boolean>(false)
     const strategyInfo = ref()
     const voteInfoVisible = ref(false)
     const strategyVisible = ref(false)
@@ -102,6 +104,7 @@ const ProposalDetail = defineComponent({
           break
         }
         case 'erc20Balance': {
+          votePowerShow.value = true
           if (strategy.tokenContractAddress) {
             const userAddress = walletStore.address
 
@@ -112,6 +115,7 @@ const ProposalDetail = defineComponent({
             })
             votePower.value = ethers.utils.formatUnits(userBalance, strategy.voteDecimals)
           }
+          votePowerShow.value = false
           break
         }
         default:
@@ -340,6 +344,7 @@ const ProposalDetail = defineComponent({
       voteRecords,
       selectedChoice,
       votePower,
+      votePowerShow,
       voteInfoVisible,
       strategyVisible,
       createProposalRef,
@@ -567,7 +572,10 @@ const ProposalDetail = defineComponent({
                 </div>
                 <div class="text-color1 u-h5">Your voting power</div>
                 <div class="text-right text-color3 u-h6">
-                  {this.votePower} {this.proposalInfo?.voteSymbol}
+                  <NSpin size="small" show={this.votePowerShow}>
+                    {!this.votePowerShow && <span>{this.votePower}</span>}
+                    <span> {this.proposalInfo?.voteSymbol}</span>
+                  </NSpin>
                 </div>
               </div>
               <div class="flex mt-6 justify-end">
