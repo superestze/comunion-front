@@ -143,12 +143,14 @@ export const useWalletStore = defineStore('wallet', {
     },
     async _onNetworkChange(newNetwork: any, oldNetwork: any) {
       console.log('You have changed the network', newNetwork, oldNetwork)
-      if (newNetwork?.chainId) {
-        location.reload()
-      }
       const network = await this.wallet!.getProvider().getNetwork()
       this.chainId = network.chainId
       this.chainName = network.name
+      if (newNetwork?.chainId) {
+        setTimeout(() => {
+          location.reload()
+        }, 100)
+      }
     },
     openConnectModal() {
       this.connectModalOpened = true
