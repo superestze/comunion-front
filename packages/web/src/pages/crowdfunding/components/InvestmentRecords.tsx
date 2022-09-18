@@ -100,11 +100,11 @@ export const InvestmentRecords = defineComponent({
                       <div class="flex mb-2 items-center">
                         <div class="text-color1 truncate u-title3">{record.comerName}</div>
                         {record.access === 1 ? (
-                          <span class="rounded-sm bg-[#00BFA5] text-white text-xs ml-2 py-0.5 px-2">
+                          <span class="rounded-sm text-color3 u-h7 ml-2 py-0.5 px-2 border-1 border-[#DADCE0]">
                             Invest
                           </span>
                         ) : (
-                          <span class="bg-warning rounded-sm text-white text-xs ml-2 py-0.5 px-2">
+                          <span class="rounded-sm text-color3 u-h7 ml-2 py-0.5 px-2 border-1 border-[#DADCE0]">
                             Sell
                           </span>
                         )}
