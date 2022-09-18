@@ -16,7 +16,7 @@ import './invest.css'
 export const renderUnit = (name: string) => (
   <div
     class={[
-      'u-label2 flex justify-center items-center border rounded-r-lg bg-purple w-30',
+      'u-h5 flex justify-center items-center border rounded-r-sm bg-purple w-30',
       { 'text-color1': name, 'text-grey4': !name }
     ]}
   >
