@@ -317,12 +317,28 @@ const ProposalDetail = defineComponent({
       getVoteRecords(pagination.page)
     }
 
-    const blockExploreUrl = computed(() => {
+    const isShowStrategyInfo = (property: string) => {
+      let showInfo: string[] = []
+
+      switch (strategyInfo.value.dictValue) {
+        case 'ticket':
+          showInfo = ['network']
+          break
+        case 'erc20Balance':
+          showInfo = ['network', 'symbol', 'address', 'decimals']
+          break
+        default:
+          showInfo = []
+      }
+      return showInfo.includes(property)
+    }
+
+    const networkInfo = computed(() => {
       if (strategyInfo.value.chainId) {
         const findRes = allNetworks.find(network => network.chainId === strategyInfo.value.chainId)
-        return findRes?.explorerUrl
+        return findRes
       }
-      return undefined
+      return
     })
 
     const isAdmin = computed(() => {
@@ -354,7 +370,7 @@ const ProposalDetail = defineComponent({
       strategyInfo,
       govSetting,
       ipfsDetail,
-      blockExploreUrl,
+      networkInfo,
       isAdmin,
       delProposalVisible,
       showVoteInfo,
@@ -367,7 +383,8 @@ const ProposalDetail = defineComponent({
       toIPFSRaw,
       closeIPFSDetail,
       toComerDetail,
-      loadMoreVoteRecords
+      loadMoreVoteRecords,
+      isShowStrategyInfo
     }
   },
   render() {
@@ -540,7 +557,7 @@ const ProposalDetail = defineComponent({
                 class="mb-6"
                 proposalInfo={this.proposalInfo}
                 onShowStrategyDetail={() => (this.strategyVisible = true)}
-                blockExploreUrl={this.blockExploreUrl}
+                blockExploreUrl={this.networkInfo?.explorerUrl}
               />
             )}
             {!!this.proposalInfo && !!this.strategyInfo && (
@@ -559,9 +576,9 @@ const ProposalDetail = defineComponent({
                 <div class="text-color1 u-h5">Block height</div>
                 <div class="flex text-color3 justify-end items-center u-h6">
                   {this.proposalInfo?.blockNumber?.toLocaleString()}
-                  {this.blockExploreUrl && (
+                  {this.networkInfo?.explorerUrl && (
                     <a
-                      href={`${this.blockExploreUrl}/block/${this.proposalInfo?.blockNumber}`}
+                      href={`${this.networkInfo?.explorerUrl}/block/${this.proposalInfo?.blockNumber}`}
                       target="__blank"
                       class="outline-none ml-2 leading-4"
                     >
@@ -601,7 +618,7 @@ const ProposalDetail = defineComponent({
               </div>
             </div>
           </UModal>
-          <UModal show={this.strategyVisible} class="bg-white rounded-sm p-7 w-150">
+          <UModal show={this.strategyVisible} class="bg-white rounded-sm px-7 pt-7 pb-10 w-150">
             <div>
               <div class="flex mb-6 justify-between">
                 <span class="text-primary2 u-h3">Strategies</span>
@@ -613,23 +630,34 @@ const ProposalDetail = defineComponent({
               <div class="border border-color-border rounded-sm grid py-4 px-6 gap-y-4 grid-cols-2">
                 <div class="text-colo1 u-h4">{this.strategyInfo?.strategyName}</div>
                 <div class="text-right text-color3 u-h5"></div>
-                <div class="text-colo1 u-h5">Symbol</div>
-                <div class="text-right text-color3 u-h5">
-                  {this.strategyInfo.voteSymbol || '--'}
-                </div>
-                <div class="text-color1 u-h5">Address</div>
-                <div class="flex text-color2 items-center justify-end u-h5">
-                  {shortenAddress(this.strategyInfo?.tokenContractAddress) || '--'}{' '}
-                  <a
-                    href={`${this.blockExploreUrl}/address/${this.strategyInfo?.tokenContractAddress}`}
-                    target="__blank"
-                    class="outline-none ml-2 leading-4 "
-                  >
-                    <UrlOutlined class="text-primary" />
-                  </a>
-                </div>
-                <div class="text-color1 u-h5">Decimals</div>
-                <div class="text-right text-color3 u-h5">{this.strategyInfo?.voteDecimals}</div>
+                <div class="text-colo1 u-h5">Network</div>
+                <div class="text-right text-color3 u-h5">{this.networkInfo?.name || '--'}</div>
+                {this.isShowStrategyInfo('symbol') && <div class="text-colo1 u-h5">Symbol</div>}
+                {this.isShowStrategyInfo('symbol') && (
+                  <div class="text-right text-color3 u-h5">
+                    {this.strategyInfo.voteSymbol || '--'}
+                  </div>
+                )}
+
+                {this.isShowStrategyInfo('address') && <div class="text-color1 u-h5">Address</div>}
+                {this.isShowStrategyInfo('address') && (
+                  <div class="flex text-color2 items-center justify-end u-h5">
+                    {shortenAddress(this.strategyInfo?.tokenContractAddress) || '--'}{' '}
+                    <a
+                      href={`${this.networkInfo?.explorerUrl}/address/${this.strategyInfo?.tokenContractAddress}`}
+                      target="__blank"
+                      class="outline-none ml-2 leading-4 "
+                    >
+                      <UrlOutlined class="text-primary" />
+                    </a>
+                  </div>
+                )}
+                {this.isShowStrategyInfo('decimals') && (
+                  <div class="text-color1 u-h5">Decimals</div>
+                )}
+                {this.isShowStrategyInfo('decimals') && (
+                  <div class="text-right text-color3 u-h5">{this.strategyInfo?.voteDecimals}</div>
+                )}
               </div>
             </div>
           </UModal>
