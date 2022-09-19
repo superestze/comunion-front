@@ -48,10 +48,10 @@ export default defineComponent({
                 The First
               </p>
             </div>
-            <p class="font-medium text-[#FFF1F1] text-[64px] text-center">
-              <span>Permissionless {this.text}</span>
+            <p class="font-medium text-[#FFF1F1] text-[64px]">
+              <span class="ml-[1.9rem]">Permissionless {this.text}</span>
               {this.lineStatus && (
-                <span class="inline-block h-13 w-1 bg-[#ffffff] ml-2 animate-pulse"></span>
+                <span class="inline-block h-13 w-1 bg-[#ffffff] ml-2 animate-pulse "></span>
               )}
             </p>
             <p class="text-[#FFFFFF] text-[32px] text-center mt-8.5">

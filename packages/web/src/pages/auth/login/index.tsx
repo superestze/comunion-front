@@ -55,11 +55,16 @@ export default defineComponent({
           <MoreNavigationPage />
           <div class="bg-white flex rounded-8px flex-1 h-542px max-w-1245px">
             <div
-              class={`${styles.bgImage} bg-primary rounded-2px h-606px -mt-8 text-white ml-25 pt-162px pl-64px w-635px`}
+              class={`${styles.bgImage} bg-primary rounded-2px h-606px -mt-8 text-white ml-25 pt-212px pl-64px w-635px`}
             >
-              <p style={{ color: 'rgba(255,255,255,0.8)' }}>Welcome to Comunion</p>
-              <p class="font-bold mt-30px text-30px">The First</p>
-              <p class="font-bold mt-16px text-30px">Permissionless Economic Network </p>
+              <p
+                style={{ color: 'rgba(255,255,255,0.5)', 'font-family': 'auto' }}
+                class="text-[16px]"
+              >
+                The First
+              </p>
+              <p class="font-bold mt-10px text-30px">Permissionless Economic Network </p>
+              <p class="font-bold mt-8px text-20px">to narrow the gap between rich and poor</p>
               <div class="mt-214px">
                 <ULogo height={20} withText theme="white" />
               </div>
@@ -74,7 +79,7 @@ export default defineComponent({
                     class="w-full"
                   />
                 </div>
-                <p class="font-bold text-center text-[#111111] text-28px">Comunion</p>
+                <p class="font-100 text-center text-[#ffffff] text-28px">Comunion</p>
                 <p
                   class="mt-54px text-center mb-20px"
                   style={{
