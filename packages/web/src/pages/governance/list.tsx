@@ -110,7 +110,7 @@ const GovernanceListPage = defineComponent({
   render() {
     return (
       <USpin show={this.pagination.loading}>
-        <div class="mt-8 mb-16">
+        <div class="mx-auto mt-8 mb-16 max-w-227">
           <div class="flex mb-6 ">
             <div class="flex-1"></div>
             <UDropdownFilter
