@@ -1,5 +1,5 @@
 .u-tag-com {
-  @apply rounded-sm h-5 px-2.5 inline-flex items-center u-h6;
+  @apply rounded-sm h-5 px-2.5 inline-flex items-center u-h7;
 
   &__filled {
     @apply text-white;

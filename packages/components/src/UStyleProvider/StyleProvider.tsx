@@ -139,7 +139,8 @@ const UStyleProvider = defineComponent({
       Button: {
         colorHoverPrimary: props.primary1Color,
         borderHoverPrimary: props.primary1Color,
-        textColorGhostHoverPrimary: props.primary1Color
+        textColorGhostHoverPrimary: props.primary1Color,
+        fontWeight: 600
       },
       Pagination: {
         itemBorderHover: props.primary1Color,
