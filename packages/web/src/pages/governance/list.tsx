@@ -121,9 +121,8 @@ const GovernanceListPage = defineComponent({
               v-model:value={this.proposalStatus}
             />
           </div>
-          {this.DataList.map(item => (
-            <ProposalCard key={item.proposalId} proposalData={item} />
-          ))}
+          {Array.isArray(this.DataList) &&
+            this.DataList.map(item => <ProposalCard key={item.proposalId} proposalData={item} />)}
         </div>
       </USpin>
     )
