@@ -7,7 +7,7 @@ import Background from './components/widgets/background'
 import Benefits from './components/widgets/benefits'
 import BgImage from './components/widgets/bgImage'
 import Comunion from './components/widgets/comunion'
-import { First } from './components/widgets/describe'
+// import { First } from './components/widgets/describe'
 import Ecomomy from './components/widgets/ecomomy'
 import Footer from './components/widgets/footer'
 import Header from './components/widgets/header'
@@ -28,7 +28,7 @@ export default defineComponent({
             <BgImage />
             <Background />
             <Header />
-            <First />
+            {/* <First /> */}
             <Overview />
             <Comunion />
             <Ecomomy />

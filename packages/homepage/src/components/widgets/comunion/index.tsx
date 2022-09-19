@@ -35,14 +35,14 @@ export default defineComponent({
         h1line1: 'A new era of economy',
         h1line2: 'Net-Chain Economy',
         content:
-          'The core theory is based on technolog of internet and blockchain to research how can increase income of labor through promote the liquidity of labor and the capitalization of labor value'
+          'The core theory is based on technology of internet and blockchain to research how can increase income of labor through promoting labor’s liquidity and the capitalization of labor value'
       },
       {
         icons: [comp2, comp2, comp2],
         h1line1: 'A new decentralized organization ',
         h1line2: 'DCO',
         content:
-          'Generate high efficient productivity through linking distribute labors and fragmented productivities to build, beginning DAO, beyond DAO          '
+          'Generate much higher efficient collaboration power through linking distributed labors and fragmented productivity to build. It born from DAO, but beyond DAO'
       },
       {
         icons: [comp3, comp3, comp3],
