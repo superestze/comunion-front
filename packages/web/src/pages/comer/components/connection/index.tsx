@@ -258,7 +258,7 @@ export default defineComponent({
           }
         }}
       >
-        {!isNaN(Number(this.currentTabId)) && tabContents[Number(this.currentTabId)].cont > 0 && (
+        {!Number(this.currentTabId) && tabContents[Number(this.currentTabId)]?.cont && (
           <div class="flex flex-col">{tabContents[Number(this.currentTabId)].content}</div>
         )}
       </UCard>
