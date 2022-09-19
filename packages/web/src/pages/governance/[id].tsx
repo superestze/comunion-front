@@ -7,7 +7,8 @@ import {
   UPopover,
   USpin,
   UTable,
-  UTag
+  UTag,
+  UBreadcrumb
 } from '@comunion/components'
 import {
   CloseOutlined,
@@ -372,6 +373,7 @@ const ProposalDetail = defineComponent({
   render() {
     return (
       <USpin show={this.pageLoading}>
+        <UBreadcrumb class="mt-10 mb-10"></UBreadcrumb>
         <div class="flex mt-1 mb-14">
           <UCard style="flex:2" class="mr-4">
             <div class="flex mb-5 justify-between">
@@ -441,7 +443,7 @@ const ProposalDetail = defineComponent({
               </div>
             )}
 
-            <CustomCard class="mb-6 mt-10" title="Cast your vote">
+            <CustomCard class="mt-10 mb-6" title="Cast your vote">
               <div class="pt-6">
                 {this.proposalInfo?.choices?.map(voteInfo => (
                   <div
