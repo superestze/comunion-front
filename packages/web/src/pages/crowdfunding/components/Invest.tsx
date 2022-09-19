@@ -507,7 +507,8 @@ export const Invest = defineComponent({
                 {countDownTime.value.value.seconds}
               </span>
             </div>
-            <div class="mb-4 text-color2 u-h5">dCrowdfunding Detail</div>
+
+            <div class="mb-4 text-color2 u-h5">Detail</div>
             <div class="mb-13 grid gap-4 grid-cols-2 u-h7">
               <div class="rounded-sm flex flex-col bg-[rgba(83,49,244,0.06)] h-22 pl-4 justify-center">
                 <div class="flex text-primary  items-end">
@@ -543,7 +544,8 @@ export const Invest = defineComponent({
                 <div class="mt-1 text-color3 u-h7">Available Swap</div>
               </div>
             </div>
-            <div class="mb-6 text-color2 u-h5">Token Information</div>
+
+            <div class="mb-6 text-color2 u-h5">Token</div>
             <div class="u-h5">
               <div class="token-info-item">
                 <span class="token-info-item-label">Totally Supply：</span>

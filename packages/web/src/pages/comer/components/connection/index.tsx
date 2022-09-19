@@ -91,136 +91,151 @@ export default defineComponent({
     }
 
     const tabContents = [
-      <>
-        {this.followedStartups.list.value.length > 0 && (
+      {
+        count: this.followedStartups.list.value.length,
+        content: (
           <>
-            {this.followedStartups.list.value.map(item => {
-              return (
-                <BasicItem
-                  item={item}
-                  onConnect={handleConnect}
-                  onUnconnect={handleUnConnect}
-                  keyMap={{
-                    name: 'startupName',
-                    follow: 'followedByMe'
-                  }}
+            {this.followedStartups.list.value.length > 0 && (
+              <>
+                {this.followedStartups.list.value.map(item => {
+                  return (
+                    <BasicItem
+                      item={item}
+                      onConnect={handleConnect}
+                      onUnconnect={handleUnConnect}
+                      keyMap={{
+                        name: 'startupName',
+                        follow: 'followedByMe'
+                      }}
+                      v-slots={{
+                        avatar: () => (
+                          <div
+                            class="cursor-pointer flex h-11 w-11 items-center overflow-hidden"
+                            onClick={() => this.$router.push(`/startup/${item.startupId}`)}
+                          >
+                            <UStartupLogo src={item.startupLogo} />
+                          </div>
+                        )
+                      }}
+                    />
+                  )
+                })}
+              </>
+            )}
+            {this.followedStartups.total.value > 5 && (
+              <div class="flex mt-5 justify-center">
+                <LoadingBtn
+                  onMore={handleMore}
+                  end={this.followedStartups.list.value.length >= this.followedStartups.total.value}
                   v-slots={{
-                    avatar: () => (
-                      <div
-                        class="cursor-pointer flex h-11 w-11 items-center overflow-hidden"
-                        onClick={() => this.$router.push(`/startup/${item.startupId}`)}
-                      >
-                        <UStartupLogo src={item.startupLogo} />
-                      </div>
-                    )
+                    text: () => {
+                      return `More${this.tabsInstance.tabs.value[0].subTitle}`
+                    }
                   }}
                 />
-              )
-            })}
+              </div>
+            )}
           </>
-        )}
-        {this.followedStartups.total.value > 5 && (
-          <div class="flex mt-5 justify-center">
-            <LoadingBtn
-              onMore={handleMore}
-              end={this.followedStartups.list.value.length >= this.followedStartups.total.value}
-              v-slots={{
-                text: () => {
-                  return `More${this.tabsInstance.tabs.value[0].subTitle}`
-                }
-              }}
-            />
-          </div>
-        )}
-      </>,
-      <>
-        {this.followComer.list.value.length > 0 && (
+        )
+      },
+      {
+        count: this.followComer.list.value.length,
+        content: (
           <>
-            {this.followComer.list.value.map(item => {
-              return (
-                <BasicItem
-                  item={item}
-                  onConnect={handleConnect}
-                  onUnconnect={handleUnConnect}
-                  keyMap={{
-                    name: 'comerName',
-                    follow: 'followedByMe'
-                  }}
+            {this.followComer.list.value.length > 0 && (
+              <>
+                {this.followComer.list.value.map(item => {
+                  return (
+                    <BasicItem
+                      item={item}
+                      onConnect={handleConnect}
+                      onUnconnect={handleUnConnect}
+                      keyMap={{
+                        name: 'comerName',
+                        follow: 'followedByMe'
+                      }}
+                      v-slots={{
+                        avatar: () => (
+                          <div
+                            class="cursor-pointer flex h-11 w-11 "
+                            onClick={() =>
+                              this.$router.push({ path: '/comer', query: { id: item.comerId } })
+                            }
+                          >
+                            <UStartupLogo src={item.comerAvatar} width="11" height="11" />
+                          </div>
+                        )
+                      }}
+                    />
+                  )
+                })}
+              </>
+            )}
+            {this.followComer.total.value > 5 && (
+              <div class="flex mt-5 justify-center">
+                <LoadingBtn
+                  onMore={handleMore}
+                  end={this.followComer.list.value.length >= this.followComer.total.value}
                   v-slots={{
-                    avatar: () => (
-                      <div
-                        class="cursor-pointer flex h-11 w-11 "
-                        onClick={() =>
-                          this.$router.push({ path: '/comer', query: { id: item.comerId } })
-                        }
-                      >
-                        <UStartupLogo src={item.comerAvatar} width="11" height="11" />
-                      </div>
-                    )
+                    text: () => {
+                      return `More${this.tabsInstance.tabs.value[1].subTitle}`
+                    }
                   }}
                 />
-              )
-            })}
+              </div>
+            )}
           </>
-        )}
-        {this.followComer.total.value > 5 && (
-          <div class="flex mt-5 justify-center">
-            <LoadingBtn
-              onMore={handleMore}
-              end={this.followComer.list.value.length >= this.followComer.total.value}
-              v-slots={{
-                text: () => {
-                  return `More${this.tabsInstance.tabs.value[1].subTitle}`
-                }
-              }}
-            />
-          </div>
-        )}
-      </>,
-      <>
-        {this.connector.list.value.length > 0 && (
+        )
+      },
+      {
+        cont: this.connector.list.value.length,
+        content: (
           <>
-            {this.connector.list.value.map(item => {
-              return (
-                <BasicItem
-                  item={item}
-                  onConnect={handleConnect}
-                  onUnconnect={handleUnConnect}
-                  keyMap={{
-                    name: 'comerName',
-                    follow: 'followedByMe'
-                  }}
+            {this.connector.list.value.length > 0 && (
+              <>
+                {this.connector.list.value.map(item => {
+                  return (
+                    <BasicItem
+                      item={item}
+                      onConnect={handleConnect}
+                      onUnconnect={handleUnConnect}
+                      keyMap={{
+                        name: 'comerName',
+                        follow: 'followedByMe'
+                      }}
+                      v-slots={{
+                        avatar: () => (
+                          <div
+                            class="cursor-pointer flex h-11 w-11 items-center overflow-hidden"
+                            onClick={() =>
+                              this.$router.push({ path: '/comer', query: { id: item.comerId } })
+                            }
+                          >
+                            <UStartupLogo src={item.comerAvatar} width="11" height="11" />
+                          </div>
+                        )
+                      }}
+                    />
+                  )
+                })}
+              </>
+            )}
+            {this.connector.total.value > 5 && (
+              <div class="flex mt-5 justify-center">
+                <LoadingBtn
+                  onMore={handleMore}
+                  end={this.connector.list.value.length >= this.connector.total.value}
                   v-slots={{
-                    avatar: () => (
-                      <div
-                        class="cursor-pointer flex h-11 w-11 items-center overflow-hidden"
-                        onClick={() =>
-                          this.$router.push({ path: '/comer', query: { id: item.comerId } })
-                        }
-                      >
-                        <UStartupLogo src={item.comerAvatar} width="11" height="11" />
-                      </div>
-                    )
+                    text: () => {
+                      return `More${this.tabsInstance.tabs.value[2].subTitle}`
+                    }
                   }}
                 />
-              )
-            })}
+              </div>
+            )}
           </>
-        )}
-        {this.connector.total.value > 5 && (
-          <div class="flex mt-5 justify-center">
-            <LoadingBtn
-              onMore={handleMore}
-              end={this.connector.list.value.length >= this.connector.total.value}
-              v-slots={{
-                text: () => {
-                  return `More${this.tabsInstance.tabs.value[2].subTitle}`
-                }
-              }}
-            />
-          </div>
-        )}
-      </>
+        )
+      }
     ]
 
     return (
@@ -243,14 +258,9 @@ export default defineComponent({
           }
         }}
       >
-        <div class="flex flex-col">
-          {/* <Switch
-            tabs={this.tabsInstance.tabs.value}
-            onSwitchPanel={tabsChange}
-            currentId={this.currentTabId}
-          /> */}
-          {!isNaN(Number(this.currentTabId)) && tabContents[Number(this.currentTabId)]}
-        </div>
+        {!isNaN(Number(this.currentTabId)) && tabContents[Number(this.currentTabId)].cont > 0 && (
+          <div class="flex flex-col">{tabContents[Number(this.currentTabId)].content}</div>
+        )}
       </UCard>
     )
   }

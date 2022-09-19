@@ -71,7 +71,7 @@ export const CrowdfundingInfo = defineComponent({
     getSellTokenInfo()
 
     return () => (
-      <UCard title="info">
+      <UCard title="Info">
         {props.info.youtube && (
           <div class="mb-6">
             <iframe
