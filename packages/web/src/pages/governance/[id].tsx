@@ -441,7 +441,7 @@ const ProposalDetail = defineComponent({
               </div>
             )}
 
-            <CustomCard class="mb-6" title="Cast your vote">
+            <CustomCard class="mb-6 mt-10" title="Cast your vote">
               <div class="pt-6">
                 {this.proposalInfo?.choices?.map(voteInfo => (
                   <div
