@@ -1,5 +1,6 @@
 import { UButton } from '@comunion/components'
 import { defineComponent, ref, computed } from 'vue'
+import { useRoute } from 'vue-router'
 import {
   BountyContractReturnType,
   useBountyContractWrapper
@@ -19,6 +20,7 @@ export default defineComponent({
     }
   },
   setup() {
+    const route = useRoute()
     const visible = ref<boolean>(false)
     const { bountyContract, chainId } = useBountyContractWrapper()
     const { release } = bountyContract
@@ -35,7 +37,8 @@ export default defineComponent({
       visible,
       release,
       disabled,
-      chainId
+      chainId,
+      route
     }
   },
   render() {
@@ -56,13 +59,13 @@ export default defineComponent({
         'Release succeedes'
       )) as unknown as BountyContractReturnType
       const { error } = await services['bounty@bounty-release']({
-        bountyID: parseInt(this.$route.query.bountyId as string),
+        bountyID: parseInt(this.route.params.id as string),
         chainID: this.chainId,
         TxHash: response.hash
       })
 
       const bountyStore = useBountyStore()
-      bountyStore.initialize(this.$route.query.bountyId as string)
+      bountyStore.initialize(this.route.params.id as string)
       if (!error) {
         triggerDialog()
       }

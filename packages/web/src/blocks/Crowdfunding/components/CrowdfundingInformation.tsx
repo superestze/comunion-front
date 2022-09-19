@@ -169,7 +169,7 @@ export const CrowdfundingInformation = defineComponent({
                 v-model:value={props.crowdfundingInfo.swapPercent}
                 class="flex-1"
               ></UInputBigNumber>
-              <div class="my-1 text-sx text-grey4">
+              <div class="my-1 text-sx text-color3">
                 {props.crowdfundingInfo.swapPercent || '?'} % of the raised funds will go into the
                 swap pool
               </div>
@@ -191,7 +191,7 @@ export const CrowdfundingInformation = defineComponent({
               <div class="flex items-end">
                 Rate
                 <span class="n-form-item-label__asterisk">&nbsp;*</span>
-                <span class="ml-1 u-body2">
+                <span class="ml-1 u-h5">
                   1 {props.crowdfundingInfo.buyTokenName} = {props.crowdfundingInfo.buyPrice || '?'}{' '}
                   {props.crowdfundingInfo.sellTokenName}
                 </span>
@@ -221,7 +221,7 @@ export const CrowdfundingInformation = defineComponent({
                 v-model:value={props.crowdfundingInfo.buyPrice}
                 class="flex-1"
               ></UInputBigNumber>
-              <div class="my-1 text-xs text-grey4">
+              <div class="my-1 text-xs text-color3">
                 The price is at when investors buy token during dCrowdfunding
               </div>
             </div>
@@ -310,7 +310,7 @@ export const CrowdfundingInformation = defineComponent({
                 v-model:value={props.crowdfundingInfo.sellTax}
                 class="flex-1"
               ></UInputBigNumber>
-              <div class="my-1 text-xs text-grey4">
+              <div class="my-1 text-xs text-color3">
                 Fees to be deducted when investors sell tokens
               </div>
             </div>
@@ -356,7 +356,7 @@ export const CrowdfundingInformation = defineComponent({
                 v-model:value={props.crowdfundingInfo.maxSell}
                 class="flex-1"
               ></UInputBigNumber>
-              <div class="my-1 text-xs text-grey4">
+              <div class="my-1 text-xs text-color3">
                 Maximum sellable is the percentage of token each investor can sell
               </div>
             </div>
@@ -435,7 +435,7 @@ export const CrowdfundingInformation = defineComponent({
         >
           <UFormItemsFactory fields={this.formFields} values={this.crowdfundingInfo} />
         </UForm>
-        <div class="bg-purple rounded-lg mt-4 py-5.5 px-6">
+        <div class="bg-purple rounded-sm mt-4 py-5.5 px-6">
           Need <span class="text-primary">{this.totalSellToken}</span>{' '}
           {this.crowdfundingInfo.sellTokenSymbol} to create dCrowdfunding.
         </div>

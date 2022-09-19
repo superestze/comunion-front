@@ -20,16 +20,16 @@ export default defineComponent({
     const bg2 = handleSrcset(bubble2)
     return (
       <>
-        <div class="absolute top-0 left-0 right-0">
+        <div class="absolute top-[92vh] left-0 right-0">
           <img class="w-full" srcset={bg1} src={bgBubble1} />
         </div>
         <div class="absolute bottom-1200px right-0 <md:bottom-696">
           <img class="w-full" srcset={bg2} src={bgBubble2} />
         </div>
-        <div class="absolute left-0px top-1300px <md:top-403.5">
+        <div class="absolute left-0px top-1550px <md:top-403.5">
           <img class="w-full <md:h-22 <md:w-10" src={bgBubble3} />
         </div>
-        <div class="absolute right-0px top-2100px <md:hidden">
+        <div class="absolute right-0px top-2950px <md:hidden">
           <img class="w-full" src={bgBubble4} />
         </div>
         <div class="absolute left-0px bottom-700px <md:bottom-696">

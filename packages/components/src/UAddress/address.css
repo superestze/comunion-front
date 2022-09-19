@@ -2,11 +2,11 @@
   @apply flex text-primary items-center;
 
   &__link {
-    @apply flex-1 mr-2 text-primary truncate u-title2;
+    @apply flex-1 truncate;
   }
 
   &__copy {
-    @apply cursor-pointer ml-8px text-[16px];
+    @apply cursor-pointer leading-none ml-2;
   }
 
   &__icon {

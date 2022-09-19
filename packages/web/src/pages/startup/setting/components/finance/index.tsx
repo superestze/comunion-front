@@ -127,11 +127,6 @@ export default defineComponent({
       composes: [{ required: true, type: 'array', min: 1 }]
     }
 
-    const divStyle = {
-      'font-weight': '600',
-      'font-size': '16px'
-    }
-
     const addCompose = () => {
       this.info.composes.push({
         walletName: '',
@@ -158,7 +153,7 @@ export default defineComponent({
       <USpin show={this.loading}>
         <div class="bg-white border rounded-sm mb-6 min-h-200 p-10 relative overflow-hidden">
           <UForm ref={(ref: any) => (this.form = ref)} rules={rules} model={this.info}>
-            <UFormItem label="Launch Network" required={true} label-style={divStyle}>
+            <UFormItem label="Launch Network" required={true}>
               <div class="w-full">
                 <USelect
                   v-model:value={this.info.network}
@@ -179,7 +174,7 @@ export default defineComponent({
                 />
               </div>
             </UFormItem>
-            <UFormItem label="Token Name" label-style={divStyle}>
+            <UFormItem label="Token Name">
               <div class="w-full">
                 <UInput
                   v-model:value={this.info.tokenName}
@@ -188,7 +183,7 @@ export default defineComponent({
                 />
               </div>
             </UFormItem>
-            <UFormItem label="Token Symbol" label-style={divStyle}>
+            <UFormItem label="Token Symbol">
               <div class="w-full">
                 <UInput
                   v-model:value={this.info.tokenSymbol}
@@ -197,7 +192,7 @@ export default defineComponent({
                 />
               </div>
             </UFormItem>
-            <UFormItem label="Token Supply" label-style={divStyle}>
+            <UFormItem label="Token Supply">
               <div class="w-full">
                 <UInput
                   v-model:value={this.info.totalSupply}
@@ -208,14 +203,14 @@ export default defineComponent({
                 />
               </div>
             </UFormItem>
-            <UFormItem label="Token Contract" label-style={divStyle}>
+            <UFormItem label="Token Contract">
               <UAddressInput
                 placeholder="Please enter your token contract address"
                 v-model:value={this.info.contract}
               />
             </UFormItem>
             {/* onChange={onTokenContractChange} */}
-            <UFormItem label="Presale" label-style={divStyle}>
+            <UFormItem label="Presale">
               <div class="w-full">
                 <UDatePicker
                   v-model:value={this.info.presaleDate}
@@ -227,7 +222,7 @@ export default defineComponent({
                 />
               </div>
             </UFormItem>
-            <UFormItem label="Launch" label-style={divStyle}>
+            <UFormItem label="Launch">
               <div class="w-full">
                 <UDatePicker
                   v-model:value={this.info.launchDate}
@@ -237,7 +232,7 @@ export default defineComponent({
                 />
               </div>
             </UFormItem>
-            <UFormItem label="Wallet" label-style={divStyle}>
+            <UFormItem label="Wallet">
               <div class="w-full">
                 {this.info.composes.map((compose, index) => (
                   <div class="flex mb-6 w-full items-center">

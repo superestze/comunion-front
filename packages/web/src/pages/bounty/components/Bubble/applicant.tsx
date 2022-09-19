@@ -1,6 +1,7 @@
 import { UButton } from '@comunion/components'
 import { format } from 'timeago.js'
 import { defineComponent, PropType, ref, computed } from 'vue'
+import { useRoute } from 'vue-router'
 import {
   useBountyContractWrapper,
   BountyContractReturnType
@@ -15,6 +16,7 @@ import { useBountyContractStore } from '@/stores/bountyContract'
 import { checkSupportNetwork } from '@/utils/wallet'
 
 export default defineComponent({
+  name: 'ApplicantBubble',
   props: {
     applicant: {
       type: Object as PropType<ItemType<ServiceReturn<'bounty@bounty-list-applicants'>>>,
@@ -26,6 +28,7 @@ export default defineComponent({
     }
   },
   setup(props) {
+    const route = useRoute()
     const visible = ref<boolean>(false)
     const userStore = useUserStore()
     // const bountyStore = useBountyStore()
@@ -59,7 +62,8 @@ export default defineComponent({
       approveDisabled,
       // get,
       approveApplicant,
-      bountyStatus
+      bountyStatus,
+      route
     }
   },
   render() {
@@ -83,16 +87,16 @@ export default defineComponent({
         `Approve ${this.applicant?.name || 'applicant'} succeedes`
       )) as unknown as BountyContractReturnType
       const { error } = await services['bounty@bounty-founder-approve']({
-        bountyID: parseInt(this.$route.query.bountyId as string),
+        bountyID: parseInt(this.route.params.id as string),
         applicantComerID: this.applicant?.comerID,
         txHash: response?.hash || ''
       })
 
       const bountyStore = useBountyStore()
-      bountyStore.initialize(this.$route.query.bountyId as string)
+      bountyStore.initialize(this.route.params.id as string)
       if (!error) {
-        // this.get(this.$route.query.bountyId as string)
-        // this.getApprovedPeople(this.$route.query.bountyId as string)
+        // this.get(this.route.params.id as string)
+        // this.getApprovedPeople(this.route.params.id as string)
         triggerDialog()
         return
       }
@@ -117,19 +121,18 @@ export default defineComponent({
             )
           }}
         />
+
         <Bubble
-          class="mt-10"
+          class="mb-10"
           avatar={this.applicant?.image}
           comerId={this.applicant?.comerID as unknown as string}
           v-slots={{
             default: () => (
               <div class="flex-1 ml-4">
-                <div class="flex justify-between items-center">
-                  <div>
-                    <p class="mb-2 font-primary font-semibold text-color1">
-                      {this.applicant?.name}
-                    </p>
-                    <p class="mr-16px text-color3 u-h7">{this.formatDate}</p>
+                <div class="flex items-center">
+                  <div class="flex-1">
+                    <p class="mb-2 text-color1 u-h4">{this.applicant?.name}</p>
+                    <p class="text-color3 u-h7">{this.formatDate}</p>
                   </div>
                   {this.bountyRole === USER_ROLE.FOUNDER && (
                     <UButton
@@ -150,8 +153,8 @@ export default defineComponent({
                     </UButton>
                   )}
                 </div>
-                <div class="bg-purple rounded-[8px] mt-3 py-4 px-6 ">
-                  <div class="text-black max-h-20 overflow-auto u-body2">
+                <div class="bg-purple rounded mt-2 p-4">
+                  <div class="max-h-20 text-color2 overflow-auto u-h5">
                     {this.applicant?.description}
                   </div>
                 </div>

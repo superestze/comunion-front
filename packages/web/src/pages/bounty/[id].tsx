@@ -6,7 +6,7 @@ import { defineComponent, computed, ref, watch } from 'vue'
 import { useRoute, useRouter } from 'vue-router'
 import BountyDetailCard from './components/BountyDetailCard'
 import { ActivityBubble, ApplicantBubble, DepositBubble } from './components/Bubble'
-import { Payment } from './components/Payment'
+import Payment from './components/Payment'
 import PersonalCard from './components/PersonalCard'
 import PostUpdate from './components/PostUpdate'
 import StartupCard from './components/StartupCard'
@@ -130,7 +130,7 @@ export default defineComponent({
 
         <div class="flex mb-20 gap-6">
           <div class="overflow-hidden basis-2/3">
-            <div class="bg-white border rounded-[2px] mb-6 p-6">
+            <div class="bg-white border rounded-sm mb-6 p-6">
               {this.bountySection.detail && (
                 <BountyDetailCard
                   bountyExpired={this.bountyExpired}
@@ -140,7 +140,7 @@ export default defineComponent({
             </div>
             <UCard
               title="payment"
-              class="mb-6 !pb-8"
+              class="mb-6"
               v-slots={{
                 header: () => (
                   <div class="flex justify-between">
@@ -190,31 +190,34 @@ export default defineComponent({
                     <div class="flex items-center">
                       {this.bountyContractInfo.bountyStatus >= BOUNTY_STATUS.WORKSTARTED && (
                         <>
-                          <UTooltip placement="bottom">
-                            {{
-                              trigger: () => (
-                                <ClockOutlined
-                                  class={`${
-                                    this.gapValue >= 0 ? 'text-grey4' : 'text-error'
-                                  } w-4 h-4 mr-2.5`}
-                                />
-                              ),
-                              default: () => (
-                                <div class="text-white w-84">
-                                  Post an update at least every 5 days, otherwise you will lose the
-                                  permission to lock the deposit, and the founder can unlock.
-                                </div>
-                              )
-                            }}
-                          </UTooltip>
                           {/* just applicant show countdown tips */}
                           {this.bountyContractInfo.role !== USER_ROLE.FOUNDER &&
                             (this.gapValue >= 0 ? (
-                              <p class="flex mr-4 text-grey3 items-center ">
-                                Founder can unlock after
-                                <span class="mx-1 text-primary">{this.gapValue}</span>
-                                {this.gapValue > 1 ? `${pluralize(this.gapUnit)}` : this.gapUnit}
-                              </p>
+                              <>
+                                <UTooltip placement="bottom">
+                                  {{
+                                    trigger: () => (
+                                      <ClockOutlined
+                                        class={`${
+                                          this.gapValue >= 0 ? 'text-color3' : 'text-error'
+                                        } w-4 h-4 mr-2.5`}
+                                      />
+                                    ),
+                                    default: () => (
+                                      <div class="text-white w-84">
+                                        Post an update at least every 5 days, otherwise you will
+                                        lose the permission to lock the deposit, and the founder can
+                                        unlock.
+                                      </div>
+                                    )
+                                  }}
+                                </UTooltip>
+                                <p class="flex mr-4 text-grey3 items-center ">
+                                  Founder can unlock after
+                                  <span class="mx-1 text-primary">{this.gapValue}</span>
+                                  {this.gapValue > 1 ? `${pluralize(this.gapUnit)}` : this.gapUnit}
+                                </p>
+                              </>
                             ) : (
                               <p class="flex text-error mr-4 items-center">
                                 Founder can already unlock deposits
@@ -250,14 +253,13 @@ export default defineComponent({
             </UCard>
           </div>
           <div class="overflow-hidden basis-1/3">
-            <div class="bg-white border rounded-[2px] mb-6 p-6">
+            <div class="bg-white border rounded-sm mb-6 p-6">
               {this.bountySection.startup && <StartupCard startup={this.bountySection.startup} />}
             </div>
             <UCard title="Founder" class="mb-6">
               {this.bountySection.founder && (
                 <PersonalCard
                   profile={this.bountySection.founder}
-                  class="mt-5"
                   keyMap={{
                     skills: 'applicantsSkills',
                     comerId: 'comerID',
@@ -285,7 +287,6 @@ export default defineComponent({
               {(this.bountySection.approvedPeople?.comerID || 0) > 0 && (
                 <PersonalCard
                   profile={this.bountySection.approvedPeople}
-                  class="mt-5"
                   keyMap={{
                     skills: 'applicantsSkills',
                     comerId: 'comerID',
@@ -303,7 +304,7 @@ export default defineComponent({
                 <>
                   {this.bountySection.depositRecords.map((item, index) => (
                     <DepositBubble
-                      class={`mb-4 ${index === 0 && 'mt-6'}`}
+                      class={`mb-4`}
                       depositInfo={item}
                       key={item.name}
                       tokenSymbol={this.bountyContractInfo.depositTokenSymbol}

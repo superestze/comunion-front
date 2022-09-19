@@ -35,7 +35,7 @@ const Deposit = defineComponent({
               <div>
                 Deposit
                 <span class="n-form-item-label__asterisk">&nbsp;*</span>
-                <span class="text-xs u-body1 text-grey4 ml-4">
+                <span class="text-xs u-body1 text-color3 ml-4">
                   Depoist {props.bountyInfo.token1Symbol} into bounty contract which can enhance
                   credit in order to attract much more applicants
                 </span>

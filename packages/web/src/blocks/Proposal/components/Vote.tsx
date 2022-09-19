@@ -93,173 +93,164 @@ export const Vote = defineComponent({
   },
   render() {
     return (
-      <div>
-        <UForm ref={(ref: any) => (this.proposalVoteFormRef = ref)} model={this.proposalInfo}>
-          <UFormItem
-            showFeedback={false}
-            label="Voting"
-            required
-            class="relative flex flex-col mb-4"
+      <UForm ref={(ref: any) => (this.proposalVoteFormRef = ref)} model={this.proposalInfo}>
+        <UFormItem showFeedback={false} label="Voting" required class="flex flex-col mb-4 relative">
+          <div
+            class="border rounded-sm cursor-pointer flex w-full py-2 px-4 justify-between items-center"
+            onClick={this.triggerVoteField}
+            id="voting-field"
           >
-            <div
-              class="w-full border rounded-lg px-4 py-2 flex justify-between items-center cursor-pointer"
-              onClick={this.triggerVoteField}
-              id="voting-field"
-            >
-              <div class="flex-1 flex items-center">
-                <div class="u-body2 text-grey3">Voting system</div>
-                <div class="text-primary ml-2">{this.selectedVotingInfo?.label}</div>
-              </div>
-              <ArrowDownOutlined class="text-grey4 w-4 h-4" />
+            <div class="flex flex-1 items-center">
+              <div class="text-grey3 u-h5">Voting system</div>
+              <div class="text-primary ml-2">{this.selectedVotingInfo?.label}</div>
             </div>
-            {this.showOptionsPanel && (
-              <div
-                id="content"
-                class="absolute inset-0 top-10 min-h-100 p-4 rounded z-1 bg-white"
-                style={{ boxShadow: '0px 2px 10px rgba(0, 0, 0, 0.097547)' }}
-                onClick={e => e.stopPropagation()}
-              >
-                {this.voteOptions?.map(voting => (
-                  <div
-                    key={voting.key}
-                    class={[
-                      'mb-4 p-4 bg-white rounded flex justify-between items-center',
-                      { 'border cursor-pointer': voting.value !== this.proposalInfo.vote },
-                      { 'bg-[#5E18FE1A]': voting.value === this.proposalInfo.vote }
-                    ]}
-                    onClick={() => this.choiceOption(voting.value)}
-                  >
-                    <div>
-                      <div class="u-label1 tracking-0px">{voting.label}</div>
-                      <div class="u-tag" style={{ padding: 0 }}>
-                        {voting.remark}
-                      </div>
-                    </div>
-                    {voting.value === this.proposalInfo.vote && (
-                      <div class="text-primary">
-                        <ConfirmOutlined />
-                      </div>
-                    )}
-                  </div>
-                ))}
-              </div>
-            )}
-          </UFormItem>
-          <div class="mb-6">
-            {this.proposalInfo.voteChoices?.map((voteChoice, choiceIndex) => (
-              <div class="flex items-center mb-3">
-                <UFormItem
-                  showFeedback={false}
-                  showLabel={false}
-                  class={[this.selectedVotingInfo?.value === BASIC_TYPE ? 'w-full' : 'w-180']}
-                  path="voteChoices"
-                  rule={[
-                    {
-                      validator: () => {
-                        if (choiceIndex === 0 && !voteChoice.value) {
-                          return false
-                        }
-                        return true
-                      }
-                    }
+            <ArrowDownOutlined class="h-4 text-color3 w-4" />
+          </div>
+          {this.showOptionsPanel && (
+            <div
+              id="content"
+              class="bg-white rounded min-h-100 p-4 inset-0 top-10 z-1 absolute"
+              style={{ boxShadow: '0px 2px 10px rgba(0, 0, 0, 0.097547)' }}
+              onClick={e => e.stopPropagation()}
+            >
+              {this.voteOptions?.map(voting => (
+                <div
+                  key={voting.key}
+                  class={[
+                    'mb-4 p-4 bg-white rounded flex justify-between items-center',
+                    { 'border cursor-pointer': voting.value !== this.proposalInfo.vote },
+                    { 'bg-[#5E18FE1A]': voting.value === this.proposalInfo.vote }
                   ]}
+                  onClick={() => this.choiceOption(voting.value)}
                 >
-                  <UInput
-                    v-slots={{
-                      prefix: (
-                        <div class="u-body2 text-grey3 w-20">
-                          Choice {choiceIndex + 1}
-                          {choiceIndex === 0 && (
-                            <span class="n-form-item-label__asterisk text-error">&nbsp;*</span>
-                          )}
-                        </div>
-                      ),
-                      suffix: (
-                        <div class="u-body2 text-grey3 pl-4">{voteChoice.value.length}/32</div>
-                      )
-                    }}
-                    v-model:value={voteChoice.value}
-                    maxlength={32}
-                    disabled={voteChoice.disabled}
-                    class={[{ 'max-w-184': this.selectedVotingInfo?.value !== BASIC_TYPE }]}
-                  ></UInput>
-                </UFormItem>
-                {this.selectedVotingInfo?.value !== BASIC_TYPE && (
-                  <div class="flex-1 flex items-center justify-start ml-4">
-                    {choiceIndex !== 0 && (
-                      <MinusCircleOutlined
-                        class="mr-3 text-error cursor-pointer"
-                        onClick={() => this.delVoteChoices(choiceIndex)}
-                      />
-                    )}
-                    {this.proposalInfo.voteChoices?.length === choiceIndex + 1 &&
-                      this.proposalInfo.voteChoices?.length < 20 && (
-                        <AddCircleOutlined class="cursor-pointer" onClick={this.addVoteChoices} />
-                      )}
+                  <div>
+                    <div class="tracking-0px u-label1">{voting.label}</div>
+                    <div class="u-tag" style={{ padding: 0 }}>
+                      {voting.remark}
+                    </div>
                   </div>
-                )}
-              </div>
-            ))}
-          </div>
-          <div class="u-body4 mb-3">Voting period</div>
-          <div class="flex justify-between gap-14">
-            <UFormItem
-              label="Start Date(UTC)"
-              labelStyle={{ fontSize: '12px' }}
+                  {voting.value === this.proposalInfo.vote && (
+                    <div class="text-primary">
+                      <ConfirmOutlined />
+                    </div>
+                  )}
+                </div>
+              ))}
+            </div>
+          )}
+        </UFormItem>
+        <div class="mb-6">
+          {this.proposalInfo.voteChoices?.map((voteChoice, choiceIndex) => (
+            <div class="flex mb-3 items-center">
+              <UFormItem
+                showFeedback={false}
+                showLabel={false}
+                class={[this.selectedVotingInfo?.value === BASIC_TYPE ? 'w-full' : 'w-180']}
+                path="voteChoices"
+                rule={[
+                  {
+                    validator: () => {
+                      if (choiceIndex === 0 && !voteChoice.value) {
+                        return false
+                      }
+                      return true
+                    }
+                  }
+                ]}
+              >
+                <UInput
+                  v-slots={{
+                    prefix: (
+                      <div class="text-grey3 w-20 u-h5">
+                        Choice {choiceIndex + 1}
+                        {choiceIndex === 0 && (
+                          <span class="text-error n-form-item-label__asterisk">&nbsp;*</span>
+                        )}
+                      </div>
+                    ),
+                    suffix: <div class="pl-4 text-grey3 u-h5">{voteChoice.value.length}/32</div>
+                  }}
+                  v-model:value={voteChoice.value}
+                  maxlength={32}
+                  disabled={voteChoice.disabled}
+                  class={[{ 'max-w-184': this.selectedVotingInfo?.value !== BASIC_TYPE }]}
+                ></UInput>
+              </UFormItem>
+              {this.selectedVotingInfo?.value !== BASIC_TYPE && (
+                <div class="flex flex-1 ml-4 items-center justify-start">
+                  {choiceIndex !== 0 && (
+                    <MinusCircleOutlined
+                      class="cursor-pointer mr-3 text-error"
+                      onClick={() => this.delVoteChoices(choiceIndex)}
+                    />
+                  )}
+                  {this.proposalInfo.voteChoices?.length === choiceIndex + 1 &&
+                    this.proposalInfo.voteChoices?.length < 20 && (
+                      <AddCircleOutlined class="cursor-pointer" onClick={this.addVoteChoices} />
+                    )}
+                </div>
+              )}
+            </div>
+          ))}
+        </div>
+        <div class="mb-3 u-body4">Voting period</div>
+        <div class="flex gap-14 justify-between">
+          <UFormItem
+            label="Start Date(UTC)"
+            labelStyle={{ fontSize: '12px' }}
+            class="w-full"
+            path="startTime"
+            rule={[
+              { required: true, message: 'Please set the start Time' },
+              {
+                validator: (rule, value) => {
+                  if (!value || !this.proposalInfo.endTime) return true
+                  return dayjs(value).isBefore(dayjs(this.proposalInfo.endTime))
+                },
+                message: 'Start time needs to be before End time',
+                trigger: ['blur']
+              }
+            ]}
+          >
+            <UDatePicker
+              type="datetime"
+              v-model:value={this.proposalInfo.startTime}
+              format="yyyy-MM-dd HH:mm"
               class="w-full"
-              path="startTime"
-              rule={[
-                { required: true, message: 'Please set the start Time' },
-                {
-                  validator: (rule, value) => {
-                    if (!value || !this.proposalInfo.endTime) return true
-                    return dayjs(value).isBefore(dayjs(this.proposalInfo.endTime))
-                  },
-                  message: 'Start time needs to be before End time',
-                  trigger: ['blur']
-                }
-              ]}
-            >
-              <UDatePicker
-                type="datetime"
-                v-model:value={this.proposalInfo.startTime}
-                format="yyyy-MM-dd HH:mm"
-                class="w-full"
-                isDateDisabled={(current: number) => {
-                  return dayjs(current) < dayjs().startOf('day')
-                }}
-              ></UDatePicker>
-            </UFormItem>
-            <UFormItem
-              label="End Date(UTC)"
-              labelStyle={{ fontSize: '12px' }}
+              isDateDisabled={(current: number) => {
+                return dayjs(current) < dayjs().startOf('day')
+              }}
+            ></UDatePicker>
+          </UFormItem>
+          <UFormItem
+            label="End Date(UTC)"
+            labelStyle={{ fontSize: '12px' }}
+            class="w-full"
+            path="endTime"
+            rule={[
+              { required: true, message: 'Please set the end time' },
+              {
+                validator: (rule, value) => {
+                  if (!value || !this.proposalInfo.startTime) return true
+                  return dayjs(value).isAfter(dayjs(this.proposalInfo.startTime))
+                },
+                message: 'End time needs to be after Start time',
+                trigger: ['blur']
+              }
+            ]}
+          >
+            <UDatePicker
+              type="datetime"
+              v-model:value={this.proposalInfo.endTime}
+              format="yyyy-MM-dd HH:mm"
               class="w-full"
-              path="endTime"
-              rule={[
-                { required: true, message: 'Please set the end time' },
-                {
-                  validator: (rule, value) => {
-                    if (!value || !this.proposalInfo.startTime) return true
-                    return dayjs(value).isAfter(dayjs(this.proposalInfo.startTime))
-                  },
-                  message: 'End time needs to be after Start time',
-                  trigger: ['blur']
-                }
-              ]}
-            >
-              <UDatePicker
-                type="datetime"
-                v-model:value={this.proposalInfo.endTime}
-                format="yyyy-MM-dd HH:mm"
-                class="w-full"
-                isDateDisabled={(current: number) => {
-                  return dayjs(current) < dayjs().startOf('day')
-                }}
-              ></UDatePicker>
-            </UFormItem>
-          </div>
-        </UForm>
-      </div>
+              isDateDisabled={(current: number) => {
+                return dayjs(current) < dayjs().startOf('day')
+              }}
+            ></UDatePicker>
+          </UFormItem>
+        </div>
+      </UForm>
     )
   }
 })

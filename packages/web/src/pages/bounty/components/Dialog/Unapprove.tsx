@@ -1,5 +1,6 @@
 import { UButton } from '@comunion/components'
 import { defineComponent, PropType, computed } from 'vue'
+import { useRoute } from 'vue-router'
 import { useBountyContractWrapper } from '../../hooks/useBountyContractWrapper'
 import Basic from './basic'
 import { services } from '@/services'
@@ -23,7 +24,7 @@ export const UnapprovePromptSet = defineComponent({
     }
   },
   setup() {
-    console.log('====')
+    const route = useRoute()
     const userStore = useUserStore()
     const bountyStore = useBountyStore()
     const { bountyContract } = useBountyContractWrapper()
@@ -36,7 +37,8 @@ export const UnapprovePromptSet = defineComponent({
     return {
       profile,
       unapproveApplicant,
-      address
+      address,
+      route
     }
   },
   render() {
@@ -58,7 +60,7 @@ export const UnapprovePromptSet = defineComponent({
       }
       await this.unapproveApplicant(this.address, '', '')
       const { error } = await services['bounty@bounty-founder-unapprove']({
-        bountyID: this.$route.query.bountyId as string,
+        bountyID: this.route.params.id as string,
         applicantComerID: this.profile?.comerID
       })
       if (!error) {

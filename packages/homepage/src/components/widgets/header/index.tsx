@@ -15,7 +15,8 @@ export default defineComponent({
     const headerClass = ref<string>('flex justify-between')
     const scrollFn = () => {
       if (document.scrollingElement && document.scrollingElement.scrollTop > 1200) {
-        headerClass.value = 'transform translate-y-1200px w-full bg-[#ededf2]'
+        // headerClass.value = 'transform translate-y-962px w-full bg-[#ededf2]'
+        headerClass.value = 'sticky top-0px bg-[#ededf2] z-1'
       } else {
         headerClass.value = 'sticky top-0px bg-[#ededf2] z-1'
       }
@@ -64,6 +65,9 @@ export default defineComponent({
               type="primary"
               size="small"
               class="mr-40px"
+              style={{
+                '--n-border-radius': '2px'
+              }}
               onClick={joinComunion}
             >
               Connect Account

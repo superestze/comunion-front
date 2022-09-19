@@ -14,11 +14,18 @@ export const ProposalCard = defineComponent({
         NonNullable<ServiceReturn<'governance@public-list'>>['rows'][number]
       >,
       required: true
+    },
+    noBorder: {
+      type: Boolean,
+      default: () => false
+    },
+    noDescription: {
+      type: Boolean,
+      default: () => false
     }
   },
   setup(props) {
     const router = useRouter()
-
     const statusStyle = computed(() => {
       return GOVERNANCE_STATUS_STYLE[
         props.proposalData.status as keyof typeof GOVERNANCE_STATUS_STYLE
@@ -70,7 +77,9 @@ export const ProposalCard = defineComponent({
   render() {
     return (
       <div
-        class="bg-white rounded-sm cursor-pointer flex border-1 mb-5 py-6 px-6 hover:bg-color-hover"
+        class={`bg-white rounded-sm cursor-pointer flex ${
+          !this.noDescription ? 'mb-5' : ''
+        } py-6 px-6 ${this.noBorder ? '' : 'border-1'} hover:bg-color-hover`}
         onClick={() => this.handleCard()}
       >
         <UStartupLogo src={this.proposalData.startupLogo || ''} class="h-15 mr-4 w-15" />
@@ -89,7 +98,7 @@ export const ProposalCard = defineComponent({
           <div class="mt-2 mb-1 max-w-9/10 text-color1 truncate u-h4">
             {this.proposalData.title}
           </div>
-          {this.proposalData.description && (
+          {!this.noDescription && this.proposalData.description && (
             <div class="text-color2 u-h6 line-clamp-2" v-html={this.proposalData.description} />
           )}
           {this.timeTip && <div class="mt-2 text-color3 u-h7">{this.timeTip}</div>}

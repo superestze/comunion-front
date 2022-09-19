@@ -29,7 +29,7 @@ export default defineComponent({
     })
 
     const title = computed(() => {
-      return `Connections(${list.value?.length || 0})`
+      return `Connection(${list.value?.length || 0})`
     })
 
     return {

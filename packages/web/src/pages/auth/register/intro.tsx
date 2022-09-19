@@ -20,10 +20,10 @@ const RegisterIntroductionPage = defineComponent({
       <RegisterLayout>
         <h1 class="text-primary pt-[9vh] u-h1">Welcome to come into Comunion Universal！</h1>
         <h2 class="mt-3 text-primary u-h1">You're a comer now！</h2>
-        {/* <p class="mt-6 text-grey3 u-body2">
+        {/* <p class="mt-6 text-grey3 u-h5">
           Comunion is a next, new startup paradigm of digital economic growth
         </p> */}
-        <p class="mt-2 text-grey3 u-body2">
+        <p class="mt-2 text-grey3 u-h5">
           Comunion Universal is a revolutionary multi-chain protocol and decentralized organization
           dedicated to building a thriving and collaborative work ecosystem, community, and economy.
         </p>
@@ -36,7 +36,7 @@ const RegisterIntroductionPage = defineComponent({
         <div class="flex py-6 justify-end">
           <UButton
             type="primary"
-            class="rounded-lg font-[16px] w-30"
+            class="rounded-sm font-[16px] w-30"
             size="large"
             onClick={toProfile}
           >

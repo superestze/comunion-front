@@ -6,6 +6,6 @@
   }
 
   .title {
-    @apply u-body2 text-grey3 mr-2;
+    @apply u-h5 text-grey3 mr-2;
   }
 }

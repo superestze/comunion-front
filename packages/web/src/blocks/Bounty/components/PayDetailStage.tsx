@@ -114,8 +114,8 @@ const PayDetailStage = defineComponent({
         {/* <UFormItemsFactory fields={this.payDetailStageFields} values={this.bountyInfo} /> */}
         {this.bountyInfo.stages.map((stage: any, stageIndex: number) => (
           <div class="flex mb-6 items-center">
-            <div class="bg-purple rounded-lg px-4 pt-4">
-              <div class="text-grey1">Rewards</div>
+            <div class="bg-purple rounded-sm px-4 pt-4">
+              <div class="text-color1">Rewards</div>
               {/* <div class="flex items-center"> */}
               <div class="grid grid-cols-[1fr,56px,1fr]">
                 <UInputNumberGroup
@@ -157,7 +157,7 @@ const PayDetailStage = defineComponent({
               </div>
               <div class="grid grid-cols-[1fr,56px,1fr]">
                 {!this.bountyInfo.token2Symbol && (
-                  <div class="mt-2 text-xs text-grey4 col-start-3">
+                  <div class="mt-2 text-xs text-color3 col-start-3">
                     Not setup token yet, go to{' '}
                     <span
                       class="cursor-pointer text-primary"
@@ -222,7 +222,7 @@ const PayDetailStage = defineComponent({
             </div>
           </div>
         ))}
-        <div class="bg-purple rounded-lg mr-20 py-5.5 px-6">
+        <div class="bg-purple rounded-sm mr-20 py-5.5 px-6">
           The current total rewards as{' '}
           <span class="text-primary">
             <span class={[{ 'text-error': this.payStagesTotal.usdcTotal > MAX_AMOUNT }]}>

@@ -128,10 +128,10 @@ const RegisterProfilePage = defineComponent({
       <RegisterLayout>
         <div class="mx-auto max-w-226 py-[10vh]">
           <h1 class="u-h3">Basic Profile</h1>
-          <p class="mt-2 mb-6 text-grey2 u-body2">
+          <p class="mt-2 mb-6 text-grey2 u-h5">
             Add your profile, a short bio, and links to your other online websites.
           </p>
-          <div class="bg-white border rounded-lg border-grey5 pt-10 pb-5">
+          <div class="bg-white border rounded-sm border-color-border pt-10 pb-5">
             <div class="mx-auto w-200">
               <UFormFactory
                 fields={fields}
@@ -140,7 +140,7 @@ const RegisterProfilePage = defineComponent({
                 onSubmit={onSubmit}
               />
               <UModal v-model:show={success.value} closable={false} maskClosable={false}>
-                <div class="bg-white rounded-lg flex flex-col h-88 w-150 items-center">
+                <div class="bg-white rounded-sm flex flex-col h-88 w-150 items-center">
                   <img src={successImg} class="h-40 mt-18 w-110" />
                   <div class="flex mt-12 items-center">
                     <UButton type="primary" ghost size="large" onClick={toHomePage}>

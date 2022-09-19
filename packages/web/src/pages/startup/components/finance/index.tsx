@@ -72,11 +72,12 @@ export default defineComponent({
     return { financeBasic, wallets }
   },
   render() {
+    const renderList = this.financeBasic.filter(item => !!item.value)
     return (
       <UCard title="Finance" class="mb-6">
-        <div class="flex flex-col">
-          {this.financeBasic.map(item => {
-            if (item.value) {
+        {!!renderList.length && (
+          <div class="flex flex-col">
+            {renderList.map(item => {
               return (
                 <div class="flex mt-4  items-center">
                   <p class="font-primary font-medium tracking-normal max-w-1/2 text-[14px] w-38">
@@ -91,14 +92,10 @@ export default defineComponent({
                   </p>
                 </div>
               )
-            }
-            return ''
-          })}
-          {(this.wallets || [])?.length > 0 && (
-            <>
-              <div class="bg-grey5 h-1px mt-6.5 w-full"></div>
-              <div class="flex mt-5.5  items-center">
-                <p class="max-w-1/2 w-38 font-primary font-medium tracking-normal text-[14px]">
+            })}
+            {(this.wallets || [])?.length > 0 && (
+              <div class="border-t-color-border flex mt-6 items-center">
+                <p class="font-primary font-medium tracking-normal max-w-1/2 text-[14px] w-38">
                   Presale wallet：
                 </p>
                 <div class="overflow-hidden">
@@ -109,20 +106,9 @@ export default defineComponent({
                   })}
                 </div>
               </div>
-            </>
-          )}
-          {/* <div class="bg-grey5 h-1px mt-6.5 w-full"></div>
-          <div class="flex mt-5.5  items-center">
-            <p class="font-primary font-medium tracking-normal max-w-1/2 text-[14px] w-38">
-              Presale wallet：
-            </p>
-            <div class="overflow-hidden">
-              {(this.wallets || []).map(item => {
-                return <UAddress class="font-primary text-color2" autoSlice address={item.value} />
-              })}
-            </div>
-          </div> */}
-        </div>
+            )}
+          </div>
+        )}
       </UCard>
     )
   }

@@ -114,31 +114,31 @@ const BountyPage = defineComponent({
 
     return () => (
       <USpin show={pagination.loading}>
-        <div class="mt-8 mb-16">
-          <div class="flex mb-6">
+        <div class="mx-auto mt-8 mb-16 max-w-227">
+          <div class="flex mb-6 items-end">
             <div class="flex-1">
               <UTabs onBeforeLeave={tabsChange} class="no-border">
-                <UTab name="Bounty">Bounty</UTab>
+                <UTab name="Bounty ">
+                  <span class="font-100 text-[14px]">Bounty</span>
+                </UTab>
                 <UTab name="Offering" disabled>
-                  <span class=" text-color3">Offering</span>
+                  <span class=" font-100 text-color3 text-[14px]">Offering</span>
                 </UTab>
               </UTabs>
             </div>
-            <div class="flex items-start">
-              <UDropdownFilter
-                options={BOUNTY_TYPES.map(item => ({ label: item, value: item }))}
-                placeholder="All Status"
-                class="rounded mr-4 w-37"
-                clearable
-                v-model:value={searchType.value}
-              />
+            <UDropdownFilter
+              options={BOUNTY_TYPES.map(item => ({ label: item, value: item }))}
+              placeholder="All Status"
+              class="rounded mr-4 w-37"
+              clearable
+              v-model:value={searchType.value}
+            />
 
-              <SearchInput
-                v-model:value={searchInput.value}
-                placeholder="Search"
-                loading={pagination.loading}
-              />
-            </div>
+            <SearchInput
+              v-model:value={searchInput.value}
+              placeholder="Search"
+              loading={pagination.loading}
+            />
           </div>
           {DataList.value.map(item => (
             <BountyCard key={item.bountyId} startup={item} />

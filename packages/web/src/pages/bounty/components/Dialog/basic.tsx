@@ -44,7 +44,7 @@ export default defineComponent({
             )
           }}
         >
-          <p class="text-grey3 mt-24px mb-64px">{this.content}</p>
+          <p class="min-h-20 p-4 text-color2 u-h6">{this.content}</p>
           {this.$slots.btns && this.$slots.btns()}
         </UCard>
       </UModal>

@@ -111,7 +111,7 @@ const StartupsPage = defineComponent({
         <div class="mt-8 mb-16">
           <div class="flex mb-6 items-center ">
             <div class="flex-1">
-              {/* <h3 class="text-grey1 u-h3">{pagination.total.toLocaleString()} Startups</h3> */}
+              {/* <h3 class="text-color1 u-h3">{pagination.total.toLocaleString()} Startups</h3> */}
             </div>
             <UDropdownFilter
               options={STARTUP_TYPES.map(item => ({ label: item, value: item }))}

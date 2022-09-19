@@ -1,14 +1,18 @@
 .invest {
   .token-info-item {
-    @apply mb-4 flex items-center;
+    @apply mb-4 flex items-center justify-between;
 
     .token-info-item-label {
-      @apply text-grey3 mr-2;
+      @apply u-h6 text-color1;
+    }
+
+    .token-info-item-label-right {
+      @apply u-h6 text-color2 text-right;
     }
 
     .token-info-item-address.u-address {
       .u-address__link {
-        @apply mr-2.5 font-normal text-sm;
+        @apply mr-2.5 u-h6 text-sm;
       }
 
       .u-address__copy {

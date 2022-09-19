@@ -110,7 +110,7 @@ const GovernanceListPage = defineComponent({
   render() {
     return (
       <USpin show={this.pagination.loading}>
-        <div class="mt-8 mb-16">
+        <div class="mx-auto mt-8 mb-16 max-w-227">
           <div class="flex mb-6 ">
             <div class="flex-1"></div>
             <UDropdownFilter
@@ -121,9 +121,8 @@ const GovernanceListPage = defineComponent({
               v-model:value={this.proposalStatus}
             />
           </div>
-          {this.DataList.map(item => (
-            <ProposalCard key={item.proposalId} proposalData={item} />
-          ))}
+          {Array.isArray(this.DataList) &&
+            this.DataList.map(item => <ProposalCard key={item.proposalId} proposalData={item} />)}
         </div>
       </USpin>
     )

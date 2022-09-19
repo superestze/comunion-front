@@ -22,12 +22,12 @@ export default defineComponent({
   render() {
     return (
       <div class="flex w-full mt-80px flex-col justify-center relative <md:mt-21">
-        <h1
+        {/* <h1
           class="mb-41px text-20px text-center <md:text-[1.625rem] <md:mb-9"
           style={{ color: 'rgba(17,17,17,0.6)' }}
         >
           You Can
-        </h1>
+        </h1> */}
         <div
           class="<md:hidden grid grid-rows-4 grid-cols-6 mx-auto bg-transparent grid-cols-[279px,136px,143px,138px,141px,276px] grid-rows-[180px,180px,180px,180px]"
           style={{ backgroundColor: 'rgba(255,255,255,0.6)' }}
@@ -122,7 +122,7 @@ export default defineComponent({
             <p class={`${styles.title20} mt-4 text-white/70`}>
               Web3, Crypto, Blockchain, Metaverse etc
             </p>
-            <div class="mt-35 w-10.5 h-10.5">
+            <div class="mt-35 w-10.5 h-10.5 <md:mt-25">
               <img
                 class="w-full"
                 srcset={`${rocket}, ${rocket2} 2x, ${rocket3} 3x`}

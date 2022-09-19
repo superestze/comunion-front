@@ -8,7 +8,7 @@ const WalletInfo = defineComponent({
   setup() {
     const walletStore = useWalletStore()
     return () => (
-      <div class="px-2 py-1 rounded border border-solid border-grey5 bg-white cursor-pointer">
+      <div class="px-2 py-1 rounded border border-solid border-color-border bg-white cursor-pointer">
         {walletStore.connected ? (
           <div class="flex items-center">
             <div class={styles.connectedDot}></div>

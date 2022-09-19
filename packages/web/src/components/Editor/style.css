@@ -1,5 +1,5 @@
 .rich-editor {
-  @apply rounded-lg border border-grey5 overflow-hidden;
+  @apply rounded-sm border border-color-border overflow-hidden;
 
   .n-form-item-blank--error & {
     border: 1px solid var(--u-error-color);

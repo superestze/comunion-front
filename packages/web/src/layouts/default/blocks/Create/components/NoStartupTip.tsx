@@ -28,7 +28,7 @@ const NoStartupTip = defineComponent({
             <WarningFilled />{' '}
             <span class="u-title1 ml-4">You do need create a startup at first</span>
           </div>
-          <div class="mt-3 ml-12 u-body2 text-grey3">
+          <div class="mt-3 ml-12 u-h5 text-grey3">
             Please do create a startup before creating a bounty.
           </div>
           <div class="flex justify-end mt-20">

@@ -6,7 +6,9 @@ import {
   UModal,
   UPopover,
   USpin,
-  UTable
+  UTable,
+  UTag,
+  UBreadcrumb
 } from '@comunion/components'
 import {
   CloseOutlined,
@@ -19,6 +21,7 @@ import {
 import { shortenAddress } from '@comunion/utils'
 import dayjs from 'dayjs'
 import { ethers } from 'ethers'
+import { NSpin } from 'naive-ui'
 import { defineComponent, ref, reactive, onMounted, computed } from 'vue'
 import { useRoute, useRouter } from 'vue-router'
 import { CurrentResult } from './components/CurrentResult'
@@ -26,6 +29,7 @@ import StartupCard from './components/StartupCard'
 import { StrategyInformation } from './components/StrategyInfo'
 import { GOVERNANCE_KEY, GOVERNANCE_STATUS_STYLE, signerVoteTypes } from './utils'
 import CreateProposalBlock, { CreateProposalRef } from '@/blocks/Proposal/Create'
+import CustomCard from '@/components/CustomCard'
 import { allNetworks, infuraKey } from '@/constants'
 import { useErc20Contract } from '@/contracts'
 import { ServiceReturn, services } from '@/services'
@@ -65,6 +69,7 @@ const ProposalDetail = defineComponent({
     })
     const selectedChoice = ref<SelectChoiceType>()
     const votePower = ref<number | string>(0)
+    const votePowerShow = ref<boolean>(false)
     const strategyInfo = ref()
     const voteInfoVisible = ref(false)
     const strategyVisible = ref(false)
@@ -102,6 +107,7 @@ const ProposalDetail = defineComponent({
           break
         }
         case 'erc20Balance': {
+          votePowerShow.value = true
           if (strategy.tokenContractAddress) {
             const userAddress = walletStore.address
 
@@ -112,6 +118,7 @@ const ProposalDetail = defineComponent({
             })
             votePower.value = ethers.utils.formatUnits(userBalance, strategy.voteDecimals)
           }
+          votePowerShow.value = false
           break
         }
         default:
@@ -340,6 +347,7 @@ const ProposalDetail = defineComponent({
       voteRecords,
       selectedChoice,
       votePower,
+      votePowerShow,
       voteInfoVisible,
       strategyVisible,
       createProposalRef,
@@ -365,28 +373,25 @@ const ProposalDetail = defineComponent({
   render() {
     return (
       <USpin show={this.pageLoading}>
-        <div class="flex mt-12 mb-20 gap-x-6">
-          <div class="bg-white border rounded-lg border-grey5 p-10 w-228">
+        <UBreadcrumb class="mt-10 mb-10"></UBreadcrumb>
+        <div class="flex mt-1 mb-14">
+          <UCard style="flex:2" class="mr-4">
             <div class="flex mb-5 justify-between">
-              <span class="font-primary font-semibold max-w-200 text-color1 text-[24px] truncate">
-                {this.proposalInfo?.title}
-              </span>
-              <span class="rounded-[2px] px-4 !border-1 !border-gray-500/50 !u-h6">
+              <span class="max-w-9/10 text-color1truncate u-h3">{this.proposalInfo?.title}</span>
+              <UTag class="text-color2">
                 {GOVERNANCE_KEY[this.proposalInfo?.status as keyof typeof GOVERNANCE_KEY]}
-              </span>
+              </UTag>
             </div>
-            <div class="flex h-7 w-7 items-center">
+            <div class="flex items-center">
               <div
                 class="cursor-pointer flex items-center"
                 onClick={() => this.toComerDetail(this.proposalInfo?.authorComerId)}
               >
-                <div class="flex-shrink-0 h-7 w-7">
-                  <ULazyImage
-                    class="rounded-full h-7 w-7"
-                    src={this.proposalInfo?.authorComerAvatar || ''}
-                  />
-                </div>
-                <div class="mx-4 text-color2 whitespace-nowrap hover:text-primary">
+                <ULazyImage
+                  class="rounded-full h-7 w-7"
+                  src={this.proposalInfo?.authorComerAvatar || ''}
+                />
+                <div class="mx-4 text-color2 u-h6 hover:text-primary">
                   {this.proposalInfo?.authorComerName}
                 </div>
               </div>
@@ -394,19 +399,23 @@ const ProposalDetail = defineComponent({
                 trigger="click"
                 placement="bottom"
                 v-slots={{
-                  trigger: () => (
-                    <div class="h-7 w-7">
-                      <MoreFilled class="cursor-pointer" />
-                    </div>
-                  ),
+                  trigger: () => <MoreFilled class="cursor-pointer h-7 w-9" />,
                   default: () => (
                     <div class="flex flex-col">
-                      <UButton size="small" quaternary onClick={this.duplicateProposal}>
+                      <UButton
+                        size="small"
+                        type="primary"
+                        class="text-white"
+                        quaternary
+                        onClick={this.duplicateProposal}
+                      >
                         Duplicate proposal
                       </UButton>
                       {this.isAdmin && (
                         <UButton
                           size="small"
+                          type="error"
+                          class="mt-1"
                           quaternary
                           onClick={() => (this.delProposalVisible = true)}
                         >
@@ -419,25 +428,30 @@ const ProposalDetail = defineComponent({
               ></UPopover>
             </div>
             {this.proposalInfo?.description && (
-              <div class="mt-4 u-body2" v-html={this.proposalInfo?.description} />
+              <div class="mt-4 text-color2 u-h6" v-html={this.proposalInfo?.description} />
             )}
             {this.proposalInfo?.discussionLink && (
               <div class="mt-8">
-                <div class="mb-1 u-title3">Discussion：</div>
-                <a href={this.proposalInfo.discussionLink} target="__blank" class="text-primary">
+                <div class="mb-1 text-color1 u-h4">Discussion：</div>
+                <a
+                  href={this.proposalInfo.discussionLink}
+                  target="__blank"
+                  class="text-color3 u-h5 hover:text-primary"
+                >
                   {this.proposalInfo.discussionLink}
                 </a>
               </div>
             )}
-            <div class="border rounded-lg border-grey5 my-10">
-              <header class="bg-purple py-4 px-6 text-color1 u-h4">Cast your vote</header>
-              <section class="p-6">
+
+            <CustomCard class="mt-10 mb-6" title="Cast your vote">
+              <div class="pt-6">
                 {this.proposalInfo?.choices?.map(voteInfo => (
                   <div
-                    class={[
-                      'border border-primary-10 text-primary text-center py-3 mb-4 rounded-lg cursor-pointer hover:border-[#5331F4]',
-                      { 'border-primary': this.selectedChoice?.id === voteInfo.id }
-                    ]}
+                    class={`u-h4 border text-center py-3 mb-4 rounded-sm cursor-pointer hover:border-[#5331F4] hover:text-primary ${
+                      this.selectedChoice?.id === voteInfo.id
+                        ? 'border-primary  text-primary'
+                        : 'border-primary-10  text-color2'
+                    }`}
                     onClick={() => this.choiceVote(voteInfo)}
                   >
                     {voteInfo.itemName}
@@ -445,9 +459,9 @@ const ProposalDetail = defineComponent({
                 ))}
                 <div
                   class={[
-                    'text-white text-center py-3 rounded-lg ',
+                    'text-white u-h4 text-center py-3 rounded-sm',
                     this.selectedChoice && this.proposalInfo?.status === 2
-                      ? 'bg-primary1 cursor-pointer'
+                      ? 'bg-primary cursor-pointer'
                       : 'bg-grey5 cursor-not-allowed'
                   ]}
                   onClick={() =>
@@ -458,28 +472,18 @@ const ProposalDetail = defineComponent({
                 >
                   Vote
                 </div>
-              </section>
-            </div>
+              </div>
+            </CustomCard>
+
             {!!this.voteRecords?.length && (
-              <div>
-                <UTable>
-                  <thead>
-                    <tr>
-                      <th>
-                        <div class="px-3 text-color1 u-h4">Votes({this.pagination.total})</div>
-                      </th>
-                      <th></th>
-                      <th></th>
-                    </tr>
-                  </thead>
-                </UTable>
-                <div class="max-h-154 overflow-y-scroll">
-                  <UTable>
-                    <tbody class="">
+              <CustomCard title={`Votes${this.pagination.total}`}>
+                <div class="-mx-6 -mb-6">
+                  <UTable bordered={false}>
+                    <tbody>
                       {this.voteRecords?.map(record => (
                         <tr key={record.voterComerId}>
                           <td>
-                            <div class="flex ml-3 items-center">
+                            <div class="flex ml-2 items-center">
                               <ULazyImage src={record.voterComerAvatar} class="h-7 mr-3 w-7" />
                               <span class="text-color2 u-h6">{record.voterComerName}</span>
                             </div>
@@ -522,10 +526,10 @@ const ProposalDetail = defineComponent({
                     </tbody>
                   </UTable>
                 </div>
-              </div>
+              </CustomCard>
             )}
-          </div>
-          <div class="flex-1 min-w-111">
+          </UCard>
+          <div class="flex-1 ">
             {this.startupInfo && (
               <UCard contentStyle={{ paddingTop: 24 }} class="mb-6">
                 <StartupCard startup={this.startupInfo} />
@@ -546,10 +550,10 @@ const ProposalDetail = defineComponent({
               />
             )}
           </div>
-          <UModal show={this.voteInfoVisible} class="bg-white rounded-lg p-10 w-150">
+          <UModal show={this.voteInfoVisible} class="bg-white rounded-sm p-10 w-150">
             <div>
               <div class="mb-6 u-h3">Vote overview</div>
-              <div class="border rounded-lg border-grey5 grid py-4 px-6 gap-y-4 grid-cols-2">
+              <div class="border border-color-border rounded-sm grid py-4 px-6 gap-y-4 grid-cols-2">
                 <div class="text-color1 u-h5">Option(s)</div>
                 <div class="text-right text-color3 u-h6">{this.selectedChoice?.itemName}</div>
                 <div class="text-color1 u-h5">Block height</div>
@@ -567,7 +571,10 @@ const ProposalDetail = defineComponent({
                 </div>
                 <div class="text-color1 u-h5">Your voting power</div>
                 <div class="text-right text-color3 u-h6">
-                  {this.votePower} {this.proposalInfo?.voteSymbol}
+                  <NSpin size="small" show={this.votePowerShow}>
+                    {!this.votePowerShow && <span>{this.votePower}</span>}
+                    <span> {this.proposalInfo?.voteSymbol}</span>
+                  </NSpin>
                 </div>
               </div>
               <div class="flex mt-6 justify-end">
@@ -594,7 +601,7 @@ const ProposalDetail = defineComponent({
               </div>
             </div>
           </UModal>
-          <UModal show={this.strategyVisible} class="bg-white rounded-lg p-7 w-150">
+          <UModal show={this.strategyVisible} class="bg-white rounded-sm p-7 w-150">
             <div>
               <div class="flex mb-6 justify-between">
                 <span class="text-primary2 u-h3">Strategies</span>
@@ -603,15 +610,15 @@ const ProposalDetail = defineComponent({
                   onClick={() => (this.strategyVisible = false)}
                 />
               </div>
-              <div class="border rounded-lg border-grey5 grid py-4 px-6 gap-y-4 grid-cols-2">
+              <div class="border border-color-border rounded-sm grid py-4 px-6 gap-y-4 grid-cols-2">
                 <div class="text-colo1 u-h4">{this.strategyInfo?.strategyName}</div>
-                <div class="text-right text-color3 u-body2"></div>
+                <div class="text-right text-color3 u-h5"></div>
                 <div class="text-colo1 u-h5">Symbol</div>
-                <div class="text-right text-color3 u-body2">
+                <div class="text-right text-color3 u-h5">
                   {this.strategyInfo.voteSymbol || '--'}
                 </div>
                 <div class="text-color1 u-h5">Address</div>
-                <div class="flex text-color2 items-center justify-end u-body2">
+                <div class="flex text-color2 items-center justify-end u-h5">
                   {shortenAddress(this.strategyInfo?.tokenContractAddress) || '--'}{' '}
                   <a
                     href={`${this.blockExploreUrl}/address/${this.strategyInfo?.tokenContractAddress}`}
@@ -622,12 +629,12 @@ const ProposalDetail = defineComponent({
                   </a>
                 </div>
                 <div class="text-color1 u-h5">Decimals</div>
-                <div class="text-right text-color3 u-body2">{this.strategyInfo?.voteDecimals}</div>
+                <div class="text-right text-color3 u-h5">{this.strategyInfo?.voteDecimals}</div>
               </div>
             </div>
           </UModal>
           {/* this.ipfsDetail.visible */}
-          <UModal show={this.ipfsDetail.visible} class="bg-white rounded-lg py-7 px-8 w-150">
+          <UModal show={this.ipfsDetail.visible} class="bg-white rounded-sm py-7 px-8 w-150">
             <div>
               <div class="flex text-primary mb-6 justify-between u-h5">
                 <span class="text-color1 u-h5">Receipt</span>
@@ -636,7 +643,7 @@ const ProposalDetail = defineComponent({
                   onClick={this.closeIPFSDetail}
                 />
               </div>
-              <div class="border rounded-lg flex border-grey5 text-center p-5 justify-between">
+              <div class="border border-color-border rounded-sm flex text-center p-5 justify-between">
                 <span class="u-h5">Author</span>
                 <span class="flex text-primary items-center">
                   <span class="text-primary mr-4 u-body4">
@@ -649,7 +656,7 @@ const ProposalDetail = defineComponent({
                 </span>
               </div>
               <div
-                class="border rounded-full cursor-pointer flex border-grey5 mt-5 text-primary py-4 px-6 group justify-center items-center hover:border-[#5331F4]"
+                class="border border-color-border rounded-full cursor-pointer flex mt-5 text-primary py-4 px-6 group justify-center items-center hover:border-[#5331F4]"
                 onClick={() =>
                   this.toVerify({
                     ipfs: this.ipfsDetail.hash

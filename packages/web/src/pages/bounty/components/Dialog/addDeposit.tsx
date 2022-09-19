@@ -11,6 +11,7 @@ import {
 } from '@comunion/components'
 import { ethers } from 'ethers'
 import { defineComponent, Ref, computed, ref, reactive, watch } from 'vue'
+import { useRoute } from 'vue-router'
 import {
   useBountyContractWrapper,
   BountyContractReturnType
@@ -34,6 +35,7 @@ export default defineComponent({
   },
   emits: ['triggerDialog'],
   setup(props) {
+    const route = useRoute()
     const formData = reactive({
       increaseDeposit: null
     })
@@ -111,7 +113,8 @@ export default defineComponent({
       approve,
       chainId,
       detail,
-      bountyContractStore
+      bountyContractStore,
+      route
     }
   },
   render() {
@@ -145,7 +148,7 @@ export default defineComponent({
           )) as unknown as BountyContractReturnType
           const tokenAmount = Number(this.formData.increaseDeposit)
           const { error } = await services['bounty@bounty-add-deposit']({
-            bountyID: this.$route.query.bountyId as string,
+            bountyID: this.route.params.id as string,
             chainID: this.chainId,
             txHash: response.hash,
             tokenSymbol: tokenSymbol,
@@ -153,7 +156,7 @@ export default defineComponent({
           })
 
           const bountyStore = useBountyStore()
-          bountyStore.initialize(this.$route.query.bountyId as string)
+          bountyStore.initialize(this.route.params.id as string)
           if (!error) {
             triggerDialog()
           }

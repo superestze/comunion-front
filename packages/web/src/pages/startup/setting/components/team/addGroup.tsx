@@ -122,8 +122,8 @@ export default defineComponent({
                   />
                 </div>
               ))}
-            <UButton dashed class="w-full u-body2" onClick={addGroup}>
-              <span class="flex text-color3 items-center u-body2">
+            <UButton dashed class="w-full u-h5" onClick={addGroup}>
+              <span class="flex text-color3 items-center u-h5">
                 <PlusOutlined class="h-4 mr-3 w-4" />
                 Add
               </span>

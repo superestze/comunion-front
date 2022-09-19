@@ -38,27 +38,29 @@ export const IBORateHistory = defineComponent({
 
     return () => (
       <UCard title="Rate History">
-        <UScrollList
-          triggered={pagination.loading}
-          page={pagination.page}
-          pageSize={pagination.pageSize}
-          total={pagination.total}
-          onLoadMore={() => getHistories(pagination.page)}
-        >
-          {(records.value || [])?.map(record => {
-            return (
-              <div class="mb-6">
-                <div class="mb-2 u-body2 text-grey4">{dayjs().format('YYYY-MM-DD HH:mm')}</div>
-                <div class="border-1 border-grey5 rounded-lg bg-purple flex justify-between px-4 py-2.5">
-                  <span class="u-title2">
-                    1 {record.buyTokenSymbol} = {record.buyPrice} {record.sellTokenSymbol}
-                  </span>
-                  <span class="u-title2">Swap = {record.swapPercent} %</span>
+        {!!records.value?.length && (
+          <UScrollList
+            triggered={pagination.loading}
+            page={pagination.page}
+            pageSize={pagination.pageSize}
+            total={pagination.total}
+            onLoadMore={() => getHistories(pagination.page)}
+          >
+            {(records.value || [])?.map(record => {
+              return (
+                <div class="mb-6">
+                  <div class="mb-2 u-h6 text-color3">{dayjs().format('YYYY-MM-DD HH:mm')}</div>
+                  <div class="border-1 border-grey5 rounded-sm bg-purple flex justify-between px-4 py-2.5">
+                    <span class="u-h4">
+                      1 {record.buyTokenSymbol} = {record.buyPrice} {record.sellTokenSymbol}
+                    </span>
+                    <span class="u-h4">Swap = {record.swapPercent} %</span>
+                  </div>
                 </div>
-              </div>
-            )
-          })}
-        </UScrollList>
+              )
+            })}
+          </UScrollList>
+        )}
       </UCard>
     )
   }

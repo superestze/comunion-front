@@ -30,17 +30,17 @@ export function useTabs(comerId: number) {
   const tabs = computed(() => [
     {
       id: '0',
-      title: 'STARTUP',
+      title: 'Startup',
       subTitle: `(${converset(count.startupCnt)})`
     },
     {
       id: '1',
-      title: 'COMER',
+      title: 'Comer',
       subTitle: `(${converset(count.comerCnt)})`
     },
     {
       id: '2',
-      title: 'CONNECTOR',
+      title: 'Connector',
       subTitle: `(${converset(count.followerCnt)})`
     }
   ])

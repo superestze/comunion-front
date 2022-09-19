@@ -26,7 +26,7 @@ export const renderUnit = (name: string) => (
   <div
     class={[
       'flex justify-center items-center border rounded-r-lg bg-white w-30',
-      { 'text-grey1': name, 'text-grey4': !name }
+      { 'text-color1': name, 'text-color3': !name }
     ]}
   >
     {name || 'Token'}
@@ -177,7 +177,7 @@ const BountyBasicInfo = defineComponent({
         ],
         render(value) {
           return (
-            <div class="w-full">
+            <>
               {props.bountyInfo.contact.map((item: ContactType, itemIndex: number) => (
                 <div class={{ 'mb-4': itemIndex < props.bountyInfo.contact.length - 1 }}>
                   <div class="flex items-center">
@@ -219,9 +219,21 @@ const BountyBasicInfo = defineComponent({
                   {item.type === 1 && item.value && !validateEmail(item.value) && (
                     <div class="text-error ml-50">Please enter the correct email address</div>
                   )}
+                  {item.type === 2 &&
+                    item.value &&
+                    !item.value.includes('http://') &&
+                    !item.value.includes('https://') && (
+                      <div class="text-error ml-50">Please enter the correct email Discord</div>
+                    )}
+                  {item.type === 3 &&
+                    item.value &&
+                    !item.value.includes('http://') &&
+                    !item.value.includes('https://') && (
+                      <div class="text-error ml-50">Please enter the correct email Telegram</div>
+                    )}
                 </div>
               ))}
-            </div>
+            </>
           )
         }
       },
@@ -255,7 +267,7 @@ const BountyBasicInfo = defineComponent({
             h(
               <div>
                 Applicants deposit
-                <span class="font-normal text-xs ml-4 text-grey4">
+                <span class="font-normal text-xs ml-4 text-color3">
                   Applicant must deposit {props.bountyInfo.token1Symbol} for applying the bounty
                 </span>
               </div>

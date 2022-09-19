@@ -137,17 +137,12 @@ const UStyleProvider = defineComponent({
         asteriskColor: props.errorColor
       },
       Button: {
-        colorHoverPrimary: props.primaryColor,
-        colorPressedPrimary: props.primary1Color,
-        colorFocusPrimary: props.primary1Color,
-        textColorGhostPrimary: props.primaryColor,
-        textColorGhostHoverPrimary: props.primaryColor,
-        textColorGhostFocusPrimary: props.primaryColor,
-        borderHoverPrimary: props.primaryColor,
-        borderFocusPrimary: props.primaryColor
+        colorHoverPrimary: props.primary1Color,
+        borderHoverPrimary: props.primary1Color,
+        textColorGhostHoverPrimary: props.primary1Color
       },
       Pagination: {
-        itemBorderHover: props.primaryColor,
+        itemBorderHover: props.primary1Color,
         itemTextColorHover: props.primaryColor
       },
       Input: {
@@ -194,7 +189,8 @@ const UStyleProvider = defineComponent({
         heightLarge: '34px',
         heightMedium: '22px',
         heightSmall: '22px',
-        heightTiny: '20px'
+        heightTiny: '20px',
+        closeIconSizeMedium: '12px'
       }
     }))
 

@@ -347,7 +347,7 @@ const CreateBountyForm = defineComponent({
 
   render() {
     return (
-      <div>
+      <>
         <div class="mx-35 mb-15">
           <Steps
             steps={this.stepOptions}
@@ -413,16 +413,22 @@ const CreateBountyForm = defineComponent({
           <UCard
             style={{ width: '540px' }}
             closable={true}
-            class="!p-7"
             onClose={() => (this.modalVisibleState = false)}
+            v-slots={{
+              header: () => {
+                return (
+                  <div class="flex relative items-center">
+                    <WarningFilled class="mr-4" />{' '}
+                    <span class="text-color1 u-h3">Discard changes?</span>
+                  </div>
+                )
+              }
+            }}
           >
-            <div class="flex -top-3 relative items-center">
-              <WarningFilled /> <span class="ml-4 u-title1">Discard changes?</span>
+            <div class="min-h-20 p-4 text-color2 u-h6">
+              This can’t be undone and you’ll lose your changes.
             </div>
-            <div class="mt-3 ml-12 u-body2">
-              This can’t be undone and you’ll lose your changes.{' '}
-            </div>
-            <div class="flex mt-20 justify-end">
+            <div class="flex mt-4 justify-end">
               <UButton
                 size="large"
                 type="primary"
@@ -447,7 +453,7 @@ const CreateBountyForm = defineComponent({
             </div>
           </UCard>
         </UModal>
-      </div>
+      </>
     )
   }
 })

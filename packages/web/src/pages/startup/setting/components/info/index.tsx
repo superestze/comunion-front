@@ -406,7 +406,7 @@ export default defineComponent({
               customRequest={this.handleUploadLogo}
             />
             <RectDraggerUpload
-              class="ml-16"
+              class="ml-16 w-full"
               text="Startup Banner"
               tip={() => (
                 <>
@@ -418,6 +418,7 @@ export default defineComponent({
               accept="image/png, image/jpeg, image/bmp, image/psd, image/svg, image/tiff"
               imageUrl={this.info.cover}
               customRequest={this.handleUploadCover}
+              bgSize={true}
             />
           </div>
           <UForm rules={rules} model={this.info} ref={(ref: any) => (this.form = ref)}>

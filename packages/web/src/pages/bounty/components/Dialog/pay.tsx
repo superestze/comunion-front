@@ -10,6 +10,7 @@ import {
   UModal
 } from '@comunion/components'
 import { defineComponent, Ref, computed, ref, reactive, PropType, watch } from 'vue'
+import { useRoute } from 'vue-router'
 import { BountyProjectCardType } from '../ProjectCard'
 import { MAX_AMOUNT, renderUnit } from '@/blocks/Bounty/components/BasicInfo'
 import { services } from '@/services'
@@ -42,6 +43,7 @@ export default defineComponent({
   },
   emits: ['triggerDialog'],
   setup(props) {
+    const route = useRoute()
     const formData = reactive({
       token1Symbol: '',
       token2Symbol: '',
@@ -227,7 +229,8 @@ export default defineComponent({
       formData,
       getActivities,
       getBountyPayment,
-      paidInfo
+      paidInfo,
+      route
     }
   },
   render() {
@@ -247,18 +250,18 @@ export default defineComponent({
       this.form?.validate(async err => {
         if (typeof err === 'undefined') {
           const { error: errorPaid } = await services['bounty@bounty-paid']({
-            bountyID: parseInt(this.$route.query.bountyId as string),
+            bountyID: parseInt(this.route.params.id as string),
             seqNum: this.paymentInfo?.seqNum || 0,
             paidInfo: this.paidInfo
           })
           const { error } = await services['bounty@bounty-activities']({
-            bountyID: this.$route.query.bountyId as string,
+            bountyID: this.route.params.id as string,
             content: JSON.stringify(this.formData),
             sourceType: 2
           })
           if (!errorPaid && !error) {
-            this.getActivities(this.$route.query.bountyId as string)
-            this.getBountyPayment(this.$route.query.bountyId as string)
+            this.getActivities(this.route.params.id as string)
+            this.getBountyPayment(this.route.params.id as string)
             triggerDialog()
           }
         }
