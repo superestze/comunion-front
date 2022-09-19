@@ -71,7 +71,6 @@ export default defineComponent({
         name: 'socials',
         rules: [
           {
-            required: true,
             validator: (rule, value: SocialType[]) => {
               return !!value.find(item => !!item.socialLink && !item.delete)
             },

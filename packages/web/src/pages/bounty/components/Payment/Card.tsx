@@ -1,4 +1,4 @@
-import { defineComponent, computed } from 'vue'
+import { defineComponent } from 'vue'
 
 export default defineComponent({
   props: {
@@ -11,30 +11,21 @@ export default defineComponent({
       default: () => false
     }
   },
-  setup(props) {
-    const outlined = computed(() => {
-      const str = 'border-1 border-solid rounded-8px bg-white overflow-hidden'
-      if (props.lock) {
-        return `${str} border-error`
-      }
-      return `${str} border-purple-light`
-    })
-    return {
-      outlined
-    }
-  },
   render() {
     return (
-      <div class={this.outlined}>
+      <div
+        class={`n-card u-card border-1 rounded-sm bg-white overflow-hidden ${
+          this.lock ? 'border-error' : 'border-color-border'
+        }`}
+      >
         {this.$slots.title ? (
           this.$slots.title()
         ) : (
-          <p class="bg-purple flex h-72px justify-between items-center">
-            <span class="ml-24px text-20px">{this.title}</span>
-          </p>
+          <p class="bg-purple border-b border-color-border p-4 text-color1 u-h4">{this.title}</p>
         )}
-        {this.$slots.text?.()}
-        {this.$slots.btn?.()}
+        {typeof this.$slots.default === 'function' && (
+          <div class="n-card__content">{this.$slots.default()}</div>
+        )}
       </div>
     )
   }

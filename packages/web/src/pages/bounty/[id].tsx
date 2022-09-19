@@ -6,7 +6,7 @@ import { defineComponent, computed, ref, watch } from 'vue'
 import { useRoute, useRouter } from 'vue-router'
 import BountyDetailCard from './components/BountyDetailCard'
 import { ActivityBubble, ApplicantBubble, DepositBubble } from './components/Bubble'
-import { Payment } from './components/Payment'
+import Payment from './components/Payment'
 import PersonalCard from './components/PersonalCard'
 import PostUpdate from './components/PostUpdate'
 import StartupCard from './components/StartupCard'
@@ -140,7 +140,7 @@ export default defineComponent({
             </div>
             <UCard
               title="payment"
-              class="mb-6 !pb-8"
+              class="mb-6"
               v-slots={{
                 header: () => (
                   <div class="flex justify-between">
