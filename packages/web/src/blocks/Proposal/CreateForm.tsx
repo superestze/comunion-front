@@ -198,41 +198,45 @@ const CreateProposalFrom = defineComponent({
   },
   render() {
     return (
-      <div>
-        <div>
-          {this.proposalInfo.current === 1 && (
-            <BasicInfo
-              startupOptions={this.startupOptions}
-              proposalInfo={this.proposalInfo}
-              ref={(ref: any) => (this.basicInfoRef = ref)}
-            />
-          )}
-          {this.proposalInfo.current === 2 && (
-            <Vote
-              proposalInfo={this.proposalInfo}
-              ref={(ref: any) => (this.voteRef = ref)}
-              voteOptions={this.voteOptions}
-            />
-          )}
-        </div>
+      <>
+        {this.proposalInfo.current === 1 && (
+          <BasicInfo
+            startupOptions={this.startupOptions}
+            proposalInfo={this.proposalInfo}
+            ref={(ref: any) => (this.basicInfoRef = ref)}
+          />
+        )}
+        {this.proposalInfo.current === 2 && (
+          <Vote
+            proposalInfo={this.proposalInfo}
+            ref={(ref: any) => (this.voteRef = ref)}
+            voteOptions={this.voteOptions}
+          />
+        )}
         <UModal v-model:show={this.modalVisibleState} maskClosable={false}>
           <UCard
             style={{ width: '540px' }}
             closable={true}
-            class="!p-7"
             onClose={() => (this.modalVisibleState = false)}
+            v-slots={{
+              header: () => {
+                return (
+                  <div class="flex relative items-center">
+                    <WarningFilled class="mr-4" />{' '}
+                    <span class="text-color1 u-h3">Discard changes?</span>
+                  </div>
+                )
+              }
+            }}
           >
-            <div class="relative -top-3 flex items-center">
-              <WarningFilled /> <span class="u-title1 ml-4">Discard changes?</span>
+            <div class="min-h-20 p-4 text-color2 u-h6">
+              This can’t be undone and you’ll lose your changes.
             </div>
-            <div class="mt-3 ml-12 u-body2">
-              This can’t be undone and you’ll lose your changes.{' '}
-            </div>
-            <div class="flex justify-end mt-20">
+            <div class="flex mt-4 justify-end">
               <UButton
                 type="primary"
                 ghost
-                class="w-41 mr-4"
+                class="mr-4 w-41"
                 onClick={() => (this.modalVisibleState = false)}
               >
                 Cancel
@@ -243,7 +247,7 @@ const CreateProposalFrom = defineComponent({
             </div>
           </UCard>
         </UModal>
-      </div>
+      </>
     )
   }
 })
