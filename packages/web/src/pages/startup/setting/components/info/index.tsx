@@ -418,7 +418,7 @@ export default defineComponent({
               accept="image/png, image/jpeg, image/bmp, image/psd, image/svg, image/tiff"
               imageUrl={this.info.cover}
               customRequest={this.handleUploadCover}
-              bgSize="45"
+              bgSize={true}
             />
           </div>
           <UForm rules={rules} model={this.info} ref={(ref: any) => (this.form = ref)}>

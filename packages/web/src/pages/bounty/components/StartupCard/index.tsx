@@ -67,6 +67,9 @@ export default defineComponent({
           telegram={this.startup?.telegram}
           twitter={this.startup?.twitter}
           docs={this.startup?.docs}
+          email={this.startup?.email}
+          medium={this.startup?.medium}
+          facebook={this.startup?.facebook}
           class="flex mt-4 gap-4"
         />
       </>
