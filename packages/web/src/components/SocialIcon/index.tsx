@@ -1,3 +1,4 @@
+import { UTooltip } from '@comunion/components'
 import {
   DiscordFilled,
   WebsiteFilled,
@@ -8,7 +9,9 @@ import {
   EmailFilled,
   MediumFilled
 } from '@comunion/icons'
-import { defineComponent } from 'vue'
+import copy from 'copy-to-clipboard'
+import { defineComponent, ref } from 'vue'
+
 function asyncComponent(type: string, wrapper: string, disable?: boolean) {
   const textClass = ''
   // if (disable) {
@@ -42,7 +45,7 @@ export default defineComponent({
     },
     outWrapper: {
       type: String,
-      default: () => 'w-12 h-12'
+      default: () => 'm-2'
     },
     innerWrapper: {
       type: String,
@@ -61,21 +64,47 @@ export default defineComponent({
       default: () => false
     }
   },
+  setup(props, ctx) {
+    const showTooltipRef = ref<boolean>(false)
+
+    return {
+      showTooltipRef
+    }
+  },
   render() {
     return (
       <div
-        class={`flex justify-center items-center rounded-[50%] ${this.outWrapper} ${
+        class={`${this.outWrapper} ${
           this.disable ? 'cursor-not-allowed text-color3' : 'text-color2 hover:text-color1'
         }`}
       >
         {this.link ? (
-          <a
-            class={this.innerWrapper}
-            href={`${this.icon === 'Email' ? 'mailto:' : ''}${this.address}`}
-            target="_blank"
-          >
-            {asyncComponent(this.icon, this.innerWrapper)}
-          </a>
+          <>
+            {this.icon === 'Discord' && (
+              <span
+                onClick={e => {
+                  e.stopPropagation()
+                  this.showTooltipRef = copy(this.address)
+                }}
+                onMouseleave={e => {
+                  e.stopPropagation()
+                  this.showTooltipRef = false
+                }}
+              >
+                <UTooltip show={this.showTooltipRef}>
+                  {{
+                    trigger: () => <>{asyncComponent(this.icon, this.innerWrapper)}</>,
+                    default: () => 'Copied!'
+                  }}
+                </UTooltip>
+              </span>
+            )}
+            {this.icon !== 'Discord' && (
+              <a href={`${this.icon === 'Email' ? 'mailto:' : ''}${this.address}`} target="_blank">
+                {asyncComponent(this.icon, this.innerWrapper)}
+              </a>
+            )}
+          </>
         ) : (
           <>{asyncComponent(this.icon, this.innerWrapper, this.disable)}</>
         )}
