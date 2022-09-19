@@ -1,4 +1,4 @@
-import { UCard, ULazyImage, UScrollList } from '@comunion/components'
+import { UCard, ULazyImage, UScrollList, UTag } from '@comunion/components'
 import dayjs from 'dayjs'
 import { defineComponent, reactive, ref, onMounted } from 'vue'
 import { useRoute } from 'vue-router'
@@ -77,7 +77,6 @@ export const InvestmentRecords = defineComponent({
     }
   },
   render() {
-    console.log(this.investRecords)
     return (
       <UCard title="Investment record">
         {!!this.investRecords?.length && (
@@ -90,31 +89,23 @@ export const InvestmentRecords = defineComponent({
           >
             {(this.investRecords ?? []).map(record => {
               return (
-                <div class="mt-6">
-                  <div class="flex">
-                    <ULazyImage
-                      src={record.comerAvatar ?? ''}
-                      class="rounded-full cursor-pointer h-9 w-9"
-                    />
-                    <div class=" flex-1 mx-4">
-                      <div class="flex mb-2 items-center">
-                        <div class="text-color1 truncate u-title3">{record.comerName}</div>
-                        {record.access === 1 ? (
-                          <span class="rounded-sm text-color3 u-h7 ml-2 py-0.5 px-2 border-1 border-[#DADCE0]">
-                            Invest
-                          </span>
-                        ) : (
-                          <span class="rounded-sm text-color3 u-h7 ml-2 py-0.5 px-2 border-1 border-[#DADCE0]">
-                            Sell
-                          </span>
-                        )}
-                      </div>
-                      <div class="mb-2 text-grey4 u-body2">
-                        {dayjs(record.time).format('YYYY-MM-DD HH:mm')}
-                      </div>
+                <div class="flex mb-6">
+                  <ULazyImage
+                    src={record.comerAvatar ?? ''}
+                    class="rounded-full cursor-pointer h-9 w-9"
+                  />
+                  <div class=" flex-1 mx-4">
+                    <div class="flex mb-2 items-center">
+                      <div class="text-color1 truncate u-h4">{record.comerName}</div>
+                      <UTag class="ml-2 text-color3">
+                        {record.access === 1 ? 'Invest' : 'Sell'}
+                      </UTag>
                     </div>
-                    <div class="font-semibold ml-auto text-primary">{this.getAmount(record)}</div>
+                    <div class="mb-2 text-color3 u-h7">
+                      {dayjs(record.time).format('YYYY-MM-DD HH:mm')}
+                    </div>
                   </div>
+                  <div class="font-semibold ml-auto text-primary">{this.getAmount(record)}</div>
                 </div>
               )
             })}

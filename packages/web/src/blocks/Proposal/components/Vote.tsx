@@ -101,10 +101,10 @@ export const Vote = defineComponent({
             id="voting-field"
           >
             <div class="flex flex-1 items-center">
-              <div class="text-grey3 u-body2">Voting system</div>
+              <div class="text-grey3 u-h5">Voting system</div>
               <div class="text-primary ml-2">{this.selectedVotingInfo?.label}</div>
             </div>
-            <ArrowDownOutlined class="h-4 text-grey4 w-4" />
+            <ArrowDownOutlined class="h-4 text-color3 w-4" />
           </div>
           {this.showOptionsPanel && (
             <div
@@ -161,14 +161,14 @@ export const Vote = defineComponent({
                 <UInput
                   v-slots={{
                     prefix: (
-                      <div class="text-grey3 w-20 u-body2">
+                      <div class="text-grey3 w-20 u-h5">
                         Choice {choiceIndex + 1}
                         {choiceIndex === 0 && (
                           <span class="text-error n-form-item-label__asterisk">&nbsp;*</span>
                         )}
                       </div>
                     ),
-                    suffix: <div class="pl-4 text-grey3 u-body2">{voteChoice.value.length}/32</div>
+                    suffix: <div class="pl-4 text-grey3 u-h5">{voteChoice.value.length}/32</div>
                   }}
                   v-model:value={voteChoice.value}
                   maxlength={32}

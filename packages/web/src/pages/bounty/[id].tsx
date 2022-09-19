@@ -195,7 +195,7 @@ export default defineComponent({
                               trigger: () => (
                                 <ClockOutlined
                                   class={`${
-                                    this.gapValue >= 0 ? 'text-grey4' : 'text-error'
+                                    this.gapValue >= 0 ? 'text-color3' : 'text-error'
                                   } w-4 h-4 mr-2.5`}
                                 />
                               ),

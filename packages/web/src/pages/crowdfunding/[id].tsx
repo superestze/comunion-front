@@ -138,9 +138,10 @@ const CrowdfundingDetail = defineComponent({
       <USpin show={pageLoading.value}>
         <UBreadcrumb class="mt-10 mb-10"></UBreadcrumb>
         <div class="flex mb-20 gap-6">
-          <div class="w-228">
+          <div style="flex:2" class="overflow-hidden">
             {crowdfundingInfo.value && (
               <Invest
+                class="mb-6"
                 buyCoinInfo={buyCoinInfo.value}
                 sellCoinInfo={sellCoinInfo.value}
                 info={crowdfundingInfo.value}
@@ -150,7 +151,8 @@ const CrowdfundingDetail = defineComponent({
 
             {crowdfundingInfo.value && <CrowdfundingInfo info={crowdfundingInfo.value} />}
           </div>
-          <div class="flex-1 min-w-111">
+
+          <div class="flex-1 overflow-hidden">
             {startupInfo.value && (
               <UCard class="mb-6">
                 <StartupCard startup={startupInfo.value} />
@@ -163,6 +165,7 @@ const CrowdfundingDetail = defineComponent({
               buyTokenName={buyCoinInfo.value.symbol}
               sellTokenName={sellCoinInfo.value.symbol}
             />
+
             <IBORateHistory />
           </div>
         </div>

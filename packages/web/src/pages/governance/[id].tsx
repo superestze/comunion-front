@@ -424,11 +424,11 @@ const ProposalDetail = defineComponent({
               ></UPopover>
             </div>
             {this.proposalInfo?.description && (
-              <div class="mt-4 u-body2" v-html={this.proposalInfo?.description} />
+              <div class="mt-4 u-h5" v-html={this.proposalInfo?.description} />
             )}
             {this.proposalInfo?.discussionLink && (
               <div class="mt-8">
-                <div class="mb-1 u-title3">Discussion：</div>
+                <div class="mb-1 u-h4">Discussion：</div>
                 <a href={this.proposalInfo.discussionLink} target="__blank" class="text-primary">
                   {this.proposalInfo.discussionLink}
                 </a>
@@ -613,13 +613,13 @@ const ProposalDetail = defineComponent({
               </div>
               <div class="border rounded-lg border-color-border grid py-4 px-6 gap-y-4 grid-cols-2">
                 <div class="text-colo1 u-h4">{this.strategyInfo?.strategyName}</div>
-                <div class="text-right text-color3 u-body2"></div>
+                <div class="text-right text-color3 u-h5"></div>
                 <div class="text-colo1 u-h5">Symbol</div>
-                <div class="text-right text-color3 u-body2">
+                <div class="text-right text-color3 u-h5">
                   {this.strategyInfo.voteSymbol || '--'}
                 </div>
                 <div class="text-color1 u-h5">Address</div>
-                <div class="flex text-color2 items-center justify-end u-body2">
+                <div class="flex text-color2 items-center justify-end u-h5">
                   {shortenAddress(this.strategyInfo?.tokenContractAddress) || '--'}{' '}
                   <a
                     href={`${this.blockExploreUrl}/address/${this.strategyInfo?.tokenContractAddress}`}
@@ -630,7 +630,7 @@ const ProposalDetail = defineComponent({
                   </a>
                 </div>
                 <div class="text-color1 u-h5">Decimals</div>
-                <div class="text-right text-color3 u-body2">{this.strategyInfo?.voteDecimals}</div>
+                <div class="text-right text-color3 u-h5">{this.strategyInfo?.voteDecimals}</div>
               </div>
             </div>
           </UModal>

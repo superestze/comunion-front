@@ -67,7 +67,7 @@ export default defineComponent({
                 return i + 1 < 4 ? (
                   <>
                     <span
-                      class="rounded-sm text-color1 mr-2 px-2 text-0.75rem leading-1.25rem inline-block border-1 border-[#DADCE0]"
+                      class="rounded-sm text-color1 mr-2 px-2 text-0.75rem leading-1.25rem inline-block border-1 border-color-border"
                       key={i}
                     >
                       {tag}

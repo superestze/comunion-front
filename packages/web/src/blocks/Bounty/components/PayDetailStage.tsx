@@ -157,7 +157,7 @@ const PayDetailStage = defineComponent({
               </div>
               <div class="grid grid-cols-[1fr,56px,1fr]">
                 {!this.bountyInfo.token2Symbol && (
-                  <div class="mt-2 text-xs text-grey4 col-start-3">
+                  <div class="mt-2 text-xs text-color3 col-start-3">
                     Not setup token yet, go to{' '}
                     <span
                       class="cursor-pointer text-primary"

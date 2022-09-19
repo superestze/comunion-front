@@ -24,7 +24,7 @@ const UTeamMembers = defineComponent({
           <span class="u-body3 pl-2 pt-1">
             <i class={styles.members_span_i}>{props.memberCount}</i>
           </span>
-          <span class="u-body2 m-auto ml-3">Members</span>
+          <span class="u-h5 m-auto ml-3">Members</span>
         </div>
         <div class="flex-1"></div>
         <div class="flex align-center ">

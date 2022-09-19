@@ -39,7 +39,7 @@ function normalMessage(obj: NormalMessage) {
         <p class="font-primary mr-16px text-14px text-color3">{obj.date}</p>
       </div>
       <div class={`bg-purple rounded-md  mt-3 py-4 px-6 `}>
-        <div class={` text-black u-body2 max-h-20 overflow-auto`} innerHTML={obj.content}></div>
+        <div class={` text-black u-h5 max-h-20 overflow-auto`} innerHTML={obj.content}></div>
       </div>
     </div>
   )

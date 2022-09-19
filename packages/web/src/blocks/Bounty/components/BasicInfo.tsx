@@ -26,7 +26,7 @@ export const renderUnit = (name: string) => (
   <div
     class={[
       'flex justify-center items-center border rounded-r-lg bg-white w-30',
-      { 'text-color1': name, 'text-grey4': !name }
+      { 'text-color1': name, 'text-color3': !name }
     ]}
   >
     {name || 'Token'}
@@ -255,7 +255,7 @@ const BountyBasicInfo = defineComponent({
             h(
               <div>
                 Applicants deposit
-                <span class="font-normal text-xs ml-4 text-grey4">
+                <span class="font-normal text-xs ml-4 text-color3">
                   Applicant must deposit {props.bountyInfo.token1Symbol} for applying the bounty
                 </span>
               </div>

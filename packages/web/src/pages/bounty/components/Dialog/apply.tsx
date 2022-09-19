@@ -90,7 +90,7 @@ const ApplyDialog = defineComponent({
           label: () => [h(<div>1.Deposit</div>)],
           feedback: () => [
             h(
-              <span class="text-12px text-grey4">
+              <span class="text-12px text-color3">
                 Minimum deposit <span class="text-primary">{deposit}</span>{' '}
                 {detail?.depositTokenSymbol} for applying bounty
               </span>

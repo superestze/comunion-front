@@ -126,7 +126,7 @@ export default defineComponent({
             ) : (
               <>
                 {this.content.trim() === '' ? (
-                  <p class="font-[400] text-14px text-grey4">Edit your Bio</p>
+                  <p class="font-[400] text-14px text-color3">Edit your Bio</p>
                 ) : (
                   <>
                     <div

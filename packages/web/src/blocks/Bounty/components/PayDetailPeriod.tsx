@@ -167,7 +167,7 @@ const PayDetailPeriod = defineComponent({
                 ></UInputNumberGroup>
                 <div>
                   {!props.bountyInfo.token2Symbol && (
-                    <div class="mt-2 text-xs text-grey4 col-start-3">
+                    <div class="mt-2 text-xs text-color3 col-start-3">
                       Not setup token yet, go to{' '}
                       <span
                         class="cursor-pointer text-primary"
