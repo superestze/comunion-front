@@ -21,8 +21,8 @@ export default defineComponent({
     const list = [
       {
         icons: [contributor, contributor2, contributor3],
-        title: 'Contributor',
-        subtitle: 'Contribute to earn',
+        title: 'Buidler',
+        subtitle: 'Build to earn',
         content:
           'Anyone with skills can build or contribute to a startup in the 0-1 stage for earning early rewards.'
       },

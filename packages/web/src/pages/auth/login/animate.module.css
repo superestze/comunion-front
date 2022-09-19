@@ -4,7 +4,7 @@
   }
 
   100% {
-    background-position: 10000% 25%;
+    background-position: 9000% 25%;
   }
 }
 
@@ -12,5 +12,5 @@
   background-color: #5331f4;
   background-image: url('./assets/indexBgImage.png');
   background-position: 0 25%;
-  animation: bg-animate 360s linear infinite;
+  animation: bg-animate 600s linear infinite;
 }
