@@ -6,14 +6,24 @@ export default defineComponent({
     const divRef = ref()
     const text = ref('')
     const lineStatus = ref(true)
-    const goTest = () => {
+    const goTest = async () => {
       let diskText = 'economic network'
-      const timer = setInterval(() => {
+      let secound = 10
+      const timer = await setInterval(() => {
         if (diskText) {
-          text.value += diskText[0]
-          diskText = diskText.substring(1, diskText.length)
+          if (diskText[0] !== ' ') {
+            text.value += diskText[0]
+            diskText = diskText.substring(1, diskText.length)
+          } else {
+            secound--
+            if (secound == 0) {
+              text.value += diskText[0]
+              diskText = diskText.substring(1, diskText.length)
+            }
+          }
         } else {
           lineStatus.value = false
+          secound = 10
           clearInterval(timer)
         }
       }, 100)
@@ -41,20 +51,22 @@ export default defineComponent({
   render() {
     return (
       <>
-        <div ref="divRef" class={`${styles.bgImage} overflow-hidden`}>
-          <div class="absolute left-0 right-0 top-0 bottom-0 m-auto w-256 h-35">
+        <div ref="divRef" class={[styles.bgImage]}>
+          <div class="absolute left-0 right-0 top-0 bottom-0 m-auto w-256 h-35 <md:w-[90vw]">
             <div class="font-primary font-semibold">
-              <p class="text-[rgba(255,255,255,0.5)] text-[20px] mb-3 absolute left-[2.1rem] top-[-1.5rem]">
+              <p class="text-[rgba(255,255,255,0.5)] text-[20px] mb-3 absolute left-[2.1rem] top-[-1.5rem] <md:left-[3rem] <md:top-[-3rem] <md:text-[1vw]">
                 The First
               </p>
             </div>
-            <p class="font-medium text-[#FFF1F1] text-[64px]">
-              <span class="ml-[1.9rem]">Permissionless {this.text}</span>
-              {this.lineStatus && (
-                <span class="inline-block h-13 w-1 bg-[#ffffff] ml-2 animate-pulse "></span>
-              )}
+            <p class="font-medium text-[#FFF1F1] <md:pl-[3rem]">
+              <span class="ml-[1.9rem] text-[64px] <md:ml-[0] <md:text-[8vw] <md:font-700 <md:font-primary <md:font-medium">
+                Permissionless {this.text}
+              </span>
+              <span
+                class={`${styles.lineColor} line-color inline-block h-13 w-1 bg-[#ffffff] ml-2`}
+              ></span>
             </p>
-            <p class="text-[#FFFFFF] text-[32px] text-center mt-8.5">
+            <p class="text-[#FFFFFF] text-[32px] mt-8.5 ml-[13rem] <md:ml-[3rem] <md:text-[3.5vw] <md:font-700">
               to narrow the gap between rich and poor
             </p>
           </div>

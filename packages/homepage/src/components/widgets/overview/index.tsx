@@ -122,7 +122,7 @@ export default defineComponent({
             <p class={`${styles.title20} mt-4 text-white/70`}>
               Web3, Crypto, Blockchain, Metaverse etc
             </p>
-            <div class="mt-35 w-10.5 h-10.5">
+            <div class="mt-35 w-10.5 h-10.5 <md:mt-25">
               <img
                 class="w-full"
                 srcset={`${rocket}, ${rocket2} 2x, ${rocket3} 3x`}
