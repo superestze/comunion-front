@@ -1,5 +1,6 @@
 import { UButton } from '@comunion/components'
 import { defineComponent, ref, computed } from 'vue'
+import { useRoute } from 'vue-router'
 import { useBountyContractWrapper } from '../../hooks/useBountyContractWrapper'
 import { BasicDialog } from '../Dialog'
 import { BOUNTY_STATUS } from '@/constants'
@@ -15,6 +16,7 @@ export default defineComponent({
     }
   },
   setup() {
+    const route = useRoute()
     const visible = ref<boolean>(false)
     const bountyContractStore = useBountyContractStore()
     const { bountyContract, gap } = useBountyContractWrapper()
@@ -30,7 +32,8 @@ export default defineComponent({
       unlock,
       depositLock,
       gap,
-      isCompleted
+      isCompleted,
+      route
     }
   },
   render() {
@@ -47,7 +50,7 @@ export default defineComponent({
         'Unlock succeedes'
       )
       const { error } = await services['bounty@bounty-applicants-unlock']({
-        bountyID: parseInt(this.$route.query.bountyId as string)
+        bountyID: parseInt(this.route.params.id as string)
       })
       if (!error) {
         triggerDialog()
@@ -64,7 +67,7 @@ export default defineComponent({
       // }
       await this.lock('Waiting to submit all contents to blockchain for lock', 'Lock succeedes')
       services['bounty@bounty-applicant-lock']({
-        bountyID: parseInt(this.$route.query.bountyId as string)
+        bountyID: parseInt(this.route.params.id as string)
       })
     }
     return (

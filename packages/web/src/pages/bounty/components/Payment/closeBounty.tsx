@@ -1,5 +1,6 @@
 import { UButton } from '@comunion/components'
 import { defineComponent, ref, computed } from 'vue'
+import { useRoute } from 'vue-router'
 import { useBountyContractWrapper } from '../../hooks/useBountyContractWrapper'
 import { BasicDialog } from '../Dialog'
 import { BOUNTY_STATUS } from '@/constants'
@@ -15,6 +16,7 @@ export default defineComponent({
     }
   },
   setup() {
+    const route = useRoute()
     const visibleFailCloseBounty = ref<boolean>(false)
     const { bountyContract } = useBountyContractWrapper()
     const bountyContractStore = useBountyContractStore()
@@ -34,7 +36,8 @@ export default defineComponent({
       visibleFailCloseBounty,
       close: bountyContract.close,
       disabled,
-      closeDesc
+      closeDesc,
+      route
     }
   },
   render() {
@@ -49,7 +52,7 @@ export default defineComponent({
       // )
       await this.close('', '')
       const { error } = await services['bounty@bounty-close']({
-        bountyID: this.$route.query.bountyId as string
+        bountyID: this.route.params.id as string
       })
       if (error) {
         triggerDialog()
