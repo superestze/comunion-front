@@ -26,6 +26,9 @@ export default defineComponent({
         return true
       }
       if (bountyContractStore.bountyContractInfo.role === USER_ROLE.FOUNDER) {
+        if (bountyContractStore.bountyContractInfo.bountyStatus >= BOUNTY_STATUS.COMPLETED) {
+          return true
+        }
         return false
       }
       return bountyContractStore.bountyContractInfo.status !== APPLICANT_STATUS.APPROVED
