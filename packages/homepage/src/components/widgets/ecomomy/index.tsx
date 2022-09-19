@@ -45,7 +45,7 @@ export default defineComponent({
     return (
       <>
         <Title
-          title="A New Era of Ecomomy"
+          title="All-in-one co-building network"
           subTitle="Connect ideas, talents and funding for Startups"
         />
         <div class="flex justify-center mt-74px <md:mx-auto <md:w-155.5">
