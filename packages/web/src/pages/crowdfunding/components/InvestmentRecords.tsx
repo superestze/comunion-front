@@ -89,7 +89,7 @@ export const InvestmentRecords = defineComponent({
           >
             {(this.investRecords ?? []).map(record => {
               return (
-                <div class="flex mb-6">
+                <div class="flex mb-4">
                   <ULazyImage
                     src={record.comerAvatar ?? ''}
                     class="rounded-full cursor-pointer h-9 w-9"
@@ -105,7 +105,7 @@ export const InvestmentRecords = defineComponent({
                       {dayjs(record.time).format('YYYY-MM-DD HH:mm')}
                     </div>
                   </div>
-                  <div class="font-semibold ml-auto text-primary">{this.getAmount(record)}</div>
+                  <div class=" text-primary">{this.getAmount(record)}</div>
                 </div>
               )
             })}
