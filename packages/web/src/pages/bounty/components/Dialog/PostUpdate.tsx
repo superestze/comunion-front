@@ -10,6 +10,7 @@ import {
 } from '@comunion/components'
 import dayjs from 'dayjs'
 import { defineComponent, reactive, ref, watch, computed } from 'vue'
+import { useRoute } from 'vue-router'
 import { services } from '@/services'
 import { useBountyStore } from '@/stores'
 import { useBountyContractStore } from '@/stores/bountyContract'
@@ -28,6 +29,7 @@ export default defineComponent({
   },
   emits: ['triggerDialog'],
   setup(props) {
+    const route = useRoute()
     const info = reactive({
       update: ''
     })
@@ -80,7 +82,8 @@ export default defineComponent({
       form,
       getActivities,
       bountyContractInfo: bountyContractStore.bountyContractInfo,
-      gap
+      gap,
+      route
     }
   },
   render() {
@@ -107,10 +110,10 @@ export default defineComponent({
           const { error } = await services['bounty@bounty-activities']({
             sourceType: 1,
             content: this.info.update,
-            bountyID: this.$route.query.bountyId as string
+            bountyID: this.route.params.id as string
           })
           if (!error) {
-            this.getActivities(this.$route.query.bountyId as string)
+            this.getActivities(this.route.params.id as string)
             triggerDialog()
           }
         }

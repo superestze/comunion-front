@@ -1,5 +1,6 @@
 import { UButton } from '@comunion/components'
 import { defineComponent, ref } from 'vue'
+import { useRoute } from 'vue-router'
 import {
   BountyContractReturnType,
   useBountyContractWrapper
@@ -21,13 +22,15 @@ export default defineComponent({
     }
   },
   setup() {
+    const route = useRoute()
     const visible = ref<boolean>(false)
     const { bountyContract, chainId } = useBountyContractWrapper()
     const { releaseMyDeposit } = bountyContract
     return {
       visible,
       releaseMyDeposit,
-      chainId
+      chainId,
+      route
     }
   },
   render() {
@@ -41,13 +44,13 @@ export default defineComponent({
         'Release my deposit succeedes'
       )) as unknown as BountyContractReturnType
       await services['bounty@bounty-release-my-deposit']({
-        bountyID: this.$route.query.bountyId as string,
+        bountyID: this.route.params.id as string,
         chainID: this.chainId,
         txHash: response.hash
       })
 
       const bountyStore = useBountyStore()
-      bountyStore.initialize(this.$route.query.bountyId as string)
+      bountyStore.initialize(this.route.params.id as string)
       triggerDialog()
     }
     const triggerDialog = async () => {

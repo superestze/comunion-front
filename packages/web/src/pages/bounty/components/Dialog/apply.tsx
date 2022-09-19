@@ -13,6 +13,7 @@ import {
 } from '@comunion/components'
 import { ethers } from 'ethers'
 import { defineComponent, Ref, computed, h, ref, reactive, watch } from 'vue'
+import { useRoute } from 'vue-router'
 import {
   BountyContractReturnType,
   useBountyContractWrapper
@@ -48,6 +49,7 @@ const ApplyDialog = defineComponent({
   },
   emits: ['triggerDialog'],
   setup(props) {
+    const route = useRoute()
     const formData = reactive({
       deposit: 0,
       description: ''
@@ -166,7 +168,8 @@ const ApplyDialog = defineComponent({
       approve,
       chainId,
       detail,
-      bountyContractStore
+      bountyContractStore,
+      route
     }
   },
   render() {
@@ -213,7 +216,7 @@ const ApplyDialog = defineComponent({
           }
           const tokenAmount = Number(this.formData.deposit)
           await services['bounty@bounty-applicants-apply']({
-            bountyID: parseInt(this.$route.query.bountyId as string),
+            bountyID: parseInt(this.route.params.id as string),
             applicants: {
               description: this.formData.description
             },
@@ -226,7 +229,7 @@ const ApplyDialog = defineComponent({
           })
 
           const bountyStore = useBountyStore()
-          bountyStore.initialize(this.$route.query.bountyId as string)
+          bountyStore.initialize(this.route.params.id as string)
           triggerDialog(true)
         }
         if (!this.terms.value) {
@@ -247,12 +250,12 @@ const ApplyDialog = defineComponent({
     }
 
     return (
-      <UModal show={this.visible}>
+      <UModal v-model:show={this.visible}>
         <UCard
+          //  '--n-close-icon-color': '#3F2D99'
           style={{
             width: '540px',
-            '--n-title-text-color': '#3F2D99',
-            '--n-close-icon-color': '#3F2D99'
+            '--n-title-text-color': '#3F2D99'
           }}
           title={this.title}
           bordered={false}
@@ -288,7 +291,7 @@ const ApplyDialog = defineComponent({
                 I accept that I will not be able to take the deposit in case of evil.
               </span>
             </UCheckbox>
-            <div class="flex justify-end mt-10">
+            <div class="flex mt-10 justify-end">
               <UButton class="mr-16px w-164px" type="default" onClick={userBehavier('cancel')}>
                 Cancel
               </UButton>

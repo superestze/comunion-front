@@ -1,6 +1,7 @@
 import { UButton } from '@comunion/components'
 import { format } from 'timeago.js'
 import { defineComponent, PropType, ref, computed } from 'vue'
+import { useRoute } from 'vue-router'
 import {
   useBountyContractWrapper,
   BountyContractReturnType
@@ -26,6 +27,7 @@ export default defineComponent({
     }
   },
   setup(props) {
+    const route = useRoute()
     const visible = ref<boolean>(false)
     const userStore = useUserStore()
     // const bountyStore = useBountyStore()
@@ -59,7 +61,8 @@ export default defineComponent({
       approveDisabled,
       // get,
       approveApplicant,
-      bountyStatus
+      bountyStatus,
+      route
     }
   },
   render() {
@@ -83,16 +86,16 @@ export default defineComponent({
         `Approve ${this.applicant?.name || 'applicant'} succeedes`
       )) as unknown as BountyContractReturnType
       const { error } = await services['bounty@bounty-founder-approve']({
-        bountyID: parseInt(this.$route.query.bountyId as string),
+        bountyID: parseInt(this.route.params.id as string),
         applicantComerID: this.applicant?.comerID,
         txHash: response?.hash || ''
       })
 
       const bountyStore = useBountyStore()
-      bountyStore.initialize(this.$route.query.bountyId as string)
+      bountyStore.initialize(this.route.params.id as string)
       if (!error) {
-        // this.get(this.$route.query.bountyId as string)
-        // this.getApprovedPeople(this.$route.query.bountyId as string)
+        // this.get(this.route.params.id as string)
+        // this.getApprovedPeople(this.route.params.id as string)
         triggerDialog()
         return
       }
@@ -126,7 +129,7 @@ export default defineComponent({
               <div class="flex-1 ml-4">
                 <div class="flex justify-between items-center">
                   <div>
-                    <p class="mb-2 font-primary font-semibold text-color1">
+                    <p class="font-primary font-semibold mb-2 text-color1">
                       {this.applicant?.name}
                     </p>
                     <p class="mr-16px text-color3 u-h7">{this.formatDate}</p>
