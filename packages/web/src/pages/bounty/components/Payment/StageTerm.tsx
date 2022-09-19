@@ -75,9 +75,11 @@ export default defineComponent({
 
         <div class="border rounded-sm bg-[#F5F6FA] border-[#D5CFF4] mb-6 py-6 px-16 relative">
           {this.item?.status === 2 && <PayedMask />}
-          <span class="rounded-br-md bg-[#D5CFF4] text-primary py-1 px-2 top-[-1px] left-[-1px] absolute u-h5">
+
+          <span class="rounded-br-md bg-[#D5CFF4] text-primary py-1 px-4 top-[-1px] left-[-1px] absolute u-h4">
             {this.flagStr}
           </span>
+
           <div class="flex items-center">
             <p class="flex-1 text-primary">
               <span class="u-h2">{this.item.token1Amount || 0}</span>

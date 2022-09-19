@@ -19,7 +19,7 @@ export default defineComponent({
     return (
       <div class="flex">
         <Avatar
-          class="!h-11 !w-11"
+          class="h-12 w-12"
           avatar={this.avatar}
           onClickAvatar={toComerDetail(this.comerId as string)}
         />

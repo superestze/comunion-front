@@ -149,7 +149,7 @@ export default defineComponent({
                   class={`flex items-center overflow-hidden border-b p-4 ${
                     this.bountyContractInfo.depositLock
                       ? 'bg-[#fbeaea] border-error'
-                      : 'bg-white border-b border-color-border'
+                      : 'bg-purple border-b border-color-border'
                   }`}
                 >
                   <div class="flex-1 text-color1 u-h4">Deposit</div>

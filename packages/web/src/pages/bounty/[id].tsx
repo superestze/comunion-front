@@ -257,7 +257,6 @@ export default defineComponent({
               {this.bountySection.founder && (
                 <PersonalCard
                   profile={this.bountySection.founder}
-                  class="mt-5"
                   keyMap={{
                     skills: 'applicantsSkills',
                     comerId: 'comerID',
@@ -285,7 +284,6 @@ export default defineComponent({
               {(this.bountySection.approvedPeople?.comerID || 0) > 0 && (
                 <PersonalCard
                   profile={this.bountySection.approvedPeople}
-                  class="mt-5"
                   keyMap={{
                     skills: 'applicantsSkills',
                     comerId: 'comerID',
@@ -303,7 +301,7 @@ export default defineComponent({
                 <>
                   {this.bountySection.depositRecords.map((item, index) => (
                     <DepositBubble
-                      class={`mb-4 ${index === 0 && 'mt-6'}`}
+                      class={`mb-4`}
                       depositInfo={item}
                       key={item.name}
                       tokenSymbol={this.bountyContractInfo.depositTokenSymbol}
