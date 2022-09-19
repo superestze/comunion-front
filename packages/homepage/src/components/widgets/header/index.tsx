@@ -65,6 +65,9 @@ export default defineComponent({
               type="primary"
               size="small"
               class="mr-40px"
+              style={{
+                '--n-border-radius': '2px'
+              }}
               onClick={joinComunion}
             >
               Connect Account
