@@ -3,7 +3,10 @@ import {
   DiscordFilled,
   TelegramFilled,
   TwitterFilled,
-  DocsFilled
+  DocsFilled,
+  EmailFilled,
+  MediumFilled,
+  FacebookFilled
 } from '@comunion/icons'
 import { defineComponent, computed } from 'vue'
 import styles from './SocialGroup.module.css'
@@ -11,7 +14,7 @@ import { toSocialEnd } from '@/utils/socialJump'
 
 export const SocialGroup = defineComponent({
   name: 'socialGroup',
-  props: ['website', 'discord', 'telegram', 'twitter', 'docs'],
+  props: ['website', 'discord', 'telegram', 'twitter', 'docs', 'email', 'medium', 'facebook'],
   setup(props) {
     const socialData = computed(() => [
       {
@@ -38,6 +41,21 @@ export const SocialGroup = defineComponent({
         key: 'docs',
         component: DocsFilled,
         value: props.docs
+      },
+      {
+        key: 'email',
+        component: EmailFilled,
+        value: props.email
+      },
+      {
+        key: 'medium',
+        component: MediumFilled,
+        value: props.medium
+      },
+      {
+        key: 'facebook',
+        component: FacebookFilled,
+        value: props.facebook
       }
     ])
 
