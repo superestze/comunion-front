@@ -76,8 +76,6 @@ export default defineComponent({
     }
   },
   render() {
-    console.log('proposal render')
-
     return (
       <UCard title="Governance" class="mb-6">
         {this.proposalList.map(proposal => (
