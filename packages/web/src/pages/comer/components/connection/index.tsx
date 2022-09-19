@@ -250,7 +250,7 @@ export default defineComponent({
                   label: `${item.title}`,
                   value: item.id
                 }))}
-                class="w-32"
+                class="w-28"
                 v-model:value={this.currentTabId}
                 consistent-menu-width={false}
               />
