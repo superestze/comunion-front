@@ -66,7 +66,7 @@ export default defineComponent({
                 class={`${styles.lineColor} line-color inline-block h-13 w-1 bg-[#ffffff] ml-2`}
               ></span>
             </p>
-            <p class="text-[#FFFFFF] text-[32px] mt-8.5 ml-[13rem] <md:ml-[0] <md:text-[1vw]">
+            <p class="text-[#FFFFFF] text-[32px] mt-8.5 ml-[13rem] <md:ml-[0] <md:text-[4.7vw]">
               to narrow the gap between rich and poor
             </p>
           </div>
