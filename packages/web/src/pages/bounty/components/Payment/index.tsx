@@ -149,7 +149,7 @@ export default defineComponent({
                   class={`flex items-center overflow-hidden border-b p-4 ${
                     this.bountyContractInfo.depositLock
                       ? 'bg-[#fbeaea] border-error'
-                      : 'bg-white border-b border-color-border'
+                      : 'bg-purple border-b border-color-border'
                   }`}
                 >
                   <div class="flex-1 text-color1 u-h4">Deposit</div>
@@ -269,7 +269,7 @@ export default defineComponent({
           <div class="border-solid border-color-border border-width-1px rounded-8px mt-24px max-h-258px p-24px overflow-hidden">
             <p class="mb-6 u-title1">Target</p>
             <UScrollbar style={{ maxHeight: `${162}px` }}>
-              <p class="text-grey2 u-body2" innerHTML={this.paymentInfo?.periodTerms?.terms} />
+              <p class="text-grey2 u-h5" innerHTML={this.paymentInfo?.periodTerms?.terms} />
             </UScrollbar>
           </div>
         )}

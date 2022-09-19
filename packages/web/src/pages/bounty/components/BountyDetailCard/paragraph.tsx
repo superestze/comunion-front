@@ -39,7 +39,7 @@ export default defineComponent({
   },
   setup(props, ctx) {
     const contentClass = computed(() => {
-      return `flex items-center u-body2 ${props.contentClass}`
+      return `flex items-center u-h5 ${props.contentClass}`
     })
 
     const foldClass = computed(() => {

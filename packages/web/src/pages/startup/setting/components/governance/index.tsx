@@ -269,7 +269,7 @@ export default defineComponent({
           class="bg-white border rounded-sm mb-6 min-h-200 p-10 relative overflow-hidden governance-setting"
         >
           <div class="border border-color-border rounded-sm mb-6 w-full">
-            <div class="border-b border-b-color-border flex py-3 px-6 items-center u-title3">
+            <div class="border-b border-b-color-border flex py-3 px-6 items-center u-h4">
               <span class="mr-2">Strategie(s)</span>
               <UTooltip placement="right">
                 {{
@@ -314,7 +314,7 @@ export default defineComponent({
               )}
               {}
               <div
-                class="border border-dashed rounded-sm cursor-pointer flex py-2 text-color3 items-center justify-center u-body2"
+                class="border border-dashed rounded-sm cursor-pointer flex py-2 text-color3 items-center justify-center u-h5"
                 onClick={this.addStrategy}
               >
                 <span style={{ fontSize: '18px', marginRight: '10px' }}>+</span>
@@ -323,7 +323,7 @@ export default defineComponent({
             </div>
           </div>
           <div class="border border-color-border rounded-sm mb-6 w-full">
-            <div class="border-b border-b-color-border py-3 px-6 u-title3">Vote symbol</div>
+            <div class="border-b border-b-color-border py-3 px-6 u-h4">Vote symbol</div>
             <div class="p-6">
               <UFormItem
                 showLabel={false}
@@ -344,9 +344,7 @@ export default defineComponent({
             </div>
           </div>
           <div class="border border-color-border rounded-sm mb-6 w-full">
-            <div class="border-b border-b-color-border py-3 px-6 u-title3">
-              Proposal precondition
-            </div>
+            <div class="border-b border-b-color-border py-3 px-6 u-h4">Proposal precondition</div>
             <div class="p-6">
               <div class="mb-6">
                 <USwitch
@@ -356,7 +354,7 @@ export default defineComponent({
                     return {}
                   }}
                 />
-                <span class="ml-4 u-body2">Allow all team members to submit a proposal</span>
+                <span class="ml-4 u-h5">Allow all team members to submit a proposal</span>
               </div>
               <div class="mb-2 u-body4">Proposal threshold </div>
               <UInputNumberGroup
@@ -383,7 +381,7 @@ export default defineComponent({
             </div>
           </div>
           <div class="border border-color-border rounded-sm mb-6 w-full">
-            <div class="border-b border-b-color-border py-3 px-6 u-title3">Proposal validity</div>
+            <div class="border-b border-b-color-border py-3 px-6 u-h4">Proposal validity</div>
             <div class="p-6">
               <UInputNumberGroup
                 class="w-full"
@@ -410,7 +408,7 @@ export default defineComponent({
             </div>
           </div>
           <div class="border border-color-border rounded-sm mb-2 w-full">
-            <div class="border-b border-b-color-border py-3 px-6 u-title3">Admin</div>
+            <div class="border-b border-b-color-border py-3 px-6 u-h4">Admin</div>
             <div class="p-6">
               <div class="flex mb-4">
                 <UInput disabled value={this.govSetting.admins[0]} class="flex-1" />
@@ -477,7 +475,7 @@ export default defineComponent({
             <div>
               {this.strategies?.map(strate => (
                 <div
-                  class="border rounded-sm cursor-pointer mb-6 p-6 u-title3"
+                  class="border rounded-sm cursor-pointer mb-6 p-6 u-h4"
                   onClick={() => (this.strategyModal = strate.dictValue)}
                 >
                   {strate.dictLabel}

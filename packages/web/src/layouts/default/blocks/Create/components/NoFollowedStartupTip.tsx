@@ -26,9 +26,9 @@ const NoFollowedStartupTip = defineComponent({
         <UCard style={{ width: '540px' }} closable={true} class="!p-7" onClose={close}>
           <div class="relative -top-3 flex items-center">
             <WarningFilled />{' '}
-            <span class="u-title3 ml-4">You have not joined or connected any startup</span>
+            <span class="u-h4 ml-4">You have not joined or connected any startup</span>
           </div>
-          <div class="mt-3 ml-12 u-body2 text-grey3">
+          <div class="mt-3 ml-12 u-h5 text-grey3">
             Please join or connect a startup before create proposal
           </div>
           <div class="flex justify-end mt-20">

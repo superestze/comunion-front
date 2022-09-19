@@ -89,13 +89,13 @@ export const CrowdfundingInfo = defineComponent({
         {props.info.detail && (
           <div class="mb-6">
             <div class="mb-1 u-title2">dCrowdfunding detail：</div>
-            <a class="text-primary u-body2" target="__blank" href={props.info.detail}>
+            <a class="text-primary u-h5" target="__blank" href={props.info.detail}>
               {props.info.detail}
             </a>
           </div>
         )}
-        <div class="mt-6 mb-10 break-all u-body2" v-html={props.info.description}></div>
-        <div class="grid gap-y-6 grid-cols-[220px,1fr] u-h6 text-color2">
+        <div class="mb-6 u-h5" v-html={props.info.description}></div>
+        <div class="grid text-color2 gap-y-6 grid-cols-[220px,1fr] u-h6">
           <div class="text-color1">dCrowdfunding Address :</div>
           <div class="text-primary">
             <a

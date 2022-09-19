@@ -39,18 +39,12 @@ export default defineComponent({
             class="rounded-sm h-15 mr-4 w-15"
           />
           <div class="flex-1 overflow-hidden">
-            <div class="mb-2 truncate font-primary font-semibold text-[20px] text-color1">
-              {this.startup?.title}
-            </div>
-            {(this.startup?.mode || 0) > 0 && (
-              <span class="rounded-sm h-1.25rem mr-2 px-2 text-0.75rem text-color2 leading-1.25rem inline-block border-1 border-[#DADCE0]">
-                {this.modeName}
-              </span>
-            )}
+            <div class="mb-2 text-color1 truncate u-h3">{this.startup?.title}</div>
+            {(this.startup?.mode || 0) > 0 && <UTag class="text-color2">{this.modeName}</UTag>}
           </div>
         </div>
         {this.tags.length > 0 && (
-          <div class="flex flex-wrap mt-5 gap-2 text-[#211B42]">
+          <div class="flex flex-wrap mt-4 gap-2">
             {this.tags.slice(0, 4).map((value, $index) => {
               return <UTag key={`tag_${$index}`}>{value}</UTag>
             })}
@@ -59,7 +53,7 @@ export default defineComponent({
           </div>
         )}
         {this.startup?.mission && (
-          <p class="mt-6 text-color1 u-body2 line-clamp-2 text-color3">{this.startup?.mission}</p>
+          <p class="mt-2 text-color2 u-h5 line-clamp-2">{this.startup?.mission}</p>
         )}
         <SocialGroup
           discord={this.startup?.discord}

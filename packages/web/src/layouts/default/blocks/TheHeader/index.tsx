@@ -76,8 +76,8 @@ const TheHeader = defineComponent({
             <RouterLink
               key={nav.name}
               class={[
-                'transition u-body2 font-bold ',
-                nav.disabled ? '!text-grey4 cursor-default' : 'text-[#0009] hover:text-primary'
+                'transition u-h5 font-bold ',
+                nav.disabled ? '!text-color3 cursor-default' : 'text-[#0009] hover:text-primary'
               ]}
               activeClass={[nav.disabled ? 'text-[#0009]' : '!text-primary'].join(' ')}
               to={nav.disabled ? '' : nav.url}

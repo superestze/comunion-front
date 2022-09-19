@@ -167,11 +167,11 @@ export const VerifyToken = defineComponent({
         render(value) {
           return (
             <div class="grid grid-cols-[100px,2fr]">
-              <div class="mb-6 text-grey3 u-body2">Name:</div>
+              <div class="mb-6 text-grey3 u-h5">Name:</div>
               <div>{props.crowdfundingInfo.sellTokenName}</div>
-              <div class="mb-6 text-grey3 u-body2">Symbol:</div>
+              <div class="mb-6 text-grey3 u-h5">Symbol:</div>
               <div>{props.crowdfundingInfo.sellTokenSymbol}</div>
-              <div class="text-grey3 u-body2">Decimals:</div>
+              <div class="text-grey3 u-h5">Decimals:</div>
               <div>{props.crowdfundingInfo.sellTokenDecimals}</div>
             </div>
           )
@@ -191,7 +191,7 @@ export const VerifyToken = defineComponent({
               <div>
                 Team Wallet Address
                 <span class="n-form-item-label__asterisk">&nbsp;*</span>
-                <span class="font-normal text-xs ml-4 text-grey4">
+                <span class="font-normal text-xs ml-4 text-color3">
                   Team wallet address used to receive funds raised
                 </span>
               </div>

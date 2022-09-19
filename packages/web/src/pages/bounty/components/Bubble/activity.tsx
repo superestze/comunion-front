@@ -34,12 +34,12 @@ type TransactionContent = {
 function normalMessage(obj: NormalMessage) {
   return (
     <div class="flex-1 ml-4">
-      <div class="items-center mb-4">
-        <p class="mb-1 font-primary font-semibold text-4">{obj.name}</p>
-        <p class="mr-16px text-14px font-primary text-color3">{obj.date}</p>
+      <div class="mb-4 items-center">
+        <p class="font-primary font-semibold mb-1 text-4">{obj.name}</p>
+        <p class="font-primary mr-16px text-14px text-color3">{obj.date}</p>
       </div>
       <div class={`bg-purple rounded-md  mt-3 py-4 px-6 `}>
-        <div class={` text-black u-body2 max-h-20 overflow-auto`} innerHTML={obj.content}></div>
+        <div class={` text-black u-h5 max-h-20 overflow-auto`} innerHTML={obj.content}></div>
       </div>
     </div>
   )
@@ -48,17 +48,17 @@ function normalMessage(obj: NormalMessage) {
 function transactionMessage(obj: TransactionMessage) {
   return (
     <div class="flex-1 ml-4">
-      <div class="items-center mb-4">
-        <p class="mb-1 font-primary font-semibold text-4">{obj.name}</p>
-        <p class="mr-16px text-14px font-primary text-color3">{obj.date}</p>
+      <div class="mb-4 items-center">
+        <p class="font-primary font-semibold mb-1 text-4">{obj.name}</p>
+        <p class="font-primary mr-16px text-14px text-color3">{obj.date}</p>
       </div>
       <p class="bg-purple flex rounded-8px text-black p-6 overflow-hidden items-center">
         <div class="flex items-center">
           <div class="bg-white flex rounded-20px h-40px w-40px justify-center items-center">
             <VectorFilled class="text-primary" />
           </div>
-          <div class="border-solid flex flex-col border-r-1px border-color-border h-16 ml-3 pr-6 justify-center">
-            <p class="text-16px font-primary font-semibold text-[##333333]">Send</p>
+          <div class="border-solid border-color-border flex flex-col border-r-1px h-16 ml-3 pr-6 justify-center">
+            <p class="font-primary font-semibold text-16px text-[##333333]">Send</p>
             <p class="mt-10px text-14px text-grey3">{obj.dateTime}</p>
           </div>
         </div>
@@ -71,11 +71,11 @@ function transactionMessage(obj: TransactionMessage) {
               </>
             )}
           </p>
-          <p class="mt-4px font-primary font-400">Txn Hash：</p>
+          <p class="font-primary font-400 mt-4px">Txn Hash：</p>
           <a
             href={`${obj.url}${obj.content.transactionHash1}`}
             target="_blank"
-            class="mt-4px text-primary font-primary font-400"
+            class="font-primary font-400 mt-4px text-primary"
           >
             {obj.content.transactionHash1}
           </a>
@@ -83,7 +83,7 @@ function transactionMessage(obj: TransactionMessage) {
             <a
               href={`${obj.url}${obj.content.transactionHash2}`}
               target="_blank"
-              class="mt-4px text-primary font-primary font-400"
+              class="font-primary font-400 mt-4px text-primary"
             >
               {obj.content.transactionHash2}
             </a>
@@ -130,7 +130,7 @@ export default defineComponent({
     return (
       <>
         <Bubble
-          class="mt-10"
+          class="mb-10"
           avatar={this.activity?.avatar || ''}
           comerId={this.activity?.comerID as unknown as string}
           v-slots={{

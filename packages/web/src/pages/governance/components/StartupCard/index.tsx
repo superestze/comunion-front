@@ -54,7 +54,7 @@ export default defineComponent({
               {(this.startup?.mode || 0) > 0 && (
                 // STARTUP_TYPES_COLOR_MAP[this.modeName]
                 <UTag
-                  class="border-1 border-[#DADCE0] !text-color2 font-primary !text-xs !h-5"
+                  class="border-1 border-color-border !text-color2 font-primary !text-xs !h-5"
                   type="filled"
                   bgColor={''}
                 >

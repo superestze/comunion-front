@@ -16,6 +16,7 @@ import { useBountyContractStore } from '@/stores/bountyContract'
 import { checkSupportNetwork } from '@/utils/wallet'
 
 export default defineComponent({
+  name: 'ApplicantBubble',
   props: {
     applicant: {
       type: Object as PropType<ItemType<ServiceReturn<'bounty@bounty-list-applicants'>>>,
@@ -120,19 +121,18 @@ export default defineComponent({
             )
           }}
         />
+
         <Bubble
-          class="mt-10"
+          class="mb-10"
           avatar={this.applicant?.image}
           comerId={this.applicant?.comerID as unknown as string}
           v-slots={{
             default: () => (
               <div class="flex-1 ml-4">
-                <div class="flex justify-between items-center">
-                  <div>
-                    <p class="font-primary font-semibold mb-2 text-color1">
-                      {this.applicant?.name}
-                    </p>
-                    <p class="mr-16px text-color3 u-h7">{this.formatDate}</p>
+                <div class="flex items-center">
+                  <div class="flex-1">
+                    <p class="mb-2 text-color1 u-h4">{this.applicant?.name}</p>
+                    <p class="text-color3 u-h7">{this.formatDate}</p>
                   </div>
                   {this.bountyRole === USER_ROLE.FOUNDER && (
                     <UButton
@@ -153,8 +153,8 @@ export default defineComponent({
                     </UButton>
                   )}
                 </div>
-                <div class="bg-purple rounded-[8px] mt-3 py-4 px-6 ">
-                  <div class="text-black max-h-20 overflow-auto u-body2">
+                <div class="bg-purple rounded mt-2 p-4">
+                  <div class="max-h-20 text-color2 overflow-auto u-h5">
                     {this.applicant?.description}
                   </div>
                 </div>
