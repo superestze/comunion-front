@@ -435,7 +435,7 @@ export const CrowdfundingInformation = defineComponent({
         >
           <UFormItemsFactory fields={this.formFields} values={this.crowdfundingInfo} />
         </UForm>
-        <div class="bg-purple rounded-lg mt-4 py-5.5 px-6">
+        <div class="bg-purple rounded-sm mt-4 py-5.5 px-6">
           Need <span class="text-primary">{this.totalSellToken}</span>{' '}
           {this.crowdfundingInfo.sellTokenSymbol} to create dCrowdfunding.
         </div>

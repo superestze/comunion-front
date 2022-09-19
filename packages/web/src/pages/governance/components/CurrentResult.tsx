@@ -16,11 +16,10 @@ export const CurrentResult = defineComponent({
   },
   render() {
     return (
-      <UCard>
-        <div class="u-h5 text-color2 mb-6">Current results</div>
+      <UCard title="Current results">
         {(this.proposalInfo.choiceVoteInfos || []).map(choiceOption => (
           <div>
-            <div class="flex justify-between mb-1 u-h6">
+            <div class="flex mb-2 justify-between u-h6">
               <span>{choiceOption.itemName}</span>
               <span class="text-color3">
                 {choiceOption.votes}
@@ -31,7 +30,7 @@ export const CurrentResult = defineComponent({
               color="#5331F4"
               showIndicator={false}
               percentage={Number(choiceOption.percent) * 100}
-              height={6}
+              height={8}
               class="mb-4"
             />
           </div>

@@ -38,47 +38,34 @@ export default defineComponent({
     return (
       <div>
         <div class="flex">
-          <div class="w-15 h-15" onClick={this.toComerDetail}>
+          <div class="h-15 mr-4 w-15" onClick={this.toComerDetail}>
             <UStartupLogo
               src={this.startup?.logo || ''}
               width="15"
               height="15"
-              class="rounded !object-contain cursor-pointer"
+              class="rounded cursor-pointer !object-contain"
             />
           </div>
-          <div class="flex-1 flex flex-col ml-6 truncate">
-            <div class="flex items-center mb-12px">
-              <span class="u-h2 w-full truncate">{this.startup?.name}</span>
-            </div>
-            <div class="flex">
-              {(this.startup?.mode || 0) > 0 && (
-                // STARTUP_TYPES_COLOR_MAP[this.modeName]
-                <UTag
-                  class="border-1 border-color-border !text-color2 font-primary !text-xs !h-5"
-                  type="filled"
-                  bgColor={''}
-                >
-                  {this.modeName}
-                </UTag>
-              )}
-            </div>
+          <div class="flex-1">
+            <div class="mb-12px text-color1 truncate u-h3">{this.startup?.name}</div>
+            {(this.startup?.mode || 0) > 0 && <UTag class="text-color2">{this.modeName}</UTag>}
           </div>
         </div>
-        <div class={['flex flex-wrap gap-2 mt-20px']}>
+        <div class={['flex flex-wrap gap-2 mt-4']}>
           {(this.tags || []).slice(0, 4).map((value, $index) => {
             return $index + 1 < 4 && <UTag key={value}>{value}</UTag>
           })}
 
           {(this.tags || []).length - 3 > 1 ? <UTag>+ {(this.tags || []).length - 3}</UTag> : null}
         </div>
-        <p class="font-opensans text-color2 break-all line-clamp-2 mt-4">{this.startup?.mission}</p>
+        <p class="mt-4 text-color2 break-all u-h5 line-clamp-2">{this.startup?.mission}</p>
         <SocialGroup
           discord={this.startup?.discord}
           website={this.startup?.website}
           telegram={this.startup?.telegram}
           twitter={this.startup?.twitter}
           docs={this.startup?.docs}
-          class="flex gap-4 mt-7"
+          class="flex mt-6 gap-4"
         />
       </div>
     )

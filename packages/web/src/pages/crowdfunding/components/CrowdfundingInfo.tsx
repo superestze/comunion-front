@@ -75,7 +75,7 @@ export const CrowdfundingInfo = defineComponent({
         {props.info.youtube && (
           <div class="mb-6">
             <iframe
-              class="rounded-lg"
+              class="rounded-sm"
               width="100%"
               height="320"
               src={`https://www.youtube.com/embed/${youtubeId.value}`}

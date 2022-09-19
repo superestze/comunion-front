@@ -96,7 +96,7 @@ export const Vote = defineComponent({
       <UForm ref={(ref: any) => (this.proposalVoteFormRef = ref)} model={this.proposalInfo}>
         <UFormItem showFeedback={false} label="Voting" required class="flex flex-col mb-4 relative">
           <div
-            class="border rounded-lg cursor-pointer flex w-full py-2 px-4 justify-between items-center"
+            class="border rounded-sm cursor-pointer flex w-full py-2 px-4 justify-between items-center"
             onClick={this.triggerVoteField}
             id="voting-field"
           >

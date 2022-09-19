@@ -3,7 +3,7 @@
   --active-bg-new: rgb(240 240 240 / 100%);
 
   box-shadow: 0 2px 10px rgb(0 0 0 / 10%);
-  @apply !rounded-lg !mt-5 !ml-0 !py-5 !px-3;
+  @apply !rounded-sm !mt-5 !ml-0 !py-5 !px-3;
 
   :global {
     .n-dropdown-option-body {
@@ -32,7 +32,7 @@
 
         .n-dropdown-option-body {
           &__suffix {
-            @apply rounded-lg bg-green1 h-2 mr-10px ml-2 w-2 self-center !min-w-0 !p-0 !block;
+            @apply rounded-sm bg-green1 h-2 mr-10px ml-2 w-2 self-center !min-w-0 !p-0 !block;
           }
         }
       }

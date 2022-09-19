@@ -191,7 +191,7 @@ const EditStartupForm = defineComponent({
     return () => (
       <UForm ref={formRef} rules={allRules} model={model}>
         <p class="mb-7 text-[#3F2D99] uppercase u-card-title1">FINANCE SETTING</p>
-        <ul class="border rounded-lg list-disc border-color-border mb-6 p-4 pl-8 text-body1 relative u-body1">
+        <ul class="border rounded-sm list-disc border-color-border mb-6 p-4 pl-8 text-body1 relative u-body1">
           <li>First, shilling startup by filling token information</li>
           <li>
             If you have not a token yet， please contact comunion team help you to create your

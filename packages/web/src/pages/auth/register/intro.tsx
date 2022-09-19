@@ -36,7 +36,7 @@ const RegisterIntroductionPage = defineComponent({
         <div class="flex py-6 justify-end">
           <UButton
             type="primary"
-            class="rounded-lg font-[16px] w-30"
+            class="rounded-sm font-[16px] w-30"
             size="large"
             onClick={toProfile}
           >
