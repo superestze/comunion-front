@@ -177,7 +177,7 @@ const BountyBasicInfo = defineComponent({
         ],
         render(value) {
           return (
-            <div class="w-full">
+            <>
               {props.bountyInfo.contact.map((item: ContactType, itemIndex: number) => (
                 <div class={{ 'mb-4': itemIndex < props.bountyInfo.contact.length - 1 }}>
                   <div class="flex items-center">
@@ -221,7 +221,7 @@ const BountyBasicInfo = defineComponent({
                   )}
                 </div>
               ))}
-            </div>
+            </>
           )
         }
       },

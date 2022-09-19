@@ -389,78 +389,8 @@ const CreateStartupForm = defineComponent({
     }
     return () => (
       <UForm ref={formRef} rules={allRules} model={model}>
-        {/* <p class="mb-7 text-primary1 u-card-title1">INFO SETTING</p> */}
         <UFormItemsFactory fields={infoFields} values={model} />
-        {/* <div class="bg-purple h-13px my-8"></div> */}
-        {/* <p class="mb-7 uppercase u-card-title1">Finance Setting</p> */}
-        {/* <ul class="border rounded-lg list-disc border-color-border mb-6 p-4 pl-8 text-body1 relative">
-          <li>Firstly, the token must be bound to the Start-Up as Proof-of-Stake.</li>
-          <li>A token can only be bound to one Startup and can't be changed after bound.</li>
-          <li>If you have not a token yet, use Erc20-Generator to create your token.</li>
-          <div class="flex text-primary right-4 bottom-4 absolute items-center">
-            How to Set
-            <TipOutlined class="ml-1" />
-          </div>
-        </ul> */}
-        {/* <UFormItem label="Token Contract" required path="tokenContract">
-          <UAddressInput
-            placeholder="Please enter your token contract address"
-            v-model:value={model.tokenContract}
-            onChange={onTokenContractChange}
-          />
-        </UFormItem> */}
-        {/* <div class="border rounded-lg border-color-border mb-2 grid py-4.5 px-4 text-body2 gap-x-2 gap-y-4 grid-cols-2">
-          <div class="flex items-center">
-            <span class="w-36">TOKEN NAME:</span>
-            <span>{tokenInfo.name || '--'}</span>
-          </div>
-          <div class="flex items-center">
-            <span class="w-36">Total Liquidity:</span>
-            <span>{tokenInfo.liquidity || '--'}</span>
-          </div>
-          <div class="flex items-center">
-            <span class="w-36">TOKEN SYMBOL:</span>
-            <span>{tokenInfo.symbol || '--'}</span>
-          </div>
-          <div class="flex items-center">
-            <span class="w-36">Total Txns:</span>
-            <span>{tokenInfo.txns || '--'}</span>
-          </div>
-          <div class="flex items-center">
-            <span class="w-36">TOTAL SUPPLY:</span>
-            <span>{tokenInfo.supply || '--'}</span>
-          </div>
-          <div class="flex items-center">
-            <span class="w-36">Holders:</span>
-            <span>{tokenInfo.holders || '--'}</span>
-          </div>
-        </div> */}
-        {/* <UFormItem label="Wallet Compose" required path="composes">
-          <div class="w-full">
-            {model.composes.map((compose, index) => (
-              <div class="flex mb-6 w-full items-center">
-                <UInputGroup key={index} class="flex w-full">
-                  <UInput v-model:value={compose.name} class="!w-50" placeholder="Wallet name" />
-                  <UAddressInput
-                    v-model:value={compose.address}
-                    class="flex-1"
-                    placeholder="Please entre wallet address"
-                  />
-                </UInputGroup>
-                {model.composes.length > 1 && (
-                  <CloseOutlined
-                    class="cursor-pointer ml-4 text-grey3 hover:text-primary"
-                    onClick={() => removeCompose(index)}
-                  />
-                )}
-              </div>
-            ))}
-          </div>
-        </UFormItem> */}
-        {/* <UButton text onClick={addCompose} type="primary">
-          <PlusOutlined class="mr-2" />
-          ADD ANOTHER WALLET
-        </UButton> */}
+
         <div class="flex mt-10 items-center justify-end">
           <UButton type="default" size="large" class="mr-4 w-41" onClick={onCancel}>
             Cancel

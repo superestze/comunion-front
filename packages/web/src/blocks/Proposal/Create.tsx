@@ -41,15 +41,15 @@ const CreateProposalBlock = defineComponent({
 
     const footer = () => {
       return (
-        <div class="text-right pr-16 pb-4 bg-purple">
+        <div class="bg-purple text-right pr-16 pb-4">
           {createCreateProposalInfo.value?.proposalInfo.current === 1 && (
-            <UButton class="w-40 mr-4" type="primary" ghost onClick={closeCrowdfunding}>
+            <UButton class="mr-4 w-40" type="primary" ghost onClick={closeCrowdfunding}>
               Cancel
             </UButton>
           )}
           {(createCreateProposalInfo.value?.proposalInfo.current as number) > 1 && (
             <UButton
-              class="w-40 mr-4"
+              class="mr-4 w-40"
               type="primary"
               ghost
               onClick={createCreateProposalInfo.value?.toPreviousStep}
@@ -97,16 +97,14 @@ const CreateProposalBlock = defineComponent({
           whiteBoard: this.footer
         }}
       >
-        <div class="-mt-5">
-          {this.visible && (
-            <CreateProposalForm
-              ref={(ref: any) => (this.createCreateProposalInfo = ref)}
-              stepOptions={this.stepOptions}
-              defaultProposalInfo={this.defaultProposalInfo}
-              onCancel={this.close}
-            />
-          )}
-        </div>
+        {this.visible && (
+          <CreateProposalForm
+            ref={(ref: any) => (this.createCreateProposalInfo = ref)}
+            stepOptions={this.stepOptions}
+            defaultProposalInfo={this.defaultProposalInfo}
+            onCancel={this.close}
+          />
+        )}
       </UDrawer>
     )
   }

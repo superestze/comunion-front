@@ -132,7 +132,7 @@ export const BasicInfo = defineComponent({
               <RichEditor
                 limit={6400}
                 placeholder="Describe what you proposal is about"
-                class="w-full h-full"
+                class="h-full w-full"
                 v-model:value={props.proposalInfo.description}
               />
             </div>
@@ -168,16 +168,14 @@ export const BasicInfo = defineComponent({
   },
   render() {
     return (
-      <div>
-        <UForm
-          ref={(ref: any) => (this.proposalBasicInfoForm = ref)}
-          rules={this.proposalBasicInfoRules}
-          model={this.proposalInfo}
-          // class="grid grid-cols-2 gap-x-10"
-        >
-          <UFormItemsFactory fields={this.formFields} values={this.proposalInfo} />
-        </UForm>
-      </div>
+      <UForm
+        ref={(ref: any) => (this.proposalBasicInfoForm = ref)}
+        rules={this.proposalBasicInfoRules}
+        model={this.proposalInfo}
+        // class="grid gap-x-10 grid-cols-2"
+      >
+        <UFormItemsFactory fields={this.formFields} values={this.proposalInfo} />
+      </UForm>
     )
   }
 })
