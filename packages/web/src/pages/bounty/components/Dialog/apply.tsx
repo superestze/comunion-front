@@ -247,12 +247,12 @@ const ApplyDialog = defineComponent({
     }
 
     return (
-      <UModal show={this.visible}>
+      <UModal v-model:show={this.visible}>
         <UCard
+          //  '--n-close-icon-color': '#3F2D99'
           style={{
             width: '540px',
-            '--n-title-text-color': '#3F2D99',
-            '--n-close-icon-color': '#3F2D99'
+            '--n-title-text-color': '#3F2D99'
           }}
           title={this.title}
           bordered={false}

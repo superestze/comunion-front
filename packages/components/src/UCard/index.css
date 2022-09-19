@@ -4,4 +4,8 @@
       @apply u-h5;
     }
   }
+
+  .n-base-close {
+    color: #3f2d99;
+  }
 }
