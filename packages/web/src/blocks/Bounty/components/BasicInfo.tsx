@@ -177,10 +177,14 @@ const BountyBasicInfo = defineComponent({
         ],
         render(value) {
           return (
-            <>
+            <div class="w-full">
               {props.bountyInfo.contact.map((item: ContactType, itemIndex: number) => (
-                <div class={{ 'mb-4': itemIndex < props.bountyInfo.contact.length - 1 }}>
-                  <div class="flex items-center">
+                <>
+                  <div
+                    class={`flex items-center ${
+                      itemIndex < props.bountyInfo.contact.length - 1 ? 'mb-4' : ''
+                    }`}
+                  >
                     <UInputGroup>
                       <USelect
                         options={contactOptions.value}
@@ -198,24 +202,28 @@ const BountyBasicInfo = defineComponent({
                         }
                       ></UInput>
                     </UInputGroup>
-                    {props.bountyInfo.contact.length > 1 && (
-                      <div
-                        class="cursor-pointer flex items-center"
-                        onClick={() => ctx.emit('delContact', itemIndex)}
-                      >
-                        <MinusCircleOutlined class="h-5 ml-4.5 w-5" />
-                      </div>
-                    )}
+                    {/* buttons */}
+                    <div class="flex ml-4 w-22 items-center">
+                      {props.bountyInfo.contact.length > 1 && (
+                        <div
+                          class="cursor-pointer flex items-center"
+                          onClick={() => ctx.emit('delContact', itemIndex)}
+                        >
+                          <MinusCircleOutlined class="h-5 mr-4 text-error w-5" />
+                        </div>
+                      )}
 
-                    {itemIndex + 1 === props.bountyInfo.contact.length && itemIndex < 5 && (
-                      <div
-                        class="cursor-pointer flex items-center"
-                        onClick={() => ctx.emit('addContact')}
-                      >
-                        <AddCircleOutlined class="h-5 ml-4.5 w-5" />
-                      </div>
-                    )}
+                      {itemIndex + 1 === props.bountyInfo.contact.length && itemIndex < 5 && (
+                        <div
+                          class="cursor-pointer flex items-center"
+                          onClick={() => ctx.emit('addContact')}
+                        >
+                          <AddCircleOutlined class="h-5 w-5" />
+                        </div>
+                      )}
+                    </div>
                   </div>
+                  {/* tips */}
                   {item.type === 1 && item.value && !validateEmail(item.value) && (
                     <div class="text-error ml-50">Please enter the correct email address</div>
                   )}
@@ -231,9 +239,9 @@ const BountyBasicInfo = defineComponent({
                     !item.value.includes('https://') && (
                       <div class="text-error ml-50">Please enter the correct email Telegram</div>
                     )}
-                </div>
+                </>
               ))}
-            </>
+            </div>
           )
         }
       },
