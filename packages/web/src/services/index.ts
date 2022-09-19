@@ -1297,9 +1297,9 @@ export const services = {
       mode?: number
       contractAudit?: string
       docs: string
-      tag: string[],
-      email?: string,
-      medium?: string,
+      tag: string[]
+      email?: string
+      medium?: string
       facebook?: string
     }>({
       url: replacePath('/bounty/{bountyID}/startup', args),
@@ -4007,7 +4007,7 @@ export const services = {
 
   'misc@file-upload'(
     args: // file : File
-      FormData
+    FormData
   ) {
     return requestAdapter<{
       url: string
