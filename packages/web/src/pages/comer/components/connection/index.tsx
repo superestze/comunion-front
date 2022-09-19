@@ -258,9 +258,7 @@ export default defineComponent({
           }
         }}
       >
-        {!Number(this.currentTabId) && tabContents[Number(this.currentTabId)]?.cont && (
-          <div class="flex flex-col">{tabContents[Number(this.currentTabId)].content}</div>
-        )}
+        {tabContents[Number(this.currentTabId)] && tabContents[Number(this.currentTabId)].content}
       </UCard>
     )
   }
