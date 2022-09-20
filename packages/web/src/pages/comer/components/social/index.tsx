@@ -245,7 +245,7 @@ export default defineComponent({
             ) : (
               <div class="cursor-pointer flex flex-wrap gap-4">
                 {this.socials.length === 0 ? (
-                  <p class="text-color2 u-h5">Add your social</p>
+                  <p class="text-color3 u-h5">Add your social</p>
                 ) : (
                   <>{socialIconComponent(this.socialsObj, this.view, editIcon, delIcon)}</>
                 )}

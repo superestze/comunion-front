@@ -169,7 +169,7 @@ export default defineComponent({
             ) : (
               <div>
                 {this.educations.length === 0 ? (
-                  <p class="text-color2 u-h5">Add your Education</p>
+                  <p class="text-color3 u-h5">Add your Education</p>
                 ) : (
                   <>
                     {this.educations.map(item => {
