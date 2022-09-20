@@ -62,6 +62,7 @@ export default defineComponent({
       defualt: ''
     }
   },
+  emits: ['saved'],
   setup(props) {
     const walletStore = useWalletStore()
     const chainStore = useChainStore()
@@ -378,6 +379,7 @@ export default defineComponent({
                   `Startup "${this.info.name}" is Creating`
                 )
                 message.success('Successfully saved')
+                this.$emit('saved')
               } catch (error) {
                 this.info.switchChain = false
                 this.info.isChain = false
@@ -388,6 +390,7 @@ export default defineComponent({
             } else {
               await this.contractStore.setStartupSuccessAfter(requestParams)
               message.success('Successfully saved')
+              this.$emit('saved')
             }
           } catch (error) {
             console.error(error)

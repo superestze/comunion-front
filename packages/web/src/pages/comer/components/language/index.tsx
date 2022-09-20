@@ -161,7 +161,7 @@ export default defineComponent({
             ) : (
               <div class="flex flex-col ">
                 {this.languages.length === 0 ? (
-                  <p class="text-color2 u-h5">Add your Languages</p>
+                  <p class="text-color3 u-h5">Add your Languages</p>
                 ) : (
                   <>
                     {this.languages.map(item => (

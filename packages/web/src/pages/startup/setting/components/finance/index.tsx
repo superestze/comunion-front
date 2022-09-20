@@ -47,6 +47,7 @@ export default defineComponent({
       type: String
     }
   },
+  emits: ['saved'],
   setup(props) {
     const loading = ref(false)
 
@@ -118,6 +119,7 @@ export default defineComponent({
           await services['startup@startup-finance-setting-update'](params)
           this.loading = false
           message.success('Successfully saved')
+          this.$emit('saved')
         }
       })
     }

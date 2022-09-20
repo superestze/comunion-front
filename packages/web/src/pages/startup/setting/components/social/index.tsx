@@ -40,6 +40,7 @@ export default defineComponent({
       type: String
     }
   },
+  emits: ['saved'],
   setup(props) {
     const loading = ref(false)
 
@@ -194,6 +195,7 @@ export default defineComponent({
           })
           this.loading = false
           message.success('Successfully saved')
+          this.$emit('saved')
         }
       })
     }
