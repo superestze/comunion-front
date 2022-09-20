@@ -1,10 +1,8 @@
-import { message, UTooltip, UUpload, UUploadDragger } from '@comunion/components'
+import { message, UTooltip, UUpload, UUploadDragger, USpin } from '@comunion/components'
 import { QuestionCircleOutlined, RefreshOutlined, UploadFilled } from '@comunion/icons'
 import { CustomRequest } from 'naive-ui/lib/upload/src/interface'
 import { defineComponent, ref } from 'vue'
 import type { PropType } from 'vue'
-import bgImage from './bgImage.png'
-import image from './image.png'
 import './rect.css'
 
 export default defineComponent({
@@ -35,6 +33,10 @@ export default defineComponent({
     bgSize: {
       type: Boolean,
       default: () => false
+    },
+    loading: {
+      type: Boolean,
+      default: false
     }
   },
   setup() {
@@ -55,7 +57,7 @@ export default defineComponent({
       }
     }
     return (
-      <div>
+      <USpin show={this.loading}>
         <UUpload
           onBeforeUpload={handleBeforeUpload}
           class="rect-upload"
@@ -68,10 +70,12 @@ export default defineComponent({
                 <div class="bg-[rgba(0,0,0,0.5)] opacity-0 top-0 right-0 bottom-0 left-0 z-2 absolute rect-upload-mask">
                   <RefreshOutlined class="h-10 -mt-5 text-white -ml-5 top-1/2 left-1/2 w-10 absolute" />
                 </div>
-                <img
-                  src={this.imageUrl || this.bgSize ? bgImage : image}
-                  class={`h-full object-cover w-full top-0 left-0 right-0 m-auto z-1 absolute`}
-                />
+                {this.imageUrl && (
+                  <img
+                    src={this.imageUrl}
+                    class={`h-full object-cover w-full top-0 left-0 right-0 m-auto z-1 absolute`}
+                  />
+                )}
               </div>
             ) : (
               <div class="bg-purple flex h-full w-full justify-center items-center">
@@ -92,7 +96,7 @@ export default defineComponent({
             }}
           </UTooltip>
         </p>
-      </div>
+      </USpin>
     )
   }
 })
