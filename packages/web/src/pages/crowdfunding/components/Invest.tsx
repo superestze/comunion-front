@@ -404,7 +404,7 @@ export const Invest = defineComponent({
         countDownTime.value.status !== CrowdfundingStatus.LIVE ||
         Number(fromValue.value) <= 0 ||
         (mode.value === 'buy' && fromValue.value > maxBuyAmount.value) ||
-        (mode.value === 'sell' && toValue.value > maxSellAmount.value)
+        (mode.value === 'sell' && fromValue.value > maxSellAmount.value)
       )
     })
 
