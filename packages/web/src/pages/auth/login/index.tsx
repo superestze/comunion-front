@@ -79,7 +79,7 @@ export default defineComponent({
                     class="w-full"
                   />
                 </div>
-                <p class="font-100 text-center text-[#ffffff] text-28px">Comunion</p>
+                <p class="text-[#111111] text-28px font-bold text-center">Comunion</p>
                 <p
                   class="mt-54px text-center mb-20px"
                   style={{
