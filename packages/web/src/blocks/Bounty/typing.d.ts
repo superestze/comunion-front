@@ -1,6 +1,7 @@
 export interface ContactType {
   type: number
   value: string
+  blur?: boolean
 }
 export interface BountyInfo {
   current: number

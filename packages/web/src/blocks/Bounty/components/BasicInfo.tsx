@@ -18,7 +18,7 @@ import { BountyInfo, ContactType, chainInfoType } from '../typing'
 import RichEditor from '@/components/Editor'
 import { services } from '@/services'
 import { useUserStore } from '@/stores'
-import { validateEmail } from '@/utils/type'
+import { validateEmail, validateTelegram } from '@/utils/type'
 
 export const MAX_AMOUNT = 9999
 
@@ -181,7 +181,7 @@ const BountyBasicInfo = defineComponent({
               {props.bountyInfo.contact.map((item: ContactType, itemIndex: number) => (
                 <>
                   <div
-                    class={`flex items-center ${
+                    class={`flex items-center justify-between ${
                       itemIndex < props.bountyInfo.contact.length - 1 ? 'mb-4' : ''
                     }`}
                   >
@@ -196,10 +196,17 @@ const BountyBasicInfo = defineComponent({
                         v-model:value={item.value}
                         inputProps={{ type: item.type === 1 ? 'email' : 'text' }}
                         status={
-                          item.type === 1 && item.value && !validateEmail(item.value)
+                          (item.type === 1 && item.value && !validateEmail(item.value)) ||
+                          (item.type === 3 && item.value && !validateTelegram(item.value))
                             ? 'error'
                             : undefined
                         }
+                        onBlur={() => {
+                          item.blur = true
+                        }}
+                        onFocus={() => {
+                          item.blur = false
+                        }}
                       ></UInput>
                     </UInputGroup>
                     {/* buttons */}
@@ -224,15 +231,12 @@ const BountyBasicInfo = defineComponent({
                     </div>
                   </div>
                   {/* tips */}
-                  {item.type === 1 && item.value && !validateEmail(item.value) && (
+                  {item.type === 1 && item.blur && item.value && !validateEmail(item.value) && (
                     <div class="text-error ml-50">Please enter the correct email address</div>
                   )}
-                  {item.type === 3 &&
-                    item.value &&
-                    !item.value.includes('http://') &&
-                    !item.value.includes('https://') && (
-                      <div class="text-error ml-50">Invalid Telegram contract</div>
-                    )}
+                  {item.type === 3 && item.blur && item.value && !validateTelegram(item.value) && (
+                    <div class="text-error ml-50">Invalid Telegram contract {item.blur}</div>
+                  )}
                 </>
               ))}
             </div>
