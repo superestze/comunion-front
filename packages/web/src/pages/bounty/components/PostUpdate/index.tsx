@@ -52,7 +52,7 @@ export default defineComponent({
         <UButton
           type="primary"
           size="small"
-          class="w-35 !font-primary !font-semibold !text-[16px]"
+          class="w-35 !font-primary !font-semibold !text-[14px]"
           onClick={triggerDialog}
           disabled={this.disabled}
           color={this.disabled ? 'rgba(0,0,0,0.1)' : ''}
