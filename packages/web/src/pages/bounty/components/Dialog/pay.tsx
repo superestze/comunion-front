@@ -73,15 +73,14 @@ export default defineComponent({
           t: 'custom',
           name: 'token1Amount',
           title: 'Pay amount',
-          required: true,
-          formItemProps: {
-            feedback: 'At least greater than 0 for pay amount',
-            themeOverrides: {
-              feedbackTextColor: 'var(--u-grey-4-color)',
-              feedbackFontSizeMedium: '12px'
-            }
-          },
+          // required: true,
           rules: [
+            {
+              required: true,
+              message: 'Pay amount cannot be blank',
+              type: 'number',
+              trigger: 'blur'
+            },
             {
               validator: (rule, value) => {
                 return value > 0 || (formData.token2Amount > 0 && value >= 0)
@@ -118,7 +117,7 @@ export default defineComponent({
           name: 'token2Amount',
           title: '',
           formItemProps: {
-            feedback: 'At least greater than 0 for new desposit',
+            feedback: 'At least greater than 0 for pay amount',
             themeOverrides: {
               feedbackTextColor: 'var(--u-grey-4-color)',
               feedbackFontSizeMedium: '12px'
@@ -130,7 +129,7 @@ export default defineComponent({
                 return value > 0 || (formData.token1Amount > 0 && value >= 0)
               },
               message: 'Please set pay amount',
-              trigger: 'change'
+              trigger: 'blur'
             }
           ],
           render() {
