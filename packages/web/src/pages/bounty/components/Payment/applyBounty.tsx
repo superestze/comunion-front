@@ -1,4 +1,4 @@
-import { UButton } from '@comunion/components'
+import { UButton, UTooltip } from '@comunion/components'
 import { defineComponent, ref, computed } from 'vue'
 import { ApplyDialog } from '../Dialog'
 import { APPLICANT_STATUS, BOUNTY_STATUS } from '@/constants'
@@ -64,14 +64,40 @@ export default defineComponent({
           onTriggerDialog={applyBounty}
           deposit={this.applicantDepositMinAmount}
         />
-        <UButton
+        {this.disabled && this.ApplicantApplyDesc === 'Apply' ? (
+          <UButton
+            type="primary"
+            class={`${this.disabled && 'text-white'} ${this.$attrs.class}`}
+            onClick={applyBounty}
+            disabled={this.disabled}
+          >
+            <UTooltip
+              trigger="hover"
+              placement="top"
+              v-slots={{
+                trigger: () => this.ApplicantApplyDesc,
+                default: () => 'This bounty has been won by another applicant'
+              }}
+            />
+          </UButton>
+        ) : (
+          <UButton
+            type="primary"
+            class={`${this.disabled && 'text-white'} ${this.$attrs.class}`}
+            onClick={applyBounty}
+            disabled={this.disabled}
+          >
+            {this.ApplicantApplyDesc}
+          </UButton>
+        )}
+        {/* <UButton
           type="primary"
           class={`${this.disabled && 'text-white'} ${this.$attrs.class}`}
           onClick={applyBounty}
           disabled={this.disabled}
         >
           {this.ApplicantApplyDesc}
-        </UButton>
+        </UButton> */}
       </>
     )
   }
