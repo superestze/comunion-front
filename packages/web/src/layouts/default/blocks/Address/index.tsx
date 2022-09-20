@@ -30,13 +30,10 @@ const WalletAddress = defineComponent({
     return () => {
       // userStore.
       const btn = (
-        // <HeaderButton class={ctx.attrs.class} onClick={connectWallet}>
-
-        // </HeaderButton>
         <UButton
           size="small"
           onClick={connectWallet}
-          class="h-8 font-primary"
+          class="font-primary h-8"
           style={{
             '--n-border-radius': '2px',
             '--n-border': '1px solid rgba(218, 220, 224, 1)'
