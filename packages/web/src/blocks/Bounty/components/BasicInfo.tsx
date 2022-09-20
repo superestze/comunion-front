@@ -210,7 +210,7 @@ const BountyBasicInfo = defineComponent({
                       ></UInput>
                     </UInputGroup>
                     {/* buttons */}
-                    <div class="flex ml-4 w-22 items-center">
+                    <div class="flex ml-4 w-15 items-center">
                       {props.bountyInfo.contact.length > 1 && (
                         <div
                           class="cursor-pointer flex items-center"
@@ -235,7 +235,7 @@ const BountyBasicInfo = defineComponent({
                     <div class="text-error ml-50">Please enter the correct email address</div>
                   )}
                   {item.type === 3 && item.blur && item.value && !validateTelegram(item.value) && (
-                    <div class="text-error ml-50">Invalid Telegram contract {item.blur}</div>
+                    <div class="text-error ml-50">Invalid Telegram contract</div>
                   )}
                 </>
               ))}
