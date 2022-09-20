@@ -9,6 +9,9 @@ export const UStartupLogoProps = {
   },
   alt: {
     type: String
+  },
+  onClick: {
+    type: Function
   }
 } as const
 
@@ -47,6 +50,7 @@ const UStartupLogo = defineComponent({
           alt={props.alt}
           {...{ loading: 'lazy' }}
           {...ctx.attrs}
+          onClick={() => typeof props.onClick === 'function' && props.onClick()}
         />
       ) : (
         <div
@@ -55,6 +59,7 @@ const UStartupLogo = defineComponent({
             { failed: errored.value }
           ]}
           {...ctx.attrs}
+          onClick={() => typeof props.onClick === 'function' && props.onClick()}
         >
           {errored.value && <StartupLogoFilled class="m-auto h-7/10 w-7/10" />}
         </div>
