@@ -44,7 +44,7 @@ const GovernanceListPage = defineComponent({
       })
       if (!error) {
         if (reload) {
-          DataList.value = data!.rows as unknown as ItemType[]
+          DataList.value = (data!.rows as unknown as ItemType[]) || []
         } else {
           DataList.value.push(...(data!.rows as unknown as ItemType[]))
         }
