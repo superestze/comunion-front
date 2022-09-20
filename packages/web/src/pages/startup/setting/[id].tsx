@@ -30,7 +30,12 @@ export default defineComponent({
     const currentEditComponent = ref<string>('INFO')
     const startup = useStartup()
     const route = useRoute()
-    startup.get(route.params.id as string)
+
+    const getDetail = () => {
+      startup.get(route.params.id as string)
+    }
+    // init
+    getDetail()
 
     const socialList = computed(() => {
       const list = getContactList(startup.detail).filter(item => !!item.socialLink)
@@ -43,7 +48,8 @@ export default defineComponent({
       currentEditComponent,
       startup: startup.detail,
       route,
-      socialList
+      socialList,
+      getDetail
     }
   },
   render() {
@@ -86,6 +92,7 @@ export default defineComponent({
                   isChain: this.startup?.onChain
                 }}
                 startupId={this.route.params.id as string}
+                onSaved={this.getDetail}
               />
             )}
             {this.currentEditComponent === 'SECURITY' && (
@@ -95,6 +102,7 @@ export default defineComponent({
                   contractAudit: this.startup?.contractAudit || ''
                 }}
                 startupId={this.route.params.id as string}
+                onSaved={this.getDetail}
               />
             )}
             {this.currentEditComponent === 'FINANCE' && (
@@ -111,6 +119,7 @@ export default defineComponent({
                   wallets: this.startup?.wallets || []
                 }}
                 startupId={this.route.params.id as string}
+                onSaved={this.getDetail}
               />
             )}
             {this.currentEditComponent === 'TEAM' && (
@@ -126,6 +135,7 @@ export default defineComponent({
                   socials: this.socialList
                 }}
                 startupId={this.route.params.id as string}
+                onSaved={this.getDetail}
               />
             )}
             {this.currentEditComponent === 'GOVERNANCE' && this.startup && (
@@ -135,6 +145,7 @@ export default defineComponent({
               <Sequence
                 data={{ tabSequence: this.startup?.tabSequence || [] }}
                 startupId={this.route.params.id as string}
+                onSaved={this.getDetail}
               />
             )}
             {this.currentEditComponent === 'DAPP' && (

@@ -18,7 +18,7 @@ import { BountyInfo, ContactType, chainInfoType } from '../typing'
 import RichEditor from '@/components/Editor'
 import { services } from '@/services'
 import { useUserStore } from '@/stores'
-import { validateEmail } from '@/utils/type'
+import { validateEmail, validateTelegram } from '@/utils/type'
 
 export const MAX_AMOUNT = 9999
 
@@ -177,10 +177,14 @@ const BountyBasicInfo = defineComponent({
         ],
         render(value) {
           return (
-            <>
+            <div class="w-full">
               {props.bountyInfo.contact.map((item: ContactType, itemIndex: number) => (
-                <div class={{ 'mb-4': itemIndex < props.bountyInfo.contact.length - 1 }}>
-                  <div class="flex items-center">
+                <>
+                  <div
+                    class={`flex items-center justify-between ${
+                      itemIndex < props.bountyInfo.contact.length - 1 ? 'mb-4' : ''
+                    }`}
+                  >
                     <UInputGroup>
                       <USelect
                         options={contactOptions.value}
@@ -192,48 +196,50 @@ const BountyBasicInfo = defineComponent({
                         v-model:value={item.value}
                         inputProps={{ type: item.type === 1 ? 'email' : 'text' }}
                         status={
-                          item.type === 1 && item.value && !validateEmail(item.value)
+                          (item.type === 1 && item.value && !validateEmail(item.value)) ||
+                          (item.type === 3 && item.value && !validateTelegram(item.value))
                             ? 'error'
                             : undefined
                         }
+                        onBlur={() => {
+                          item.blur = true
+                        }}
+                        onFocus={() => {
+                          item.blur = false
+                        }}
                       ></UInput>
                     </UInputGroup>
-                    {props.bountyInfo.contact.length > 1 && (
-                      <div
-                        class="cursor-pointer flex items-center"
-                        onClick={() => ctx.emit('delContact', itemIndex)}
-                      >
-                        <MinusCircleOutlined class="h-5 ml-4.5 w-5" />
-                      </div>
-                    )}
+                    {/* buttons */}
+                    <div class="flex ml-4 w-15 items-center">
+                      {props.bountyInfo.contact.length > 1 && (
+                        <div
+                          class="cursor-pointer flex items-center"
+                          onClick={() => ctx.emit('delContact', itemIndex)}
+                        >
+                          <MinusCircleOutlined class="h-5 mr-4 text-error w-5" />
+                        </div>
+                      )}
 
-                    {itemIndex + 1 === props.bountyInfo.contact.length && itemIndex < 5 && (
-                      <div
-                        class="cursor-pointer flex items-center"
-                        onClick={() => ctx.emit('addContact')}
-                      >
-                        <AddCircleOutlined class="h-5 ml-4.5 w-5" />
-                      </div>
-                    )}
+                      {itemIndex + 1 === props.bountyInfo.contact.length && itemIndex < 5 && (
+                        <div
+                          class="cursor-pointer flex items-center"
+                          onClick={() => ctx.emit('addContact')}
+                        >
+                          <AddCircleOutlined class="h-5 w-5" />
+                        </div>
+                      )}
+                    </div>
                   </div>
-                  {item.type === 1 && item.value && !validateEmail(item.value) && (
+                  {/* tips */}
+                  {item.type === 1 && item.blur && item.value && !validateEmail(item.value) && (
                     <div class="text-error ml-50">Please enter the correct email address</div>
                   )}
-                  {item.type === 2 &&
-                    item.value &&
-                    !item.value.includes('http://') &&
-                    !item.value.includes('https://') && (
-                      <div class="text-error ml-50">Please enter the correct email Discord</div>
-                    )}
-                  {item.type === 3 &&
-                    item.value &&
-                    !item.value.includes('http://') &&
-                    !item.value.includes('https://') && (
-                      <div class="text-error ml-50">Please enter the correct email Telegram</div>
-                    )}
-                </div>
+                  {item.type === 3 && item.blur && item.value && !validateTelegram(item.value) && (
+                    <div class="text-error ml-50">Invalid Telegram contract</div>
+                  )}
+                </>
               ))}
-            </>
+            </div>
           )
         }
       },

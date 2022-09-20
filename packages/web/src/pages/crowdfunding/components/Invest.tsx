@@ -770,7 +770,7 @@ export const Invest = defineComponent({
             <div class="min-h-20 p-4 text-color2 u-h6">
               This can't be undo and you'll lose your changes
             </div>
-            <div class="flex mt-20 justify-end">
+            <div class="flex mt-4 justify-end">
               <UButton
                 type="primary"
                 ghost
@@ -804,7 +804,7 @@ export const Invest = defineComponent({
               This will transfer all funds raised to the team wallet
             </div>
 
-            <div class="flex mt-20 justify-end">
+            <div class="flex mt-4 justify-end">
               <UButton
                 type="primary"
                 ghost

@@ -100,7 +100,7 @@ export default defineComponent({
             ) : (
               <div class="flex flex-wrap gap-2">
                 {Array.isArray(this.info.skills) && this.info.skills.length === 0 ? (
-                  <p class="text-color2 u-h5">Add your skill</p>
+                  <p class="text-color3 u-h5">Add your skill</p>
                 ) : (
                   <>
                     {this.info.skills.map(value => (

@@ -2,7 +2,6 @@ import { ULogo, UTransactionContainer, UTransactionWaiting } from '@comunion/com
 import { defineComponent, watchEffect } from 'vue'
 import { RouterLink, RouterView, useRouter, useRoute } from 'vue-router'
 import TheHeader from './blocks/TheHeader'
-import styles from './index.module.css'
 import { FOOTER_LINKS } from '@/constants'
 import { useUserStore, useWalletStore } from '@/stores'
 import { useContractStore } from '@/stores/contract'
@@ -45,37 +44,30 @@ const DefaultLayout = defineComponent({
           <RouterView key={route.fullPath} />
         </div>
         {/* Footer */}
-        <div class={styles.footer}>
-          <div class="border-t-white m-auto border-t-1px border-opacity-10 pb-28px w-311px sm:flex sm:pt-36px sm:pb-62px sm:w-1110px">
+        <div class="bg-[#F0F0F0] text-color2">
+          <div class="flex py-15 u-page-container relative items-start">
             {/* about us */}
-            <RouterLink
-              class="flex mt-30px text-white mb-16px items-center block sm:mt-0 sm:mr-126px sm:items-baseline"
-              to="/"
-            >
+            <RouterLink class="flex flex-1 items-center" to="/">
               <ULogo theme="colorful" height={32} />
-              <span class="text-white ml-5 u-h3 ">ABOUT US</span>
+              <span class=" ml-5 u-h3 ">ABOUT US</span>
             </RouterLink>
-            <div class="relative sm:flex sm:flex-1 sm:gap-40">
-              {FOOTER_LINKS.map(data => (
-                <div key={data.title} class="mb-40px">
-                  <div class="text-white pt-12px pb-12px block u-card-title1 sm:pb-16px ">
-                    {data.title.toUpperCase()}
-                  </div>
-                  {data.links.map(item => (
-                    <a
-                      class="text-white pt-12px pb-12px text-15px leading-15px block sm:pb-16px sm:text-16px hover:text-primary"
-                      key={item.title}
-                      href={item.url}
-                      target="_blank"
-                    >
-                      {item.title}
-                    </a>
-                  ))}
-                </div>
-              ))}
-              {/* 版本号 */}
-              <span class="text-white footer-links-vertion">V5.7. Aug 2022</span>
-            </div>
+            {FOOTER_LINKS.map(data => (
+              <div key={data.title} class="flex-1">
+                <div class="mb-2 u-h4">{data.title.toUpperCase()}</div>
+                {data.links.map(item => (
+                  <a
+                    class="mt-4 block u-h6 hover:text-color1"
+                    key={item.title}
+                    href={item.url}
+                    target="_blank"
+                  >
+                    {item.title}
+                  </a>
+                ))}
+              </div>
+            ))}
+            {/* 版本号 */}
+            <span class="text-white right-4 bottom-15 absolute">V5.7. Aug 2022</span>
           </div>
         </div>
       </div>

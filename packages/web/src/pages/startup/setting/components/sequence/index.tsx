@@ -19,6 +19,7 @@ export default defineComponent({
       required: true
     }
   },
+  emits: ['saved'],
   setup(props) {
     const loading = ref(false)
 
@@ -47,7 +48,8 @@ export default defineComponent({
         tabs: this.list
       })
       this.loading = false
-      message.success('successfully saved')
+      message.success('Successfully saved')
+      this.$emit('saved')
     }
     return (
       <USpin show={this.loading}>

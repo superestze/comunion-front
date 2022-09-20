@@ -66,7 +66,10 @@ export default defineComponent({
   emits: ['Done'],
   setup(props) {
     const subTitle = computed(() => {
-      return `${props.location}, ${props.timeZone}`
+      const result = []
+      props.location && result.push(props.location)
+      props.timeZone && result.push(props.timeZone)
+      return `${result.join(', ')}`
     })
     const editMode = ref<boolean>(false)
     const showAvatarModal = ref<boolean>(false)
@@ -188,7 +191,6 @@ export default defineComponent({
     const handleSubmit = () => {
       this.form?.validate(async err => {
         if (typeof err === 'undefined') {
-          console.log(this.info)
           await services['account@update-basic-info']({
             name: this.info.name,
             cover: this.info.cover,

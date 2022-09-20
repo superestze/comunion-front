@@ -419,13 +419,7 @@ const ProposalDetail = defineComponent({
                   trigger: () => <MoreFilled class="cursor-pointer h-7 w-9" />,
                   default: () => (
                     <div class="flex flex-col">
-                      <UButton
-                        size="small"
-                        type="primary"
-                        class="text-white"
-                        quaternary
-                        onClick={this.duplicateProposal}
-                      >
+                      <UButton size="small" onClick={this.duplicateProposal}>
                         Duplicate proposal
                       </UButton>
                       {this.isAdmin && (
@@ -433,7 +427,6 @@ const ProposalDetail = defineComponent({
                           size="small"
                           type="error"
                           class="mt-1"
-                          quaternary
                           onClick={() => (this.delProposalVisible = true)}
                         >
                           Delete proposal
@@ -718,7 +711,7 @@ const ProposalDetail = defineComponent({
                 This action cannot be undone, the proposal will be permanently deleted
               </div>
 
-              <div class="flex mt-20 justify-end">
+              <div class="flex mt-4 justify-end">
                 <UButton
                   type="primary"
                   ghost

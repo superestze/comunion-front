@@ -15,12 +15,13 @@ import { AddCircleOutlined, MinusCircleOutlined } from '@comunion/icons'
 import { defineComponent, ref, reactive, PropType, watch } from 'vue'
 import { contactList } from './util'
 import { services } from '@/services'
-import { validateEmail } from '@/utils/type'
+import { validateEmail, validateTelegram } from '@/utils/type'
 
 type SocialType = {
   socialType: number
   socialLink: string
   delete?: boolean
+  blur?: boolean
 }
 
 type DataType = {
@@ -39,6 +40,7 @@ export default defineComponent({
       type: String
     }
   },
+  emits: ['saved'],
   setup(props) {
     const loading = ref(false)
 
@@ -82,7 +84,10 @@ export default defineComponent({
               const items = value.filter(item => !item.delete && !!item.socialLink)
               if (items.length) {
                 for (const item of items) {
-                  if (item.socialType === 1 && !validateEmail(item.socialLink)) {
+                  if (
+                    (item.socialType === 1 && !validateEmail(item.socialLink)) ||
+                    (item.socialType === 5 && !validateTelegram(item.socialLink))
+                  ) {
                     return false
                   } else {
                     return !!item.socialLink.trim()
@@ -91,9 +96,7 @@ export default defineComponent({
               }
 
               return true
-            },
-            message: 'Please enter contact information',
-            trigger: 'blur'
+            }
           }
         ],
         render() {
@@ -115,12 +118,21 @@ export default defineComponent({
                           v-model:value={item.socialLink}
                           inputProps={{ type: item.socialType === 1 ? 'email' : 'text' }}
                           status={
-                            item.socialType === 1 &&
-                            item.socialLink &&
-                            !validateEmail(item.socialLink)
+                            (item.socialType === 1 &&
+                              item.socialLink &&
+                              !validateEmail(item.socialLink)) ||
+                            (item.socialType === 5 &&
+                              item.socialLink &&
+                              !validateTelegram(item.socialLink))
                               ? 'error'
                               : undefined
                           }
+                          onBlur={() => {
+                            item.blur = true
+                          }}
+                          onFocus={() => {
+                            item.blur = false
+                          }}
                         ></UInput>
                       </UInputGroup>
                       {info.socials.filter(e => !e.delete).length > 1 && (
@@ -143,9 +155,16 @@ export default defineComponent({
                       </div>
                     </div>
                     {item.socialType === 1 &&
+                      item.blur &&
                       item.socialLink &&
                       !validateEmail(item.socialLink) && (
                         <div class="text-error ml-50">Please enter the correct email address</div>
+                      )}
+                    {item.socialType === 5 &&
+                      item.blur &&
+                      item.socialLink &&
+                      !validateTelegram(item.socialLink) && (
+                        <div class="text-error ml-50">Invalid Telegram contract</div>
                       )}
                   </div>
                 ))}
@@ -175,7 +194,8 @@ export default defineComponent({
             deletedSocials: this.info.socials.filter(e => e.delete).map(e => e.socialType)
           })
           this.loading = false
-          message.success('successfully saved')
+          message.success('Successfully saved')
+          this.$emit('saved')
         }
       })
     }

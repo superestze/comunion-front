@@ -70,7 +70,7 @@ export default defineComponent({
           onTriggerDialog={triggerDialog}
           v-slots={{
             btns: () => (
-              <div class="flex mt-80px justify-end">
+              <div class="flex mt-10 justify-end">
                 <UButton type="primary" class="w-164px" size="small">
                   Ok
                 </UButton>

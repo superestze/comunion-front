@@ -62,6 +62,7 @@ export default defineComponent({
       defualt: ''
     }
   },
+  emits: ['saved'],
   setup(props) {
     const walletStore = useWalletStore()
     const chainStore = useChainStore()
@@ -294,16 +295,21 @@ export default defineComponent({
     ])
     const form = ref<FormInst>()
     const { onUpload } = useUpload()
+    const logoUploadLoading = ref(false)
+    const coverUploadLoading = ref(false)
     const handleUploadLogo: CustomRequest = async ({ file, onProgress, onFinish, onError }) => {
       if (file.file) {
+        logoUploadLoading.value = true
         onUpload(file.file, percent => {
           onProgress({ percent })
         })
           .then(url => {
             info.logo = url as string
+            logoUploadLoading.value = false
             onFinish()
           })
           .catch(err => {
+            logoUploadLoading.value = false
             onError()
           })
       }
@@ -311,14 +317,17 @@ export default defineComponent({
 
     const handleUploadCover: CustomRequest = async ({ file, onProgress, onFinish, onError }) => {
       if (file.file) {
+        coverUploadLoading.value = true
         onUpload(file.file, percent => {
           onProgress({ percent })
         })
           .then(url => {
             info.cover = url as string
+            coverUploadLoading.value = false
             onFinish()
           })
           .catch(err => {
+            coverUploadLoading.value = false
             onError()
           })
       }
@@ -332,7 +341,9 @@ export default defineComponent({
       handleUploadLogo,
       handleUploadCover,
       contractStore,
-      setFieldsStatus
+      setFieldsStatus,
+      coverUploadLoading,
+      logoUploadLoading
     }
   },
   render() {
@@ -367,7 +378,8 @@ export default defineComponent({
                   'Waiting to submit all contents to blockchain for creating startup',
                   `Startup "${this.info.name}" is Creating`
                 )
-                message.success('successfully saved')
+                message.success('Successfully saved')
+                this.$emit('saved')
               } catch (error) {
                 this.info.switchChain = false
                 this.info.isChain = false
@@ -377,7 +389,8 @@ export default defineComponent({
               this.setFieldsStatus(true)
             } else {
               await this.contractStore.setStartupSuccessAfter(requestParams)
-              message.success('successfully saved')
+              message.success('Successfully saved')
+              this.$emit('saved')
             }
           } catch (error) {
             console.error(error)
@@ -400,13 +413,14 @@ export default defineComponent({
                   <p>Max size：10MB</p>
                 </>
               )}
+              loading={this.logoUploadLoading}
               fileSize={10 * 1024 * 1024}
               accept="image/png, image/jpeg, image/bmp, image/psd, image/svg, image/tiff"
               imageUrl={this.info.logo}
               customRequest={this.handleUploadLogo}
             />
             <RectDraggerUpload
-              class="ml-16 w-full"
+              class="flex-1 ml-10"
               text="Startup Banner"
               tip={() => (
                 <>
@@ -414,6 +428,7 @@ export default defineComponent({
                   <p>Max size：10MB</p>
                 </>
               )}
+              loading={this.coverUploadLoading}
               fileSize={10 * 1024 * 1024}
               accept="image/png, image/jpeg, image/bmp, image/psd, image/svg, image/tiff"
               imageUrl={this.info.cover}
@@ -421,6 +436,7 @@ export default defineComponent({
               bgSize={true}
             />
           </div>
+
           <UForm rules={rules} model={this.info} ref={(ref: any) => (this.form = ref)}>
             <UFormItemsFactory fields={this.fields} values={this.info} />
           </UForm>
