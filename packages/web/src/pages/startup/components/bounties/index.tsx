@@ -40,8 +40,8 @@ export default defineComponent({
             <BountiesCard class="_item" startup={item} key={item.bountyId} miniCard />
           ))
         ) : (
-          <UNoContent textTip="TO BE EMPTY">
-            <EmptyFilled />
+          <UNoContent textTip="No connect yet">
+            <EmptyFilled class="-mb-14" />
           </UNoContent>
         )}
       </UCard>

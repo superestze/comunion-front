@@ -123,17 +123,13 @@ export default defineComponent({
         </div>
 
         <div class="flex mt-2 px-10 justify-between relative">
-          <div
-            class="rounded h-30 bottom-2 left-10 w-30 absolute overflow-hidden"
+          <UStartupLogo
+            src={this.startupInfo?.logo || ''}
+            width="20"
+            height="20"
+            class="bg-white h-30 bottom-2 left-10 w-30 absolute"
             style="box-shadow: 2px 6px 12px rgba(69, 68, 132, 0.25);"
-          >
-            <UStartupLogo
-              src={this.startupInfo?.logo || ''}
-              width="30"
-              height="30"
-              class="bg-white rounded h-full w-full !object-cover"
-            />
-          </div>
+          />
           <div class="pl-36">
             <div class="flex items-center">
               <p class="text-color1 u-h2">{this.startupInfo?.name}</p>
@@ -195,7 +191,7 @@ export default defineComponent({
                   )
                 })}
             </div>
-            <p class="mt-2 text-color2 u-h6 max-w-[600px]">{this.startupInfo?.mission}</p>
+            <p class="mt-2 max-w-[600px] text-color2 u-h6">{this.startupInfo?.mission}</p>
           </div>
           <div class="flex flex-wrap gap-2">
             {this.socialList.map(item => (
