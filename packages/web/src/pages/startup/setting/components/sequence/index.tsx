@@ -47,7 +47,7 @@ export default defineComponent({
         tabs: this.list
       })
       this.loading = false
-      message.success('successfully saved')
+      message.success('Successfully saved')
     }
     return (
       <USpin show={this.loading}>
