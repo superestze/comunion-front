@@ -1,6 +1,0 @@
-.btn {
-  @apply cursor-pointer rounded-3xl py-2.5 px-3 text-primary1;
-
-  /* stylelint-disable */
-  background: rgba(var(--u-primary-value), 0.06);
-}

@@ -188,6 +188,9 @@ const UStyleProvider = defineComponent({
         heightSmall: '22px',
         heightTiny: '20px',
         closeIconSizeMedium: '12px'
+      },
+      Dropdown: {
+        optionColorActive: props.colorHover
       }
     }))
 

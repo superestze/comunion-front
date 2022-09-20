@@ -5,6 +5,7 @@ import HeaderDropdown from '../../components/HeaderDropdown'
 import notsupport from '@/assets/networks/notsupport.svg'
 import { ChainNetworkType } from '@/constants'
 import { useWalletStore, useChainStore } from '@/stores'
+
 const NetworkSwitcher = defineComponent({
   name: 'NetworkSwitcher',
   setup(props, ctx) {
@@ -63,14 +64,7 @@ const NetworkSwitcher = defineComponent({
         }))}
         onSelect={onSelectNetwork}
       >
-        <UButton
-          size="small"
-          class="h-8 u-h6"
-          style={{
-            '--n-border-radius': '2px',
-            '--n-border': '1px solid rgba(218, 220, 224, 1)'
-          }}
-        >
+        <UButton size="small" class="h-8 u-h6">
           <div class="flex flex-nowrap items-center u-h6" ref={btnRef}>
             {getNetworkNode()}
             {/* {networkCache.value && (
@@ -82,7 +76,6 @@ const NetworkSwitcher = defineComponent({
             <ArrowDownOutlined class="h-4 ml-2 w-4" />
           </div>
         </UButton>
-        {/* <HeaderButton class={ctx.attrs.class}></HeaderButton> */}
       </HeaderDropdown>
     )
   }

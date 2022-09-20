@@ -132,7 +132,7 @@ const CreateBlock = defineComponent({
               label: () => (
                 <div class="flex items-center" onClick={onCreateBounty}>
                   <div class="rounded flex h-full mr-4 w-8 items-center justify-center">
-                    <CreateCrowdfundingNewFilled class="text-primary" />
+                    <CreateBountyNewFilled class="text-primary" />
                   </div>
                   <div>
                     <div class="text-[#000000] u-h4">Bounty</div>
@@ -148,7 +148,7 @@ const CreateBlock = defineComponent({
               label: () => (
                 <div class="flex items-center" onClick={onCreateCrowdfunding}>
                   <div class="rounded flex h-full mr-4 w-8 items-center justify-center">
-                    <CreateBountyNewFilled class="text-primary" />
+                    <CreateCrowdfundingNewFilled class="text-primary" />
                   </div>
                   <div>
                     <div class="text-[#000000] u-h4">dCrowdfunding</div>

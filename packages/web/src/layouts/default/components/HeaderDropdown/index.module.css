@@ -1,14 +1,12 @@
 .dropdown {
   /* stylelint-disable */
-  --active-bg: rgba(var(--u-primary-value), 0.1);
+  --active-bg: var(--u-color-hover);
   --active-bg-new: rgba(240, 240, 240, 1);
   box-shadow: 0 2px 10px rgb(0 0 0 / 10%);
   @apply !rounded-sm !mt-5 !ml-0 !py-5 !px-5;
 
   :global {
     .n-dropdown-option-body {
-      background: none !important;
-
       &::before {
         left: 0px !important;
         right: 0px !important;
@@ -69,7 +67,7 @@
 
         .n-dropdown-option-body {
           &__suffix {
-            @apply rounded-sm bg-green1 h-2 -mr-2px ml-2 w-2 self-center !min-w-0 !p-0 !block;
+            @apply rounded bg-green1 h-2 -mr-1 ml-2 w-2 !min-w-0 !p-0;
           }
         }
 
