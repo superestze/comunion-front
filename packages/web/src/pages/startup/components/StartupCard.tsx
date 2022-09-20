@@ -1,7 +1,7 @@
-import { UTag, UStartupLogo } from '@comunion/components'
-// import { StartupLogoOutlined } from '@comunion/icons'
+import { UTag } from '@comunion/components'
 import { defineComponent, PropType } from 'vue'
 import { useRouter } from 'vue-router'
+import UStartupLogo from '@/components/UStartupLogo'
 import { getStartupTypeFromNumber, StartupTypesType } from '@/constants'
 import { StartupItem } from '@/types'
 import { getChainInfoByChainId } from '@/utils/etherscan'
@@ -37,8 +37,6 @@ const StartupCard = defineComponent({
           <div class="flex items-center">
             <UStartupLogo
               src={props.startup.logo}
-              width="8"
-              height="12"
               class="bg-white rounded h-3.75rem mr-0.75rem w-3.75rem !object-cover"
             />
             <div class="flex-1 ">

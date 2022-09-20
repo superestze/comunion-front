@@ -1,7 +1,8 @@
-import { UStartupLogo, UTag } from '@comunion/components'
+import { UTag } from '@comunion/components'
 import { ethers } from 'ethers'
 import { defineComponent, PropType, computed, ref, onMounted } from 'vue'
 import { useRouter } from 'vue-router'
+import UStartupLogo from '@/components/UStartupLogo'
 import { CROWDFUNDING_TYPES } from '@/constants'
 import { useErc20Contract, useCrowdfundingContract } from '@/contracts'
 import { useWalletStore } from '@/stores'
@@ -99,7 +100,7 @@ export default defineComponent({
         class="rounded-sm cursor-pointer flex py-4 px-4 items-center hover:bg-color-hover"
         onClick={() => toDetail(props.info.crowdfundingId, props.info.chainId)}
       >
-        <UStartupLogo src={props.info.poster} width="10" height="10" class="h-15 mr-4 w-15" />
+        <UStartupLogo src={props.info.poster} class="h-15 mr-4 w-15" />
 
         <div class="flex-1 overflow-hidden">
           <div class="flex mb-2 items-center">

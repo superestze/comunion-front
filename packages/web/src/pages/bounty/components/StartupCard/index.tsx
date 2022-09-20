@@ -1,5 +1,6 @@
-import { UStartupLogo, UTag } from '@comunion/components'
+import { UTag } from '@comunion/components'
 import { defineComponent, PropType, computed } from 'vue'
+import UStartupLogo from '@/components/UStartupLogo'
 import { getStartupTypeFromNumber, StartupTypesType } from '@/constants'
 import { SocialGroup } from '@/pages/startup/components/SocialGroup'
 import { ServiceReturn } from '@/services'
@@ -32,12 +33,7 @@ export default defineComponent({
     return (
       <>
         <div class="flex ">
-          <UStartupLogo
-            src={this.startup?.logo || ''}
-            width="15"
-            height="15"
-            class="rounded-sm h-15 mr-4 w-15"
-          />
+          <UStartupLogo src={this.startup?.logo || ''} class=" h-15 mr-4 w-15" />
           <div class="flex-1 overflow-hidden">
             <div class="mb-2 text-color1 truncate u-h3">{this.startup?.title}</div>
             {(this.startup?.mode || 0) > 0 && <UTag class="text-color2">{this.modeName}</UTag>}

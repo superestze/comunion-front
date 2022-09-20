@@ -1,9 +1,10 @@
-import { UButton, UPopover, UStartupLogo, UTag } from '@comunion/components'
+import { UButton, UPopover, UTag } from '@comunion/components'
 import { defineComponent, computed, ref, watch, PropType } from 'vue'
 
 import { useStartupProfile } from '../../hooks/useStartupProfile'
 import defaultCover from './assets/cover.png'
 import SocialIcon from '@/components/SocialIcon'
+import UStartupLogo from '@/components/UStartupLogo'
 import { getStartupTypeFromNumber, StartupTypesType } from '@/constants'
 import { getContactList } from '@/pages/startup/setting/[id]'
 import { contactList } from '@/pages/startup/setting/components/social/util'
@@ -125,8 +126,6 @@ export default defineComponent({
         <div class="flex mt-2 px-10 justify-between relative">
           <UStartupLogo
             src={this.startupInfo?.logo || ''}
-            width="20"
-            height="20"
             class="bg-white h-30 bottom-2 left-10 w-30 absolute"
             style="box-shadow: 2px 6px 12px rgba(69, 68, 132, 0.25);"
           />
