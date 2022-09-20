@@ -195,7 +195,6 @@ export default defineComponent({
           })
           this.loading = false
           message.success('Successfully saved')
-          // TODO
           this.$emit('saved')
         }
       })
