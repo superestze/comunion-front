@@ -199,7 +199,7 @@ export default defineComponent({
               admins: govSetting.admins.filter(Boolean).map(admin => ({ walletAddress: admin }))
             })
             if (!error) {
-              message.success('successfully saved')
+              message.success('Successfully saved')
             }
           }
         })

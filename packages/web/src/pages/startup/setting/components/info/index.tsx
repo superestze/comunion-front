@@ -377,7 +377,7 @@ export default defineComponent({
                   'Waiting to submit all contents to blockchain for creating startup',
                   `Startup "${this.info.name}" is Creating`
                 )
-                message.success('successfully saved')
+                message.success('Successfully saved')
               } catch (error) {
                 this.info.switchChain = false
                 this.info.isChain = false
@@ -387,7 +387,7 @@ export default defineComponent({
               this.setFieldsStatus(true)
             } else {
               await this.contractStore.setStartupSuccessAfter(requestParams)
-              message.success('successfully saved')
+              message.success('Successfully saved')
             }
           } catch (error) {
             console.error(error)

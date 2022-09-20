@@ -117,7 +117,7 @@ export default defineComponent({
           // console.log(params)
           await services['startup@startup-finance-setting-update'](params)
           this.loading = false
-          message.success('successfully saved')
+          message.success('Successfully saved')
         }
       })
     }

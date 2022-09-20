@@ -175,7 +175,7 @@ export default defineComponent({
             deletedSocials: this.info.socials.filter(e => e.delete).map(e => e.socialType)
           })
           this.loading = false
-          message.success('successfully saved')
+          message.success('Successfully saved')
         }
       })
     }

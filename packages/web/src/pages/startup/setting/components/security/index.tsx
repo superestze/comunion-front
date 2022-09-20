@@ -108,7 +108,7 @@ export default defineComponent({
             contractAudit: this.info.contractAudit
           })
           this.loading = false
-          message.success('successfully saved')
+          message.success('Successfully saved')
         }
       })
     }
