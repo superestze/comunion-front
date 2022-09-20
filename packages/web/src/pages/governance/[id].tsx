@@ -683,7 +683,7 @@ const ProposalDetail = defineComponent({
                 This action cannot be undone, the proposal will be permanently deleted
               </div>
 
-              <div class="flex mt-20 justify-end">
+              <div class="flex mt-4 justify-end">
                 <UButton
                   type="primary"
                   ghost
