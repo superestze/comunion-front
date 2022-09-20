@@ -1,9 +1,10 @@
-import { UStartupLogo, UTag } from '@comunion/components'
+import { UTag } from '@comunion/components'
 import { ConfirmOutlined } from '@comunion/icons'
 import dayjs from 'dayjs'
 import { defineComponent, PropType, computed } from 'vue'
 import { useRouter } from 'vue-router'
 import { GOVERNANCE_KEY, GOVERNANCE_STATUS_STYLE } from '../utils'
+import UStartupLogo from '@/components/UStartupLogo'
 import { ServiceReturn } from '@/services'
 
 export const ProposalCard = defineComponent({

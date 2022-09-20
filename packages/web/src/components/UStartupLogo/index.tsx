@@ -1,17 +1,8 @@
 import { StartupLogoFilled } from '@comunion/icons'
 import type { ExtractPropTypes } from 'vue'
 import { defineComponent, ref, watch } from 'vue'
-import '../ULazyImage/LazyImage.css'
 
 export const UStartupLogoProps = {
-  width: {
-    type: String,
-    default: 0
-  },
-  height: {
-    type: String,
-    default: 0
-  },
   src: {
     type: String,
     required: true
@@ -22,6 +13,7 @@ export const UStartupLogoProps = {
 } as const
 
 export type UStartupLogoPropsType = ExtractPropTypes<typeof UStartupLogoProps>
+
 const UStartupLogo = defineComponent({
   name: 'UStartupLogo',
   props: UStartupLogoProps,
@@ -64,13 +56,7 @@ const UStartupLogo = defineComponent({
           ]}
           {...ctx.attrs}
         >
-          {errored.value && (
-            <StartupLogoFilled
-              class={`${props.width ? 'w-' + props.width : 'w-full'} ${
-                props.height ? 'h-' + props.height : 'h-full'
-              } m-auto`}
-            />
-          )}
+          {errored.value && <StartupLogoFilled class="m-auto h-7/10 w-7/10" />}
         </div>
       )
   }
