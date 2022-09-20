@@ -50,7 +50,7 @@ export const UStyleProviderProps = {
   },
   successColor: {
     type: String,
-    default: '#1C60F3'
+    default: '#21B689'
   },
   warningColor: {
     type: String,
