@@ -339,7 +339,7 @@ export default defineComponent({
                 <UInput v-model:value={this.govSetting.voteSymbol} maxlength={8} />
               </UFormItem>
               <div class="mt-2 text-color3 u-h7">
-                Set up a special vote symbol that can be used to distinguish it from other startup
+                The default symbol used for this startup,usually token symbol
               </div>
             </div>
           </div>
