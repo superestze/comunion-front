@@ -53,10 +53,10 @@ const DefaultLayout = defineComponent({
             </RouterLink>
             {FOOTER_LINKS.map(data => (
               <div key={data.title} class="flex-1">
-                <div class="u-h4">{data.title.toUpperCase()}</div>
+                <div class="mb-2 u-h4">{data.title.toUpperCase()}</div>
                 {data.links.map(item => (
                   <a
-                    class="mt-6 block u-h6 hover:text-color1"
+                    class="mt-4 block u-h6 hover:text-color1"
                     key={item.title}
                     href={item.url}
                     target="_blank"
