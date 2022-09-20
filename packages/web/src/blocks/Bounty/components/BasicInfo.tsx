@@ -227,17 +227,11 @@ const BountyBasicInfo = defineComponent({
                   {item.type === 1 && item.value && !validateEmail(item.value) && (
                     <div class="text-error ml-50">Please enter the correct email address</div>
                   )}
-                  {item.type === 2 &&
-                    item.value &&
-                    !item.value.includes('http://') &&
-                    !item.value.includes('https://') && (
-                      <div class="text-error ml-50">Please enter the correct email Discord</div>
-                    )}
                   {item.type === 3 &&
                     item.value &&
                     !item.value.includes('http://') &&
                     !item.value.includes('https://') && (
-                      <div class="text-error ml-50">Please enter the correct email Telegram</div>
+                      <div class="text-error ml-50">Invalid Telegram contract</div>
                     )}
                 </>
               ))}
