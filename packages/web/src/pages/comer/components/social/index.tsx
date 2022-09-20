@@ -8,7 +8,7 @@ import {
   UPopover
 } from '@comunion/components'
 import { PenOutlined, DeleteFilled } from '@comunion/icons'
-import { defineComponent, ref, reactive, computed, PropType, watch } from 'vue'
+import { defineComponent, ref, reactive, computed, PropType } from 'vue'
 import { btnGroup } from '../btnGroup'
 import Edit from '../edit'
 import SocialIcon from '@/components/SocialIcon'
@@ -29,6 +29,7 @@ function socialIconComponent(
       if (view) {
         return <SocialIcon icon={item.value} link={view} address={social} />
       }
+
       return (
         <UPopover
           trigger="click"
@@ -92,6 +93,14 @@ export default defineComponent({
           ],
           placeholder: 'Input the Address'
         })
+      } else if (info.type === 'Discord') {
+        fields.push({
+          title: 'Address',
+          name: 'value',
+          required: true,
+          rules: [{ type: 'string', message: 'Input the Address' }],
+          placeholder: 'Input the Address'
+        })
       } else {
         fields.push({
           t: 'website',
@@ -104,17 +113,17 @@ export default defineComponent({
       return fields
     })
 
-    watch(
-      () => props.profile,
-      value => {
-        console.log(value, 123123123)
-      },
-      {
-        deep: true,
-        immediate: true,
-        flush: 'sync'
-      }
-    )
+    // watch(
+    //   () => props.profile,
+    //   value => {
+    //     console.log(value, 123123123)
+    //   },
+    //   {
+    //     deep: true,
+    //     immediate: true,
+    //     flush: 'sync'
+    //   }
+    // )
 
     const socials = computed(() => {
       const result = []
@@ -236,7 +245,7 @@ export default defineComponent({
             ) : (
               <div class="cursor-pointer flex flex-wrap gap-4">
                 {this.socials.length === 0 ? (
-                  <p class="font-[400] text-14px text-color3">Add your social</p>
+                  <p class="text-color2 u-h5">Add your social</p>
                 ) : (
                   <>{socialIconComponent(this.socialsObj, this.view, editIcon, delIcon)}</>
                 )}
