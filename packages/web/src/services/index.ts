@@ -1285,6 +1285,7 @@ export const services = {
   },
   'bounty@bounty-startup-list'(args: { bountyID: any }) {
     return requestAdapter<{
+      id?: number
       logo?: string
       mission: string
       title?: string

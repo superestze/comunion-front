@@ -19,7 +19,7 @@ export default defineComponent({
     const toComerDetail = () => {
       // TODO
       // need startup id
-      // router.push({ path: `/startup/${props.startup?.id}` })
+      props.startup?.id && router.push({ path: `/startup/${props.startup.id}` })
     }
     const modeName = computed(
       () => getStartupTypeFromNumber(props.startup?.mode || 0) as StartupTypesType
@@ -43,7 +43,7 @@ export default defineComponent({
         <div class="flex ">
           <UStartupLogo
             src={this.startup?.logo || ''}
-            class=" h-15 mr-4 w-15"
+            class="cursor-pointer h-15 mr-4 w-15"
             onClick={this.toComerDetail}
           />
           <div class="flex-1 overflow-hidden">
