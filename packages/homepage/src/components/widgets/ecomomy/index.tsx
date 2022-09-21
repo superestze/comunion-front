@@ -49,7 +49,12 @@ export default defineComponent({
           subTitle="Connect ideas, talents and funding for Startups"
         />
         <div class="flex justify-center mt-74px <md:mx-auto <md:w-155.5">
-          <img class="object-fill h-auto" src={EcomomyBg} alt="new ecomomy" srcset={srcset} />
+          <img
+            class="object-fill h-auto flex-shrink-0"
+            src={EcomomyBg}
+            alt="new ecomomy"
+            srcset={srcset}
+          />
         </div>
         <Blocks list={list} class="mt-155px" />
       </>
