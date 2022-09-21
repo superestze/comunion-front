@@ -205,7 +205,7 @@ export default defineComponent({
                 placement="bottom"
                 v-slots={{
                   trigger: () => this.getLinkTarget(item.socialLink, item.label),
-                  default: () => <div class="cursor-pointer text-white">{item.label}</div>
+                  default: () => <div class="cursor-pointer">{item.label}</div>
                 }}
               />
             ))}
