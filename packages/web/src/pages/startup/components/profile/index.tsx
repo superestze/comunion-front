@@ -121,13 +121,20 @@ export default defineComponent({
             alt="bg"
             class="h-full object-cover w-full"
           />
+          {!this.startupInfo?.cover && (
+            <div class="text-right top-19 right-10 absolute">
+              <div class="text-color2 u-h3">
+                Nothing is more powerful than an idea whose time has come
+              </div>
+              <div class="mt-9 text-color3 u-h6">Victor Hugo</div>
+            </div>
+          )}
         </div>
 
         <div class="flex mt-2 px-10 justify-between relative">
           <UStartupLogo
             src={this.startupInfo?.logo || ''}
             class="bg-white h-30 bottom-2 left-10 w-30 absolute"
-            style="box-shadow: 2px 6px 12px rgba(69, 68, 132, 0.25);"
           />
           <div class="pl-36">
             <div class="flex items-center">
