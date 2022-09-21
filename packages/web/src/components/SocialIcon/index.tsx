@@ -75,7 +75,9 @@ export default defineComponent({
     return (
       <div
         class={`${this.outWrapper} ${
-          this.disable ? 'cursor-not-allowed text-color3' : 'text-color2 hover:text-color1'
+          this.disable
+            ? 'cursor-not-allowed text-[rgba(0,0,0,0.1)]'
+            : 'text-color2 hover:text-color1'
         }`}
       >
         {this.link ? (
