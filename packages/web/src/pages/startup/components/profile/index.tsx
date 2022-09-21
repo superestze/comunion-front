@@ -114,7 +114,7 @@ export default defineComponent({
         .finally(() => (this.loading = false))
     }
     return (
-      <div class="bg-white border rounded-sm mb-6  overflow-hidden">
+      <div class="bg-white border rounded-sm mb-6 overflow-hidden">
         <div class="h-13.125rem overflow-hidden">
           <img
             src={this.startupInfo?.cover || defaultCover}
@@ -123,7 +123,7 @@ export default defineComponent({
           />
           {!this.startupInfo?.cover && (
             <div class="text-right top-19 right-10 absolute">
-              <div class="text-color2 u-h3">
+              <div class="font-normal text-color2 u-h3">
                 Nothing is more powerful than an idea whose time has come
               </div>
               <div class="mt-9 text-color3 u-h6">Victor Hugo</div>
