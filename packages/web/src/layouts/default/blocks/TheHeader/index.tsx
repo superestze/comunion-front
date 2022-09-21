@@ -5,7 +5,7 @@ import WalletAddress from '../Address'
 import CreateBlock from '../Create'
 import NetworkSwitcher from '../Network'
 import UserAvatar from '../UserAvatar'
-
+const indexUrl = import.meta.env.VITE_COMUNION_HOMEPAGE_URL
 const TheHeader = defineComponent({
   name: 'TheHeader',
   setup() {
@@ -68,7 +68,7 @@ const TheHeader = defineComponent({
 
     return () => (
       <div class={headerClass.value} style={styles.value}>
-        <div class="mr-4">
+        <div class="mr-4 cursor-pointer" onClick={() => window.open(indexUrl, '_self')}>
           <ULogo height={20} theme="colorful" />
         </div>
         <div class="text-[#0009] gap-x-6 inline-flex item-center">
