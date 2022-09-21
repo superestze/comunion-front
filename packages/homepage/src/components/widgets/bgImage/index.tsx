@@ -54,7 +54,7 @@ export default defineComponent({
         <div ref="divRef" class={[styles.bgImage]}>
           <div class="absolute left-0 right-0 top-0 bottom-0 m-auto w-256 h-35 <md:w-[90vw]">
             <div class="font-primary font-semibold">
-              <p class="text-[rgba(255,255,255,0.5)] text-[20px] mb-3 absolute left-[2.1rem] top-[-1.5rem] <md:left-[3rem] <md:top-[-3rem] <md:text-[1vw]">
+              <p class="text-[rgba(255,255,255,0.5)] text-[20px] mb-3 absolute left-[2.1rem] top-[-1.5rem] <md:left-[3rem] <md:top-[-3rem] <md:text-[3.5vw]">
                 The First
               </p>
             </div>
