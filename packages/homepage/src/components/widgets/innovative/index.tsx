@@ -102,7 +102,7 @@ export default defineComponent({
           })}
         </div>
         {/* <md:h-67.5 */}
-        <div class="flex justify-center my-118px <md:w-155.5 <md:mt-19.5 <md:mb-39.5 <md:mx-auto">
+        <div class="flex justify-center my-118px <md:w-155.5 <md:mt-19.5 <md:mb-39.5 <md:mx-auto <md:max-h-[12vh]">
           <img srcset={`${mission}, ${mission2} 2x, ${mission3} 3x`} src={mission} />
         </div>
       </>
