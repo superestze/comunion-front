@@ -4,7 +4,8 @@ import {
   getFieldsRules,
   UCard,
   UForm,
-  UFormItemsFactory
+  UFormItemsFactory,
+  USpin
 } from '@comunion/components'
 import { DeleteFilled, PenOutlined } from '@comunion/icons'
 import { uniqueId } from 'lodash'
@@ -35,6 +36,7 @@ export default defineComponent({
   },
   emits: ['Done'],
   setup(props) {
+    const loading = ref(false)
     const editMode = ref<boolean>(false)
     const info = reactive({
       id: uniqueId('lang'),
@@ -76,6 +78,7 @@ export default defineComponent({
     ]
 
     return {
+      loading,
       editMode,
       info,
       form,
@@ -99,6 +102,7 @@ export default defineComponent({
     const handleSubmit = () => {
       this.form?.validate(async err => {
         if (typeof err === 'undefined') {
+          this.loading = true
           const index = this.languages.findIndex(item => {
             return item.id === this.info.id
           })
@@ -112,6 +116,7 @@ export default defineComponent({
           })
           this.$emit('Done')
           handleEditMode()()
+          this.loading = false
         }
       })
     }
@@ -128,14 +133,16 @@ export default defineComponent({
       const index = this.languages.findIndex(item => item.id === id)
       if (index > -1) {
         this.languages.splice(index, 1)
+        this.loading = true
         await services['account@languages']({
           languages: this.languages
         })
         this.$emit('Done')
+        this.loading = false
       }
     }
     return (
-      <>
+      <USpin show={this.loading}>
         {this.view && this.languages.length === 0 ? null : (
           <UCard
             title="Languages"
@@ -200,7 +207,7 @@ export default defineComponent({
             )}
           </UCard>
         )}
-      </>
+      </USpin>
     )
   }
 })

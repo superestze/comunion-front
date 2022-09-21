@@ -5,7 +5,8 @@ import {
   UCard,
   UForm,
   UFormItemsFactory,
-  UTag
+  UTag,
+  USpin
 } from '@comunion/components'
 import { defineComponent, ref, reactive, PropType, watchEffect } from 'vue'
 import { btnGroup } from '../btnGroup'
@@ -25,6 +26,7 @@ export default defineComponent({
   },
   emits: ['Done'],
   setup(props) {
+    const loading = ref(false)
     const editMode = ref<boolean>(false)
 
     const fields: FormFactoryField[] = [
@@ -46,6 +48,7 @@ export default defineComponent({
     const form = ref<FormInst>()
 
     return {
+      loading,
       editMode,
       info,
       fields,
@@ -64,17 +67,20 @@ export default defineComponent({
     const handleSubmit = () => {
       this.form?.validate(async err => {
         if (typeof err === 'undefined') {
+          this.loading = true
           await services['account@update-comer-skills']({
             skills: this.info.skills
           })
           handleEditMode()()
           this.$emit('Done')
+          this.loading = false
         }
       })
     }
     const rules = getFieldsRules(this.fields)
+
     return (
-      <>
+      <USpin show={this.loading}>
         {this.view && this.skills.length === 0 ? null : (
           <UCard
             title="Skills"
@@ -112,7 +118,7 @@ export default defineComponent({
             )}
           </UCard>
         )}
-      </>
+      </USpin>
     )
   }
 })
