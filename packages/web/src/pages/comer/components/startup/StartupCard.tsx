@@ -47,6 +47,9 @@ const StartupCard = defineComponent({
                 </>
               ) : null
             })}
+            {props.startup.hashTags.length - 4 > 0 ? (
+              <UTag class="text-color1">+ {props.startup.hashTags.length - 4}</UTag>
+            ) : null}
           </div>
         </div>
         {userStore.profile?.comerID === props.startup.comerID && (

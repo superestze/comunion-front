@@ -1,3 +1,4 @@
+import { UTag } from '@comunion/components'
 import { defineComponent, PropType, computed } from 'vue'
 import { useRouter } from 'vue-router'
 import Avatar from '@/components/Avatar'
@@ -58,23 +59,24 @@ export default defineComponent({
       <div class="flex">
         <Avatar avatar={this.normalize.avatar} onClickAvatar={toComerDetail} class="!h-12 !w-12" />
         <div class="flex-1 ml-4 ">
-          <div class="mb-2 truncate font-primary font-semibold text-[16px]">
+          <div class="font-primary font-semibold mb-2 text-[16px] truncate">
             {this.normalize.name}
           </div>
           <div class="flex mb-2 items-center">
-            {Array.isArray(this.normalize.skills) &&
-              this.normalize.skills.map((tag, i) => {
-                return i + 1 < 4 ? (
-                  <>
-                    <span
-                      class="rounded-sm text-color1 mr-2 px-2 text-0.75rem leading-1.25rem inline-block border-1 border-color-border"
-                      key={i}
-                    >
+            {Array.isArray(this.normalize.skills) && (
+              <>
+                {this.normalize.skills.map((tag, i) => {
+                  return i + 1 < 4 ? (
+                    <UTag class="text-color1" key={i}>
                       {tag}
-                    </span>
-                  </>
-                ) : null
-              })}
+                    </UTag>
+                  ) : null
+                })}
+                {this.normalize.skills.length - 4 > 0 ? (
+                  <UTag class="text-color1">+ {this.normalize.skills.length - 4}</UTag>
+                ) : null}
+              </>
+            )}
           </div>
           <div class="mb-2 text-[#9F9F9F] text-[14px] leading-4 u-h6">
             {this.normalize.email ? `${this.normalize.email} · ` : ''}
