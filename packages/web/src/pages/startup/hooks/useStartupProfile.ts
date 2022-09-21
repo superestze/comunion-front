@@ -9,13 +9,12 @@ export function useStartupProfile() {
         const { error, data } = res
         if (!error) {
           if (data.isFollowed) {
-            resolve('ok')
+            resolve(data.isFollowed)
+            return
           } else {
-            reject()
+            resolve(data.isFollowed)
             return
           }
-          resolve('ok')
-          return
           // userIsFollow.value = data!.isFollowed
         }
         reject()
