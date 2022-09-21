@@ -12,7 +12,7 @@ export const UNoContent = defineComponent({
     return () => (
       <div class="u-developing">
         <div class="flex items-center justify-center">{slots.default?.()}</div>
-        <div class="text-center text-color1 u-h5">{props.textTip}</div>
+        <div class="text-center text-color3 u-h4">{props.textTip}</div>
       </div>
     )
   }
