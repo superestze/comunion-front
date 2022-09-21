@@ -63,10 +63,12 @@ export default defineComponent({
     return (
       <div>
         <div class="flex">
-          <div class="flex flex-col flex-grow flex-1">
+          <div class="flex flex-col flex-grow flex-1 overflow-hidden">
             <UTooltip width={400} placement="top-start" trigger="hover">
               {{
-                trigger: () => <span class=" text-color1 u-h4">{this.bountyDetail?.title}</span>,
+                trigger: () => (
+                  <span class="text-color1  truncate u-h4">{this.bountyDetail?.title}</span>
+                ),
                 default: () => this.bountyDetail?.title
               }}
             </UTooltip>
@@ -81,7 +83,7 @@ export default defineComponent({
                 })}
             </div>
           </div>
-          {this.bountyStatus && <UTag>{this.bountyStatus.label}</UTag>}
+          {this.bountyStatus && <UTag class="ml-4">{this.bountyStatus.label}</UTag>}
         </div>
         <Paragraph
           class="mt-6"
