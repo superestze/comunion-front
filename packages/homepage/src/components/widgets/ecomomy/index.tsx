@@ -48,7 +48,7 @@ export default defineComponent({
           title="All-in-one co-building network"
           subTitle="Connect ideas, talents and funding for Startups"
         />
-        <div class="flex justify-center mt-74px <md:mx-auto <md:w-155.5">
+        <div class="flex justify-center mt-74px <md:mx-auto <md:w-[80%]">
           <img
             class="object-fill h-auto flex-shrink-0"
             src={EcomomyBg}
