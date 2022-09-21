@@ -5,7 +5,8 @@ import {
   UCard,
   UForm,
   UFormItemsFactory,
-  UPopover
+  UPopover,
+  USpin
 } from '@comunion/components'
 import { PenOutlined, DeleteFilled } from '@comunion/icons'
 import { defineComponent, ref, reactive, computed, PropType } from 'vue'
@@ -65,6 +66,7 @@ export default defineComponent({
     }
   },
   setup(props) {
+    const loading = ref(false)
     const editMode = ref<boolean>(false)
     const info = reactive({
       type: '',
@@ -170,6 +172,7 @@ export default defineComponent({
     })
 
     return {
+      loading,
       editMode,
       fields,
       form,
@@ -193,12 +196,14 @@ export default defineComponent({
     const handleSubmit = () => {
       this.form?.validate(async err => {
         if (typeof err === 'undefined') {
+          this.loading = true
           await services['account@social-add-or-update']({
             socialType: soureType[this.info.type],
             socialLink: this.info.value
           })
           this.$emit('Done')
           handleEditMode()()
+          this.loading = false
         }
       })
     }
@@ -210,16 +215,18 @@ export default defineComponent({
     }
 
     const delIcon = async (type: string) => {
+      this.loading = true
       await services['account@social-delete']({
         socialType: soureType[type]
       })
       this.$emit('Done')
+      this.loading = false
     }
 
     const rules = getFieldsRules(this.fields)
 
     return (
-      <>
+      <USpin show={this.loading}>
         {this.view && this.socials.length === 0 ? null : (
           <UCard
             title="Social"
@@ -253,7 +260,7 @@ export default defineComponent({
             )}
           </UCard>
         )}
-      </>
+      </USpin>
     )
   }
 })

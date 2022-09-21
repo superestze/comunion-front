@@ -4,7 +4,8 @@ import {
   getFieldsRules,
   UCard,
   UForm,
-  UFormItemsFactory
+  UFormItemsFactory,
+  USpin
 } from '@comunion/components'
 import { defineComponent, ref, reactive, watch, nextTick } from 'vue'
 import { btnGroup } from '../btnGroup'
@@ -26,6 +27,7 @@ export default defineComponent({
   },
   emits: ['Done'],
   setup(props, ctx) {
+    const loading = ref(false)
     const editMode = ref<boolean>(false)
 
     const pRef = ref<any>()
@@ -72,6 +74,7 @@ export default defineComponent({
       }
     ]
     return {
+      loading,
       editMode,
       pRef,
       showMoreBtn,
@@ -91,16 +94,17 @@ export default defineComponent({
     }
     const handleSubmit = async () => {
       if (this.info.bio.trim() !== '') {
+        this.loading = true
         await services['account@update-bio']({
           bio: this.info.bio
         })
         this.$emit('Done')
         handleEditMode()
-        return
+        this.loading = false
       }
     }
     return (
-      <>
+      <USpin show={this.loading}>
         {this.view && this.content.trim() === '' ? null : (
           <UCard
             title="BIO"
@@ -157,7 +161,7 @@ export default defineComponent({
             )}
           </UCard>
         )}
-      </>
+      </USpin>
     )
   }
 })

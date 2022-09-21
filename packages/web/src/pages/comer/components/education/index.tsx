@@ -4,7 +4,8 @@ import {
   getFieldsRules,
   UCard,
   UForm,
-  UFormItemsFactory
+  UFormItemsFactory,
+  USpin
 } from '@comunion/components'
 import { DeleteFilled, PenOutlined } from '@comunion/icons'
 import dayjs from 'dayjs'
@@ -36,6 +37,7 @@ export default defineComponent({
   },
   emits: ['Done'],
   setup(props) {
+    const loading = ref(false)
     const editMode = ref<boolean>(false)
     const info = reactive<EducationType>({
       id: uniqueId('edu'),
@@ -81,6 +83,7 @@ export default defineComponent({
       { immediate: true, deep: true }
     )
     return {
+      loading,
       editMode,
       info,
       form,
@@ -114,11 +117,13 @@ export default defineComponent({
           } else {
             this.educations.push(this.info)
           }
+          this.loading = true
           await services['account@educations']({
             educations: this.educations
           })
           this.$emit('Done')
           handleEditMode()()
+          this.loading = false
         }
       })
     }
@@ -132,18 +137,21 @@ export default defineComponent({
         }
         return
       }
+
       const index = this.educations.findIndex(item => item.id === id)
       if (index > -1) {
         this.educations.splice(index, 1)
+        this.loading = true
         await services['account@educations']({
           educations: this.educations
         })
         this.$emit('Done')
+        this.loading = false
       }
     }
 
     return (
-      <>
+      <USpin show={this.loading}>
         {this.view && this.educations.length === 0 ? null : (
           <UCard
             title="Education"
@@ -209,7 +217,7 @@ export default defineComponent({
             )}
           </UCard>
         )}
-      </>
+      </USpin>
     )
   }
 })
