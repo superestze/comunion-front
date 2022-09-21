@@ -33,8 +33,12 @@ export default defineComponent({
     const { toggleFollowStartup, getUserIsFollow } = profile
     let theChainName = getChainInfoByChainId(props.startup.chainID)?.shortName
     getUserIsFollow(props.startupId)
-      .then(() => (userIsFollow.value = true))
-      .catch(() => (userIsFollow.value = false))
+      .then(() => {
+        userIsFollow.value = true
+      })
+      .catch(() => {
+        userIsFollow.value = false
+      })
 
     const startupInfo = ref<StartupDetail & { onChain: boolean }>()
 
@@ -109,6 +113,7 @@ export default defineComponent({
       this.loading = true
       this.toggleFollowStartup(type, this.startupId)
         .then(() => {
+          console.log('===========')
           this.userIsFollow = !this.userIsFollow
         })
         .finally(() => (this.loading = false))

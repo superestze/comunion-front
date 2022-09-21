@@ -6,8 +6,14 @@ export function useStartupProfile() {
       services['startup@startup-followed-by-me']({
         startupId
       }).then(res => {
-        const { error } = res
+        const { error, data } = res
         if (!error) {
+          if (data.isFollowed) {
+            resolve('ok')
+          } else {
+            reject()
+            return
+          }
           resolve('ok')
           return
           // userIsFollow.value = data!.isFollowed
