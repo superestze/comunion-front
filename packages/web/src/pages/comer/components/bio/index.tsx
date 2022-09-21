@@ -60,7 +60,7 @@ export default defineComponent({
 
     const fields: FormFactoryField[] = [
       {
-        title: 'Bio',
+        title: 'BIO',
         name: 'bio',
         type: 'textarea',
         placeholder: 'Tell the world your story',
