@@ -216,7 +216,7 @@ const ApplyDialog = defineComponent({
             )) as unknown as BountyContractReturnType
             console.warn('bounty detail 3', response)
             if (!response) {
-              message.error('支付失败')
+              message.error('Payment failure')
               return triggerDialog(false)
             }
           } else {
