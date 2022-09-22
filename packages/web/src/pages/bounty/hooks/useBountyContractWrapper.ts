@@ -1,3 +1,4 @@
+import { message } from '@comunion/components'
 import dayjs from 'dayjs'
 import { BigNumber } from 'ethers'
 import { computed } from 'vue'
@@ -61,8 +62,26 @@ export function useBountyContractWrapper(bountyId?: string) {
   const usdc = usdcTokenContract(AVAX_USDC_ADDR[walletStore.chainId!])
 
   const approve = async (contractAddress: string, amount: BigNumber) => {
-    const usdcRes = await usdc.approve(contractAddress, amount)
-    await usdcRes.wait()
+    // const usdcRes = await usdc.approve(contractAddress, amount)
+    return usdc
+      .approve(contractAddress, amount)
+      .then((usdcRes: any) => {
+        return usdcRes.wait().catch((err: any) => {
+          console.warn(`usdcRes err:`, err)
+        })
+      })
+      .catch((err: any) => {
+        switch (err.code) {
+          case 4001:
+            message.error('Authorization failure')
+            break
+          case -32603:
+            message.error('MetaMask network connection failure')
+            break
+          default:
+            console.warn(`usdc.approve err with params:${contractAddress}, ${amount}`, err)
+        }
+      })
   }
   const gap = computed(() => {
     return dayjs(new Date(bountyContractStore.bountyContractInfo.timeLock * 1000)).diff(

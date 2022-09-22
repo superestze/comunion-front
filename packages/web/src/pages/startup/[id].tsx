@@ -13,7 +13,7 @@ import Security from './components/security'
 
 import Team from './components/team'
 import { useStartup } from './hooks/useStartup'
-import Empty from '@/pages/comer/components/empty'
+import Empty from '@/components/Empty'
 import { services } from '@/services'
 // type DataType = NonNullable<ServiceReturn<'startup@tartup-businness-data-count'>>
 

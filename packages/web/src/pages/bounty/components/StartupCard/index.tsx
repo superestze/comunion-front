@@ -1,5 +1,7 @@
-import { UStartupLogo, UTag } from '@comunion/components'
+import { UTag } from '@comunion/components'
 import { defineComponent, PropType, computed } from 'vue'
+import { useRouter } from 'vue-router'
+import UStartupLogo from '@/components/UStartupLogo'
 import { getStartupTypeFromNumber, StartupTypesType } from '@/constants'
 import { SocialGroup } from '@/pages/startup/components/SocialGroup'
 import { ServiceReturn } from '@/services'
@@ -13,6 +15,12 @@ export default defineComponent({
     }
   },
   setup(props) {
+    const router = useRouter()
+    const toComerDetail = () => {
+      // TODO
+      // need startup id
+      props.startup?.id && router.push({ path: `/startup/${props.startup.id}` })
+    }
     const modeName = computed(
       () => getStartupTypeFromNumber(props.startup?.mode || 0) as StartupTypesType
     )
@@ -25,7 +33,8 @@ export default defineComponent({
 
     return {
       modeName,
-      tags
+      tags,
+      toComerDetail
     }
   },
   render() {
@@ -34,9 +43,8 @@ export default defineComponent({
         <div class="flex ">
           <UStartupLogo
             src={this.startup?.logo || ''}
-            width="15"
-            height="15"
-            class="rounded-sm h-15 mr-4 w-15"
+            class="cursor-pointer h-15 mr-4 w-15"
+            onClick={this.toComerDetail}
           />
           <div class="flex-1 overflow-hidden">
             <div class="mb-2 text-color1 truncate u-h3">{this.startup?.title}</div>

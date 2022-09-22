@@ -40,13 +40,10 @@ export default defineComponent({
               <CrowdfundingMiniCard class="_item" info={item} key={item.crowdfundingId} />
             ))
         ) : (
-          <UNoContent textTip="TO BE EMPTY">
-            <EmptyFilled />
+          <UNoContent textTip="No connect yet">
+            <EmptyFilled class="-mb-14" />
           </UNoContent>
         )}
-        {/* <UNoContent textTip="TO BE DEV">
-          <EmptyFilled />
-        </UNoContent> */}
       </UCard>
     )
   }

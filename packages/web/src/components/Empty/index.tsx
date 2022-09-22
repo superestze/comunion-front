@@ -1,4 +1,4 @@
-import { UCard, UNoContent } from '@comunion/components'
+import { UNoContent } from '@comunion/components'
 import { EmptyFilled } from '@comunion/icons'
 import { defineComponent } from 'vue'
 
@@ -11,11 +11,9 @@ export default defineComponent({
   },
   render() {
     return (
-      <UCard title="" class="mb-6">
-        <UNoContent textTip="NO ACTIVITIES YET" class="my-10">
-          <EmptyFilled />
-        </UNoContent>
-      </UCard>
+      <UNoContent textTip="No connect yet" class="my-10">
+        <EmptyFilled class="-mb-14" />
+      </UNoContent>
     )
   }
 })

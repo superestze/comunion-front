@@ -1,7 +1,8 @@
-import { UStartupLogo, UTag } from '@comunion/components'
+import { UTag } from '@comunion/components'
 import { SettingOutlined } from '@comunion/icons'
 import { defineComponent, PropType } from 'vue'
 import { useRouter } from 'vue-router'
+import UStartupLogo from '@/components/UStartupLogo'
 import { useUserStore } from '@/stores'
 import { StartupItem } from '@/types'
 
@@ -35,12 +36,7 @@ const StartupCard = defineComponent({
         class="rounded-sm cursor-pointer flex py-4 px-4 items-center hover:bg-color-hover"
         onClick={toStartDetail}
       >
-        <UStartupLogo
-          src={props.startup.logo}
-          width="8"
-          height="8"
-          class="rounded-sm h-15 mr-4 w-15"
-        />
+        <UStartupLogo src={props.startup.logo} class="rounded-sm h-15 mr-4 w-15" />
         <div class="flex-1">
           <div class="mb-2 text-color1 u-h4">{props.startup.name}</div>
           <div class="flex gap-2 items-center">
@@ -51,6 +47,9 @@ const StartupCard = defineComponent({
                 </>
               ) : null
             })}
+            {props.startup.hashTags.length - 4 > 0 ? (
+              <UTag class="text-color1">+ {props.startup.hashTags.length - 4}</UTag>
+            ) : null}
           </div>
         </div>
         {userStore.profile?.comerID === props.startup.comerID && (

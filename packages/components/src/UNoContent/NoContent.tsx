@@ -1,5 +1,4 @@
 import { defineComponent } from 'vue'
-import './index.css'
 
 export const UNoContent = defineComponent({
   name: 'UNoContent',
@@ -12,8 +11,8 @@ export const UNoContent = defineComponent({
   setup(props, { slots }) {
     return () => (
       <div class="u-developing">
-        <div class="u-developing__img">{slots.default?.()}</div>
-        <div class="u-developing__text">{props.textTip}</div>
+        <div class="flex items-center justify-center">{slots.default?.()}</div>
+        <div class="text-center text-color3 u-h4">{props.textTip}</div>
       </div>
     )
   }

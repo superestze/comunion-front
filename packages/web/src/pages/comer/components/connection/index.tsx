@@ -1,4 +1,4 @@
-import { UCard, UStartupLogo, UDropdownFilter } from '@comunion/components'
+import { UCard, UDropdownFilter } from '@comunion/components'
 import { defineComponent, ref, watch, onMounted } from 'vue'
 
 import { useConnector } from './useConnector'
@@ -7,6 +7,7 @@ import { useFollowedStartups } from './useFollowedStartups'
 import { useTabs } from './useTabs'
 import { BasicItem } from '@/components/ListItem'
 import LoadingBtn from '@/components/More/loading'
+import UStartupLogo from '@/components/UStartupLogo'
 
 export default defineComponent({
   props: {
@@ -90,7 +91,7 @@ export default defineComponent({
       }
     }
 
-    const tabContents = [
+    const tabContents: { count: number; content?: JSX.Element }[] = [
       {
         count: this.followedStartups.list.value.length,
         content: (
@@ -162,7 +163,7 @@ export default defineComponent({
                               this.$router.push({ path: '/comer', query: { id: item.comerId } })
                             }
                           >
-                            <UStartupLogo src={item.comerAvatar} width="11" height="11" />
+                            <UStartupLogo src={item.comerAvatar} />
                           </div>
                         )
                       }}
@@ -188,7 +189,7 @@ export default defineComponent({
         )
       },
       {
-        cont: this.connector.list.value.length,
+        count: this.connector.list.value.length,
         content: (
           <>
             {this.connector.list.value.length > 0 && (
@@ -211,7 +212,7 @@ export default defineComponent({
                               this.$router.push({ path: '/comer', query: { id: item.comerId } })
                             }
                           >
-                            <UStartupLogo src={item.comerAvatar} width="11" height="11" />
+                            <UStartupLogo src={item.comerAvatar} />
                           </div>
                         )
                       }}
@@ -238,7 +239,7 @@ export default defineComponent({
       }
     ]
 
-    return (
+    return tabContents.filter((item: { count: number }) => item.count > 0).length > 0 ? (
       <UCard
         title="Connected"
         class="mb-6"
@@ -260,6 +261,6 @@ export default defineComponent({
       >
         {tabContents[Number(this.currentTabId)] && tabContents[Number(this.currentTabId)].content}
       </UCard>
-    )
+    ) : null
   }
 })

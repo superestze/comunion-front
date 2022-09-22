@@ -25,7 +25,7 @@ export const MAX_AMOUNT = 9999
 export const renderUnit = (name: string) => (
   <div
     class={[
-      'flex justify-center items-center border rounded-r-lg bg-white w-30',
+      'flex justify-center items-center border rounded-r-sm bg-white w-30',
       { 'text-color1': name, 'text-color3': !name }
     ]}
   >

@@ -29,6 +29,7 @@ type checkboxItem = {
 }
 
 const ApplyDialog = defineComponent({
+  name: 'applyBountyDialog',
   props: {
     visible: {
       type: Boolean,
@@ -54,7 +55,9 @@ const ApplyDialog = defineComponent({
       deposit: 0,
       description: ''
     })
+    // Minimum deposit
     let deposit = 0
+
     watch(
       () => props.visible,
       value => {
@@ -68,7 +71,7 @@ const ApplyDialog = defineComponent({
 
     const bountyStore = useBountyStore()
 
-    const { detail } = bountyStore
+    const detail = computed(() => bountyStore.detail)
     const { bountyContract, bountyContractStore, approve, chainId } = useBountyContractWrapper()
     const fields: Ref<FormFactoryField[]> = computed(() => [
       {
@@ -90,9 +93,9 @@ const ApplyDialog = defineComponent({
           label: () => [h(<div>1.Deposit</div>)],
           feedback: () => [
             h(
-              <span class="text-12px text-color3">
+              <span class="text-color3 u-h7">
                 Minimum deposit <span class="text-primary">{deposit}</span>{' '}
-                {detail?.depositTokenSymbol} for applying bounty
+                {detail.value?.depositTokenSymbol} for applying bounty
               </span>
             )
           ]
@@ -125,7 +128,7 @@ const ApplyDialog = defineComponent({
         title: '2.Submit your executing plan.',
         name: 'description',
         type: 'textarea',
-        placeholder: 'Input your execution plan',
+        placeholder: 'Input your executing plan',
         minlength: 30,
         rules: [
           { required: true, message: `The executing plan can't be blank.` },
@@ -173,11 +176,6 @@ const ApplyDialog = defineComponent({
     }
   },
   render() {
-    const handleTerms = (e: any) => {
-      e.stopPropagation()
-      // console.log(e)
-    }
-
     const triggerDialog = (done: boolean) => {
       this.$emit('triggerDialog', done)
     }
@@ -197,22 +195,32 @@ const ApplyDialog = defineComponent({
           let response!: BountyContractReturnType
           const tokenSymbol = this.bountyContractStore.bountyContractInfo.depositTokenSymbol
           if (this.formData.deposit >= this.deposit) {
-            const approvePendingText =
-              'Waiting to submit all contents to blockchain for approval deposit'
             const contractStore = useContractStore()
-            contractStore.startContract(approvePendingText)
-            await this.approve(
+            contractStore.startContract(
+              'Waiting to submit all contents to blockchain for approval deposit'
+            )
+
+            console.warn('bounty detail info', this.detail)
+
+            const res1 = await this.approve(
               this.detail?.depositContract || '',
               ethers.utils.parseUnits(this.formData.deposit.toString(), 18)
             )
+            console.warn('bounty detail 2', res1)
+            if (!res1) {
+              return contractStore.endContract('failed', { success: false })
+            }
             response = (await this.bountyContract.applyFor(
               ethers.utils.parseUnits(this.formData.deposit.toString(), 18),
               'Waiting to submit all contents to blockchain for apply',
               `Apply by ${this.formData.deposit} ${tokenSymbol}`
             )) as unknown as BountyContractReturnType
+            console.warn('bounty detail 3', response)
+            if (!response) {
+              return message.error('Payment failure')
+            }
           } else {
-            message.error('Input deposit must be greater than applicant deposit!')
-            return
+            return message.error('Input deposit must be greater than applicant deposit!')
           }
           const tokenAmount = Number(this.formData.deposit)
           await services['bounty@bounty-applicants-apply']({
@@ -230,7 +238,7 @@ const ApplyDialog = defineComponent({
 
           const bountyStore = useBountyStore()
           bountyStore.initialize(this.route.params.id as string)
-          triggerDialog(true)
+          return triggerDialog(true)
         }
         if (!this.terms.value) {
           this.terms.validate = true
@@ -238,7 +246,7 @@ const ApplyDialog = defineComponent({
         if (!this.accept.value) {
           this.accept.validate = true
         }
-        console.log(err)
+        return console.log(err)
       })
     }
 
@@ -252,16 +260,11 @@ const ApplyDialog = defineComponent({
     return (
       <UModal v-model:show={this.visible}>
         <UCard
-          //  '--n-close-icon-color': '#3F2D99'
           style={{
             width: '540px',
             '--n-title-text-color': '#3F2D99'
           }}
           title={this.title}
-          bordered={false}
-          size="huge"
-          role="dialog"
-          aria-modal="true"
           closable
           onClose={userBehavier('cancel')}
         >
@@ -276,26 +279,28 @@ const ApplyDialog = defineComponent({
             <UCheckbox checked={this.terms.value} onChange={handleCheckbox('terms')}>
               <span class={this.termsClass}>
                 I have read, understand, and agree to,{' '}
-                <a class="text-primary" onClick={handleTerms}>
+                <a class="text-primary" href="###">
                   the Terms of Service.
                 </a>
               </span>
             </UCheckbox>
             <br />
-            <UCheckbox
-              checked={this.accept.value}
-              onChange={handleCheckbox('accept')}
-              class="mt-10px"
-            >
+            <UCheckbox checked={this.accept.value} onChange={handleCheckbox('accept')} class="mt-2">
               <span class={this.acceptClass}>
                 I accept that I will not be able to take the deposit in case of evil.
               </span>
             </UCheckbox>
             <div class="flex mt-10 justify-end">
-              <UButton class="mr-16px w-164px" type="default" onClick={userBehavier('cancel')}>
+              <UButton class="mr-4 w-40" type="default" onClick={userBehavier('cancel')}>
                 Cancel
               </UButton>
-              <UButton class="w-164px" type="primary" onClick={userBehavier('submit')}>
+              <UButton
+                class="w-40"
+                type="primary"
+                onClick={userBehavier('submit')}
+                disabled={!this.detail?.depositContract}
+                loading={!this.detail?.depositContract}
+              >
                 Submit
               </UButton>
             </div>

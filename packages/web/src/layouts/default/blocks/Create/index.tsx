@@ -177,14 +177,7 @@ const CreateBlock = defineComponent({
             }
           ]}
         >
-          <UButton
-            type="primary"
-            size="small"
-            class="font-primary font-semibold font-medium h-8 w-19.25"
-            style={{
-              '--n-border-radius': '2px'
-            }}
-          >
+          <UButton type="primary" size="small" class="h-8 w-19.25 !font-normal">
             Create
           </UButton>
           {/* <button class={[styles.btn, ctx.attrs.class]}></button> */}

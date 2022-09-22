@@ -1,9 +1,10 @@
-import { UButton, UPopover, UStartupLogo, UTag } from '@comunion/components'
+import { UButton, UPopover, UTag } from '@comunion/components'
 import { defineComponent, computed, ref, watch, PropType } from 'vue'
 
 import { useStartupProfile } from '../../hooks/useStartupProfile'
 import defaultCover from './assets/cover.png'
 import SocialIcon from '@/components/SocialIcon'
+import UStartupLogo from '@/components/UStartupLogo'
 import { getStartupTypeFromNumber, StartupTypesType } from '@/constants'
 import { getContactList } from '@/pages/startup/setting/[id]'
 import { contactList } from '@/pages/startup/setting/components/social/util'
@@ -32,8 +33,12 @@ export default defineComponent({
     const { toggleFollowStartup, getUserIsFollow } = profile
     let theChainName = getChainInfoByChainId(props.startup.chainID)?.shortName
     getUserIsFollow(props.startupId)
-      .then(() => (userIsFollow.value = true))
-      .catch(() => (userIsFollow.value = false))
+      .then(res => {
+        userIsFollow.value = !!res
+      })
+      .catch(() => {
+        userIsFollow.value = false
+      })
 
     const startupInfo = ref<StartupDetail & { onChain: boolean }>()
 
@@ -113,27 +118,28 @@ export default defineComponent({
         .finally(() => (this.loading = false))
     }
     return (
-      <div class="bg-white border rounded-sm mb-6  overflow-hidden">
+      <div class="bg-white border rounded-sm mb-6 overflow-hidden">
         <div class="h-13.125rem overflow-hidden">
           <img
             src={this.startupInfo?.cover || defaultCover}
             alt="bg"
             class="h-full object-cover w-full"
           />
+          {!this.startupInfo?.cover && (
+            <div class="text-right top-19 right-10 absolute">
+              <div class="font-normal text-color2 u-h3">
+                Nothing is more powerful than an idea whose time has come
+              </div>
+              <div class="mt-9 text-color3 u-h6">Victor Hugo</div>
+            </div>
+          )}
         </div>
 
         <div class="flex mt-2 px-10 justify-between relative">
-          <div
-            class="rounded h-30 bottom-2 left-10 w-30 absolute overflow-hidden"
-            style="box-shadow: 2px 6px 12px rgba(69, 68, 132, 0.25);"
-          >
-            <UStartupLogo
-              src={this.startupInfo?.logo || ''}
-              width="30"
-              height="30"
-              class="bg-white rounded h-full w-full !object-cover"
-            />
-          </div>
+          <UStartupLogo
+            src={this.startupInfo?.logo || ''}
+            class="bg-white h-30 bottom-2 left-10 w-30 absolute"
+          />
           <div class="pl-36">
             <div class="flex items-center">
               <p class="text-color1 u-h2">{this.startupInfo?.name}</p>
@@ -195,7 +201,7 @@ export default defineComponent({
                   )
                 })}
             </div>
-            <p class="mt-2 text-color2 u-h6 max-w-[600px]">{this.startupInfo?.mission}</p>
+            <p class="mt-2 max-w-[600px] text-color2 u-h6">{this.startupInfo?.mission}</p>
           </div>
           <div class="flex flex-wrap gap-2">
             {this.socialList.map(item => (
@@ -203,7 +209,7 @@ export default defineComponent({
                 placement="bottom"
                 v-slots={{
                   trigger: () => this.getLinkTarget(item.socialLink, item.label),
-                  default: () => <div class="cursor-pointer text-white">{item.label}</div>
+                  default: () => <div class="cursor-pointer">{item.label}</div>
                 }}
               />
             ))}

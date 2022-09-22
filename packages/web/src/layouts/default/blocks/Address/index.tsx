@@ -30,15 +30,7 @@ const WalletAddress = defineComponent({
     return () => {
       // userStore.
       const btn = (
-        <UButton
-          size="small"
-          onClick={connectWallet}
-          class="font-primary h-8"
-          style={{
-            '--n-border-radius': '2px',
-            '--n-border': '1px solid rgba(218, 220, 224, 1)'
-          }}
-        >
+        <UButton size="small" onClick={connectWallet} class="h-8 !font-normal">
           {walletStore.connected && walletStore.address
             ? shortenAddress(walletStore.address)
             : 'Connect Wallet'}

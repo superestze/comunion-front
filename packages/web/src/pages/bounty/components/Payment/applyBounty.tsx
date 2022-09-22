@@ -6,6 +6,7 @@ import { useBountyContractStore } from '@/stores/bountyContract'
 import { checkSupportNetwork } from '@/utils/wallet'
 
 export default defineComponent({
+  name: 'applyBounty',
   props: {
     disabled: {
       type: Boolean,
@@ -65,21 +66,24 @@ export default defineComponent({
           deposit={this.applicantDepositMinAmount}
         />
         {this.disabled && this.ApplicantApplyDesc === 'Apply' ? (
-          <UButton
-            type="primary"
-            class={`${this.disabled && 'text-white'} ${this.$attrs.class}`}
-            onClick={applyBounty}
-            disabled={this.disabled}
-          >
-            <UTooltip
-              trigger="hover"
-              placement="top"
-              v-slots={{
-                trigger: () => this.ApplicantApplyDesc,
-                default: () => 'This bounty has been won by another applicant'
-              }}
-            />
-          </UButton>
+          <UTooltip
+            trigger="hover"
+            placement="top"
+            v-slots={{
+              trigger: () => (
+                <div class="w-[100%]">
+                  <UButton
+                    type="primary"
+                    class={`${this.disabled && 'text-white w-[100%]'} ${this.$attrs.class}`}
+                    disabled
+                  >
+                    {this.ApplicantApplyDesc}
+                  </UButton>
+                </div>
+              ),
+              default: () => 'This bounty has been won by another applicant'
+            }}
+          />
         ) : (
           <UButton
             type="primary"

@@ -3,6 +3,8 @@ import { defineStore } from 'pinia'
 import { useRequest } from 'vue-request'
 import { useBountyContract } from '@/contracts'
 import { services } from '@/services'
+import { useUserStore } from '@/stores'
+const userStore = useUserStore()
 
 export type BountyContractInfoType = {
   bountyStatus: number
@@ -64,6 +66,10 @@ export const useBountyContractStore = defineStore('bountyContract', {
     ) {
       const getState = () => {
         return new Promise((resolve, reject) => {
+          // when user is logout, stop request
+          if (!userStore.inited && cancel) {
+            return reject(cancel())
+          }
           if (reset) {
             this.bountyContractInfo = {
               bountyStatus: 0,
@@ -153,9 +159,8 @@ export const useBountyContractStore = defineStore('bountyContract', {
                 ethers.utils.formatEther(response[9])
               )
               this.bountyContractInfo.status = Number(response[10])
-
+              // TODO use the data, not the state
               resolve(response)
-              console.log(this.bountyContractInfo, Number(ethers.utils.formatUnits(response[7], 0)))
             })
             .catch(err => reject(err))
         })
