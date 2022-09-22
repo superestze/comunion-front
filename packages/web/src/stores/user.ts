@@ -104,6 +104,7 @@ export const useUserStore = defineStore('user', {
       this.token = ''
       this.profile = null
       this.userResponse = null
+      this.inited = false
       storage('session').clear()
       storage('local').remove(STORE_KEY_TOKEN)
       walletStore.disconnectWallet()

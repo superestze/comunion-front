@@ -3,6 +3,8 @@ import { defineStore } from 'pinia'
 import { useRequest } from 'vue-request'
 import { useBountyContract } from '@/contracts'
 import { services } from '@/services'
+import { useUserStore } from '@/stores'
+const userStore = useUserStore()
 
 export type BountyContractInfoType = {
   bountyStatus: number
@@ -64,6 +66,9 @@ export const useBountyContractStore = defineStore('bountyContract', {
     ) {
       const getState = () => {
         return new Promise((resolve, reject) => {
+          if (!userStore.inited && cancel) {
+            return reject(cancel())
+          }
           if (reset) {
             this.bountyContractInfo = {
               bountyStatus: 0,
