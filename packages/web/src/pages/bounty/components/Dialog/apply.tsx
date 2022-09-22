@@ -200,16 +200,15 @@ const ApplyDialog = defineComponent({
             const contractStore = useContractStore()
             contractStore.startContract(approvePendingText)
             console.warn('bounty detail info', this.detail)
-            console.warn(
-              'bounty detail 1',
-              this.detail?.depositContract,
-              ethers.utils.parseUnits(this.formData.deposit.toString(), 18)
-            )
+
             const res1 = await this.approve(
               this.detail?.depositContract || '',
               ethers.utils.parseUnits(this.formData.deposit.toString(), 18)
             )
             console.warn('bounty detail 2', res1)
+            if (!res1) {
+              return message.warning('授权失败')
+            }
             response = (await this.bountyContract.applyFor(
               ethers.utils.parseUnits(this.formData.deposit.toString(), 18),
               'Waiting to submit all contents to blockchain for apply',
