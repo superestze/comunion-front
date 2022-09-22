@@ -207,7 +207,7 @@ const ApplyDialog = defineComponent({
             )
             console.warn('bounty detail 2', res1)
             if (!res1) {
-              return null
+              return triggerDialog(false)
             }
             response = (await this.bountyContract.applyFor(
               ethers.utils.parseUnits(this.formData.deposit.toString(), 18),
@@ -216,7 +216,8 @@ const ApplyDialog = defineComponent({
             )) as unknown as BountyContractReturnType
             console.warn('bounty detail 3', response)
             if (!response) {
-              return message.error('支付失败')
+              message.error('支付失败')
+              return triggerDialog(false)
             }
           } else {
             return message.error('Input deposit must be greater than applicant deposit!')
@@ -293,7 +294,13 @@ const ApplyDialog = defineComponent({
               <UButton class="mr-4 w-40" type="default" onClick={userBehavier('cancel')}>
                 Cancel
               </UButton>
-              <UButton class="w-40" type="primary" onClick={userBehavier('submit')}>
+              <UButton
+                class="w-40"
+                type="primary"
+                onClick={userBehavier('submit')}
+                disabled={!this.detail?.depositContract}
+                loading={!this.detail?.depositContract}
+              >
                 Submit
               </UButton>
             </div>
