@@ -62,7 +62,7 @@ export default defineComponent({
           <div class="font-primary font-semibold mb-2 text-[16px] truncate">
             {this.normalize.name}
           </div>
-          <div class="flex mb-2 items-center">
+          <div class="flex flex-wrap mb-2 gap-2 items-center">
             {Array.isArray(this.normalize.skills) && (
               <>
                 {this.normalize.skills.map((tag, i) => {

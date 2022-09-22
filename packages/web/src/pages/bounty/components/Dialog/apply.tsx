@@ -125,7 +125,7 @@ const ApplyDialog = defineComponent({
         title: '2.Submit your executing plan.',
         name: 'description',
         type: 'textarea',
-        placeholder: 'Input your execution plan',
+        placeholder: 'Input your executing plan',
         minlength: 30,
         rules: [
           { required: true, message: `The executing plan can't be blank.` },
