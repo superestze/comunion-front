@@ -207,7 +207,7 @@ const ApplyDialog = defineComponent({
             )
             console.warn('bounty detail 2', res1)
             if (!res1) {
-              return message.warning('授权失败')
+              return null
             }
             response = (await this.bountyContract.applyFor(
               ethers.utils.parseUnits(this.formData.deposit.toString(), 18),
