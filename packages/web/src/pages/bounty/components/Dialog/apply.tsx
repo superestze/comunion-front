@@ -199,6 +199,7 @@ const ApplyDialog = defineComponent({
               'Waiting to submit all contents to blockchain for approval deposit'
             const contractStore = useContractStore()
             contractStore.startContract(approvePendingText)
+            console.warn('bounty detail info', this.detail)
             console.warn(
               'bounty detail 1',
               this.detail?.depositContract,
