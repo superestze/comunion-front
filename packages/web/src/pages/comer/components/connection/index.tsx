@@ -91,7 +91,7 @@ export default defineComponent({
       }
     }
 
-    const tabContents = [
+    const tabContents: { count: number; content?: JSX.Element }[] = [
       {
         count: this.followedStartups.list.value.length,
         content: (
@@ -189,7 +189,7 @@ export default defineComponent({
         )
       },
       {
-        cont: this.connector.list.value.length,
+        count: this.connector.list.value.length,
         content: (
           <>
             {this.connector.list.value.length > 0 && (
@@ -239,7 +239,7 @@ export default defineComponent({
       }
     ]
 
-    return (
+    return tabContents.filter((item: { count: number }) => item.count > 0).length > 0 ? (
       <UCard
         title="Connected"
         class="mb-6"
@@ -261,6 +261,6 @@ export default defineComponent({
       >
         {tabContents[Number(this.currentTabId)] && tabContents[Number(this.currentTabId)].content}
       </UCard>
-    )
+    ) : null
   }
 })

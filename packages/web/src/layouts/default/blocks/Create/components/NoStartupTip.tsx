@@ -21,21 +21,32 @@ const NoStartupTip = defineComponent({
       show,
       close
     })
+
     return () => (
       <UModal v-model:show={modalVisibleState.value} maskClosable={false} autoFocus={false}>
-        <UCard style={{ width: '540px' }} closable={true} class="!p-7" onClose={close}>
-          <div class="relative -top-3 flex items-center">
-            <WarningFilled />{' '}
-            <span class="u-title1 ml-4">You do need create a startup at first</span>
-          </div>
-          <div class="mt-3 ml-12 u-h5 text-grey3">
+        <UCard
+          style={{ width: '540px' }}
+          closable={true}
+          onClose={close}
+          v-slots={{
+            header: () => {
+              return (
+                <div class="flex relative items-center">
+                  <WarningFilled class="mr-4" />{' '}
+                  <span class="text-color1 u-h3">You do need create a startup at first</span>
+                </div>
+              )
+            }
+          }}
+        >
+          <div class="min-h-20 p-4 text-color2 u-h6">
             Please do create a startup before creating a bounty.
           </div>
-          <div class="flex justify-end mt-20">
-            <UButton type="primary" ghost class="w-41 mr-4 h-9" onClick={close}>
+          <div class="flex mt-4 justify-end">
+            <UButton type="primary" ghost class="mr-4 w-41" onClick={close}>
               Cancel
             </UButton>
-            <UButton type="primary" class="w-41 h-9" onClick={toCreateStartup}>
+            <UButton type="primary" class="w-41" onClick={toCreateStartup}>
               Go to create
             </UButton>
           </div>
