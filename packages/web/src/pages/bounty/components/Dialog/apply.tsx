@@ -71,7 +71,7 @@ const ApplyDialog = defineComponent({
 
     const bountyStore = useBountyStore()
 
-    const { detail } = bountyStore
+    const detail = computed(() => bountyStore.detail)
     const { bountyContract, bountyContractStore, approve, chainId } = useBountyContractWrapper()
     const fields: Ref<FormFactoryField[]> = computed(() => [
       {
@@ -95,7 +95,7 @@ const ApplyDialog = defineComponent({
             h(
               <span class="text-color3 u-h7">
                 Minimum deposit <span class="text-primary">{deposit}</span>{' '}
-                {detail?.depositTokenSymbol} for applying bounty
+                {detail.value?.depositTokenSymbol} for applying bounty
               </span>
             )
           ]
