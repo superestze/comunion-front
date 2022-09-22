@@ -195,10 +195,11 @@ const ApplyDialog = defineComponent({
           let response!: BountyContractReturnType
           const tokenSymbol = this.bountyContractStore.bountyContractInfo.depositTokenSymbol
           if (this.formData.deposit >= this.deposit) {
-            const approvePendingText =
-              'Waiting to submit all contents to blockchain for approval deposit'
             const contractStore = useContractStore()
-            contractStore.startContract(approvePendingText)
+            contractStore.startContract(
+              'Waiting to submit all contents to blockchain for approval deposit'
+            )
+
             console.warn('bounty detail info', this.detail)
 
             const res1 = await this.approve(
@@ -207,7 +208,7 @@ const ApplyDialog = defineComponent({
             )
             console.warn('bounty detail 2', res1)
             if (!res1) {
-              return triggerDialog(false)
+              return contractStore.endContract('failed', { success: false })
             }
             response = (await this.bountyContract.applyFor(
               ethers.utils.parseUnits(this.formData.deposit.toString(), 18),
@@ -216,8 +217,7 @@ const ApplyDialog = defineComponent({
             )) as unknown as BountyContractReturnType
             console.warn('bounty detail 3', response)
             if (!response) {
-              message.error('Payment failure')
-              return triggerDialog(false)
+              return message.error('Payment failure')
             }
           } else {
             return message.error('Input deposit must be greater than applicant deposit!')

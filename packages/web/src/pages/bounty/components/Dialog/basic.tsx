@@ -21,7 +21,7 @@ export default defineComponent({
     const triggerDialog = () => {
       this.$emit('triggerDialog')
     }
-
+    // TODO fix tyle
     return (
       <UModal show={this.visible}>
         <UCard
@@ -30,19 +30,11 @@ export default defineComponent({
             '--n-title-text-color': '#3F2D99',
             '--n-close-icon-color': '#3F2D99'
           }}
+          title={this.title}
           bordered={false}
           size="huge"
-          role="dialog"
-          aria-modal="true"
           closable
           onClose={triggerDialog}
-          v-slots={{
-            header: () => (
-              <div>
-                <div>{this.title}</div>
-              </div>
-            )
-          }}
         >
           <p class="min-h-20 p-4 text-color2 u-h6">{this.content}</p>
           {this.$slots.btns && this.$slots.btns()}
