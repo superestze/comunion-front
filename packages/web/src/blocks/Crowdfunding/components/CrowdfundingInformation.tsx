@@ -192,8 +192,8 @@ export const CrowdfundingInformation = defineComponent({
                 Rate
                 <span class="n-form-item-label__asterisk">&nbsp;*</span>
                 <span class="ml-1 u-h5">
-                  1 {props.crowdfundingInfo.buyTokenName} = {props.crowdfundingInfo.buyPrice || '?'}{' '}
-                  {props.crowdfundingInfo.sellTokenName}
+                  1 {props.crowdfundingInfo.buyTokenSymbol} ={' '}
+                  {props.crowdfundingInfo.buyPrice || '?'} {props.crowdfundingInfo.sellTokenSymbol}
                 </span>
               </div>
             )
