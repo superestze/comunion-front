@@ -199,25 +199,28 @@ const ApplyDialog = defineComponent({
               'Waiting to submit all contents to blockchain for approval deposit'
             const contractStore = useContractStore()
             contractStore.startContract(approvePendingText)
+            console.warn('bounty detail info', this.detail)
             console.warn(
               'bounty detail 1',
               this.detail?.depositContract,
               ethers.utils.parseUnits(this.formData.deposit.toString(), 18)
             )
-            await this.approve(
+            const res1 = await this.approve(
               this.detail?.depositContract || '',
               ethers.utils.parseUnits(this.formData.deposit.toString(), 18)
             )
-            console.warn('bounty detail 2')
+            console.warn('bounty detail 2', res1)
             response = (await this.bountyContract.applyFor(
               ethers.utils.parseUnits(this.formData.deposit.toString(), 18),
               'Waiting to submit all contents to blockchain for apply',
               `Apply by ${this.formData.deposit} ${tokenSymbol}`
             )) as unknown as BountyContractReturnType
             console.warn('bounty detail 3', response)
+            if (!response) {
+              return message.error('支付失败')
+            }
           } else {
-            message.error('Input deposit must be greater than applicant deposit!')
-            return
+            return message.error('Input deposit must be greater than applicant deposit!')
           }
           const tokenAmount = Number(this.formData.deposit)
           await services['bounty@bounty-applicants-apply']({
@@ -235,7 +238,7 @@ const ApplyDialog = defineComponent({
 
           const bountyStore = useBountyStore()
           bountyStore.initialize(this.route.params.id as string)
-          triggerDialog(true)
+          return triggerDialog(true)
         }
         if (!this.terms.value) {
           this.terms.validate = true
@@ -243,7 +246,7 @@ const ApplyDialog = defineComponent({
         if (!this.accept.value) {
           this.accept.validate = true
         }
-        console.log(err)
+        return console.log(err)
       })
     }
 

@@ -46,14 +46,13 @@ export function wrapTransaction(
         return res
       })
       .catch((e: any) => {
-        console.error(e)
         if (pengdingText || waitingText) {
           contractStore.endContract('failed', { success: false })
         }
         if (e.data?.message) {
           message.error(e.data.message)
         }
-        throw e
+        return null
       })
   }
 }
