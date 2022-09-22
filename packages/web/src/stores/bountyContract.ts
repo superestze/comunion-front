@@ -155,7 +155,6 @@ export const useBountyContractStore = defineStore('bountyContract', {
               this.bountyContractInfo.status = Number(response[10])
 
               resolve(response)
-              console.log(this.bountyContractInfo, Number(ethers.utils.formatUnits(response[7], 0)))
             })
             .catch(err => reject(err))
         })
