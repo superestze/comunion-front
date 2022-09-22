@@ -29,6 +29,7 @@ type checkboxItem = {
 }
 
 const ApplyDialog = defineComponent({
+  name: 'applyBountyDialog',
   props: {
     visible: {
       type: Boolean,
@@ -54,7 +55,9 @@ const ApplyDialog = defineComponent({
       deposit: 0,
       description: ''
     })
+    // Minimum deposit
     let deposit = 0
+
     watch(
       () => props.visible,
       value => {
@@ -90,7 +93,7 @@ const ApplyDialog = defineComponent({
           label: () => [h(<div>1.Deposit</div>)],
           feedback: () => [
             h(
-              <span class="text-12px text-color3">
+              <span class="text-color3 u-h7">
                 Minimum deposit <span class="text-primary">{deposit}</span>{' '}
                 {detail?.depositTokenSymbol} for applying bounty
               </span>
@@ -173,11 +176,6 @@ const ApplyDialog = defineComponent({
     }
   },
   render() {
-    const handleTerms = (e: any) => {
-      e.stopPropagation()
-      // console.log(e)
-    }
-
     const triggerDialog = (done: boolean) => {
       this.$emit('triggerDialog', done)
     }
@@ -201,15 +199,22 @@ const ApplyDialog = defineComponent({
               'Waiting to submit all contents to blockchain for approval deposit'
             const contractStore = useContractStore()
             contractStore.startContract(approvePendingText)
+            console.warn(
+              'bounty detail 1',
+              this.detail?.depositContract,
+              ethers.utils.parseUnits(this.formData.deposit.toString(), 18)
+            )
             await this.approve(
               this.detail?.depositContract || '',
               ethers.utils.parseUnits(this.formData.deposit.toString(), 18)
             )
+            console.warn('bounty detail 2')
             response = (await this.bountyContract.applyFor(
               ethers.utils.parseUnits(this.formData.deposit.toString(), 18),
               'Waiting to submit all contents to blockchain for apply',
               `Apply by ${this.formData.deposit} ${tokenSymbol}`
             )) as unknown as BountyContractReturnType
+            console.warn('bounty detail 3', response)
           } else {
             message.error('Input deposit must be greater than applicant deposit!')
             return
@@ -252,16 +257,11 @@ const ApplyDialog = defineComponent({
     return (
       <UModal v-model:show={this.visible}>
         <UCard
-          //  '--n-close-icon-color': '#3F2D99'
           style={{
             width: '540px',
             '--n-title-text-color': '#3F2D99'
           }}
           title={this.title}
-          bordered={false}
-          size="huge"
-          role="dialog"
-          aria-modal="true"
           closable
           onClose={userBehavier('cancel')}
         >
@@ -276,26 +276,22 @@ const ApplyDialog = defineComponent({
             <UCheckbox checked={this.terms.value} onChange={handleCheckbox('terms')}>
               <span class={this.termsClass}>
                 I have read, understand, and agree to,{' '}
-                <a class="text-primary" onClick={handleTerms}>
+                <a class="text-primary" href="###">
                   the Terms of Service.
                 </a>
               </span>
             </UCheckbox>
             <br />
-            <UCheckbox
-              checked={this.accept.value}
-              onChange={handleCheckbox('accept')}
-              class="mt-10px"
-            >
+            <UCheckbox checked={this.accept.value} onChange={handleCheckbox('accept')} class="mt-2">
               <span class={this.acceptClass}>
                 I accept that I will not be able to take the deposit in case of evil.
               </span>
             </UCheckbox>
             <div class="flex mt-10 justify-end">
-              <UButton class="mr-16px w-164px" type="default" onClick={userBehavier('cancel')}>
+              <UButton class="mr-4 w-40" type="default" onClick={userBehavier('cancel')}>
                 Cancel
               </UButton>
-              <UButton class="w-164px" type="primary" onClick={userBehavier('submit')}>
+              <UButton class="w-40" type="primary" onClick={userBehavier('submit')}>
                 Submit
               </UButton>
             </div>
