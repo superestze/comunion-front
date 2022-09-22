@@ -276,9 +276,6 @@ export default defineComponent({
           }}
           title="Payment"
           bordered={false}
-          size="huge"
-          role="dialog"
-          aria-modal="true"
           closable
           onClose={triggerDialog}
         >
@@ -291,10 +288,10 @@ export default defineComponent({
               <UFormItemsFactory fields={this.fields} values={this.formData} />
             </UForm>
             <div class="flex justify-end">
-              <UButton class="mr-16px w-164px" type="default" onClick={userBehavier('cancel')}>
+              <UButton class="mr-4 w-40" type="default" onClick={userBehavier('cancel')}>
                 Cancel
               </UButton>
-              <UButton class="w-164px" type="primary" onClick={userBehavier('submit')}>
+              <UButton class="w-40" type="primary" onClick={userBehavier('submit')}>
                 Submit
               </UButton>
             </div>
