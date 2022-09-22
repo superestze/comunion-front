@@ -6,6 +6,7 @@ import { useBountyContractStore } from '@/stores/bountyContract'
 import { checkSupportNetwork } from '@/utils/wallet'
 
 export default defineComponent({
+  name: 'applyBounty',
   props: {
     disabled: {
       type: Boolean,
