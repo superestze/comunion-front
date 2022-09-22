@@ -220,8 +220,7 @@ const ApplyDialog = defineComponent({
               return message.error('支付失败')
             }
           } else {
-            message.error('Input deposit must be greater than applicant deposit!')
-            return
+            return message.error('Input deposit must be greater than applicant deposit!')
           }
           const tokenAmount = Number(this.formData.deposit)
           await services['bounty@bounty-applicants-apply']({
@@ -239,7 +238,7 @@ const ApplyDialog = defineComponent({
 
           const bountyStore = useBountyStore()
           bountyStore.initialize(this.route.params.id as string)
-          triggerDialog(true)
+          return triggerDialog(true)
         }
         if (!this.terms.value) {
           this.terms.validate = true
@@ -247,7 +246,7 @@ const ApplyDialog = defineComponent({
         if (!this.accept.value) {
           this.accept.validate = true
         }
-        console.log(err)
+        return console.log(err)
       })
     }
 
