@@ -113,6 +113,7 @@ export const useBountyContractStore = defineStore('bountyContract', {
                 this.bountyContractInfo.timeLock =
                   this.bountyContractInfo.timeLock || data.timeLock || 0
                 // resolve(data)
+                console.log(1111111, this.bountyContractInfo.status)
               }
               // reject(error)
             })
@@ -153,7 +154,7 @@ export const useBountyContractStore = defineStore('bountyContract', {
                 ethers.utils.formatEther(response[9])
               )
               this.bountyContractInfo.status = Number(response[10])
-
+              console.log(2222222, Number(response[10]))
               resolve(response)
             })
             .catch(err => reject(err))
