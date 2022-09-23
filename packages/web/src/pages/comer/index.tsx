@@ -31,7 +31,6 @@ export default defineComponent({
     const { id } = route.query
     // console.log(id)
     const instance = useProfile(id as string)
-    console.log(instance.view)
 
     instance.getProfileData()
 

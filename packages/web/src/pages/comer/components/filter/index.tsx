@@ -42,7 +42,6 @@ export default defineComponent({
         <UTabs class="dashboard-tabs" onUpdateValue={tabsChange}>
           <UTabPane
             name="CREATED"
-            tab="Created"
             v-slots={{
               tab: () => {
                 return (
@@ -62,7 +61,6 @@ export default defineComponent({
           </UTabPane>
           <UTabPane
             name="PARTICIPATED"
-            tab="Participated"
             v-slots={{
               tab: () => {
                 return (
