@@ -1,6 +1,6 @@
 import { defineComponent, PropType, computed } from 'vue'
-import { startupSortItemList } from '../../setting/components/sequence/BasicSortable'
 import { ModuleTags } from '@/components/Tags'
+import { startupSortItemList } from '@/pages/startup/setting/components/sequence/BasicSortable'
 
 export default defineComponent({
   props: {
