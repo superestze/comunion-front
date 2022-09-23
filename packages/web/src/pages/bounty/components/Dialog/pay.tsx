@@ -9,7 +9,7 @@ import {
   UInputNumberGroup,
   UModal
 } from '@comunion/components'
-import { defineComponent, computed, ref, reactive, PropType, watch } from 'vue'
+import { defineComponent, Ref, computed, ref, reactive, PropType, watch } from 'vue'
 import { useRoute } from 'vue-router'
 import { BountyProjectCardType } from '../ProjectCard'
 import { MAX_AMOUNT, renderUnit } from '@/blocks/Bounty/components/BasicInfo'
@@ -66,7 +66,7 @@ export default defineComponent({
       }
     )
 
-    const fields = computed<FormFactoryField[]>(() => {
+    const fields: Ref<FormFactoryField[]> = computed(() => {
       const result: FormFactoryField[] = []
       if (formData.token1Symbol) {
         result.push({
