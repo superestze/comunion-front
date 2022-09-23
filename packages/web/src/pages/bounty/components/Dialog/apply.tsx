@@ -206,7 +206,6 @@ const ApplyDialog = defineComponent({
               this.detail?.depositContract || '',
               ethers.utils.parseUnits(this.formData.deposit.toString(), 18)
             )
-            console.warn('bounty detail 2', res1)
             if (!res1) {
               return contractStore.endContract('failed', { success: false })
             }
@@ -215,9 +214,8 @@ const ApplyDialog = defineComponent({
               'Waiting to submit all contents to blockchain for apply',
               `Apply by ${this.formData.deposit} ${tokenSymbol}`
             )) as unknown as BountyContractReturnType
-            console.warn('bounty detail 3', response)
             if (!response) {
-              return message.error('Payment failure')
+              return null
             }
           } else {
             return message.error('Input deposit must be greater than applicant deposit!')

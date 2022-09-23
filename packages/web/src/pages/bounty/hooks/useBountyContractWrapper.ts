@@ -73,10 +73,10 @@ export function useBountyContractWrapper(bountyId?: string) {
       .catch((err: any) => {
         switch (err.code) {
           case 4001:
-            message.error('Authorization failure')
+            message.error('Authorization failed')
             break
           case -32603:
-            message.error('MetaMask network connection failure')
+            message.error('MetaMask network connection failed')
             break
           default:
             console.warn(`usdc.approve err with params:${contractAddress}, ${amount}`, err)

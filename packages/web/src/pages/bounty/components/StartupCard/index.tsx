@@ -17,8 +17,6 @@ export default defineComponent({
   setup(props) {
     const router = useRouter()
     const toComerDetail = () => {
-      // TODO
-      // need startup id
       props.startup?.id && router.push({ path: `/startup/${props.startup.id}` })
     }
     const modeName = computed(
