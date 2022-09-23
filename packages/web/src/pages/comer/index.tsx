@@ -26,7 +26,7 @@ const keyValue: Record<string, string> = {
 }
 
 export default defineComponent({
-  name: 'comer',
+  name: 'Comer',
   setup() {
     const route = useRoute()
     const { id } = route.query
@@ -150,7 +150,7 @@ export default defineComponent({
                   onTabChange={handleTabChange}
                   onSelectedTagChange={handleSelectedTagChange}
                 />
-                {this.nothingToShow ? (
+                {this.nothingToShow || !this.profile.comerID ? (
                   <Empty />
                 ) : (
                   <>
