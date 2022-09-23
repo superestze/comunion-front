@@ -31,17 +31,17 @@ export function useTabs(comerId: number) {
     {
       id: '0',
       title: 'Startup',
-      subTitle: `(${converset(count.startupCnt)})`
+      totalRows: converset(count.startupCnt)
     },
     {
       id: '1',
       title: 'Comer',
-      subTitle: `(${converset(count.comerCnt)})`
+      totalRows: converset(count.comerCnt)
     },
     {
       id: '2',
       title: 'Connector',
-      subTitle: `(${converset(count.followerCnt)})`
+      totalRows: converset(count.followerCnt)
     }
   ])
   return {
