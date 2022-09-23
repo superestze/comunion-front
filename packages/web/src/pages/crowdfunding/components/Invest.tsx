@@ -57,7 +57,7 @@ export const Invest = defineComponent({
       swapAmount: 0
     })
 
-    const fundingContractState = ref()
+    const fundingContractStateSecound = ref()
     const fundingContract = useCrowdfundingContract({
       chainId: walletStore.chainId!,
       addresses: { [walletStore.chainId!]: props.info.crowdfundingContract }
@@ -126,10 +126,10 @@ export const Invest = defineComponent({
 
     const countDownTime = computed(() => {
       const countDown = {
-        days: 0,
-        hours: 0,
-        minutes: 0,
-        seconds: 0
+        days: '00',
+        hours: '00',
+        minutes: '00',
+        seconds: '00'
       }
 
       const numberClass = 'u-h4 rounded-sm px-1 min-w-10 text-center py-2'
@@ -139,7 +139,7 @@ export const Invest = defineComponent({
           status: CrowdfundingStatus.CANCELED,
           label: 'dCrowdfunding Has Cancelled',
           value: countDown,
-          class: 'bg-[rgba(245,246,250,1)] text-color3'
+          class: `${numberClass} bg-[rgba(245,246,250,1)] text-black text-opacity-10`
         }
       }
       // before start
@@ -191,7 +191,7 @@ export const Invest = defineComponent({
 
     const disableRemoveOrCancel = computed(() => {
       if (founderOperation.value === 'Remove') {
-        return fundingContractState.value?.[9] === CrowdfundingStatus.ENDED
+        return fundingContractStateSecound.value?.[9] === CrowdfundingStatus.ENDED
       } else {
         return countDownTime.value.status !== CrowdfundingStatus.UPCOMING
       }
@@ -211,6 +211,7 @@ export const Invest = defineComponent({
           crowdfundingId: props.info.crowdfundingId,
           txHash: contractRes.hash
         })
+        fundingContractStateSecound.value = false
       } catch (error) {
         console.log('error', error)
       }
@@ -433,6 +434,7 @@ export const Invest = defineComponent({
       // console.log('props.info', props.info)
       if (props.info.chainId == chainID) {
         const fundingContractState = await fundingContract.state('', '')
+        fundingContractStateSecound.value = fundingContractState
         raiseState.value.raiseGoal = Number(ethers.utils.formatEther(fundingContractState[0]))
         raiseState.value.raiseAmount = Number(ethers.utils.formatEther(fundingContractState[1]))
         raiseState.value.raisePercent = Number(
