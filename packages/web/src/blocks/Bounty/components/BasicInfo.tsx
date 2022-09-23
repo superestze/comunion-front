@@ -12,7 +12,7 @@ import {
 import { SelectOption } from '@comunion/components/src/constants'
 import { MinusCircleOutlined, AddCircleOutlined, ArrowLineRightOutlined } from '@comunion/icons'
 import dayjs from 'dayjs'
-import { defineComponent, PropType, ref, computed, Ref, h, onMounted, watch } from 'vue'
+import { defineComponent, PropType, ref, computed, h, onMounted, watch } from 'vue'
 import { useRouter } from 'vue-router'
 import { BountyInfo, ContactType, chainInfoType } from '../typing'
 import RichEditor from '@/components/Editor'
@@ -63,7 +63,7 @@ const BountyBasicInfo = defineComponent({
     const startupOptions = ref<SelectOption[]>([])
     const userStore = useUserStore()
     const bountyDetailForm = ref<FormInst | null>(null)
-    const bountyBasicInfoFields: Ref<FormFactoryField[]> = computed(() => [
+    const bountyBasicInfoFields = computed<FormFactoryField[]>(() => [
       {
         t: 'select',
         title: 'Startup',
