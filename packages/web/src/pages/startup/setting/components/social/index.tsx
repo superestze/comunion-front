@@ -73,15 +73,15 @@ export default defineComponent({
         name: 'socials',
         rules: [
           {
-            validator: (rule, value: any) => {
-              return !!value.find((item: any) => !!item.socialLink && !item.delete)
+            validator: (rule, value: SocialType[]) => {
+              return !!value.find(item => !!item.socialLink && !item.delete)
             },
             message: 'Please enter at least one contact information',
             trigger: 'blur'
           },
           {
-            validator: (rule, value: any) => {
-              const items = value.filter((item: any) => !item.delete && !!item.socialLink)
+            validator: (rule, value: SocialType[]) => {
+              const items = value.filter(item => !item.delete && !!item.socialLink)
               if (items.length) {
                 for (const item of items) {
                   if (
