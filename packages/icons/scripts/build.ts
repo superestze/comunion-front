@@ -61,7 +61,10 @@ async function buildSvg(suffix: string, dirPath: string, filename: string) {
 
 async function build() {
   const exportEntries = []
-  const exportTypes = [`import type { RendererElement, RendererNode, VNode } from "vue"`, '']
+  const exportTypes = [
+    `import type { RendererElement, RendererNode, VNode } from "vue"`,
+    'JSX.Element'
+  ]
   let svgs = await readdir(outlinedDir)
   for (const svg of svgs) {
     if (svg.match(/\.svg$/)) {
