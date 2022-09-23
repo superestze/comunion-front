@@ -29,7 +29,7 @@ export const DEFAULT_SKILLS: SelectOption[] = [
 }))
 
 export const DEFAULT_STARTUP_TAGS: SelectOption[] = [
-  'NCO',
+  'DCO',
   'WEB3',
   'NFT',
   'DEFI',
