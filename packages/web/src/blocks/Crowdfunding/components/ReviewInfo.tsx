@@ -76,7 +76,7 @@ export const ReviewInfo = defineComponent({
         {!!this.crowdfundingInfo.youtube && (
           <div class="review-info-item">
             <div class="title w-[220px]">Youtube :</div>
-            <a href={this.crowdfundingInfo.youtube} target="__blank" class="text-primary">
+            <a href={this.crowdfundingInfo.youtube} target="__blank" class="text-primary flex-1">
               {this.crowdfundingInfo.youtube}
             </a>
           </div>
@@ -85,7 +85,7 @@ export const ReviewInfo = defineComponent({
           <div class="review-info-item">
             <div class="title w-[220px]">dCrowdfunding detail :</div>
 
-            <a href={this.crowdfundingInfo.detail} target="__blank" class="text-primary">
+            <a href={this.crowdfundingInfo.detail} target="__blank" class="text-primary flex-1">
               {this.crowdfundingInfo.detail}
             </a>
           </div>
