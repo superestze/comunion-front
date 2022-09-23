@@ -72,7 +72,7 @@ export default defineComponent({
         placeholder: 'Input startup contract audit',
         rules: [
           {
-            validator: (rule, value) =>
+            validator: (rule, value: any) =>
               !value ||
               (value && value.startsWith('https://')) ||
               (value && value.startsWith('http://')),

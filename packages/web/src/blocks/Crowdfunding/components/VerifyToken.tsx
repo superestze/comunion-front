@@ -205,7 +205,7 @@ export const VerifyToken = defineComponent({
             trigger: 'blur'
           },
           {
-            validator: (rule, value: string) => {
+            validator: (rule, value) => {
               return /^0x[a-zA-Z\d]{40}/.test(value) && value.length === 42
             },
             message: 'Invalid team wallet address',
