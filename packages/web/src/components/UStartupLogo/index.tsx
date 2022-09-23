@@ -61,9 +61,7 @@ const UStartupLogo = defineComponent({
           {...ctx.attrs}
           onClick={() => typeof props.onClick === 'function' && props.onClick()}
         >
-          {errored.value && (
-            <StartupLogoFilled class="m-auto h-7/10 -top-[2px] -left-[2px] w-7/10 relative" />
-          )}
+          {errored.value && <StartupLogoFilled class="m-auto h-7/10 -left-[2px] w-7/10 relative" />}
         </div>
       )
   }
