@@ -123,7 +123,7 @@ const CreateStartupForm = defineComponent({
             }
             try {
               if (model.switch) {
-                await startupContract.newStartup(
+                const res1 = await startupContract.newStartup(
                   [
                     model.name,
                     // model.type ? model.type : 0,
@@ -140,8 +140,11 @@ const CreateStartupForm = defineComponent({
                   'Waiting to submit all contents to blockchain for creating startup',
                   `Startup "${model.name}" is Creating`
                 )
+                if (!res1) {
+                  throw new Error('fail')
+                }
               } else {
-                const res = await contractStore.createStartupSuccessAfter({
+                const res2 = await contractStore.createStartupSuccessAfter({
                   nextwork: model.nextwork === undefined ? 0 : model.nextwork,
                   switch: false,
                   name: model.name,
@@ -151,7 +154,7 @@ const CreateStartupForm = defineComponent({
                   tags: model.tags,
                   txHash: ''
                 })
-                if (!res?.data) {
+                if (!res2?.data) {
                   throw new Error('fail')
                 }
               }

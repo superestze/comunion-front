@@ -26,12 +26,12 @@ const keyValue: Record<string, string> = {
 }
 
 export default defineComponent({
+  name: 'comer',
   setup() {
     const route = useRoute()
     const { id } = route.query
     // console.log(id)
     const instance = useProfile(id as string)
-    console.log(instance.view)
 
     instance.getProfileData()
 
