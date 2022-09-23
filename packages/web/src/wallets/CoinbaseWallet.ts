@@ -70,7 +70,7 @@ export default class CoinbaseWallet extends AbstractWallet {
       return true
     } catch (e: any) {
       if (e.code === 4902) {
-        const added = await this.addNetwork(allNetworks.find(n => n.chainId === chainId)!)
+        await this.addNetwork(allNetworks.find(n => n.chainId === chainId)!)
         // if (added) {
         //   return this.switchNetwork(chainId)
         // }
