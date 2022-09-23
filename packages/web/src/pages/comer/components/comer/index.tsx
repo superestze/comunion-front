@@ -66,6 +66,7 @@ export default defineComponent({
   },
   emits: ['Done'],
   setup(props) {
+    const userStore = useUserStore()
     const loading = ref(false)
     const subTitle = computed(() => {
       const result = []
@@ -164,7 +165,6 @@ export default defineComponent({
       return info.cover || defaultImg
     })
 
-    const userStore = useUserStore()
     const self = computed(() => {
       return `${route.query.id}` === `${userStore.profile?.comerID}`
     })
@@ -181,7 +181,8 @@ export default defineComponent({
       toggleFollow,
       follow,
       imageUrl,
-      self
+      self,
+      userStore
     }
   },
   render() {
@@ -205,6 +206,7 @@ export default defineComponent({
           this.$emit('Done')
           handleEditMode()
           this.loading = false
+          this.userStore.mergeProfile({ avatar: this.info.avatar })
         }
       })
     }
