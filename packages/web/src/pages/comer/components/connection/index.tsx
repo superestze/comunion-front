@@ -1,5 +1,5 @@
 import { UCard, UDropdownFilter } from '@comunion/components'
-import { defineComponent, ref, watch, onMounted } from 'vue'
+import { defineComponent, ref, watch, onMounted, computed } from 'vue'
 
 import { useConnector } from './useConnector'
 import { useFollowComer } from './useFollowComer'
@@ -22,22 +22,22 @@ export default defineComponent({
     }
   },
   setup(props) {
-    const followedStartups = useFollowedStartups(props.comerId)
-    const connector = useConnector(props.comerId)
-    const tabsInstance = useTabs(props.comerId)
-    const followComer = useFollowComer(props.comerId)
+    const followedStartups = computed(() => useFollowedStartups(props.comerId))
+    const connector = computed(() => useConnector(props.comerId))
+    const tabsInstance = computed(() => useTabs(props.comerId))
+    const followComer = computed(() => useFollowComer(props.comerId))
     const currentTabId = ref<string>('0')
 
     const loadData = (id: string, reset = false) => {
       if (id === '0') {
-        if (reset) followedStartups.reset()
-        followedStartups.getFollowList()
+        if (reset) followedStartups.value.reset()
+        followedStartups.value.getFollowList()
       } else if (id === '1') {
-        if (reset) followComer.reset()
-        followComer.getFollowList()
+        if (reset) followComer.value.reset()
+        followComer.value.getFollowList()
       } else if (id === '2') {
-        if (reset) connector.reset()
-        connector.getConnector()
+        if (reset) connector.value.reset()
+        connector.value.getConnector()
       }
     }
 
@@ -47,6 +47,7 @@ export default defineComponent({
     )
 
     onMounted(() => {
+      console.warn('onMounted', currentTabId.value)
       loadData(currentTabId.value)
     })
 
