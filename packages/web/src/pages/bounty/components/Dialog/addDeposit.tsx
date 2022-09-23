@@ -10,7 +10,7 @@ import {
   UModal
 } from '@comunion/components'
 import { ethers } from 'ethers'
-import { defineComponent, Ref, computed, ref, reactive, watch } from 'vue'
+import { defineComponent, computed, ref, reactive, watch } from 'vue'
 import { useRoute } from 'vue-router'
 import {
   useBountyContractWrapper,
@@ -55,7 +55,7 @@ export default defineComponent({
 
     const { detail } = bountyStore
     const { deposit } = bountyContract
-    const fields: Ref<FormFactoryField[]> = computed(() => [
+    const fields = computed<FormFactoryField[]>(() => [
       {
         t: 'custom',
         name: 'increaseDeposit',
@@ -70,7 +70,7 @@ export default defineComponent({
         rules: [
           {
             required: true,
-            validator: (rule, value: number) => {
+            validator: (rule, value) => {
               // console.log(formData.increaseDeposit)
               return value > 0
             },

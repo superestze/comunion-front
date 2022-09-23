@@ -12,7 +12,7 @@ import {
   message
 } from '@comunion/components'
 import { ethers } from 'ethers'
-import { defineComponent, Ref, computed, h, ref, reactive, watch } from 'vue'
+import { defineComponent, computed, h, ref, reactive, watch } from 'vue'
 import { useRoute } from 'vue-router'
 import {
   BountyContractReturnType,
@@ -73,7 +73,7 @@ const ApplyDialog = defineComponent({
 
     const detail = computed(() => bountyStore.detail)
     const { bountyContract, bountyContractStore, approve, chainId } = useBountyContractWrapper()
-    const fields: Ref<FormFactoryField[]> = computed(() => [
+    const fields = computed<FormFactoryField[]>(() => [
       {
         t: 'custom',
         name: 'deposit',
@@ -82,7 +82,7 @@ const ApplyDialog = defineComponent({
         rules: [
           {
             required: true,
-            validator: (rule, value: number) => {
+            validator: (rule, value) => {
               return value >= deposit
             },
             message: `Minimum deposit ${deposit} USDC for applying bounty`,
