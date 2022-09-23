@@ -10,10 +10,10 @@ import Governance from './components/governance'
 import Overview from './components/overview'
 import Profile from './components/profile'
 import Security from './components/security'
-
 import Team from './components/team'
 import { useStartup } from './hooks/useStartup'
 import Empty from '@/components/Empty'
+import { startupSortItemList } from '@/pages/startup/setting/components/sequence/BasicSortable'
 import { services } from '@/services'
 // type DataType = NonNullable<ServiceReturn<'startup@tartup-businness-data-count'>>
 
@@ -92,6 +92,12 @@ export default defineComponent({
     }
   },
   render() {
+    const componentsMap: any = {
+      Bounty: <Bounties startupId={this.startupId} />,
+      dCrowdfunding: <Crowdfunding startupId={this.startupId} />,
+      Governance: <Governance startupId={this.startupId} />
+    }
+
     return (
       <USpin show={this.loading}>
         <UBreadcrumb class="mt-10 mb-10">
@@ -128,9 +134,16 @@ export default defineComponent({
               tabSequence={this.startup?.tabSequence}
               onSelectedTagChange={tags => (this.selectedTags = tags)}
             />
-            {this.canShowByTagName('Bounty') && <Bounties startupId={this.startupId} />}
-            {this.canShowByTagName('dCrowdfunding') && <Crowdfunding startupId={this.startupId} />}
-            {this.canShowByTagName('Governance') && <Governance startupId={this.startupId} />}
+            {Array.isArray(this.startup?.tabSequence) &&
+              this.startup?.tabSequence.map(sequence => {
+                const targetIndex = startupSortItemList.findIndex(item => item.id === sequence)
+                if (targetIndex === -1) {
+                  return null
+                }
+                const widgetName = startupSortItemList[targetIndex].name
+                return this.canShowByTagName(widgetName) ? componentsMap[widgetName] : null
+              })}
+
             {!this.hasDataToShow && <Empty />}
           </div>
         </div>
