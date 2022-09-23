@@ -44,14 +44,6 @@ export default defineComponent({
 
     const dataService = computed<UPaginatedListPropsType['service']>(
       () => async (page, pageSize) => {
-        // const { error, data } = await services['startup@start-team-meabers-list']({
-        //   startupId: props.startupId,
-        //   limit: pageSize,
-        //   offset: pageSize * (page - 1)
-        // })
-        // return { items: error ? [] : data!.list!, total: error ? 0 : data!.total }
-        // TODO
-        // group fileter
         const { error, data } = await services['startup@startup-group-member-list']({
           startupId: props.startupId,
           groupID: currentGroup.value || 0,

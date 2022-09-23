@@ -37,7 +37,6 @@ export default defineComponent({
   emits: ['selectedChange'],
   render() {
     const handleTag = (key: string) => () => {
-      console.warn(key)
       if (key === 'All') {
         this.selectedList = ['All']
         this.$emit('selectedChange', this.selectedList)

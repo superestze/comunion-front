@@ -10,6 +10,7 @@ import LoadingBtn from '@/components/More/loading'
 import UStartupLogo from '@/components/UStartupLogo'
 
 export default defineComponent({
+  name: 'ComerConnection',
   props: {
     view: {
       type: Boolean,
@@ -130,7 +131,7 @@ export default defineComponent({
                   end={this.followedStartups.list.value.length >= this.followedStartups.total.value}
                   v-slots={{
                     text: () => {
-                      return `More${this.tabsInstance.tabs.value[0].subTitle}`
+                      return `More(${this.tabsInstance.tabs.value[0].totalRows})`
                     }
                   }}
                 />
@@ -179,7 +180,7 @@ export default defineComponent({
                   end={this.followComer.list.value.length >= this.followComer.total.value}
                   v-slots={{
                     text: () => {
-                      return `More${this.tabsInstance.tabs.value[1].subTitle}`
+                      return `More(${this.tabsInstance.tabs.value[1].totalRows})`
                     }
                   }}
                 />
@@ -228,7 +229,7 @@ export default defineComponent({
                   end={this.connector.list.value.length >= this.connector.total.value}
                   v-slots={{
                     text: () => {
-                      return `More${this.tabsInstance.tabs.value[2].subTitle}`
+                      return `More(${this.tabsInstance.tabs.value[2].totalRows})`
                     }
                   }}
                 />
@@ -239,7 +240,8 @@ export default defineComponent({
       }
     ]
 
-    return tabContents.filter((item: { count: number }) => item.count > 0).length > 0 ? (
+    return !this.view ||
+      this.tabsInstance.tabs.value.filter((item: any) => item.totalRows > 0).length > 0 ? (
       <UCard
         title="Connected"
         class="mb-6"

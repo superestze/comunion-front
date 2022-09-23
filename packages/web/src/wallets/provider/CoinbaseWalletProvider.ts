@@ -10,12 +10,14 @@ export class CoinbaseWalletProvider extends ethers.providers.Web3Provider {
   _polling: number | undefined
   _account: string | undefined
   constructor() {
+    const coinbaseWindow = (window.ethereum as { providers: Array<{ getChainId: () => number }> })
+      .providers[0]
     const APP_NAME = 'comunion'
     const APP_LOGO_URL = ''
     // url and infuraId (https://infura.io/zh)
-    // const DEFAULT_ETH_JSONRPC_URL = `https://d.app.comunion.io/${WALLET_INFURA_ID}`
-    const DEFAULT_ETH_JSONRPC_URL = `https://d.app.comunion.io/${WALLET_INFURA_ID}`
-    const DEFAULT_CHAIN_ID = 1
+    // const DEFAULT_ETH_JSONRPC_URL = `https://mainnet.infura.io/v3//${WALLET_INFURA_ID}`
+    const DEFAULT_ETH_JSONRPC_URL = `https://mainnet.infura.io/v3/${WALLET_INFURA_ID}`
+    const DEFAULT_CHAIN_ID = coinbaseWindow.getChainId()
     // Initialize Coinbase Wallet SDK
     const coinbaseWallet = new CoinbaseWalletSDK({
       appName: APP_NAME,

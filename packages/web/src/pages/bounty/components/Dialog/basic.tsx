@@ -21,7 +21,7 @@ export default defineComponent({
     const triggerDialog = () => {
       this.$emit('triggerDialog')
     }
-    // TODO fix tyle
+
     return (
       <UModal show={this.visible}>
         <UCard
