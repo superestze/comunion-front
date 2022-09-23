@@ -47,7 +47,6 @@ export default defineComponent({
     )
 
     onMounted(() => {
-      console.warn('onMounted', currentTabId.value)
       loadData(currentTabId.value)
     })
 
