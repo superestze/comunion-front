@@ -6,7 +6,6 @@ type AttrType<T> = T extends { rows: infer M } ? M : T
 type ListType = AttrType<ServiceReturn<'account@followers-of-comer'>>
 
 export function useFollowComer(comerId: number) {
-  console.warn('useFollowComer comerId=', comerId)
   const list = ref<NonNullable<ListType>>([])
   const total = ref<number>(0)
   const page = ref<number>(1)
