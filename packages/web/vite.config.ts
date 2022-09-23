@@ -27,7 +27,9 @@ export default defineConfig({
     }
   },
   define: {
-    'process.env.NODE_DEBUG': false
+    'process.env.NODE_DEBUG': false, // @coinbase/wallet-sdk
+    'process.env.LINK_API_URL': '', // @coinbase/wallet-sdk
+    'process.env.SDK_VERSION': '3.5.2' // @coinbase/wallet-sdk
   },
   // optimizeDeps: {
   //   include: ['bn.js', 'hash.js']
