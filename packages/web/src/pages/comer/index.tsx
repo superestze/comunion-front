@@ -30,7 +30,6 @@ export default defineComponent({
   setup() {
     const route = useRoute()
     const { id } = route.query
-    // console.log(id)
     const instance = useProfile(id as string)
 
     instance.getProfileData()
@@ -66,7 +65,7 @@ export default defineComponent({
     })
 
     watch(
-      () => [createdByMe.value, instance.profile.value?.comerID],
+      () => [createdByMe.value, instance.profile?.value?.comerID],
       ([createdByMe, comerId]) => {
         if (comerId) {
           moduleTag.getData(comerId as number, createdByMe ? 1 : 2)
@@ -124,7 +123,7 @@ export default defineComponent({
                 <Bio content={this.profile?.bio} view={this.view} onDone={this.get} />
                 <Social view={this.view} profile={this.profile} onDone={this.get} />
                 <Skill
-                  skills={(this.profile?.skills || []).map(item => item.name) as string[]}
+                  skills={(this.profile?.skills || []).map((item: any) => item.name) as string[]}
                   view={this.view}
                   onDone={this.get}
                 />
@@ -138,7 +137,7 @@ export default defineComponent({
                   list={this.profile?.educations as any}
                   onDone={this.get}
                 />
-                <Connection view={this.view} comerId={this.profile.comerID as number} />
+                <Connection view={this.view} comerId={this.profile?.comerID as number} />
               </>
             )}
           </div>
@@ -150,7 +149,7 @@ export default defineComponent({
                   onTabChange={handleTabChange}
                   onSelectedTagChange={handleSelectedTagChange}
                 />
-                {this.nothingToShow || !this.profile.comerID ? (
+                {this.nothingToShow || !this.profile?.comerID ? (
                   <Empty />
                 ) : (
                   <>
@@ -159,7 +158,7 @@ export default defineComponent({
                         return (
                           <Startup
                             createdByMe={this.createdByMe}
-                            comerId={this.profile.comerID as number}
+                            comerId={this.profile?.comerID as number}
                             view={this.view}
                           />
                         )
@@ -171,7 +170,7 @@ export default defineComponent({
                         return (
                           <Bounty
                             createdByMe={this.createdByMe}
-                            comerId={this.profile.comerID as number}
+                            comerId={this.profile?.comerID as number}
                           />
                         )
                       } else if (
@@ -182,7 +181,7 @@ export default defineComponent({
                         return (
                           <Crowdfunding
                             createdByMe={this.createdByMe}
-                            comerId={this.profile.comerID as number}
+                            comerId={this.profile?.comerID as number}
                           />
                         )
                       } else if (
@@ -190,7 +189,12 @@ export default defineComponent({
                         rowDisplay('Proposal') &&
                         this.tagCount.proposalCnt
                       ) {
-                        return <Proposal createdByMe={this.createdByMe} />
+                        return (
+                          <Proposal
+                            createdByMe={this.createdByMe}
+                            comerId={this.profile?.comerID as number}
+                          />
+                        )
                       } else {
                         return
                       }
