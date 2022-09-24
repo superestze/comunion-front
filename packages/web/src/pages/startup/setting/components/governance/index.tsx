@@ -116,6 +116,7 @@ export default defineComponent({
         if (!error) {
           govSetting.strategies = data.strategies.map(item => ({
             ...item,
+            network: item.chainId,
             dictLabel: item.strategyName
           }))
           govSetting.voteSymbol = data.voteSymbol
@@ -292,8 +293,8 @@ export default defineComponent({
                   >
                     <span class="u-body4">
                       {strategy.dictLabel}{' '}
-                      {strategy.voteSymbol && (
-                        <span class="bg-[#8247E50F] rounded-2xl text-primary text-xs ml-4 py-1 px-4">
+                      {strategy.voteSymbol && strategy.dictValue !== 'ticket' && (
+                        <span class="bg-[#8247E50F] rounded-2xl text-primary text-xs ml-3 py-1 px-4">
                           {strategy.voteSymbol}
                         </span>
                       )}
