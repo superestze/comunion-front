@@ -69,33 +69,66 @@ export const Invest = defineComponent({
 
     const chainInfo = getChainInfoByChainId(props.info.chainId)
 
+    const getMin = (first: number | string, second: number | string) => {
+      return ethers.FixedNumber.from(first).subUnsafe(ethers.FixedNumber.from(second)).isNegative()
+        ? first
+        : second
+    }
+
     const maxBuyAmount = computed(() => {
+      console.log('props.buyCoinInfo.balance===>', props.buyCoinInfo.balance)
+      console.log('maxBuy===>', maxBuy.value)
+
       return (
-        formatToFloor(Math.min(maxBuy.value, Number(props.buyCoinInfo.balance)).toString(), 8) ||
-        '0'
+        formatToFloor(
+          getMin(maxBuy.value, props.buyCoinInfo.balance!).toString(),
+          buyIsMainCoin.value ? 18 : props.buyCoinInfo.decimal!
+        ) || '0'
       )
     })
 
     const maxSellAmount = computed(() => {
       return (
-        formatToFloor(Math.min(maxSell.value, Number(props.sellCoinInfo.balance)).toString(), 8) ||
-        '0'
+        formatToFloor(
+          getMin(maxSell.value, props.sellCoinInfo.balance!).toString(),
+          props.sellCoinInfo.decimal!
+        ) || '0'
       )
     })
     const changeFromValue = (value: string) => {
       if (mode.value === 'buy') {
-        toValue.value = formatToFloor(Number(value) * props.info.buyPrice, 8)
+        toValue.value = formatToFloor(
+          ethers.FixedNumber.from(value)
+            .mulUnsafe(ethers.FixedNumber.from(props.info.buyPrice))
+            .toString(),
+          props.sellCoinInfo.decimal!
+        )
       } else {
-        toValue.value = formatToFloor(Number(value) / props.info.buyPrice, 8)
+        toValue.value = formatToFloor(
+          ethers.FixedNumber.from(value)
+            .divUnsafe(ethers.FixedNumber.from(props.info.buyPrice))
+            .toString(),
+          buyIsMainCoin.value ? 18 : props.buyCoinInfo.decimal!
+        )
       }
       console.log('toValue.value==>', toValue.value)
     }
 
     const changeToValue = (value: string) => {
       if (mode.value === 'buy') {
-        fromValue.value = formatToFloor(Number(value) / props.info.buyPrice, 8)
+        fromValue.value = formatToFloor(
+          ethers.FixedNumber.from(value)
+            .divUnsafe(ethers.FixedNumber.from(props.info.buyPrice))
+            .toString(),
+          buyIsMainCoin.value ? 18 : props.buyCoinInfo.decimal!
+        )
       } else {
-        fromValue.value = formatToFloor(Number(value) * props.info.buyPrice, 8)
+        fromValue.value = formatToFloor(
+          ethers.FixedNumber.from(value)
+            .mulUnsafe(ethers.FixedNumber.from(props.info.buyPrice))
+            .toString(),
+          props.sellCoinInfo.decimal!
+        )
       }
     }
 
@@ -260,7 +293,11 @@ export const Invest = defineComponent({
       const buyPendingText = 'Waiting to submit all contents to blockchain for buying'
       const waitingText = 'Waiting to confirm'
       try {
+        console.log('fromValue.value==>', fromValue.value)
+
         const buyAmount = ethers.utils.parseEther(fromValue.value)
+
+        console.log('submit', buyAmount, sellAmount)
         // main coin buy token
         const contractRes: any = await fundingContract.buy(
           buyAmount,
@@ -411,6 +448,8 @@ export const Invest = defineComponent({
 
     const setMaxBalance = () => {
       if (mode.value === 'buy') {
+        console.log('maxBuyAmount.value===>', maxBuyAmount.value)
+
         fromValue.value = maxBuyAmount.value
       } else {
         fromValue.value = maxSellAmount.value
@@ -604,7 +643,7 @@ export const Invest = defineComponent({
               }}
               type="withUnit"
               inputProps={{
-                onInput: changeFromValue
+                onChange: changeFromValue
                 // max: mode.value === 'buy' ? maxBuyAmount.value : maxSellAmount.value
               }}
               renderUnit={() =>

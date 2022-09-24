@@ -493,7 +493,10 @@ const ProposalDetail = defineComponent({
                       {this.voteRecords?.map(record => (
                         <tr key={record.voterComerId}>
                           <td>
-                            <div class="flex ml-2 items-center">
+                            <div
+                              class="flex ml-2 items-center cursor-pointer"
+                              onClick={() => this.toComerDetail(record.voterComerId)}
+                            >
                               <ULazyImage src={record.voterComerAvatar} class="h-7 mr-3 w-7" />
                               <span class="text-color2 u-h6">{record.voterComerName}</span>
                             </div>

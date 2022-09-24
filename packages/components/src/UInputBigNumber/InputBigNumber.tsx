@@ -48,8 +48,14 @@ const UInputBigNumber = defineComponent({
     watch(
       () => inputValue.value,
       n => {
+        inputValue.value = (n as string)?.replace(/[^\d.]/g, '')
         if (props.maxlength) {
           inputValue.value = n?.toString().substring(0, Number(props.maxlength))
+        }
+        if (props.precision) {
+          inputValue.value = n?.toString().replace(/\.(\d+)/, (e, $1) => {
+            return `.${$1.substr(0, props.precision)}`
+          })
         }
         if (props.parse) {
           inputValue.value = props.parse(inputValue.value)
@@ -121,6 +127,7 @@ const UInputBigNumber = defineComponent({
       clearInterval(longEnterEventRef.value)
       longEnterEventRef.value = null
     }
+
     const controlSlot = (
       <div class="bg-purple flex flex-col h-6 w-4.5 items-center justify-center">
         <div
@@ -148,7 +155,7 @@ const UInputBigNumber = defineComponent({
       <NInput
         class="input-big-number"
         {...props}
-        inputProps={{ ...props.inputProps, type: 'number' }}
+        inputProps={{ ...props.inputProps }}
         onBlur={blurInput}
         v-model:value={inputValue.value}
         v-slots={{ suffix: controlSlot, ...ctx.slots }}

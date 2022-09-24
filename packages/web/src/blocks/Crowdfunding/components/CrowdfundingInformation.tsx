@@ -217,7 +217,7 @@ export const CrowdfundingInformation = defineComponent({
               <UInputBigNumber
                 placeholder="EX:10"
                 maxlength="20"
-                precision={18}
+                precision={Number(props.crowdfundingInfo.sellTokenDecimals)}
                 v-model:value={props.crowdfundingInfo.buyPrice}
                 class="flex-1"
               ></UInputBigNumber>
