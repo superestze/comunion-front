@@ -16,7 +16,9 @@ import { ServiceReturn, services } from '@/services'
 import { SupportedWalletTypes } from '@/types/wallet'
 import { getWallet } from '@/wallets'
 import AbstractWallet from '@/wallets/AbstractWallet'
-
+export type coinbaseProvider = {
+  ethereum: any
+}
 export type WalletState = {
   // inited
   inited: boolean
@@ -131,6 +133,19 @@ export const useWalletStore = defineStore('wallet', {
       }
     },
     disconnectWallet() {
+      if (
+        (
+          (this.wallet?._provider as ethers.providers.Web3Provider)?.provider as {
+            close: () => void
+          }
+        )?.close
+      ) {
+        ;(
+          (this.wallet?._provider as ethers.providers.Web3Provider).provider as {
+            close: () => void
+          }
+        )?.close()
+      }
       this.connected = false
       storage('local').remove(STORE_KEY_WALLET_CONNECTED)
       this.address = undefined
