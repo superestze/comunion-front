@@ -1,4 +1,3 @@
-import { CloseOutlined } from '@comunion/icons'
 import { defineComponent, PropType, ref, watchEffect } from 'vue'
 import { UModal } from '../UModal'
 import { ExtractPropTypes } from '../utils'
@@ -24,9 +23,9 @@ const UContractInteraction = defineComponent({
   setup(props) {
     const show = ref(false)
 
-    const close = () => {
-      show.value = false
-    }
+    // const close = () => {
+    //   show.value = false
+    // }
 
     watchEffect(() => {
       if (props.status) {
@@ -41,10 +40,15 @@ const UContractInteraction = defineComponent({
     })
 
     return () => (
-      <UModal v-model:show={show.value} transform-origin="center">
+      <UModal
+        v-model:show={show.value}
+        transform-origin="center"
+        close-on-esc={false}
+        mask-closable={false}
+      >
         {props.status && show.value ? (
           <div class={`u-contract-interaction status-${props.status}`}>
-            <CloseOutlined class="u-contract-interaction-close" onClick={close} />
+            {/* <CloseOutlined class="u-contract-interaction-close" onClick={close} /> */}
             {props.status === 'pending' && <div class="u-contract-interaction-animation"></div>}
             <div class="u-contract-interaction-status">
               {props.status.slice(0, 1).toUpperCase()}
