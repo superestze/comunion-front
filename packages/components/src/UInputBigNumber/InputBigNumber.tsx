@@ -157,7 +157,7 @@ const UInputBigNumber = defineComponent({
         {...props}
         inputProps={{ ...props.inputProps }}
         onBlur={blurInput}
-        value={inputValue.value}
+        v-model:value={inputValue.value}
         v-slots={{ suffix: controlSlot, ...ctx.slots }}
       ></NInput>
     )
