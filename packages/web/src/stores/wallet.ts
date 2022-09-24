@@ -133,19 +133,10 @@ export const useWalletStore = defineStore('wallet', {
       }
     },
     disconnectWallet() {
-      // if (
-      //   (
-      //     (this.wallet?._provider as ethers.providers.Web3Provider)?.provider as {
-      //       close: () => void
-      //     }
-      //   )?.close
-      // ) {
-      //   ;(
-      //     (this.wallet?._provider as ethers.providers.Web3Provider).provider as {
-      //       close: () => void
-      //     }
-      //   )?.close()
-      // }
+      const providers = (window.ethereum as coinbaseWindowType)?.providers || []
+      providers.map(item => {
+        item.close && item.close()
+      })
       this.connected = false
       storage('local').remove(STORE_KEY_WALLET_CONNECTED)
       this.address = undefined
@@ -178,12 +169,6 @@ export const useWalletStore = defineStore('wallet', {
       /**
        * when change wallet You need to close coinbase wallet connect
        */
-      if (walletType === 'MetaMask') {
-        const providers = (window.ethereum as coinbaseWindowType)?.providers || []
-        providers.map(item => {
-          item.close && item.close()
-        })
-      }
       const wallet = await getWallet(walletType)
       const WALLET_CONSTAST_TYPE = storage('local').get<string>(STORE_KEY_WALLET_CONSTAST_TYPE)
       const userStore = useUserStore()
