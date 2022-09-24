@@ -41,7 +41,7 @@ export default defineComponent({
       {
         icons: [p3, p3_2, p3_3],
         h1line1: 'More Opportunites',
-        h1line2: 'Generated',
+        h1line2: 'Created',
         content:
           'More opportunities available to anyone, including remote working, early stage investing, fundraising, etc.'
       },
@@ -61,7 +61,7 @@ export default defineComponent({
       <div class="flex flex-col items-center">
         <Title
           title="Revolutionary"
-          subTitle="Generates an all-in-one meeting place for being dedicated to building a thriving and collaborative ecosystem, community, and economy"
+          subTitle="Through generating a new startup paradigm to reduce the barrier and cost of creating startup, also create more job opportunities and convert labor value to capital gain,  which help labors to promote income "
         />
         <div class="flex flex-row flex-wrap w-1120px mx-auto mt-80px <md:hidden">
           {this.list.map((item, $index) => {
