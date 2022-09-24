@@ -98,6 +98,8 @@ export default defineComponent({
       Governance: <Governance startupId={this.startupId} />
     }
 
+    const _tabSequence: number[] = this.startup?.tabSequence || [2, 3, 4, 5]
+
     return (
       <USpin show={this.loading}>
         <UBreadcrumb class="mt-10 mb-10">
@@ -134,15 +136,14 @@ export default defineComponent({
               tabSequence={this.startup?.tabSequence}
               onSelectedTagChange={tags => (this.selectedTags = tags)}
             />
-            {Array.isArray(this.startup?.tabSequence) &&
-              this.startup?.tabSequence.map(sequence => {
-                const targetIndex = startupSortItemList.findIndex(item => item.id === sequence)
-                if (targetIndex === -1) {
-                  return null
-                }
-                const widgetName = startupSortItemList[targetIndex].name
-                return this.canShowByTagName(widgetName) ? componentsMap[widgetName] : null
-              })}
+            {_tabSequence.map(sequence => {
+              const targetIndex = startupSortItemList.findIndex(item => item.id === sequence)
+              if (targetIndex === -1) {
+                return null
+              }
+              const widgetName = startupSortItemList[targetIndex].name
+              return this.canShowByTagName(widgetName) ? componentsMap[widgetName] : null
+            })}
 
             {!this.hasDataToShow && <Empty />}
           </div>

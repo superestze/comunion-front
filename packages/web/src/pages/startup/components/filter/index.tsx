@@ -1,4 +1,4 @@
-import { defineComponent, PropType, computed } from 'vue'
+import { defineComponent, PropType, computed, onMounted, nextTick } from 'vue'
 import { ModuleTags } from '@/components/Tags'
 import { startupSortItemList } from '@/pages/startup/setting/components/sequence/BasicSortable'
 
@@ -8,7 +8,8 @@ export default defineComponent({
       type: Object as PropType<number[]>
     }
   },
-  setup(props) {
+  emits: ['selectedTagChange'],
+  setup(props, ctx) {
     const tasksList = computed<string[]>(() => {
       const _tabSequence = Array.isArray(props.tabSequence) ? props.tabSequence : [2, 3, 4, 5]
       return _tabSequence.map(value => {
@@ -24,11 +25,16 @@ export default defineComponent({
       return ['All', ...tasksList.value.filter(item => !!item)]
     })
 
+    onMounted(() => {
+      nextTick(() => {
+        ctx.emit('selectedTagChange', ['All'])
+      })
+    })
+
     return {
       tasks
     }
   },
-  emits: ['selectedTagChange'],
   render() {
     const handleSelectedChange = (selectedList: string[]) => {
       this.$emit('selectedTagChange', selectedList)
