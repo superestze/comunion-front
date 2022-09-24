@@ -143,7 +143,7 @@ const CreateCrowdfundingForm = defineComponent({
           crowdfundingInfo.sellTokenDecimals
         )
         // get dcrowdfunding factory address
-        const factoryAddress = CrowdfundingFactoryAddresses[walletStore.chainId!]
+        const factoryAddress = CrowdfundingFactoryAddresses()
         contractStore.startContract(approvePendingText)
         // approve sellToken to crowdfund factory contract
         const erc20Res = await erc20TokenContract(crowdfundingInfo.sellTokenContract!)
