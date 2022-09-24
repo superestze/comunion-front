@@ -27,7 +27,9 @@ export default defineConfig({
     }
   },
   define: {
-    'process.env.NODE_DEBUG': false
+    'process.env.NODE_DEBUG': false,
+    'process.env.LINK_API_URL': '',
+    'process.env.SDK_VERSION': ''
   },
   // optimizeDeps: {
   //   include: ['bn.js', 'hash.js']
