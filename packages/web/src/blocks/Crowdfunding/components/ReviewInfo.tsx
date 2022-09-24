@@ -30,14 +30,14 @@ export const ReviewInfo = defineComponent({
         <div class="review-info-item">
           <div class="title w-[220px]">Raise Goal :</div>
           <div>
-            {this.crowdfundingInfo.raiseGoal} {this.crowdfundingInfo.buyTokenName}
+            {this.crowdfundingInfo.raiseGoal} {this.crowdfundingInfo.buyTokenSymbol}
           </div>
         </div>
         <div class="review-info-item">
           <div class="title w-[220px]">Tokens For dCrowdfunding :</div>
           <div>
             {this.crowdfundingInfo.buyPrice! * this.crowdfundingInfo.raiseGoal!}{' '}
-            {this.crowdfundingInfo.sellTokenName}
+            {this.crowdfundingInfo.sellTokenSymbol}
           </div>
         </div>
         <div class="review-info-item">
@@ -47,14 +47,14 @@ export const ReviewInfo = defineComponent({
         <div class="review-info-item">
           <div class="title w-[220px]">Rate :</div>
           <div>
-            1 {this.crowdfundingInfo.buyTokenName} = {this.crowdfundingInfo.buyPrice}{' '}
-            {this.crowdfundingInfo.sellTokenName}
+            1 {this.crowdfundingInfo.buyTokenSymbol} = {this.crowdfundingInfo.buyPrice}{' '}
+            {this.crowdfundingInfo.sellTokenSymbol}
           </div>
         </div>
         <div class="review-info-item">
           <div class="title w-[220px]">Maximum Buy :</div>
           <div>
-            {this.crowdfundingInfo.maxBuyAmount} {this.crowdfundingInfo.buyTokenName}
+            {this.crowdfundingInfo.maxBuyAmount} {this.crowdfundingInfo.buyTokenSymbol}
           </div>
         </div>
         <div class="review-info-item">

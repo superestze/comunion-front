@@ -143,7 +143,7 @@ const CreateCrowdfundingForm = defineComponent({
           crowdfundingInfo.sellTokenDecimals
         )
         // get dcrowdfunding factory address
-        const factoryAddress = CrowdfundingFactoryAddresses()
+        const factoryAddress = CrowdfundingFactoryAddresses[walletStore.chainId!]
         contractStore.startContract(approvePendingText)
         // approve sellToken to crowdfund factory contract
         const erc20Res = await erc20TokenContract(crowdfundingInfo.sellTokenContract!)
@@ -158,7 +158,10 @@ const CreateCrowdfundingForm = defineComponent({
             crowdfundingInfo.raiseGoal!.toString(),
             crowdfundingInfo.sellTokenDecimals
           ),
-          ethers.utils.parseUnits(crowdfundingInfo.buyPrice!.toString(), 2),
+          ethers.utils.parseUnits(
+            crowdfundingInfo.buyPrice!.toString(),
+            crowdfundingInfo.sellTokenDecimals
+          ),
           ethers.utils.parseUnits(crowdfundingInfo.swapPercent!.toString(), 2),
           ethers.utils.parseUnits(crowdfundingInfo.sellTax!.toString(), 2),
           ethers.utils.parseUnits(crowdfundingInfo.maxBuyAmount!.toString(), 18),
