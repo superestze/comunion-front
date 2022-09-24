@@ -3,7 +3,6 @@ import { defineComponent, reactive, ref, watch } from 'vue'
 import { useRouter } from 'vue-router'
 import { ProposalCard } from '@/pages/governance/components/ProposalCard'
 import { ServiceReturn, services } from '@/services'
-import { useUserStore } from '@/stores'
 import { IPagination } from '@/types'
 
 export default defineComponent({
@@ -11,11 +10,14 @@ export default defineComponent({
     createdByMe: {
       type: Boolean,
       default: () => true
+    },
+    comerId: {
+      type: Number,
+      required: true
     }
   },
   setup(props) {
     const router = useRouter()
-    const userStore = useUserStore()
     const pagination = reactive<IPagination>({
       pageSize: 5,
       total: 0,
@@ -38,7 +40,7 @@ export default defineComponent({
             ? 'governance@proposal-list-of-comer-posted'
             : 'governance@proposal-list-of-comer-participated'
         ]({
-          comerID: userStore.profile?.comerID,
+          comerID: props.comerId,
           page,
           limit: pagination.pageSize
         })
