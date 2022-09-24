@@ -1,25 +1,32 @@
 import { Contract, BigNumber } from 'ethers'
 import { computed } from 'vue'
 import { getContract, GetContractArgs, wrapTransaction } from './share'
-import { useWalletStore } from '@/stores'
+import { useWalletStore, useChainStore, abiType } from '@/stores'
+// export const BountyFactoryAddresses: Record<number, string> = {
+//   43113: '0x8B4Dbcc4480926577eC05FCfd1568bFf10F4288e',
+//   43114: '0xd8461714Ab1C2E051073520E6c8db8eE15f6147C'
+// }
 
-export const BountyFactoryAddresses: Record<number, string> = {
-  5: '0x42583219DC1564D465DDD01D3327CEF942f6aB88',
-  43113: '0x18bA7216E088816c2CA7a6Bee08Bec48F4c9e25c',
-  97: '0xAAb8FCD8DD22a5de73550F8e67fF9Ca970d1257E',
-  4002: '0xd8461714Ab1C2E051073520E6c8db8eE15f6147C',
-  80001: '0xd8461714Ab1C2E051073520E6c8db8eE15f6147C',
-  2814: '0xAAb8FCD8DD22a5de73550F8e67fF9Ca970d1257E'
+// const abi =
+//   '[{"inputs":[{"internalType":"address","name":"_depositToken","type":"address"},{"internalType":"uint256","name":"_founderDepositAmount","type":"uint256"},{"internalType":"uint256","name":"_applicantDepositAmount","type":"uint256"},{"internalType":"uint256","name":"_applyDeadline","type":"uint256"}],"name":"createBounty","outputs":[],"stateMutability":"nonpayable","type":"function"},{"inputs":[],"name":"getDeployedBounties","outputs":[{"internalType":"address[]","name":"","type":"address[]"}],"stateMutability":"view","type":"function"},{"inputs":[],"name":"owner","outputs":[{"internalType":"address","name":"","type":"address"}],"stateMutability":"view","type":"function"},{"inputs":[],"name":"renounceOwnership","outputs":[],"stateMutability":"nonpayable","type":"function"},{"inputs":[{"internalType":"address","name":"newOwner","type":"address"}],"name":"transferOwnership","outputs":[],"stateMutability":"nonpayable","type":"function"}]'
+export const BountyFactoryAddresses = () => {
+  const walletStore = useWalletStore()
+  const chainStore = useChainStore()
+  const addres = (chainStore.abiInfo as abiType)[walletStore.chainId!]?.bounty?.address || ''
+  return addres
 }
-
-const abi =
-  '[{"inputs":[],"name":"children","outputs":[{"internalType":"address[]","name":"","type":"address[]"}],"stateMutability":"view","type":"function"},{"inputs":[{"internalType":"address","name":"_depositToken","type":"address"},{"internalType":"uint256","name":"_founderDepositAmount","type":"uint256"},{"internalType":"uint256","name":"_applicantDepositAmount","type":"uint256"},{"internalType":"uint256","name":"_applyDeadline","type":"uint256"}],"name":"createBounty","outputs":[],"stateMutability":"nonpayable","type":"function"},{"inputs":[{"internalType":"address","name":"_address","type":"address"}],"name":"isChild","outputs":[{"internalType":"bool","name":"","type":"bool"}],"stateMutability":"view","type":"function"},{"inputs":[],"name":"owner","outputs":[{"internalType":"address","name":"","type":"address"}],"stateMutability":"view","type":"function"},{"inputs":[],"name":"renounceOwnership","outputs":[],"stateMutability":"nonpayable","type":"function"},{"inputs":[{"internalType":"address","name":"newOwner","type":"address"}],"name":"transferOwnership","outputs":[],"stateMutability":"nonpayable","type":"function"}]'
-
+export const getBountyAddresses = () => {
+  const walletStore = useWalletStore()
+  const chainStore = useChainStore()
+  const address = (chainStore.abiInfo as abiType)[walletStore.chainId!]?.bounty?.address || ''
+  return {
+    [walletStore.chainId!]: address
+  }
+}
 export function useBountyFactoryContract(
-  params: Omit<GetContractArgs, 'abi'> = { addresses: BountyFactoryAddresses }
+  params: Omit<GetContractArgs, 'abi'> = { addresses: getBountyAddresses() }
 ): {
   getContract: () => Contract
-  children: (pendingText: string, waitingText: string, overrides?: any) => Promise<[/**  */ any]>
   createBounty: (
     _depositToken: string,
     _founderDepositAmount: number | BigNumber,
@@ -29,8 +36,7 @@ export function useBountyFactoryContract(
     waitingText: string,
     overrides?: any
   ) => Promise<[]>
-  isChild: (
-    _address: string,
+  getDeployedBounties: (
     pendingText: string,
     waitingText: string,
     overrides?: any
@@ -45,6 +51,12 @@ export function useBountyFactoryContract(
   ) => Promise<[]>
 } {
   const walletStore = useWalletStore()
+  const chainStore = useChainStore()
+  const abi = (chainStore.abiInfo as abiType)[walletStore.chainId!]?.bounty?.abi
+  const BountyFactoryAddresses = {
+    [walletStore.chainId!]:
+      (chainStore.abiInfo as abiType)[walletStore.chainId!]?.bounty?.address || ''
+  }
   const getContractArgs = computed<GetContractArgs>(() => {
     return {
       abi,
@@ -55,9 +67,8 @@ export function useBountyFactoryContract(
   })
   return {
     getContract: () => getContract({ ...getContractArgs.value, ...params }),
-    children: wrapTransaction({ ...getContractArgs.value, ...params }, 'children'),
     createBounty: wrapTransaction({ ...getContractArgs.value, ...params }, 'createBounty'),
-    isChild: wrapTransaction({ ...getContractArgs.value, ...params }, 'isChild'),
+    getDeployedBounties: wrapTransaction({ ...getContractArgs.value, ...params }, 'children'),
     owner: wrapTransaction({ ...getContractArgs.value, ...params }, 'owner'),
     renounceOwnership: wrapTransaction(
       { ...getContractArgs.value, ...params },
