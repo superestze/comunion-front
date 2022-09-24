@@ -9,7 +9,11 @@
     "dev": "tsup --dts --watch src"
   },
   "repository": "comunion-io/front-next.git",
-  "keywords": ["vue", "vue3", "hooks"],
+  "keywords": [
+    "vue",
+    "vue3",
+    "hooks"
+  ],
   "license": "GPL-3.0-or-later",
   "bugs": {
     "url": "https://github.com/comunion-io/front-next/issues"
@@ -17,7 +21,7 @@
   "homepage": "https://github.com/comunion-io/front-next#readme",
   "dependencies": {
     "@comunion/utils": "^0.0.1",
-    "vue": "^3.2.31"
+    "vue": "^3.2.39"
   },
   "devDependencies": {
     "tsup": "^4.12.0"

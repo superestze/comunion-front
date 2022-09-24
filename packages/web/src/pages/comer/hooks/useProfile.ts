@@ -19,7 +19,11 @@ export function useProfile(id?: string) {
     }
   }
 
-  const profile = computed<NonNullable<ServiceReturn<'account@comer-profile-get'>>>(() => {
+  const profile = computed<any>(() => {
+    // when run getProfileData(), 'profile' should be null！
+    if (loading.value) {
+      return null
+    }
     if (view.value) {
       return profileStore.someone?.comerProfile as unknown as NonNullable<
         ServiceReturn<'account@comer-profile-get'>

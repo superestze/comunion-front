@@ -16,7 +16,9 @@ import { ServiceReturn, services } from '@/services'
 import { SupportedWalletTypes } from '@/types/wallet'
 import { getWallet } from '@/wallets'
 import AbstractWallet from '@/wallets/AbstractWallet'
-
+export type coinbaseProvider = {
+  ethereum: any
+}
 export type WalletState = {
   // inited
   inited: boolean
@@ -131,6 +133,10 @@ export const useWalletStore = defineStore('wallet', {
       }
     },
     disconnectWallet() {
+      const providers = (window.ethereum as coinbaseWindowType)?.providers || []
+      providers.map(item => {
+        item.close && item.close()
+      })
       this.connected = false
       storage('local').remove(STORE_KEY_WALLET_CONNECTED)
       this.address = undefined
@@ -166,15 +172,12 @@ export const useWalletStore = defineStore('wallet', {
       const wallet = await getWallet(walletType)
       const WALLET_CONSTAST_TYPE = storage('local').get<string>(STORE_KEY_WALLET_CONSTAST_TYPE)
       const userStore = useUserStore()
+
       if (
         WALLET_CONSTAST_TYPE &&
         WALLET_CONSTAST_TYPE !== walletType &&
         window.location.pathname !== '/auth/login'
       ) {
-        const providers = (window.ethereum as coinbaseWindowType)?.providers || []
-        providers.map(item => {
-          item.close && item.close()
-        })
         this.disconnectWallet()
         storage('local').remove(STORE_KEY_WALLET_CONSTAST_TYPE)
         message.info('Account switched, please re-login')
