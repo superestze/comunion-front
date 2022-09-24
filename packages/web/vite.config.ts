@@ -28,8 +28,8 @@ export default defineConfig({
   },
   define: {
     'process.env.NODE_DEBUG': false,
-    'process.env.LINK_API_URL': '',
-    'process.env.SDK_VERSION': ''
+    'process.env.LINK_API_URL': null,
+    'process.env.SDK_VERSION': null
   },
   // optimizeDeps: {
   //   include: ['bn.js', 'hash.js']
