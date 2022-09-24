@@ -28,6 +28,8 @@
     "@comunion/components": "^0.0.1",
     "@comunion/icons": "^0.0.1",
     "@comunion/utils": "^0.0.1",
+    "@sentry/browser": "^7.13.0",
+    "@sentry/tracing": "^7.13.0",
     "@tiptap/extension-character-count": "^2.0.0-beta.196",
     "@tiptap/extension-placeholder": "^2.0.0-beta.196",
     "@tiptap/extension-underline": "^2.0.0-beta.196",

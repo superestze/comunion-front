@@ -21,6 +21,7 @@ import {
 import { services } from '@/services'
 import { useWalletStore } from '@/stores'
 import { useContractStore } from '@/stores/contract'
+import { reportError } from '@/utils/sentry'
 
 const CreateCrowdfundingForm = defineComponent({
   name: 'CreateCrowdfundingForm',
@@ -174,6 +175,7 @@ const CreateCrowdfundingForm = defineComponent({
         )
         return contractRes
       } catch (e: any) {
+        reportError(e as Error)
         console.error(e)
         contractStore.endContract('failed', { success: false })
       }
@@ -220,6 +222,7 @@ const CreateCrowdfundingForm = defineComponent({
         })
         ctx.emit('cancel')
       } catch (error) {
+        reportError(error as Error)
         console.error('error===>', error)
       }
     }

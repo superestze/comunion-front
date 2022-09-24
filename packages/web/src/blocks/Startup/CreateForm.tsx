@@ -14,6 +14,7 @@ import { useStartupContract } from '@/contracts'
 import { services } from '@/services'
 import { useWalletStore, useChainStore } from '@/stores'
 import { useContractStore } from '@/stores/contract'
+import { reportError } from '@/utils/sentry'
 type chainSelectOption = {
   label: string
   logo: string
@@ -164,6 +165,7 @@ const CreateStartupForm = defineComponent({
               )
               onCancel()
             } catch (error) {
+              reportError(error as Error)
               // message.error('Failed to create startup, please check your network and contract')
               // console.error(error)
               // message.error(error.message)

@@ -23,7 +23,7 @@ const NoFollowedStartupTip = defineComponent({
     })
     return () => (
       <UModal v-model:show={modalVisibleState.value} maskClosable={false} autoFocus={false}>
-        <UCard style={{ width: '540px' }} closable={true} class="!p-7" onClose={close}>
+        <UCard style={{ width: '540px' }} closable={true} onClose={close}>
           <div class="relative -top-3 flex items-center">
             <WarningFilled />{' '}
             <span class="u-h4 ml-4">You have not joined or connected any startup</span>

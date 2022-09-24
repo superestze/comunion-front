@@ -10,6 +10,7 @@ import { signerProposalTypes } from '@/pages/governance/utils'
 import { services } from '@/services'
 import { useUserStore, useWalletStore } from '@/stores'
 import { getClient } from '@/utils/ipfs'
+import { reportError } from '@/utils/sentry'
 
 const CreateProposalFrom = defineComponent({
   name: 'CreateCrowdfundingForm',
@@ -107,8 +108,6 @@ const CreateProposalFrom = defineComponent({
             (startup: { value: number | undefined }) => startup.value === proposalInfo.startupId
           )
           const blockNumber = walletStore.wallet?.getProvider().blockNumber
-          // const voteType =
-          //   voteOptions.value?.find(option => option.value === proposalInfo.vote)?.label || 'basic'
 
           const domain = { name: 'Comunion' }
 
@@ -125,55 +124,56 @@ const CreateProposalFrom = defineComponent({
             Discussion: proposalInfo.discussion || '',
             BlockHeight: blockNumber
           }
-          // const optionalContent = {
-          //   Description: proposalInfo.description || '',
-          //   Discussion: proposalInfo.discussion || ''
-          // }
 
-          const signature = await walletStore.wallet?.signTypedData(
-            domain,
-            signerProposalTypes,
-            saveContent
-          )
-
-          // sign(JSON.stringify(saveContent, null, 2))
-          console.log('signature===>', signature)
-          if (signature) {
-            const { cid } = await ipfsClient.add(
-              JSON.stringify({
-                address: walletStore.address,
-                data: saveContent,
-                sig: signature
-              })
+          try {
+            const signature = await walletStore.wallet?.signTypedData(
+              domain,
+              signerProposalTypes,
+              saveContent
             )
-            console.log('cid==>', cid)
-            // console.log('path==>', path)
 
-            const { error } = await services['governance@create-proposal']({
-              authorComerId: userInfo.profile!.comerID!,
-              authorWalletAddress: walletStore.address!,
-              chainId: walletStore.chainId!,
-              blockNumber: blockNumber!,
-              releaseTimestamp: dayjs().utc().toISOString(),
-              ipfsHash: cid.toString(),
-              title: proposalInfo.title!,
-              startupId: proposalInfo.startupId,
-              description: proposalInfo.description,
-              discussionLink: proposalInfo.discussion,
-              voteSystem: proposalInfo.vote,
-              startTime: dayjs(proposalInfo.startTime!).utc().toISOString(),
-              endTime: dayjs(proposalInfo.endTime!).utc().toISOString(),
-              choices: (proposalInfo.voteChoices || [])
-                .filter((item: { value: string }) => item.value)
-                .map((choice, choiceIndex) => ({
-                  itemName: choice.value,
-                  seqNum: choiceIndex + 1
-                }))
-            })
-            if (!error) {
+            // sign(JSON.stringify(saveContent, null, 2))
+            console.log('signature===>', signature)
+            if (signature) {
+              const { cid } = await ipfsClient.add(
+                JSON.stringify({
+                  address: walletStore.address,
+                  data: saveContent,
+                  sig: signature
+                })
+              )
+              console.log('cid==>', cid)
+              const reqParams = {
+                authorComerId: userInfo.profile!.comerID!,
+                authorWalletAddress: walletStore.address!,
+                chainId: walletStore.chainId!,
+                blockNumber: blockNumber!,
+                releaseTimestamp: dayjs().utc().toISOString(),
+                ipfsHash: cid.toString(),
+                title: proposalInfo.title!,
+                startupId: proposalInfo.startupId,
+                description: proposalInfo.description,
+                discussionLink: proposalInfo.discussion,
+                voteSystem: proposalInfo.vote,
+                startTime: dayjs(proposalInfo.startTime!).utc().toISOString(),
+                endTime: dayjs(proposalInfo.endTime!).utc().toISOString(),
+                choices: (proposalInfo.voteChoices || [])
+                  .filter((item: { value: string }) => item.value)
+                  .map((choice, choiceIndex) => ({
+                    itemName: choice.value,
+                    seqNum: choiceIndex + 1
+                  }))
+              }
+
+              const { error } = await services['governance@create-proposal'](reqParams)
+              if (error) {
+                return reportError(new Error('create proposal'), reqParams)
+              }
               message.success('Create proposal successfully')
               closeDrawer()
             }
+          } catch (error) {
+            return reportError(error as Error)
           }
         }
       })
