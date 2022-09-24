@@ -1,39 +1,55 @@
-import { Contract, BigNumber } from 'ethers'
+import { Contract } from 'ethers'
 import { computed } from 'vue'
 import { getContract, GetContractArgs, wrapTransaction } from './share'
-import { useWalletStore } from '@/stores'
+import { useWalletStore, useChainStore, abiType } from '@/stores'
+// export const StartupAddresses: Record<number, string> = {
+//   5: '0xEdf4565af54D9508e247c044F09EddcaD91DAdED',
+//   43113: '0x7E94572BCc67B6eDa93DBa0493b681dC0ae9E964',
+//   43114: '0x45BE0Eaa7076854d790A9583c6E3AE020d1A1556'
+// }
 
-export const StartupAddresses: Record<number, string> = {
-  5: '0x744E0A1452F5E3Dc42E75c4C4B4de9faa16E3948',
-  43113: '0xC31a16498d1B8d703883B509097f099165D5324A',
-  97: '0xd8461714Ab1C2E051073520E6c8db8eE15f6147C',
-  4002: '0xc7a1bAe0Db6203F3Ee3C721909B3b959a1b437Ca',
-  80001: '0xc7a1bAe0Db6203F3Ee3C721909B3b959a1b437Ca',
-  5700: '0xc7a1bAe0Db6203F3Ee3C721909B3b959a1b437Ca',
-  2814: '0xd8461714Ab1C2E051073520E6c8db8eE15f6147C'
+// const abi =
+//   '[{"inputs":[{"components":[{"internalType":"string","name":"name","type":"string"},{"internalType":"enum Startup.Mode","name":"mode","type":"uint8"},{"internalType":"string","name":"logo","type":"string"},{"internalType":"string","name":"mission","type":"string"},{"internalType":"string","name":"overview","type":"string"},{"internalType":"bool","name":"isValidate","type":"bool"}],"internalType":"struct Startup.Profile","name":"p","type":"tuple"}],"name":"newStartup","outputs":[],"stateMutability":"payable","type":"function"},{"inputs":[{"internalType":"string","name":"","type":"string"}],"name":"startups","outputs":[{"internalType":"string","name":"name","type":"string"},{"internalType":"enum Startup.Mode","name":"mode","type":"uint8"},{"internalType":"string","name":"logo","type":"string"},{"internalType":"string","name":"mission","type":"string"},{"internalType":"string","name":"overview","type":"string"},{"internalType":"bool","name":"isValidate","type":"bool"}],"stateMutability":"view","type":"function"},{"inputs":[{"internalType":"address payable","name":"receiver","type":"address"}],"name":"suicide0","outputs":[],"stateMutability":"nonpayable","type":"function"},{"inputs":[{"internalType":"address","name":"newOwner","type":"address"}],"name":"transferOwnership","outputs":[],"stateMutability":"nonpayable","type":"function"}]'
+export const getStartupAddresses = () => {
+  const walletStore = useWalletStore()
+  const chainStore = useChainStore()
+  const address = (chainStore.abiInfo as abiType)[walletStore.chainId!]?.startup?.address || ''
+  return {
+    [walletStore.chainId!]: address
+  }
 }
-
-const abi =
-  '[{"inputs":[{"components":[{"internalType":"string","name":"name","type":"string"},{"internalType":"uint256","name":"chainId","type":"uint256"},{"internalType":"bool","name":"used","type":"bool"}],"internalType":"struct Startup.Profile","name":"p","type":"tuple"}],"name":"createStartup","outputs":[],"stateMutability":"nonpayable","type":"function"},{"inputs":[{"internalType":"string","name":"name","type":"string"}],"name":"getStartup","outputs":[{"components":[{"internalType":"string","name":"name","type":"string"},{"internalType":"uint256","name":"chainId","type":"uint256"},{"internalType":"bool","name":"used","type":"bool"}],"internalType":"struct Startup.Profile","name":"","type":"tuple"}],"stateMutability":"view","type":"function"},{"inputs":[],"name":"owner","outputs":[{"internalType":"address","name":"","type":"address"}],"stateMutability":"view","type":"function"},{"inputs":[],"name":"renounceOwnership","outputs":[],"stateMutability":"nonpayable","type":"function"},{"inputs":[{"internalType":"address","name":"newOwner","type":"address"}],"name":"transferOwnership","outputs":[],"stateMutability":"nonpayable","type":"function"}]'
-
 export function useStartupContract(
-  params: Omit<GetContractArgs, 'abi'> = { addresses: StartupAddresses }
+  params: Omit<GetContractArgs, 'abi'> = { addresses: getStartupAddresses() }
 ): {
   getContract: () => Contract
-  createStartup: (
-    p: [name: string, chainId: number | BigNumber, used: any],
+  newStartup: (
+    p: [name: string, network: number, isValidate: any],
+    modelInfo: any,
     pendingText: string,
     waitingText: string,
     overrides?: any
   ) => Promise<[]>
-  getStartup: (
-    name: string,
+  startups: (
+    arg0: string,
     pendingText: string,
     waitingText: string,
     overrides?: any
-  ) => Promise<[/**  */ [/** name */ string, /** chainId */ number | BigNumber, /** used */ any]]>
-  owner: (pendingText: string, waitingText: string, overrides?: any) => Promise<[/**  */ string]>
-  renounceOwnership: (pendingText: string, waitingText: string, overrides?: any) => Promise<[]>
+  ) => Promise<
+    [
+      /** name */ string,
+      /** mode */ number,
+      /** logo */ string,
+      /** mission */ string,
+      /** overview */ string,
+      /** isValidate */ any
+    ]
+  >
+  suicide0: (
+    receiver: string,
+    pendingText: string,
+    waitingText: string,
+    overrides?: any
+  ) => Promise<[]>
   transferOwnership: (
     newOwner: string,
     pendingText: string,
@@ -42,6 +58,16 @@ export function useStartupContract(
   ) => Promise<[]>
 } {
   const walletStore = useWalletStore()
+  const chainStore = useChainStore()
+  const abi = (chainStore.abiInfo as abiType)[walletStore.chainId!]?.startup?.abi
+    .replace(/\\t/g, '')
+    .replace(/\\r/g, '')
+    .replace(/\\n/g, '')
+    .replace(/\\"/g, '"')
+  const StartupAddresses = {
+    [walletStore.chainId!]:
+      (chainStore.abiInfo as abiType)[walletStore.chainId!]?.startup?.address || ''
+  }
   const getContractArgs = computed<GetContractArgs>(() => {
     return {
       abi,
@@ -52,13 +78,9 @@ export function useStartupContract(
   })
   return {
     getContract: () => getContract({ ...getContractArgs.value, ...params }),
-    createStartup: wrapTransaction({ ...getContractArgs.value, ...params }, 'createStartup'),
-    getStartup: wrapTransaction({ ...getContractArgs.value, ...params }, 'getStartup'),
-    owner: wrapTransaction({ ...getContractArgs.value, ...params }, 'owner'),
-    renounceOwnership: wrapTransaction(
-      { ...getContractArgs.value, ...params },
-      'renounceOwnership'
-    ),
+    newStartup: wrapTransaction({ ...getContractArgs.value, ...params }, 'createStartup'),
+    startups: wrapTransaction({ ...getContractArgs.value, ...params }, 'startups'),
+    suicide0: wrapTransaction({ ...getContractArgs.value, ...params }, 'suicide0'),
     transferOwnership: wrapTransaction({ ...getContractArgs.value, ...params }, 'transferOwnership')
   }
 }
