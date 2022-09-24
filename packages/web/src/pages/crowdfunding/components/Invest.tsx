@@ -96,11 +96,11 @@ export const Invest = defineComponent({
       )
     })
     const changeFromValue = (value: string) => {
-      console.log('value===>', value)
-
       if (mode.value === 'buy') {
         toValue.value = formatToFloor(
-          Number(value) * props.info.buyPrice,
+          ethers.FixedNumber.from(value)
+            .mulUnsafe(ethers.FixedNumber.from(props.info.buyPrice))
+            .toString(),
           props.sellCoinInfo.decimal!
         )
       } else {
@@ -117,12 +117,16 @@ export const Invest = defineComponent({
     const changeToValue = (value: string) => {
       if (mode.value === 'buy') {
         fromValue.value = formatToFloor(
-          Number(value) / props.info.buyPrice,
+          ethers.FixedNumber.from(value)
+            .divUnsafe(ethers.FixedNumber.from(props.info.buyPrice))
+            .toString(),
           buyIsMainCoin.value ? 18 : props.buyCoinInfo.decimal!
         )
       } else {
         fromValue.value = formatToFloor(
-          Number(value) * props.info.buyPrice,
+          ethers.FixedNumber.from(value)
+            .mulUnsafe(ethers.FixedNumber.from(props.info.buyPrice))
+            .toString(),
           props.sellCoinInfo.decimal!
         )
       }
@@ -292,6 +296,8 @@ export const Invest = defineComponent({
         console.log('fromValue.value==>', fromValue.value)
 
         const buyAmount = ethers.utils.parseEther(fromValue.value)
+
+        console.log('submit', buyAmount, sellAmount)
         // main coin buy token
         const contractRes: any = await fundingContract.buy(
           buyAmount,
