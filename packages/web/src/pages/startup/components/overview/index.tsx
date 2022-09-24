@@ -44,7 +44,7 @@ export default defineComponent({
               <p
                 class="text-color2 u-h6 "
                 ref={(ref: any) => (this.pRef = ref)}
-                v-html={this.content}
+                v-html={this.content.replaceAll('\n', '<br>')}
               />
               {this.showMoreBtn && this.fold && (
                 <div
