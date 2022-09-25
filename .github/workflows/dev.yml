@@ -18,7 +18,7 @@ jobs:
         with:
           version: 6.0.2
       - name: Install dependencies
-        run: pnpm i --no-frozen-lockfile
+        run: pnpm i
       - name: Build
         run: pnpm build:dev
       - name: Configure AWS Credentials
