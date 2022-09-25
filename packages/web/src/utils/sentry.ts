@@ -12,5 +12,10 @@ Sentry.init({
 })
 
 export const reportError = (err: Error, data?: any) => {
-  Sentry.captureException(err, data)
+  Sentry.captureMessage(
+    JSON.stringify({
+      err: err.message,
+      data: data
+    })
+  )
 }
