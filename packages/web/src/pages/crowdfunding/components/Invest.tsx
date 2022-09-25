@@ -48,8 +48,8 @@ export const Invest = defineComponent({
     const contractStore = useContractStore()
     const cancelModal = ref(false)
     const removeModal = ref(false)
-    const fromValue = ref<string>('0.0')
-    const toValue = ref<string>('0.0')
+    const fromValue = ref<string>('')
+    const toValue = ref<string>('')
     const raiseState = ref({
       raiseAmount: 0,
       raiseGoal: 0,
@@ -643,7 +643,8 @@ export const Invest = defineComponent({
               }}
               type="withUnit"
               inputProps={{
-                onChange: changeFromValue
+                onInput: changeFromValue,
+                placeholder: '0.0'
                 // max: mode.value === 'buy' ? maxBuyAmount.value : maxSellAmount.value
               }}
               renderUnit={() =>
@@ -672,7 +673,8 @@ export const Invest = defineComponent({
               <UInputNumberGroup
                 v-model:value={toValue.value}
                 inputProps={{
-                  onInput: changeToValue
+                  onInput: changeToValue,
+                  placeholder: '0.0'
                   // max: mode.value === 'buy' ? maxSellAmount.value : maxBuyAmount.value
                 }}
                 v-slots={{
