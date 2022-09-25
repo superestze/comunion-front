@@ -19,6 +19,7 @@ import { AVAX_USDC_ADDR } from '@/contracts/utils'
 import { services } from '@/services'
 import { useUserStore, useWalletStore } from '@/stores'
 import { useContractStore } from '@/stores/contract'
+import { reportError } from '@/utils/sentry'
 
 const CreateBountyForm = defineComponent({
   name: 'CreateBountyForm',
@@ -137,6 +138,7 @@ const CreateBountyForm = defineComponent({
         )
         return contractRes
       } catch (e: any) {
+        reportError(e as Error)
         console.error(e)
         contractStore.endContract('failed', { success: false })
       }
@@ -235,6 +237,7 @@ const CreateBountyForm = defineComponent({
         })
         ctx.emit('cancel')
       } catch (error) {
+        reportError(error as Error)
         console.error('error===>', error)
       }
     }

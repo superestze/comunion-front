@@ -75,5 +75,10 @@
   },
   "engines": {
     "node": ">=10.0.0"
+  },
+  "pnpm": {
+    "overrides": {
+      "ethereumjs-abi": "https://registry.npmjs.org/ethereumjs-abi/-/ethereumjs-abi-0.6.8.tgz"
+    }
   }
 }
