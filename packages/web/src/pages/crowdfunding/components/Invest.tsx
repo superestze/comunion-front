@@ -175,10 +175,18 @@ export const Invest = defineComponent({
           class: `${numberClass} bg-[rgba(245,246,250,1)] text-black text-opacity-10`
         }
       }
+
+      const dateNow = ref<dayjs.Dayjs>(dayjs.utc())
+
+      const timer = () => {
+        dateNow.value = dayjs.utc()
+        setTimeout(timer, 1000)
+      }
       // before start
-      if (dayjs.utc().isBefore(dayjs(props.info.startTime).utc())) {
+      if (dateNow.value.isBefore(dayjs(props.info.startTime).utc())) {
+        timer()
         const [days, hours, minutes, seconds] = dayjs
-          .duration(dayjs(props.info.startTime).utc().diff(dayjs.utc()))
+          .duration(dayjs(props.info.startTime).utc().diff(dateNow.value))
           .format('DD-HH-mm-ss')
           .split('-')
         return {
@@ -193,7 +201,9 @@ export const Invest = defineComponent({
           class: `${numberClass} bg-[rgba(83,49,244,0.06)] text-primary`
         }
       }
-      if (dayjs.utc().isAfter(dayjs(props.info.endTime).utc())) {
+
+      // ended
+      if (dateNow.value.isAfter(dayjs(props.info.endTime).utc())) {
         return {
           status: CrowdfundingStatus.ENDED,
           label: 'dCrowdfunding Has Ended',
@@ -203,8 +213,9 @@ export const Invest = defineComponent({
       }
 
       // after start and before end
+      timer()
       const diffDuration = dayjs
-        .duration(dayjs(props.info.endTime).utc().diff(dayjs.utc()))
+        .duration(dayjs(props.info.endTime).utc().diff(dateNow.value))
         .format('DD-HH-mm-ss')
         .split('-')
 
@@ -535,6 +546,7 @@ export const Invest = defineComponent({
           <div class="flex-1">
             <div class="mb-4 text-color2 u-h5">{countDownTime.value.label}</div>
             <div class="flex mb-15 items-center">
+              {/* TODO */}
               <span class={`${countDownTime.value.class} mr-2`}>
                 {countDownTime.value.value.days}
               </span>
