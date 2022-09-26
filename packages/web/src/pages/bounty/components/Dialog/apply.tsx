@@ -189,6 +189,7 @@ const ApplyDialog = defineComponent({
       if (!isSupport) {
         return
       }
+      // submit
       this.form?.validate(async err => {
         if (typeof err === 'undefined' && this.terms.value && this.accept.value) {
           // console.log(ethers.utils.parseUnits(this.formData.deposit.toString(), 18))
