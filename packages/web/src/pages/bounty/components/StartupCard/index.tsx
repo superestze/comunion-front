@@ -1,7 +1,7 @@
 import { UTag } from '@comunion/components'
 import { defineComponent, PropType, computed } from 'vue'
 import { useRouter } from 'vue-router'
-import UStartupLogo from '@/components/UStartupLogo'
+import StartupLogo from '@/components/StartupLogo'
 import { getStartupTypeFromNumber, StartupTypesType } from '@/constants'
 import { SocialGroup } from '@/pages/startup/components/SocialGroup'
 import { ServiceReturn } from '@/services'
@@ -39,7 +39,7 @@ export default defineComponent({
     return (
       <>
         <div class="flex ">
-          <UStartupLogo
+          <StartupLogo
             src={this.startup?.logo || ''}
             class="cursor-pointer h-15 mr-4 w-15"
             onClick={this.toComerDetail}

@@ -4,7 +4,7 @@ import dayjs from 'dayjs'
 import { format } from 'timeago.js'
 import { defineComponent, PropType, reactive, onMounted, ref } from 'vue'
 import { useRouter } from 'vue-router'
-import UStartupLogo from '@/components/UStartupLogo'
+import StartupLogo from '@/components/StartupLogo'
 import { BOUNTY_TYPES_COLOR_MAP } from '@/constants'
 import { ServiceReturn, services } from '@/services'
 import { getChainInfoByChainId } from '@/utils/etherscan'
@@ -77,7 +77,7 @@ export default defineComponent({
         onClick={handleCard(props.startup.bountyId)}
       >
         <div class="flex items-start">
-          <UStartupLogo src={props.startup.logo} class="h-15 mr-4 w-15" />
+          <StartupLogo src={props.startup.logo} class="h-15 mr-4 w-15" />
 
           <div class="flex-1 overflow-hidden">
             <div class="flex mb-2 items-center">
