@@ -105,7 +105,7 @@ export default defineComponent({
         <div class="flex-1 overflow-hidden">
           <div class="flex mb-2 items-center">
             <div class="text-color1 truncate u-h4">{props.info.startupName}</div>
-            <UTag class="ml-4 text-color2">{CROWDFUNDING_TYPES[props.info.status - 1]}</UTag>
+            <UTag class="ml-4 text-color2">{CROWDFUNDING_TYPES[props.info.status]}</UTag>
           </div>
           <div class="text-color3 u-h6">
             <span>Raise Goal：</span>

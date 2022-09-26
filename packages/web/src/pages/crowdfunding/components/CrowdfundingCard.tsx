@@ -133,7 +133,7 @@ export const CrowdfundingCard = defineComponent({
         onClick={() => props.onClick?.()}
       >
         <UTag type="filled" bgColor="#fff" class="top-4 right-4 absolute !text-color2">
-          {CROWDFUNDING_TYPES[props.info.status - 1]}
+          {CROWDFUNDING_TYPES[props.info.status]}
         </UTag>
         <ULazyImage src={props.info.poster} class=" h-10.75rem w-full" />
         <div class="p-6">
