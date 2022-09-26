@@ -1,6 +1,7 @@
 import { defineComponent } from 'vue'
 
 export default defineComponent({
+  name: 'CustomCard',
   props: {
     title: {
       type: String
