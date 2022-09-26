@@ -2,7 +2,7 @@ import { StartupLogoFilled } from '@comunion/icons'
 import type { ExtractPropTypes } from 'vue'
 import { defineComponent, ref, watch } from 'vue'
 
-export const UStartupLogoProps = {
+export const StartupLogoProps = {
   src: {
     type: String,
     required: true
@@ -15,11 +15,11 @@ export const UStartupLogoProps = {
   }
 } as const
 
-export type UStartupLogoPropsType = ExtractPropTypes<typeof UStartupLogoProps>
+export type StartupLogoPropsType = ExtractPropTypes<typeof StartupLogoProps>
 
-const UStartupLogo = defineComponent({
-  name: 'UStartupLogo',
-  props: UStartupLogoProps,
+const StartupLogo = defineComponent({
+  name: 'StartupLogo',
+  props: StartupLogoProps,
   setup(props, ctx) {
     const loaded = ref(false)
     const errored = ref(false)
@@ -67,4 +67,4 @@ const UStartupLogo = defineComponent({
   }
 })
 
-export default UStartupLogo
+export default StartupLogo

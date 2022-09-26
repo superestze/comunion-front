@@ -4,7 +4,7 @@ import { defineComponent, computed, ref, watch, PropType } from 'vue'
 import { useStartupProfile } from '../../hooks/useStartupProfile'
 import defaultCover from './assets/cover.png'
 import SocialIcon from '@/components/SocialIcon'
-import UStartupLogo from '@/components/UStartupLogo'
+import StartupLogo from '@/components/StartupLogo'
 import { getStartupTypeFromNumber, StartupTypesType } from '@/constants'
 import { getContactList } from '@/pages/startup/setting/[id]'
 import { contactList } from '@/pages/startup/setting/components/social/util'
@@ -136,7 +136,7 @@ export default defineComponent({
         </div>
 
         <div class="flex mt-2 px-10 justify-between relative">
-          <UStartupLogo
+          <StartupLogo
             src={this.startupInfo?.logo || ''}
             class="bg-white h-30 bottom-2 left-10 w-30 absolute"
           />
