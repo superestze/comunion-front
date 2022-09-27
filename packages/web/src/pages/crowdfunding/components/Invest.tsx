@@ -41,7 +41,7 @@ export const Invest = defineComponent({
       required: true
     }
   },
-  emits: ['refreshCoin'],
+  emits: ['refreshCoin', 'refreshData'],
   setup(props, ctx) {
     const walletStore = useWalletStore()
     const userStore = useUserStore()
@@ -111,7 +111,6 @@ export const Invest = defineComponent({
           buyIsMainCoin.value ? 18 : props.buyCoinInfo.decimal!
         )
       }
-      console.log('toValue.value==>', toValue.value)
     }
 
     const changeToValue = (value: string) => {
@@ -259,8 +258,11 @@ export const Invest = defineComponent({
           txHash: contractRes.hash
         })
         fundingContractStateSecound.value = false
+        // refresh date
+        ctx.emit('refreshData')
       } catch (error) {
         console.log('error', error)
+        contractStore.endContract('failed', { success: false })
       }
     }
 
@@ -274,8 +276,11 @@ export const Invest = defineComponent({
           crowdfundingId: props.info.crowdfundingId,
           txHash: contractRes.hash
         })
+        // refresh date
+        ctx.emit('refreshData')
       } catch (error) {
         console.error('error===>', error)
+        contractStore.endContract('failed', { success: false })
       }
     }
     const netWorkChange = async (value: number) => {
