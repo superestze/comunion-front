@@ -13,3 +13,19 @@ export const validateTelegram = (telegram: string) => {
     .toLowerCase()
     .match(/http(s)?:\/\/([\w-]+\.)+[\w-]+(\/[\w- ./?%&=]*)?/)
 }
+
+export const validateDiscordUsername = (discord: string) => {
+  return String(discord)
+    .toLowerCase()
+    .match(/[^#]+#\d+$/)
+}
+
+export const validateDiscordAddress = (discord: string) => {
+  return String(discord)
+    .toLowerCase()
+    .match(/http(s)?:\/\/discord.com(\/[\w- ./?%&=]+)/)
+}
+
+export const validateDiscord = (discord: string) => {
+  return validateDiscordUsername(discord) || validateDiscordAddress(discord)
+}
