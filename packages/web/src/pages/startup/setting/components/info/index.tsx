@@ -378,7 +378,7 @@ export default defineComponent({
                   'Waiting to submit all contents to blockchain for creating startup',
                   `Startup "${this.info.name}" is Creating`
                 )
-                message.success('Successfully saved')
+                // message.success('Successfully saved')
                 this.$emit('saved')
               } catch (error) {
                 this.info.switchChain = false
