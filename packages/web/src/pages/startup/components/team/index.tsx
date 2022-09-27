@@ -65,6 +65,7 @@ export default defineComponent({
       <UCard title={this.title} class="mb-6">
         {listData.map(item => (
           <BasicItem
+            class="-mx-4"
             item={{
               comerId: item.comerID,
               comerName: item.comerProfile?.name,

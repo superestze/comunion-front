@@ -30,9 +30,11 @@ const UContractInteraction = defineComponent({
     watchEffect(() => {
       if (props.status) {
         if (['success', 'canceled', 'failed'].includes(props.status)) {
-          setTimeout(() => {
-            show.value = false
-          }, 1000)
+          // setTimeout(() => {
+          //   show.value = false
+          // }, 1000)
+          // dont show the blank dialog
+          show.value = false
         } else if ('pending' === props.status) {
           show.value = true
         }
