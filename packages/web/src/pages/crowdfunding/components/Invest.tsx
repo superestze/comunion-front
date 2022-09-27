@@ -812,18 +812,10 @@ export const Invest = defineComponent({
             style={{ width: '540px' }}
             closable={true}
             onClose={() => (cancelModal.value = false)}
-            v-slots={{
-              header: () => {
-                return (
-                  <div class="flex relative items-center">
-                    <span class="text-color1 u-h3">Cancellation of dCrowdfunding</span>
-                  </div>
-                )
-              }
-            }}
+            title="Are you sure to cancel the dCrowdfunding？"
           >
             <div class="min-h-20 p-4 text-color2 u-h6">
-              This can't be undo and you'll lose your changes
+              All contents will be deleted once you click yes button
             </div>
             <div class="flex mt-4 justify-end">
               <UButton
