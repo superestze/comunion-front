@@ -6,7 +6,6 @@ import Paragraph from './paragraph'
 import More from '@/components/More'
 import { BOUNTY_TYPES_COLOR_MAP } from '@/constants'
 import { ServiceReturn } from '@/services'
-import { useBountyContractStore } from '@/stores/bountyContract'
 
 export default defineComponent({
   name: 'BountyDetailCard',
@@ -21,13 +20,15 @@ export default defineComponent({
     }
   },
   setup(props) {
+    console.log(props.bountyDetail)
     const fold = ref<boolean>(true)
     const handleMore = () => {
       fold.value = !fold.value
     }
-    const bountyContractStore = useBountyContractStore()
+    // const bountyContractStore = useBountyContractStore()
     const bountyStatus = computed(() => {
-      let status = bountyContractStore.bountyContractInfo.bountyStatus
+      // let status = bountyContractStore.bountyContractInfo.bountyStatus
+      let status = props.bountyDetail?.status || 0
       if (props.bountyExpired) {
         status = 4
       }
