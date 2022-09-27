@@ -102,6 +102,7 @@ export default defineComponent({
                 {this.followedStartups.list.value.map(item => {
                   return (
                     <BasicItem
+                      class="-mx-4"
                       item={item}
                       onConnect={handleConnect}
                       onUnconnect={handleUnConnect}
@@ -149,6 +150,7 @@ export default defineComponent({
                 {this.followComer.list.value.map(item => {
                   return (
                     <BasicItem
+                      class="-mx-4"
                       item={item}
                       onConnect={handleConnect}
                       onUnconnect={handleUnConnect}
@@ -198,6 +200,7 @@ export default defineComponent({
                 {this.connector.list.value.map(item => {
                   return (
                     <BasicItem
+                      class="-mx-4"
                       item={item}
                       onConnect={handleConnect}
                       onUnconnect={handleUnConnect}
