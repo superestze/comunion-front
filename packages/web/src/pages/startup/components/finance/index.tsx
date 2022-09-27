@@ -75,7 +75,7 @@ export default defineComponent({
     const renderList = this.financeBasic.filter(item => !!item.value)
     return (
       <UCard title="Finance" class="mb-6">
-        {!!renderList.length && (
+        {renderList.length ? (
           <div class="flex flex-col">
             {renderList.map(item => {
               return (
@@ -108,7 +108,7 @@ export default defineComponent({
               </div>
             )}
           </div>
-        )}
+        ) : null}
       </UCard>
     )
   }

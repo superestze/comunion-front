@@ -41,7 +41,7 @@ export const Invest = defineComponent({
       required: true
     }
   },
-  emits: ['refreshCoin'],
+  emits: ['refreshCoin', 'refreshData'],
   setup(props, ctx) {
     const walletStore = useWalletStore()
     const userStore = useUserStore()
@@ -111,7 +111,6 @@ export const Invest = defineComponent({
           buyIsMainCoin.value ? 18 : props.buyCoinInfo.decimal!
         )
       }
-      console.log('toValue.value==>', toValue.value)
     }
 
     const changeToValue = (value: string) => {
@@ -170,7 +169,7 @@ export const Invest = defineComponent({
       if (props.info.status === CrowdfundingStatus.CANCELED) {
         return {
           status: CrowdfundingStatus.CANCELED,
-          label: 'dCrowdfunding Has Cancelled',
+          label: 'Cancelled',
           value: countDown,
           class: `${numberClass} bg-[rgba(245,246,250,1)] text-black text-opacity-10`
         }
@@ -178,9 +177,12 @@ export const Invest = defineComponent({
 
       const dateNow = ref<dayjs.Dayjs>(dayjs.utc())
 
-      const timer = () => {
+      const timer: any = () => {
         dateNow.value = dayjs.utc()
-        setTimeout(timer, 1000)
+        if (dateNow.value.isAfter(dayjs(props.info.endTime).utc())) {
+          return null
+        }
+        return setTimeout(timer, 1000)
       }
       // before start
       if (dateNow.value.isBefore(dayjs(props.info.startTime).utc())) {
@@ -256,8 +258,11 @@ export const Invest = defineComponent({
           txHash: contractRes.hash
         })
         fundingContractStateSecound.value = false
+        // refresh date
+        ctx.emit('refreshData')
       } catch (error) {
         console.log('error', error)
+        contractStore.endContract('failed', { success: false })
       }
     }
 
@@ -271,8 +276,11 @@ export const Invest = defineComponent({
           crowdfundingId: props.info.crowdfundingId,
           txHash: contractRes.hash
         })
+        // refresh date
+        ctx.emit('refreshData')
       } catch (error) {
         console.error('error===>', error)
+        contractStore.endContract('failed', { success: false })
       }
     }
     const netWorkChange = async (value: number) => {
@@ -816,14 +824,14 @@ export const Invest = defineComponent({
               header: () => {
                 return (
                   <div class="flex relative items-center">
-                    <span class="text-color1 u-h3">Cancellation of dCrowdfunding</span>
+                    <span class="text-color1 u-h3">Are you sure to cancel the dCrowdfunding？</span>
                   </div>
                 )
               }
             }}
           >
             <div class="min-h-20 p-4 text-color2 u-h6">
-              This can't be undo and you'll lose your changes
+              All contents will be deleted once you click yes button
             </div>
             <div class="flex mt-4 justify-end">
               <UButton

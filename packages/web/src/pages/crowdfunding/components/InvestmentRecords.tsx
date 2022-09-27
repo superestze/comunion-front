@@ -92,7 +92,7 @@ export const InvestmentRecords = defineComponent({
                 <div class="flex mb-4">
                   <ULazyImage
                     src={record.comerAvatar ?? ''}
-                    class="rounded-full cursor-pointer h-9 w-9"
+                    class="rounded-full cursor-pointer h-12 w-12"
                   />
                   <div class=" flex-1 mx-4">
                     <div class="flex mb-2 items-center">

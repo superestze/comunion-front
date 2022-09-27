@@ -421,7 +421,7 @@ const ProposalDetail = defineComponent({
                 onClick={() => this.toComerDetail(this.proposalInfo?.authorComerId)}
               >
                 <ULazyImage
-                  class="rounded-full h-7 w-7"
+                  class="rounded-full h-12 w-12"
                   src={this.proposalInfo?.authorComerAvatar || ''}
                 />
                 <div class="mx-4 text-color2 u-h6 hover:text-primary">
@@ -502,7 +502,7 @@ const ProposalDetail = defineComponent({
             </CustomCard>
 
             {!!this.voteRecords?.length && (
-              <CustomCard title={`Votes${this.pagination.total}`}>
+              <CustomCard title={`Votes(${this.pagination.total})`}>
                 <div class="-mx-6 -mb-6">
                   <UTable bordered={false}>
                     <tbody>
@@ -513,7 +513,7 @@ const ProposalDetail = defineComponent({
                               class="cursor-pointer flex ml-2 items-center"
                               onClick={() => this.toComerDetail(record.voterComerId)}
                             >
-                              <ULazyImage src={record.voterComerAvatar} class="h-7 mr-3 w-7" />
+                              <ULazyImage src={record.voterComerAvatar} class="h-12 mr-3 w-12" />
                               <span class="text-color2 u-h6">{record.voterComerName}</span>
                             </div>
                           </td>

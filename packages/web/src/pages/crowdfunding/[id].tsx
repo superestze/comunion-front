@@ -146,6 +146,7 @@ const CrowdfundingDetail = defineComponent({
                 sellCoinInfo={sellCoinInfo.value}
                 info={crowdfundingInfo.value}
                 onRefreshCoin={initPage}
+                onRefreshData={() => getCrowdfundingInfo(Number(route.params.id))}
               />
             )}
 

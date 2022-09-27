@@ -11,6 +11,7 @@ import {
 } from '@comunion/icons'
 import copy from 'copy-to-clipboard'
 import { defineComponent, ref } from 'vue'
+import { validateDiscordUsername } from '@/utils/type'
 
 function asyncComponent(type: string, wrapper: string, disable?: boolean) {
   const textClass = ''
@@ -82,8 +83,9 @@ export default defineComponent({
       >
         {this.link ? (
           <>
-            {this.icon === 'Discord' && (
+            {this.icon === 'Discord' && !!validateDiscordUsername(this.address) ? (
               <span
+                title={this.address}
                 onClick={e => {
                   e.stopPropagation()
                   this.showTooltipRef = copy(this.address)
@@ -100,9 +102,12 @@ export default defineComponent({
                   }}
                 </UTooltip>
               </span>
-            )}
-            {this.icon !== 'Discord' && (
-              <a href={`${this.icon === 'Email' ? 'mailto:' : ''}${this.address}`} target="_blank">
+            ) : (
+              <a
+                href={`${this.icon === 'Email' ? 'mailto:' : ''}${this.address}`}
+                title={this.address}
+                target="_blank"
+              >
                 {asyncComponent(this.icon, this.innerWrapper)}
               </a>
             )}
