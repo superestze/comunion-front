@@ -13,7 +13,7 @@ const UInputNumberGroup = defineComponent({
       type: Object as PropType<UInputBigNumberPropsType & AllowedComponentProps>
     },
     value: {
-      type: Object as PropType<string | [string, string] | null>,
+      type: [String, Array],
       default: null
       // required: true
     },
