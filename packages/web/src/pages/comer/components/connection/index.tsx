@@ -112,7 +112,7 @@ export default defineComponent({
                       v-slots={{
                         avatar: () => (
                           <div
-                            class="cursor-pointer flex h-11 w-11 items-center overflow-hidden"
+                            class="cursor-pointer flex h-12 w-12 items-center overflow-hidden"
                             onClick={() => this.$router.push(`/startup/${item.startupId}`)}
                           >
                             <StartupLogo src={item.startupLogo} />
@@ -159,7 +159,7 @@ export default defineComponent({
                       v-slots={{
                         avatar: () => (
                           <div
-                            class="cursor-pointer flex h-11 w-11 "
+                            class="cursor-pointer flex h-12 w-12 "
                             onClick={() =>
                               this.$router.push({ path: '/comer', query: { id: item.comerId } })
                             }
