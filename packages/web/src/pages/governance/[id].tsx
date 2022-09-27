@@ -502,7 +502,7 @@ const ProposalDetail = defineComponent({
             </CustomCard>
 
             {!!this.voteRecords?.length && (
-              <CustomCard title={`Votes${this.pagination.total}`}>
+              <CustomCard title={`Votes(${this.pagination.total})`}>
                 <div class="-mx-6 -mb-6">
                   <UTable bordered={false}>
                     <tbody>
