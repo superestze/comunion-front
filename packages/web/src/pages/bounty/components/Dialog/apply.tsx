@@ -189,6 +189,7 @@ const ApplyDialog = defineComponent({
       if (!isSupport) {
         return
       }
+      // submit
       this.form?.validate(async err => {
         if (typeof err === 'undefined' && this.terms.value && this.accept.value) {
           // console.log(ethers.utils.parseUnits(this.formData.deposit.toString(), 18))
@@ -215,7 +216,7 @@ const ApplyDialog = defineComponent({
               `Apply by ${this.formData.deposit} ${tokenSymbol}`
             )) as unknown as BountyContractReturnType
             if (!response) {
-              return null
+              return contractStore.endContract('failed', { success: false })
             }
           } else {
             return message.error('Input deposit must be greater than applicant deposit!')

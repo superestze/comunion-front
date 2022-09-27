@@ -15,7 +15,7 @@ import { AddCircleOutlined, MinusCircleOutlined } from '@comunion/icons'
 import { defineComponent, ref, reactive, PropType, watch } from 'vue'
 import { contactList } from './util'
 import { services } from '@/services'
-import { validateEmail, validateTelegram } from '@/utils/type'
+import { validateEmail, validateTelegram, validateDiscord } from '@/utils/type'
 
 type SocialType = {
   socialType: number
@@ -82,21 +82,27 @@ export default defineComponent({
           {
             validator: (rule, value: SocialType[]) => {
               const items = value.filter(item => !item.delete && !!item.socialLink)
+
               if (items.length) {
-                for (const item of items) {
-                  if (
-                    (item.socialType === 1 && !validateEmail(item.socialLink)) ||
-                    (item.socialType === 5 && !validateTelegram(item.socialLink))
-                  ) {
-                    return false
-                  } else {
-                    return !!item.socialLink.trim()
-                  }
-                }
+                return (
+                  items.filter(item => {
+                    if (
+                      (item.socialType === 1 && !validateEmail(item.socialLink)) ||
+                      (item.socialType === 4 && !validateDiscord(item.socialLink)) ||
+                      (item.socialType === 5 && !validateTelegram(item.socialLink))
+                    ) {
+                      return false
+                    } else {
+                      return !!item.socialLink.trim()
+                    }
+                  }).length === items.length
+                )
               }
 
               return true
-            }
+            },
+            message: 'Please enter the correct address or username',
+            trigger: 'blur'
           }
         ],
         render() {
@@ -121,6 +127,9 @@ export default defineComponent({
                             (item.socialType === 1 &&
                               item.socialLink &&
                               !validateEmail(item.socialLink)) ||
+                            (item.socialType === 4 &&
+                              item.socialLink &&
+                              !validateDiscord(item.socialLink)) ||
                             (item.socialType === 5 &&
                               item.socialLink &&
                               !validateTelegram(item.socialLink))

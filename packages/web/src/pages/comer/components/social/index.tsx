@@ -15,6 +15,7 @@ import Edit from '../edit'
 import SocialIcon from '@/components/SocialIcon'
 import { SocialTypeList, soureType } from '@/constants'
 import { ServiceReturn, services } from '@/services'
+import { validateEmail, validateDiscord } from '@/utils/type'
 
 type FnParam = (type: string, value?: string) => void
 
@@ -29,26 +30,26 @@ function socialIconComponent(
     if (social) {
       if (view) {
         return <SocialIcon icon={item.value} link={view} address={social} />
+      } else {
+        return (
+          <UPopover
+            trigger="click"
+            placement="top"
+            v-slots={{
+              trigger: () => <SocialIcon icon={item.value} />,
+              default: () => (
+                <div class="cursor-pointer flex m-3">
+                  <PenOutlined
+                    class="h-3.5 text-primary mr-4.5 w-3.5"
+                    onClick={() => edit(item.value, social)}
+                  />
+                  <DeleteFilled class="h-3.5 text-primary w-3.5" onClick={() => del(item.value)} />
+                </div>
+              )
+            }}
+          />
+        )
       }
-
-      return (
-        <UPopover
-          trigger="click"
-          placement="top"
-          v-slots={{
-            trigger: () => <SocialIcon icon={item.value} />,
-            default: () => (
-              <div class="cursor-pointer flex m-3">
-                <PenOutlined
-                  class="h-3.5 text-primary mr-4.5 w-3.5"
-                  onClick={() => edit(item.value, social)}
-                />
-                <DeleteFilled class="h-3.5 text-primary w-3.5" onClick={() => del(item.value)} />
-              </div>
-            )
-          }}
-        />
-      )
     }
     return null
   })
@@ -90,8 +91,18 @@ export default defineComponent({
           name: 'value',
           required: true,
           rules: [
-            { type: 'string', message: 'Input the Address' },
-            { type: 'email', message: 'Enter the correct email address' }
+            {
+              validator: (rule, value: any) => {
+                return !!value.socialLink && !value.delete
+              },
+              message: 'Please enter at least one contact information',
+              trigger: 'blur'
+            },
+            {
+              validator: (rule, value: any) => {
+                return !!validateEmail(value.socialLink)
+              }
+            }
           ],
           placeholder: 'Input the Address'
         })
@@ -100,7 +111,22 @@ export default defineComponent({
           title: 'Address',
           name: 'value',
           required: true,
-          rules: [{ type: 'string', message: 'Input the Address' }],
+          rules: [
+            {
+              validator: (rule, value) => {
+                return !!value.trim()
+              },
+              message: 'Please enter at least one contact information',
+              trigger: 'blur'
+            },
+            {
+              validator: (rule, value) => {
+                return !!validateDiscord(value)
+              },
+              message: 'Please enter the correct address or username',
+              trigger: 'blur'
+            }
+          ],
           placeholder: 'Input the Address'
         })
       } else {
@@ -114,18 +140,6 @@ export default defineComponent({
       }
       return fields
     })
-
-    // watch(
-    //   () => props.profile,
-    //   value => {
-    //     console.log(value, 123123123)
-    //   },
-    //   {
-    //     deep: true,
-    //     immediate: true,
-    //     flush: 'sync'
-    //   }
-    // )
 
     const socials = computed(() => {
       const result = []

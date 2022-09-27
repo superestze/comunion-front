@@ -1,4 +1,4 @@
-import { message, UButton, UCard, UModal } from '@comunion/components'
+import { message, UButton, UCard, UModal, USpin } from '@comunion/components'
 import { WarningFilled } from '@comunion/icons'
 import dayjs from 'dayjs'
 import { defineComponent, onMounted, PropType, reactive, ref } from 'vue'
@@ -65,7 +65,6 @@ const CreateProposalFrom = defineComponent({
     const getStartupsOptions = async () => {
       try {
         const { error, data } = await services['account@related-statups']()
-        console.log('data==>', data)
 
         if (!error) {
           startupOptions.value = data.map(item => ({
@@ -84,7 +83,6 @@ const CreateProposalFrom = defineComponent({
     const getVoteTypeOptions = async () => {
       try {
         const { error, data } = await services['meta@dict-list-by-type']({ type: 'voteSystem' })
-        console.log('data==>', data)
         if (!error) {
           voteOptions.value = data.map(item => ({
             label: item.dictLabel as string,
@@ -97,11 +95,12 @@ const CreateProposalFrom = defineComponent({
         //
       }
     }
+
+    const submitLoading = ref(false)
+
     const onSubmit = async () => {
       // validate
       voteRef.value?.proposalVoteFormRef?.validate(async (error: any) => {
-        console.log('error==>', error)
-
         if (!error) {
           //
           const startupInfo = startupOptions.value.find(
@@ -125,6 +124,7 @@ const CreateProposalFrom = defineComponent({
             BlockHeight: blockNumber
           }
 
+          submitLoading.value = true
           try {
             const signature = await walletStore.wallet?.signTypedData(
               domain,
@@ -133,23 +133,30 @@ const CreateProposalFrom = defineComponent({
             )
 
             // sign(JSON.stringify(saveContent, null, 2))
-            console.log('signature===>', signature)
             if (signature) {
-              const { cid } = await ipfsClient.add(
-                JSON.stringify({
-                  address: walletStore.address,
-                  data: saveContent,
-                  sig: signature
+              const ipfsClientRes: any = await ipfsClient
+                .add(
+                  JSON.stringify({
+                    address: walletStore.address,
+                    data: saveContent,
+                    sig: signature
+                  })
+                )
+                .catch(err => {
+                  console.warn('ipfsClientRes=', err)
+                  message.warning(err.message)
+                  submitLoading.value = false
                 })
-              )
-              console.log('cid==>', cid)
+              if (!ipfsClientRes) {
+                return null
+              }
               const reqParams = {
                 authorComerId: userInfo.profile!.comerID!,
                 authorWalletAddress: walletStore.address!,
                 chainId: walletStore.chainId!,
                 blockNumber: blockNumber!,
                 releaseTimestamp: dayjs().utc().toISOString(),
-                ipfsHash: cid.toString(),
+                ipfsHash: ipfsClientRes.cid.toString(),
                 title: proposalInfo.title!,
                 startupId: proposalInfo.startupId,
                 description: proposalInfo.description,
@@ -167,12 +174,15 @@ const CreateProposalFrom = defineComponent({
 
               const { error } = await services['governance@create-proposal'](reqParams)
               if (error) {
+                submitLoading.value = false
                 return reportError(new Error('create proposal'), reqParams)
               }
+              submitLoading.value = false
               message.success('Create proposal successfully')
               closeDrawer()
             }
           } catch (error) {
+            submitLoading.value = false
             return reportError(error as Error)
           }
         }
@@ -193,12 +203,13 @@ const CreateProposalFrom = defineComponent({
       voteRef,
       startupOptions,
       voteOptions,
+      submitLoading,
       closeDrawer
     }
   },
   render() {
     return (
-      <>
+      <USpin show={this.submitLoading}>
         {this.proposalInfo.current === 1 && (
           <BasicInfo
             startupOptions={this.startupOptions}
@@ -247,7 +258,7 @@ const CreateProposalFrom = defineComponent({
             </div>
           </UCard>
         </UModal>
-      </>
+      </USpin>
     )
   }
 })

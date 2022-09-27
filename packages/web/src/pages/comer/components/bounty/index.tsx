@@ -2,7 +2,6 @@ import { UCard } from '@comunion/components'
 import { defineComponent, reactive, ref, watch } from 'vue'
 import BountiesCard from '@/pages/bounty/components/BountyCard'
 import { ServiceReturn, services } from '@/services'
-import '@/assets/style/last-item-noborder.css'
 
 type BountyType = NonNullable<ServiceReturn<'bounty@my-posted-bounty-list'>>['rows']
 
@@ -69,10 +68,10 @@ export default defineComponent({
   },
   render() {
     return (
-      <UCard title="Bounties" class="mb-6 last-item-noborder">
+      <UCard title="Bounties" class="mb-6">
         {Array.isArray(this.bounties) &&
           this.bounties.map((bounty, i) => (
-            <BountiesCard class="_item" startup={bounty} key={i} miniCard />
+            <BountiesCard class="-mx-4" startup={bounty} key={i} miniCard />
           ))}
       </UCard>
     )

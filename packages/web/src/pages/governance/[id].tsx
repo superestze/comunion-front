@@ -190,6 +190,7 @@ const ProposalDetail = defineComponent({
       voteInfoVisible.value = true
     }
 
+    const voteLoading = ref(false)
     const confirmVote = async () => {
       if (selectedChoice.value) {
         try {
@@ -215,34 +216,48 @@ const ProposalDetail = defineComponent({
           )
 
           if (signature) {
-            const { cid } = await ipfsClient.add(
-              JSON.stringify({
-                address: walletStore.address,
-                sig: signature,
-                data: {
-                  domain,
-                  types: signerVoteTypes,
-                  message: saveContent
-                }
+            voteLoading.value = true
+            const voteRes = await ipfsClient
+              .add(
+                JSON.stringify({
+                  address: walletStore.address,
+                  sig: signature,
+                  data: {
+                    domain,
+                    types: signerVoteTypes,
+                    message: saveContent
+                  }
+                })
+              )
+              .catch(err => {
+                console.warn('voteRes=', err)
+                message.warning(err.message)
+                voteLoading.value = false
               })
-            )
+
+            voteLoading.value = false
+            if (!voteRes) {
+              return null
+            }
             const { error } = await services['governance@vote-proposal']({
               proposalID: route.params.id,
               voterWalletAddress: walletStore.address!,
               choiceItemId: id,
               votes: Number(votePower.value),
-              ipfsHash: cid.toString()
+              ipfsHash: voteRes.cid.toString()
             })
             if (!error) {
               getProposalDetail()
               getVoteRecords(1, true)
               voteInfoVisible.value = false
+              return true
             }
           }
         } catch (error) {
           console.error('error', error)
         }
       }
+      return null
     }
 
     const showVerifyModal = (hash: string, address: string, choice: string) => {
@@ -373,6 +388,7 @@ const ProposalDetail = defineComponent({
       networkInfo,
       isAdmin,
       delProposalVisible,
+      voteLoading,
       showVoteInfo,
       choiceVote,
       confirmVote,
@@ -405,7 +421,7 @@ const ProposalDetail = defineComponent({
                 onClick={() => this.toComerDetail(this.proposalInfo?.authorComerId)}
               >
                 <ULazyImage
-                  class="rounded-full h-7 w-7"
+                  class="rounded-full h-12 w-12"
                   src={this.proposalInfo?.authorComerAvatar || ''}
                 />
                 <div class="mx-4 text-color2 u-h6 hover:text-primary">
@@ -486,7 +502,7 @@ const ProposalDetail = defineComponent({
             </CustomCard>
 
             {!!this.voteRecords?.length && (
-              <CustomCard title={`Votes${this.pagination.total}`}>
+              <CustomCard title={`Votes(${this.pagination.total})`}>
                 <div class="-mx-6 -mb-6">
                   <UTable bordered={false}>
                     <tbody>
@@ -494,10 +510,10 @@ const ProposalDetail = defineComponent({
                         <tr key={record.voterComerId}>
                           <td>
                             <div
-                              class="flex ml-2 items-center cursor-pointer"
+                              class="cursor-pointer flex ml-2 items-center"
                               onClick={() => this.toComerDetail(record.voterComerId)}
                             >
-                              <ULazyImage src={record.voterComerAvatar} class="h-7 mr-3 w-7" />
+                              <ULazyImage src={record.voterComerAvatar} class="h-12 mr-3 w-12" />
                               <span class="text-color2 u-h6">{record.voterComerName}</span>
                             </div>
                           </td>
@@ -564,7 +580,7 @@ const ProposalDetail = defineComponent({
             )}
           </div>
           <UModal show={this.voteInfoVisible} class="bg-white rounded-sm p-10 w-150">
-            <div>
+            <USpin show={this.voteLoading}>
               <div class="mb-6 u-h3">Vote overview</div>
               <div class="border border-color-border rounded-sm grid py-4 px-6 gap-y-4 grid-cols-2">
                 <div class="text-color1 u-h5">Option(s)</div>
@@ -612,7 +628,7 @@ const ProposalDetail = defineComponent({
                   Vote
                 </UButton>
               </div>
-            </div>
+            </USpin>
           </UModal>
           <UModal show={this.strategyVisible} class="bg-white rounded-sm px-7 pt-7 pb-10 w-150">
             <div>

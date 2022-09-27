@@ -40,10 +40,11 @@ export function useTabs(comerId: number) {
     },
     {
       id: '2',
-      title: 'Connector',
+      title: 'Connection',
       totalRows: converset(count.followerCnt)
     }
   ])
+
   return {
     tabs
   }

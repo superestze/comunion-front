@@ -3,7 +3,6 @@ import { defineComponent, reactive, ref, watch } from 'vue'
 import { default as ItemCard } from '@/pages/crowdfunding/components/CrowdfundingMiniCard'
 import { services } from '@/services'
 import { CrowdfundingItem } from '@/types'
-import '@/assets/style/last-item-noborder.css'
 
 export default defineComponent({
   props: {
@@ -77,9 +76,9 @@ export default defineComponent({
   },
   render() {
     return (
-      <UCard title="dCrowdfunding" class="mb-6 last-item-noborder">
+      <UCard title="dCrowdfunding" class="mb-6">
         {Array.isArray(this.list) &&
-          this.list.map(item => <ItemCard class="_item" info={item} key={item.crowdfundingId} />)}
+          this.list.map(item => <ItemCard class="-mx-4" info={item} key={item.crowdfundingId} />)}
       </UCard>
     )
   }

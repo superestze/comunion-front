@@ -65,6 +65,7 @@ export default defineComponent({
       <UCard title={this.title} class="mb-6">
         {listData.map(item => (
           <BasicItem
+            class="-mx-4"
             item={{
               comerId: item.comerID,
               comerName: item.comerProfile?.name,
@@ -79,7 +80,7 @@ export default defineComponent({
             v-slots={{
               avatar: () => (
                 <div
-                  class="cursor-pointer flex h-9 w-9 items-center overflow-hidden"
+                  class="cursor-pointer flex h-12 w-12 items-center overflow-hidden"
                   onClick={() => this.$router.push({ path: '/comer', query: { id: item.comerID } })}
                 >
                   <ULazyImage src={item.comerProfile?.avatar || defaultAvatar} />

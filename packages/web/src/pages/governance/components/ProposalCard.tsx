@@ -4,7 +4,7 @@ import dayjs from 'dayjs'
 import { defineComponent, PropType, computed } from 'vue'
 import { useRouter } from 'vue-router'
 import { GOVERNANCE_KEY, GOVERNANCE_STATUS_STYLE } from '../utils'
-import UStartupLogo from '@/components/UStartupLogo'
+import StartupLogo from '@/components/StartupLogo'
 import { ServiceReturn } from '@/services'
 
 export const ProposalCard = defineComponent({
@@ -80,10 +80,10 @@ export const ProposalCard = defineComponent({
       <div
         class={`bg-white rounded-sm cursor-pointer flex ${
           !this.noDescription ? 'mb-5' : ''
-        } py-6 px-6 ${this.noBorder ? '' : 'border-1'} hover:bg-color-hover`}
+        } py-4 px-4 ${this.noBorder ? '' : 'border-1'} hover:bg-color-hover`}
         onClick={() => this.handleCard()}
       >
-        <UStartupLogo src={this.proposalData.startupLogo || ''} class="h-15 mr-4 w-15" />
+        <StartupLogo src={this.proposalData.startupLogo || ''} class="h-15 mr-4 w-15" />
         <div class="flex-1 overflow-hidden">
           <div class="flex items-center">
             <div class="flex-1 text-color3 u-h7">

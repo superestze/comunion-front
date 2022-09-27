@@ -7,7 +7,7 @@ import { useFollowedStartups } from './useFollowedStartups'
 import { useTabs } from './useTabs'
 import { BasicItem } from '@/components/ListItem'
 import LoadingBtn from '@/components/More/loading'
-import UStartupLogo from '@/components/UStartupLogo'
+import StartupLogo from '@/components/StartupLogo'
 
 export default defineComponent({
   name: 'ComerConnection',
@@ -102,6 +102,7 @@ export default defineComponent({
                 {this.followedStartups.list.value.map(item => {
                   return (
                     <BasicItem
+                      class="-mx-4"
                       item={item}
                       onConnect={handleConnect}
                       onUnconnect={handleUnConnect}
@@ -112,10 +113,10 @@ export default defineComponent({
                       v-slots={{
                         avatar: () => (
                           <div
-                            class="cursor-pointer flex h-11 w-11 items-center overflow-hidden"
+                            class="cursor-pointer flex h-12 w-12 items-center overflow-hidden"
                             onClick={() => this.$router.push(`/startup/${item.startupId}`)}
                           >
-                            <UStartupLogo src={item.startupLogo} />
+                            <StartupLogo src={item.startupLogo} />
                           </div>
                         )
                       }}
@@ -149,6 +150,7 @@ export default defineComponent({
                 {this.followComer.list.value.map(item => {
                   return (
                     <BasicItem
+                      class="-mx-4"
                       item={item}
                       onConnect={handleConnect}
                       onUnconnect={handleUnConnect}
@@ -159,12 +161,12 @@ export default defineComponent({
                       v-slots={{
                         avatar: () => (
                           <div
-                            class="cursor-pointer flex h-11 w-11 "
+                            class="cursor-pointer flex h-12 w-12 "
                             onClick={() =>
                               this.$router.push({ path: '/comer', query: { id: item.comerId } })
                             }
                           >
-                            <UStartupLogo src={item.comerAvatar} />
+                            <StartupLogo src={item.comerAvatar} />
                           </div>
                         )
                       }}
@@ -198,6 +200,7 @@ export default defineComponent({
                 {this.connector.list.value.map(item => {
                   return (
                     <BasicItem
+                      class="-mx-4"
                       item={item}
                       onConnect={handleConnect}
                       onUnconnect={handleUnConnect}
@@ -208,12 +211,12 @@ export default defineComponent({
                       v-slots={{
                         avatar: () => (
                           <div
-                            class="cursor-pointer flex h-11 w-11 items-center overflow-hidden"
+                            class="cursor-pointer flex h-12 w-12 items-center overflow-hidden"
                             onClick={() =>
                               this.$router.push({ path: '/comer', query: { id: item.comerId } })
                             }
                           >
-                            <UStartupLogo src={item.comerAvatar} />
+                            <StartupLogo src={item.comerAvatar} />
                           </div>
                         )
                       }}

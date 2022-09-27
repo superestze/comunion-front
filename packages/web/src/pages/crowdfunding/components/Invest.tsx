@@ -41,15 +41,15 @@ export const Invest = defineComponent({
       required: true
     }
   },
-  emits: ['refreshCoin'],
+  emits: ['refreshCoin', 'refreshData'],
   setup(props, ctx) {
     const walletStore = useWalletStore()
     const userStore = useUserStore()
     const contractStore = useContractStore()
     const cancelModal = ref(false)
     const removeModal = ref(false)
-    const fromValue = ref<string>('0.0')
-    const toValue = ref<string>('0.0')
+    const fromValue = ref<string>('')
+    const toValue = ref<string>('')
     const raiseState = ref({
       raiseAmount: 0,
       raiseGoal: 0,
@@ -111,7 +111,6 @@ export const Invest = defineComponent({
           buyIsMainCoin.value ? 18 : props.buyCoinInfo.decimal!
         )
       }
-      console.log('toValue.value==>', toValue.value)
     }
 
     const changeToValue = (value: string) => {
@@ -170,15 +169,26 @@ export const Invest = defineComponent({
       if (props.info.status === CrowdfundingStatus.CANCELED) {
         return {
           status: CrowdfundingStatus.CANCELED,
-          label: 'dCrowdfunding Has Cancelled',
+          label: 'Cancelled',
           value: countDown,
           class: `${numberClass} bg-[rgba(245,246,250,1)] text-black text-opacity-10`
         }
       }
+
+      const dateNow = ref<dayjs.Dayjs>(dayjs.utc())
+
+      const timer: any = () => {
+        dateNow.value = dayjs.utc()
+        if (dateNow.value.isAfter(dayjs(props.info.endTime).utc())) {
+          return null
+        }
+        return setTimeout(timer, 1000)
+      }
       // before start
-      if (dayjs.utc().isBefore(dayjs(props.info.startTime).utc())) {
+      if (dateNow.value.isBefore(dayjs(props.info.startTime).utc())) {
+        timer()
         const [days, hours, minutes, seconds] = dayjs
-          .duration(dayjs(props.info.startTime).utc().diff(dayjs.utc()))
+          .duration(dayjs(props.info.startTime).utc().diff(dateNow.value))
           .format('DD-HH-mm-ss')
           .split('-')
         return {
@@ -193,7 +203,9 @@ export const Invest = defineComponent({
           class: `${numberClass} bg-[rgba(83,49,244,0.06)] text-primary`
         }
       }
-      if (dayjs.utc().isAfter(dayjs(props.info.endTime).utc())) {
+
+      // ended
+      if (dateNow.value.isAfter(dayjs(props.info.endTime).utc())) {
         return {
           status: CrowdfundingStatus.ENDED,
           label: 'dCrowdfunding Has Ended',
@@ -203,8 +215,9 @@ export const Invest = defineComponent({
       }
 
       // after start and before end
+      timer()
       const diffDuration = dayjs
-        .duration(dayjs(props.info.endTime).utc().diff(dayjs.utc()))
+        .duration(dayjs(props.info.endTime).utc().diff(dateNow.value))
         .format('DD-HH-mm-ss')
         .split('-')
 
@@ -245,8 +258,11 @@ export const Invest = defineComponent({
           txHash: contractRes.hash
         })
         fundingContractStateSecound.value = false
+        // refresh date
+        ctx.emit('refreshData')
       } catch (error) {
         console.log('error', error)
+        contractStore.endContract('failed', { success: false })
       }
     }
 
@@ -260,8 +276,11 @@ export const Invest = defineComponent({
           crowdfundingId: props.info.crowdfundingId,
           txHash: contractRes.hash
         })
+        // refresh date
+        ctx.emit('refreshData')
       } catch (error) {
         console.error('error===>', error)
+        contractStore.endContract('failed', { success: false })
       }
     }
     const netWorkChange = async (value: number) => {
@@ -532,9 +551,10 @@ export const Invest = defineComponent({
     return () => (
       <UCard>
         <div class="flex gap-6 items-stretch invest">
-          <div class="flex-1">
+          <div class="w-[47%]">
             <div class="mb-4 text-color2 u-h5">{countDownTime.value.label}</div>
             <div class="flex mb-15 items-center">
+              {/* TODO */}
               <span class={`${countDownTime.value.class} mr-2`}>
                 {countDownTime.value.value.days}
               </span>
@@ -612,8 +632,8 @@ export const Invest = defineComponent({
               </div>
             </div>
           </div>
-          <div class="bg-border-color w-px"></div>
-          <div class="flex-1">
+          <div class="border-1 bg-border-color w-px"></div>
+          <div class="w-[52%]">
             <div class="flex mb-3 justify-between">
               <span class="text-color1 u-h4">{mode.value === 'buy' ? 'Invest' : 'Sell'}</span>
               <span class="flex leading-snug items-center">
@@ -643,7 +663,8 @@ export const Invest = defineComponent({
               }}
               type="withUnit"
               inputProps={{
-                onChange: changeFromValue
+                onInput: changeFromValue,
+                placeholder: '0.0'
                 // max: mode.value === 'buy' ? maxBuyAmount.value : maxSellAmount.value
               }}
               renderUnit={() =>
@@ -672,7 +693,8 @@ export const Invest = defineComponent({
               <UInputNumberGroup
                 v-model:value={toValue.value}
                 inputProps={{
-                  onInput: changeToValue
+                  onInput: changeToValue,
+                  placeholder: '0.0'
                   // max: mode.value === 'buy' ? maxSellAmount.value : maxBuyAmount.value
                 }}
                 v-slots={{
@@ -802,14 +824,14 @@ export const Invest = defineComponent({
               header: () => {
                 return (
                   <div class="flex relative items-center">
-                    <span class="text-color1 u-h3">Cancellation of dCrowdfunding</span>
+                    <span class="text-color1 u-h3">Are you sure to cancel the dCrowdfunding？</span>
                   </div>
                 )
               }
             }}
           >
             <div class="min-h-20 p-4 text-color2 u-h6">
-              This can't be undo and you'll lose your changes
+              All contents will be deleted once you click yes button
             </div>
             <div class="flex mt-4 justify-end">
               <UButton

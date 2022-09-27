@@ -43,7 +43,7 @@ const CrowdfundingList = defineComponent({
         page: pagination.page,
         mode:
           searchType.value !== undefined
-            ? CROWDFUNDING_TYPES.indexOf(searchType.value as CrowdfundingType) + 1
+            ? CROWDFUNDING_TYPES.indexOf(searchType.value as CrowdfundingType)
             : undefined,
         keyword: searchInput.value
       })

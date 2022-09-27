@@ -26,8 +26,9 @@ export default defineComponent({
     const walletStore = useWalletStore()
 
     const loading = ref<boolean>(false)
-
+    // initialize
     bountyStore.initialize(route.params.id as string)
+
     const bountySection = computed(() => {
       return bountyStore.bountySection
     })
@@ -82,11 +83,20 @@ export default defineComponent({
             gapUnit.value = 'day'
             gapValue.value = days
           } else {
-            gapUnit.value = 'hour'
-            gapValue.value = dayjs(new Date((bountyContractInfo.timeLock || 0) * 1000)).diff(
+            const hourse = dayjs(new Date((bountyContractInfo.timeLock || 0) * 1000)).diff(
               dayjs(new Date()),
               'hour'
             )
+            if (hourse > 0) {
+              gapUnit.value = 'hour'
+              gapValue.value = hourse
+            } else {
+              gapUnit.value = 'minute'
+              gapValue.value = dayjs(new Date((bountyContractInfo.timeLock || 0) * 1000)).diff(
+                dayjs(new Date()),
+                'minute'
+              )
+            }
           }
         }
       }
@@ -197,11 +207,20 @@ export default defineComponent({
                                 <UTooltip placement="bottom">
                                   {{
                                     trigger: () => (
-                                      <ClockOutlined
-                                        class={`${
-                                          this.gapValue >= 0 ? 'text-color3' : 'text-error'
-                                        } w-4 h-4 mr-2.5`}
-                                      />
+                                      <>
+                                        <ClockOutlined
+                                          class={`${
+                                            this.gapValue >= 0 ? 'text-color3' : 'text-error'
+                                          } w-4 h-4 mr-2.5`}
+                                        />
+                                        <p class="flex mr-4 text-grey3 items-center ">
+                                          Founder can unlock after
+                                          <span class="mx-1 text-primary">{this.gapValue}</span>
+                                          {this.gapValue > 1
+                                            ? `${pluralize(this.gapUnit)}`
+                                            : this.gapUnit}
+                                        </p>
+                                      </>
                                     ),
                                     default: () => (
                                       <div class="text-white w-84">
@@ -212,11 +231,6 @@ export default defineComponent({
                                     )
                                   }}
                                 </UTooltip>
-                                <p class="flex mr-4 text-grey3 items-center ">
-                                  Founder can unlock after
-                                  <span class="mx-1 text-primary">{this.gapValue}</span>
-                                  {this.gapValue > 1 ? `${pluralize(this.gapUnit)}` : this.gapUnit}
-                                </p>
                               </>
                             ) : (
                               <p class="flex text-error mr-4 items-center">
@@ -225,7 +239,11 @@ export default defineComponent({
                             ))}
                         </>
                       )}
-                      <PostUpdate postUpdate={this.postUpdate} />
+                      <PostUpdate
+                        gapValue={this.gapValue}
+                        bountyContractInfo={this.bountyContractInfo}
+                        postUpdate={this.postUpdate}
+                      />
                     </div>
                   )
                 }

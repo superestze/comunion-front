@@ -3,7 +3,6 @@ import { EmptyFilled } from '@comunion/icons'
 import { defineComponent, ref } from 'vue'
 import BountiesCard from '@/pages/bounty/components/BountyCard'
 import { ServiceReturn, services } from '@/services'
-import '@/assets/style/last-item-noborder.css'
 
 type BountyType = NonNullable<ServiceReturn<'bounty@startup-bounty-list'>>['rows']
 
@@ -34,10 +33,10 @@ export default defineComponent({
   },
   render() {
     return (
-      <UCard title="Bounty" class="mb-6 last-item-noborder">
+      <UCard title="Bounty" class="mb-6">
         {Array.isArray(this.bounties) && this.bounties.length > 0 ? (
           this.bounties.map(item => (
-            <BountiesCard class="_item" startup={item} key={item.bountyId} miniCard />
+            <BountiesCard class="-mx-4" startup={item} key={item.bountyId} miniCard />
           ))
         ) : (
           <UNoContent textTip="No connect yet">

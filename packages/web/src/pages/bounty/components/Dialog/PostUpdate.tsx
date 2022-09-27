@@ -8,9 +8,9 @@ import {
   UFormItemsFactory,
   UModal
 } from '@comunion/components'
-import dayjs from 'dayjs'
-import { defineComponent, reactive, ref, watch, computed } from 'vue'
+import { defineComponent, reactive, ref, watch } from 'vue'
 import { useRoute } from 'vue-router'
+import { USER_ROLE } from '@/constants'
 import { services } from '@/services'
 import { useBountyStore } from '@/stores'
 import { useBountyContractStore } from '@/stores/bountyContract'
@@ -20,6 +20,15 @@ export default defineComponent({
     visible: {
       type: Boolean,
       require: true
+    },
+    gapValue: {
+      type: Number,
+      required: true,
+      default: 0
+    },
+    bountyContractInfo: {
+      type: Object,
+      required: true
     },
     postUpdate: {
       type: Function,
@@ -69,12 +78,6 @@ export default defineComponent({
     const bountyContractStore = useBountyContractStore()
     const { getActivities } = bountyStore
 
-    const gap = computed(() => {
-      return dayjs(new Date(bountyContractStore.bountyContractInfo.timeLock * 1000)).diff(
-        dayjs(new Date()),
-        'day'
-      )
-    })
     return {
       postUpdateFields,
       fields,
@@ -82,31 +85,31 @@ export default defineComponent({
       form,
       getActivities,
       bountyContractInfo: bountyContractStore.bountyContractInfo,
-      gap,
       route
     }
   },
   render() {
-    const triggerDialog = () => {
-      this.$emit('triggerDialog')
+    const triggerDialog = (status: boolean) => {
+      this.$emit('triggerDialog', status)
     }
 
     const userBehavier = (type: 'submit' | 'cancel') => async () => {
       if (type === 'cancel') {
-        triggerDialog()
+        triggerDialog(false)
         return
       }
       this.form?.validate(async err => {
         if (typeof err === 'undefined') {
           /**
-           * POSTUPDATE does not require contract operation
+           * only applyer within gapValue, need require contract
            * */
-          // if (this.gap >= 0) {
-          //   await this.postUpdate(
-          //     'Waiting to submit all contents to blockchain for post update',
-          //     'Post update succeedes'
-          //   )
-          // }
+          if (this.bountyContractInfo.role !== USER_ROLE.FOUNDER && this.gapValue > 0) {
+            await this.postUpdate(
+              'Waiting to submit all contents to blockchain for post update',
+              'Post update succeedes'
+            )
+          }
+
           const { error } = await services['bounty@bounty-activities']({
             sourceType: 1,
             content: this.info.update,
@@ -114,11 +117,12 @@ export default defineComponent({
           })
           if (!error) {
             this.getActivities(this.route.params.id as string)
-            triggerDialog()
+            triggerDialog(true)
           }
         }
       })
     }
+
     return (
       <UModal show={this.visible}>
         <UCard
@@ -133,7 +137,7 @@ export default defineComponent({
           role="dialog"
           aria-modal="true"
           closable
-          onClose={triggerDialog}
+          onClose={() => triggerDialog(false)}
         >
           <>
             <UForm
