@@ -812,7 +812,15 @@ export const Invest = defineComponent({
             style={{ width: '540px' }}
             closable={true}
             onClose={() => (cancelModal.value = false)}
-            title="Are you sure to cancel the dCrowdfunding？"
+            v-slots={{
+              header: () => {
+                return (
+                  <div class="flex relative items-center">
+                    <span class="text-color1 u-h3">Are you sure to cancel the dCrowdfunding？</span>
+                  </div>
+                )
+              }
+            }}
           >
             <div class="min-h-20 p-4 text-color2 u-h6">
               All contents will be deleted once you click yes button
