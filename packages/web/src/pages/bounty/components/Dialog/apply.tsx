@@ -216,7 +216,7 @@ const ApplyDialog = defineComponent({
               `Apply by ${this.formData.deposit} ${tokenSymbol}`
             )) as unknown as BountyContractReturnType
             if (!response) {
-              return null
+              return contractStore.endContract('failed', { success: false })
             }
           } else {
             return message.error('Input deposit must be greater than applicant deposit!')
