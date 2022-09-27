@@ -217,7 +217,6 @@ const ProposalDetail = defineComponent({
 
           if (signature) {
             voteLoading.value = true
-            // TODO catch net error
             const voteRes = await ipfsClient
               .add(
                 JSON.stringify({
@@ -251,12 +250,14 @@ const ProposalDetail = defineComponent({
               getProposalDetail()
               getVoteRecords(1, true)
               voteInfoVisible.value = false
+              return true
             }
           }
         } catch (error) {
           console.error('error', error)
         }
       }
+      return null
     }
 
     const showVerifyModal = (hash: string, address: string, choice: string) => {
