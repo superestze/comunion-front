@@ -75,15 +75,14 @@ export const Invest = defineComponent({
         : second
     }
 
-    const maxBuyAmount = computed(() => {
-      console.log('props.buyCoinInfo.balance===>', props.buyCoinInfo.balance)
-      console.log('maxBuy===>', maxBuy.value)
+    const getBuyCoinDecimal = () => {
+      return buyIsMainCoin.value ? 18 : props.buyCoinInfo.decimal!
+    }
 
+    const maxBuyAmount = computed(() => {
+      const decimal = getBuyCoinDecimal()
       return (
-        formatToFloor(
-          getMin(maxBuy.value, props.buyCoinInfo.balance!).toString(),
-          buyIsMainCoin.value ? 18 : props.buyCoinInfo.decimal!
-        ) || '0'
+        formatToFloor(getMin(maxBuy.value, props.buyCoinInfo.balance!).toString(), decimal) || '0'
       )
     })
 
@@ -114,6 +113,7 @@ export const Invest = defineComponent({
     }
 
     const changeToValue = (value: string) => {
+      console.log('changeToValue value===>', value)
       if (mode.value === 'buy') {
         fromValue.value = formatToFloor(
           ethers.FixedNumber.from(value)
@@ -664,7 +664,8 @@ export const Invest = defineComponent({
               type="withUnit"
               inputProps={{
                 onInput: changeFromValue,
-                placeholder: '0.0'
+                placeholder: '0.0',
+                precision: mode.value === 'buy' ? getBuyCoinDecimal() : props.sellCoinInfo.decimal
                 // max: mode.value === 'buy' ? maxBuyAmount.value : maxSellAmount.value
               }}
               renderUnit={() =>
@@ -694,7 +695,9 @@ export const Invest = defineComponent({
                 v-model:value={toValue.value}
                 inputProps={{
                   onInput: changeToValue,
-                  placeholder: '0.0'
+                  placeholder: '0.0',
+                  precision:
+                    mode.value === 'sell' ? getBuyCoinDecimal() : props.sellCoinInfo.decimal
                   // max: mode.value === 'buy' ? maxSellAmount.value : maxBuyAmount.value
                 }}
                 v-slots={{
