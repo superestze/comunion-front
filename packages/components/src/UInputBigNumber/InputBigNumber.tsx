@@ -48,18 +48,21 @@ const UInputBigNumber = defineComponent({
     watch(
       () => inputValue.value,
       n => {
-        inputValue.value = (n as string)?.replace(/[^\d.]/g, '')
+        if (!n) return n
+        let newValue = (n as string)?.replace(/[^\d.]/g, '')
         if (props.maxlength) {
-          inputValue.value = n?.toString().substring(0, Number(props.maxlength))
+          newValue = newValue.toString().substring(0, Number(props.maxlength))
         }
         if (props.precision) {
-          inputValue.value = n?.toString().replace(/\.(\d+)/, (e, $1) => {
+          newValue = newValue.toString().replace(/\.(\d+)/, (e, $1) => {
             return `.${$1.substr(0, props.precision)}`
           })
         }
         if (props.parse) {
-          inputValue.value = props.parse(inputValue.value)
+          newValue = props.parse(newValue)
         }
+
+        inputValue.value = newValue
       }
     )
     watch(
@@ -75,16 +78,6 @@ const UInputBigNumber = defineComponent({
       }
     }
     const formatValue = (newValue: Big) => {
-      if (props.precision === undefined) {
-        inputValue.value = newValue.toString()
-      } else {
-        if (newValue.toString().includes('.')) {
-          const [intPart, decimalPart] = newValue.toString().split('.')
-          inputValue.value = intPart + '.' + decimalPart?.substring(0, props.precision)
-        } else {
-          inputValue.value = newValue.toString()
-        }
-      }
       if (props.max && newValue.gt(new Big(props.max))) {
         inputValue.value = String(props.max)
       }
