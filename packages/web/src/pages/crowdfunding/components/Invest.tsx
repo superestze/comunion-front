@@ -170,7 +170,7 @@ export const Invest = defineComponent({
       if (props.info.status === CrowdfundingStatus.CANCELED) {
         return {
           status: CrowdfundingStatus.CANCELED,
-          label: 'dCrowdfunding Has Cancelled',
+          label: 'Cancelled',
           value: countDown,
           class: `${numberClass} bg-[rgba(245,246,250,1)] text-black text-opacity-10`
         }
@@ -178,9 +178,12 @@ export const Invest = defineComponent({
 
       const dateNow = ref<dayjs.Dayjs>(dayjs.utc())
 
-      const timer = () => {
+      const timer: any = () => {
         dateNow.value = dayjs.utc()
-        setTimeout(timer, 1000)
+        if (dateNow.value.isAfter(dayjs(props.info.endTime).utc())) {
+          return null
+        }
+        return setTimeout(timer, 1000)
       }
       // before start
       if (dateNow.value.isBefore(dayjs(props.info.startTime).utc())) {
