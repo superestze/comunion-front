@@ -551,7 +551,7 @@ export const Invest = defineComponent({
     return () => (
       <UCard>
         <div class="flex gap-6 items-stretch invest">
-          <div class="flex-1">
+          <div class="w-[47%]">
             <div class="mb-4 text-color2 u-h5">{countDownTime.value.label}</div>
             <div class="flex mb-15 items-center">
               {/* TODO */}
@@ -632,8 +632,8 @@ export const Invest = defineComponent({
               </div>
             </div>
           </div>
-          <div class="bg-border-color w-px"></div>
-          <div class="flex-1">
+          <div class="border-1 bg-border-color w-px"></div>
+          <div class="w-[52%]">
             <div class="flex mb-3 justify-between">
               <span class="text-color1 u-h4">{mode.value === 'buy' ? 'Invest' : 'Sell'}</span>
               <span class="flex leading-snug items-center">
