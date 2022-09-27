@@ -116,8 +116,7 @@ export const useBountyContractStore = defineStore('bountyContract', {
                 this.bountyContractInfo.role = this.bountyContractInfo.role || data.myRole || 0
                 this.bountyContractInfo.status =
                   this.bountyContractInfo.status || data.myStatus || 0
-                this.bountyContractInfo.timeLock =
-                  this.bountyContractInfo.timeLock || data.timeLock || 0
+                this.bountyContractInfo.timeLock = data.timeLock || 0
                 // resolve(data)
               }
               // reject(error)

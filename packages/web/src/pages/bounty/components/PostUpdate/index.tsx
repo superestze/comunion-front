@@ -2,7 +2,6 @@ import { UButton } from '@comunion/components'
 import { defineComponent, ref, computed } from 'vue'
 import { PostUpdateDialog } from '../Dialog'
 import { APPLICANT_STATUS, BOUNTY_STATUS, USER_ROLE } from '@/constants'
-import { useBountyContractStore } from '@/stores/bountyContract'
 
 export default defineComponent({
   name: 'PostUpdate',
@@ -12,27 +11,37 @@ export default defineComponent({
       require: true,
       default: () => false
     },
+    gapValue: {
+      type: Number,
+      required: true,
+      default: 0
+    },
+    bountyContractInfo: {
+      type: Object,
+      required: true
+    },
     postUpdate: {
       type: Function,
       require: true,
       default: () => false
     }
   },
-  setup() {
+  emits: ['updateStatus'],
+  setup(props, ctx) {
     const visible = ref<boolean>(false)
-    const bountyContractStore = useBountyContractStore()
     const disabled = computed(() => {
-      if (bountyContractStore.bountyContractInfo.bountyStatus < BOUNTY_STATUS.WORKSTARTED) {
+      if (props.bountyContractInfo.bountyStatus < BOUNTY_STATUS.WORKSTARTED) {
         return true
       }
-      if (bountyContractStore.bountyContractInfo.role === USER_ROLE.FOUNDER) {
-        if (bountyContractStore.bountyContractInfo.bountyStatus >= BOUNTY_STATUS.COMPLETED) {
+      if (props.bountyContractInfo.role === USER_ROLE.FOUNDER) {
+        if (props.bountyContractInfo.bountyStatus >= BOUNTY_STATUS.COMPLETED) {
           return true
         }
         return false
       }
-      return bountyContractStore.bountyContractInfo.status !== APPLICANT_STATUS.APPROVED
+      return props.bountyContractInfo.status !== APPLICANT_STATUS.APPROVED
     })
+
     return {
       visible,
       disabled
@@ -45,14 +54,20 @@ export default defineComponent({
     return (
       <>
         <PostUpdateDialog
+          gapValue={this.gapValue}
           postUpdate={this.postUpdate}
           visible={this.visible}
-          onTriggerDialog={triggerDialog}
+          bountyContractInfo={this.bountyContractInfo}
+          onTriggerDialog={flag => {
+            triggerDialog()
+            this.$emit('updateStatus', flag)
+          }}
         />
+
         <UButton
           type="primary"
           size="small"
-          class="w-35 !font-primary !font-semibold !text-[14px]"
+          class="w-35"
           onClick={triggerDialog}
           disabled={this.disabled}
           color={this.disabled ? 'rgba(0,0,0,0.1)' : ''}

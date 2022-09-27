@@ -26,8 +26,9 @@ export default defineComponent({
     const walletStore = useWalletStore()
 
     const loading = ref<boolean>(false)
-
+    // initialize
     bountyStore.initialize(route.params.id as string)
+
     const bountySection = computed(() => {
       return bountyStore.bountySection
     })
@@ -82,11 +83,20 @@ export default defineComponent({
             gapUnit.value = 'day'
             gapValue.value = days
           } else {
-            gapUnit.value = 'hour'
-            gapValue.value = dayjs(new Date((bountyContractInfo.timeLock || 0) * 1000)).diff(
+            const hourse = dayjs(new Date((bountyContractInfo.timeLock || 0) * 1000)).diff(
               dayjs(new Date()),
               'hour'
             )
+            if (hourse > 0) {
+              gapUnit.value = 'hour'
+              gapValue.value = hourse
+            } else {
+              gapUnit.value = 'minute'
+              gapValue.value = dayjs(new Date((bountyContractInfo.timeLock || 0) * 1000)).diff(
+                dayjs(new Date()),
+                'minute'
+              )
+            }
           }
         }
       }
@@ -229,7 +239,11 @@ export default defineComponent({
                             ))}
                         </>
                       )}
-                      <PostUpdate postUpdate={this.postUpdate} />
+                      <PostUpdate
+                        gapValue={this.gapValue}
+                        bountyContractInfo={this.bountyContractInfo}
+                        postUpdate={this.postUpdate}
+                      />
                     </div>
                   )
                 }

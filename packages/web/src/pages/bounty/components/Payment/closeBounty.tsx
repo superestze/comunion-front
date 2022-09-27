@@ -46,6 +46,7 @@ export default defineComponent({
       if (!isSupport) {
         return
       }
+      // TODO confirm dialog
       // await this.close(
       //   'Waiting to submit all contents to blockchain for close bounty',
       //   'Close bounty succeedes'
@@ -61,6 +62,7 @@ export default defineComponent({
     const triggerDialog = () => {
       this.visibleFailCloseBounty = !this.visibleFailCloseBounty
     }
+
     return (
       <>
         <BasicDialog
