@@ -6,6 +6,7 @@ import { BasicInfo } from './components/BasicInfo'
 import { Vote } from './components/Vote'
 import { ProposalInfo, VoteOption } from './typing'
 import { StepProps } from '@/components/Step'
+import { infuraKey } from '@/constants'
 import { signerProposalTypes } from '@/pages/governance/utils'
 import { services } from '@/services'
 import { useUserStore, useWalletStore } from '@/stores'
@@ -76,6 +77,21 @@ const CreateProposalFrom = defineComponent({
         console.error('error===>', error)
       }
     }
+    const getGovernanceSetting = async (startupId: number) => {
+      try {
+        const { error, data } = await services['governance@get-startup-governace-setting']({
+          startupID: startupId
+        })
+        if (!error) {
+          const { strategies } = data
+          return { chainId: strategies?.[0].chainId }
+        }
+        return null
+      } catch (error) {
+        console.error('error==>', error)
+        return null
+      }
+    }
     onMounted(() => {
       getVoteTypeOptions()
       getStartupsOptions()
@@ -106,26 +122,33 @@ const CreateProposalFrom = defineComponent({
           const startupInfo = startupOptions.value.find(
             (startup: { value: number | undefined }) => startup.value === proposalInfo.startupId
           )
-          const blockNumber = walletStore.wallet?.getProvider().blockNumber
-
-          const domain = { name: 'Comunion' }
-
-          const saveContent = {
-            From: walletStore.address,
-            Startup: startupInfo?.label,
-            Timestamp: dayjs().valueOf(),
-            Type: proposalInfo.vote,
-            Title: proposalInfo.title,
-            Choice: proposalInfo.voteChoices?.map(choice => choice.value).filter(Boolean),
-            Start: dayjs(proposalInfo.startTime).utc().valueOf(),
-            End: dayjs(proposalInfo.endTime).utc().valueOf(),
-            Description: proposalInfo.description || '',
-            Discussion: proposalInfo.discussion || '',
-            BlockHeight: blockNumber
-          }
-
-          submitLoading.value = true
           try {
+            const govSetting = await getGovernanceSetting(proposalInfo.startupId!)
+            // const blockNumber = await walletStore.wallet?.getProvider().getBlockNumber()
+            let blockNumber: number | undefined = undefined
+            if (govSetting) {
+              blockNumber = await walletStore
+                .getRpcProvider(govSetting!.chainId, infuraKey)
+                ?.getBlockNumber()
+            }
+
+            const domain = { name: 'Comunion' }
+
+            const saveContent = {
+              From: walletStore.address,
+              Startup: startupInfo?.label,
+              Timestamp: dayjs().valueOf(),
+              Type: proposalInfo.vote,
+              Title: proposalInfo.title,
+              Choice: proposalInfo.voteChoices?.map(choice => choice.value).filter(Boolean),
+              Start: dayjs(proposalInfo.startTime).utc().valueOf(),
+              End: dayjs(proposalInfo.endTime).utc().valueOf(),
+              Description: proposalInfo.description || '',
+              Discussion: proposalInfo.discussion || '',
+              BlockHeight: blockNumber
+            }
+
+            submitLoading.value = true
             const signature = await walletStore.wallet?.signTypedData(
               domain,
               signerProposalTypes,
