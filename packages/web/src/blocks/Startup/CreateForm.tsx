@@ -288,7 +288,7 @@ const CreateStartupForm = defineComponent({
             trigger: 'blur'
           },
           {
-            validator: (rule, value) => !value || value.length > 3,
+            validator: (rule, value) => !value || value.length >= 3,
             message: 'Name must be 3 characters or more',
             trigger: 'blur'
           }

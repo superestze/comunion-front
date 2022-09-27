@@ -209,7 +209,7 @@ export default defineComponent({
                         }}
                       >
                         <ULazyImage
-                          class="rounded-1/2 h-15 w-15"
+                          class="rounded-1/2 h-12 w-12"
                           src={item.comerAvatar || defaultAvatar}
                         />
                         <div class="flex flex-col ml-4">
