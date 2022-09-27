@@ -135,7 +135,11 @@ export default defineComponent({
                   />
                 )}
                 {this.bountyContractInfo.role === USER_ROLE.FOUNDER && (
-                  <CloseBounty class="flex-1" detailChainId={this.detailChainId} />
+                  <CloseBounty
+                    class="flex-1"
+                    detailChainId={this.detailChainId}
+                    bountyContractInfo={this.bountyContractInfo}
+                  />
                 )}
               </div>
             )}
