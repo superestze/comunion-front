@@ -12,6 +12,7 @@ export interface ProposalInfo {
 
 export interface CreateProposalFormRef {
   proposalInfo: ProposalInfo
+  submitLoading: boolean
   toPreviousStep?: () => void
   toNext?: () => void
   onSubmit?: () => void

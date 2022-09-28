@@ -69,6 +69,7 @@ const CreateProposalBlock = defineComponent({
               class="w-40"
               onClick={createCreateProposalInfo.value?.onSubmit}
               disabled={!createCreateProposalInfo.value?.proposalInfo.voteChoices?.[0].value}
+              loading={createCreateProposalInfo.value?.submitLoading}
             >
               Submit
             </UButton>
