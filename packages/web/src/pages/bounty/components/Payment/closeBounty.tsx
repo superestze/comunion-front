@@ -6,7 +6,6 @@ import { useBountyContractWrapper } from '../../hooks/useBountyContractWrapper'
 import { BasicDialog } from '../Dialog'
 import { BOUNTY_STATUS } from '@/constants'
 import { services } from '@/services'
-import { useBountyContractStore } from '@/stores/bountyContract'
 export default defineComponent({
   props: {
     detailChainId: {
@@ -16,6 +15,11 @@ export default defineComponent({
     bountyContractInfo: {
       type: Object,
       default: () => null
+    },
+    bountyDetail: {
+      type: Object,
+      required: true,
+      default: () => null
     }
   },
   setup(props) {
@@ -24,16 +28,15 @@ export default defineComponent({
     const visibleFailCloseBounty = ref<boolean>(false)
     const visibleSureCloseBounty = ref<boolean>(false)
     const { bountyContract } = useBountyContractWrapper()
-    const bountyContractStore = useBountyContractStore()
     const bountyContractInfo = computed(() => {
-      return props.bountyContractInfo
+      return props.bountyDetail
     })
     const disabled = computed(() => {
-      return bountyContractStore.bountyContractInfo.bountyStatus === BOUNTY_STATUS.COMPLETED
+      return bountyContractInfo.value.status === BOUNTY_STATUS.COMPLETED
     })
 
     const closeDesc = computed(() => {
-      if (bountyContractStore.bountyContractInfo.bountyStatus === BOUNTY_STATUS.COMPLETED) {
+      if (bountyContractInfo.value.status === BOUNTY_STATUS.COMPLETED) {
         return 'Completed'
       } else {
         return 'Close bounty'
@@ -69,7 +72,7 @@ export default defineComponent({
           action: () => (
             <div class="flex mt-10 justify-end">
               <UButton class="mr-16px w-164px" type="default" onClick={() => sureDialog.destroy()}>
-                cancel
+                Cancel
               </UButton>
               <UButton
                 type="primary"
@@ -101,7 +104,7 @@ export default defineComponent({
                 size="small"
                 onClick={() => sureDialog.destroy()}
               >
-                Yes
+                OK
               </UButton>
             </div>
           )
