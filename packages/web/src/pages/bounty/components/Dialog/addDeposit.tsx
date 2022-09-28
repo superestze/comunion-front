@@ -141,11 +141,19 @@ export default defineComponent({
             this.detail?.depositContract || '',
             ethers.utils.parseUnits((this.formData.increaseDeposit || '').toString(), 18)
           )
+          console.log(this.formData.increaseDeposit)
           const response = (await this.deposit(
-            ethers.utils.parseUnits(this.formData.increaseDeposit || '', 18),
+            ethers.utils.parseUnits((this.formData.increaseDeposit || '').toString(), 18),
             'Waiting to submit all contents to blockchain for increase deposit',
             `Deposit increased by ${this.formData.increaseDeposit} ${tokenSymbol}`
-          )) as unknown as BountyContractReturnType
+          ).catch(error => {
+            console.log(error)
+            return null
+          })) as unknown as BountyContractReturnType
+          if (!response) {
+            contractStore.endContract('failed', { success: false })
+            return
+          }
           const tokenAmount = Number(this.formData.increaseDeposit)
           const { error } = await services['bounty@bounty-add-deposit']({
             bountyID: this.route.params.id as string,
