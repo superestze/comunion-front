@@ -39,12 +39,6 @@ const UInputNumberGroup = defineComponent({
         ctx.emit('update:value', n)
       }
     )
-    watch(
-      () => props.value,
-      n => {
-        inputValue.value = n
-      }
-    )
     const rightPart = () => {
       if (props.type === 'withUnit') {
         return props.renderUnit?.()

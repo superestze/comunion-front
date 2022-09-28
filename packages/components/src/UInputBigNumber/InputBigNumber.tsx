@@ -49,7 +49,7 @@ const UInputBigNumber = defineComponent({
       () => inputValue.value,
       n => {
         if (!n) return n
-        let newValue = (n as string)?.replace(/[^\d.]/g, '')
+        let newValue = n.toString()?.replace(/[^\d.]/g, '')
         if (props.maxlength) {
           newValue = newValue.toString().substring(0, Number(props.maxlength))
         }
@@ -80,9 +80,10 @@ const UInputBigNumber = defineComponent({
     const formatValue = (newValue: Big) => {
       if (props.max && newValue.gt(new Big(props.max))) {
         inputValue.value = String(props.max)
-      }
-      if (props.min && newValue.lt(new Big(props.min))) {
+      } else if (props.min && newValue.lt(new Big(props.min))) {
         inputValue.value = String(props.min)
+      } else {
+        inputValue.value = String(newValue)
       }
 
       ctx.emit('update:value', inputValue.value)

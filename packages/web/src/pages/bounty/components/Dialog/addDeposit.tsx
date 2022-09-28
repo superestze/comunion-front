@@ -7,7 +7,8 @@ import {
   UForm,
   UFormItemsFactory,
   UInputNumberGroup,
-  UModal
+  UModal,
+  message
 } from '@comunion/components'
 import { ethers } from 'ethers'
 import { defineComponent, Ref, computed, ref, reactive, watch } from 'vue'
@@ -147,7 +148,7 @@ export default defineComponent({
             'Waiting to submit all contents to blockchain for increase deposit',
             `Deposit increased by ${this.formData.increaseDeposit} ${tokenSymbol}`
           ).catch(error => {
-            console.log(error)
+            message.error(error.message)
             return null
           })) as unknown as BountyContractReturnType
           if (!response) {
