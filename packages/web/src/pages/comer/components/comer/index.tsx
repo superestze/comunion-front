@@ -47,7 +47,7 @@ export default defineComponent({
     },
     timeZone: {
       type: String,
-      default: () => '',
+      default: () => null,
       required: true
     },
     cover: {
@@ -102,6 +102,7 @@ export default defineComponent({
         t: 'select',
         title: 'Time Zone',
         name: 'timeZone',
+        placeholder: `Choose your time zone`,
         options: UTC_OPTIONS.map(item => ({ label: item.label, value: item.label }))
       }
     ]
@@ -109,7 +110,7 @@ export default defineComponent({
       avatar: props.avatar,
       name: props.name,
       location: props.location,
-      timeZone: props.timeZone,
+      timeZone: props.timeZone ? props.timeZone : null,
       cover: props.cover
     })
 
@@ -117,7 +118,7 @@ export default defineComponent({
       info.avatar = props.avatar
       info.name = props.name
       info.location = props.location
-      info.timeZone = props.timeZone
+      info.timeZone = props.timeZone ? props.timeZone : null
       info.cover = props.cover
     })
 
