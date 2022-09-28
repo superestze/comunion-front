@@ -48,7 +48,7 @@ const UInputBigNumber = defineComponent({
     watch(
       () => inputValue.value,
       n => {
-        inputValue.value = (n as string)?.replace(/[^\d.]/g, '')
+        inputValue.value = n?.toString().replace(/[^\d.]/g, '')
         if (props.maxlength) {
           inputValue.value = n?.toString().substring(0, Number(props.maxlength))
         }
