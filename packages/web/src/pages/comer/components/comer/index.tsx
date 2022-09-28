@@ -201,7 +201,7 @@ export default defineComponent({
             name: this.info.name,
             cover: this.info.cover,
             avatar: this.info.avatar,
-            timeZone: this.info.timeZone,
+            timeZone: this.info.timeZone ? this.info.timeZone : '',
             location: this.info.location
           })
           this.$emit('Done')
