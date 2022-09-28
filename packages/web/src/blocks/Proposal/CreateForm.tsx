@@ -119,6 +119,7 @@ const CreateProposalFrom = defineComponent({
       voteRef.value?.proposalVoteFormRef?.validate(async (error: any) => {
         if (!error) {
           //
+          submitLoading.value = true
           const startupInfo = startupOptions.value.find(
             (startup: { value: number | undefined }) => startup.value === proposalInfo.startupId
           )
@@ -128,7 +129,7 @@ const CreateProposalFrom = defineComponent({
             let blockNumber: number | undefined = undefined
             if (govSetting) {
               blockNumber = await walletStore
-                .getRpcProvider(govSetting!.chainId, infuraKey)
+                .getRpcProvider(govSetting!.chainId || 1, infuraKey) // default chainId is eth
                 ?.getBlockNumber()
             }
 
@@ -147,8 +148,6 @@ const CreateProposalFrom = defineComponent({
               Discussion: proposalInfo.discussion || '',
               BlockHeight: blockNumber
             }
-
-            submitLoading.value = true
             const signature = await walletStore.wallet?.signTypedData(
               domain,
               signerProposalTypes,
@@ -205,6 +204,8 @@ const CreateProposalFrom = defineComponent({
               closeDrawer()
             }
           } catch (error) {
+            console.error('submit proposal error', error)
+
             submitLoading.value = false
             return reportError(error as Error)
           }
@@ -213,6 +214,7 @@ const CreateProposalFrom = defineComponent({
     }
     ctx.expose({
       proposalInfo,
+      submitLoading,
       toPreviousStep,
       toNext,
       showLeaveTipModal,
