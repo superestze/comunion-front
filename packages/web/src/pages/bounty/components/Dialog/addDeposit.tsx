@@ -142,6 +142,7 @@ export default defineComponent({
             this.detail?.depositContract || '',
             ethers.utils.parseUnits((this.formData.increaseDeposit || '').toString(), 18)
           )
+          console.log(this.formData.increaseDeposit)
           const response = (await this.deposit(
             ethers.utils.parseUnits((this.formData.increaseDeposit || '').toString(), 18),
             'Waiting to submit all contents to blockchain for increase deposit',
