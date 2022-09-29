@@ -2688,7 +2688,7 @@ export const services = {
       ...extract('POST', args, [], ['proposalID'])
     })
   },
-  'governance@public-list'(args: { page: number; limit: number; states?: number[] }) {
+  'governance@public-list'(args: { page: number; limit: number; keyword: string; states?: number[] }) {
     return requestAdapter<{
       limit: number
       page: number

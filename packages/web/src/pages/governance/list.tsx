@@ -11,6 +11,7 @@ import {
   nextTick
 } from 'vue'
 import { ProposalCard } from './components/ProposalCard'
+import SearchInput from '@/components/SearchInput'
 import { GOVERNANCE_TYPES } from '@/constants/governance'
 import { ServiceReturn, services } from '@/services'
 type ItemType = NonNullable<ServiceReturn<'governance@public-list'>>['rows'][number]
@@ -19,6 +20,7 @@ const GovernanceListPage = defineComponent({
   name: 'GovernanceListPage',
   setup() {
     const proposalStatus = ref<number | undefined>(undefined)
+    const searchInput = ref<string>('')
 
     const DataList = ref<ItemType[]>([])
     const pagination = reactive<{
@@ -37,6 +39,7 @@ const GovernanceListPage = defineComponent({
       const { error, data } = await services['governance@public-list']({
         page: pagination.page,
         limit: pagination.pageSize,
+        keyword: searchInput.value,
         states:
           proposalStatus.value !== undefined && proposalStatus.value !== null
             ? [proposalStatus.value + 1]
@@ -63,7 +66,7 @@ const GovernanceListPage = defineComponent({
     const debounceLoad = debounce(onLoadMore)
 
     watch(
-      () => proposalStatus.value,
+      () => [proposalStatus.value, searchInput.value],
       () => debounceLoad(1, true)
     )
 
@@ -104,7 +107,8 @@ const GovernanceListPage = defineComponent({
     return {
       DataList,
       proposalStatus,
-      pagination
+      pagination,
+      searchInput
     }
   },
   render() {
@@ -119,6 +123,11 @@ const GovernanceListPage = defineComponent({
               class="rounded w-28"
               clearable
               v-model:value={this.proposalStatus}
+            />
+            <SearchInput
+              v-model:value={this.searchInput}
+              placeholder="Search"
+              loading={this.pagination.loading}
             />
           </div>
           {Array.isArray(this.DataList) &&
