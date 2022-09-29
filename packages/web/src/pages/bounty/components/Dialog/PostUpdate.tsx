@@ -54,7 +54,7 @@ export default defineComponent({
     const fields: FormFactoryField[] = [
       {
         t: 'string',
-        title: 'This update will be shown on activity',
+        title: 'The update will be put on activity zone.',
         name: 'update',
         placeholder: '',
         minlength: 100,

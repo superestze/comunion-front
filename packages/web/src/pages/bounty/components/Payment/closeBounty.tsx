@@ -63,10 +63,10 @@ export default defineComponent({
           style: {
             '--n-icon-margin': '20px 4px 0 0'
           },
-          title: () => <div class="ml-4 mt-5">Are you sure to close the bounty？</div>,
+          title: () => <div class="ml-4 mt-5">Close the bounty?</div>,
           content: () => (
             <div class="text-color3 mt-6.5 ml-12.5">
-              You need release all deposits before do close bounty
+              The bounty will be closed once you click 'Yes'.
             </div>
           ),
           action: () => (

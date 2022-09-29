@@ -74,8 +74,8 @@ export default defineComponent({
       <>
         <BasicDialog
           visible={this.visible}
-          title="Release deposit？"
-          content=" All deposits will be released."
+          title="Release the deposit？"
+          content="All deposits will be released at once you click 'Yes'."
           onTriggerDialog={triggerDialog}
           v-slots={{
             btns: () => (
