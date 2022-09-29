@@ -200,7 +200,7 @@ const CreateProposalFrom = defineComponent({
                 return reportError(new Error('create proposal'), reqParams)
               }
               submitLoading.value = false
-              message.success('Create proposal successfully')
+              message.success('Successfully create proposal.')
               closeDrawer()
             }
           } catch (error) {

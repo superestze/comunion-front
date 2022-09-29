@@ -211,7 +211,7 @@ const ApplyDialog = defineComponent({
             response = (await this.bountyContract.applyFor(
               ethers.utils.parseUnits(this.formData.deposit.toString(), 18),
               'The deposits are transfering to deposit contract.',
-              `Apply by ${this.formData.deposit} ${tokenSymbol}`
+              `Apply to ${this.formData.deposit} ${tokenSymbol}`
             )) as unknown as BountyContractReturnType
             if (!response) {
               return contractStore.endContract('failed', { success: false })

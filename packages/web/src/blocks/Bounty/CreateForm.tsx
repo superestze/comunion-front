@@ -134,7 +134,7 @@ const CreateBountyForm = defineComponent({
           applicantsDepositAmount,
           dayjs(bountyInfo.expiresIn).utc().valueOf() / 1000,
           'Create bounty deposit contract on blockchain.',
-          `<div class="flex items-center">Bounty "<span class="max-w-20 truncate">${bountyInfo.title}</span>" is Creating</div>`
+          `<div class="flex items-center">Bounty "<span class="max-w-20 truncate">${bountyInfo.title}</span>" is creating</div>`
         )
         return contractRes
       } catch (e: any) {
