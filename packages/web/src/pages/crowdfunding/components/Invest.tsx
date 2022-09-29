@@ -932,14 +932,14 @@ export const Invest = defineComponent({
               header: () => {
                 return (
                   <div class="flex relative items-center">
-                    <span class="text-color1 u-h3">Remove dCrowdfunding！</span>
+                    <span class="text-color1 u-h3">Remove the dCrowdfunding?</span>
                   </div>
                 )
               }
             }}
           >
             <div class="min-h-20 p-4 text-color2 u-h6">
-              This will transfer all funds raised to the team wallet
+              Note: All fundings will be sent to team wallet at once you click 'Yes'.
             </div>
 
             <div class="flex mt-4 justify-end">
