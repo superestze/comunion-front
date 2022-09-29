@@ -267,22 +267,26 @@ export const Invest = defineComponent({
     }
 
     const cancelCrowdfunding = async () => {
-      try {
-        cancelModal.value = false
-        const pendingText = 'Waiting to submit all contents to blockchain for canceling'
-        const waitingText = 'Waiting to confirm'
-        const contractRes: any = await fundingContract.cancel(pendingText, waitingText)
-        await services['crowdfunding@cancel-crowdfunding']({
+      cancelModal.value = false
+      const pendingText = 'Waiting to submit all contents to blockchain for canceling'
+      const waitingText = 'Waiting to confirm'
+      // Contract
+      const contractRes: any = await fundingContract.cancel(pendingText, waitingText)
+      // api
+      if (contractRes && contractRes.hash) {
+        services['crowdfunding@cancel-crowdfunding']({
           crowdfundingId: props.info.crowdfundingId,
           txHash: contractRes.hash
         })
-        // refresh date
-        ctx.emit('refreshData')
-      } catch (error) {
-        console.error('error===>', error)
-        contractStore.endContract('failed', { success: false })
+          .then(() => {
+            ctx.emit('refreshData')
+          })
+          .catch(() => {
+            contractStore.endContract('failed', { success: false })
+          })
       }
     }
+
     const netWorkChange = async (value: number) => {
       if (walletStore.chainId !== value) {
         await walletStore.ensureWalletConnected()
@@ -309,7 +313,7 @@ export const Invest = defineComponent({
     }
 
     const buyFromMainCoin = async (sellAmount: number | BigNumber) => {
-      const buyPendingText = 'Waiting to submit all contents to blockchain for buying'
+      const buyPendingText = 'The transaction of buying is processing.'
       const waitingText = 'Waiting to confirm'
       try {
         console.log('fromValue.value==>', fromValue.value)
@@ -337,10 +341,9 @@ export const Invest = defineComponent({
 
     const buyFromTokenCoin = async (sellAmount: number | BigNumber) => {
       try {
-        const buyPendingText = 'Waiting to submit all contents to blockchain for buying'
+        const buyPendingText = 'The transaction of buying is processing.'
         const waitingText = 'Waiting to confirm'
-        const approvePendingText =
-          'Waiting to submit all contents to blockchain for approval deposit'
+        const approvePendingText = 'The transaction of buying is processing.'
         const buyAmount = ethers.utils.parseUnits(fromValue.value)
         contractStore.startContract(approvePendingText)
         const buyTokenRes = await tokenContract(props.info.buyTokenContract)
@@ -371,10 +374,9 @@ export const Invest = defineComponent({
       try {
         const fromAmount = ethers.utils.parseUnits(fromValue.value, props.sellCoinInfo.decimal!)
         const toAmount = ethers.utils.parseUnits(toValue.value)
-        const sellPendingText = 'Waiting to submit all contents to blockchain for selling'
+        const sellPendingText = 'The selling transaction is processing.'
         const waitingText = 'Waiting to confirm'
-        const approvePendingText =
-          'Waiting to submit all contents to blockchain for approval deposit'
+        const approvePendingText = 'The transaction of selling is processing.'
         contractStore.startContract(approvePendingText)
 
         const sellTokenRes = tokenContract(props.info.sellTokenContract)
@@ -404,11 +406,10 @@ export const Invest = defineComponent({
       try {
         const fromAmount = ethers.utils.parseUnits(fromValue.value, props.sellCoinInfo.decimal!)
 
-        const sellPendingText = 'Waiting to submit all contents to blockchain for selling'
+        const sellPendingText = 'The selling transaction is processing.'
         const waitingText = 'Waiting to confirm'
 
-        const approvePendingText =
-          'Waiting to submit all contents to blockchain for approval deposit'
+        const approvePendingText = 'The transaction of selling is processing.'
         contractStore.startContract(approvePendingText)
         const sellTokenRes = tokenContract(props.info.sellTokenContract)
         const approveRes: Contract = await sellTokenRes.approve(
@@ -463,6 +464,14 @@ export const Invest = defineComponent({
         (mode.value === 'buy' && fromValue.value > maxBuyAmount.value) ||
         (mode.value === 'sell' && fromValue.value > maxSellAmount.value)
       )
+    })
+
+    const disabledBuyReason = computed(() => {
+      let reason = ''
+      if (countDownTime.value.status === CrowdfundingStatus.UPCOMING) {
+        reason = 'Note: This dCrowdfunding is not opened yet.'
+      }
+      return reason
     })
 
     const setMaxBalance = () => {
@@ -554,7 +563,6 @@ export const Invest = defineComponent({
           <div class="w-[47%]">
             <div class="mb-4 text-color2 u-h5">{countDownTime.value.label}</div>
             <div class="flex mb-15 items-center">
-              {/* TODO */}
               <span class={`${countDownTime.value.class} mr-2`}>
                 {countDownTime.value.value.days}
               </span>
@@ -632,7 +640,7 @@ export const Invest = defineComponent({
               </div>
             </div>
           </div>
-          <div class="border-1 bg-border-color w-px"></div>
+          <div class="bg-border-color border-1 w-px"></div>
           <div class="w-[52%]">
             <div class="flex mb-3 justify-between">
               <span class="text-color1 u-h4">{mode.value === 'buy' ? 'Invest' : 'Sell'}</span>
@@ -728,20 +736,33 @@ export const Invest = defineComponent({
                   {founderOperation.value}
                 </UButton>
               )}
-              <UButton
-                type="primary"
-                class="flex-1"
-                size="small"
-                style={{
-                  '--n-color-disabled': '#E0E0E0',
-                  '--n-opacity-disabled': 1,
-                  '--n-border-disabled': '1px solid #E0E0E0'
+
+              {/* UTooltip */}
+              <UTooltip>
+                {{
+                  trigger: () => (
+                    <UButton
+                      type="primary"
+                      class="flex-1"
+                      size="small"
+                      tag="div"
+                      style={{
+                        '--n-color-disabled': '#E0E0E0',
+                        '--n-opacity-disabled': 1,
+                        '--n-border-disabled': '1px solid #E0E0E0'
+                      }}
+                      onClick={buyOrSell}
+                      disabled={disabledBuyOrSell.value}
+                    >
+                      {mode.value === 'buy' ? 'Buy' : 'Sell'}
+                    </UButton>
+                  ),
+                  default: () =>
+                    disabledBuyReason.value ? (
+                      <div class="max-w-90">{disabledBuyReason.value}</div>
+                    ) : null
                 }}
-                onClick={buyOrSell}
-                disabled={disabledBuyOrSell.value}
-              >
-                {mode.value === 'buy' ? 'Buy' : 'Sell'}
-              </UButton>
+              </UTooltip>
             </div>
             <UCard>
               <div class="flex mb-4 u-h6">
@@ -827,14 +848,14 @@ export const Invest = defineComponent({
               header: () => {
                 return (
                   <div class="flex relative items-center">
-                    <span class="text-color1 u-h3">Are you sure to cancel the dCrowdfunding？</span>
+                    <span class="text-color1 u-h3">Cancel the dCrowdfunding？</span>
                   </div>
                 )
               }
             }}
           >
             <div class="min-h-20 p-4 text-color2 u-h6">
-              All contents will be deleted once you click yes button
+              Note: This action cannot be undone once you click 'Yes'!
             </div>
             <div class="flex mt-4 justify-end">
               <UButton

@@ -45,10 +45,7 @@ export default defineComponent({
       if (!isSupport) {
         return
       }
-      await this.unlock(
-        'Waiting to submit all contents to blockchain for unlock',
-        'Unlock succeedes'
-      )
+      await this.unlock('Unlock the deposits from bounty contract.', 'Unlock succeedes')
       const { error } = await services['bounty@bounty-applicants-unlock']({
         bountyID: parseInt(this.route.params.id as string)
       })
@@ -65,7 +62,7 @@ export default defineComponent({
       // if (this.gap < 0) {
       //   return
       // }
-      await this.lock('Waiting to submit all contents to blockchain for lock', 'Lock succeedes')
+      await this.lock('Lock the deposits into bounty contract.', 'Lock succeedes')
       services['bounty@bounty-applicant-lock']({
         bountyID: parseInt(this.route.params.id as string)
       })

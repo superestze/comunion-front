@@ -55,7 +55,7 @@ export default defineComponent({
         return
       }
       const response = (await this.release(
-        'Waiting to submit all contents to blockchain for release',
+        'The deposits are releasing.',
         'Release succeedes'
       )) as unknown as BountyContractReturnType
       const { error } = await services['bounty@bounty-release']({

@@ -136,7 +136,7 @@ const CreateCrowdfundingForm = defineComponent({
       ctx.emit('cancel')
     }
     const contractSubmit = async () => {
-      const approvePendingText = 'Waiting to submit all contents to blockchain for approval deposit'
+      const approvePendingText = 'Apply for creating dCrowdfunding contract on blockchain.'
       try {
         // convert data to wei unit
         const raiseGoalTotal = ethers.utils.parseUnits(
@@ -170,7 +170,7 @@ const CreateCrowdfundingForm = defineComponent({
           crowdfundingInfo.teamWallet,
           dayjs(crowdfundingInfo.startTime).valueOf() / 1000,
           dayjs(crowdfundingInfo.endTime).valueOf() / 1000,
-          'Waiting to submit all contents to blockchain for creating dCrowdfunding',
+          'Create dCrowdfunding contract on blockchain.',
           `dCrowdfunding is Creating`
         )
         return contractRes
