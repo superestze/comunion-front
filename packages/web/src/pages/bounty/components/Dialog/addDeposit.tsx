@@ -145,7 +145,7 @@ export default defineComponent({
           const response = (await this.deposit(
             ethers.utils.parseUnits((this.formData.increaseDeposit || '').toString(), 18),
             'The bounty credit will be enchanced by increasing the deposits.',
-            `Deposit increased by ${this.formData.increaseDeposit} ${tokenSymbol}`
+            `Increase deposits to ${this.formData.increaseDeposit} ${tokenSymbol}.`
           ).catch(error => {
             message.error(error.message)
             return null

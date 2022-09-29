@@ -84,7 +84,7 @@ export default defineComponent({
       const response = (await this.approveApplicant(
         this.applicant?.address || '',
         'Approve for the applicant to work for this bounty.',
-        `Approve ${this.applicant?.name || 'applicant'} succeedes`
+        `Successfully approve ${this.applicant?.name || 'applicant'}.`
       )) as unknown as BountyContractReturnType
       const { error } = await services['bounty@bounty-founder-approve']({
         bountyID: parseInt(this.route.params.id as string),

@@ -64,7 +64,7 @@ export default defineComponent({
       }
       const response = (await this.release(
         'The deposits are releasing.',
-        'Release succeedes'
+        'Successfully release.'
       )) as unknown as BountyContractReturnType
       const { error } = await services['bounty@bounty-release']({
         bountyID: parseInt(this.route.params.id as string),
