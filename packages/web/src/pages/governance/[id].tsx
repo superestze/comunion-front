@@ -469,38 +469,39 @@ const ProposalDetail = defineComponent({
               </div>
             )}
 
-            <CustomCard class="mt-10 mb-6" title="Cast your vote">
-              <div class="pt-6">
-                {this.proposalInfo?.choices?.map(voteInfo => (
+            {this.proposalInfo?.status !== 3 && (
+              <CustomCard class="mt-10 mb-6" title="Cast your vote">
+                <div class="pt-6">
+                  {this.proposalInfo?.choices?.map(voteInfo => (
+                    <div
+                      class={`u-h4 border text-center py-3 mb-4 rounded-sm cursor-pointer hover:border-[#5331F4] hover:text-primary ${
+                        this.selectedChoice?.id === voteInfo.id
+                          ? 'border-primary  text-primary'
+                          : 'border-primary-10  text-color2'
+                      }`}
+                      onClick={() => this.choiceVote(voteInfo)}
+                    >
+                      {voteInfo.itemName}
+                    </div>
+                  ))}
                   <div
-                    class={`u-h4 border text-center py-3 mb-4 rounded-sm cursor-pointer hover:border-[#5331F4] hover:text-primary ${
-                      this.selectedChoice?.id === voteInfo.id
-                        ? 'border-primary  text-primary'
-                        : 'border-primary-10  text-color2'
-                    }`}
-                    onClick={() => this.choiceVote(voteInfo)}
+                    class={[
+                      'text-white u-h4 text-center py-3 rounded-sm',
+                      this.selectedChoice && this.proposalInfo?.status === 2
+                        ? 'bg-primary cursor-pointer'
+                        : 'bg-grey5 cursor-not-allowed'
+                    ]}
+                    onClick={() =>
+                      this.selectedChoice && this.proposalInfo?.status === 2
+                        ? this.showVoteInfo()
+                        : null
+                    }
                   >
-                    {voteInfo.itemName}
+                    {this.proposalInfo?.status === 1 ? 'This Proposal is not opened yet.' : 'Vote'}
                   </div>
-                ))}
-                <div
-                  class={[
-                    'text-white u-h4 text-center py-3 rounded-sm',
-                    this.selectedChoice && this.proposalInfo?.status === 2
-                      ? 'bg-primary cursor-pointer'
-                      : 'bg-grey5 cursor-not-allowed'
-                  ]}
-                  onClick={() =>
-                    this.selectedChoice && this.proposalInfo?.status === 2
-                      ? this.showVoteInfo()
-                      : null
-                  }
-                >
-                  Vote
                 </div>
-              </div>
-            </CustomCard>
-
+              </CustomCard>
+            )}
             {!!this.voteRecords?.length && (
               <CustomCard title={`Votes(${this.pagination.total})`}>
                 <div class="-mx-6 -mb-6">
@@ -720,14 +721,14 @@ const ProposalDetail = defineComponent({
                   return (
                     <div class="flex relative items-center">
                       <WarningFilled class="mr-4" />{' '}
-                      <span class="text-color1 u-h3">Are you sure delete proposal?</span>
+                      <span class="text-color1 u-h3">Delete the proposal?</span>
                     </div>
                   )
                 }
               }}
             >
               <div class="min-h-20 p-4 text-color2 u-h6">
-                This action cannot be undone, the proposal will be permanently deleted
+                The action cannot be undone and the proposal will be permanently deleted!
               </div>
 
               <div class="flex mt-4 justify-end">

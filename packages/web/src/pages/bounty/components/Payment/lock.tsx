@@ -74,8 +74,8 @@ export default defineComponent({
       <>
         <BasicDialog
           visible={this.visible}
-          title="Unlock the deposits ？"
-          content="It is recommended that you unlock the deposit after completing the bounty."
+          title="Unlock the deposit?"
+          content="Make sure that you have received rewards before unlocking the deposit."
           onTriggerDialog={triggerDialog}
           v-slots={{
             btns: () => (
