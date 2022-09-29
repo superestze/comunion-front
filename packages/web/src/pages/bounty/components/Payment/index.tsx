@@ -231,8 +231,16 @@ export default defineComponent({
                     <Lock detailChainId={this.detailChainId} class="flex-1" />
                   ) : (
                     <div class="flex flex-1 gap-4">
-                      <AddDeposit detailChainId={this.detailChainId} class="flex-1" />
-                      <ReleaseDeposit detailChainId={this.detailChainId} class="flex-1" />
+                      <AddDeposit
+                        detailChainId={this.detailChainId}
+                        bountyDetail={this.bountyDetail}
+                        class="flex-1"
+                      />
+                      <ReleaseDeposit
+                        detailChainId={this.detailChainId}
+                        bountyDetail={this.bountyDetail}
+                        class="flex-1"
+                      />
                     </div>
                   )}
                 </>
