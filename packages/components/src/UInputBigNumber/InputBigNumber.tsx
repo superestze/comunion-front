@@ -80,7 +80,7 @@ const UInputBigNumber = defineComponent({
     const formatValue = (newValue: Big) => {
       if (props.max && newValue.gt(new Big(props.max))) {
         inputValue.value = String(props.max)
-      } else if (props.min && newValue.lt(new Big(props.min))) {
+      } else if (typeof props.min === 'number' && newValue.lt(new Big(props.min))) {
         inputValue.value = String(props.min)
       } else {
         inputValue.value = String(newValue)
