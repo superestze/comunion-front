@@ -1,4 +1,4 @@
-import { UButton } from '@comunion/components'
+import { UButton, UTooltip } from '@comunion/components'
 import { defineComponent, ref } from 'vue'
 import { useRoute } from 'vue-router'
 import {
@@ -85,14 +85,38 @@ export default defineComponent({
             )
           }}
         />
-        <UButton
-          type={this.disabled ? 'tertiary' : 'primary'}
-          class={`${this.$attrs.class}`}
-          onClick={triggerDialog}
-          disabled={this.disabled}
-        >
-          Release my deposit
-        </UButton>
+        {this.disabled ? (
+          <UTooltip
+            trigger="hover"
+            placement="top"
+            v-slots={{
+              trigger: () => (
+                <div class={`w-[100%]`}>
+                  <UButton
+                    type={'tertiary'}
+                    class={`w-[100%] ${this.$attrs.class}`}
+                    disabled={this.disabled}
+                  >
+                    Release my deposit
+                  </UButton>
+                </div>
+              ),
+              default: () => 'Not any deposit is in the contract.'
+            }}
+          />
+        ) : (
+          // <UButton type={'tertiary'} class={`${this.$attrs.class}`} disabled={this.disabled}>
+          //   Release my deposit
+          // </UButton>
+          <UButton
+            type={'primary'}
+            class={`${this.$attrs.class}`}
+            onClick={triggerDialog}
+            disabled={this.disabled}
+          >
+            Release my deposit
+          </UButton>
+        )}
       </>
     )
   }

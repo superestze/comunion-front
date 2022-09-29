@@ -244,6 +244,7 @@ export default defineComponent({
                         gapValue={this.gapValue}
                         bountyContractInfo={this.bountyContractInfo}
                         postUpdate={this.postUpdate}
+                        bountySection={this.bountySection}
                       />
                     </div>
                   )
