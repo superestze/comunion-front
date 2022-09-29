@@ -7,7 +7,8 @@ import {
   UForm,
   UFormItemsFactory,
   UInputNumberGroup,
-  UModal
+  UModal,
+  message
 } from '@comunion/components'
 import { ethers } from 'ethers'
 import { defineComponent, Ref, computed, ref, reactive, watch } from 'vue'
@@ -132,8 +133,7 @@ export default defineComponent({
       }
       this.form?.validate(async err => {
         if (typeof err === 'undefined') {
-          const approvePendingText =
-            'Waiting to submit all contents to blockchain for approval deposit'
+          const approvePendingText = 'Apply for increasing the deposits to bounty contract.'
           const contractStore = useContractStore()
           contractStore.startContract(approvePendingText)
           const tokenSymbol = this.bountyContractStore.bountyContractInfo.depositTokenSymbol
@@ -141,11 +141,19 @@ export default defineComponent({
             this.detail?.depositContract || '',
             ethers.utils.parseUnits((this.formData.increaseDeposit || '').toString(), 18)
           )
+          console.log(this.formData.increaseDeposit)
           const response = (await this.deposit(
-            ethers.utils.parseUnits(this.formData.increaseDeposit || '', 18),
-            'Waiting to submit all contents to blockchain for increase deposit',
-            `Deposit increased by ${this.formData.increaseDeposit} ${tokenSymbol}`
-          )) as unknown as BountyContractReturnType
+            ethers.utils.parseUnits((this.formData.increaseDeposit || '').toString(), 18),
+            'The bounty credit will be enchanced by increasing the deposits.',
+            `Increase deposits to ${this.formData.increaseDeposit} ${tokenSymbol}.`
+          ).catch(error => {
+            message.error(error.message)
+            return null
+          })) as unknown as BountyContractReturnType
+          if (!response) {
+            contractStore.endContract('failed', { success: false })
+            return
+          }
           const tokenAmount = Number(this.formData.increaseDeposit)
           const { error } = await services['bounty@bounty-add-deposit']({
             bountyID: this.route.params.id as string,

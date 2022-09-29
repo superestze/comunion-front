@@ -188,6 +188,7 @@ export default defineComponent({
                   detailChainId={this.bountySection.detail?.chainID || 0}
                   bountyContractInfo={this.bountyContractInfo}
                   paymentInfo={this.bountySection.bountyPayment}
+                  bountySection={this.bountySection}
                 />
               )}
             </UCard>
@@ -243,6 +244,7 @@ export default defineComponent({
                         gapValue={this.gapValue}
                         bountyContractInfo={this.bountyContractInfo}
                         postUpdate={this.postUpdate}
+                        bountySection={this.bountySection}
                       />
                     </div>
                   )

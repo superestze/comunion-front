@@ -136,7 +136,7 @@ const CreateCrowdfundingForm = defineComponent({
       ctx.emit('cancel')
     }
     const contractSubmit = async () => {
-      const approvePendingText = 'Waiting to submit all contents to blockchain for approval deposit'
+      const approvePendingText = 'Apply for creating dCrowdfunding contract on blockchain.'
       try {
         // convert data to wei unit
         const raiseGoalTotal = ethers.utils.parseUnits(
@@ -170,8 +170,8 @@ const CreateCrowdfundingForm = defineComponent({
           crowdfundingInfo.teamWallet,
           dayjs(crowdfundingInfo.startTime).valueOf() / 1000,
           dayjs(crowdfundingInfo.endTime).valueOf() / 1000,
-          'Waiting to submit all contents to blockchain for creating dCrowdfunding',
-          `dCrowdfunding is Creating`
+          'Create dCrowdfunding contract on blockchain.',
+          `dCrowdfunding is creating`
         )
         return contractRes
       } catch (e: any) {
@@ -289,14 +289,14 @@ const CreateCrowdfundingForm = defineComponent({
                 return (
                   <div class="flex relative items-center">
                     <WarningFilled class="mr-4" />{' '}
-                    <span class="text-color1 u-h3">Discard changes?</span>
+                    <span class="text-color1 u-h3">Discard the changes?</span>
                   </div>
                 )
               }
             }}
           >
             <div class="min-h-20 p-4 text-color2 u-h6">
-              This can’t be undone and you’ll lose your changes.
+              The action cannot be undone at once you click 'Yes'!
             </div>
             <div class="flex mt-4 justify-end">
               <UButton

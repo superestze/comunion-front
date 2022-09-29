@@ -83,8 +83,8 @@ export default defineComponent({
       }
       const response = (await this.approveApplicant(
         this.applicant?.address || '',
-        'Waiting to submit all contents to blockchain for approve applicant',
-        `Approve ${this.applicant?.name || 'applicant'} succeedes`
+        'Approve for the applicant to work for this bounty.',
+        `Successfully approve ${this.applicant?.name || 'applicant'}.`
       )) as unknown as BountyContractReturnType
       const { error } = await services['bounty@bounty-founder-approve']({
         bountyID: parseInt(this.route.params.id as string),
@@ -105,7 +105,7 @@ export default defineComponent({
       <>
         <Basic
           title="Approve the applicant？"
-          content="Other applicants's deposits will be released once you do approve the applicant "
+          content="Other applicant's deposits will be released at once you approve the applicant"
           visible={this.visible}
           onTriggerDialog={triggerDialog}
           v-slots={{

@@ -52,7 +52,8 @@ export const useBountyContractStore = defineStore('bountyContract', {
     dontContract(state): boolean {
       return (
         state.bountyContractInfo.founderDepositAmount === 0 &&
-        state.bountyContractInfo.myDepositAmount === 0
+        state.bountyContractInfo.myDepositAmount === 0 &&
+        state.bountyContractInfo.bountyStatus === 0
       )
     }
   },

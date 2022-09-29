@@ -32,10 +32,17 @@ export default defineComponent({
     paymentInfo: {
       type: Object as PropType<ServiceReturn<'bounty@bounty-payment'>>,
       required: true
+    },
+    bountySection: {
+      type: Object,
+      default: () => null
     }
   },
   setup(props) {
     const bountyStore = useBountyStore()
+    const bountyDetail = computed(() => {
+      return props.bountySection.detail
+    })
     const payMode = computed<'stage' | 'period'>(() => {
       return props.paymentInfo?.bountyPaymentInfo?.paymentMode === 1 ? 'stage' : 'period'
     })
@@ -79,7 +86,8 @@ export default defineComponent({
       periodTerms,
       bountyApplicantAmount,
       time,
-      expiresIn
+      expiresIn,
+      bountyDetail
     }
   },
   render() {
@@ -139,6 +147,7 @@ export default defineComponent({
                     class="flex-1"
                     detailChainId={this.detailChainId}
                     bountyContractInfo={this.bountyContractInfo}
+                    bountyDetail={this.bountyDetail}
                   />
                 )}
               </div>
@@ -222,8 +231,16 @@ export default defineComponent({
                     <Lock detailChainId={this.detailChainId} class="flex-1" />
                   ) : (
                     <div class="flex flex-1 gap-4">
-                      <AddDeposit detailChainId={this.detailChainId} class="flex-1" />
-                      <ReleaseDeposit detailChainId={this.detailChainId} class="flex-1" />
+                      <AddDeposit
+                        detailChainId={this.detailChainId}
+                        bountyDetail={this.bountyDetail}
+                        class="flex-1"
+                      />
+                      <ReleaseDeposit
+                        detailChainId={this.detailChainId}
+                        bountyDetail={this.bountyDetail}
+                        class="flex-1"
+                      />
                     </div>
                   )}
                 </>

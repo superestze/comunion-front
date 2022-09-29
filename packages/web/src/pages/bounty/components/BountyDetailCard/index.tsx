@@ -20,7 +20,6 @@ export default defineComponent({
     }
   },
   setup(props) {
-    console.log(props.bountyDetail)
     const fold = ref<boolean>(true)
     const handleMore = () => {
       fold.value = !fold.value

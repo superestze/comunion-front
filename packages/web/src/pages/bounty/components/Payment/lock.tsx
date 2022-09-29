@@ -45,10 +45,7 @@ export default defineComponent({
       if (!isSupport) {
         return
       }
-      await this.unlock(
-        'Waiting to submit all contents to blockchain for unlock',
-        'Unlock succeedes'
-      )
+      await this.unlock('Unlock the deposits from bounty contract.', 'Successfully unlock.')
       const { error } = await services['bounty@bounty-applicants-unlock']({
         bountyID: parseInt(this.route.params.id as string)
       })
@@ -65,7 +62,7 @@ export default defineComponent({
       // if (this.gap < 0) {
       //   return
       // }
-      await this.lock('Waiting to submit all contents to blockchain for lock', 'Lock succeedes')
+      await this.lock('Lock the deposits into bounty contract.', 'Successfully lock.')
       services['bounty@bounty-applicant-lock']({
         bountyID: parseInt(this.route.params.id as string)
       })
@@ -74,8 +71,8 @@ export default defineComponent({
       <>
         <BasicDialog
           visible={this.visible}
-          title="Unlock the deposits ？"
-          content="It is recommended that you unlock the deposit after completing the bounty."
+          title="Unlock the deposit?"
+          content="Make sure that you have received rewards before unlocking the deposit."
           onTriggerDialog={triggerDialog}
           v-slots={{
             btns: () => (

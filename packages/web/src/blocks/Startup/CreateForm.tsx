@@ -138,8 +138,8 @@ const CreateStartupForm = defineComponent({
                     true
                   ],
                   model,
-                  'Waiting to submit all contents to blockchain for creating startup',
-                  `Startup "${model.name}" is Creating`
+                  'The fields of network and name will be registered to blockchain.',
+                  `Startup "${model.name}" is creating`
                 )
                 if (!res1) {
                   throw new Error('fail')

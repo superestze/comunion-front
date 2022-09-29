@@ -106,7 +106,7 @@ const CreateBountyForm = defineComponent({
     }
 
     const contractSubmit = async () => {
-      const approvePendingText = 'Waiting to submit all contents to blockchain for approval deposit'
+      const approvePendingText = 'Create bounty deposit contract on blockchain.'
       const value = bountyInfo.deposit
       const applicantsDeposit = bountyInfo.applicantsDeposit
 
@@ -133,8 +133,8 @@ const CreateBountyForm = defineComponent({
           bountyAmount,
           applicantsDepositAmount,
           dayjs(bountyInfo.expiresIn).utc().valueOf() / 1000,
-          'Waiting to submit all contents to blockchain for creating bounty',
-          `<div class="flex items-center">Bounty "<span class="max-w-20 truncate">${bountyInfo.title}</span>" is Creating</div>`
+          'Create bounty deposit contract on blockchain.',
+          `<div class="flex items-center">Bounty "<span class="max-w-20 truncate">${bountyInfo.title}</span>" is creating</div>`
         )
         return contractRes
       } catch (e: any) {
@@ -422,14 +422,14 @@ const CreateBountyForm = defineComponent({
                 return (
                   <div class="flex relative items-center">
                     <WarningFilled class="mr-4" />{' '}
-                    <span class="text-color1 u-h3">Discard changes?</span>
+                    <span class="text-color1 u-h3">Discard the changes?</span>
                   </div>
                 )
               }
             }}
           >
             <div class="min-h-20 p-4 text-color2 u-h6">
-              This can’t be undone and you’ll lose your changes.
+              The action cannot be undone at once you click 'Yes'!
             </div>
             <div class="flex mt-4 justify-end">
               <UButton

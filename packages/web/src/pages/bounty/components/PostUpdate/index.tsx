@@ -1,4 +1,4 @@
-import { UButton } from '@comunion/components'
+import { UButton, UTooltip } from '@comunion/components'
 import { defineComponent, ref, computed } from 'vue'
 import { PostUpdateDialog } from '../Dialog'
 import { APPLICANT_STATUS, BOUNTY_STATUS, USER_ROLE } from '@/constants'
@@ -24,6 +24,11 @@ export default defineComponent({
       type: Function,
       require: true,
       default: () => false
+    },
+    bountySection: {
+      type: Object,
+      required: true,
+      default: () => null
     }
   },
   emits: ['updateStatus'],
@@ -34,17 +39,27 @@ export default defineComponent({
         return true
       }
       if (props.bountyContractInfo.role === USER_ROLE.FOUNDER) {
-        if (props.bountyContractInfo.bountyStatus >= BOUNTY_STATUS.COMPLETED) {
+        if (props.bountySection?.detail?.status >= BOUNTY_STATUS.COMPLETED) {
           return true
         }
         return false
       }
       return props.bountyContractInfo.status !== APPLICANT_STATUS.APPROVED
     })
-
+    const tooltip = computed(() => {
+      if (disabled.value) {
+        if (props.bountySection?.detail?.status >= BOUNTY_STATUS.COMPLETED) {
+          return 'The update button is unavailable when the bounty completed'
+        } else {
+          return 'The update button can only be available to be approved applicant.'
+        }
+      }
+      return null
+    })
     return {
       visible,
-      disabled
+      disabled,
+      tooltip
     }
   },
   render() {
@@ -63,17 +78,49 @@ export default defineComponent({
             this.$emit('updateStatus', flag)
           }}
         />
-
-        <UButton
-          type="primary"
-          size="small"
-          class="w-35"
-          onClick={triggerDialog}
-          disabled={this.disabled}
-          color={this.disabled ? 'rgba(0,0,0,0.1)' : ''}
-        >
-          Post update
-        </UButton>
+        {this.tooltip ? (
+          // <UButton
+          //   type="primary"
+          //   size="small"
+          //   class="w-35"
+          //   onClick={triggerDialog}
+          //   disabled={this.disabled}
+          //   color={this.disabled ? 'rgba(0,0,0,0.1)' : ''}
+          // >
+          //   Post update
+          // </UButton>
+          <UTooltip
+            trigger="hover"
+            placement="top"
+            v-slots={{
+              trigger: () => (
+                <div class={`w-[100%]`}>
+                  <UButton
+                    type="primary"
+                    size="small"
+                    class="w-35"
+                    disabled={this.disabled}
+                    color={'rgba(0,0,0,0.1)'}
+                  >
+                    Post update
+                  </UButton>
+                </div>
+              ),
+              default: () => this.tooltip
+            }}
+          />
+        ) : (
+          <UButton
+            type="primary"
+            size="small"
+            class="w-35"
+            onClick={triggerDialog}
+            disabled={this.disabled}
+            color={this.disabled ? 'rgba(0,0,0,0.1)' : ''}
+          >
+            Post update
+          </UButton>
+        )}
       </>
     )
   }

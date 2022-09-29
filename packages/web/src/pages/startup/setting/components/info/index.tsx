@@ -375,8 +375,8 @@ export default defineComponent({
                 await startupContract.newStartup(
                   [this.info.name, this.info.chainID === undefined ? 0 : this.info.chainID, true],
                   requestParams,
-                  'Waiting to submit all contents to blockchain for creating startup',
-                  `Startup "${this.info.name}" is Creating`
+                  'The fields of network and name will be registered to blockchain.',
+                  `Startup "${this.info.name}" is creating`
                 )
                 // message.success('Successfully saved')
                 this.$emit('saved')

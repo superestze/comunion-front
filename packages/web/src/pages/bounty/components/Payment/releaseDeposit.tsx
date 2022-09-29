@@ -17,19 +17,27 @@ export default defineComponent({
     detailChainId: {
       type: Number,
       default: () => 0
+    },
+    bountyDetail: {
+      type: Object,
+      required: true,
+      default: () => null
     }
   },
-  setup() {
+  setup(props) {
     const route = useRoute()
     const visible = ref<boolean>(false)
     const { bountyContract, chainId } = useBountyContractWrapper()
     const { release } = bountyContract
     const bountyContractStore = useBountyContractStore()
-
+    const bountyInfo = computed(() => {
+      return props.bountyDetail
+    })
     const disabled = computed(() => {
       return (
         bountyContractStore.bountyContractInfo.depositLock ||
         bountyContractStore.bountyContractInfo.bountyStatus >= BOUNTY_STATUS.COMPLETED ||
+        bountyInfo.value.status === BOUNTY_STATUS.COMPLETED ||
         bountyContractStore.dontContract
       )
     })
@@ -55,8 +63,8 @@ export default defineComponent({
         return
       }
       const response = (await this.release(
-        'Waiting to submit all contents to blockchain for release',
-        'Release succeedes'
+        'The deposits are releasing.',
+        'Successfully release.'
       )) as unknown as BountyContractReturnType
       const { error } = await services['bounty@bounty-release']({
         bountyID: parseInt(this.route.params.id as string),
@@ -74,8 +82,8 @@ export default defineComponent({
       <>
         <BasicDialog
           visible={this.visible}
-          title="Release deposit？"
-          content=" All deposits will be released."
+          title="Release the deposit？"
+          content="All deposits will be released at once you click 'Yes'."
           onTriggerDialog={triggerDialog}
           v-slots={{
             btns: () => (
