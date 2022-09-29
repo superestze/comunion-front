@@ -106,7 +106,7 @@ const CreateBountyForm = defineComponent({
     }
 
     const contractSubmit = async () => {
-      const approvePendingText = 'Waiting to submit all contents to blockchain for approval deposit'
+      const approvePendingText = 'Create bounty deposit contract on blockchain.'
       const value = bountyInfo.deposit
       const applicantsDeposit = bountyInfo.applicantsDeposit
 
@@ -133,7 +133,7 @@ const CreateBountyForm = defineComponent({
           bountyAmount,
           applicantsDepositAmount,
           dayjs(bountyInfo.expiresIn).utc().valueOf() / 1000,
-          'Waiting to submit all contents to blockchain for creating bounty',
+          'Create bounty deposit contract on blockchain.',
           `<div class="flex items-center">Bounty "<span class="max-w-20 truncate">${bountyInfo.title}</span>" is Creating</div>`
         )
         return contractRes

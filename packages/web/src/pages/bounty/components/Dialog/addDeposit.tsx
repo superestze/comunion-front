@@ -133,8 +133,7 @@ export default defineComponent({
       }
       this.form?.validate(async err => {
         if (typeof err === 'undefined') {
-          const approvePendingText =
-            'Waiting to submit all contents to blockchain for approval deposit'
+          const approvePendingText = 'Apply for increasing the deposits to bounty contract.'
           const contractStore = useContractStore()
           contractStore.startContract(approvePendingText)
           const tokenSymbol = this.bountyContractStore.bountyContractInfo.depositTokenSymbol
@@ -145,7 +144,7 @@ export default defineComponent({
           console.log(this.formData.increaseDeposit)
           const response = (await this.deposit(
             ethers.utils.parseUnits((this.formData.increaseDeposit || '').toString(), 18),
-            'Waiting to submit all contents to blockchain for increase deposit',
+            'The bounty credit will be enchanced by increasing the deposits.',
             `Deposit increased by ${this.formData.increaseDeposit} ${tokenSymbol}`
           ).catch(error => {
             message.error(error.message)

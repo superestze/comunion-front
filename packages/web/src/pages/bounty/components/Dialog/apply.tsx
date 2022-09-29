@@ -197,9 +197,7 @@ const ApplyDialog = defineComponent({
           const tokenSymbol = this.bountyContractStore.bountyContractInfo.depositTokenSymbol
           if (this.formData.deposit >= this.deposit) {
             const contractStore = useContractStore()
-            contractStore.startContract(
-              'Waiting to submit all contents to blockchain for approval deposit'
-            )
+            contractStore.startContract('Apply for deposit deposits into bounty contract.')
 
             console.warn('bounty detail info', this.detail)
 
@@ -212,7 +210,7 @@ const ApplyDialog = defineComponent({
             }
             response = (await this.bountyContract.applyFor(
               ethers.utils.parseUnits(this.formData.deposit.toString(), 18),
-              'Waiting to submit all contents to blockchain for apply',
+              'The deposits are transfering to deposit contract.',
               `Apply by ${this.formData.deposit} ${tokenSymbol}`
             )) as unknown as BountyContractReturnType
             if (!response) {

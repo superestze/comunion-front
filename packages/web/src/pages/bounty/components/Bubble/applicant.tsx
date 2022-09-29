@@ -83,7 +83,7 @@ export default defineComponent({
       }
       const response = (await this.approveApplicant(
         this.applicant?.address || '',
-        'Waiting to submit all contents to blockchain for approve applicant',
+        'Approve for the applicant to work for this bounty.',
         `Approve ${this.applicant?.name || 'applicant'} succeedes`
       )) as unknown as BountyContractReturnType
       const { error } = await services['bounty@bounty-founder-approve']({
