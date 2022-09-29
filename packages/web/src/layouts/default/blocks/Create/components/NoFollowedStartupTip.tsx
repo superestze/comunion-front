@@ -23,11 +23,21 @@ const NoFollowedStartupTip = defineComponent({
     })
     return () => (
       <UModal v-model:show={modalVisibleState.value} maskClosable={false} autoFocus={false}>
-        <UCard style={{ width: '540px' }} closable={true} onClose={close}>
-          <div class="relative -top-3 flex items-center">
-            <WarningFilled />{' '}
-            <span class="u-h4 ml-4">You have not joined or connected any startup</span>
-          </div>
+        <UCard
+          style={{ width: '540px' }}
+          closable={true}
+          onClose={close}
+          v-slots={{
+            header: () => {
+              return (
+                <div class="flex relative items-center">
+                  <WarningFilled class="mr-4" />{' '}
+                  <span class="text-color1 u-h3">You have not joined or connected any startup</span>
+                </div>
+              )
+            }
+          }}
+        >
           <div class="mt-3 ml-12 u-h5 text-grey3">
             Please join or connect a startup before create proposal
           </div>

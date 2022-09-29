@@ -62,7 +62,7 @@ export const CrowdfundingInformation = defineComponent({
         options={raiseGoalOptions.value}
         v-model:value={props.crowdfundingInfo.buyTokenContract}
         onUpdateValue={(value, option: SelectOption) =>
-          (props.crowdfundingInfo.buyTokenName = option.label)
+          (props.crowdfundingInfo.buyTokenSymbol = option.label)
         }
       />
     ))
@@ -240,7 +240,7 @@ export const CrowdfundingInformation = defineComponent({
           label: () => [
             h(
               <div>
-                Maximum Buy ({props.crowdfundingInfo.buyTokenName})
+                Maximum Buy ({props.crowdfundingInfo.buyTokenSymbol})
                 <span class="n-form-item-label__asterisk">&nbsp;*</span>
               </div>
             )
