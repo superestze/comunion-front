@@ -235,6 +235,10 @@ export const Invest = defineComponent({
       }
     })
 
+    const founderOperation = computed(() => {
+      return countDownTime.value.status === CrowdfundingStatus.ENDED ? 'Remove' : 'Cancel'
+    })
+
     const disableRemoveOrCancel = computed(() => {
       if (founderOperation.value === 'Remove') {
         return fundingContractStateSecound.value?.[9] === CrowdfundingStatus.ENDED
@@ -243,8 +247,15 @@ export const Invest = defineComponent({
       }
     })
 
-    const founderOperation = computed(() => {
-      return countDownTime.value.status === CrowdfundingStatus.ENDED ? 'Remove' : 'Cancel'
+    const disableRemoveOrCancelReason = computed(() => {
+      let reason = ''
+      if (disableRemoveOrCancel.value) {
+        if (founderOperation.value !== 'Remove') {
+          reason = 'Note: This dCrowdfunding cannot be cancelled when it is in living.'
+        }
+      }
+
+      return reason
     })
 
     const removeCrowdfunding = async () => {
@@ -722,24 +733,48 @@ export const Invest = defineComponent({
               />
             </div>
             <div class="flex mt-8.5 mb-6 gap-4 items-center">
-              {props.info.comerId === userStore.profile?.comerID && (
-                <UButton
-                  type="primary"
-                  class="basis-1/3"
-                  size="small"
-                  style={{
-                    '--n-color-disabled': '#E0E0E0',
-                    '--n-opacity-disabled': 1,
-                    '--n-border-disabled': '1px solid #E0E0E0'
-                  }}
-                  onClick={removeOrCancel}
-                  disabled={disableRemoveOrCancel.value}
-                >
-                  {founderOperation.value}
-                </UButton>
-              )}
+              {props.info.comerId === userStore.profile?.comerID &&
+                (disableRemoveOrCancelReason.value ? (
+                  <UTooltip>
+                    {{
+                      trigger: () => (
+                        <UButton
+                          tag="div"
+                          type="primary"
+                          class="basis-1/3"
+                          size="small"
+                          style={{
+                            '--n-color-disabled': '#E0E0E0',
+                            '--n-opacity-disabled': 1,
+                            '--n-border-disabled': '1px solid #E0E0E0'
+                          }}
+                          onClick={removeOrCancel}
+                          disabled={disableRemoveOrCancel.value}
+                        >
+                          {founderOperation.value}
+                        </UButton>
+                      ),
+                      default: () => <div class="max-w-90">{disableRemoveOrCancelReason.value}</div>
+                    }}
+                  </UTooltip>
+                ) : (
+                  <UButton
+                    type="primary"
+                    class="basis-1/3"
+                    size="small"
+                    style={{
+                      '--n-color-disabled': '#E0E0E0',
+                      '--n-opacity-disabled': 1,
+                      '--n-border-disabled': '1px solid #E0E0E0'
+                    }}
+                    onClick={removeOrCancel}
+                    disabled={disableRemoveOrCancel.value}
+                  >
+                    {founderOperation.value}
+                  </UButton>
+                ))}
 
-              {/* disable Tooltip */}
+              {/* if has disabledBuyReason, show tooltip */}
               {disabledBuyReason.value ? (
                 <UTooltip>
                   {{
@@ -897,14 +932,14 @@ export const Invest = defineComponent({
               header: () => {
                 return (
                   <div class="flex relative items-center">
-                    <span class="text-color1 u-h3">Remove dCrowdfunding！</span>
+                    <span class="text-color1 u-h3">Remove the dCrowdfunding?</span>
                   </div>
                 )
               }
             }}
           >
             <div class="min-h-20 p-4 text-color2 u-h6">
-              This will transfer all funds raised to the team wallet
+              Note: All fundings will be sent to team wallet at once you click 'Yes'.
             </div>
 
             <div class="flex mt-4 justify-end">

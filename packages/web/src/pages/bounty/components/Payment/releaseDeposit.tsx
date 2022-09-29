@@ -17,19 +17,27 @@ export default defineComponent({
     detailChainId: {
       type: Number,
       default: () => 0
+    },
+    bountyDetail: {
+      type: Object,
+      required: true,
+      default: () => null
     }
   },
-  setup() {
+  setup(props) {
     const route = useRoute()
     const visible = ref<boolean>(false)
     const { bountyContract, chainId } = useBountyContractWrapper()
     const { release } = bountyContract
     const bountyContractStore = useBountyContractStore()
-
+    const bountyInfo = computed(() => {
+      return props.bountyDetail
+    })
     const disabled = computed(() => {
       return (
         bountyContractStore.bountyContractInfo.depositLock ||
         bountyContractStore.bountyContractInfo.bountyStatus >= BOUNTY_STATUS.COMPLETED ||
+        bountyInfo.value.status === BOUNTY_STATUS.COMPLETED ||
         bountyContractStore.dontContract
       )
     })
