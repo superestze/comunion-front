@@ -376,7 +376,7 @@ export default defineComponent({
                   [this.info.name, this.info.chainID === undefined ? 0 : this.info.chainID, true],
                   requestParams,
                   'The fields of network and name will be registered to blockchain.',
-                  `Startup "${this.info.name}" is Creating`
+                  `Startup "${this.info.name}" is creating`
                 )
                 // message.success('Successfully saved')
                 this.$emit('saved')
