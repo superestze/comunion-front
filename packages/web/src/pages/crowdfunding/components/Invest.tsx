@@ -470,6 +470,8 @@ export const Invest = defineComponent({
       let reason = ''
       if (countDownTime.value.status === CrowdfundingStatus.UPCOMING) {
         reason = 'Note: This dCrowdfunding is not opened yet.'
+      } else if (countDownTime.value.status === CrowdfundingStatus.ENDED) {
+        reason = 'Note: This dCrowdfunding has ended.'
       }
       return reason
     })
@@ -737,32 +739,46 @@ export const Invest = defineComponent({
                 </UButton>
               )}
 
-              {/* UTooltip */}
-              <UTooltip>
-                {{
-                  trigger: () => (
-                    <UButton
-                      type="primary"
-                      class="flex-1"
-                      size="small"
-                      tag="div"
-                      style={{
-                        '--n-color-disabled': '#E0E0E0',
-                        '--n-opacity-disabled': 1,
-                        '--n-border-disabled': '1px solid #E0E0E0'
-                      }}
-                      onClick={buyOrSell}
-                      disabled={disabledBuyOrSell.value}
-                    >
-                      {mode.value === 'buy' ? 'Buy' : 'Sell'}
-                    </UButton>
-                  ),
-                  default: () =>
-                    disabledBuyReason.value ? (
-                      <div class="max-w-90">{disabledBuyReason.value}</div>
-                    ) : null
-                }}
-              </UTooltip>
+              {/* disable Tooltip */}
+              {disabledBuyReason.value ? (
+                <UTooltip>
+                  {{
+                    trigger: () => (
+                      <UButton
+                        type="primary"
+                        class="flex-1"
+                        size="small"
+                        tag="div"
+                        style={{
+                          '--n-color-disabled': '#E0E0E0',
+                          '--n-opacity-disabled': 1,
+                          '--n-border-disabled': '1px solid #E0E0E0'
+                        }}
+                        onClick={buyOrSell}
+                        disabled={disabledBuyOrSell.value}
+                      >
+                        {mode.value === 'buy' ? 'Buy' : 'Sell'}
+                      </UButton>
+                    ),
+                    default: () => <div class="max-w-90">{disabledBuyReason.value}</div>
+                  }}
+                </UTooltip>
+              ) : (
+                <UButton
+                  type="primary"
+                  class="flex-1"
+                  size="small"
+                  style={{
+                    '--n-color-disabled': '#E0E0E0',
+                    '--n-opacity-disabled': 1,
+                    '--n-border-disabled': '1px solid #E0E0E0'
+                  }}
+                  onClick={buyOrSell}
+                  disabled={disabledBuyOrSell.value}
+                >
+                  {mode.value === 'buy' ? 'Buy' : 'Sell'}
+                </UButton>
+              )}
             </div>
             <UCard>
               <div class="flex mb-4 u-h6">
