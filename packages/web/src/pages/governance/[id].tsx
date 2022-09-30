@@ -408,7 +408,7 @@ const ProposalDetail = defineComponent({
       <USpin show={this.pageLoading}>
         <UBreadcrumb class="mt-10 mb-10"></UBreadcrumb>
         <div class="flex mt-1 mb-14">
-          <UCard style="flex:2" class="mr-4">
+          <UCard style="flex:2" class="mr-4 overflow-hidden">
             <div class="flex mb-5 justify-between">
               <span class="max-w-9/10 text-color1truncate u-h3">{this.proposalInfo?.title}</span>
               <UTag class="text-color2">
