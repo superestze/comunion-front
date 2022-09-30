@@ -262,7 +262,7 @@ export const Invest = defineComponent({
       try {
         removeModal.value = false
         const pendingText = 'Waiting to submit all contents to blockchain for removing'
-        const waitingText = 'Waiting to confirm'
+        const waitingText = 'Waiting to confirm.'
         const contractRes: any = await fundingContract.remove(pendingText, waitingText)
         await services['crowdfunding@remove-crowdfunding']({
           crowdfundingId: props.info.crowdfundingId,
@@ -280,7 +280,7 @@ export const Invest = defineComponent({
     const cancelCrowdfunding = async () => {
       cancelModal.value = false
       const pendingText = 'Waiting to submit all contents to blockchain for canceling'
-      const waitingText = 'Waiting to confirm'
+      const waitingText = 'Waiting to confirm.'
       // Contract
       const contractRes: any = await fundingContract.cancel(pendingText, waitingText)
       // api
@@ -325,7 +325,7 @@ export const Invest = defineComponent({
 
     const buyFromMainCoin = async (sellAmount: number | BigNumber) => {
       const buyPendingText = 'The transaction of buying is processing.'
-      const waitingText = 'Waiting to confirm'
+      const waitingText = 'Waiting to confirm.'
       try {
         console.log('fromValue.value==>', fromValue.value)
 
@@ -353,7 +353,7 @@ export const Invest = defineComponent({
     const buyFromTokenCoin = async (sellAmount: number | BigNumber) => {
       try {
         const buyPendingText = 'The transaction of buying is processing.'
-        const waitingText = 'Waiting to confirm'
+        const waitingText = 'Waiting to confirm.'
         const approvePendingText = 'The transaction of buying is processing.'
         const buyAmount = ethers.utils.parseUnits(fromValue.value)
         contractStore.startContract(approvePendingText)
@@ -386,7 +386,7 @@ export const Invest = defineComponent({
         const fromAmount = ethers.utils.parseUnits(fromValue.value, props.sellCoinInfo.decimal!)
         const toAmount = ethers.utils.parseUnits(toValue.value)
         const sellPendingText = 'The selling transaction is processing.'
-        const waitingText = 'Waiting to confirm'
+        const waitingText = 'Waiting to confirm.'
         const approvePendingText = 'The transaction of selling is processing.'
         contractStore.startContract(approvePendingText)
 
@@ -418,7 +418,7 @@ export const Invest = defineComponent({
         const fromAmount = ethers.utils.parseUnits(fromValue.value, props.sellCoinInfo.decimal!)
 
         const sellPendingText = 'The selling transaction is processing.'
-        const waitingText = 'Waiting to confirm'
+        const waitingText = 'Waiting to confirm.'
 
         const approvePendingText = 'The transaction of selling is processing.'
         contractStore.startContract(approvePendingText)
