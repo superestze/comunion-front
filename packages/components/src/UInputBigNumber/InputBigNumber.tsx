@@ -47,7 +47,7 @@ const UInputBigNumber = defineComponent({
     const delayEventRef = ref()
 
     watch(
-      () => props.value,
+      () => inputValue.value,
       n => {
         if (!n) return n
         let newValue = n.toString()?.replace(/[^\d.]/g, '')
@@ -64,6 +64,12 @@ const UInputBigNumber = defineComponent({
         }
 
         inputValue.value = newValue
+      }
+    )
+    watch(
+      () => props.value,
+      n => {
+        inputValue.value = n
       }
     )
 
