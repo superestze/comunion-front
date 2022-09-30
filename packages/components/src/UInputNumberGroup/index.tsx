@@ -51,7 +51,11 @@ const UInputNumberGroup = defineComponent({
     return () => (
       <div class={['u-input-number-group', props.class]}>
         <NInputGroup>
-          <UInputBigNumber v-model:value={props.value} {...props.inputProps} v-slots={ctx.slots} />
+          <UInputBigNumber
+            v-model:value={inputValue.value}
+            {...props.inputProps}
+            v-slots={ctx.slots}
+          />
           {rightPart()}
         </NInputGroup>
       </div>
