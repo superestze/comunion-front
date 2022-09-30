@@ -1,7 +1,7 @@
 import { UBreadcrumb, USpin } from '@comunion/components'
 import { defineComponent, ref, computed } from 'vue'
 import { useRoute } from 'vue-router'
-import Bounties from './components/bounties'
+import Bounty from './components/bounties'
 import Connection from './components/connection'
 import Crowdfunding from './components/crowdfunding'
 import Filter from './components/filter'
@@ -93,7 +93,7 @@ export default defineComponent({
   },
   render() {
     const componentsMap: any = {
-      Bounty: <Bounties startupId={this.startupId} />,
+      Bounty: <Bounty startupId={this.startupId} />,
       dCrowdfunding: <Crowdfunding startupId={this.startupId} />,
       Governance: <Governance startupId={this.startupId} />
     }
