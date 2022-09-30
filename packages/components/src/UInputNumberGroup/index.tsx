@@ -1,7 +1,7 @@
 import './style.css'
 
 import { NInputGroup } from 'naive-ui'
-import { AllowedComponentProps, defineComponent, PropType } from 'vue'
+import { AllowedComponentProps, defineComponent, PropType, watch } from 'vue'
 import UInputBigNumber, { UInputBigNumberPropsType } from '../UInputBigNumber/InputBigNumber'
 
 type GroupType = 'withSelect' | 'withUnit'
@@ -32,6 +32,12 @@ const UInputNumberGroup = defineComponent({
   },
   emits: ['update:value'],
   setup(props, ctx) {
+    watch(
+      () => props.value,
+      n => {
+        ctx.emit('update:value', n)
+      }
+    )
     const rightPart = () => {
       if (props.type === 'withUnit') {
         return props.renderUnit?.()
