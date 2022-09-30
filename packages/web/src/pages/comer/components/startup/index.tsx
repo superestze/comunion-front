@@ -73,7 +73,7 @@ export default defineComponent({
   },
   render() {
     return (
-      <UCard title="Startups" class="mb-6 ">
+      <UCard title="Startup" class="mb-6 ">
         {this.startups.map((startup, i) => (
           <StartupCard class="-mx-4" startup={startup} key={i} view={this.view} />
         ))}

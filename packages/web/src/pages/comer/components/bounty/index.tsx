@@ -68,7 +68,7 @@ export default defineComponent({
   },
   render() {
     return (
-      <UCard title="Bounties" class="mb-6">
+      <UCard title="Bounty" class="mb-6">
         {Array.isArray(this.bounties) &&
           this.bounties.map((bounty, i) => (
             <BountiesCard class="-mx-4" startup={bounty} key={i} miniCard />
