@@ -45,8 +45,9 @@ const UInputBigNumber = defineComponent({
     const inputValue = ref(props.value)
     const longEnterEventRef = ref()
     const delayEventRef = ref()
+
     watch(
-      () => inputValue.value,
+      () => props.value,
       n => {
         if (!n) return n
         let newValue = n.toString()?.replace(/[^\d.]/g, '')
@@ -65,12 +66,7 @@ const UInputBigNumber = defineComponent({
         inputValue.value = newValue
       }
     )
-    watch(
-      () => props.value,
-      n => {
-        inputValue.value = n
-      }
-    )
+
     const blurInput = () => {
       if (inputValue.value) {
         const newValue = new Big(inputValue.value as string)

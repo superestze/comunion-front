@@ -489,12 +489,11 @@ export const Invest = defineComponent({
 
     const setMaxBalance = () => {
       if (mode.value === 'buy') {
-        console.log('maxBuyAmount.value===>', maxBuyAmount.value)
-
         fromValue.value = maxBuyAmount.value
       } else {
         fromValue.value = maxSellAmount.value
       }
+      console.log('maxBuyAmount.value===>', maxBuyAmount.value, fromValue.value)
       changeFromValue(fromValue.value)
     }
 
@@ -673,6 +672,7 @@ export const Invest = defineComponent({
                   0}
               </span>
             </div>
+            {/* TODO max bug */}
             <UInputNumberGroup
               v-model:value={fromValue.value}
               v-slots={{
