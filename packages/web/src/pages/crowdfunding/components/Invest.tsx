@@ -95,6 +95,7 @@ export const Invest = defineComponent({
       )
     })
     const changeFromValue = (value: string) => {
+      if (!value) return
       if (mode.value === 'buy') {
         toValue.value = formatToFloor(
           ethers.FixedNumber.from(value)
@@ -113,6 +114,7 @@ export const Invest = defineComponent({
     }
 
     const changeToValue = (value: string) => {
+      if (!value) return
       console.log('changeToValue value===>', value)
       if (mode.value === 'buy') {
         fromValue.value = formatToFloor(
