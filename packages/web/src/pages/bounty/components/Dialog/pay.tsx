@@ -76,12 +76,6 @@ export default defineComponent({
           // required: true,
           rules: [
             {
-              required: true,
-              message: 'Pay amount cannot be blank',
-              type: 'number',
-              trigger: 'blur'
-            },
-            {
               validator: (rule, value) => {
                 return value > 0 || (formData.token2Amount > 0 && value >= 0)
               },
