@@ -5,6 +5,9 @@ import type { InputProps } from 'naive-ui'
 import { NInput } from 'naive-ui'
 import { defineComponent, ref, watch, PropType } from 'vue'
 
+Big.strict = false
+Big.NE = -21
+
 import './index.css'
 
 export type UInputBigNumberPropsType = InputProps & {
@@ -85,7 +88,7 @@ const UInputBigNumber = defineComponent({
       } else if (typeof props.min === 'number' && newValue.lt(new Big(props.min))) {
         inputValue.value = String(props.min)
       } else {
-        inputValue.value = String(newValue)
+        inputValue.value = newValue.valueOf()
       }
 
       ctx.emit('update:value', inputValue.value)
