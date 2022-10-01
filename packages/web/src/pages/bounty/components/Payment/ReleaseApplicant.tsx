@@ -40,7 +40,7 @@ export default defineComponent({
         return
       }
       const response = (await this.releaseMyDeposit(
-        'Waiting to submit all contents to blockchain for release my deposit',
+        'Note: Waiting to submit all contents to blockchain for release my deposit',
         'Release my deposit succeedes'
       )) as unknown as BountyContractReturnType
       await services['bounty@bounty-release-my-deposit']({

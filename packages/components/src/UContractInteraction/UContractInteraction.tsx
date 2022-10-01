@@ -41,6 +41,14 @@ const UContractInteraction = defineComponent({
       }
     })
 
+    const statusTextFilter = (status: string) => {
+      if (status === 'pending') {
+        return 'Indexing'
+      } else {
+        return status
+      }
+    }
+
     return () => (
       <UModal
         v-model:show={show.value}
@@ -52,9 +60,8 @@ const UContractInteraction = defineComponent({
           <div class={`u-contract-interaction status-${props.status}`}>
             {/* <CloseOutlined class="u-contract-interaction-close" onClick={close} /> */}
             {props.status === 'pending' && <div class="u-contract-interaction-animation"></div>}
-            <div class="u-contract-interaction-status">
-              {props.status.slice(0, 1).toUpperCase()}
-              {props.status.slice(1)}
+            <div class="u-contract-interaction-status capitalize ">
+              {statusTextFilter(props.status)}
             </div>
             {props.status === 'pending' && (
               <div class="u-contract-interaction-text">{props.text}</div>

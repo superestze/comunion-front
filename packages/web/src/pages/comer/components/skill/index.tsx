@@ -83,7 +83,7 @@ export default defineComponent({
       <USpin show={this.loading}>
         {this.view && this.skills.length === 0 ? null : (
           <UCard
-            title="Skills"
+            title="Skill"
             class="mb-6"
             v-slots={{
               'header-extra': () => {
