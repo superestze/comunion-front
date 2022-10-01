@@ -78,7 +78,6 @@ export default defineComponent({
             {
               required: true,
               message: 'Pay amount cannot be blank',
-              type: 'number',
               trigger: 'blur'
             },
             {
