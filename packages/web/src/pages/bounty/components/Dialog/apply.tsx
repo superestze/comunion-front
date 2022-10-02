@@ -197,7 +197,7 @@ const ApplyDialog = defineComponent({
           const tokenSymbol = this.bountyContractStore.bountyContractInfo.depositTokenSymbol
           if (this.formData.deposit >= this.deposit) {
             const contractStore = useContractStore()
-            contractStore.startContract('Apply for deposit deposits into bounty contract.')
+            contractStore.startContract('Note: Apply for deposit deposits into bounty contract.')
 
             console.warn('bounty detail info', this.detail)
 
