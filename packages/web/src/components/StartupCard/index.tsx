@@ -39,10 +39,10 @@ export default defineComponent({
     return (
       <div>
         <div class="flex">
-          <div class="cursor-pointer h-15 mr-4 w-15" onClick={this.toComerDetail}>
+          <div class="cursor-pointer h-15 mr-4 min-w-15" onClick={this.toComerDetail}>
             <StartupLogo src={this.startup?.logo || ''} />
           </div>
-          <div class="flex-1">
+          <div class="w-[calc(100%-4rem)]">
             <div class="mb-3 text-color1 truncate u-h3">{this.startup?.name}</div>
             {(this.startup?.mode || 0) > 0 && <UTag class="text-color2">{this.modeName}</UTag>}
           </div>
