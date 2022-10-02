@@ -44,9 +44,6 @@ export default defineComponent({
         }
         return false
       }
-      if (props.bountySection?.detail?.status >= BOUNTY_STATUS.COMPLETED) {
-        return true
-      }
       return props.bountyContractInfo.status !== APPLICANT_STATUS.APPROVED
     })
     const tooltip = computed(() => {
