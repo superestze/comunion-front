@@ -36,6 +36,10 @@ export default defineComponent({
     bountySection: {
       type: Object,
       default: () => null
+    },
+    bountyExpired: {
+      type: Boolean,
+      default: false
     }
   },
   setup(props) {
@@ -137,6 +141,7 @@ export default defineComponent({
                       this.bountyContractInfo.bountyStatus >= BOUNTY_STATUS.WORKSTARTED ||
                       this.expiresIn <= this.time
                     }
+                    bountyExpired={this.bountyExpired}
                     detailChainId={this.detailChainId}
                     applicantApplyStatus={this.bountyContractInfo.status}
                     applicantDepositMinAmount={this.bountyContractInfo.applicantDepositMinAmount}
@@ -172,7 +177,7 @@ export default defineComponent({
                         trigger: () => <LockKeyOutlined />,
                         default: () => (
                           <div>
-                            <p>The deposit is locked ！</p>
+                            <p>Note:The deposit is locked ！</p>
                             <p>
                               1.The deposit can be unlocked by approved appicant and be released by
                               founder.

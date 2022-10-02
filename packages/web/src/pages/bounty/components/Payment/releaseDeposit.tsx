@@ -55,7 +55,7 @@ export default defineComponent({
         bountyContractInfo.value.founderDepositAmount == 0 &&
         bountyContractInfo.value.applicantDepositAmount == 0
       ) {
-        return 'Not any deposit is in the contract.'
+        return 'Note:Not any deposit is in the contract.'
       }
       return null
     })

@@ -2,7 +2,6 @@ import { UScrollbar } from '@comunion/components'
 import { defineComponent, computed, ref } from 'vue'
 import Copy from '@/components/Copy'
 import './paragraph.css'
-
 export default defineComponent({
   props: {
     label: {
@@ -39,7 +38,7 @@ export default defineComponent({
   },
   setup(props, ctx) {
     const contentClass = computed(() => {
-      return `flex items-center u-h5 ${props.contentClass}`
+      return `u-h5 ${props.contentClass}`
     })
 
     const foldClass = computed(() => {
@@ -68,7 +67,10 @@ export default defineComponent({
         <div class="max-w-1/2 text-color1 font-primary w-42 ">{this.label}</div>
         <div class="flex-1 overflow-hidden font-primary">
           {this.foldAble ? (
-            <UScrollbar style={{ maxHeight: `${this.maxHeight}px` }}>
+            // style={{
+            //   maxHeight: `${this.maxHeight}px`
+            // }}
+            <UScrollbar>
               <p
                 class={this.foldClass}
                 ref={(ref: any) => (this.ele = ref)}

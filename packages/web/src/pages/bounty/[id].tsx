@@ -190,6 +190,7 @@ export default defineComponent({
                   bountyContractInfo={this.bountyContractInfo}
                   paymentInfo={this.bountySection.bountyPayment}
                   bountySection={this.bountySection}
+                  bountyExpired={this.bountyExpired}
                 />
               )}
             </UCard>

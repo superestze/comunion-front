@@ -23,6 +23,10 @@ export default defineComponent({
     applicantApplyStatus: {
       type: Number,
       required: true
+    },
+    bountyExpired: {
+      type: Boolean,
+      default: false
     }
   },
   setup(props) {
@@ -81,7 +85,10 @@ export default defineComponent({
                   </UButton>
                 </div>
               ),
-              default: () => 'This bounty has been won by another applicant'
+              default: () =>
+                this.bountyExpired
+                  ? 'Note:This bounty expired'
+                  : 'Note:This bounty has been won by another applicant'
             }}
           />
         ) : (
