@@ -1,4 +1,4 @@
-import { UButton } from '@comunion/components'
+import { UButton, UTooltip } from '@comunion/components'
 import { defineComponent, PropType, computed, ref } from 'vue'
 import { PayDailog } from '../Dialog'
 import PayedMask from './PayedMask'
@@ -93,22 +93,37 @@ export default defineComponent({
               )}
             </p>
 
-            {this.bountyContractStore.bountyContractInfo.role === USER_ROLE.FOUNDER && (
-              <UButton
-                disabled={!this.payBtnAbled}
-                class={`h-9 w-30 font-primary font-semibold  -mr-8 px-8 ${
-                  !this.payBtnAbled
-                    ? 'text-[#FFFFFF]'
-                    : 'text-primary border-1 border-[#5331F4] border-solid rounded-sm !hover:text-primary'
-                }`}
-                color={!this.payBtnAbled ? 'rgba(0,0,0,0.1)' : ''}
-                type="default"
-                size="small"
-                onClick={triggerDialog}
-              >
-                Pay
-              </UButton>
-            )}
+            {this.bountyContractStore.bountyContractInfo.role === USER_ROLE.FOUNDER &&
+              (this.payBtnAbled ? (
+                <UButton
+                  class={`h-9 w-30 font-primary font-semibold  -mr-8 px-8 text-primary border-1 border-[#5331F4] border-solid rounded-sm !hover:text-primary`}
+                  type="default"
+                  size="small"
+                  onClick={triggerDialog}
+                >
+                  Pay
+                </UButton>
+              ) : (
+                <UTooltip>
+                  {{
+                    trigger: () => (
+                      <div>
+                        <UButton
+                          disabled
+                          class={`h-9 w-30 font-primary font-semibold  -mr-8 px-8 text-[#FFFFFF]`}
+                          color={'rgba(0,0,0,0.1)'}
+                          type="default"
+                          size="small"
+                        >
+                          Pay
+                        </UButton>
+                      </div>
+                    ),
+                    default: () =>
+                      'Note: The pay button will be actived after the applicant is approvied.'
+                  }}
+                </UTooltip>
+              ))}
           </div>
 
           <div class="font-primary mt-4 text-thin text-color2">{this.item.terms}</div>

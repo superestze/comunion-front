@@ -100,7 +100,7 @@ export default defineComponent({
             placement="top"
             v-slots={{
               trigger: () => (
-                <div class={`w-[100%]`}>
+                <div>
                   <UButton
                     type="primary"
                     size="small"
