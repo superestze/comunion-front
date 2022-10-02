@@ -136,7 +136,7 @@ const CreateCrowdfundingForm = defineComponent({
       ctx.emit('cancel')
     }
     const contractSubmit = async () => {
-      const approvePendingText = 'Apply for creating dCrowdfunding contract on blockchain.'
+      const approvePendingText = 'Note: Apply for creating dCrowdfunding contract on blockchain.'
       try {
         // convert data to wei unit
         const raiseGoalTotal = ethers.utils.parseUnits(

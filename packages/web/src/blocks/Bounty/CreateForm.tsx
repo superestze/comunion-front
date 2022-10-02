@@ -106,7 +106,7 @@ const CreateBountyForm = defineComponent({
     }
 
     const contractSubmit = async () => {
-      const approvePendingText = 'Create bounty deposit contract on blockchain.'
+      const approvePendingText = 'Note: Create bounty deposit contract on blockchain.'
       const value = bountyInfo.deposit
       const applicantsDeposit = bountyInfo.applicantsDeposit
 
