@@ -35,23 +35,29 @@ export default defineComponent({
   setup(props, ctx) {
     const visible = ref<boolean>(false)
     const disabled = computed(() => {
-      if (props.bountyContractInfo.bountyStatus < BOUNTY_STATUS.WORKSTARTED) {
-        return true
-      }
+      // if (props.bountyContractInfo.bountyStatus < BOUNTY_STATUS.WORKSTARTED) {
+      //   return true
+      // }
       if (props.bountyContractInfo.role === USER_ROLE.FOUNDER) {
         if (props.bountySection?.detail?.status >= BOUNTY_STATUS.COMPLETED) {
           return true
         }
         return false
       }
-      return props.bountyContractInfo.status !== APPLICANT_STATUS.APPROVED
+      if (props.bountyContractInfo.status === APPLICANT_STATUS.APPROVED) {
+        if (props.bountySection?.detail?.status >= BOUNTY_STATUS.COMPLETED) {
+          return true
+        }
+        return false
+      }
+      return true
     })
     const tooltip = computed(() => {
       if (disabled.value) {
         if (props.bountySection?.detail?.status >= BOUNTY_STATUS.COMPLETED) {
-          return 'The update button is unavailable when the bounty completed'
+          return 'Note:The update button is unavailable when the bounty completed'
         } else {
-          return 'The update button can only be available to be approved applicant.'
+          return 'Note:The update button can only be available to be approved applicant.'
         }
       }
       return null
