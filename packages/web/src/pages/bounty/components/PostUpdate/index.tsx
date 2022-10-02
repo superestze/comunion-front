@@ -35,14 +35,17 @@ export default defineComponent({
   setup(props, ctx) {
     const visible = ref<boolean>(false)
     const disabled = computed(() => {
-      if (props.bountyContractInfo.bountyStatus < BOUNTY_STATUS.WORKSTARTED) {
-        return true
-      }
+      // if (props.bountyContractInfo.bountyStatus < BOUNTY_STATUS.WORKSTARTED) {
+      //   return true
+      // }
       if (props.bountyContractInfo.role === USER_ROLE.FOUNDER) {
         if (props.bountySection?.detail?.status >= BOUNTY_STATUS.COMPLETED) {
           return true
         }
         return false
+      }
+      if (props.bountySection?.detail?.status >= BOUNTY_STATUS.COMPLETED) {
+        return true
       }
       return props.bountyContractInfo.status !== APPLICANT_STATUS.APPROVED
     })

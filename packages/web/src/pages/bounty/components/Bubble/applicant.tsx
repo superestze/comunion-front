@@ -7,6 +7,7 @@ import {
   BountyContractReturnType
 } from '../../hooks/useBountyContractWrapper'
 import Basic from '../Dialog/basic'
+import styles from './applicant.module.css'
 import Bubble from './core'
 import { ItemType } from './getItemType'
 import { BOUNTY_STATUS, USER_ROLE } from '@/constants'
@@ -14,7 +15,6 @@ import { ServiceReturn, services } from '@/services'
 import { useBountyStore, useUserStore } from '@/stores'
 import { useBountyContractStore } from '@/stores/bountyContract'
 import { checkSupportNetwork } from '@/utils/wallet'
-
 export default defineComponent({
   name: 'ApplicantBubble',
   props: {
@@ -153,7 +153,7 @@ export default defineComponent({
                     </UButton>
                   )}
                 </div>
-                <div class="bg-purple rounded mt-2 p-4">
+                <div class={`bg-purple rounded mt-2 p-4 ${styles.approve}`}>
                   <div class="max-h-20 text-color2 overflow-auto u-h5">
                     {this.applicant?.description}
                   </div>

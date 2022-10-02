@@ -1,4 +1,4 @@
-import { UScrollbar } from '@comunion/components'
+import { UScrollbar, UTooltip } from '@comunion/components'
 import { LockKeyOutlined, UnlockKeyOutlined } from '@comunion/icons'
 import { pluralize } from 'inflected'
 import { defineComponent, PropType, computed, ref } from 'vue'
@@ -167,7 +167,24 @@ export default defineComponent({
                 >
                   <div class="flex-1 text-color1 u-h4">Deposit</div>
                   {this.bountyContractInfo.depositLock ? (
-                    <LockKeyOutlined />
+                    <UTooltip>
+                      {{
+                        trigger: () => <LockKeyOutlined />,
+                        default: () => (
+                          <div>
+                            <p>The deposit is locked ！</p>
+                            <p>
+                              1.The deposit can be unlocked by approved appicant and be released by
+                              founder.
+                            </p>
+                            <p>
+                              2.The approved applicant need to post update at least 1 time within 5
+                              days in the working for bounty
+                            </p>
+                          </div>
+                        )
+                      }}
+                    </UTooltip>
                   ) : (
                     <UnlockKeyOutlined />
                   )}
