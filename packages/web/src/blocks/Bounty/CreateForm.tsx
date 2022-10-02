@@ -106,7 +106,7 @@ const CreateBountyForm = defineComponent({
     }
 
     const contractSubmit = async () => {
-      const approvePendingText = 'Create bounty deposit contract on blockchain.'
+      const approvePendingText = 'Note: Create bounty deposit contract on blockchain.'
       const value = bountyInfo.deposit
       const applicantsDeposit = bountyInfo.applicantsDeposit
 
@@ -429,7 +429,7 @@ const CreateBountyForm = defineComponent({
             }}
           >
             <div class="min-h-20 p-4 text-color2 u-h6">
-              The action cannot be undone at once you click 'Yes'!
+              Note: The action cannot be undone at once you click 'Yes'!
             </div>
             <div class="flex mt-4 justify-end">
               <UButton

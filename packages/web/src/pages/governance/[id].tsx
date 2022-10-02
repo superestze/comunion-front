@@ -497,7 +497,9 @@ const ProposalDetail = defineComponent({
                         : null
                     }
                   >
-                    {this.proposalInfo?.status === 1 ? 'This Proposal is not opened yet.' : 'Vote'}
+                    {this.proposalInfo?.status === 1
+                      ? 'Note: This Proposal is not opened yet.'
+                      : 'Vote'}
                   </div>
                 </div>
               </CustomCard>
@@ -728,7 +730,7 @@ const ProposalDetail = defineComponent({
               }}
             >
               <div class="min-h-20 p-4 text-color2 u-h6">
-                The action cannot be undone and the proposal will be permanently deleted!
+                Note: The action cannot be undone and the proposal will be permanently deleted!
               </div>
 
               <div class="flex mt-4 justify-end">

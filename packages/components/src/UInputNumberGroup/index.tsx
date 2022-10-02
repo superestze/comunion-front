@@ -34,6 +34,12 @@ const UInputNumberGroup = defineComponent({
   setup(props, ctx) {
     const inputValue = ref(props.value)
     watch(
+      () => props.value,
+      n => {
+        inputValue.value = n
+      }
+    )
+    watch(
       () => inputValue.value,
       n => {
         ctx.emit('update:value', n)

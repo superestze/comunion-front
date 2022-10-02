@@ -105,7 +105,7 @@ export default defineComponent({
       <>
         <Basic
           title="Approve the applicant？"
-          content="Other applicant's deposits will be released at once you approve the applicant"
+          content="Note: Other applicant's deposits will be released at once you approve the applicant"
           visible={this.visible}
           onTriggerDialog={triggerDialog}
           v-slots={{

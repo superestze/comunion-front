@@ -95,6 +95,7 @@ export const Invest = defineComponent({
       )
     })
     const changeFromValue = (value: string) => {
+      if (!value) return
       if (mode.value === 'buy') {
         toValue.value = formatToFloor(
           ethers.FixedNumber.from(value)
@@ -113,6 +114,7 @@ export const Invest = defineComponent({
     }
 
     const changeToValue = (value: string) => {
+      if (!value) return
       console.log('changeToValue value===>', value)
       if (mode.value === 'buy') {
         fromValue.value = formatToFloor(
@@ -261,7 +263,7 @@ export const Invest = defineComponent({
     const removeCrowdfunding = async () => {
       try {
         removeModal.value = false
-        const pendingText = 'Waiting to submit all contents to blockchain for removing'
+        const pendingText = 'Note: Waiting to submit all contents to blockchain for removing'
         const waitingText = 'Waiting to confirm.'
         const contractRes: any = await fundingContract.remove(pendingText, waitingText)
         await services['crowdfunding@remove-crowdfunding']({
@@ -279,7 +281,7 @@ export const Invest = defineComponent({
 
     const cancelCrowdfunding = async () => {
       cancelModal.value = false
-      const pendingText = 'Waiting to submit all contents to blockchain for canceling'
+      const pendingText = 'Note: Waiting to submit all contents to blockchain for canceling'
       const waitingText = 'Waiting to confirm.'
       // Contract
       const contractRes: any = await fundingContract.cancel(pendingText, waitingText)
@@ -324,7 +326,7 @@ export const Invest = defineComponent({
     }
 
     const buyFromMainCoin = async (sellAmount: number | BigNumber) => {
-      const buyPendingText = 'The transaction of buying is processing.'
+      const buyPendingText = 'Note: The transaction of buying is processing.'
       const waitingText = 'Waiting to confirm.'
       try {
         console.log('fromValue.value==>', fromValue.value)
@@ -352,9 +354,9 @@ export const Invest = defineComponent({
 
     const buyFromTokenCoin = async (sellAmount: number | BigNumber) => {
       try {
-        const buyPendingText = 'The transaction of buying is processing.'
+        const buyPendingText = 'Note: The transaction of buying is processing.'
         const waitingText = 'Waiting to confirm.'
-        const approvePendingText = 'The transaction of buying is processing.'
+        const approvePendingText = 'Note: The transaction of buying is processing.'
         const buyAmount = ethers.utils.parseUnits(fromValue.value)
         contractStore.startContract(approvePendingText)
         const buyTokenRes = await tokenContract(props.info.buyTokenContract)
@@ -385,9 +387,9 @@ export const Invest = defineComponent({
       try {
         const fromAmount = ethers.utils.parseUnits(fromValue.value, props.sellCoinInfo.decimal!)
         const toAmount = ethers.utils.parseUnits(toValue.value)
-        const sellPendingText = 'The selling transaction is processing.'
+        const sellPendingText = 'Note: The selling transaction is processing.'
         const waitingText = 'Waiting to confirm.'
-        const approvePendingText = 'The transaction of selling is processing.'
+        const approvePendingText = 'Note: The transaction of selling is processing.'
         contractStore.startContract(approvePendingText)
 
         const sellTokenRes = tokenContract(props.info.sellTokenContract)
@@ -417,10 +419,10 @@ export const Invest = defineComponent({
       try {
         const fromAmount = ethers.utils.parseUnits(fromValue.value, props.sellCoinInfo.decimal!)
 
-        const sellPendingText = 'The selling transaction is processing.'
+        const sellPendingText = 'Note: The selling transaction is processing.'
         const waitingText = 'Waiting to confirm.'
 
-        const approvePendingText = 'The transaction of selling is processing.'
+        const approvePendingText = 'Note: The transaction of selling is processing.'
         contractStore.startContract(approvePendingText)
         const sellTokenRes = tokenContract(props.info.sellTokenContract)
         const approveRes: Contract = await sellTokenRes.approve(
@@ -899,14 +901,14 @@ export const Invest = defineComponent({
               header: () => {
                 return (
                   <div class="flex relative items-center">
-                    <span class="text-color1 u-h3">Cancel the dCrowdfunding？</span>
+                    <span class="text-color1 u-h3">Cancel the dCrowdfunding?</span>
                   </div>
                 )
               }
             }}
           >
             <div class="min-h-20 p-4 text-color2 u-h6">
-              Note: This action cannot be undone once you click 'Yes'!
+              Note: The dCrowdfungding will be closed at once you click 'Yes'.
             </div>
             <div class="flex mt-4 justify-end">
               <UButton

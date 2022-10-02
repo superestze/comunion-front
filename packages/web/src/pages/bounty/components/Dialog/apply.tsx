@@ -197,7 +197,7 @@ const ApplyDialog = defineComponent({
           const tokenSymbol = this.bountyContractStore.bountyContractInfo.depositTokenSymbol
           if (this.formData.deposit >= this.deposit) {
             const contractStore = useContractStore()
-            contractStore.startContract('Apply for deposit deposits into bounty contract.')
+            contractStore.startContract('Note: Apply for deposit deposits into bounty contract.')
 
             console.warn('bounty detail info', this.detail)
 
@@ -273,7 +273,7 @@ const ApplyDialog = defineComponent({
             >
               <UFormItemsFactory fields={this.fields} values={this.formData} />
             </UForm>
-            <UCheckbox checked={this.terms.value} onChange={handleCheckbox('terms')}>
+            <UCheckbox checked={this.terms.value} onUpdateChecked={handleCheckbox('terms')}>
               <span class={this.termsClass}>
                 I have read, understand, and agree to,{' '}
                 <a class="text-primary" href="###">
@@ -282,7 +282,11 @@ const ApplyDialog = defineComponent({
               </span>
             </UCheckbox>
             <br />
-            <UCheckbox checked={this.accept.value} onChange={handleCheckbox('accept')} class="mt-2">
+            <UCheckbox
+              checked={this.accept.value}
+              onUpdateChecked={handleCheckbox('accept')}
+              class="mt-2"
+            >
               <span class={this.acceptClass}>
                 I accept that I will not be able to take the deposit in case of evil.
               </span>

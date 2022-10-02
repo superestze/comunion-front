@@ -145,7 +145,7 @@ export default defineComponent({
       <USpin show={this.loading}>
         {this.view && this.languages.length === 0 ? null : (
           <UCard
-            title="Languages"
+            title="Language"
             class="mb-6"
             v-slots={{
               'header-extra': () => {
