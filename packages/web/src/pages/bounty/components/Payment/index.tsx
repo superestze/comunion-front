@@ -177,7 +177,7 @@ export default defineComponent({
                         trigger: () => <LockKeyOutlined />,
                         default: () => (
                           <div>
-                            <p>Note:The deposit is locked ！</p>
+                            <p>Note: The deposit is locked ！</p>
                             <p>
                               1.The deposit can be unlocked by approved appicant and be released by
                               founder.

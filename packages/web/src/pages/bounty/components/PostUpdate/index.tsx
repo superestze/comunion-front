@@ -55,9 +55,9 @@ export default defineComponent({
     const tooltip = computed(() => {
       if (disabled.value) {
         if (props.bountySection?.detail?.status >= BOUNTY_STATUS.COMPLETED) {
-          return 'Note:The update button is unavailable when the bounty completed'
+          return 'Note: The update button is unavailable when the bounty completed'
         } else {
-          return 'Note:The update button can only be available to be approved applicant.'
+          return 'Note: The update button can only be available to be approved applicant.'
         }
       }
       return null
