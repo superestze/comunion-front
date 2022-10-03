@@ -69,9 +69,9 @@ export default defineComponent({
   setup(props) {
     const loading = ref(false)
     const editMode = ref<boolean>(false)
-    const info = reactive({
-      type: '',
-      value: ''
+    const info = reactive<{ type: string | null; value: string | undefined }>({
+      type: null,
+      value: undefined
     })
     const form = ref<FormInst>()
     const fields = computed<FormFactoryField[]>(() => {
@@ -201,15 +201,15 @@ export default defineComponent({
       (create = false) =>
       () => {
         if (create) {
-          this.info.type = ''
-          this.info.value = ''
+          this.info.type = null
+          this.info.value = undefined
         }
         this.editMode = !this.editMode
       }
 
     const handleSubmit = () => {
       this.form?.validate(async err => {
-        if (typeof err === 'undefined') {
+        if (typeof err === 'undefined' && this.info.type) {
           this.loading = true
           await services['account@social-add-or-update']({
             socialType: soureType[this.info.type],
@@ -224,7 +224,7 @@ export default defineComponent({
 
     const editIcon = (type: string, value?: string) => {
       this.info.type = type
-      this.info.value = value as string
+      this.info.value = value || undefined
       handleEditMode()()
     }
 
