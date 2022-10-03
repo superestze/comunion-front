@@ -31,7 +31,7 @@ export const useUserStore = defineStore('user', {
     isProfiled: state => state.profile?.isProfiled
   },
   actions: {
-    async init(reload: boolean | undefined) {
+    async init(reload = false) {
       if (!reload && this.inited) return true
       if (this.logged) {
         const { error, data } = await services['account@user-info']()
