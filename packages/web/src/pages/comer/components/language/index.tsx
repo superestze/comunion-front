@@ -60,7 +60,7 @@ export default defineComponent({
         t: 'select',
         title: 'Language',
         name: 'language',
-        placeholder: 'Choose a language',
+        placeholder: 'Select a language',
         required: true,
         options: LanguageList
       },
@@ -68,7 +68,7 @@ export default defineComponent({
         t: 'select',
         title: 'Level',
         name: 'level',
-        placeholder: 'Choose language level',
+        placeholder: 'Select language level',
         required: true,
         options: [
           { label: 'Beginner', value: 'Beginner' },

@@ -225,7 +225,7 @@ export const addressInputRule: FormItemRule = {
 
 export const websiteInputRule: FormItemRule = {
   validator: (rule, value) => (value ? effectiveUrlValidator(value) : true),
-  message: 'invalid URL',
+  message: 'Invalid URL',
   trigger: 'blur'
 }
 
