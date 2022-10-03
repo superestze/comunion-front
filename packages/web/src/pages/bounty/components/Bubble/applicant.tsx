@@ -1,4 +1,4 @@
-import { UButton } from '@comunion/components'
+import { UButton, UTooltip } from '@comunion/components'
 import { format } from 'timeago.js'
 import { defineComponent, PropType, ref, computed } from 'vue'
 import { useRoute } from 'vue-router'
@@ -134,24 +134,34 @@ export default defineComponent({
                     <p class="mb-2 text-color1 u-h4">{this.applicant?.name}</p>
                     <p class="text-color3 u-h7">{this.formatDate}</p>
                   </div>
-                  {this.bountyRole === USER_ROLE.FOUNDER && (
-                    <UButton
-                      disabled={
-                        this.approveDisabled || this.bountyStatus >= BOUNTY_STATUS.WORKSTARTED
-                      }
-                      color={
-                        this.approveDisabled || this.bountyStatus >= BOUNTY_STATUS.WORKSTARTED
-                          ? 'rgba(0,0,0,0.1)'
-                          : ''
-                      }
-                      class="w-30"
-                      type="primary"
-                      size="small"
-                      onClick={triggerDialog}
-                    >
-                      Approve
-                    </UButton>
-                  )}
+                  {this.bountyRole === USER_ROLE.FOUNDER &&
+                    this.bountyStatus < BOUNTY_STATUS.WORKSTARTED &&
+                    (this.approveDisabled ? (
+                      <UTooltip>
+                        {{
+                          trigger: () => (
+                            <div>
+                              <UButton
+                                disabled
+                                color={'rgba(0,0,0,0.1)'}
+                                class="w-30"
+                                type="primary"
+                                size="small"
+                                onClick={triggerDialog}
+                              >
+                                Approve
+                              </UButton>
+                            </div>
+                          ),
+                          default: () =>
+                            'Note: The applicant has canceled to apply for bounty who cannot be approved.'
+                        }}
+                      </UTooltip>
+                    ) : (
+                      <UButton class="w-30" type="primary" size="small" onClick={triggerDialog}>
+                        Approve
+                      </UButton>
+                    ))}
                 </div>
                 <div class={`bg-purple rounded mt-2 p-4 ${styles.approve}`}>
                   <div class="max-h-20 text-color2 overflow-auto u-h5">
