@@ -64,6 +64,8 @@ export default defineComponent({
               skills: [],
               bio: ''
             } as UserProfileState)
+            // reload userStore
+            await userStore.init(true)
             router.replace('/startup/list')
           }
         }
@@ -71,7 +73,7 @@ export default defineComponent({
     }
     return (
       <div class="bg-purple h-full min-h-screen text-[14px] relative">
-        <div class="u-page-container flex justify-center items-center h-100vh">
+        <div class="flex h-100vh u-page-container justify-center items-center">
           <CardContent
             title=""
             config={{ width: 678 }}
