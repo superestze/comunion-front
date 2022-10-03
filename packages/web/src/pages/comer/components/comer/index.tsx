@@ -102,7 +102,7 @@ export default defineComponent({
         t: 'select',
         title: 'Time Zone',
         name: 'timeZone',
-        placeholder: `Choose your time zone`,
+        placeholder: `Select your time zone`,
         options: UTC_OPTIONS.map(item => ({ label: item.label, value: item.label }))
       }
     ]
