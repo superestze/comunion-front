@@ -33,7 +33,7 @@ export default defineComponent({
       {
         icons: [comp1, comp1, comp1],
         h1line1: 'A new era of economy',
-        h1line2: 'Net-Chain Economy',
+        h1line2: 'Comunomics',
         content:
           'The core theory is based on technology of internet and blockchain to research how can increase income of labor through promoting labor’s liquidity and the capitalization of labor value'
       },
