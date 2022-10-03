@@ -31,17 +31,20 @@ export const useUserStore = defineStore('user', {
     isProfiled: state => state.profile?.isProfiled
   },
   actions: {
-    async init() {
-      if (this.inited) return
+    async init(reload = false) {
+      if (!reload && this.inited) return true
       if (this.logged) {
         const { error, data } = await services['account@user-info']()
         if (!error) {
           this.profile = data as unknown as UserProfileState
+          return (this.inited = true)
         } else {
           // anything to do?
+          return null
         }
+      } else {
+        return null
       }
-      this.inited = true
     },
     refreshToken(token?: string) {
       this.token = token || storage('local').get<string>(STORE_KEY_TOKEN)
