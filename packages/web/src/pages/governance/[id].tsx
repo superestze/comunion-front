@@ -26,7 +26,13 @@ import { defineComponent, ref, reactive, onMounted, computed } from 'vue'
 import { useRoute, useRouter } from 'vue-router'
 import { CurrentResult } from './components/CurrentResult'
 import { StrategyInformation } from './components/StrategyInfo'
-import { GOVERNANCE_KEY, GOVERNANCE_STATUS_STYLE, signerVoteTypes } from './utils'
+import {
+  GOVERNANCE_ACTIVE,
+  GOVERNANCE_KEY,
+  GOVERNANCE_STATUS_STYLE,
+  GOVERNANCE_UPCOMING,
+  signerVoteTypes
+} from './utils'
 import CreateProposalBlock, { CreateProposalRef } from '@/blocks/Proposal/Create'
 import CustomCard from '@/components/CustomCard'
 import StartupCard from '@/components/StartupCard'
@@ -469,41 +475,56 @@ const ProposalDetail = defineComponent({
               </div>
             )}
 
-            {this.proposalInfo?.status !== 3 && (
-              <CustomCard class="mt-10 mb-6" title="Cast your vote">
-                <div class="pt-6">
-                  {this.proposalInfo?.choices?.map(voteInfo => (
-                    <div
-                      class={`u-h4 border text-center py-3 mb-4 rounded-sm cursor-pointer hover:border-[#5331F4] hover:text-primary ${
-                        this.selectedChoice?.id === voteInfo.id
-                          ? 'border-primary  text-primary'
-                          : 'border-primary-10  text-color2'
-                      }`}
-                      onClick={() => this.choiceVote(voteInfo)}
-                    >
-                      {voteInfo.itemName}
-                    </div>
-                  ))}
+            <CustomCard class="mt-10 mb-6" title="Cast your vote">
+              <div class="pt-6">
+                {this.proposalInfo?.choices?.map(voteInfo => (
+                  <div
+                    class={`u-h4 border text-center py-3 mb-4 rounded-sm cursor-pointer hover:border-[#5331F4] hover:text-primary ${
+                      this.selectedChoice?.id === voteInfo.id
+                        ? 'border-primary  text-primary'
+                        : 'border-primary-10  text-color2'
+                    }`}
+                    onClick={() => this.choiceVote(voteInfo)}
+                  >
+                    {voteInfo.itemName}
+                  </div>
+                ))}
+                {this.proposalInfo?.status === GOVERNANCE_ACTIVE ? (
                   <div
                     class={[
                       'text-white u-h4 text-center py-3 rounded-sm',
-                      this.selectedChoice && this.proposalInfo?.status === 2
+                      this.selectedChoice
                         ? 'bg-primary cursor-pointer'
                         : 'bg-grey5 cursor-not-allowed'
                     ]}
-                    onClick={() =>
-                      this.selectedChoice && this.proposalInfo?.status === 2
-                        ? this.showVoteInfo()
-                        : null
-                    }
+                    onClick={() => (this.selectedChoice ? this.showVoteInfo() : null)}
                   >
-                    {this.proposalInfo?.status === 1
-                      ? 'Note: This Proposal is not opened yet.'
-                      : 'Vote'}
+                    Vote
                   </div>
-                </div>
-              </CustomCard>
-            )}
+                ) : (
+                  <UPopover
+                    placement="top"
+                    v-slots={{
+                      trigger: () => (
+                        <div
+                          class={
+                            'text-white u-h4 text-center py-3 rounded-sm bg-grey5 cursor-not-allowed'
+                          }
+                        >
+                          Vote
+                        </div>
+                      ),
+                      default: () =>
+                        this.proposalInfo?.status === GOVERNANCE_UPCOMING ? (
+                          <div>Note: This Proposal is not opened yet.</div>
+                        ) : (
+                          <div>Note: This proposal has ended.</div>
+                        )
+                    }}
+                  />
+                )}
+              </div>
+            </CustomCard>
             {!!this.voteRecords?.length && (
               <CustomCard title={`Votes(${this.pagination.total})`}>
                 <div class="-mx-6 -mb-6">

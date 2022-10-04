@@ -2069,6 +2069,7 @@ export const services = {
         crowdfundingId: number
         startupId: number
         comerAvatar: string
+        comerId: number
         comerName: string
         amount: number
         access: number

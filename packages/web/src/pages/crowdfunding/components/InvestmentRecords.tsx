@@ -1,7 +1,7 @@
 import { UCard, ULazyImage, UScrollList, UTag } from '@comunion/components'
 import dayjs from 'dayjs'
 import { defineComponent, reactive, ref, onMounted } from 'vue'
-import { useRoute } from 'vue-router'
+import { useRoute, useRouter } from 'vue-router'
 import { ServiceReturn, services } from '@/services'
 interface IPagination {
   pageSize: number
@@ -26,6 +26,7 @@ export const InvestmentRecords = defineComponent({
   },
   setup(props, ctx) {
     const route = useRoute()
+    const router = useRouter()
     const pagination = reactive<IPagination>({
       pageSize: 20,
       total: 300,
@@ -61,6 +62,12 @@ export const InvestmentRecords = defineComponent({
       }
     }
 
+    const toComerDetail = (comerId?: number) => {
+      if (comerId) {
+        router.push({ path: '/comer', query: { id: comerId } })
+      }
+    }
+
     onMounted(() => {
       getInvestRecord(pagination.page)
     })
@@ -73,7 +80,8 @@ export const InvestmentRecords = defineComponent({
       pagination,
       investRecords,
       getInvestRecord,
-      getAmount
+      getAmount,
+      toComerDetail
     }
   },
   render() {
@@ -90,10 +98,12 @@ export const InvestmentRecords = defineComponent({
             {(this.investRecords ?? []).map(record => {
               return (
                 <div class="flex mb-4">
-                  <ULazyImage
-                    src={record.comerAvatar ?? ''}
+                  <div
+                    onClick={() => this.toComerDetail(record.comerId)}
                     class="rounded-full cursor-pointer h-12 w-12"
-                  />
+                  >
+                    <ULazyImage src={record.comerAvatar ?? ''} class="h-full w-full" />
+                  </div>
                   <div class=" flex-1 mx-4">
                     <div class="flex mb-2 items-center">
                       <div class="text-color1 truncate u-h4">{record.comerName}</div>
