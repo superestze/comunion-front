@@ -101,7 +101,7 @@ export default defineComponent({
                   </UButton>
                 </div>
               ),
-              default: () => 'Not any deposit is in the contract.'
+              default: () => 'Note: Not any deposit is in the contract.'
             }}
           />
         ) : (

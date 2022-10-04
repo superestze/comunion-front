@@ -1,4 +1,4 @@
-import { UScrollbar } from '@comunion/components'
+import { UScrollbar, UTooltip } from '@comunion/components'
 import { LockKeyOutlined, UnlockKeyOutlined } from '@comunion/icons'
 import { pluralize } from 'inflected'
 import { defineComponent, PropType, computed, ref } from 'vue'
@@ -36,6 +36,10 @@ export default defineComponent({
     bountySection: {
       type: Object,
       default: () => null
+    },
+    bountyExpired: {
+      type: Boolean,
+      default: false
     }
   },
   setup(props) {
@@ -137,6 +141,7 @@ export default defineComponent({
                       this.bountyContractInfo.bountyStatus >= BOUNTY_STATUS.WORKSTARTED ||
                       this.expiresIn <= this.time
                     }
+                    bountyExpired={this.bountyExpired}
                     detailChainId={this.detailChainId}
                     applicantApplyStatus={this.bountyContractInfo.status}
                     applicantDepositMinAmount={this.bountyContractInfo.applicantDepositMinAmount}
@@ -167,7 +172,24 @@ export default defineComponent({
                 >
                   <div class="flex-1 text-color1 u-h4">Deposit</div>
                   {this.bountyContractInfo.depositLock ? (
-                    <LockKeyOutlined />
+                    <UTooltip>
+                      {{
+                        trigger: () => <LockKeyOutlined />,
+                        default: () => (
+                          <div>
+                            <p>Note: The deposit is locked ！</p>
+                            <p>
+                              1.The deposit can be unlocked by approved appicant and be released by
+                              founder.
+                            </p>
+                            <p>
+                              2.The approved applicant need to post update at least 1 time within 5
+                              days in the working for bounty
+                            </p>
+                          </div>
+                        )
+                      }}
+                    </UTooltip>
                   ) : (
                     <UnlockKeyOutlined />
                   )}

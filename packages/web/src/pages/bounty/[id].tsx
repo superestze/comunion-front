@@ -29,9 +29,7 @@ export default defineComponent({
     // initialize
     bountyStore.initialize(route.params.id as string)
 
-    const bountySection = computed(() => {
-      return bountyStore.bountySection
-    })
+    const bountySection = computed(() => bountyStore.bountySection)
     const bountyContractStore = useBountyContractStore()
     const bountyContract = ref()
     const postUpdate = ref<any>()
@@ -40,6 +38,8 @@ export default defineComponent({
     const chainInfo = computed(() =>
       getChainInfoByChainId(bountySection.value.detail?.chainID as number)
     )
+
+    const bountyContractInfo = computed(() => bountyContractStore.bountyContractInfo)
 
     const bountyExpired = computed(() => {
       const time = dayjs().utcOffset(0).unix()
@@ -101,12 +101,13 @@ export default defineComponent({
         }
       }
     )
+
     return {
       bountyContract,
       postUpdate,
       bountySection,
       loading,
-      bountyContractInfo: bountyContractStore.bountyContractInfo,
+      bountyContractInfo,
       gapValue,
       gapUnit,
       chainInfo,
@@ -189,6 +190,7 @@ export default defineComponent({
                   bountyContractInfo={this.bountyContractInfo}
                   paymentInfo={this.bountySection.bountyPayment}
                   bountySection={this.bountySection}
+                  bountyExpired={this.bountyExpired}
                 />
               )}
             </UCard>
@@ -204,35 +206,35 @@ export default defineComponent({
                           {/* just applicant show countdown tips */}
                           {this.bountyContractInfo.role !== USER_ROLE.FOUNDER &&
                             (this.gapValue >= 0 ? (
-                              <>
-                                <UTooltip placement="bottom">
-                                  {{
-                                    trigger: () => (
-                                      <>
-                                        <ClockOutlined
-                                          class={`${
-                                            this.gapValue >= 0 ? 'text-color3' : 'text-error'
-                                          } w-4 h-4 mr-2.5`}
-                                        />
-                                        <p class="flex mr-4 text-grey3 items-center ">
-                                          Founder can unlock after
-                                          <span class="mx-1 text-primary">{this.gapValue}</span>
-                                          {this.gapValue > 1
-                                            ? `${pluralize(this.gapUnit)}`
-                                            : this.gapUnit}
-                                        </p>
-                                      </>
-                                    ),
-                                    default: () => (
-                                      <div class="text-white w-84">
-                                        Post an update at least every 5 days, otherwise you will
-                                        lose the permission to lock the deposit, and the founder can
-                                        unlock.
-                                      </div>
-                                    )
-                                  }}
-                                </UTooltip>
-                              </>
+                              <UTooltip
+                                trigger="hover"
+                                placement="bottom"
+                                v-slots={{
+                                  trigger: () => (
+                                    <div class="flex items-center">
+                                      <ClockOutlined
+                                        class={`${
+                                          this.gapValue >= 0 ? 'text-color3' : 'text-error'
+                                        } w-4 h-4 mr-2.5`}
+                                      />
+                                      <p class="flex mr-4 text-grey3 items-center ">
+                                        Founder can unlock after
+                                        <span class="mx-1 text-primary">{this.gapValue}</span>
+                                        {this.gapValue > 1
+                                          ? `${pluralize(this.gapUnit)}`
+                                          : this.gapUnit}
+                                      </p>
+                                    </div>
+                                  ),
+                                  default: () => (
+                                    <div class="text-white w-84">
+                                      Post an update at least every 5 days, otherwise you will lose
+                                      the permission to lock the deposit, and the founder can
+                                      unlock.
+                                    </div>
+                                  )
+                                }}
+                              />
                             ) : (
                               <p class="flex text-error mr-4 items-center">
                                 Founder can already unlock deposits

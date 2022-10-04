@@ -1,4 +1,4 @@
-import { UButton } from '@comunion/components'
+import { UButton, UTooltip } from '@comunion/components'
 import { defineComponent, ref, computed } from 'vue'
 import { useRoute } from 'vue-router'
 import {
@@ -22,6 +22,10 @@ export default defineComponent({
       type: Object,
       required: true,
       default: () => null
+    },
+    bountyContractInfo: {
+      type: Object,
+      default: () => null
     }
   },
   setup(props) {
@@ -30,6 +34,9 @@ export default defineComponent({
     const { bountyContract, chainId } = useBountyContractWrapper()
     const { release } = bountyContract
     const bountyContractStore = useBountyContractStore()
+    const bountyContractInfo = computed(() => {
+      return bountyContractStore.bountyContractInfo
+    })
     const bountyInfo = computed(() => {
       return props.bountyDetail
     })
@@ -38,15 +45,27 @@ export default defineComponent({
         bountyContractStore.bountyContractInfo.depositLock ||
         bountyContractStore.bountyContractInfo.bountyStatus >= BOUNTY_STATUS.COMPLETED ||
         bountyInfo.value.status === BOUNTY_STATUS.COMPLETED ||
-        bountyContractStore.dontContract
+        bountyContractStore.dontContract ||
+        (bountyContractInfo.value.founderDepositAmount == 0 &&
+          bountyContractInfo.value.applicantDepositAmount == 0)
       )
+    })
+    const disabledText = computed(() => {
+      if (
+        bountyContractInfo.value.founderDepositAmount == 0 &&
+        bountyContractInfo.value.applicantDepositAmount == 0
+      ) {
+        return 'Note: Not any deposit is in the contract.'
+      }
+      return null
     })
     return {
       visible,
       release,
       disabled,
       chainId,
-      route
+      route,
+      disabledText
     }
   },
   render() {
@@ -103,15 +122,35 @@ export default defineComponent({
             )
           }}
         />
-        <UButton
-          class={`${this.$attrs.class}`}
-          type="primary"
-          disabled={this.disabled}
-          onClick={triggerDialog}
-          size="small"
-        >
-          Release
-        </UButton>
+        {this.disabledText ? (
+          <UTooltip>
+            {{
+              trigger: () => (
+                <div class={`${this.$attrs.class}`}>
+                  <UButton
+                    class={`${this.$attrs.class} w-full`}
+                    type="primary"
+                    disabled={true}
+                    size="small"
+                  >
+                    Release
+                  </UButton>
+                </div>
+              ),
+              default: () => this.disabledText
+            }}
+          </UTooltip>
+        ) : (
+          <UButton
+            class={`${this.$attrs.class}`}
+            type="primary"
+            disabled={this.disabled}
+            onClick={triggerDialog}
+            size="small"
+          >
+            Release
+          </UButton>
+        )}
       </>
     )
   }

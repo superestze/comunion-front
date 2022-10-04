@@ -133,7 +133,7 @@ export default defineComponent({
       }
       this.form?.validate(async err => {
         if (typeof err === 'undefined') {
-          const approvePendingText = 'Apply for increasing the deposits to bounty contract.'
+          const approvePendingText = 'Note: Apply for increasing the deposits to bounty contract.'
           const contractStore = useContractStore()
           contractStore.startContract(approvePendingText)
           const tokenSymbol = this.bountyContractStore.bountyContractInfo.depositTokenSymbol

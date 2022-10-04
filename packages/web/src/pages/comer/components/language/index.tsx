@@ -38,10 +38,10 @@ export default defineComponent({
   setup(props) {
     const loading = ref(false)
     const editMode = ref<boolean>(false)
-    const info = reactive({
+    const info = reactive<{ id: any; language: string | null; level: string | null }>({
       id: uniqueId('lang'),
-      language: '',
-      level: ''
+      language: null,
+      level: null
     })
     const form = ref<FormInst>()
 
@@ -60,6 +60,7 @@ export default defineComponent({
         t: 'select',
         title: 'Language',
         name: 'language',
+        placeholder: 'Select a language',
         required: true,
         options: LanguageList
       },
@@ -67,6 +68,7 @@ export default defineComponent({
         t: 'select',
         title: 'Level',
         name: 'level',
+        placeholder: 'Select language level',
         required: true,
         options: [
           { label: 'Beginner', value: 'Beginner' },
@@ -92,8 +94,8 @@ export default defineComponent({
       () => {
         if (create) {
           this.info.id = uniqueId('lang')
-          this.info.language = ''
-          this.info.level = ''
+          this.info.language = null
+          this.info.level = null
         }
         this.editMode = !this.editMode
       }
@@ -107,9 +109,17 @@ export default defineComponent({
             return item.id === this.info.id
           })
           if (index > -1) {
-            this.languages.splice(index, 1, this.info)
+            this.languages.splice(index, 1, {
+              id: this.info.id,
+              language: this.info!.language as string,
+              level: this.info!.level as string
+            })
           } else {
-            this.languages.push(this.info)
+            this.languages.push({
+              id: this.info.id,
+              language: this.info!.language as string,
+              level: this.info!.level as string
+            })
           }
           await services['account@languages']({
             languages: this.languages
