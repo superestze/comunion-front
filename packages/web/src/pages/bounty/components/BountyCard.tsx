@@ -53,10 +53,7 @@ export default defineComponent({
     })
 
     const handleCard = (bountyId: number) => async () => {
-      const isSupport = await checkSupportNetwork(props.startup.chainID)
-      if (isSupport) {
-        router.push(`/bounty/${bountyId}`)
-      }
+      checkSupportNetwork(props.startup.chainID, () => router.push(`/bounty/${bountyId}`))
     }
 
     const wrapClass = props.miniCard
