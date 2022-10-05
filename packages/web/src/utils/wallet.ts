@@ -11,10 +11,11 @@ export async function checkSupportNetwork(chainId: number, callback?: () => void
     // not supported network, try to switch
     walletStore.openNetworkSwitcher()
     walletStore.wallet?.switchNetwork(chainId).then(res => {
-      if (res && callback) callback()
+      if (res && typeof callback === 'function') callback()
     })
     return false
   } else {
+    typeof callback === 'function' && callback()
     return true
   }
 }
