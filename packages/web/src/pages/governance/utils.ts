@@ -5,6 +5,11 @@ export const GOVERNANCE_KEY = {
   4: 'Invalid'
 }
 
+export const GOVERNANCE_UPCOMING = 1
+export const GOVERNANCE_ACTIVE = 2
+export const GOVERNANCE_ENDED = 3
+export const GOVERNANCE_INVALID = 4
+
 export const GOVERNANCE_STATUS_STYLE = {
   1: 'px-3 rounded py-1 text-white px-2 text-xs bg-primary',
   2: 'px-3 rounded py-1 text-white px-2 text-xs bg-[#00BFA5]',
