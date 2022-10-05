@@ -1,6 +1,6 @@
 import { UButton, UPopover, UTag } from '@comunion/components'
+import { PlusOutlined, CheckFilled } from '@comunion/icons'
 import { defineComponent, computed, ref, watch, PropType } from 'vue'
-
 import { useStartupProfile } from '../../hooks/useStartupProfile'
 import defaultCover from './assets/cover.png'
 import SocialIcon from '@/components/SocialIcon'
@@ -175,7 +175,7 @@ export default defineComponent({
               ghost
               onClick={() => handleFollowStartup('unfollow')}
             >
-              {/* <HookFilled class="mr-1 w-4.5" /> */}
+              <CheckFilled class="mr-2" />
               Unconnect
             </UButton>
           ) : (
@@ -184,7 +184,7 @@ export default defineComponent({
               loading={this.loading}
               onClick={() => handleFollowStartup('follow')}
             >
-              {/* <PlusOutlined class="mt-1 mb-3px w-4.5" /> */}
+              <PlusOutlined class="h-4 mr-2 w-4" />
               Connect
             </UButton>
           )}
