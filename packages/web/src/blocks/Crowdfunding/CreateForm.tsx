@@ -136,7 +136,7 @@ const CreateCrowdfundingForm = defineComponent({
       ctx.emit('cancel')
     }
     const contractSubmit = async () => {
-      const approvePendingText = 'Note: Apply for creating dCrowdfunding contract on blockchain.'
+      const approvePendingText = 'Apply for creating dCrowdfunding contract on blockchain.'
       try {
         // convert data to wei unit
         const raiseGoalTotal = ethers.utils.parseUnits(
@@ -170,8 +170,8 @@ const CreateCrowdfundingForm = defineComponent({
           crowdfundingInfo.teamWallet,
           dayjs(crowdfundingInfo.startTime).valueOf() / 1000,
           dayjs(crowdfundingInfo.endTime).valueOf() / 1000,
-          'Note: Create dCrowdfunding contract on blockchain.',
-          `Note: dCrowdfunding is creating`
+          'Create dCrowdfunding contract on blockchain.',
+          `dCrowdfunding is creating`
         )
         return contractRes
       } catch (e: any) {
@@ -296,7 +296,7 @@ const CreateCrowdfundingForm = defineComponent({
             }}
           >
             <div class="min-h-20 p-4 text-color2 u-h6">
-              Note: The action cannot be undone at once you click 'Yes'!
+              The action cannot be undone at once you click 'Yes'!
             </div>
             <div class="flex mt-4 justify-end">
               <UButton

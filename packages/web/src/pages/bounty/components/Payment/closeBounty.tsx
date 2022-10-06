@@ -71,7 +71,7 @@ export default defineComponent({
           title: () => <div class="mt-5 ml-4">Close the bounty?</div>,
           content: () => (
             <div class="mt-6.5 ml-12.5 text-color3">
-              Note: The bounty will be closed once you click 'Yes'.
+              The bounty will be closed once you click 'Yes'.
             </div>
           ),
           action: () => (
@@ -136,7 +136,7 @@ export default defineComponent({
         <BasicDialog
           visible={this.visibleFailCloseBounty}
           title="Failed to close bounty"
-          content="Note: The bounty cannot be closed until you release all deposits."
+          content="The bounty cannot be closed until you release all deposits."
           onTriggerDialog={triggerDialog}
           v-slots={{
             btns: () => (

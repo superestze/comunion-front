@@ -87,8 +87,8 @@ export default defineComponent({
               ),
               default: () =>
                 this.bountyExpired
-                  ? 'Note: This expired bounty cannot be applied for.'
-                  : 'Note: This bounty has been won by another applicant'
+                  ? 'This expired bounty cannot be applied for.'
+                  : 'This bounty has been won by another applicant'
             }}
           />
         ) : (

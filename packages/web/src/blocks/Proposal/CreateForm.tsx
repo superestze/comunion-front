@@ -266,7 +266,7 @@ const CreateProposalFrom = defineComponent({
             }}
           >
             <div class="min-h-20 p-4 text-color2 u-h6">
-              Note: The action cannot be undone at once you click 'Yes'!
+              The action cannot be undone at once you click 'Yes'!
             </div>
             <div class="flex mt-4 justify-end">
               <UButton

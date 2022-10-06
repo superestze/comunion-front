@@ -133,7 +133,7 @@ export default defineComponent({
       }
       this.form?.validate(async err => {
         if (typeof err === 'undefined') {
-          const approvePendingText = 'Note: Apply for increasing the deposits to bounty contract.'
+          const approvePendingText = 'Apply for increasing the deposits to bounty contract.'
           const contractStore = useContractStore()
           contractStore.startContract(approvePendingText)
           const tokenSymbol = this.bountyContractStore.bountyContractInfo.depositTokenSymbol
@@ -144,8 +144,8 @@ export default defineComponent({
           console.log(this.formData.increaseDeposit)
           const response = (await this.deposit(
             ethers.utils.parseUnits((this.formData.increaseDeposit || '').toString(), 18),
-            'Note: The bounty credit will be enchanced by increasing the deposits.',
-            `Note: Increase deposits to ${this.formData.increaseDeposit} ${tokenSymbol}.`
+            'The bounty credit will be enchanced by increasing the deposits.',
+            `Increase deposits to ${this.formData.increaseDeposit} ${tokenSymbol}.`
           ).catch(error => {
             message.error(error.message)
             return null

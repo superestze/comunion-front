@@ -138,7 +138,7 @@ const CreateStartupForm = defineComponent({
                     true
                   ],
                   model,
-                  'Note: The fields of network and name will be registered to blockchain.',
+                  'The fields of network and name will be registered to blockchain.',
                   `Startup "${model.name}" is creating`
                 )
                 if (!res1) {

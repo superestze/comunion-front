@@ -516,9 +516,9 @@ const ProposalDetail = defineComponent({
                       ),
                       default: () =>
                         this.proposalInfo?.status === GOVERNANCE_UPCOMING ? (
-                          <div>Note: This Proposal is not opened yet.</div>
+                          <div>This Proposal is not opened yet.</div>
                         ) : (
-                          <div>Note: This proposal has ended.</div>
+                          <div>This proposal has ended.</div>
                         )
                     }}
                   />
@@ -751,7 +751,7 @@ const ProposalDetail = defineComponent({
               }}
             >
               <div class="min-h-20 p-4 text-color2 u-h6">
-                Note: The action cannot be undone and the proposal will be permanently deleted!
+                The action cannot be undone and the proposal will be permanently deleted!
               </div>
 
               <div class="flex mt-4 justify-end">

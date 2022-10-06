@@ -40,7 +40,7 @@ export default defineComponent({
         return
       }
       const response = (await this.releaseMyDeposit(
-        'Note: Waiting to submit all contents to blockchain for release my deposit',
+        'Waiting to submit all contents to blockchain for release my deposit',
         'Release my deposit succeedes'
       )) as unknown as BountyContractReturnType
       await services['bounty@bounty-release-my-deposit']({
@@ -101,7 +101,7 @@ export default defineComponent({
                   </UButton>
                 </div>
               ),
-              default: () => 'Note: Not any deposit is in the contract.'
+              default: () => 'Not any deposit is in the contract.'
             }}
           />
         ) : (
