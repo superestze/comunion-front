@@ -170,8 +170,8 @@ const CreateCrowdfundingForm = defineComponent({
           crowdfundingInfo.teamWallet,
           dayjs(crowdfundingInfo.startTime).valueOf() / 1000,
           dayjs(crowdfundingInfo.endTime).valueOf() / 1000,
-          'Create dCrowdfunding contract on blockchain.',
-          `dCrowdfunding is creating`
+          'Note: Create dCrowdfunding contract on blockchain.',
+          `Note: dCrowdfunding is creating`
         )
         return contractRes
       } catch (e: any) {
