@@ -45,7 +45,5 @@ export function useTabs(comerId: number) {
     }
   ])
 
-  return {
-    tabs
-  }
+  return tabs
 }
