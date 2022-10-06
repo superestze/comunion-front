@@ -105,7 +105,7 @@ export default defineComponent({
            * */
           if (this.bountyContractInfo.role !== USER_ROLE.FOUNDER && this.gapValue > 0) {
             await this.postUpdate(
-              'Note: Waiting to submit all contents to blockchain for post update',
+              'Waiting to submit all contents to blockchain for post update',
               'Post update succeedes'
             )
           }

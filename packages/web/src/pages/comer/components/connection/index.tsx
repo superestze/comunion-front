@@ -24,7 +24,7 @@ export default defineComponent({
   setup(props) {
     const followedStartups = computed(() => useFollowedStartups(props.comerId))
     const connector = computed(() => useConnector(props.comerId))
-    const tabsInstance = computed(() => useTabs(props.comerId))
+    const tabsInstance = useTabs(props.comerId)
     const followComer = computed(() => useFollowComer(props.comerId))
     const currentTabId = ref<string>('0')
 
@@ -44,6 +44,18 @@ export default defineComponent({
     watch(
       () => currentTabId.value,
       id => loadData(id, true)
+    )
+
+    watch(
+      () => tabsInstance.value,
+      tabs => {
+        if (tabs[0].totalRows === 0) {
+          const targetIndex = tabs.findIndex(tab => tab.totalRows > 0)
+          if (targetIndex !== -1) {
+            currentTabId.value = String(targetIndex)
+          }
+        }
+      }
     )
 
     onMounted(() => {
@@ -132,7 +144,7 @@ export default defineComponent({
                   end={this.followedStartups.list.value.length >= this.followedStartups.total.value}
                   v-slots={{
                     text: () => {
-                      return `More(${this.tabsInstance.tabs.value[0].totalRows})`
+                      return `More(${this.tabsInstance[0].totalRows})`
                     }
                   }}
                 />
@@ -182,7 +194,7 @@ export default defineComponent({
                   end={this.followComer.list.value.length >= this.followComer.total.value}
                   v-slots={{
                     text: () => {
-                      return `More(${this.tabsInstance.tabs.value[1].totalRows})`
+                      return `More(${this.tabsInstance[1].totalRows})`
                     }
                   }}
                 />
@@ -232,7 +244,7 @@ export default defineComponent({
                   end={this.connector.list.value.length >= this.connector.total.value}
                   v-slots={{
                     text: () => {
-                      return `More(${this.tabsInstance.tabs.value[2].totalRows})`
+                      return `More(${this.tabsInstance[2].totalRows})`
                     }
                   }}
                 />
@@ -243,16 +255,15 @@ export default defineComponent({
       }
     ]
 
-    return !this.view ||
-      this.tabsInstance.tabs.value.filter((item: any) => item.totalRows > 0).length > 0 ? (
+    return !this.view || this.tabsInstance.filter((item: any) => item.totalRows > 0).length > 0 ? (
       <UCard
-        title="Connection"
+        title="Connected"
         class="mb-6"
         v-slots={{
           'header-extra': () => {
             return (
               <UDropdownFilter
-                options={this.tabsInstance.tabs.value.map(item => ({
+                options={this.tabsInstance.map(item => ({
                   label: `${item.title}`,
                   value: item.id
                 }))}

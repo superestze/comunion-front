@@ -14,7 +14,7 @@ const StartupTags = defineComponent({
     },
     placeholder: {
       type: String,
-      default: 'Choose your skill tag'
+      default: 'Select your skill tag'
     },
     tagLimit: {
       type: Number,

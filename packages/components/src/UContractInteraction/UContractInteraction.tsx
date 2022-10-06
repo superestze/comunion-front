@@ -64,7 +64,7 @@ const UContractInteraction = defineComponent({
               {statusTextFilter(props.status)}
             </div>
             {props.status === 'pending' && (
-              <div class="u-contract-interaction-text">{props.text}</div>
+              <div class="u-contract-interaction-text">Note: {props.text}</div>
             )}
           </div>
         ) : (

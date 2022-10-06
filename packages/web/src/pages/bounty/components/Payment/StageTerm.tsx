@@ -120,7 +120,7 @@ export default defineComponent({
                       </div>
                     ),
                     default: () =>
-                      'Note: The pay button will be actived after the applicant is approvied.'
+                      'The pay button will be actived after the applicant is approvied.'
                   }}
                 </UTooltip>
               ))}

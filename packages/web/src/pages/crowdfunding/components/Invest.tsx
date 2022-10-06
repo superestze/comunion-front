@@ -253,7 +253,7 @@ export const Invest = defineComponent({
       let reason = ''
       if (disableRemoveOrCancel.value) {
         if (founderOperation.value !== 'Remove') {
-          reason = 'Note: This dCrowdfunding cannot be cancelled when it is in living.'
+          reason = 'This dCrowdfunding cannot be cancelled when it is in living.'
         }
       }
 
@@ -263,7 +263,7 @@ export const Invest = defineComponent({
     const removeCrowdfunding = async () => {
       try {
         removeModal.value = false
-        const pendingText = 'Note: Waiting to submit all contents to blockchain for removing'
+        const pendingText = 'Waiting to submit all contents to blockchain for removing'
         const waitingText = 'Waiting to confirm.'
         const contractRes: any = await fundingContract.remove(pendingText, waitingText)
         await services['crowdfunding@remove-crowdfunding']({
@@ -281,7 +281,7 @@ export const Invest = defineComponent({
 
     const cancelCrowdfunding = async () => {
       cancelModal.value = false
-      const pendingText = 'Note: Waiting to submit all contents to blockchain for canceling'
+      const pendingText = 'Waiting to submit all contents to blockchain for canceling'
       const waitingText = 'Waiting to confirm.'
       // Contract
       const contractRes: any = await fundingContract.cancel(pendingText, waitingText)
@@ -326,7 +326,7 @@ export const Invest = defineComponent({
     }
 
     const buyFromMainCoin = async (sellAmount: number | BigNumber) => {
-      const buyPendingText = 'Note: The transaction of buying is processing.'
+      const buyPendingText = 'The transaction of buying is processing.'
       const waitingText = 'Waiting to confirm.'
       try {
         console.log('fromValue.value==>', fromValue.value)
@@ -354,9 +354,9 @@ export const Invest = defineComponent({
 
     const buyFromTokenCoin = async (sellAmount: number | BigNumber) => {
       try {
-        const buyPendingText = 'Note: The transaction of buying is processing.'
+        const buyPendingText = 'The transaction of buying is processing.'
         const waitingText = 'Waiting to confirm.'
-        const approvePendingText = 'Note: The transaction of buying is processing.'
+        const approvePendingText = 'The transaction of buying is processing.'
         const buyAmount = ethers.utils.parseUnits(fromValue.value)
         contractStore.startContract(approvePendingText)
         const buyTokenRes = await tokenContract(props.info.buyTokenContract)
@@ -387,9 +387,9 @@ export const Invest = defineComponent({
       try {
         const fromAmount = ethers.utils.parseUnits(fromValue.value, props.sellCoinInfo.decimal!)
         const toAmount = ethers.utils.parseUnits(toValue.value)
-        const sellPendingText = 'Note: The selling transaction is processing.'
+        const sellPendingText = 'The selling transaction is processing.'
         const waitingText = 'Waiting to confirm.'
-        const approvePendingText = 'Note: The transaction of selling is processing.'
+        const approvePendingText = 'The transaction of selling is processing.'
         contractStore.startContract(approvePendingText)
 
         const sellTokenRes = tokenContract(props.info.sellTokenContract)
@@ -419,10 +419,10 @@ export const Invest = defineComponent({
       try {
         const fromAmount = ethers.utils.parseUnits(fromValue.value, props.sellCoinInfo.decimal!)
 
-        const sellPendingText = 'Note: The selling transaction is processing.'
+        const sellPendingText = 'The selling transaction is processing.'
         const waitingText = 'Waiting to confirm.'
 
-        const approvePendingText = 'Note: The transaction of selling is processing.'
+        const approvePendingText = 'The transaction of selling is processing.'
         contractStore.startContract(approvePendingText)
         const sellTokenRes = tokenContract(props.info.sellTokenContract)
         const approveRes: Contract = await sellTokenRes.approve(
@@ -482,9 +482,9 @@ export const Invest = defineComponent({
     const disabledBuyReason = computed(() => {
       let reason = ''
       if (countDownTime.value.status === CrowdfundingStatus.UPCOMING) {
-        reason = 'Note: This dCrowdfunding is not opened yet.'
+        reason = 'This dCrowdfunding is not opened yet.'
       } else if (countDownTime.value.status === CrowdfundingStatus.ENDED) {
-        reason = 'Note: This dCrowdfunding has ended.'
+        reason = 'This dCrowdfunding has ended.'
       }
       return reason
     })
@@ -908,7 +908,7 @@ export const Invest = defineComponent({
             }}
           >
             <div class="min-h-20 p-4 text-color2 u-h6">
-              Note: The dCrowdfungding will be closed at once you click 'Yes'.
+              The dCrowdfungding will be closed at once you click 'Yes'.
             </div>
             <div class="flex mt-4 justify-end">
               <UButton
@@ -941,7 +941,7 @@ export const Invest = defineComponent({
             }}
           >
             <div class="min-h-20 p-4 text-color2 u-h6">
-              Note: All fundings will be sent to team wallet at once you click 'Yes'.
+              All fundings will be sent to team wallet at once you click 'Yes'.
             </div>
 
             <div class="flex mt-4 justify-end">
