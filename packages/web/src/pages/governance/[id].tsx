@@ -503,6 +503,15 @@ const ProposalDetail = defineComponent({
                   </div>
                 ) : (
                   <UPopover
+                    arrowStyle={{ background: 'rgba(0, 0, 0, 0.5)' }}
+                    contentStyle={{
+                      background: 'rgba(0, 0, 0, 0.5)',
+                      borderRadius: '0.25rem',
+                      fontSize: '0.8rem',
+                      padding: '0.5rem',
+                      color: '#fff'
+                    }}
+                    raw={true}
                     placement="top"
                     v-slots={{
                       trigger: () => (
