@@ -149,11 +149,11 @@ export const services = {
     return requestAdapter<
       {
         /**
-   * @description
-  ModuleStartup - 1
-  ModuleBounty - 2
-  ModuleCrowdfunding - 3
-  ModuleProposal - 4
+   * @description 
+	ModuleStartup - 1
+	ModuleBounty - 2
+	ModuleCrowdfunding - 3
+	ModuleProposal - 4
 
 
      */
@@ -1104,48 +1104,32 @@ export const services = {
        * @example Test
        */
       keyword?: any
-    } & {
-      /**
-       * @description 第几页，默认1
-       */
-      page: number
-      /**
-       * @description 排序：字段:asc/desc
-       */
-      sort: string
-    }
+    } & {}
   ) {
     return requestAdapter<{
-      limit?: number
       page?: number
+      limit?: number
       sort?: string
       totalRows?: number
       totalPages?: number
       rows: {
-        bountyId: number
-        startupId: number
-        chainID: number
-        logo: string
-        title: string
-        status: string
-        onChainStatus: string
-        paymentType: string
-        applyCutoffDate: string
-        createdTime: string
-        rewards: {
-          tokenSymbol: string
-          amount: number
+        bountyId?: number
+        startupId?: number
+        chainID?: number
+        logo?: string
+        title?: string
+        status?: string
+        onChainStatus?: string
+        paymentType?: string
+        applyCutoffDate?: string
+        createdTime?: string
+        rewards?: {
+          tokenSymbol?: string
+          amount?: number
         }[]
-        applicantCount: number
-        /**
-         * @description 押金token symbol
-         */
-        depositTokenSymbol: string
-        /**
-         * @description 技能要求
-         */
-        applicationSkills: string[]
-        depositRequirements: number
+        applicantCount?: number
+        applicationSkills?: string[]
+        depositRequirements?: number
       }[]
     }>({
       url: replacePath('/cores/bounties', args),
@@ -1286,22 +1270,19 @@ export const services = {
   'bounty@bounty-startup-list'(args: { bountyID: any }) {
     return requestAdapter<{
       id?: number
-      logo?: string
-      mission: string
       title?: string
+      mode?: number
+      logo?: string
       chainID?: number
       blockChainAddress?: string
+      contractAudit?: string
       website?: string
       discord?: string
       twitter?: string
       telegram?: string
-      mode?: number
-      contractAudit?: string
-      docs: string
-      tag: string[]
-      email?: string
-      medium?: string
-      facebook?: string
+      docs?: string
+      mission?: string
+      tag?: string[]
     }>({
       url: replacePath('/bounty/{bountyID}/startup', args),
       method: 'GET',
@@ -1476,10 +1457,6 @@ export const services = {
         applicantCount: number
         depositRequirements: number
         /**
-         * @description 押金token symbol
-         */
-        depositTokenSymbol: string
-        /**
          * @description 技能要求
          */
         applicationSkills: string[]
@@ -1574,10 +1551,6 @@ export const services = {
          */
         applicantCount: number
         depositRequirements: number
-        /**
-         * @description 押金token symbol
-         */
-        depositTokenSymbol: string
         /**
          * @description 技能要求
          */
@@ -1772,10 +1745,6 @@ export const services = {
          */
         applicantCount: number
         depositRequirements: number
-        /**
-         * @description 押金token symbol
-         */
-        depositTokenSymbol: string
         /**
          * @description 技能要求
          */
@@ -2675,13 +2644,12 @@ export const services = {
         proposalId: number
         voterComerId: number
         voterWalletAddress: string
-        voterComerName: string
         choiceItemId: number
         choiceItemName: string
         votes: number
         ipfsHash: string
         voterComerAvatar: string
-        field_10: string
+        voterComerName: string
       }[]
     }>({
       url: replacePath('/cores/proposals/:proposalID/vote-records', args),
@@ -2692,7 +2660,10 @@ export const services = {
   'governance@public-list'(args: {
     page: number
     limit: number
-    keyword: string
+    /**
+     * @description 搜索关键字
+     */
+    keyword?: string
     states?: number[]
   }) {
     return requestAdapter<{
@@ -2995,14 +2966,14 @@ export const services = {
   'startup@social-delete'(args: { startupID: any }) {
     return requestAdapter<{
       /**
-   * @description 	1-SocialEmail
-  2-SocialWebsite
-  3-SocialTwitter
-  4-SocialDiscord
-  5-SocialTelegram
-  6-SocialMedium
-  7-SocialFacebook
-  8-SocialLinktre
+   * @description 	1-SocialEmail 
+	2-SocialWebsite
+	3-SocialTwitter
+	4-SocialDiscord
+	5-SocialTelegram
+	6-SocialMedium
+	7-SocialFacebook
+	8-SocialLinktre
      */
       socialType: number
     }>({
@@ -3028,9 +2999,9 @@ export const services = {
       chainId: number
       /**
    * @description 	ModeESG Mode = 1
-  ModeNGO Mode = 2
-  ModeDAO Mode = 3
-  ModeCOM Mode = 4
+	ModeNGO Mode = 2
+	ModeDAO Mode = 3
+	ModeCOM Mode = 4
 
      */
       mode: number

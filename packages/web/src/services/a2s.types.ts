@@ -36,8 +36,8 @@ export type RequestBody =
 export interface RequestFunctionArgs {
   url: string
   method: Method
-  query: RequestQuery | null | undefined
-  body: RequestBody | null | undefined
+  query?: RequestQuery | null
+  body?: RequestBody | null
   extraParams?: RequestBody
   done?: boolean
 }
@@ -45,7 +45,7 @@ export interface RequestFunctionArgs {
 export type ResponseObject<T> =
   | {
       error: true
-      data: null
+      data?: null
       message?: string
       stack?: string | Error
     }
