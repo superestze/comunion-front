@@ -1114,23 +1114,23 @@ export const services = {
       totalPages?: number
       rows: {
         bountyId: number
-        depositTokenSymbol?: string
-        startupId?: number
-        chainID?: number
-        logo?: string
-        title?: string
-        status?: string
-        onChainStatus?: string
-        paymentType?: string
-        applyCutoffDate?: string
-        createdTime?: string
-        rewards?: {
+        depositTokenSymbol: string
+        startupId: number
+        chainID: number
+        logo: string
+        title: string
+        status: string
+        onChainStatus: string
+        paymentType: string
+        applyCutoffDate: string
+        createdTime: string
+        rewards: {
           tokenSymbol?: string
           amount?: number
         }[]
-        applicantCount?: number
-        applicationSkills?: string[]
-        depositRequirements?: number
+        applicantCount: number
+        applicationSkills: string[]
+        depositRequirements: number
       }[]
     }>({
       url: replacePath('/cores/bounties', args),

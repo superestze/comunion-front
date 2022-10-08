@@ -6,11 +6,12 @@ import { defineComponent, PropType, reactive, onMounted, ref } from 'vue'
 import { useRouter } from 'vue-router'
 import StartupLogo from '@/components/StartupLogo'
 import { BOUNTY_TYPES_COLOR_MAP } from '@/constants'
-import { ServiceReturn, services } from '@/services'
+import { services } from '@/services'
+import { BountyItem } from '@/types'
 import { getChainInfoByChainId } from '@/utils/etherscan'
 import { checkSupportNetwork } from '@/utils/wallet'
-
-type BountyType = NonNullable<ServiceReturn<'bounty@startup-bounty-list'>>['rows']
+// type BountyType = NonNullable<ServiceReturn<'bounty@startup-bounty-list'>>['rows']
+type BountyType = BountyItem[]
 
 export default defineComponent({
   name: 'BountyCard',
@@ -105,25 +106,23 @@ export default defineComponent({
             </div>
           </div>
           <div class="flex font-primary text-primary items-center">
-            {props.startup.rewards?.map(
-              (item: { tokenSymbol: string; amount: number }, i: number) => {
-                return (
-                  <>
-                    {i > 0 && (
-                      <span key={i} class="mx-1 text-base ">
-                        +
-                      </span>
-                    )}
-                    <span key={i} class="mr-0.5 u-num1 ">
-                      {item.amount}
+            {props.startup.rewards?.map((item: any, i: number) => {
+              return (
+                <>
+                  {i > 0 && (
+                    <span key={i} class="mx-1 text-base ">
+                      +
                     </span>
-                    <span key={i} class="align-middle u-h7">
-                      {item.tokenSymbol}
-                    </span>
-                  </>
-                )
-              }
-            )}
+                  )}
+                  <span key={i} class="mr-0.5 u-num1 ">
+                    {item.amount}
+                  </span>
+                  <span key={i} class="align-middle u-h7">
+                    {item.tokenSymbol}
+                  </span>
+                </>
+              )
+            })}
           </div>
         </div>
         <div class="flex font-primary ml-4.5rem text-color3 items-center u-h7">
