@@ -191,6 +191,9 @@ const UStyleProvider = defineComponent({
       },
       Dropdown: {
         optionColorActive: props.colorHover
+      },
+      Tooltip: {
+        color: 'rgba(0,0,0,.8)'
       }
     }))
 

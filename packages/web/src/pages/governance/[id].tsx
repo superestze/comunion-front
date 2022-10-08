@@ -437,6 +437,14 @@ const ProposalDetail = defineComponent({
               <UPopover
                 trigger="click"
                 placement="bottom"
+                arrowStyle={{ background: '#fff' }}
+                contentStyle={{
+                  background: '#fff',
+                  borderRadius: '0.25rem',
+                  fontSize: '0.8rem',
+                  padding: '0.5rem'
+                }}
+                raw={true}
                 v-slots={{
                   trigger: () => <MoreFilled class="cursor-pointer h-7 w-9" />,
                   default: () => (
@@ -503,15 +511,6 @@ const ProposalDetail = defineComponent({
                   </div>
                 ) : (
                   <UPopover
-                    arrowStyle={{ background: 'rgba(0, 0, 0, 0.5)' }}
-                    contentStyle={{
-                      background: 'rgba(0, 0, 0, 0.5)',
-                      borderRadius: '0.25rem',
-                      fontSize: '0.8rem',
-                      padding: '0.5rem',
-                      color: '#fff'
-                    }}
-                    raw={true}
                     placement="top"
                     v-slots={{
                       trigger: () => (

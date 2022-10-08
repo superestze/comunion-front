@@ -551,11 +551,7 @@ export const Invest = defineComponent({
         ? Number(data).toLocaleString()
         : Number(data).toLocaleString() + '.00'
       return (
-        <UTooltip
-          style={{
-            background: ' rgba(0,0,0,0.6)'
-          }}
-        >
+        <UTooltip>
           {{
             trigger: () =>
               data > 1000000 ? (
@@ -821,11 +817,7 @@ export const Invest = defineComponent({
               <div class="flex mb-4 u-h6">
                 <span class="flex flex-1 text-color1 overflow-hidden items-center">
                   Swap %：
-                  <UTooltip
-                    style={{
-                      background: ' rgba(0,0,0,0.6)'
-                    }}
-                  >
+                  <UTooltip>
                     {{
                       trigger: () => <QuestionFilled class="h-4 text-color3 w-4" />,
                       default: () => (
@@ -850,11 +842,7 @@ export const Invest = defineComponent({
               <div class="flex mb-4 u-h6">
                 <span class="flex flex-1 text-color1 overflow-hidden items-center">
                   Sell tax %：
-                  <UTooltip
-                    style={{
-                      background: ' rgba(0,0,0,0.6)'
-                    }}
-                  >
+                  <UTooltip>
                     {{
                       trigger: () => <QuestionFilled class="h-4 text-color3 w-4" />,
                       default: () => (
@@ -871,11 +859,7 @@ export const Invest = defineComponent({
               <div class="flex u-h6">
                 <span class="flex flex-1 text-color1 overflow-hidden items-center">
                   Maximum sell % ：
-                  <UTooltip
-                    style={{
-                      background: ' rgba(0,0,0,0.6)'
-                    }}
-                  >
+                  <UTooltip>
                     {{
                       trigger: () => <QuestionFilled class="h-4 text-color3 w-4" />,
                       default: () => (

@@ -227,7 +227,7 @@ export default defineComponent({
                                     </div>
                                   ),
                                   default: () => (
-                                    <div class="text-white w-84">
+                                    <div class="w-84">
                                       Post an update at least every 5 days, otherwise you will lose
                                       the permission to lock the deposit, and the founder can
                                       unlock.
