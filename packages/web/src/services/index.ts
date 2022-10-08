@@ -1113,23 +1113,24 @@ export const services = {
       totalRows?: number
       totalPages?: number
       rows: {
-        bountyId?: number
-        startupId?: number
-        chainID?: number
-        logo?: string
-        title?: string
-        status?: string
-        onChainStatus?: string
-        paymentType?: string
-        applyCutoffDate?: string
-        createdTime?: string
-        rewards?: {
+        bountyId: number
+        depositTokenSymbol: string
+        startupId: number
+        chainID: number
+        logo: string
+        title: string
+        status: string
+        onChainStatus: string
+        paymentType: string
+        applyCutoffDate: string
+        createdTime: string
+        rewards: {
           tokenSymbol?: string
           amount?: number
         }[]
-        applicantCount?: number
-        applicationSkills?: string[]
-        depositRequirements?: number
+        applicantCount: number
+        applicationSkills: string[]
+        depositRequirements: number
       }[]
     }>({
       url: replacePath('/cores/bounties', args),
@@ -1283,6 +1284,9 @@ export const services = {
       docs?: string
       mission?: string
       tag?: string[]
+      email?: string
+      medium?: string
+      facebook?: string
     }>({
       url: replacePath('/bounty/{bountyID}/startup', args),
       method: 'GET',
@@ -1460,6 +1464,7 @@ export const services = {
          * @description 技能要求
          */
         applicationSkills: string[]
+        depositTokenSymbol: string
       }[]
     }>({
       url: replacePath('/cores/bounties/comer/:comerID/participated', args),
@@ -1559,6 +1564,7 @@ export const services = {
          * @description 上链状态
          */
         onChainStatus: string
+        depositTokenSymbol: string
       }[]
     }>({
       url: replacePath('/cores/bounties/comer/:comerID/posted', args),
@@ -1753,6 +1759,7 @@ export const services = {
          * @description 上链状态
          */
         onChainStatus: string
+        depositTokenSymbol: string
       }[]
     }>({
       url: replacePath('/cores/bounties/me/posted', args),
@@ -1845,6 +1852,7 @@ export const services = {
          * @description 技能要求
          */
         applicationSkills: string[]
+        onChainStatus: string
       }[]
     }>({
       url: replacePath('/cores/bounties/startup/:startupId', args),

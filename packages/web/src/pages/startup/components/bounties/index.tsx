@@ -2,9 +2,9 @@ import { UCard, UNoContent } from '@comunion/components'
 import { EmptyFilled } from '@comunion/icons'
 import { defineComponent, ref } from 'vue'
 import BountiesCard from '@/pages/bounty/components/BountyCard'
-import { ServiceReturn, services } from '@/services'
-
-type BountyType = NonNullable<ServiceReturn<'bounty@startup-bounty-list'>>['rows']
+import { services } from '@/services'
+import { BountyItem } from '@/types'
+type BountyType = BountyItem[]
 
 export default defineComponent({
   props: {
