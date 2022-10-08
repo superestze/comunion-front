@@ -1113,7 +1113,7 @@ export const services = {
       totalRows?: number
       totalPages?: number
       rows: {
-        bountyId?: number
+        bountyId: number
         depositTokenSymbol?: string
         startupId?: number
         chainID?: number
@@ -1464,7 +1464,7 @@ export const services = {
          * @description 技能要求
          */
         applicationSkills: string[]
-        depositTokenSymbol?: string
+        depositTokenSymbol: string
       }[]
     }>({
       url: replacePath('/cores/bounties/comer/:comerID/participated', args),
@@ -1564,7 +1564,7 @@ export const services = {
          * @description 上链状态
          */
         onChainStatus: string
-        depositTokenSymbol?: string
+        depositTokenSymbol: string
       }[]
     }>({
       url: replacePath('/cores/bounties/comer/:comerID/posted', args),
@@ -1759,6 +1759,7 @@ export const services = {
          * @description 上链状态
          */
         onChainStatus: string
+        depositTokenSymbol: string
       }[]
     }>({
       url: replacePath('/cores/bounties/me/posted', args),
