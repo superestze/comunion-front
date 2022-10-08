@@ -25,7 +25,7 @@ export function getBuyCoinAddress(mainCoinAddress: string): Record<number, Selec
     ],
     4002: [
       { label: 'FTM', value: mainCoinAddress },
-      { label: 'USDC', value: AVAX_USDC_ADDR[4002] }
+      { label: 'QCTS', value: AVAX_USDC_ADDR[4002] }
     ],
     250: [
       { label: 'FTM', value: mainCoinAddress },
