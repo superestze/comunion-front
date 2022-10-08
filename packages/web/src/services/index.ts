@@ -1852,6 +1852,7 @@ export const services = {
          * @description 技能要求
          */
         applicationSkills: string[]
+        onChainStatus: string
       }[]
     }>({
       url: replacePath('/cores/bounties/startup/:startupId', args),
