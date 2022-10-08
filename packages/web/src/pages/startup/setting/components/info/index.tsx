@@ -10,7 +10,7 @@ import {
   message
 } from '@comunion/components'
 import { CustomRequest } from 'naive-ui/lib/upload/src/interface'
-import { defineComponent, ref, reactive, PropType, watch, CSSProperties, h, computed } from 'vue'
+import { defineComponent, ref, reactive, PropType, watch, h, computed } from 'vue'
 import { RectDraggerUpload } from '@/components/Upload'
 import {
   getStartupTypeFromNumber,
@@ -244,13 +244,6 @@ export default defineComponent({
         t: 'switch',
         title: '',
         name: 'switchChain',
-        railStyle: ({ focused, checked }: { focused: boolean; checked: boolean }) => {
-          const style: CSSProperties = {}
-          if (checked) {
-            style.background = '#00BFA5'
-          }
-          return style
-        },
         onUpdateValue: (value: boolean) => switchChange(value),
         disabled: info.isChain
       },

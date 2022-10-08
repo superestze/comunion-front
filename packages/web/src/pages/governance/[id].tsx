@@ -5,6 +5,7 @@ import {
   ULazyImage,
   UModal,
   UPopover,
+  UTooltip,
   USpin,
   UTable,
   UTag,
@@ -510,7 +511,7 @@ const ProposalDetail = defineComponent({
                     Vote
                   </div>
                 ) : (
-                  <UPopover
+                  <UTooltip
                     placement="top"
                     v-slots={{
                       trigger: () => (

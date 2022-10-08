@@ -196,7 +196,7 @@ function renderField(field: FormFactoryField, values: FormData) {
             <span class="text-[14px] " style="margin: 0 0 0 18px;">
               Post the two fields to blockchain
             </span>
-            <UTooltip trigger="hover" style={{ backgroundColor: 'rgba(0, 0, 0, 0.6)' }}>
+            <UTooltip trigger="hover">
               {{
                 trigger: () => <QuestionCircleOutlined class="h-4 ml-2 text-color2 w-4" />,
                 default: () => (
