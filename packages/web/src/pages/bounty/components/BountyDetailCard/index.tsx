@@ -86,7 +86,7 @@ export default defineComponent({
           {this.bountyStatus && <UTag class="ml-4">{this.bountyStatus.label}</UTag>}
         </div>
         <Paragraph
-          class="mt-6"
+          class="mt-6 items-center"
           label={'Created :'}
           content={this.createdAt}
           contentClass="text-color2"
@@ -94,28 +94,28 @@ export default defineComponent({
         {this.bountyDetail?.contact?.map(item => {
           return (
             <Paragraph
-              class="mt-4"
+              class="mt-4 items-center"
               label={`${this.contactLabel[(item.contactType || 0) - 1]} :`}
               content={item.contactAddress}
-              contentClass="text-primary"
+              contentClass="text-primary flex items-center"
               pasteboard={true}
             />
           )
         })}
         <Paragraph
-          class="mt-4"
+          class="mt-4 items-center"
           label={'Apply Cutoff Date :'}
           content={dayjs.utc(this.bountyDetail?.expiresIn).format('YYYY-MM-DD HH:mm UTC')}
           contentClass="text-color2 font-primary"
         />
         <Paragraph
-          class="mt-4"
+          class="mt-4 items-center"
           label={'Applicants deposit :'}
           content={`${this.bountyDetail?.applicantsDeposit} ${this.bountyDetail?.depositTokenSymbol}`}
           contentClass="text-color2 font-primary"
         />
         <Paragraph
-          class="mt-4"
+          class="mt-4 "
           label={'Description :'}
           content={this.bountyDetail?.description}
           foldAble={true}
