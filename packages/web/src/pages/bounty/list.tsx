@@ -141,7 +141,7 @@ const BountyPage = defineComponent({
             />
           </div>
           {DataList.value.map(item => (
-            <BountyCard key={item.bountyId} startup={item} />
+            <BountyCard key={item.bountyId} info={item} />
           ))}
           {pagination.loading &&
             new Array(pagination.pageSize).fill('').map(item => <BountySkeleton />)}
