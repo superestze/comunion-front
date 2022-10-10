@@ -1,7 +1,7 @@
 import { UCard, UNoContent } from '@comunion/components'
 import { EmptyFilled } from '@comunion/icons'
 import { defineComponent, ref } from 'vue'
-import BountiesCard from '@/pages/bounty/components/BountyCard'
+import BountyCard from '@/pages/bounty/components/BountyCard'
 import { services } from '@/services'
 import { BountyItem } from '@/types'
 type BountyType = BountyItem[]
@@ -36,7 +36,7 @@ export default defineComponent({
       <UCard title="Bounty" class="mb-6">
         {Array.isArray(this.bounties) && this.bounties.length > 0 ? (
           this.bounties.map(item => (
-            <BountiesCard class="-mx-4" startup={item} key={item.bountyId} miniCard />
+            <BountyCard class="-mx-4" info={item} key={item.bountyId} miniCard />
           ))
         ) : (
           <UNoContent textTip="No connect yet">
