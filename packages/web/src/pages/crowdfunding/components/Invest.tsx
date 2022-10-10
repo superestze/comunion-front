@@ -490,8 +490,16 @@ export const Invest = defineComponent({
         reason = `The dCrowdfunding has reached goal.`
       } else if (!(Number(fromValue.value) > 0)) {
         reason = `Enter a ${mode.value} amount.`
-      } else if (mode.value === 'buy' && Number(fromValue.value) > Number(maxBuyAmount.value)) {
+      } else if (
+        mode.value === 'buy' &&
+        Number(fromValue.value) > Number(props.info.maxBuyAmount!)
+      ) {
         reason = `Cannot buy more than maximum buy amounty.`
+      } else if (
+        mode.value === 'buy' &&
+        Number(fromValue.value) > Number(props.buyCoinInfo.balance!)
+      ) {
+        reason = `Cannot buy more than your balance.`
       } else if (mode.value === 'sell' && Number(fromValue.value) > Number(maxSellAmount.value)) {
         reason = `Cannot sell more than maximum sell amounty.`
       }
@@ -510,10 +518,9 @@ export const Invest = defineComponent({
 
     const getMaxAmount = async () => {
       const buyRes = await fundingContract.maxBuyAmount('', '')
-      console.log('buyRes===>', buyRes)
 
       maxBuy.value = ethers.utils.formatUnits(buyRes[0], props.buyCoinInfo.decimal)
-
+      console.log('maxBuy.value==>', maxBuy.value)
       const sellRes = await fundingContract.maxSellAmount('', '')
       maxSell.value = ethers.utils.formatUnits(sellRes[1], props.sellCoinInfo.decimal)
       console.log('maxSell.value==>', maxSell.value)
