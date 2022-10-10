@@ -62,8 +62,8 @@ export const Invest = defineComponent({
       chainId: walletStore.chainId!,
       addresses: { [walletStore.chainId!]: props.info.crowdfundingContract }
     })
-    const maxBuy = ref()
-    const maxSell = ref()
+    const maxBuy = ref<number | string>(0)
+    const maxSell = ref<number | string>(0)
     const mode = ref<'buy' | 'sell'>('buy')
     const tokenContract = useErc20Contract()
 
@@ -474,8 +474,9 @@ export const Invest = defineComponent({
       return (
         countDownTime.value.status !== CrowdfundingStatus.LIVE ||
         Number(fromValue.value) <= 0 ||
-        (mode.value === 'buy' && fromValue.value > maxBuyAmount.value) ||
-        (mode.value === 'sell' && fromValue.value > maxSellAmount.value)
+        raiseState.value.raisePercent >= 100 ||
+        (mode.value === 'buy' && Number(fromValue.value) > Number(maxBuyAmount.value)) ||
+        (mode.value === 'sell' && Number(fromValue.value) > Number(maxSellAmount.value))
       )
     })
 
@@ -485,6 +486,14 @@ export const Invest = defineComponent({
         reason = 'This dCrowdfunding is not opened yet.'
       } else if (countDownTime.value.status === CrowdfundingStatus.ENDED) {
         reason = 'This dCrowdfunding has ended.'
+      } else if (raiseState.value.raisePercent >= 100) {
+        reason = `The dCrowdfunding has reached goal.`
+      } else if (!(Number(fromValue.value) > 0)) {
+        reason = `Enter a ${mode.value} amount.`
+      } else if (mode.value === 'buy' && Number(fromValue.value) > Number(maxBuyAmount.value)) {
+        reason = `Cannot buy more than maximum buy amounty.`
+      } else if (mode.value === 'sell' && Number(fromValue.value) > Number(maxSellAmount.value)) {
+        reason = `Cannot sell more than maximum sell amounty.`
       }
       return reason
     })
