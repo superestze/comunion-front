@@ -1,10 +1,11 @@
 import { UAddress, UButton, UCard, UInputNumberGroup, UModal, UTooltip } from '@comunion/components'
-import { ExchangeOutlined, QuestionFilled, MoneyIconFilled } from '@comunion/icons'
+import { ExchangeOutlined, QuestionFilled } from '@comunion/icons'
 import dayjs from 'dayjs'
 import { BigNumber, Contract, ethers } from 'ethers'
 import { defineComponent, computed, PropType, ref, onMounted, watch } from 'vue'
 import { CoinType } from '../[id]'
 import { CrowdfundingStatus } from '../utils'
+import CoinIcon from '@/components/CoinIcon'
 import { useErc20Contract, useCrowdfundingContract } from '@/contracts'
 import { ServiceReturn, services } from '@/services'
 import { useUserStore, useWalletStore } from '@/stores'
@@ -13,17 +14,19 @@ import { getChainInfoByChainId } from '@/utils/etherscan'
 import { formatToFloor } from '@/utils/numberFormat'
 import './invest.css'
 
-export const renderUnit = (name: string) => (
-  <div
-    class={[
-      'u-h5 flex justify-center items-center border rounded-r-sm bg-purple w-30',
-      { 'text-color1': name, 'text-color3': !name }
-    ]}
-  >
-    <MoneyIconFilled class="h-4 mr-2 w-4" />
-    <span>{name || 'Token'}</span>
-  </div>
-)
+export const renderUnit = (symbol: string) => {
+  return (
+    <div
+      class={[
+        'u-h5 flex justify-center items-center border rounded-r-sm bg-purple w-30',
+        { 'text-color1': symbol, 'text-color3': !symbol }
+      ]}
+    >
+      <CoinIcon symbol={symbol} class="h-4 mr-2 w-4" />
+      <span>{symbol || 'Token'}</span>
+    </div>
+  )
+}
 
 export const Invest = defineComponent({
   name: 'Invest',
