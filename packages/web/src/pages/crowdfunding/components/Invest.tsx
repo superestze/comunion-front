@@ -1,10 +1,11 @@
 import { UAddress, UButton, UCard, UInputNumberGroup, UModal, UTooltip } from '@comunion/components'
-import { ExchangeOutlined, QuestionFilled, MoneyIconFilled } from '@comunion/icons'
+import { ExchangeOutlined, QuestionFilled } from '@comunion/icons'
 import dayjs from 'dayjs'
 import { BigNumber, Contract, ethers } from 'ethers'
-import { defineComponent, computed, PropType, ref, onMounted } from 'vue'
+import { defineComponent, computed, PropType, ref, onMounted, watch } from 'vue'
 import { CoinType } from '../[id]'
 import { CrowdfundingStatus } from '../utils'
+import CoinIcon from '@/components/CoinIcon'
 import { useErc20Contract, useCrowdfundingContract } from '@/contracts'
 import { ServiceReturn, services } from '@/services'
 import { useUserStore, useWalletStore } from '@/stores'
@@ -13,17 +14,19 @@ import { getChainInfoByChainId } from '@/utils/etherscan'
 import { formatToFloor } from '@/utils/numberFormat'
 import './invest.css'
 
-export const renderUnit = (name: string) => (
-  <div
-    class={[
-      'u-h5 flex justify-center items-center border rounded-r-sm bg-purple w-30',
-      { 'text-color1': name, 'text-color3': !name }
-    ]}
-  >
-    <MoneyIconFilled class="h-4 mr-2 w-4" />
-    <span>{name || 'Token'}</span>
-  </div>
-)
+export const renderUnit = (symbol: string) => {
+  return (
+    <div
+      class={[
+        'u-h5 flex justify-center items-center border rounded-r-sm bg-purple w-30',
+        { 'text-color1': symbol, 'text-color3': !symbol }
+      ]}
+    >
+      <CoinIcon symbol={symbol} class="h-4 mr-2 w-4" />
+      <span>{symbol || 'Token'}</span>
+    </div>
+  )
+}
 
 export const Invest = defineComponent({
   name: 'Invest',
@@ -82,19 +85,38 @@ export const Invest = defineComponent({
     const maxBuyAmount = computed(() => {
       const decimal = getBuyCoinDecimal()
       return (
-        formatToFloor(getMin(maxBuy.value, props.buyCoinInfo.balance!).toString(), decimal) || '0'
+        formatToFloor(
+          getMin(maxBuy.value || 0, props.buyCoinInfo.balance || 0).toString(),
+          decimal
+        ) || '0'
       )
     })
 
     const maxSellAmount = computed(() => {
       return (
         formatToFloor(
-          getMin(maxSell.value, props.sellCoinInfo.balance!).toString(),
+          getMin(maxSell.value || 0, props.sellCoinInfo.balance || 0).toString(),
           props.sellCoinInfo.decimal!
         ) || '0'
       )
     })
+
+    watch(
+      () => fromValue.value,
+      value => {
+        changeFromValue(value)
+      }
+    )
+
+    watch(
+      () => toValue.value,
+      value => {
+        changeToValue(value)
+      }
+    )
+
     const changeFromValue = (value: string) => {
+      if (Number(value) === 0) toValue.value = '0'
       if (!value) return
       if (mode.value === 'buy') {
         toValue.value = formatToFloor(
@@ -114,6 +136,7 @@ export const Invest = defineComponent({
     }
 
     const changeToValue = (value: string) => {
+      if (Number(value) === 0) fromValue.value = '0'
       if (!value) return
       console.log('changeToValue value===>', value)
       if (mode.value === 'buy') {
@@ -698,10 +721,10 @@ export const Invest = defineComponent({
               }}
               type="withUnit"
               inputProps={{
-                onInput: changeFromValue,
+                // onInput: changeFromValue,
                 placeholder: '0.0',
-                precision: mode.value === 'buy' ? getBuyCoinDecimal() : props.sellCoinInfo.decimal
-                // max: mode.value === 'buy' ? maxBuyAmount.value : maxSellAmount.value
+                precision: mode.value === 'buy' ? getBuyCoinDecimal() : props.sellCoinInfo.decimal,
+                max: mode.value === 'buy' ? maxBuyAmount.value : maxSellAmount.value
               }}
               renderUnit={() =>
                 renderUnit(
@@ -729,11 +752,11 @@ export const Invest = defineComponent({
               <UInputNumberGroup
                 v-model:value={toValue.value}
                 inputProps={{
-                  onInput: changeToValue,
+                  // onInput: changeToValue,
                   placeholder: '0.0',
                   precision:
-                    mode.value === 'sell' ? getBuyCoinDecimal() : props.sellCoinInfo.decimal
-                  // max: mode.value === 'buy' ? maxSellAmount.value : maxBuyAmount.value
+                    mode.value === 'sell' ? getBuyCoinDecimal() : props.sellCoinInfo.decimal,
+                  max: mode.value === 'buy' ? maxSellAmount.value : maxBuyAmount.value
                 }}
                 v-slots={{
                   suffix: () => null
