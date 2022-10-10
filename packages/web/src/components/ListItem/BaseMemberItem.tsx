@@ -1,4 +1,3 @@
-import { UButton } from '@comunion/components'
 import { defineComponent, PropType, ref, watch, computed } from 'vue'
 
 export default defineComponent({
@@ -47,7 +46,10 @@ export default defineComponent({
       })
     }
     const handleUnconnect = () => {
-      this.$emit('unconnect', {
+      if (this.disabled) {
+        return null
+      }
+      return this.$emit('unconnect', {
         ...this.item,
         cb: () => {
           this.connect = false
@@ -66,28 +68,13 @@ export default defineComponent({
             </div>
           )}
         </div>
-        {this.connect ? (
-          <UButton
-            class="flex flex-shrink-0 text-color2 u-h7"
-            size="tiny"
-            text
-            disabled={this.disabled}
-            onClick={handleUnconnect}
-          >
-            {/* <CheckFilled class="mr-2" /> */}
-            Unconnect
-          </UButton>
-        ) : (
-          <UButton
-            class="flex flex-shrink-0 text-color2 u-h7"
-            size="tiny"
-            text
-            disabled={this.disabled}
-            onClick={handleConnect}
-          >
-            Connect
-          </UButton>
-        )}
+        <span
+          class="cursor-pointer text-color2 u-h7 hover:text-primary"
+          onClick={() => (this.connect ? handleUnconnect() : handleConnect())}
+        >
+          {/* <CheckFilled class="mr-2" /> */}
+          {this.connect ? 'Unconnect' : 'Connect'}
+        </span>
       </div>
     )
   }
