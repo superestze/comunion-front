@@ -5,10 +5,9 @@ import { useStartupProfile } from '../../hooks/useStartupProfile'
 import defaultCover from './assets/cover.png'
 import SocialIcon from '@/components/SocialIcon'
 import StartupLogo from '@/components/StartupLogo'
-import { getStartupTypeFromNumber, StartupTypesType } from '@/constants'
+import { getStartupTypeFromNumber, StartupTypesType, goTxHashPath } from '@/constants'
 import { getContactList } from '@/pages/startup/setting/[id]'
 import { contactList } from '@/pages/startup/setting/components/social/util'
-import { useChainStore } from '@/stores'
 import { StartupDetail } from '@/types'
 import { getChainInfoByChainId } from '@/utils/etherscan'
 export default defineComponent({
@@ -23,7 +22,6 @@ export default defineComponent({
     }
   },
   setup(props) {
-    const chainStore = useChainStore()
     const modeName = computed(() => {
       return getStartupTypeFromNumber(props.startup.mode) as StartupTypesType
     })
@@ -92,7 +90,7 @@ export default defineComponent({
     }
     const goPath = () => {
       if (startupInfo.value?.onChain) {
-        chainStore.goTxHashPath(startupInfo.value?.chainID, startupInfo.value.blockChainAddress)
+        goTxHashPath(startupInfo.value?.chainID, startupInfo.value.blockChainAddress)
       }
     }
     return {

@@ -180,3 +180,15 @@ export const supportedNetworks: ChainNetworkType[] = allNetworks.filter(network 
 )
 
 export const infuraKey = '65b449dc78314fe583ece8797faccc0a'
+
+export const goTxHashPath = (chainId: number, address: string) => {
+  let url = ''
+  allNetworks.forEach(item => {
+    if (item.chainId === chainId) {
+      url = item.explorerUrl
+    }
+  })
+  if (url) {
+    window.open(`${url}/tx/${address}`, address)
+  }
+}

@@ -9,10 +9,10 @@ import {
   FormFactoryField
 } from '@comunion/components'
 import { defineComponent, PropType, reactive, ref, CSSProperties, h } from 'vue'
-import { STARTUP_TYPES } from '@/constants'
+import { STARTUP_TYPES, supportedNetworks } from '@/constants'
 import { useStartupContract } from '@/contracts'
 import { services } from '@/services'
-import { useWalletStore, useChainStore } from '@/stores'
+import { useWalletStore } from '@/stores'
 import { useContractStore } from '@/stores/contract'
 import { reportError } from '@/utils/sentry'
 type chainSelectOption = {
@@ -28,6 +28,9 @@ type modelType = {
   overview: string
   tags: Array<string>
 }
+type createStartUpReturn = {
+  hash?: string
+}
 const CreateStartupForm = defineComponent({
   name: 'CreateStartupForm',
   props: {
@@ -37,9 +40,7 @@ const CreateStartupForm = defineComponent({
   },
   setup(props, ctx) {
     const walletStore = useWalletStore()
-    const chainStore = useChainStore()
     const contractStore = useContractStore()
-    const supportedNetworks = reactive(chainStore.supportedNetworks)
     const defaultModel = {
       nextwork: walletStore.chainId,
       // logo: '',
@@ -124,7 +125,7 @@ const CreateStartupForm = defineComponent({
             }
             try {
               if (model.switch) {
-                const res1 = await startupContract.newStartup(
+                const res1 = await startupContract.createStartup(
                   [
                     model.name,
                     // model.type ? model.type : 0,
@@ -137,10 +138,19 @@ const CreateStartupForm = defineComponent({
                     // model.overview,
                     true
                   ],
-                  model,
                   'The fields of network and name will be registered to blockchain.',
                   `Startup "${model.name}" is creating`
                 )
+                await contractStore.createStartupSuccessAfter({
+                  nextwork: model.nextwork === undefined ? 0 : model.nextwork,
+                  switch: false,
+                  name: model.name,
+                  type: model.type ? model.type : 0,
+                  mission: model.mission,
+                  overview: model.overview,
+                  tags: model.tags,
+                  txHash: (res1 as createStartUpReturn).hash || ''
+                })
                 if (!res1) {
                   throw new Error('fail')
                 }
