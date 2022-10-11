@@ -150,7 +150,7 @@ export const allNetworks: ChainNetworkType[] = [
     nologo: nosyscoin,
     chainId: 57,
     name: 'Syscoin Mainnet',
-    shortName: 'Mainnet',
+    shortName: 'Syscoin',
     currencySymbol: 'USDC',
     rpcUrl: 'https://rpc.ankr.com/syscoin',
     explorerUrl: 'https://explorer.syscoin.org'
