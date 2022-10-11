@@ -29,7 +29,7 @@ function socialIconComponent(
     const social = socialObj[item.serviceKey]
     if (social) {
       if (view) {
-        return <SocialIcon icon={item.value} link={view} address={social} />
+        return <SocialIcon icon={item.value} disable={!social} address={social} />
       } else {
         return (
           <UPopover
