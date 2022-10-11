@@ -33,9 +33,9 @@ export default defineComponent({
       type: Object as PropType<ServiceReturn<'bounty@bounty-payment'>>,
       required: true
     },
-    bountySection: {
+    bountyDetail: {
       type: Object,
-      default: () => null
+      required: true
     },
     bountyExpired: {
       type: Boolean,
@@ -44,9 +44,7 @@ export default defineComponent({
   },
   setup(props) {
     const bountyStore = useBountyStore()
-    const bountyDetail = computed(() => {
-      return props.bountySection.detail
-    })
+
     const payMode = computed<'stage' | 'period'>(() => {
       return props.paymentInfo?.bountyPaymentInfo?.paymentMode === 1 ? 'stage' : 'period'
     })
@@ -90,8 +88,7 @@ export default defineComponent({
       periodTerms,
       bountyApplicantAmount,
       time,
-      expiresIn,
-      bountyDetail
+      expiresIn
     }
   },
   render() {

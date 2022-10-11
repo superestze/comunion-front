@@ -11,9 +11,10 @@ import PersonalCard from './components/PersonalCard'
 import PostUpdate from './components/PostUpdate'
 import StartupCard from './components/StartupCard'
 import { useBountyContractWrapper } from './hooks/useBountyContractWrapper'
+import useBountyDetail from './hooks/useBountyDetail'
 import { BOUNTY_STATUS, PERIOD_OPTIONS, USER_ROLE } from '@/constants'
 import { services } from '@/services'
-import { useBountyStore, useWalletStore } from '@/stores'
+import { useWalletStore } from '@/stores'
 import { useBountyContractStore } from '@/stores/bountyContract'
 import { getChainInfoByChainId } from '@/utils/etherscan'
 
@@ -22,31 +23,28 @@ export default defineComponent({
   setup() {
     const route = useRoute()
     const router = useRouter()
-    const bountyStore = useBountyStore()
+
     const walletStore = useWalletStore()
 
     const loading = ref<boolean>(false)
-    // initialize
-    bountyStore.initialize(route.params.id as string)
 
-    const bountySection = computed(() => bountyStore.bountySection)
+    const bountySection = useBountyDetail(String(route.params.id))
     const bountyContractStore = useBountyContractStore()
     const bountyContract = ref()
     const postUpdate = ref<any>()
     const gapValue = ref<number>(0)
     const gapUnit = ref<string>('day')
     const chainInfo = computed(() =>
-      getChainInfoByChainId(bountySection.value.detail?.chainID as number)
+      getChainInfoByChainId(bountySection.detail.value?.chainID as number)
     )
 
     const bountyContractInfo = computed(() => bountyContractStore.bountyContractInfo)
 
     const bountyExpired = computed(() => {
       const time = dayjs().utcOffset(0).unix()
-      const expiresIn = dayjs.utc(bountyStore.bountySection.detail?.expiresIn || '').unix()
+      const expiresIn = dayjs.utc(bountySection.detail.value?.expiresIn || '').unix()
       const notApplicant =
-        !bountyStore.bountySection.applicantsList ||
-        bountyStore.bountySection.applicantsList.length == 0
+        !bountySection.applicantsList.value || bountySection.applicantsList.value.length == 0
       const isExpires = expiresIn > 0 && time > 0 && time >= expiresIn
       if (isExpires && notApplicant) {
         return true
@@ -66,7 +64,7 @@ export default defineComponent({
 
     let isInit = false
     watch(
-      [() => bountySection.value.detail, bountyContractStore.bountyContractInfo],
+      [() => bountySection.detail.value, bountyContractStore.bountyContractInfo],
       ([detail, bountyContractInfo]) => {
         if (detail?.depositContract && !isInit) {
           const BountyContractWrapper = useBountyContractWrapper(route.params.id as string)
@@ -142,10 +140,10 @@ export default defineComponent({
         <div class="flex mb-20 gap-6">
           <div class="overflow-hidden basis-2/3">
             <div class="bg-white border rounded-sm mb-6 p-6">
-              {this.bountySection.detail && (
+              {this.bountySection.detail.value && (
                 <BountyDetailCard
                   bountyExpired={this.bountyExpired}
-                  bountyDetail={this.bountySection.detail}
+                  bountyDetail={this.bountySection.detail.value}
                 />
               )}
             </div>
@@ -157,7 +155,8 @@ export default defineComponent({
                   <div class="flex justify-between">
                     <p class="flex items-center">
                       <span class="mr-6 text-color2 u-h5">Payment</span>
-                      {this.bountySection.bountyPayment?.bountyPaymentInfo?.paymentMode === 1 ? (
+                      {this.bountySection.bountyPayment.value?.bountyPaymentInfo?.paymentMode ===
+                      1 ? (
                         <>
                           <StageOutlined class="h-4 w-4" />
                           <p class="font-medium text-primary ml-2">Stage</p>
@@ -168,7 +167,7 @@ export default defineComponent({
                           <p class="font-medium text-primary ml-2">
                             Period:{' '}
                             {getPeriodByType(
-                              this.bountySection.bountyPayment?.periodTerms?.periodType || 1
+                              this.bountySection.bountyPayment.value?.periodTerms?.periodType || 1
                             )}
                           </p>
                         </>
@@ -184,12 +183,12 @@ export default defineComponent({
                 )
               }}
             >
-              {this.bountySection.bountyPayment && (
+              {this.bountySection.bountyPayment.value && (
                 <Payment
-                  detailChainId={this.bountySection.detail?.chainID || 0}
+                  detailChainId={this.bountySection.detail.value?.chainID || 0}
                   bountyContractInfo={this.bountyContractInfo}
-                  paymentInfo={this.bountySection.bountyPayment}
-                  bountySection={this.bountySection}
+                  paymentInfo={this.bountySection.bountyPayment.value}
+                  bountyDetail={this.bountySection.detail}
                   bountyExpired={this.bountyExpired}
                 />
               )}
@@ -253,35 +252,39 @@ export default defineComponent({
                 }
               }}
             >
-              {this.bountySection.activitiesList && this.bountySection.activitiesList.length > 0 && (
-                <>
-                  {this.bountySection.activitiesList.map(activity => (
-                    <ActivityBubble activity={activity} />
-                  ))}
-                </>
-              )}
+              {this.bountySection.activitiesList.value &&
+                this.bountySection.activitiesList.value.length > 0 && (
+                  <>
+                    {this.bountySection.activitiesList.value.map(activity => (
+                      <ActivityBubble activity={activity} />
+                    ))}
+                  </>
+                )}
             </UCard>
             <UCard title="Applicants">
-              {this.bountySection.applicantsList && this.bountySection.applicantsList.length > 0 && (
-                <>
-                  {this.bountySection.applicantsList.map(applicant => (
-                    <ApplicantBubble
-                      detailChainId={this.bountySection.detail?.chainID || 0}
-                      applicant={applicant}
-                    />
-                  ))}
-                </>
-              )}
+              {this.bountySection.applicantsList.value &&
+                this.bountySection.applicantsList.value.length > 0 && (
+                  <>
+                    {this.bountySection.applicantsList.value.map(applicant => (
+                      <ApplicantBubble
+                        detailChainId={this.bountySection.detail.value?.chainID || 0}
+                        applicant={applicant}
+                      />
+                    ))}
+                  </>
+                )}
             </UCard>
           </div>
           <div class="overflow-hidden basis-1/3">
             <div class="bg-white border rounded-sm mb-6 p-6">
-              {this.bountySection.startup && <StartupCard startup={this.bountySection.startup} />}
+              {this.bountySection.startup.value && (
+                <StartupCard startup={this.bountySection.startup.value} />
+              )}
             </div>
             <UCard title="Founder" class="mb-6">
-              {this.bountySection.founder && (
+              {this.bountySection.founder.value && (
                 <PersonalCard
-                  profile={this.bountySection.founder}
+                  profile={this.bountySection.founder.value}
                   keyMap={{
                     skills: 'applicantsSkills',
                     comerId: 'comerID',
@@ -301,14 +304,14 @@ export default defineComponent({
               //   'header-extra': () => (
               //     <>
               //       {this.bountyContractInfo.role === USER_ROLE.FOUNDER &&
-              //         (this.bountySection.approvedPeople?.comerID || 0) > 0 && <Unapprove />}
+              //         (this.bountySection.approvedPeople.value?.comerID || 0) > 0 && <Unapprove />}
               //     </>
               //   )
               // }}
             >
-              {(this.bountySection.approvedPeople?.comerID || 0) > 0 && (
+              {(this.bountySection.approvedPeople.value?.comerID || 0) > 0 && (
                 <PersonalCard
-                  profile={this.bountySection.approvedPeople}
+                  profile={this.bountySection.approvedPeople.value}
                   keyMap={{
                     skills: 'applicantsSkills',
                     comerId: 'comerID',
@@ -322,18 +325,19 @@ export default defineComponent({
               )}
             </UCard>
             <UCard title="Deposit records">
-              {this.bountySection.depositRecords && this.bountySection.depositRecords.length > 0 && (
-                <>
-                  {this.bountySection.depositRecords.map((item, index) => (
-                    <DepositBubble
-                      class={`mb-4`}
-                      depositInfo={item}
-                      key={item.name}
-                      tokenSymbol={this.bountyContractInfo.depositTokenSymbol}
-                    />
-                  ))}
-                </>
-              )}
+              {this.bountySection.depositRecords.value &&
+                this.bountySection.depositRecords.value.length > 0 && (
+                  <>
+                    {this.bountySection.depositRecords.value.map((item, index) => (
+                      <DepositBubble
+                        class={`mb-4`}
+                        depositInfo={item}
+                        key={item.name}
+                        tokenSymbol={this.bountyContractInfo.depositTokenSymbol}
+                      />
+                    ))}
+                  </>
+                )}
             </UCard>
           </div>
         </div>
