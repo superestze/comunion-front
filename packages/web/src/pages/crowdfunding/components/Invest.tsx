@@ -497,7 +497,7 @@ export const Invest = defineComponent({
       return (
         countDownTime.value.status !== CrowdfundingStatus.LIVE ||
         Number(fromValue.value) <= 0 ||
-        raiseState.value.raisePercent >= 100 ||
+        (mode.value === 'buy' && raiseState.value.raisePercent >= 100) ||
         (mode.value === 'buy' && Number(fromValue.value) > Number(maxBuyAmount.value)) ||
         (mode.value === 'sell' && Number(fromValue.value) > Number(maxSellAmount.value))
       )
@@ -509,7 +509,7 @@ export const Invest = defineComponent({
         reason = 'This dCrowdfunding is not opened yet.'
       } else if (countDownTime.value.status === CrowdfundingStatus.ENDED) {
         reason = 'This dCrowdfunding has ended.'
-      } else if (raiseState.value.raisePercent >= 100) {
+      } else if (mode.value === 'buy' && raiseState.value.raisePercent >= 100) {
         reason = `The dCrowdfunding has reached goal.`
       } else if (!(Number(fromValue.value) > 0)) {
         reason = `Enter a ${mode.value} amount.`
