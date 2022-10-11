@@ -5,6 +5,7 @@ import StartupLogo from '@/components/StartupLogo'
 import { getStartupTypeFromNumber, StartupTypesType } from '@/constants'
 import { SocialGroup } from '@/pages/startup/components/SocialGroup'
 import { ServiceReturn } from '@/services'
+import { getChainInfoByChainId } from '@/utils/etherscan'
 
 export default defineComponent({
   props: {
@@ -42,9 +43,18 @@ export default defineComponent({
           <div class="cursor-pointer h-15 mr-4 min-w-15" onClick={this.toComerDetail}>
             <StartupLogo src={this.startup?.logo || ''} />
           </div>
-          <div class="w-[calc(100%-4rem)]">
+          <div class="flex-1">
             <div class="mb-3 text-color1 truncate u-h3">{this.startup?.name}</div>
-            {(this.startup?.mode || 0) > 0 && <UTag class="text-color2">{this.modeName}</UTag>}
+            <div class="flex items-center">
+              {(this.startup?.mode || 0) > 0 && <UTag class="text-color2">{this.modeName}</UTag>}
+              {this.startup?.chainID ? (
+                <img
+                  src={getChainInfoByChainId(this.startup?.chainID)?.logo}
+                  class="h-4 ml-2 w-4"
+                  title={getChainInfoByChainId(this.startup.chainID)?.shortName}
+                />
+              ) : null}
+            </div>
           </div>
         </div>
         <div class={['flex flex-wrap gap-2 mt-4']}>

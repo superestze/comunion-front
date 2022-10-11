@@ -5,6 +5,7 @@ import StartupLogo from '@/components/StartupLogo'
 import { getStartupTypeFromNumber, StartupTypesType } from '@/constants'
 import { SocialGroup } from '@/pages/startup/components/SocialGroup'
 import { ServiceReturn } from '@/services'
+import { getChainInfoByChainId } from '@/utils/etherscan'
 
 export default defineComponent({
   name: 'StartupCard',
@@ -46,7 +47,16 @@ export default defineComponent({
           />
           <div class="flex-1 overflow-hidden">
             <div class="mb-2 text-color1 truncate u-h3">{this.startup?.title}</div>
-            {(this.startup?.mode || 0) > 0 && <UTag class="text-color2">{this.modeName}</UTag>}
+            <div class="flex items-center">
+              {(this.startup?.mode || 0) > 0 && <UTag class="text-color2">{this.modeName}</UTag>}
+              {this.startup?.chainID ? (
+                <img
+                  src={getChainInfoByChainId(this.startup?.chainID)?.logo}
+                  class="h-4 ml-2 w-4"
+                  title={getChainInfoByChainId(this.startup.chainID)?.shortName}
+                />
+              ) : null}
+            </div>
           </div>
         </div>
         {this.tags.length > 0 && (
