@@ -17,9 +17,9 @@ import {
   useBountyContractWrapper,
   BountyContractReturnType
 } from '../../hooks/useBountyContractWrapper'
+import useBountyDetail from '../../hooks/useBountyDetail'
 import { MAX_AMOUNT, renderUnit } from '@/blocks/Bounty/components/BasicInfo'
 import { services } from '@/services'
-import { useBountyStore } from '@/stores'
 import { useContractStore } from '@/stores/contract'
 import { checkSupportNetwork } from '@/utils/wallet'
 
@@ -52,9 +52,7 @@ export default defineComponent({
 
     const { bountyContract, bountyContractStore, approve, chainId } = useBountyContractWrapper()
 
-    const bountyStore = useBountyStore()
-
-    const { detail } = bountyStore
+    const bountySection = useBountyDetail(String(route.params.id))
     const { deposit } = bountyContract
     const fields: Ref<FormFactoryField[]> = computed(() => [
       {
@@ -113,7 +111,7 @@ export default defineComponent({
       deposit,
       approve,
       chainId,
-      detail,
+      bountySection,
       bountyContractStore,
       route
     }
@@ -138,7 +136,7 @@ export default defineComponent({
           contractStore.startContract(approvePendingText)
           const tokenSymbol = this.bountyContractStore.bountyContractInfo.depositTokenSymbol
           await this.approve(
-            this.detail?.depositContract || '',
+            this.bountySection.detail.value?.depositContract || '',
             ethers.utils.parseUnits((this.formData.increaseDeposit || '').toString(), 18)
           )
           console.log(this.formData.increaseDeposit)
@@ -163,8 +161,8 @@ export default defineComponent({
             tokenAmount: tokenAmount || 0
           })
 
-          const bountyStore = useBountyStore()
-          bountyStore.initialize(this.route.params.id as string)
+          this.bountySection.reload()
+
           if (!error) {
             triggerDialog()
           }

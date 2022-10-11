@@ -2,9 +2,10 @@ import { UButton } from '@comunion/components'
 import { defineComponent, PropType, computed } from 'vue'
 import { useRoute } from 'vue-router'
 import { useBountyContractWrapper } from '../../hooks/useBountyContractWrapper'
+import useBountyDetail from '../../hooks/useBountyDetail'
 import Basic from './basic'
 import { services } from '@/services'
-import { useUserStore, useBountyStore } from '@/stores'
+import { useUserStore } from '@/stores'
 import { checkSupportNetwork } from '@/utils/wallet'
 
 export type VisibleMap = {
@@ -26,22 +27,23 @@ export const UnapprovePromptSet = defineComponent({
   setup() {
     const route = useRoute()
     const userStore = useUserStore()
-    const bountyStore = useBountyStore()
     const { bountyContract } = useBountyContractWrapper()
     const { unapproveApplicant } = bountyContract
+    const bountySection = useBountyDetail(String(route.params.id))
 
     const profile = computed(() => {
       return userStore.profile
     })
-    const address = computed(() => bountyStore.bountySection.approvedPeople?.address)
+
     return {
       profile,
       unapproveApplicant,
-      address,
+      bountySection,
       route
     }
   },
   render() {
+    const address = this.bountySection.approvedPeople.value?.address
     const closeUnapproveConfirm = () => {
       this.visibleMap!.visibleUnapproveConfirm = false
     }
@@ -55,10 +57,10 @@ export const UnapprovePromptSet = defineComponent({
       if (!isSupport) {
         return
       }
-      if (!this.address) {
+      if (!address) {
         return
       }
-      await this.unapproveApplicant(this.address, '', '')
+      await this.unapproveApplicant(address, '', '')
       const { error } = await services['bounty@bounty-founder-unapprove']({
         bountyID: this.route.params.id as string,
         applicantComerID: this.profile?.comerID

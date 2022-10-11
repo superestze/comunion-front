@@ -4,8 +4,8 @@ import dayjs from 'dayjs'
 import { pluralize } from 'inflected'
 import { defineComponent, computed, ref, watch } from 'vue'
 import { useRoute, useRouter } from 'vue-router'
-import BountyDetailCard from './components/BountyDetailCard'
 import { ActivityBubble, ApplicantBubble, DepositBubble } from './components/Bubble'
+import Info from './components/Info'
 import Payment from './components/Payment'
 import PersonalCard from './components/PersonalCard'
 import PostUpdate from './components/PostUpdate'
@@ -67,8 +67,8 @@ export default defineComponent({
       [() => bountySection.detail.value, bountyContractStore.bountyContractInfo],
       ([detail, bountyContractInfo]) => {
         if (detail?.depositContract && !isInit) {
-          const BountyContractWrapper = useBountyContractWrapper(route.params.id as string)
-          postUpdate.value = BountyContractWrapper.bountyContract.postUpdate
+          const { bountyContract } = useBountyContractWrapper(route.params.id as string)
+          postUpdate.value = bountyContract.postUpdate
           loading.value = false
           isInit = true
         }
@@ -141,10 +141,7 @@ export default defineComponent({
           <div class="overflow-hidden basis-2/3">
             <div class="bg-white border rounded-sm mb-6 p-6">
               {this.bountySection.detail.value && (
-                <BountyDetailCard
-                  bountyExpired={this.bountyExpired}
-                  bountyDetail={this.bountySection.detail.value}
-                />
+                <Info bountyExpired={this.bountyExpired} bountyDetail={this.bountySection.detail} />
               )}
             </div>
             <UCard

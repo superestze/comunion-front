@@ -3,10 +3,10 @@ import { useDialog } from 'naive-ui'
 import { defineComponent, ref, computed } from 'vue'
 import { useRoute } from 'vue-router'
 import { useBountyContractWrapper } from '../../hooks/useBountyContractWrapper'
+import useBountyDetail from '../../hooks/useBountyDetail'
 import { BasicDialog } from '../Dialog'
 import { BOUNTY_STATUS } from '@/constants'
 import { services } from '@/services'
-import { useBountyStore } from '@/stores'
 export default defineComponent({
   props: {
     detailChainId: {
@@ -29,19 +29,18 @@ export default defineComponent({
     const visibleFailCloseBounty = ref<boolean>(false)
     const visibleSureCloseBounty = ref<boolean>(false)
     const { bountyContract } = useBountyContractWrapper()
-    const bountyStore = useBountyStore()
+    const bountySection = useBountyDetail(String(route.params.id))
+
     const bountyContractInfo = computed(() => {
       return props.bountyContractInfo
     })
-    const bountyInfo = computed(() => {
-      return props.bountyDetail
-    })
+
     const disabled = computed(() => {
-      return bountyInfo.value.status === BOUNTY_STATUS.COMPLETED
+      return props.bountyDetail.value.status === BOUNTY_STATUS.COMPLETED
     })
 
     const closeDesc = computed(() => {
-      if (bountyInfo.value.status === BOUNTY_STATUS.COMPLETED) {
+      if (props.bountyDetail.value.status === BOUNTY_STATUS.COMPLETED) {
         return 'Completed'
       } else {
         return 'Close bounty'
@@ -56,7 +55,7 @@ export default defineComponent({
       route,
       bountyContractInfo,
       dialog,
-      bountyStore
+      bountySection
     }
   },
   render() {
@@ -121,7 +120,7 @@ export default defineComponent({
         bountyID: this.route.params.id as string
       })
       if (!error) {
-        this.bountyStore.initialize(this.route.params.id as string)
+        this.bountySection.reload()
         dialog.destroy()
       }
     }

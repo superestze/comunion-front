@@ -1,17 +1,21 @@
 import { onMounted, ref } from 'vue'
 import { ServiceReturn, services } from '@/services'
 
-export default function useBountyDetail(bountyId: string) {
-  const detail = ref<ServiceReturn<'bounty@bounty-get-detail'> | null>(null)
-  const startup = ref<ServiceReturn<'bounty@bounty-startup-list'> | null>(null)
-  const founder = ref<ServiceReturn<'bounty@bounty-founder'> | null>(null)
-  const approvedPeople = ref<ServiceReturn<'bounty@bounty-approved'> | null>(null)
-  const activitiesList = ref<ServiceReturn<'bounty@bounty-activities-list'> | null>([])
-  const applicantsList = ref<ServiceReturn<'bounty@bounty-list-applicants'> | null>([])
-  const depositRecords = ref<ServiceReturn<'bounty@bounty-deposit-records'> | null>([])
-  const bountyPayment = ref<ServiceReturn<'bounty@bounty-payment'> | null>(null)
+const loading = ref(false)
+const detail = ref<ServiceReturn<'bounty@bounty-get-detail'> | null>(null)
+const startup = ref<ServiceReturn<'bounty@bounty-startup-list'> | null>(null)
+const founder = ref<ServiceReturn<'bounty@bounty-founder'> | null>(null)
+const approvedPeople = ref<ServiceReturn<'bounty@bounty-approved'> | null>(null)
+const activitiesList = ref<ServiceReturn<'bounty@bounty-activities-list'> | null>([])
+const applicantsList = ref<ServiceReturn<'bounty@bounty-list-applicants'> | null>([])
+const depositRecords = ref<ServiceReturn<'bounty@bounty-deposit-records'> | null>([])
+const bountyPayment = ref<ServiceReturn<'bounty@bounty-payment'> | null>(null)
 
-  async function get(id: string) {
+export default function useBountyDetail(bountyId: string | undefined) {
+  async function get(id: string, reload = false) {
+    if (reload) {
+      detail.value = null
+    }
     if (detail.value === null) {
       const { error, data } = await services['bounty@bounty-get-detail']({ bountyID: id })
       if (!error) {
@@ -21,7 +25,10 @@ export default function useBountyDetail(bountyId: string) {
     return detail.value
   }
 
-  async function getStartup(bountyId: string) {
+  async function getStartup(bountyId: string, reload = false) {
+    if (reload) {
+      startup.value = null
+    }
     if (startup.value === null) {
       const { error, data } = await services['bounty@bounty-startup-list']({ bountyID: bountyId })
       if (!error) {
@@ -31,7 +38,10 @@ export default function useBountyDetail(bountyId: string) {
     return startup.value
   }
 
-  async function getFounder(bountyId: string) {
+  async function getFounder(bountyId: string, reload = false) {
+    if (reload) {
+      founder.value = null
+    }
     if (founder.value === null) {
       const { error, data } = await services['bounty@bounty-founder']({ bountyID: bountyId })
       if (!error) {
@@ -42,7 +52,10 @@ export default function useBountyDetail(bountyId: string) {
     return founder.value
   }
 
-  async function getApprovedPeople(bountyId: string) {
+  async function getApprovedPeople(bountyId: string, reload = false) {
+    if (reload) {
+      approvedPeople.value = null
+    }
     if (approvedPeople.value === null) {
       const { error, data } = await services['bounty@bounty-approved']({ bountyID: bountyId })
       if (!error) {
@@ -53,7 +66,10 @@ export default function useBountyDetail(bountyId: string) {
     return approvedPeople.value
   }
 
-  async function getActivities(bountyId: string) {
+  async function getActivities(bountyId: string, reload = false) {
+    if (reload) {
+      activitiesList.value = []
+    }
     if (
       activitiesList.value === null ||
       (Array.isArray(activitiesList.value) && !activitiesList.value.length)
@@ -69,7 +85,10 @@ export default function useBountyDetail(bountyId: string) {
     return activitiesList.value
   }
 
-  async function getApplicants(bountyId: string) {
+  async function getApplicants(bountyId: string, reload = false) {
+    if (reload) {
+      applicantsList.value = []
+    }
     if (
       applicantsList.value === null ||
       (Array.isArray(applicantsList.value) && !applicantsList.value.length)
@@ -85,7 +104,10 @@ export default function useBountyDetail(bountyId: string) {
     return applicantsList.value
   }
 
-  async function getDepositRecords(bountyId: string) {
+  async function getDepositRecords(bountyId: string, reload = false) {
+    if (reload) {
+      depositRecords.value = []
+    }
     if (
       depositRecords.value === null ||
       (Array.isArray(depositRecords.value) && !depositRecords.value.length)
@@ -101,7 +123,10 @@ export default function useBountyDetail(bountyId: string) {
     return depositRecords.value
   }
 
-  async function getBountyPayment(bountyId: string) {
+  async function getBountyPayment(bountyId: string, reload = false) {
+    if (reload) {
+      bountyPayment.value = null
+    }
     if (bountyPayment.value === null) {
       const { error, data } = await services['bounty@bounty-payment']({
         bountyID: bountyId
@@ -114,21 +139,31 @@ export default function useBountyDetail(bountyId: string) {
     return bountyPayment.value
   }
 
-  function initialize(bountyId: string) {
-    return Promise.all([
-      get(bountyId),
-      getStartup(bountyId),
-      getFounder(bountyId),
-      getApprovedPeople(bountyId),
-      getActivities(bountyId),
-      getApplicants(bountyId),
-      getBountyPayment(bountyId),
-      getDepositRecords(bountyId)
-    ])
+  function initialize(bountyId: string, reload = false) {
+    if (loading.value) {
+      return console.warn('useBountyDetail is loading')
+    }
+    loading.value = true
+    Promise.all([
+      get(bountyId, reload),
+      getStartup(bountyId, reload),
+      getFounder(bountyId, reload),
+      getApprovedPeople(bountyId, reload),
+      getActivities(bountyId, reload),
+      getApplicants(bountyId, reload),
+      getBountyPayment(bountyId, reload),
+      getDepositRecords(bountyId, reload)
+    ]).finally(() => {
+      loading.value = false
+    })
+  }
+
+  function reload() {
+    bountyId && initialize(bountyId, true)
   }
 
   onMounted(() => {
-    initialize(bountyId)
+    bountyId && initialize(bountyId)
   })
 
   return {
@@ -139,6 +174,15 @@ export default function useBountyDetail(bountyId: string) {
     activitiesList,
     applicantsList,
     depositRecords,
-    bountyPayment
+    bountyPayment,
+    get,
+    getStartup,
+    getFounder,
+    getApprovedPeople,
+    getActivities,
+    getApplicants,
+    getBountyPayment,
+    getDepositRecords,
+    reload
   }
 }
