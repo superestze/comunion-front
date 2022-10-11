@@ -152,8 +152,8 @@ export const allNetworks: ChainNetworkType[] = [
     name: 'Syscoin Mainnet',
     shortName: 'Mainnet',
     currencySymbol: 'USDC',
-    rpcUrl: 'https://testnet.rollux.com:2814',
-    explorerUrl: 'https://explorer.testnet.rollux.com'
+    rpcUrl: 'https://rpc.ankr.com/syscoin',
+    explorerUrl: 'https://explorer.syscoin.org'
   }
 ]
 interface NETWORKS_COLOR_MAP_TYPE {
