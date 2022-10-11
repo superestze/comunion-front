@@ -92,17 +92,6 @@ export const useChainStore = defineStore('chain', {
       } catch (error) {
         console.warn(error)
       }
-    },
-    goTxHashPath(chainId: number, address: string) {
-      let url = ''
-      this.allNetworks.forEach(item => {
-        if (item.chainId === chainId) {
-          url = item.explorerUrl
-        }
-      })
-      if (url) {
-        window.open(`${url}/tx/${address}`, address)
-      }
     }
   }
 })
