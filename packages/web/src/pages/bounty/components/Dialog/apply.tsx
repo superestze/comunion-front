@@ -18,9 +18,9 @@ import {
   BountyContractReturnType,
   useBountyContractWrapper
 } from '../../hooks/useBountyContractWrapper'
+import useBountyDetail from '../../hooks/useBountyDetail'
 import { MAX_AMOUNT, renderUnit } from '@/blocks/Bounty/components/BasicInfo'
 import { services } from '@/services'
-import { useBountyStore } from '@/stores'
 import { useContractStore } from '@/stores/contract'
 import { checkSupportNetwork } from '@/utils/wallet'
 type checkboxItem = {
@@ -68,10 +68,8 @@ const ApplyDialog = defineComponent({
         }
       }
     )
+    const bountySection = useBountyDetail(String(route.params.id))
 
-    const bountyStore = useBountyStore()
-
-    const detail = computed(() => bountyStore.detail)
     const { bountyContract, bountyContractStore, approve, chainId } = useBountyContractWrapper()
     const fields: Ref<FormFactoryField[]> = computed(() => [
       {
@@ -95,7 +93,7 @@ const ApplyDialog = defineComponent({
             h(
               <span class="text-color3 u-h7">
                 Minimum deposit <span class="text-primary">{deposit}</span>{' '}
-                {detail.value?.depositTokenSymbol} for applying bounty
+                {bountySection.detail.value?.depositTokenSymbol} for applying bounty
               </span>
             )
           ]
@@ -170,7 +168,7 @@ const ApplyDialog = defineComponent({
       bountyContract,
       approve,
       chainId,
-      detail,
+      bountySection,
       bountyContractStore,
       route
     }
@@ -199,10 +197,8 @@ const ApplyDialog = defineComponent({
             const contractStore = useContractStore()
             contractStore.startContract('Apply for deposit deposits into bounty contract.')
 
-            console.warn('bounty detail info', this.detail)
-
             const res1 = await this.approve(
-              this.detail?.depositContract || '',
+              this.bountySection.detail.value?.depositContract || '',
               ethers.utils.parseUnits(this.formData.deposit.toString(), 18)
             )
             if (!res1) {
@@ -233,8 +229,7 @@ const ApplyDialog = defineComponent({
             }
           })
 
-          const bountyStore = useBountyStore()
-          bountyStore.initialize(this.route.params.id as string)
+          this.bountySection.reload()
           return triggerDialog(true)
         }
         if (!this.terms.value) {
@@ -299,8 +294,8 @@ const ApplyDialog = defineComponent({
                 class="w-40"
                 type="primary"
                 onClick={userBehavier('submit')}
-                disabled={!this.detail?.depositContract}
-                loading={!this.detail?.depositContract}
+                disabled={!this.bountySection.detail.value?.depositContract}
+                loading={!this.bountySection.detail.value?.depositContract}
               >
                 Submit
               </UButton>

@@ -39,13 +39,13 @@ export default defineComponent({
       //   return true
       // }
       if (props.bountyContractInfo.role === USER_ROLE.FOUNDER) {
-        if (props.bountySection?.detail?.status >= BOUNTY_STATUS.COMPLETED) {
+        if (props.bountySection.detail.value?.status >= BOUNTY_STATUS.COMPLETED) {
           return true
         }
         return false
       }
       if (props.bountyContractInfo.status === APPLICANT_STATUS.APPROVED) {
-        if (props.bountySection?.detail?.status >= BOUNTY_STATUS.COMPLETED) {
+        if (props.bountySection.detail.value?.status >= BOUNTY_STATUS.COMPLETED) {
           return true
         }
         return false
@@ -54,7 +54,7 @@ export default defineComponent({
     })
     const tooltip = computed(() => {
       if (disabled.value) {
-        if (props.bountySection?.detail?.status >= BOUNTY_STATUS.COMPLETED) {
+        if (props.bountySection.detail.value?.status >= BOUNTY_STATUS.COMPLETED) {
           return 'The update button is unavailable when the bounty completed'
         } else {
           return 'The update button can only be available to be approved applicant.'

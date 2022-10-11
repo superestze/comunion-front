@@ -10,9 +10,9 @@ import {
 } from '@comunion/components'
 import { defineComponent, reactive, ref, watch } from 'vue'
 import { useRoute } from 'vue-router'
+import useBountyDetail from '../../hooks/useBountyDetail'
 import { USER_ROLE } from '@/constants'
 import { services } from '@/services'
-import { useBountyStore } from '@/stores'
 import { useBountyContractStore } from '@/stores/bountyContract'
 
 export default defineComponent({
@@ -74,9 +74,8 @@ export default defineComponent({
 
     const postUpdateFields = getFieldsRules(fields)
     const form = ref<FormInst>()
-    const bountyStore = useBountyStore()
     const bountyContractStore = useBountyContractStore()
-    const { getActivities } = bountyStore
+    const { getActivities } = useBountyDetail(String(route.params.id))
 
     return {
       postUpdateFields,
@@ -116,7 +115,7 @@ export default defineComponent({
             bountyID: this.route.params.id as string
           })
           if (!error) {
-            this.getActivities(this.route.params.id as string)
+            this.getActivities(this.route.params.id as string, true)
             triggerDialog(true)
           }
         }

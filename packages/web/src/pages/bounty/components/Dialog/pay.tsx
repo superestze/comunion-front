@@ -11,10 +11,10 @@ import {
 } from '@comunion/components'
 import { defineComponent, Ref, computed, ref, reactive, PropType, watch } from 'vue'
 import { useRoute } from 'vue-router'
+import useBountyDetail from '../../hooks/useBountyDetail'
 import { BountyProjectCardType } from '../ProjectCard'
 import { MAX_AMOUNT, renderUnit } from '@/blocks/Bounty/components/BasicInfo'
 import { services } from '@/services'
-import { useBountyStore } from '@/stores'
 import { checkSupportNetwork } from '@/utils/wallet'
 
 import './pay.css'
@@ -52,6 +52,7 @@ export default defineComponent({
       transactionHash1: '',
       transactionHash2: ''
     })
+
     watch(
       () => props.visible,
       value => {
@@ -192,8 +193,7 @@ export default defineComponent({
       return p
     })
     const form = ref<FormInst>()
-    const bountyStore = useBountyStore()
-    const { getActivities, getBountyPayment } = bountyStore
+    const { getActivities, getBountyPayment } = useBountyDetail(String(route.params.id))
 
     const paidInfo = computed(() => {
       const result: paidInfoType[] = []
@@ -253,8 +253,8 @@ export default defineComponent({
             sourceType: 2
           })
           if (!errorPaid && !error) {
-            this.getActivities(this.route.params.id as string)
-            this.getBountyPayment(this.route.params.id as string)
+            this.getActivities(this.route.params.id as string, true)
+            this.getBountyPayment(this.route.params.id as string, true)
             triggerDialog()
           }
         }

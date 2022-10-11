@@ -2,9 +2,10 @@ import { message } from '@comunion/components'
 import dayjs from 'dayjs'
 import { BigNumber } from 'ethers'
 import { computed } from 'vue'
+import useBountyDetail from './useBountyDetail'
 import { useBountyContract, useErc20Contract } from '@/contracts'
 import { AVAX_USDC_ADDR } from '@/contracts/utils'
-import { useBountyStore, useWalletStore } from '@/stores'
+import { useWalletStore } from '@/stores'
 import { useBountyContractStore } from '@/stores/bountyContract'
 
 export type BountyContractReturnType = {
@@ -48,11 +49,11 @@ export type BountyContractReturnType = {
 
 export function useBountyContractWrapper(bountyId?: string) {
   const walletStore = useWalletStore()
-  const bountyStore = useBountyStore()
+  const { detail } = useBountyDetail(bountyId)
   const bountyContractStore = useBountyContractStore()
   const bountyContract = useBountyContract({
     chainId: walletStore.chainId,
-    addresses: { [walletStore.chainId!]: bountyStore.bountySection?.detail?.depositContract || '' }
+    addresses: { [walletStore.chainId!]: detail.value?.depositContract || '' }
   })
 
   if (bountyId) {

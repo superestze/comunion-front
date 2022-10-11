@@ -4,7 +4,7 @@ import { AVAX_USDC_ADDR } from '@/contracts/utils'
 export function getBuyCoinAddress(mainCoinAddress: string): Record<number, SelectOption[]> {
   return {
     1: [
-      { label: 'GoerliETH', value: mainCoinAddress },
+      { label: 'ETH', value: mainCoinAddress },
       { label: 'USDC', value: AVAX_USDC_ADDR[1] }
     ],
     5: [
@@ -16,7 +16,7 @@ export function getBuyCoinAddress(mainCoinAddress: string): Record<number, Selec
       { label: 'USDC', value: AVAX_USDC_ADDR[56] }
     ],
     97: [
-      { label: 'BNB', value: mainCoinAddress },
+      { label: 'TBNB', value: mainCoinAddress },
       { label: 'QCTS', value: AVAX_USDC_ADDR[97] }
     ],
     2814: [
@@ -33,7 +33,7 @@ export function getBuyCoinAddress(mainCoinAddress: string): Record<number, Selec
     ],
     43113: [
       { label: 'AVAX', value: mainCoinAddress },
-      { label: 'USDC', value: AVAX_USDC_ADDR[43113] }
+      { label: 'V-USDC', value: AVAX_USDC_ADDR[43113] }
     ],
     43114: [
       { label: 'AVAX', value: mainCoinAddress },
@@ -48,7 +48,7 @@ export function getBuyCoinAddress(mainCoinAddress: string): Record<number, Selec
       { label: 'USDC', value: AVAX_USDC_ADDR[137] }
     ],
     57: [
-      { label: 'MATIC', value: mainCoinAddress },
+      { label: 'SYS', value: mainCoinAddress },
       { label: 'USDC', value: AVAX_USDC_ADDR[57] }
     ]
   }

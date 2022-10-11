@@ -12,7 +12,7 @@ import Bubble from './core'
 import { ItemType } from './getItemType'
 import { BOUNTY_STATUS, USER_ROLE } from '@/constants'
 import { ServiceReturn, services } from '@/services'
-import { useBountyStore, useUserStore } from '@/stores'
+import { useUserStore } from '@/stores'
 import { useBountyContractStore } from '@/stores/bountyContract'
 import { checkSupportNetwork } from '@/utils/wallet'
 export default defineComponent({
@@ -31,9 +31,6 @@ export default defineComponent({
     const route = useRoute()
     const visible = ref<boolean>(false)
     const userStore = useUserStore()
-    // const bountyStore = useBountyStore()
-
-    // const { getApprovedPeople, get } = bountyStore
 
     const bountyContractStore = useBountyContractStore()
     const { bountyContract } = useBountyContractWrapper()
@@ -92,8 +89,6 @@ export default defineComponent({
         txHash: response?.hash || ''
       })
 
-      const bountyStore = useBountyStore()
-      bountyStore.initialize(this.route.params.id as string)
       if (!error) {
         // this.get(this.route.params.id as string)
         // this.getApprovedPeople(this.route.params.id as string)

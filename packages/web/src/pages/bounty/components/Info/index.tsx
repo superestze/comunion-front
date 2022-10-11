@@ -1,17 +1,16 @@
 import { UTag, UTooltip } from '@comunion/components'
 import dayjs from 'dayjs'
 import { format } from 'timeago.js'
-import { defineComponent, ref, PropType, computed, onMounted } from 'vue'
+import { defineComponent, ref, computed, onMounted } from 'vue'
 import Paragraph from './paragraph'
 import More from '@/components/More'
 import { BOUNTY_TYPES_COLOR_MAP } from '@/constants'
-import { ServiceReturn } from '@/services'
 
 export default defineComponent({
-  name: 'BountyDetailCard',
+  name: 'Info',
   props: {
     bountyDetail: {
-      type: Object as PropType<ServiceReturn<'bounty@bounty-get-detail'>>,
+      type: Object,
       required: true
     },
     bountyExpired: {
@@ -27,15 +26,15 @@ export default defineComponent({
     // const bountyContractStore = useBountyContractStore()
     const bountyStatus = computed(() => {
       // let status = bountyContractStore.bountyContractInfo.bountyStatus
-      let status = props.bountyDetail?.status || 0
+      let status = props.bountyDetail.value.status || 0
       if (props.bountyExpired) {
         status = 4
       }
       return BOUNTY_TYPES_COLOR_MAP[status]
     })
     const createdAt = computed(() => {
-      if (props.bountyDetail?.createdAt) {
-        return format(props.bountyDetail.createdAt, 'comunionTimeAgo')
+      if (props.bountyDetail.value.createdAt) {
+        return format(props.bountyDetail.value.createdAt, 'comunionTimeAgo')
       }
       return ''
     })
@@ -67,14 +66,14 @@ export default defineComponent({
             <UTooltip width={400} placement="top-start" trigger="hover">
               {{
                 trigger: () => (
-                  <span class="text-color1  truncate u-h4">{this.bountyDetail?.title}</span>
+                  <span class="text-color1  truncate u-h4">{this.bountyDetail.value.title}</span>
                 ),
-                default: () => this.bountyDetail?.title
+                default: () => this.bountyDetail.value.title
               }}
             </UTooltip>
             <div class="flex flex-wrap mt-5 gap-2">
-              {Array.isArray(this.bountyDetail?.applicantSkills) &&
-                this.bountyDetail?.applicantSkills.map((tag: string, i: number) => {
+              {Array.isArray(this.bountyDetail.value.applicantSkills) &&
+                this.bountyDetail.value.applicantSkills.map((tag: string, i: number) => {
                   return (
                     <UTag key={i} class="text-color1">
                       {tag}
@@ -91,7 +90,7 @@ export default defineComponent({
           content={this.createdAt}
           contentClass="text-color2"
         />
-        {this.bountyDetail?.contact?.map(item => {
+        {this.bountyDetail.value.contact?.map((item: any) => {
           return (
             <Paragraph
               class="mt-4 items-center"
@@ -105,19 +104,19 @@ export default defineComponent({
         <Paragraph
           class="mt-4 items-center"
           label={'Apply Cutoff Date :'}
-          content={dayjs.utc(this.bountyDetail?.expiresIn).format('YYYY-MM-DD HH:mm UTC')}
+          content={dayjs.utc(this.bountyDetail.value.expiresIn).format('YYYY-MM-DD HH:mm UTC')}
           contentClass="text-color2 font-primary"
         />
         <Paragraph
           class="mt-4 items-center"
           label={'Applicants deposit :'}
-          content={`${this.bountyDetail?.applicantsDeposit} ${this.bountyDetail?.depositTokenSymbol}`}
+          content={`${this.bountyDetail.value.applicantsDeposit} ${this.bountyDetail.value.depositTokenSymbol}`}
           contentClass="text-color2 font-primary"
         />
         <Paragraph
           class="mt-4 "
           label={'Description :'}
-          content={this.bountyDetail?.description}
+          content={this.bountyDetail.value.description}
           foldAble={true}
           fold={this.fold}
           maxHeight={300}

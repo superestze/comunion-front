@@ -5,10 +5,10 @@ import {
   BountyContractReturnType,
   useBountyContractWrapper
 } from '../../hooks/useBountyContractWrapper'
+import useBountyDetail from '../../hooks/useBountyDetail'
 import { BasicDialog } from '../Dialog'
 import { BOUNTY_STATUS } from '@/constants'
 import { services } from '@/services'
-import { useBountyStore } from '@/stores'
 import { useBountyContractStore } from '@/stores/bountyContract'
 import { checkSupportNetwork } from '@/utils/wallet'
 
@@ -37,14 +37,12 @@ export default defineComponent({
     const bountyContractInfo = computed(() => {
       return bountyContractStore.bountyContractInfo
     })
-    const bountyInfo = computed(() => {
-      return props.bountyDetail
-    })
+
     const disabled = computed(() => {
       return (
         bountyContractStore.bountyContractInfo.depositLock ||
         bountyContractStore.bountyContractInfo.bountyStatus >= BOUNTY_STATUS.COMPLETED ||
-        bountyInfo.value.status === BOUNTY_STATUS.COMPLETED ||
+        props.bountyDetail.value.status === BOUNTY_STATUS.COMPLETED ||
         bountyContractStore.dontContract ||
         (bountyContractInfo.value.founderDepositAmount == 0 &&
           bountyContractInfo.value.applicantDepositAmount == 0)
@@ -91,8 +89,8 @@ export default defineComponent({
         TxHash: response.hash
       })
 
-      const bountyStore = useBountyStore()
-      bountyStore.initialize(this.route.params.id as string)
+      const bountySection = useBountyDetail(String(this.route.params.id))
+      bountySection.reload()
       if (!error) {
         triggerDialog()
       }

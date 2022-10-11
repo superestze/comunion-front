@@ -15,7 +15,6 @@ import ReleaseDeposit from './releaseDeposit'
 import PaymentCard from '@/components/CustomCard'
 import { APPLICANT_STATUS, BOUNTY_STATUS, USER_ROLE, PERIOD_OPTIONS } from '@/constants'
 import { ServiceReturn } from '@/services'
-import { useBountyStore } from '@/stores'
 import { BountyContractInfoType } from '@/stores/bountyContract'
 
 export default defineComponent({
@@ -33,9 +32,9 @@ export default defineComponent({
       type: Object as PropType<ServiceReturn<'bounty@bounty-payment'>>,
       required: true
     },
-    bountySection: {
+    bountyDetail: {
       type: Object,
-      default: () => null
+      required: true
     },
     bountyExpired: {
       type: Boolean,
@@ -43,10 +42,6 @@ export default defineComponent({
     }
   },
   setup(props) {
-    const bountyStore = useBountyStore()
-    const bountyDetail = computed(() => {
-      return props.bountySection.detail
-    })
     const payMode = computed<'stage' | 'period'>(() => {
       return props.paymentInfo?.bountyPaymentInfo?.paymentMode === 1 ? 'stage' : 'period'
     })
@@ -82,16 +77,18 @@ export default defineComponent({
       time.value = Date.now() / 1000
       setTimeout(timer, 1000)
     }
+
     timer()
-    const expiresIn = computed(() => new Date(bountyStore.detail?.expiresIn || '').getTime() / 1000)
+
+    const expiresIn = computed(() => new Date(props.bountyDetail.value.expiresIn).getTime() / 1000)
+
     return {
       payMode,
       stageTerms,
       periodTerms,
       bountyApplicantAmount,
       time,
-      expiresIn,
-      bountyDetail
+      expiresIn
     }
   },
   render() {

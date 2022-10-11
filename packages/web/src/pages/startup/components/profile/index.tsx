@@ -5,11 +5,13 @@ import { useStartupProfile } from '../../hooks/useStartupProfile'
 import defaultCover from './assets/cover.png'
 import SocialIcon from '@/components/SocialIcon'
 import StartupLogo from '@/components/StartupLogo'
-import { getStartupTypeFromNumber, StartupTypesType, goTxHashPath } from '@/constants'
+import { getStartupTypeFromNumber, StartupTypesType } from '@/constants'
 import { getContactList } from '@/pages/startup/setting/[id]'
 import { contactList } from '@/pages/startup/setting/components/social/util'
+import { goTxHashPath } from '@/pages/startup/util'
 import { StartupDetail } from '@/types'
 import { getChainInfoByChainId } from '@/utils/etherscan'
+
 export default defineComponent({
   props: {
     startupId: {
