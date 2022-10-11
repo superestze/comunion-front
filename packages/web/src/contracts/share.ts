@@ -21,27 +21,17 @@ export function wrapTransaction(
     if (pengdingText) {
       contractStore.startContract(pengdingText)
     }
-    let options: any
-    if (functionName === 'createStartup') {
-      options = fnArgs.pop()
-    } else {
-      options = {}
-    }
     const contract = getContract(contractArgs)
     const fn = contract[functionName]
     return fn(...fnArgs, overrides)
       .then((res: any) => {
         if (waitingText) {
-          contractStore.endContract(
-            'success',
-            {
-              success: true,
-              hash: res.hash,
-              text: waitingText,
-              promiseFn: res.wait
-            },
-            options
-          )
+          contractStore.endContract('success', {
+            success: true,
+            hash: res.hash,
+            text: waitingText,
+            promiseFn: res.wait
+          })
         }
         return res
       })
