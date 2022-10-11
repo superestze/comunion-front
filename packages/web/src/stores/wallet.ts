@@ -3,13 +3,13 @@ import { storage } from '@comunion/utils'
 import { ethers, getDefaultProvider, providers } from 'ethers'
 import { defineStore } from 'pinia'
 import { markRaw } from 'vue'
-import { useChainStore } from './chain'
 import { useUserStore } from './user'
 import {
   STORE_KEY_WALLET_CONNECTED,
   STORE_KEY_WALLET_TYPE,
   allNetworks,
-  STORE_KEY_WALLET_CONSTAST_TYPE
+  STORE_KEY_WALLET_CONSTAST_TYPE,
+  supportedNetworks
 } from '@/constants'
 import router from '@/router'
 import { ServiceReturn, services } from '@/services'
@@ -67,9 +67,8 @@ export const useWalletStore = defineStore('wallet', {
   }),
   getters: {
     isNetworkSupported: state => {
-      const chainStore = useChainStore()
       let status = false
-      chainStore.getSupportedNetworks.forEach(item => {
+      supportedNetworks.forEach(item => {
         if (item.chainId === state.chainId) {
           status = true
         }

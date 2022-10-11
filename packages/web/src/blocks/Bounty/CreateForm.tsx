@@ -122,7 +122,8 @@ const CreateBountyForm = defineComponent({
         ) // convert usdc unit to wei
         if (value !== 0) {
           contractStore.startContract(approvePendingText)
-          const bountyFactoryAddress = bountyFactoryAddresses()
+          const bountyFactoryAddress = bountyFactoryAddresses[walletStore.chainId!]
+          console.log(bountyFactoryAddress)
           // approve amount to bounty factory contract
           const approveRes: Contract = await usdcRes.approve(bountyFactoryAddress, bountyAmount)
           await approveRes.wait()

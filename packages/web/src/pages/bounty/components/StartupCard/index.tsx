@@ -1,10 +1,13 @@
 import { UTag } from '@comunion/components'
 import { defineComponent, PropType, computed } from 'vue'
 import { useRouter } from 'vue-router'
+import SocialIcon from '@/components/SocialIcon'
 import StartupLogo from '@/components/StartupLogo'
 import { getStartupTypeFromNumber, StartupTypesType } from '@/constants'
-import { SocialGroup } from '@/pages/startup/components/SocialGroup'
+import { getContactList } from '@/pages/startup/setting/[id]'
+import { contactList } from '@/pages/startup/setting/components/social/util'
 import { ServiceReturn } from '@/services'
+import { getChainInfoByChainId } from '@/utils/etherscan'
 
 export default defineComponent({
   name: 'StartupCard',
@@ -29,10 +32,21 @@ export default defineComponent({
       return []
     })
 
+    const socialList = computed(() => {
+      return (props.startup ? getContactList(props.startup) : []).map(item => {
+        const targetIndex = contactList.findIndex(type => type.value === item.socialType)
+        return {
+          ...item,
+          label: targetIndex === -1 ? '' : contactList[targetIndex].label
+        }
+      })
+    })
+
     return {
       modeName,
       tags,
-      toComerDetail
+      toComerDetail,
+      socialList
     }
   },
   render() {
@@ -46,7 +60,16 @@ export default defineComponent({
           />
           <div class="flex-1 overflow-hidden">
             <div class="mb-2 text-color1 truncate u-h3">{this.startup?.title}</div>
-            {(this.startup?.mode || 0) > 0 && <UTag class="text-color2">{this.modeName}</UTag>}
+            <div class="flex items-center">
+              {(this.startup?.mode || 0) > 0 && <UTag class="text-color2">{this.modeName}</UTag>}
+              {this.startup?.chainID ? (
+                <img
+                  src={getChainInfoByChainId(this.startup?.chainID)?.logo}
+                  class="h-4 ml-2 w-4"
+                  title={getChainInfoByChainId(this.startup.chainID)?.shortName}
+                />
+              ) : null}
+            </div>
           </div>
         </div>
         {this.tags.length > 0 && (
@@ -61,17 +84,11 @@ export default defineComponent({
         {this.startup?.mission && (
           <p class="mt-2 text-color2 u-h5 line-clamp-2">{this.startup?.mission}</p>
         )}
-        <SocialGroup
-          discord={this.startup?.discord}
-          website={this.startup?.website}
-          telegram={this.startup?.telegram}
-          twitter={this.startup?.twitter}
-          docs={this.startup?.docs}
-          email={this.startup?.email}
-          medium={this.startup?.medium}
-          facebook={this.startup?.facebook}
-          class="flex mt-4 gap-4"
-        />
+        <div class="flex mt-4 gap-6">
+          {this.socialList.map(item => (
+            <SocialIcon icon={item.label} disable={!item.socialLink} address={item.socialLink} />
+          ))}
+        </div>
       </>
     )
   }

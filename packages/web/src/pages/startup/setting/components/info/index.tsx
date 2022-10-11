@@ -17,10 +17,11 @@ import {
   STARTUP_TYPES,
   ChainNetworkType,
   StartupTypesType,
-  getStartupNumberFromType
+  getStartupNumberFromType,
+  supportedNetworks as supportedNetworksImport
 } from '@/constants'
 import { useStartupContract } from '@/contracts'
-import { useChainStore, useWalletStore } from '@/stores'
+import { useWalletStore } from '@/stores'
 import { useContractStore } from '@/stores/contract'
 type InfoPropType = {
   logo: string
@@ -65,7 +66,6 @@ export default defineComponent({
   emits: ['saved'],
   setup(props) {
     const walletStore = useWalletStore()
-    const chainStore = useChainStore()
     const contractStore = useContractStore()
     const loading = ref(false)
     const info = reactive<InfoType & { switchChain: boolean }>({
@@ -81,7 +81,7 @@ export default defineComponent({
       switchChain: false
     })
     const supportedNetworks = computed(() => {
-      const data = chainStore.supportedNetworks
+      const data = supportedNetworksImport
       return data
     })
     const netWorkChange = async (value: number) => {
@@ -365,9 +365,8 @@ export default defineComponent({
             }
             if (!this.info.isChain && this.info.switchChain) {
               try {
-                await startupContract.newStartup(
+                await startupContract.createStartup(
                   [this.info.name, this.info.chainID === undefined ? 0 : this.info.chainID, true],
-                  requestParams,
                   'The fields of network and name will be registered to blockchain.',
                   `Startup "${this.info.name}" is creating`
                 )
