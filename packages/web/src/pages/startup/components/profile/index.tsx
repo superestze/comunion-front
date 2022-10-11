@@ -1,4 +1,4 @@
-import { UButton, UPopover, UTag } from '@comunion/components'
+import { UButton, UTag } from '@comunion/components'
 import { PlusOutlined, CheckFilled } from '@comunion/icons'
 import { defineComponent, computed, ref, watch, PropType } from 'vue'
 import { useStartupProfile } from '../../hooks/useStartupProfile'
@@ -73,21 +73,7 @@ export default defineComponent({
         }
       })
     })
-    const getLinkTarget = (link: string, label: string) => {
-      if (link) {
-        return (
-          <a href={link} target="_blank">
-            <SocialIcon icon={label} outWrapper="w-10 h-10" />
-          </a>
-        )
-      } else {
-        return (
-          <span>
-            <SocialIcon icon={label} disable outWrapper="w-10 h-10" />
-          </span>
-        )
-      }
-    }
+
     const goPath = () => {
       if (startupInfo.value?.onChain) {
         goTxHashPath(startupInfo.value?.chainID, startupInfo.value.blockChainAddress)
@@ -102,7 +88,6 @@ export default defineComponent({
       socialList,
       theChainName,
       props,
-      getLinkTarget,
       goPath
     }
   },
@@ -201,15 +186,9 @@ export default defineComponent({
             </div>
             <p class="mt-2 max-w-[600px] text-color2 u-h6">{this.startupInfo?.mission}</p>
           </div>
-          <div class="flex flex-wrap gap-2">
+          <div class="flex flex-wrap gap-6">
             {this.socialList.map(item => (
-              <UPopover
-                placement="bottom"
-                v-slots={{
-                  trigger: () => this.getLinkTarget(item.socialLink, item.label),
-                  default: () => <div class="cursor-pointer">{item.label}</div>
-                }}
-              />
+              <SocialIcon icon={item.label} disable={!item.socialLink} address={item.socialLink} />
             ))}
           </div>
         </div>

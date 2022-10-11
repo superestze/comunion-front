@@ -13,29 +13,25 @@ import copy from 'copy-to-clipboard'
 import { defineComponent, ref } from 'vue'
 import { validateDiscordUsername } from '@/utils/type'
 
-function asyncComponent(type: string, wrapper: string, disable?: boolean) {
-  const textClass = ''
-  // if (disable) {
-  //   textClass = 'text-color3'
-  // }
+function asyncComponent(type: string, wrapper: string) {
   if (type === 'Website') {
-    return <WebsiteFilled class={`${wrapper} ${textClass}`} />
+    return <WebsiteFilled class={`${wrapper}`} />
   } else if (type === 'Discord') {
-    return <DiscordFilled class={`${wrapper} ${textClass}`} />
+    return <DiscordFilled class={`${wrapper}`} />
   } else if (type === 'Facebook') {
-    return <FacebookFilled class={`${wrapper} ${textClass}`} />
+    return <FacebookFilled class={`${wrapper}`} />
   } else if (type === 'Linktree') {
-    return <UnionFilled class={`${wrapper} ${textClass}`} />
+    return <UnionFilled class={`${wrapper}`} />
   } else if (type === 'Telegram') {
-    return <TelegramFilled class={`${wrapper} ${textClass}`} />
+    return <TelegramFilled class={`${wrapper}`} />
   } else if (type === 'Twitter') {
-    return <TwitterFilled class={`${wrapper} ${textClass}`} />
+    return <TwitterFilled class={`${wrapper}`} />
   } else if (type === 'Email') {
-    return <EmailFilled class={`${wrapper} ${textClass}`} />
+    return <EmailFilled class={`${wrapper}`} />
   } else if (type === 'Medium') {
-    return <MediumFilled class={`${wrapper} ${textClass}`} />
+    return <MediumFilled class={`${wrapper}`} />
   }
-  return
+  return null
 }
 
 export default defineComponent({
@@ -44,17 +40,9 @@ export default defineComponent({
       type: String,
       required: true
     },
-    outWrapper: {
-      type: String,
-      default: () => 'm-2'
-    },
-    innerWrapper: {
+    iconClass: {
       type: String,
       default: () => 'w-5 h-5'
-    },
-    link: {
-      type: Boolean,
-      default: () => false
     },
     address: {
       type: String,
@@ -65,7 +53,7 @@ export default defineComponent({
       default: () => false
     }
   },
-  setup(props, ctx) {
+  setup() {
     const showTooltipRef = ref<boolean>(false)
 
     return {
@@ -74,14 +62,8 @@ export default defineComponent({
   },
   render() {
     return (
-      <div
-        class={`${this.outWrapper} ${
-          this.disable
-            ? 'cursor-not-allowed text-[rgba(0,0,0,0.1)]'
-            : 'text-color2 hover:text-color1'
-        }`}
-      >
-        {this.link ? (
+      <div class={`${this.disable ? 'text-[rgba(0,0,0,0.1)]' : 'text-color2 hover:text-color1'}`}>
+        {this.address ? (
           <>
             {this.icon === 'Discord' && !!validateDiscordUsername(this.address) ? (
               <span
@@ -97,7 +79,11 @@ export default defineComponent({
               >
                 <UTooltip show={this.showTooltipRef}>
                   {{
-                    trigger: () => <>{asyncComponent(this.icon, this.innerWrapper)}</>,
+                    trigger: () => (
+                      <span class="cursor-pointer" title={this.icon}>
+                        {asyncComponent(this.icon, this.iconClass)}
+                      </span>
+                    ),
                     default: () => 'Copied!'
                   }}
                 </UTooltip>
@@ -108,12 +94,12 @@ export default defineComponent({
                 title={this.address}
                 target="_blank"
               >
-                {asyncComponent(this.icon, this.innerWrapper)}
+                {asyncComponent(this.icon, this.iconClass)}
               </a>
             )}
           </>
         ) : (
-          <>{asyncComponent(this.icon, this.innerWrapper, this.disable)}</>
+          <span title={this.icon}>{asyncComponent(this.icon, this.iconClass)}</span>
         )}
       </div>
     )
