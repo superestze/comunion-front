@@ -49,8 +49,8 @@ export const allNetworks: ChainNetworkType[] = [
     logo: ethereum,
     nologo: noethereum,
     chainId: 5,
-    name: 'Goerli Testnet',
-    shortName: 'Goerli Testnet',
+    name: 'Goerli',
+    shortName: 'Goerli',
     currencySymbol: 'ETH',
     rpcUrl: 'https://goerli.infura.io/v3/',
     explorerUrl: 'https://goerli.etherscan.io'
@@ -59,7 +59,7 @@ export const allNetworks: ChainNetworkType[] = [
     logo: avalanche,
     nologo: noavalanche,
     chainId: 43114,
-    name: 'Avalanche C-Chain',
+    name: 'Avalanche',
     shortName: 'Avalanche',
     currencySymbol: 'AVAX',
     rpcUrl: 'https://api.avax.network/ext/bc/C/rpc',
@@ -70,7 +70,7 @@ export const allNetworks: ChainNetworkType[] = [
     nologo: noavalanche,
     chainId: 43113,
     name: 'Avalanche Fuji Testnet',
-    shortName: 'Avalanche Testnet',
+    shortName: 'Avalanche Fuji Testnet',
     currencySymbol: 'AVAX',
     rpcUrl: 'https://api.avax-test.network/ext/bc/C/rpc',
     explorerUrl: 'https://cchain.explorer.avax-test.network'
@@ -80,7 +80,7 @@ export const allNetworks: ChainNetworkType[] = [
     nologo: nofantom,
     chainId: 250,
     name: 'Fantom Opera',
-    shortName: 'Fantom',
+    shortName: 'Fantom Opera',
     currencySymbol: 'FTM',
     rpcUrl: 'https://rpc.ftm.tools',
     explorerUrl: 'https://ftmscan.com'
@@ -90,7 +90,7 @@ export const allNetworks: ChainNetworkType[] = [
     nologo: nofantom,
     chainId: 4002,
     name: 'Fantom Testnet',
-    shortName: 'Fantom',
+    shortName: 'Fantom Testnet',
     currencySymbol: 'FTM',
     rpcUrl: 'https://rpc.testnet.fantom.network',
     explorerUrl: 'https://testnet.ftmscan.com'
@@ -99,8 +99,8 @@ export const allNetworks: ChainNetworkType[] = [
     logo: binance,
     nologo: nobinance,
     chainId: 56,
-    name: 'Binance Smart Chain Mainnet',
-    shortName: 'BSC',
+    name: 'BNB Smart Chain',
+    shortName: 'BNB Smart Chain',
     currencySymbol: 'BNB',
     rpcUrl: 'https://bsc-dataseed1.binance.org',
     explorerUrl: 'https://bscscan.com'
@@ -109,8 +109,8 @@ export const allNetworks: ChainNetworkType[] = [
     logo: binance,
     nologo: nobinance,
     chainId: 97,
-    name: 'Binance Smart Chain Testnet',
-    shortName: 'BSC Testnet',
+    name: 'BNB Smart Chain Testnet',
+    shortName: 'BNB Smart Chain Testnet',
     currencySymbol: 'tBNB',
     rpcUrl: 'https://data-seed-prebsc-1-s1.binance.org:8545',
     explorerUrl: 'https://testnet.bscscan.com'
@@ -119,7 +119,7 @@ export const allNetworks: ChainNetworkType[] = [
     logo: polygon,
     nologo: nopolygon,
     chainId: 137,
-    name: 'Polygon Mainnet',
+    name: 'Polygon',
     shortName: 'Polygon',
     currencySymbol: 'MATIC',
     rpcUrl: 'https://polygon-rpc.com',
@@ -140,7 +140,7 @@ export const allNetworks: ChainNetworkType[] = [
     nologo: nosyscoin,
     chainId: 2814,
     name: 'Rollux OPv1 Private',
-    shortName: 'Rollux',
+    shortName: 'Rollux OPv1 Private',
     currencySymbol: 'RSYS',
     rpcUrl: 'https://testnet.rollux.com:2814',
     explorerUrl: 'https://explorer.testnet.rollux.com'
@@ -149,10 +149,10 @@ export const allNetworks: ChainNetworkType[] = [
     logo: syscoin,
     nologo: nosyscoin,
     chainId: 57,
-    name: 'Syscoin Mainnet',
+    name: 'Syscoin',
     shortName: 'Syscoin',
-    currencySymbol: 'USDC',
-    rpcUrl: 'https://rpc.ankr.com/syscoin',
+    currencySymbol: 'SYS',
+    rpcUrl: 'https://rpc.syscoin.org',
     explorerUrl: 'https://explorer.syscoin.org'
   }
 ]
@@ -190,15 +190,3 @@ export const supportedNetworks: ChainNetworkType[] = allNetworks.filter(network 
 )
 
 export const infuraKey = '65b449dc78314fe583ece8797faccc0a'
-
-export const goTxHashPath = (chainId: number, address: string) => {
-  let url = ''
-  allNetworks.forEach(item => {
-    if (item.chainId === chainId) {
-      url = item.explorerUrl
-    }
-  })
-  if (url) {
-    window.open(`${url}/tx/${address}`, address)
-  }
-}
