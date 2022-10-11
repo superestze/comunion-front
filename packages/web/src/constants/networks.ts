@@ -79,8 +79,8 @@ export const allNetworks: ChainNetworkType[] = [
     logo: fantom,
     nologo: nofantom,
     chainId: 250,
-    name: 'Fantom Opera',
-    shortName: 'Fantom Opera',
+    name: 'Fantom',
+    shortName: 'Fantom',
     currencySymbol: 'FTM',
     rpcUrl: 'https://rpc.ftm.tools',
     explorerUrl: 'https://ftmscan.com'
@@ -99,8 +99,8 @@ export const allNetworks: ChainNetworkType[] = [
     logo: binance,
     nologo: nobinance,
     chainId: 56,
-    name: 'BNB Smart Chain',
-    shortName: 'BNB Smart Chain',
+    name: 'BNB Chain',
+    shortName: 'BNB Chain',
     currencySymbol: 'BNB',
     rpcUrl: 'https://bsc-dataseed1.binance.org',
     explorerUrl: 'https://bscscan.com'
@@ -109,8 +109,8 @@ export const allNetworks: ChainNetworkType[] = [
     logo: binance,
     nologo: nobinance,
     chainId: 97,
-    name: 'BNB Smart Chain Testnet',
-    shortName: 'BNB Smart Chain Testnet',
+    name: 'BNB Chain Testnet',
+    shortName: 'BNB Chain Testnet',
     currencySymbol: 'tBNB',
     rpcUrl: 'https://data-seed-prebsc-1-s1.binance.org:8545',
     explorerUrl: 'https://testnet.bscscan.com'
