@@ -35,6 +35,7 @@ export type ChainNetworkType = {
  * (Ethereum、BNB Smart Chain、Avalanche、Fantom Opera) use
  */
 export const allNetworks: ChainNetworkType[] = [
+  // mainnet
   {
     logo: ethereum,
     nologo: noethereum,
@@ -44,56 +45,6 @@ export const allNetworks: ChainNetworkType[] = [
     currencySymbol: 'ETH',
     rpcUrl: 'https://mainnet.infura.io/v3/',
     explorerUrl: 'https://etherscan.io'
-  },
-  {
-    logo: ethereum,
-    nologo: noethereum,
-    chainId: 5,
-    name: 'Goerli',
-    shortName: 'Goerli',
-    currencySymbol: 'ETH',
-    rpcUrl: 'https://goerli.infura.io/v3/',
-    explorerUrl: 'https://goerli.etherscan.io'
-  },
-  {
-    logo: avalanche,
-    nologo: noavalanche,
-    chainId: 43114,
-    name: 'Avalanche',
-    shortName: 'Avalanche',
-    currencySymbol: 'AVAX',
-    rpcUrl: 'https://api.avax.network/ext/bc/C/rpc',
-    explorerUrl: 'https://snowtrace.io'
-  },
-  {
-    logo: avalanche,
-    nologo: noavalanche,
-    chainId: 43113,
-    name: 'Avalanche Fuji Testnet',
-    shortName: 'Avalanche Fuji Testnet',
-    currencySymbol: 'AVAX',
-    rpcUrl: 'https://api.avax-test.network/ext/bc/C/rpc',
-    explorerUrl: 'https://cchain.explorer.avax-test.network'
-  },
-  {
-    logo: fantom,
-    nologo: nofantom,
-    chainId: 250,
-    name: 'Fantom',
-    shortName: 'Fantom',
-    currencySymbol: 'FTM',
-    rpcUrl: 'https://rpc.ftm.tools',
-    explorerUrl: 'https://ftmscan.com'
-  },
-  {
-    logo: fantom,
-    nologo: nofantom,
-    chainId: 4002,
-    name: 'Fantom Testnet',
-    shortName: 'Fantom Testnet',
-    currencySymbol: 'FTM',
-    rpcUrl: 'https://rpc.testnet.fantom.network',
-    explorerUrl: 'https://testnet.ftmscan.com'
   },
   {
     logo: binance,
@@ -106,14 +57,14 @@ export const allNetworks: ChainNetworkType[] = [
     explorerUrl: 'https://bscscan.com'
   },
   {
-    logo: binance,
-    nologo: nobinance,
-    chainId: 97,
-    name: 'BNB Chain Testnet',
-    shortName: 'BNB Chain Testnet',
-    currencySymbol: 'tBNB',
-    rpcUrl: 'https://data-seed-prebsc-1-s1.binance.org:8545',
-    explorerUrl: 'https://testnet.bscscan.com'
+    logo: syscoin,
+    nologo: nosyscoin,
+    chainId: 57,
+    name: 'Syscoin',
+    shortName: 'Syscoin',
+    currencySymbol: 'SYS',
+    rpcUrl: 'https://rpc.syscoin.org',
+    explorerUrl: 'https://explorer.syscoin.org'
   },
   {
     logo: polygon,
@@ -124,6 +75,67 @@ export const allNetworks: ChainNetworkType[] = [
     currencySymbol: 'MATIC',
     rpcUrl: 'https://polygon-rpc.com',
     explorerUrl: 'https://polygonscan.com'
+  },
+  {
+    logo: fantom,
+    nologo: nofantom,
+    chainId: 250,
+    name: 'Fantom',
+    shortName: 'Fantom',
+    currencySymbol: 'FTM',
+    rpcUrl: 'https://rpc.ftm.tools',
+    explorerUrl: 'https://ftmscan.com'
+  },
+  {
+    logo: avalanche,
+    nologo: noavalanche,
+    chainId: 43114,
+    name: 'Avalanche',
+    shortName: 'Avalanche',
+    currencySymbol: 'AVAX',
+    rpcUrl: 'https://api.avax.network/ext/bc/C/rpc',
+    explorerUrl: 'https://snowtrace.io'
+  },
+  // testnet
+  {
+    logo: ethereum,
+    nologo: noethereum,
+    chainId: 5,
+    name: 'Goerli',
+    shortName: 'Goerli',
+    currencySymbol: 'ETH',
+    rpcUrl: 'https://goerli.infura.io/v3/',
+    explorerUrl: 'https://goerli.etherscan.io'
+  },
+  {
+    logo: binance,
+    nologo: nobinance,
+    chainId: 97,
+    name: 'BNB Chain Testnet',
+    shortName: 'BNB Chain Testnet',
+    currencySymbol: 'tBNB',
+    rpcUrl: 'https://data-seed-prebsc-1-s1.binance.org:8545',
+    explorerUrl: 'https://testnet.bscscan.com'
+  },
+  {
+    logo: fantom,
+    nologo: nofantom,
+    chainId: 4002,
+    name: 'Fantom Testnet',
+    shortName: 'Fantom Testnet',
+    currencySymbol: 'FTM',
+    rpcUrl: 'https://rpc.testnet.fantom.network',
+    explorerUrl: 'https://testnet.ftmscan.com'
+  },
+  {
+    logo: avalanche,
+    nologo: noavalanche,
+    chainId: 43113,
+    name: 'Avalanche Fuji Testnet',
+    shortName: 'Avalanche Fuji Testnet',
+    currencySymbol: 'AVAX',
+    rpcUrl: 'https://api.avax-test.network/ext/bc/C/rpc',
+    explorerUrl: 'https://cchain.explorer.avax-test.network'
   },
   {
     logo: polygon,
@@ -144,16 +156,6 @@ export const allNetworks: ChainNetworkType[] = [
     currencySymbol: 'RSYS',
     rpcUrl: 'https://testnet.rollux.com:2814',
     explorerUrl: 'https://explorer.testnet.rollux.com'
-  },
-  {
-    logo: syscoin,
-    nologo: nosyscoin,
-    chainId: 57,
-    name: 'Syscoin',
-    shortName: 'Syscoin',
-    currencySymbol: 'SYS',
-    rpcUrl: 'https://rpc.syscoin.org',
-    explorerUrl: 'https://explorer.syscoin.org'
   }
 ]
 interface NETWORKS_COLOR_MAP_TYPE {
