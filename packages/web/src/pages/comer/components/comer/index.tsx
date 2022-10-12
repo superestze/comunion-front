@@ -55,7 +55,7 @@ export default defineComponent({
       default: () => defaultImg,
       requried: true
     },
-    view: {
+    viewMode: {
       type: Boolean,
       default: () => false
     },
@@ -143,7 +143,7 @@ export default defineComponent({
 
     const route = useRoute()
 
-    const comerService = useComer(route.query.id as string)
+    const comerService = useComer(String(route.query.id || userStore.profile?.comerID))
 
     const toggleFollow = async (onlyGet = false) => {
       if (!onlyGet) {
@@ -153,7 +153,7 @@ export default defineComponent({
           await comerService.follow()
         }
       }
-      if (props.view) {
+      if (props.viewMode) {
         const { error, data } = await comerService.followByMe()
         if (!error) {
           follow.value = data.isFollowed
@@ -167,7 +167,7 @@ export default defineComponent({
     })
 
     const self = computed(() => {
-      return `${route.query.id}` === `${userStore.profile?.comerID}`
+      return !route.query.id || String(route.query.id) === String(userStore.profile?.comerID)
     })
 
     return {
@@ -256,7 +256,7 @@ export default defineComponent({
                 src={this.avatar}
               />
               <div class="flex mt-5 w-full pr-6 justify-end">
-                {this.view ? (
+                {this.viewMode ? (
                   <>
                     {!this.self ? (
                       <>
@@ -291,7 +291,7 @@ export default defineComponent({
                 <p class="text-color1 u-h3">{this.name}</p>
                 <p class="mt-2 text-color3 u-h6">{this.subTitle}</p>
                 {/* oauth */}
-                {!this.view && (
+                {!this.viewMode && (
                   <div class="flex flex-wrap mt-6">
                     <OAuthLinkWidget
                       comerAccounts={this.comerAccounts}

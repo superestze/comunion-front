@@ -9,7 +9,7 @@ const LandingPage = defineComponent({
     const userStore = useUserStore()
 
     watchEffect(() => {
-      if (userStore.inited) {
+      if (userStore.profile) {
         if (!userStore.logged) {
           // when not logged, go to login page
           router.replace('/auth/login')

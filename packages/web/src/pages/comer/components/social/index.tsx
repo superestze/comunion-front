@@ -14,21 +14,21 @@ import { btnGroup } from '../btnGroup'
 import Edit from '../edit'
 import SocialIcon from '@/components/SocialIcon'
 import { SocialTypeList, soureType } from '@/constants'
-import { ServiceReturn, services } from '@/services'
+import { services } from '@/services'
+import type { UserProfileState } from '@/types'
 import { validateEmail, validateDiscord } from '@/utils/type'
-
 type FnParam = (type: string, value?: string) => void
 
 function socialIconComponent(
   socialObj: { [key: string]: string | undefined },
-  view: boolean,
+  viewMode: boolean,
   edit: FnParam,
   del: FnParam
 ) {
   return SocialTypeList.map(item => {
     const social = socialObj[item.serviceKey]
     if (social) {
-      if (view) {
+      if (viewMode) {
         return <SocialIcon icon={item.value} disable={!social} address={social} />
       } else {
         return (
@@ -57,12 +57,12 @@ function socialIconComponent(
 
 export default defineComponent({
   props: {
-    view: {
+    viewMode: {
       type: Boolean,
       default: () => false
     },
     profile: {
-      type: Object as PropType<NonNullable<ServiceReturn<'account@comer-profile-get'>>>,
+      type: Object as PropType<UserProfileState>,
       required: true
     }
   },
@@ -241,7 +241,7 @@ export default defineComponent({
 
     return (
       <USpin show={this.loading}>
-        {this.view && this.socials.length === 0 ? null : (
+        {this.viewMode && this.socials.length === 0 ? null : (
           <UCard
             title="Social"
             class="mb-6"
@@ -249,7 +249,7 @@ export default defineComponent({
               'header-extra': () => {
                 if (this.editMode) {
                   return
-                } else if (this.view) {
+                } else if (this.viewMode) {
                   return
                 }
                 return <Edit onHandleClick={handleEditMode(true)}>Add New</Edit>
@@ -268,7 +268,7 @@ export default defineComponent({
                 {this.socials.length === 0 ? (
                   <p class="text-color3 u-h5">Add your social</p>
                 ) : (
-                  <>{socialIconComponent(this.socialsObj, this.view, editIcon, delIcon)}</>
+                  <>{socialIconComponent(this.socialsObj, this.viewMode, editIcon, delIcon)}</>
                 )}
               </div>
             )}

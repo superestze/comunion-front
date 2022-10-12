@@ -15,7 +15,7 @@ export default defineComponent({
       walletStore.openBindModal().then((data: ServiceReturn<'account@wallet-link'>) => {
         if (data?.token) {
           userStore.refreshToken(data.token)
-          userStore.refreshMe()
+          userStore.init(true)
         }
         if (data?.isProfiled) {
           replace('/startup/list')
@@ -41,7 +41,7 @@ export default defineComponent({
             </p>
           ),
           footer: () => (
-            <div class="flex justify-end mt-10">
+            <div class="flex mt-10 justify-end">
               <UButton class="w-160px" onClick={cancelAssociation}>
                 Cancel
               </UButton>

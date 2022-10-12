@@ -1,87 +1,48 @@
 import { computed, ref } from 'vue'
-import { ServiceReturn } from '@/services'
-import { useProfileStore } from '@/stores/profile'
+import { services } from '@/services'
+import { useUserStore } from '@/stores'
+import type { UserProfileState } from '@/types'
 
-export function useProfile(id?: string) {
-  const profileStore = useProfileStore()
-  const view = computed(() => typeof id === 'string' && id.length === 15)
+const userStore = useUserStore()
+
+export function useProfile(comerId?: string) {
+  const currentComerProfile = ref<UserProfileState | null>(null)
+
+  userStore.getComerProfile().then(res => {
+    currentComerProfile.value = res
+  })
+
+  const viewMode = computed(
+    () => !!comerId && String(currentComerProfile.value?.comerID) !== comerId
+  )
   const loading = ref<boolean>(false)
-  const getProfileData = () => {
-    loading.value = true
-    if (view.value) {
-      profileStore.get(() => {
-        loading.value = false
-      }, id)
-    } else {
-      profileStore.get(() => {
-        loading.value = false
-      })
+
+  const profile = ref<UserProfileState | null>(null)
+
+  async function getProfileData(reload = false) {
+    if (!reload && profile.value) {
+      return profile.value
     }
+    profile.value = null
+    if (viewMode.value) {
+      const { error, data } = await services['account@comer-info-get']({ comerId })
+      if (!error) {
+        profile.value = data.comerProfile || null
+      }
+    } else {
+      profile.value = await userStore.getComerProfile(reload)
+    }
+    return profile.value
   }
 
-  const profile = computed<any>(() => {
-    // when run getProfileData(), 'profile' should be null！
-    if (loading.value) {
-      return null
-    }
-    if (view.value) {
-      return profileStore.someone?.comerProfile as unknown as NonNullable<
-        ServiceReturn<'account@comer-profile-get'>
-      >
-    }
-    return profileStore.detail as unknown as NonNullable<ServiceReturn<'account@comer-profile-get'>>
-  })
-
-  const socials = computed(() => {
-    const result = []
-    if (profile.value) {
-      if (profile.value.website) {
-        result.push(profile.value.website)
-      }
-      if (profile.value.discord) {
-        result.push(profile.value.discord)
-      }
-      if (profile.value.facebook) {
-        result.push(profile.value.facebook)
-      }
-      if (profile.value.linktree) {
-        result.push(profile.value.linktree)
-      }
-      if (profile.value.telegram) {
-        result.push(profile.value.telegram)
-      }
-      if (profile.value.twitter) {
-        result.push(profile.value.twitter)
-      }
-      if (profile.value.email) {
-        result.push(profile.value.email)
-      }
-      if (profile.value.medium) {
-        result.push(profile.value.medium)
-      }
-    }
-    return result
-  })
-
-  const socialsObj = computed(() => {
-    return {
-      website: profile.value?.website,
-      discord: profile.value?.discord,
-      facebook: profile.value?.facebook,
-      linktree: profile.value?.linktree,
-      telegram: profile.value?.telegram,
-      twitter: profile.value?.twitter,
-      email: profile.value?.email,
-      medium: profile.value?.medium
-    }
-  })
+  // init
+  // viewMode need reload
+  getProfileData(viewMode.value)
 
   return {
     getProfileData,
     profile,
-    view,
-    loading,
-    socials,
-    socialsObj
+    viewMode,
+    loading
   }
 }

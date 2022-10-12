@@ -29,10 +29,7 @@ export default defineComponent({
   name: 'Comer',
   setup() {
     const route = useRoute()
-    const { id } = route.query
-    const instance = useProfile(id as string)
-
-    instance.getProfileData()
+    const instance = useProfile(String(route.query.id))
 
     const createdByMe = ref<boolean>(true)
     const systemTasks = ref<string[]>(['All', 'Startup', 'Bounty', 'dCrowdfunding', 'Proposal'])
@@ -65,7 +62,7 @@ export default defineComponent({
     })
 
     watch(
-      () => [createdByMe.value, instance.profile?.value?.comerID],
+      () => [createdByMe.value, instance.profile.value?.comerID],
       ([createdByMe, comerId]) => {
         if (comerId) {
           moduleTag.getData(comerId as number, createdByMe ? 1 : 2)
@@ -79,8 +76,8 @@ export default defineComponent({
       systemTasks,
       createdByMe,
       selectedTasks,
-      view: instance.view,
-      get: instance.getProfileData,
+      viewMode: instance.viewMode,
+      refreshData: () => instance.getProfileData(true),
       tagCount: moduleTag.tagCount,
       nothingToShow,
       getData: moduleTag.getData,
@@ -116,28 +113,34 @@ export default defineComponent({
                   location={this.profile?.location}
                   timeZone={this.profile?.timeZone}
                   cover={this.profile?.cover}
-                  view={this.view}
-                  onDone={this.get}
+                  viewMode={this.viewMode}
+                  onDone={this.refreshData}
                   comerAccounts={this.profile?.comerAccounts as ComerAccount[]}
                 />
-                <Bio content={this.profile?.bio} view={this.view} onDone={this.get} />
-                <Social view={this.view} profile={this.profile} onDone={this.get} />
+                <Bio
+                  content={this.profile?.bio}
+                  viewMode={this.viewMode}
+                  onDone={this.refreshData}
+                />
+                <Social viewMode={this.viewMode} profile={this.profile} onDone={this.refreshData} />
                 <Skill
                   skills={(this.profile?.skills || []).map((item: any) => item.name) as string[]}
-                  view={this.view}
-                  onDone={this.get}
+                  viewMode={this.viewMode}
+                  onDone={this.refreshData}
                 />
                 <Language
-                  view={this.view}
+                  viewMode={this.viewMode}
                   list={this.profile?.languages as any}
-                  onDone={this.get}
+                  onDone={this.refreshData}
                 />
                 <Education
-                  view={this.view}
+                  viewMode={this.viewMode}
                   list={this.profile?.educations as any}
-                  onDone={this.get}
+                  onDone={this.refreshData}
                 />
-                <Connection view={this.view} comerId={this.profile?.comerID as number} />
+                {this.profile.comerID && (
+                  <Connection viewMode={this.viewMode} comerId={this.profile.comerID as number} />
+                )}
               </>
             )}
           </div>
@@ -159,7 +162,7 @@ export default defineComponent({
                           <Startup
                             createdByMe={this.createdByMe}
                             comerId={this.profile?.comerID as number}
-                            view={this.view}
+                            viewMode={this.viewMode}
                           />
                         )
                       } else if (

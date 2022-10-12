@@ -105,6 +105,7 @@ export default defineComponent({
       loading.value = true
       services['account@oauth-account-unlink']({ accountID: currentUnbindAccountId.value })
         .then(() => {
+          // TODO refresh profile
           profileStore.get(() => {
             unBindVisible.value = false
             ctx.emit('update')

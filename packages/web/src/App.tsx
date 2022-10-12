@@ -50,7 +50,6 @@ export default defineComponent({
           <ULoadingBar />
           <UUploadProvider onUpload={onUpload}>
             <UHashInputProvider onSearch={onSearchHash}>
-              {/* {userStore.inited && walletStore.inited && <RouterView />} */}
               <UModalProvider>
                 <RouterView />
               </UModalProvider>

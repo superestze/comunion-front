@@ -6,6 +6,7 @@ type AttrType<T> = T extends { rows: infer M } ? M : T
 type ListType = AttrType<ServiceReturn<'account@followers-of-comer'>>
 
 export function useFollowComer(comerId: number) {
+  console.warn('useFollowComer', comerId)
   const list = ref<NonNullable<ListType>>([])
   const total = ref<number>(0)
   const page = ref<number>(1)
@@ -34,6 +35,7 @@ export function useFollowComer(comerId: number) {
   }
 
   const connect = async (id: string, cb: () => void) => {
+    console.warn('connect id', id)
     const comerService = useComer(id)
     const { error } = await comerService.follow()
     if (!error) {

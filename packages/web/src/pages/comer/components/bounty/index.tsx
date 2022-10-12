@@ -11,7 +11,7 @@ export default defineComponent({
       type: Boolean,
       default: () => true
     },
-    view: {
+    viewMode: {
       type: Boolean,
       default: () => false
     },

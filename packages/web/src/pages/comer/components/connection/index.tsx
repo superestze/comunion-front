@@ -12,7 +12,7 @@ import StartupLogo from '@/components/StartupLogo'
 export default defineComponent({
   name: 'ComerConnection',
   props: {
-    view: {
+    viewMode: {
       type: Boolean,
       default: () => false
     },
@@ -255,7 +255,8 @@ export default defineComponent({
       }
     ]
 
-    return !this.view || this.tabsInstance.filter((item: any) => item.totalRows > 0).length > 0 ? (
+    return !this.viewMode ||
+      this.tabsInstance.filter((item: any) => item.totalRows > 0).length > 0 ? (
       <UCard
         title="Connected"
         class="mb-6"

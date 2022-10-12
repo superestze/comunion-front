@@ -13,7 +13,7 @@ const StartupCard = defineComponent({
       type: Object as PropType<StartupItem>,
       required: true
     },
-    view: {
+    viewMode: {
       type: Boolean,
       default: () => false
     }

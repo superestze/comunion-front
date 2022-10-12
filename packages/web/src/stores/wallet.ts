@@ -20,8 +20,6 @@ export type coinbaseProvider = {
   ethereum: any
 }
 export type WalletState = {
-  // inited
-  inited: boolean
   // wallet address
   address?: string
   // current chain id
@@ -55,7 +53,6 @@ let _openNetworkSwitcher: () => void | undefined
 
 export const useWalletStore = defineStore('wallet', {
   state: (): WalletState => ({
-    inited: false,
     address: undefined,
     chainId: undefined,
     chainName: undefined,
@@ -79,7 +76,7 @@ export const useWalletStore = defineStore('wallet', {
   },
   actions: {
     async init() {
-      if (this.inited) return
+      if (this.connected) return
       const isConnected = storage('local').get<string>(STORE_KEY_WALLET_CONNECTED)
       // auto connect when previous session is connected
       if (isConnected && this.walletType) {
@@ -88,7 +85,6 @@ export const useWalletStore = defineStore('wallet', {
           this._onWallectConnect(wallet)
         }
       }
-      this.inited = true
     },
     async _onWallectConnect(wallet: AbstractWallet) {
       this.wallet = markRaw(wallet)

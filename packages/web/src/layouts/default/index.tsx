@@ -19,7 +19,7 @@ const DefaultLayout = defineComponent({
       if (!userStore.logged) {
         userStore.logout(false)
         router.replace('/auth/login')
-      } else if (userStore.inited && !userStore.isProfiled) {
+      } else if (userStore.profile && !userStore.isProfiled) {
         if (!route.path.startsWith('/auth')) {
           router.replace('/auth/register/simple')
         }
