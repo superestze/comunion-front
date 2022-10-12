@@ -19,7 +19,7 @@ export default defineComponent({
       type: Array as PropType<string[]>,
       required: true
     },
-    view: {
+    viewMode: {
       type: Boolean,
       default: () => false
     }
@@ -81,7 +81,7 @@ export default defineComponent({
 
     return (
       <USpin show={this.loading}>
-        {this.view && this.skills.length === 0 ? null : (
+        {this.viewMode && this.skills.length === 0 ? null : (
           <UCard
             title="Skill"
             class="mb-6"
@@ -89,7 +89,7 @@ export default defineComponent({
               'header-extra': () => {
                 if (this.editMode) {
                   return
-                } else if (this.view) {
+                } else if (this.viewMode) {
                   return
                 }
                 return <Edit onHandleClick={handleEditMode()}>Add New</Edit>

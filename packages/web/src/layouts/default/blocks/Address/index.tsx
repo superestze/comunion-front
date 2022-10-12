@@ -18,7 +18,7 @@ const WalletAddress = defineComponent({
       walletStore.openBindModal().then(data => {
         if (data?.token) {
           userStore.refreshToken(data.token)
-          userStore.refreshMe()
+          userStore.init(true)
         }
       })
     }

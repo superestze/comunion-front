@@ -7,7 +7,6 @@ import useOAuth from '../Hooks/useOAuth'
 import OAuthLinkBtn from './OAuthLinkBtn'
 import { services } from '@/services'
 import { useUserStore } from '@/stores'
-import { useProfileStore } from '@/stores/profile'
 import { UserResponse } from '@/types'
 
 export type ComerAccount = {
@@ -36,7 +35,6 @@ export default defineComponent({
   emits: ['update'],
   setup(props, ctx) {
     const loading = ref<boolean>(false)
-    const profileStore = useProfileStore()
     const { googleLogin, githubLogin } = useOAuth()
     const cantUnbind = ref<boolean>(false)
     const userStore = useUserStore()
@@ -105,7 +103,7 @@ export default defineComponent({
       loading.value = true
       services['account@oauth-account-unlink']({ accountID: currentUnbindAccountId.value })
         .then(() => {
-          profileStore.get(() => {
+          userStore.init(true).then(() => {
             unBindVisible.value = false
             ctx.emit('update')
           })

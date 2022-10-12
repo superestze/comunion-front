@@ -9,22 +9,22 @@ import type { UserProfileState, UserResponse } from '@/types'
 import AbstractWallet from '@/wallets/AbstractWallet'
 
 export type UserState = {
-  // inited
-  inited: boolean
   // user token
   token: string | undefined
   // user profile
   profile: UserProfileState | null
   // user signin response
   userResponse: UserResponse | null
+  // comer profile
+  comerProfile: UserProfileState | null
 }
 
 export const useUserStore = defineStore('user', {
   state: (): UserState => ({
     token: storage('local').get<string>(STORE_KEY_TOKEN),
-    inited: false,
     profile: null,
-    userResponse: null
+    userResponse: null,
+    comerProfile: null
   }),
   getters: {
     logged: state => !!state.token,
@@ -32,12 +32,27 @@ export const useUserStore = defineStore('user', {
   },
   actions: {
     async init(reload = false) {
-      if (!reload && this.inited) return true
+      if (!reload && this.profile) return this.profile
       if (this.logged) {
         const { error, data } = await services['account@user-info']()
         if (!error) {
           this.profile = data as unknown as UserProfileState
-          return (this.inited = true)
+          return this.profile
+        } else {
+          // anything to do?
+          return null
+        }
+      } else {
+        return null
+      }
+    },
+    async getComerProfile(reload = false) {
+      if (!reload && this.comerProfile) return this.comerProfile
+      if (this.logged) {
+        const { error, data } = await services['account@comer-profile-get']()
+        if (!error) {
+          this.comerProfile = data
+          return this.comerProfile
         } else {
           // anything to do?
           return null
@@ -49,15 +64,6 @@ export const useUserStore = defineStore('user', {
     refreshToken(token?: string) {
       this.token = token || storage('local').get<string>(STORE_KEY_TOKEN)
       storage('local').set(STORE_KEY_TOKEN, this.token as string)
-    },
-    async refreshMe() {
-      const { error, data } = await services['account@user-info']()
-      if (!error) {
-        this.profile = data as unknown as UserProfileState
-      }
-    },
-    setProfile(profile: UserProfileState) {
-      this.profile = profile
     },
     mergeProfile(profile: Partial<UserProfileState>) {
       if (this.profile) {
@@ -107,7 +113,6 @@ export const useUserStore = defineStore('user', {
       this.token = ''
       this.profile = null
       this.userResponse = null
-      this.inited = false
       storage('session').clear()
       storage('local').remove(STORE_KEY_TOKEN)
       walletStore.disconnectWallet()

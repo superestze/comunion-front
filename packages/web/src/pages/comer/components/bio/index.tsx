@@ -20,7 +20,7 @@ export default defineComponent({
       default: () => '',
       required: true
     },
-    view: {
+    viewMode: {
       type: Boolean,
       default: () => false
     }
@@ -105,7 +105,7 @@ export default defineComponent({
     }
     return (
       <USpin show={this.loading}>
-        {this.view && this.content.trim() === '' ? null : (
+        {this.viewMode && this.content.trim() === '' ? null : (
           <UCard
             title="BIO"
             class="mb-6"
@@ -113,7 +113,7 @@ export default defineComponent({
               'header-extra': () => {
                 if (this.editMode) {
                   return
-                } else if (this.view) {
+                } else if (this.viewMode) {
                   return
                 }
                 return <Edit onHandleClick={handleEditMode} />

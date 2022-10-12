@@ -14,7 +14,7 @@ export default defineComponent({
       type: Number,
       required: true
     },
-    view: {
+    viewMode: {
       type: Boolean,
       default: () => false
     }
@@ -75,7 +75,7 @@ export default defineComponent({
     return (
       <UCard title="Startup" class="mb-6 ">
         {this.startups.map((startup, i) => (
-          <StartupCard class="-mx-4" startup={startup} key={i} view={this.view} />
+          <StartupCard class="-mx-4" startup={startup} key={i} viewMode={this.viewMode} />
         ))}
       </UCard>
     )

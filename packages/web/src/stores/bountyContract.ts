@@ -68,7 +68,7 @@ export const useBountyContractStore = defineStore('bountyContract', {
       const getState = () => {
         return new Promise((resolve, reject) => {
           // when user is logout, stop request
-          if (!userStore.inited && cancel) {
+          if (!userStore.profile && cancel) {
             return reject(cancel())
           }
           if (reset) {
