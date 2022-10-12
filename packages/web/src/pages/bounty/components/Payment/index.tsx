@@ -80,7 +80,7 @@ export default defineComponent({
 
     timer()
 
-    const expiresIn = computed(() => new Date(props.bountyDetail.value.expiresIn).getTime() / 1000)
+    const expiresIn = computed(() => new Date(props.bountyDetail.value?.expiresIn).getTime() / 1000)
 
     return {
       payMode,
