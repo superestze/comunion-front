@@ -16,7 +16,6 @@ import PaymentCard from '@/components/CustomCard'
 import { APPLICANT_STATUS, BOUNTY_STATUS, USER_ROLE, PERIOD_OPTIONS } from '@/constants'
 import { ServiceReturn } from '@/services'
 import { BountyContractInfoType } from '@/stores/bountyContract'
-
 export default defineComponent({
   name: 'Payment',
   props: {
@@ -298,7 +297,7 @@ export default defineComponent({
           this.stageTerms.map(item => <StageTerm item={item} detailChainId={this.detailChainId} />)}
 
         {this.payMode === 'period' && (
-          <ProjectCarousel width={820} total={this.periodTerms.length}>
+          <ProjectCarousel total={this.periodTerms.length}>
             {this.periodTerms.map(term => (
               <ProjectCardWithDialog info={term} />
             ))}
@@ -306,10 +305,18 @@ export default defineComponent({
         )}
 
         {this.payMode === 'period' && (
-          <div class="border-solid border-color-border border-width-1px rounded-sm mt-24px max-h-258px p-24px overflow-hidden">
-            <p class="mb-6 u-title1">Target</p>
-            <UScrollbar style={{ maxHeight: `${162}px` }}>
-              <p class="text-grey2 u-h5" innerHTML={this.paymentInfo?.periodTerms?.terms} />
+          <div
+            class={`border-solid border-color-border border-width-1px rounded-sm mt-24px max-h-258px p-24px overflow-hidden`}
+          >
+            <p class="mb-6 u-h3 text-color3">Target</p>
+            <UScrollbar
+              style={{
+                '--n-scrollbar-color-hover': `#E0E0E0`,
+                '--n-scrollbar-color': `#E0E0E0`,
+                maxHeight: `${162}px`
+              }}
+            >
+              <p class="text-color font-[14px]" innerHTML={this.paymentInfo?.periodTerms?.terms} />
             </UScrollbar>
           </div>
         )}
