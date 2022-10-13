@@ -1,4 +1,4 @@
-import { UScrollbar, UTooltip } from '@comunion/components'
+import { UTooltip } from '@comunion/components'
 import { LockKeyOutlined, UnlockKeyOutlined } from '@comunion/icons'
 import { pluralize } from 'inflected'
 import { defineComponent, PropType, computed, ref } from 'vue'
@@ -16,6 +16,7 @@ import PaymentCard from '@/components/CustomCard'
 import { APPLICANT_STATUS, BOUNTY_STATUS, USER_ROLE, PERIOD_OPTIONS } from '@/constants'
 import { ServiceReturn } from '@/services'
 import { BountyContractInfoType } from '@/stores/bountyContract'
+import './index.module.css'
 export default defineComponent({
   name: 'Payment',
   props: {
@@ -309,15 +310,10 @@ export default defineComponent({
             class={`border-solid border-color-border border-width-1px rounded-sm mt-24px max-h-258px p-24px overflow-hidden`}
           >
             <p class="mb-6 u-h3 text-color3">Target</p>
-            <UScrollbar
-              style={{
-                '--n-scrollbar-color-hover': `#E0E0E0`,
-                '--n-scrollbar-color': `#E0E0E0`,
-                maxHeight: `${162}px`
-              }}
-            >
-              <p class="text-color font-[14px]" innerHTML={this.paymentInfo?.periodTerms?.terms} />
-            </UScrollbar>
+            <p
+              class="text-color font-[14px] max-h-[162px] overflow-y-scroll"
+              innerHTML={this.paymentInfo?.periodTerms?.terms}
+            />
           </div>
         )}
       </>
