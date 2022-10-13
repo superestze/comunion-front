@@ -35,7 +35,7 @@ const LoginPage = defineComponent({
       if (path === '/auth/association' || path === '/auth/login' || query.state) {
         return
       }
-      if (userStore.inited && !userStore.isProfiled) {
+      if (userStore.profile && !userStore.isProfiled) {
         userStore.logout(false)
       }
     })

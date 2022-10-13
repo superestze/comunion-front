@@ -26,7 +26,7 @@ type EducationType = {
 
 export default defineComponent({
   props: {
-    view: {
+    viewMode: {
       type: Boolean,
       default: () => false
     },
@@ -152,7 +152,7 @@ export default defineComponent({
 
     return (
       <USpin show={this.loading}>
-        {this.view && this.educations.length === 0 ? null : (
+        {this.viewMode && this.educations.length === 0 ? null : (
           <UCard
             title="Education"
             class="mb-6"
@@ -160,7 +160,7 @@ export default defineComponent({
               'header-extra': () => {
                 if (this.editMode) {
                   return
-                } else if (this.view) {
+                } else if (this.viewMode) {
                   return
                 }
                 return <Edit onHandleClick={handleEditMode(true)}>Add New</Edit>
@@ -196,7 +196,7 @@ export default defineComponent({
                           </div>
                           <div
                             class={`hidden mr-4 ${
-                              !this.view ? listHover['hidden'] : ''
+                              !this.viewMode ? listHover['hidden'] : ''
                             } cursor-pointer`}
                           >
                             <PenOutlined

@@ -7,7 +7,6 @@ import RegisterLayout from './components/Layout'
 import { UTC_OPTIONS } from '@/constants'
 import { ServiceArg, services } from '@/services'
 import { useUserStore } from '@/stores'
-import { UserProfileState } from '@/types'
 
 const RegisterProfilePage = defineComponent({
   name: 'RegisterProfilePage',
@@ -105,7 +104,8 @@ const RegisterProfilePage = defineComponent({
     ]
 
     const onSubmit = async (values: Record<string, any>) => {
-      const newUser: UserProfileState = {
+      // TODO: should use type UserProfileState
+      const newUser: any = {
         ...(values as ServiceArg<'account@comer-profile-create'>),
         avatar: 'https://comunion-avatars.s3.ap-northeast-1.amazonaws.com/avatar1.svg'
       }
@@ -131,7 +131,7 @@ const RegisterProfilePage = defineComponent({
           <p class="mt-2 mb-6 text-grey2 u-h5">
             Add your profile, a short bio, and links to your other online websites.
           </p>
-          <div class="bg-white border rounded-sm border-color-border pt-10 pb-5">
+          <div class="bg-white border border-color-border rounded-sm pt-10 pb-5">
             <div class="mx-auto w-200">
               <UFormFactory
                 fields={fields}

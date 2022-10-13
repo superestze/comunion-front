@@ -1,4 +1,4 @@
-import { onMounted, ref } from 'vue'
+import { onUnmounted, ref } from 'vue'
 import { ServiceReturn, services } from '@/services'
 
 const loading = ref(false)
@@ -162,8 +162,17 @@ export default function useBountyDetail(bountyId: string | undefined) {
     bountyId && initialize(bountyId, true)
   }
 
-  onMounted(() => {
-    bountyId && initialize(bountyId)
+  bountyId && initialize(bountyId)
+
+  onUnmounted(() => {
+    detail.value = null
+    startup.value = null
+    founder.value = null
+    approvedPeople.value = null
+    activitiesList.value = []
+    applicantsList.value = []
+    depositRecords.value = []
+    bountyPayment.value = null
   })
 
   return {

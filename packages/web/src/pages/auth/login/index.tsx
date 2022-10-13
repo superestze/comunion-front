@@ -29,7 +29,7 @@ export default defineComponent({
       if (path === '/auth/association' || path === '/auth/login' || query.state) {
         return
       }
-      if (userStore.inited && !userStore.isProfiled) {
+      if (userStore.profile && !userStore.isProfiled) {
         userStore.logout(false)
       }
     })
@@ -79,7 +79,7 @@ export default defineComponent({
                     class="w-full"
                   />
                 </div>
-                <p class="text-[#111111] text-28px font-bold text-center">Comunion</p>
+                <p class="font-bold text-center text-[#111111] text-28px">Comunion</p>
                 <p
                   class="mt-54px text-center mb-20px"
                   style={{

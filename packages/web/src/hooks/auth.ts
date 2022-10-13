@@ -15,7 +15,7 @@ export function useOnLoggedIn() {
     if (result && (result === 'google' || result === 'github')) {
       replace('/comer')
       storage('session').remove('link:btn')
-      userStore.refreshMe()
+      userStore.init(true)
       return
     }
     // if (user?.firstLogin) {
