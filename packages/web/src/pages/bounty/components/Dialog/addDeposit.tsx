@@ -11,7 +11,7 @@ import {
   message
 } from '@comunion/components'
 import { ethers } from 'ethers'
-import { defineComponent, Ref, computed, ref, reactive, watch } from 'vue'
+import { defineComponent, Ref, computed, ref, reactive, watch, VNodeChild } from 'vue'
 import { useRoute } from 'vue-router'
 import {
   useBountyContractWrapper,
@@ -144,7 +144,7 @@ export default defineComponent({
             ethers.utils.parseUnits((this.formData.increaseDeposit || '').toString(), 18),
             'The bounty credit will be enchanced by increasing the deposits.',
             `Increase deposits to ${this.formData.increaseDeposit} ${tokenSymbol}.`
-          ).catch(error => {
+          ).catch((error: { message: string | (() => VNodeChild) }) => {
             message.error(error.message)
             return null
           })) as unknown as BountyContractReturnType

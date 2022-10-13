@@ -46,8 +46,16 @@ export type BountyContractReturnType = {
   creates: null
   chainId: number
 }
+type useBountyContractWrapperType = {
+  bountyContract: any
+  usdc: any
+  approve: any
+  gap: any
+  bountyContractStore: any
+  chainId: number | undefined
+}
 let cancel: () => void
-export function useBountyContractWrapper(bountyId?: string) {
+export function useBountyContractWrapper(bountyId?: string): useBountyContractWrapperType {
   const walletStore = useWalletStore()
   const userStore = useUserStore()
   const { detail } = useBountyDetail(bountyId)
@@ -59,19 +67,19 @@ export function useBountyContractWrapper(bountyId?: string) {
 
   if (bountyId) {
     // when user is logout, stop request
-    if (!userStore.inited && cancel) {
+    if (!userStore.profile && cancel) {
       cancel()
-      return
+    } else {
+      if (cancel) {
+        cancel()
+      }
+      const res = useRequest(bountyContractStore.initialize, {
+        defaultParams: [bountyContract, bountyId as string],
+        pollingInterval: 5000,
+        pollingWhenHidden: true
+      })
+      cancel = res.cancel
     }
-    if (cancel) {
-      cancel()
-    }
-    const res = useRequest(bountyContractStore.initialize, {
-      defaultParams: [bountyContract, bountyId as string],
-      pollingInterval: 5000,
-      pollingWhenHidden: true
-    })
-    cancel = res.cancel
   }
   const usdcTokenContract = useErc20Contract()
   const usdc = usdcTokenContract(AVAX_USDC_ADDR[walletStore.chainId!])
