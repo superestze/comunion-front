@@ -383,7 +383,7 @@ export const CrowdfundingInformation = defineComponent({
           }
         ],
         isDateDisabled: (current: number) => {
-          return dayjs(current) < dayjs()
+          return dayjs(current) < dayjs().startOf('day')
         },
         placeholder: 'select a date'
       },
@@ -407,7 +407,7 @@ export const CrowdfundingInformation = defineComponent({
           }
         ],
         isDateDisabled: (current: number) => {
-          return dayjs(current) < dayjs()
+          return dayjs(current) < dayjs().startOf('day')
         },
         placeholder: 'select a date'
       }
