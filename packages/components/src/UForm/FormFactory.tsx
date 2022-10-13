@@ -91,6 +91,7 @@ export type FormFactoryField = {
   class?: string
   slots?: InternalSlots
   formItemProps?: FormItemProps
+  maxlength?: number
 } & (
   | FormFactoryInputField
   | FormFactoryAddrssInputField
@@ -146,7 +147,14 @@ function renderField(field: FormFactoryField, values: FormData) {
   const props = omitObject(field, 'title', 'name', 'required', 't', 'rules')
   switch (field.t) {
     case 'website':
-      return <NInput {...(props as UInputPropsType)} v-model:value={values[field.name]} clearable />
+      return (
+        <NInput
+          {...(props as UInputPropsType)}
+          v-model:value={values[field.name]}
+          clearable
+          maxlength={props?.maxlength ?? 1000000000000000}
+        />
+      )
     case 'address':
       return (
         <UAddressInput {...(props as UAddressInputPropsType)} v-model:value={values[field.name]} />
@@ -213,7 +221,13 @@ function renderField(field: FormFactoryField, values: FormData) {
     case 'custom':
       return field.render(values[field.name])
     default:
-      return <NInput {...(props as UInputPropsType)} v-model:value={values[field.name]} />
+      return (
+        <NInput
+          {...(props as UInputPropsType)}
+          v-model:value={values[field.name]}
+          maxlength={props?.maxlength ?? 1000000000000000}
+        />
+      )
   }
 }
 
