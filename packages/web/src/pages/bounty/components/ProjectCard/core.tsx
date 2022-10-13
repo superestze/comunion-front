@@ -63,12 +63,12 @@ export default defineComponent({
       this.$emit('pay', this.info)
     }
     return (
-      <div class="bg-purple border-purple border-solid rounded-md border-1 mt-2 ml-2 relative  ">
+      <div class="bg-purple border-purple border-solid rounded-sm border-1 mt-2 ml-2 relative  ">
         <div class="bg-purple-light flex rounded-br-md h-7 text-primary w-11.5 z-1 absolute justify-center items-center u-h5 ">
           {this.index}
         </div>
 
-        <div class="rounded-md flex flex-col h-full w-full items-center relative overflow-hidden">
+        <div class="rounded-sm flex flex-col h-full w-full items-center relative overflow-hidden">
           {this.info?.status === 2 && <PayedMask />}
           <div class="flex flex-1 items-end">
             <div>
