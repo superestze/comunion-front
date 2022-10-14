@@ -11,6 +11,8 @@
   "scripts": {
     "postinstall": "husky install",
     "docs:dev": "pnpm --filter @comunion/docs docs:dev",
+    "docs:build": "pnpm --filter @comunion/docs docs:build",
+    "docs:serve": "pnpm --filter @comunion/docs docs:serve",
     "dev:utils": "pnpm --filter @comunion/utils dev",
     "dev:hooks": "pnpm --filter @comunion/hooks dev",
     "dev:components": "pnpm --filter @comunion/components dev",
