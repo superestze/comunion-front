@@ -10,7 +10,7 @@
   "license": "GPL-3.0-or-later",
   "scripts": {
     "postinstall": "husky install",
-    "docs": "pnpm --filter @comunion/docs docs:dev",
+    "docs:dev": "pnpm --filter @comunion/docs docs:dev",
     "dev:utils": "pnpm --filter @comunion/utils dev",
     "dev:hooks": "pnpm --filter @comunion/hooks dev",
     "dev:components": "pnpm --filter @comunion/components dev",

@@ -1,6 +1,6 @@
 ---
 layout: doc
-title: 组件编写规范
+title: 组件设计规范
 sidebar: true
 ---
 
