@@ -5,7 +5,7 @@ import windicssPlugin from 'vite-plugin-windicss'
 import type { UserConfig } from 'vitepress/types/index'
 
 const config: UserConfig = {
-  base: '/comunion-front',
+  base: process.env.NODE_ENV === 'development' ? '/' : '/comunion-front/',
   lang: 'en-US',
   title: 'Comunion Frontend Developer',
   description: 'Comunion frontend developer documents',
@@ -156,6 +156,12 @@ const config: UserConfig = {
     }
   },
   vite: {
+    server: {
+      fs: {
+        // 可以为项目根目录的上一级提供服务
+        allow: ['..']
+      }
+    },
     plugins: [
       vueJsx({
         enableObjectSlots: true
