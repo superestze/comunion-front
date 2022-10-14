@@ -1,4 +1,5 @@
 ---
+layout: doc
 title: 开发约定
 sidebar: true
 ---

@@ -8,6 +8,7 @@ const config: UserConfig = {
   lang: 'en-US',
   title: 'Comunion Frontend Developer',
   description: 'Comunion frontend developer documents',
+  lastUpdated: true,
   locales: {
     '/': {
       lang: 'en-US'
@@ -19,13 +20,12 @@ const config: UserConfig = {
     }
   },
   themeConfig: {
-    repo: 'comunion-io/v5-front',
-    docsDir: './',
     // logo: 'logo.png',
-    editLinks: true,
-    editLinkText: 'Edit this page on GitHub',
-    lastUpdated: 'Last Updated',
-
+    editLink: {
+      pattern: 'https://github.com/comunion-io/comunion-front/edit/develop/packages/docs/:path'
+    },
+    socialLinks: [{ icon: 'github', link: 'https://github.com/comunion-io/comunion-front' }],
+    lastUpdatedText: 'Last Updated',
     locales: {
       '/': {
         selectText: 'Languages',
@@ -59,10 +59,6 @@ const config: UserConfig = {
             buttonText: '刷新'
           }
         },
-        // algolia: {
-        //   apiKey: '',
-        //   indexName: 'comunion-fe'
-        // },
         nav: [
           { text: '开发入门', link: '/zh/guide/getting-started', activeMatch: '^/zh/guide' },
           { text: '组件库', link: '/zh/components/', activeMatch: '^/zh/components' },
@@ -70,58 +66,82 @@ const config: UserConfig = {
         ],
         sidebar: {
           '/zh/guide/': [
-            { text: '快速开始', link: '/zh/guide/getting-started' },
-            { text: '编辑器配置', link: '/zh/guide/ide' },
-            { text: '开发规范', link: '/zh/guide/specification' },
-            { text: '组件开发规范', link: '/zh/guide/component' },
-            { text: '代码结构', link: '/zh/guide/structure' },
-            { text: 'Git 规范', link: '/zh/guide/git' },
-            { text: '上链交互', link: '/zh/guide/chain' },
-            { text: '开发规划', link: '/zh/guide/roadmap' }
+            {
+              text: '开发入门',
+              items: [
+                { text: '快速开始', link: '/zh/guide/getting-started' },
+                { text: '编辑器配置', link: '/zh/guide/ide' },
+                { text: '开发规范', link: '/zh/guide/specification' },
+                { text: '组件开发规范', link: '/zh/guide/component' },
+                { text: '代码结构', link: '/zh/guide/structure' },
+                { text: 'Git 规范', link: '/zh/guide/git' },
+                { text: '上链交互', link: '/zh/guide/chain' },
+                { text: '开发约定', link: '/zh/guide/agreement' },
+                { text: '开发规划', link: '/zh/guide/roadmap' }
+              ]
+            }
           ],
           '/zh/components/': [
             {
-              text: '基础',
-              children: [
-                { text: '排版', link: '/zh/components/typography' },
-                { text: '图标', link: '/zh/components/icons' },
-                { text: '按钮', link: '/zh/components/button' }
-              ]
-            },
-            {
-              text: '表单',
-              children: [{ text: '输入框', link: '/zh/components/input' }]
-            },
-            {
-              text: '显示',
-              children: [
-                { text: 'tag', link: '/zh/components/tag' },
-                { text: '开发中', link: '/zh/components/developing' },
-                { text: 'star', link: '/zh/components/star' }
-              ]
-            },
-            {
-              text: '导航',
-              children: [
-                { text: '返回', link: '/zh/components/back' },
-                { text: '查看更多', link: '/zh/components/viewMore' }
+              text: '组件库',
+              items: [
+                {
+                  text: '基础',
+                  items: [
+                    { text: '排版', link: '/zh/components/typography' },
+                    { text: '图标', link: '/zh/components/icons' },
+                    { text: '按钮', link: '/zh/components/button' }
+                  ]
+                },
+                {
+                  text: '表单',
+                  items: [{ text: '输入框', link: '/zh/components/input' }]
+                },
+                {
+                  text: '显示',
+                  items: [
+                    { text: 'tag', link: '/zh/components/tag' },
+                    { text: '开发中', link: '/zh/components/developing' },
+                    { text: 'star', link: '/zh/components/star' }
+                  ]
+                },
+                {
+                  text: '导航',
+                  items: [
+                    { text: '返回', link: '/zh/components/back' },
+                    { text: '查看更多', link: '/zh/components/viewMore' }
+                  ]
+                }
               ]
             }
           ],
           '/zh/libraries/': [
             {
-              text: 'hooks',
-              children: [{ text: '用户', link: '/zh/libraries/hooks/useUser' }]
-            },
-            {
               text: '函数库',
-              children: [{ text: '链', link: '/zh/libraries/utils/chain' }]
+              items: [
+                {
+                  text: 'hooks',
+                  items: [{ text: '用户', link: '/zh/libraries/hooks/useUser' }]
+                },
+                {
+                  text: '函数库',
+                  items: [{ text: '链', link: '/zh/libraries/utils/chain' }]
+                }
+              ]
             }
           ]
         }
+        // algolia: {
+        //   apiKey: '',
+        //   indexName: 'comunion-fe'
+        // },
       }
-    }
+    },
 
+    footer: {
+      message: 'MIT Licensed',
+      copyright: 'Copyright © 2021-present Comunion'
+    }
     // algolia: {
     //   apiKey: 'c57105e511faa5558547599f120ceeba',
     //   indexName: 'vitepress'
