@@ -5,6 +5,7 @@ import windicssPlugin from 'vite-plugin-windicss'
 import type { UserConfig } from 'vitepress/types/index'
 
 const config: UserConfig = {
+  base: '/comunion-front',
   lang: 'en-US',
   title: 'Comunion Frontend Developer',
   description: 'Comunion frontend developer documents',
@@ -71,12 +72,12 @@ const config: UserConfig = {
               items: [
                 { text: '快速开始', link: '/zh/guide/getting-started' },
                 { text: '编辑器配置', link: '/zh/guide/ide' },
-                { text: '开发规范', link: '/zh/guide/specification' },
-                { text: '组件开发规范', link: '/zh/guide/component' },
                 { text: '代码结构', link: '/zh/guide/structure' },
+                { text: '开发规范', link: '/zh/guide/specification' },
+                { text: '组件设计规范', link: '/zh/guide/component' },
+                { text: '开发约定', link: '/zh/guide/agreement' },
                 { text: 'Git 规范', link: '/zh/guide/git' },
                 { text: '上链交互', link: '/zh/guide/chain' },
-                { text: '开发约定', link: '/zh/guide/agreement' },
                 { text: '开发规划', link: '/zh/guide/roadmap' }
               ]
             }
