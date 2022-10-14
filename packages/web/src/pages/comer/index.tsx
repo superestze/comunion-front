@@ -29,7 +29,7 @@ export default defineComponent({
   name: 'Comer',
   setup() {
     const route = useRoute()
-    const instance = useProfile(String(route.query.id))
+    const instance = useProfile(route.query.id)
 
     const createdByMe = ref<boolean>(true)
     const systemTasks = ref<string[]>(['All', 'Startup', 'Bounty', 'dCrowdfunding', 'Proposal'])
