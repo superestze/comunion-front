@@ -5,7 +5,12 @@ import {
 } from 'vue-request'
 import type { ServiceArg, ServiceKeys, ServiceReturn } from '@/services'
 import { services } from '@/services'
-
+/**
+ * useRequest
+ * key[string]: server name
+ * args[object]: request params
+ * options[object]: useRequest/vue-request options
+ * */
 export function useRequest<T extends ServiceKeys>(
   key: T,
   args: ServiceArg<T>,
@@ -18,7 +23,12 @@ export function useRequest<T extends ServiceKeys>(
     ...options
   })
 }
-
+/**
+ * usePagination
+ * key[string]: server name
+ * args[object]: request params
+ * options[object]: usePagination/vue-request options
+ * */
 export function usePagination<T extends ServiceKeys>(
   key: T,
   args: ServiceArg<T>,
@@ -43,6 +53,12 @@ export function usePagination<T extends ServiceKeys>(
 }
 
 type DataType = { list: any[]; [key: string]: any }
+/**
+ * useLoadMore
+ * key[string]: server name
+ * args[object]: request params
+ * options[object]: useLoadMore/vue-request options
+ * */
 export function useLoadMore<T extends ServiceKeys>(
   key: T,
   args: ServiceArg<T>,
