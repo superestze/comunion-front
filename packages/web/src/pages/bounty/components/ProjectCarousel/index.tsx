@@ -33,29 +33,31 @@ export default defineComponent({
         {this.total > 3 && (
           <>
             <div
-              class="rounded cursor-pointer flex bg-gray-100 h-48px -mt-24px top-1/2 -left-30px w-20px absolute items-center"
+              class="cursor-pointer flex bg-gray-100 h-48px -mt-24px top-1/2 -left-20px w-20px absolute items-center"
               onClick={prev}
             >
               <LeftArrowFilled />
             </div>
             <div
-              class="rounded cursor-pointer flex bg-gray-100 h-48px -mt-24px top-1/2 -right-30px w-20px absolute items-center"
+              class="cursor-pointer flex bg-gray-100 h-48px -mt-24px top-1/2 -right-20px w-20px absolute items-center"
               onClick={next}
             >
               <RightArrowFilled />
             </div>
           </>
         )}
-        <UCarousel
-          ref={(ref: any) => (this.carousel = ref)}
-          slidesPerView={Math.min(3, this.total)}
-          spaceBetween={20}
-          loop={true}
-          draggable={true}
-          showDots={false}
-        >
-          {this.$slots.default?.()}
-        </UCarousel>
+        <div class={this.total > 3 ? `mx-4` : ''}>
+          <UCarousel
+            ref={(ref: any) => (this.carousel = ref)}
+            slidesPerView={Math.min(3, this.total)}
+            spaceBetween={24}
+            loop={true}
+            draggable={true}
+            showDots={false}
+          >
+            {this.$slots.default?.()}
+          </UCarousel>
+        </div>
       </div>
     )
   }

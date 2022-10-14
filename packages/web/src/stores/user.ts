@@ -40,10 +40,10 @@ export const useUserStore = defineStore('user', {
           return this.profile
         } else {
           // anything to do?
-          return null
+          return console.warn(`request error`)
         }
       } else {
-        return null
+        return console.warn(`user is unlogin`)
       }
     },
     async getComerProfile(reload = false) {
@@ -113,6 +113,7 @@ export const useUserStore = defineStore('user', {
       this.token = ''
       this.profile = null
       this.userResponse = null
+      this.comerProfile = null
       storage('session').clear()
       storage('local').remove(STORE_KEY_TOKEN)
       walletStore.disconnectWallet()

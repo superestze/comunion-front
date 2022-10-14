@@ -1,4 +1,4 @@
-import { UScrollbar, UTooltip } from '@comunion/components'
+import { UTooltip } from '@comunion/components'
 import { LockKeyOutlined, UnlockKeyOutlined } from '@comunion/icons'
 import { pluralize } from 'inflected'
 import { defineComponent, PropType, computed, ref } from 'vue'
@@ -16,7 +16,7 @@ import PaymentCard from '@/components/CustomCard'
 import { APPLICANT_STATUS, BOUNTY_STATUS, USER_ROLE, PERIOD_OPTIONS } from '@/constants'
 import { ServiceReturn } from '@/services'
 import { BountyContractInfoType } from '@/stores/bountyContract'
-
+import './index.module.css'
 export default defineComponent({
   name: 'Payment',
   props: {
@@ -80,7 +80,7 @@ export default defineComponent({
 
     timer()
 
-    const expiresIn = computed(() => new Date(props.bountyDetail.value.expiresIn).getTime() / 1000)
+    const expiresIn = computed(() => new Date(props.bountyDetail.value?.expiresIn).getTime() / 1000)
 
     return {
       payMode,
@@ -298,7 +298,7 @@ export default defineComponent({
           this.stageTerms.map(item => <StageTerm item={item} detailChainId={this.detailChainId} />)}
 
         {this.payMode === 'period' && (
-          <ProjectCarousel width={820} total={this.periodTerms.length}>
+          <ProjectCarousel total={this.periodTerms.length}>
             {this.periodTerms.map(term => (
               <ProjectCardWithDialog info={term} />
             ))}
@@ -306,11 +306,14 @@ export default defineComponent({
         )}
 
         {this.payMode === 'period' && (
-          <div class="border-solid border-color-border border-width-1px rounded-8px mt-24px max-h-258px p-24px overflow-hidden">
-            <p class="mb-6 u-title1">Target</p>
-            <UScrollbar style={{ maxHeight: `${162}px` }}>
-              <p class="text-grey2 u-h5" innerHTML={this.paymentInfo?.periodTerms?.terms} />
-            </UScrollbar>
+          <div
+            class={`border-solid border-color-border border-width-1px rounded-sm mt-24px max-h-258px p-24px overflow-hidden`}
+          >
+            <p class="mb-6 u-h3 text-color3">Target</p>
+            <p
+              class="text-color font-[14px] max-h-[162px] overflow-y-scroll"
+              innerHTML={this.paymentInfo?.periodTerms?.terms}
+            />
           </div>
         )}
       </>

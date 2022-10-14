@@ -2,12 +2,12 @@ import { message } from '@comunion/components'
 import dayjs from 'dayjs'
 import { BigNumber } from 'ethers'
 import { computed } from 'vue'
+import { useRequest } from 'vue-request'
 import useBountyDetail from './useBountyDetail'
 import { useBountyContract, useErc20Contract } from '@/contracts'
 import { AVAX_USDC_ADDR } from '@/contracts/utils'
-import { useWalletStore } from '@/stores'
+import { useWalletStore, useUserStore } from '@/stores'
 import { useBountyContractStore } from '@/stores/bountyContract'
-
 export type BountyContractReturnType = {
   hash: string
   type: number
@@ -46,9 +46,18 @@ export type BountyContractReturnType = {
   creates: null
   chainId: number
 }
-
-export function useBountyContractWrapper(bountyId?: string) {
+type useBountyContractWrapperType = {
+  bountyContract: any
+  usdc: any
+  approve: any
+  gap: any
+  bountyContractStore: any
+  chainId: number | undefined
+}
+let cancel: () => void
+export function useBountyContractWrapper(bountyId?: string): useBountyContractWrapperType {
   const walletStore = useWalletStore()
+  const userStore = useUserStore()
   const { detail } = useBountyDetail(bountyId)
   const bountyContractStore = useBountyContractStore()
   const bountyContract = useBountyContract({
@@ -57,7 +66,20 @@ export function useBountyContractWrapper(bountyId?: string) {
   })
 
   if (bountyId) {
-    bountyContractStore.initialize(bountyContract, bountyId as string, true)
+    // when user is logout, stop request
+    if (!userStore.profile && cancel) {
+      cancel()
+    } else {
+      if (cancel) {
+        cancel()
+      }
+      const res = useRequest(bountyContractStore.initialize, {
+        defaultParams: [bountyContract, bountyId as string],
+        pollingInterval: 5000,
+        pollingWhenHidden: true
+      })
+      cancel = res.cancel
+    }
   }
   const usdcTokenContract = useErc20Contract()
   const usdc = usdcTokenContract(AVAX_USDC_ADDR[walletStore.chainId!])
