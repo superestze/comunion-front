@@ -1,4 +1,5 @@
 ---
+layout: doc
 title: 上链交互
 sidebar: true
 ---

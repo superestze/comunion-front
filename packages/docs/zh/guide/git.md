@@ -1,4 +1,5 @@
 ---
+layout: doc
 title: Git 代码提交流程
 sidebar: true
 ---
