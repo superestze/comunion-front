@@ -5,7 +5,7 @@ import type { UserProfileState } from '@/types'
 
 const userStore = useUserStore()
 
-export function useProfile(comerId?: string) {
+export function useProfile(comerId?: any) {
   const currentComerProfile = ref<UserProfileState | null>(null)
 
   userStore.getComerProfile().then(res => {
@@ -13,7 +13,7 @@ export function useProfile(comerId?: string) {
   })
 
   const viewMode = computed(
-    () => !!comerId && String(currentComerProfile.value?.comerID) !== comerId
+    () => !!comerId && String(currentComerProfile.value?.comerID) !== String(comerId)
   )
   const loading = ref<boolean>(false)
 

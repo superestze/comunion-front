@@ -1,4 +1,5 @@
 ---
+layout: doc
 title: 快速开始
 sidebar: true
 ---
@@ -7,10 +8,13 @@ sidebar: true
 
 ## 项目启动
 
-在根目录执行
+初始化项目及启动开发服务
 
 ```bash
-pnpm run dev
+git clone https://github.com/comunion-io/comunion-front
+cd comunion-front
+pnpm install
+pnpm dev
 ```
 
 - 启动文档预览

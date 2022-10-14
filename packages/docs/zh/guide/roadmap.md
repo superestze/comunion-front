@@ -1,4 +1,5 @@
 ---
+layout: doc
 title: 开发规划
 sidebar: true
 ---
