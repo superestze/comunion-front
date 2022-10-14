@@ -2,7 +2,7 @@ import { UBreadcrumb, UCard, USpin, UTooltip } from '@comunion/components'
 import { PeriodOutlined, StageOutlined, ClockOutlined } from '@comunion/icons'
 import dayjs from 'dayjs'
 import { pluralize } from 'inflected'
-import { defineComponent, computed, ref, watch } from 'vue'
+import { defineComponent, computed, ref, watch, onUnmounted } from 'vue'
 import { useRoute, useRouter } from 'vue-router'
 import { ActivityBubble, ApplicantBubble, DepositBubble } from './components/Bubble'
 import Info from './components/Info'
@@ -99,7 +99,9 @@ export default defineComponent({
         }
       }
     )
-
+    onUnmounted(() => {
+      bountySection.setNullData()
+    })
     return {
       bountyContract,
       postUpdate,

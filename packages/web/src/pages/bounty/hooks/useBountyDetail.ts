@@ -1,4 +1,4 @@
-import { onUnmounted, ref } from 'vue'
+import { ref } from 'vue'
 import { ServiceReturn, services } from '@/services'
 
 const loading = ref(false)
@@ -138,7 +138,16 @@ export default function useBountyDetail(bountyId: string | undefined) {
 
     return bountyPayment.value
   }
-
+  function setNullData() {
+    detail.value = null
+    startup.value = null
+    founder.value = null
+    approvedPeople.value = null
+    activitiesList.value = []
+    applicantsList.value = []
+    depositRecords.value = []
+    bountyPayment.value = null
+  }
   function initialize(bountyId: string, reload = false) {
     if (loading.value) {
       return console.warn('useBountyDetail is loading')
@@ -164,17 +173,6 @@ export default function useBountyDetail(bountyId: string | undefined) {
 
   bountyId && initialize(bountyId)
 
-  onUnmounted(() => {
-    detail.value = null
-    startup.value = null
-    founder.value = null
-    approvedPeople.value = null
-    activitiesList.value = []
-    applicantsList.value = []
-    depositRecords.value = []
-    bountyPayment.value = null
-  })
-
   return {
     detail,
     startup,
@@ -192,6 +190,7 @@ export default function useBountyDetail(bountyId: string | undefined) {
     getApplicants,
     getBountyPayment,
     getDepositRecords,
-    reload
+    reload,
+    setNullData
   }
 }
