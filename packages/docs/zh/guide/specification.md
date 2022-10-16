@@ -106,7 +106,12 @@ export default defineComponent({
     // useXXX: hooks 命名规范，前缀是use
     const { ... } = useXXX();
 
-    return () => <></>;
+    return {
+      key: value
+    };
+  },
+  render(){
+    return (<>{something}</>)
   }
 })
 ```

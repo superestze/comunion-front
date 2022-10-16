@@ -46,10 +46,11 @@ const StartupsPage = defineComponent({
         keyword: searchInput.value
       })
       if (!error) {
+        const list = Array.isArray(data.list) ? data.list : []
         if (reload) {
-          DataList.value = data!.list as unknown as StartupItem[]
+          DataList.value = list as unknown as StartupItem[]
         } else {
-          DataList.value.push(...(data!.list as unknown as StartupItem[]))
+          DataList.value.push(...(list as unknown as StartupItem[]))
         }
 
         pagination.total = data!.total
